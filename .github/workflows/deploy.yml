@@ -61,8 +61,29 @@ jobs:
           name: book
           path: book/book/
 
+  playground:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@v2
+      - uses: jetli/wasm-pack-action@v0.4.0
+      - name: Build wasm
+        run: wasm-pack build --target web -d html/pkg --no-typescript
+        working-directory: playground
+      - name: Remove .gitignore
+        run: rm html/pkg/.gitignore
+        working-directory: playground
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: playground
+          path: playground/html/
+
   deploy:
-    needs: book
+    needs: [book, playground]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -74,6 +95,11 @@ jobs:
         with:
           name: book
           path: public/book
+      - name: Download playground
+        uses: actions/download-artifact@v4
+        with:
+          name: playground
+          path: public/playground
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

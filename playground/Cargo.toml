@@ -1,0 +1,21 @@
+[package]
+name = "veryl-wasm"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+miette          = {version = "5.10", features = ["fancy"]}
+semver          = {version = "1.0", features = ["serde"]}
+veryl-analyzer  = {git = "https://github.com/dalance/veryl"}
+veryl-emitter   = {git = "https://github.com/dalance/veryl"}
+veryl-formatter = {git = "https://github.com/dalance/veryl"}
+veryl-metadata  = {git = "https://github.com/dalance/veryl"}
+veryl-parser    = {git = "https://github.com/dalance/veryl"}
+wasm-bindgen    = "0.2"
+
+[workspace]
