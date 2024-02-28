@@ -10,21 +10,8 @@ env:
   LANGUAGES: ja
 
 jobs:
-  index:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          cname: doc.veryl-lang.org
-
   book:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -68,9 +55,26 @@ jobs:
             mdbook build -d book/$po_lang
             echo "::endgroup::"
           done
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: book
+          path: book/book/
+
+  deploy:
+    needs: book
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download book
+        uses: actions/download-artifact@v4
+        with:
+          name: book
+          path: public
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./book/book
-          destination_dir: book
+          cname: doc.veryl-lang.org
