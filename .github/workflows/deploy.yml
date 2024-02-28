@@ -67,11 +67,11 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Download book
-        uses: actions/download-artifact@v4
-        with:
-          name: book
-          path: public/book
+      #- name: Download book
+      #  uses: actions/download-artifact@v4
+      #  with:
+      #    name: book
+      #    path: public/book
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
