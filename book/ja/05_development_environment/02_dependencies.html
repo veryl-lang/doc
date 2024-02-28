@@ -25,10 +25,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <meta property="og:url" content="https://github.com/dalance/veryl" />
+        <meta property="og:url" content="https://github.com/veryl-lang/veryl" />
         <meta property="og:title" content="Veryl: A Modern Hardware Description Language" />
         <meta property="og:description" content="Veryl is a hardware description language which is designed as a SystemVerilog alternative." />
-        <meta property="og:image" content="https://github.com/dalance/veryl/raw/master/support/logo/veryl_ogp.png" />
+        <meta property="og:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
 
         <link rel="shortcut icon" href="../favicon.png">
         <link rel="stylesheet" href="../css/variables.css">
@@ -235,15 +235,15 @@
                         <h1 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h1>
 <p>他の Veryl プロジェクトへの依存関係をプロジェクトに追加したい場合、<code>Veryl.toml</code> に <code>[dependencies]</code> セクションを追加します。エントリの左辺は依存関係へのパス、右辺はバージョンです。</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/dalance/veryl_sample" = "0.1.0"
+"https://github.com/veryl-lang/sample" = "0.1.0"
 </code></pre>
 <p>デフォルトでは依存関係の名前空間はそのプロジェクト名と同じです。もし名前空間を指定したい場合は、 <code>name</code> フィールドを使います。</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/dalance/veryl_sample" = {version = "0.1.0", name = "veryl_sample_alt"}
+"https://github.com/veryl-lang/sample" = {version = "0.1.0", name = "veryl_sample_alt"}
 </code></pre>
 <p>同じ依存関係の複数のバージョンを使う場合は、以下のようにそれぞれの名前を指定できます。</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/dalance/veryl_sample" = [
+"https://github.com/veryl-lang/sample" = [
     {version = "0.1.0", name = "veryl_sample1"},
     {version = "0.2.0", name = "veryl_sample2"},
 ]
