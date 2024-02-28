@@ -10,6 +10,17 @@ env:
   LANGUAGES: ja
 
 jobs:
+  index:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          cname: doc.veryl-lang.org
+
   book:
     runs-on: ubuntu-latest
     permissions:
@@ -57,10 +68,9 @@ jobs:
             mdbook build -d book/$po_lang
             echo "::endgroup::"
           done
-      - name: Move to public
-        run: mv ./book/book public
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          cname: doc.veryl-lang.org
+          publish_dir: ./book/book
+          destination_dir: book
