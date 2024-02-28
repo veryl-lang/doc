@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-02-28T18:48:04+09:00\n"
+"POT-Creation-Date: 2024-02-28T19:12:46+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -398,8 +398,8 @@ msgstr ""
 "トツールが標準で揃っています。Veryl でもそれらを最初からサポートします。"
 
 #: src/01_introduction.md:45
-msgid "The following tools are planed to support."
-msgstr "以下のツールサポートが予定されています。"
+msgid "The following tools are supported."
+msgstr "以下のツールがサポートされています。"
 
 #: src/01_introduction.md:49
 msgid "Language server"
@@ -449,8 +449,8 @@ msgid ""
 "Download from [release page](https://github.com/veryl-lang/veryl/releases/"
 "latest), and extract to the directory in PATH."
 msgstr ""
-"[リリースページ](https://github.com/veryl-lang/veryl/releases/latest)からダウン"
-"ロードして、パスの通ったところに展開してください。"
+"[リリースページ](https://github.com/veryl-lang/veryl/releases/latest)からダウ"
+"ンロードして、パスの通ったところに展開してください。"
 
 #: src/02_getting_started/01_installation.md:16
 msgid "Cargo"

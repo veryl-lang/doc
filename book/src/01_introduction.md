@@ -42,7 +42,7 @@ Veryl can use SystemVerilog's module / interface / struct / enum in the code, an
 Modern programming languages have development support tools like linter, formatter, and language server by default.
 Veryl will have them too from the beginning of development.
 
-The following tools are planed to support.
+The following tools are supported.
 
 * Linter
 * Formatter
