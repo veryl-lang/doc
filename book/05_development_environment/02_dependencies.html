@@ -236,16 +236,16 @@
 <p>If you want to add other Veryl projects to dependencies of your project, you can add them to <code>[dependencies]</code> section in <code>Veryl.toml</code>.
 The left hand side of entry is path to the dependency, and the right hand side is version.</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/dalance/veryl_sample" = "0.1.0"
+"https://github.com/veryl-lang/sample" = "0.1.0"
 </code></pre>
 <p>By default, the namespace of the dependency is the same as the project name of the dependency.
 If you want to specify namespace, you can use <code>name</code> field.</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/dalance/veryl_sample" = {version = "0.1.0", name = "veryl_sample_alt"}
+"https://github.com/veryl-lang/sample" = {version = "0.1.0", name = "veryl_sample_alt"}
 </code></pre>
 <p>If you want to use many versions of the same dependency path, you can specify each name.</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/dalance/veryl_sample" = [
+"https://github.com/veryl-lang/sample" = [
     {version = "0.1.0", name = "veryl_sample1"},
     {version = "0.2.0", name = "veryl_sample2"},
 ]
