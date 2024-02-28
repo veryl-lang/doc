@@ -5,7 +5,7 @@ The left hand side of entry is path to the dependency, and the right hand side i
 
 ```toml
 [dependencies]
-"https://github.com/dalance/veryl_sample" = "0.1.0"
+"https://github.com/veryl-lang/sample" = "0.1.0"
 ```
 
 By default, the namespace of the dependency is the same as the project name of the dependency.
@@ -13,14 +13,14 @@ If you want to specify namespace, you can use `name` field.
 
 ```toml
 [dependencies]
-"https://github.com/dalance/veryl_sample" = {version = "0.1.0", name = "veryl_sample_alt"}
+"https://github.com/veryl-lang/sample" = {version = "0.1.0", name = "veryl_sample_alt"}
 ```
 
 If you want to use many versions of the same dependency path, you can specify each name.
 
 ```toml
 [dependencies]
-"https://github.com/dalance/veryl_sample" = [
+"https://github.com/veryl-lang/sample" = [
     {version = "0.1.0", name = "veryl_sample1"},
     {version = "0.2.0", name = "veryl_sample2"},
 ]
