@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-02-28T14:50:26+09:00\n"
+"POT-Creation-Date: 2024-02-28T17:53:05+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -514,7 +514,7 @@ msgstr ""
 "言語サーバの組み込みは以下の URL を参照してください。"
 
 #: src/02_getting_started/01_installation.md:42
-msgid "[Vim / Neovim plugin](https://github.com/dalance/veryl.vim)"
+msgid "[Vim / Neovim plugin](https://github.com/veryl-lang/veryl.vim)"
 msgstr "[Vim / Neovim plugin](https://github.com/dalance/veryl.vim)"
 
 #: src/02_getting_started/01_installation.md:44
@@ -4013,8 +4013,8 @@ msgid ""
 "The available configurations are below. These can be specified in `[doc]` "
 "section of `Veryl.toml`."
 msgstr ""
-"設定可能な項目は以下の通りです。これは `Veryl.toml` の `[doc]` セクション"
-"で指定できます。"
+"設定可能な項目は以下の通りです。これは `Veryl.toml` の `[doc]` セクションで指"
+"定できます。"
 
 #: src/05_development_environment/09_documentation.md:29
 msgid ""

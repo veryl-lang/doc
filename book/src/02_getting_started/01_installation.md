@@ -39,7 +39,7 @@ For Vim / Neovim, Veryl plugin is provided.
 The plugin provides file type detection, syntex highlight.
 There are some instructions for plugin installation and language server integration in the following URL.
 
-[Vim / Neovim plugin](https://github.com/dalance/veryl.vim)
+[Vim / Neovim plugin](https://github.com/veryl-lang/veryl.vim)
 
 ### Other Editors
 
