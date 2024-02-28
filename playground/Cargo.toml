@@ -11,11 +11,11 @@ crate-type = ["cdylib"]
 [dependencies]
 miette          = {version = "5.10", features = ["fancy"]}
 semver          = {version = "1.0", features = ["serde"]}
-veryl-analyzer  = {git = "https://github.com/dalance/veryl"}
-veryl-emitter   = {git = "https://github.com/dalance/veryl"}
-veryl-formatter = {git = "https://github.com/dalance/veryl"}
-veryl-metadata  = {git = "https://github.com/dalance/veryl"}
-veryl-parser    = {git = "https://github.com/dalance/veryl"}
+veryl-analyzer  = {git = "https://github.com/veryl-lang/veryl"}
+veryl-emitter   = {git = "https://github.com/veryl-lang/veryl"}
+veryl-formatter = {git = "https://github.com/veryl-lang/veryl"}
+veryl-metadata  = {git = "https://github.com/veryl-lang/veryl"}
+veryl-parser    = {git = "https://github.com/veryl-lang/veryl"}
 wasm-bindgen    = "0.2"
 
 [workspace]

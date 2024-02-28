@@ -29,7 +29,7 @@ jobs:
         run: |
           cargo install mdbook-i18n-helpers --locked --version 0.3.0
       - name: Build mdbook plugin
-        run: cargo install --git https://github.com/dalance/veryl mdbook-veryl
+        run: cargo install --git https://github.com/veryl-lang/veryl mdbook-veryl
       - name: Build mdbook
         run: mdbook build
         working-directory: book

@@ -1,6 +1,6 @@
 # The Veryl Hardware Description Language
 
-![Veryl](https://github.com/dalance/veryl/raw/master/support/logo/veryl_wide.png)
+![Veryl](https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_wide.png)
 
 Veryl is a modern hardware description language which is designed as a "SystemVerilog Alternative".
 There are some design concepts.

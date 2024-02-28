@@ -72,7 +72,7 @@ The `repository` field should be a URL to the source repository for the project.
 
 ```toml
 [project]
-repository = "https://github.com/dalance/veryl"
+repository = "https://github.com/veryl-lang/veryl"
 ```
 
 ## The `[build]` section {#the-build-section}

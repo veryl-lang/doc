@@ -11,7 +11,7 @@ Veryl uses `git` command internally. Please confirm `git` can be launched.
 
 ### Download binary
 
-Download from [release page](https://github.com/dalance/veryl/releases/latest), and extract to the directory in PATH.
+Download from [release page](https://github.com/veryl-lang/veryl/releases/latest), and extract to the directory in PATH.
 
 ### Cargo
 

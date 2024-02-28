@@ -1388,7 +1388,7 @@ checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
 [[package]]
 name = "veryl-analyzer"
 version = "0.6.0"
-source = "git+https://github.com/dalance/veryl#932c5750926e7461841bd5ebfc642f45a9f0ff19"
+source = "git+https://github.com/veryl-lang/veryl#99e08de3b537f18cf8dd2b541277d1f4b88f34d3"
 dependencies = [
  "Inflector",
  "bimap",
@@ -1403,7 +1403,7 @@ dependencies = [
 [[package]]
 name = "veryl-emitter"
 version = "0.6.0"
-source = "git+https://github.com/dalance/veryl#932c5750926e7461841bd5ebfc642f45a9f0ff19"
+source = "git+https://github.com/veryl-lang/veryl#99e08de3b537f18cf8dd2b541277d1f4b88f34d3"
 dependencies = [
  "serde",
  "strnum_bitwidth",
@@ -1415,7 +1415,7 @@ dependencies = [
 [[package]]
 name = "veryl-formatter"
 version = "0.6.0"
-source = "git+https://github.com/dalance/veryl#932c5750926e7461841bd5ebfc642f45a9f0ff19"
+source = "git+https://github.com/veryl-lang/veryl#99e08de3b537f18cf8dd2b541277d1f4b88f34d3"
 dependencies = [
  "veryl-metadata",
  "veryl-parser",
@@ -1424,7 +1424,7 @@ dependencies = [
 [[package]]
 name = "veryl-metadata"
 version = "0.6.0"
-source = "git+https://github.com/dalance/veryl#932c5750926e7461841bd5ebfc642f45a9f0ff19"
+source = "git+https://github.com/veryl-lang/veryl#99e08de3b537f18cf8dd2b541277d1f4b88f34d3"
 dependencies = [
  "directories",
  "fs4",
@@ -1446,7 +1446,7 @@ dependencies = [
 [[package]]
 name = "veryl-parser"
 version = "0.6.0"
-source = "git+https://github.com/dalance/veryl#932c5750926e7461841bd5ebfc642f45a9f0ff19"
+source = "git+https://github.com/veryl-lang/veryl#99e08de3b537f18cf8dd2b541277d1f4b88f34d3"
 dependencies = [
  "anyhow",
  "bimap",
