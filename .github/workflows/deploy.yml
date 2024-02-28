@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   # Update the language picker in index.hbs to link new languages.
@@ -61,3 +61,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./book/book
           destination_dir: book
+          cname: doc.veryl-lang.org
