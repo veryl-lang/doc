@@ -1,19 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="{{ language }}" class="{{ default_theme }}" dir="{{ text_direction }}">
     <head prefix="og: http://ogp.me/ns#">
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NXW2P6CCF3"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-NXW2P6CCF3');
-        </script>
-
-        <link rel="alternate" hreflang="en" href="https://doc.veryl-lang.org/book/" />
-        <link rel="alternate" hreflang="ja" href="https://doc.veryl-lang.org/book/ja/" />
-
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>{{ title }}</title>
@@ -31,11 +18,6 @@
         <meta name="description" content="{{ description }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
-
-        <meta property="og:url" content="https://github.com/veryl-lang/veryl" />
-        <meta property="og:title" content="Veryl: A Modern Hardware Description Language" />
-        <meta property="og:description" content="Veryl is a hardware description language which is designed as a SystemVerilog alternative." />
-        <meta property="og:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
 
         {{#if favicon_svg}}
         <link rel="icon" href="{{ path_to_root }}favicon.svg">
