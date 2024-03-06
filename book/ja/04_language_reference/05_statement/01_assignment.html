@@ -1,34 +1,51 @@
 <!DOCTYPE HTML>
 <html lang="ja" class="light" dir="ltr">
     <head prefix="og: http://ogp.me/ns#">
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NXW2P6CCF3"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-NXW2P6CCF3');
-        </script>
-
-        <link rel="alternate" hreflang="en" href="https://doc.veryl-lang.org/book/" />
-        <link rel="alternate" hreflang="ja" href="https://doc.veryl-lang.org/book/ja/" />
-
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>代入 - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NXW2P6CCF3"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
         
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff">
+            gtag('config', 'G-NXW2P6CCF3');
+        </script>
+        
+        <script>
+            (function () {
+                // See these pages for details:
+                // https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
+                // https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics
+                let base = "https://doc.veryl-lang.org/book";
+        let canonical_href = `${base}/ja/04_language_reference/05_statement/01_assignment.md`;
 
+                // mdbook gives us a string ending in ".md", we replace it with ".html":
+                canonical_href = canonical_href.slice(0, -"md".length) + "html";
+                if (canonical_href.endsWith("/index.html")) {
+                    canonical_href = canonical_href.slice(0, -"index.html".length);
+                }
+        
+                let link = document.createElement("link");
+                link.rel = "canonical";
+                link.href = canonical_href;
+                document.head.appendChild(link);
+            })()
+        </script>
+        
         <meta property="og:url" content="https://github.com/veryl-lang/veryl" />
         <meta property="og:title" content="Veryl: A Modern Hardware Description Language" />
         <meta property="og:description" content="Veryl is a hardware description language which is designed as a SystemVerilog alternative." />
         <meta property="og:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="shortcut icon" href="../../favicon.png">
         <link rel="stylesheet" href="../../css/variables.css">
