@@ -264,7 +264,7 @@
 <p>さらに Veryl は SystemVerilog と相互運用可能です。Veryl では SystemVerilog の module / interface / struct / enum を使えますし、逆も可能です。</p>
 <h2 id="ツール統合"><a class="header" href="#ツール統合">ツール統合</a></h2>
 <p>モダンなプログラミング言語ではリンタやフォーマッタ、言語サーバといったサポートツールが標準で揃っています。Veryl でもそれらを最初からサポートします。</p>
-<p>The following tools are planed to support.</p>
+<p>以下のツールがサポートされています。</p>
 <ul>
 <li>リンタ</li>
 <li>フォーマッタ</li>
@@ -1674,7 +1674,11 @@ case_enum = "snake"
 </div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="言語サーバ"><a class="header" href="#言語サーバ">言語サーバ</a></h1>
 <p><code>veryl-ls</code> は言語サーバのバイナリです。使用するにはエディタの設定やプラグインが必要です。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="互換性"><a class="header" href="#互換性">互換性</a></h1>
+<p>設定可能な項目は以下の通りです。これは各エディタの設定から指定できます。</p>
+<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr></thead><tbody>
+<tr><td>useOperatorCompletion</td><td>ブーリアン</td><td>false</td><td>演算子（例 ‘&gt;:’, ‘&gt;&gt;’）の補完を有効にする</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="互換性"><a class="header" href="#互換性">互換性</a></h1>
 <p>いくつかのツールはサポートしていない SystemVerilog 構文があります。これをサポートするために、 <code>Veryl.toml</code> の設定でコード生成をカスタマイズすることができます。</p>
 <h2 id="vivado"><a class="header" href="#vivado">Vivado</a></h2>
 <h3 id="文字列パラメータ"><a class="header" href="#文字列パラメータ">文字列パラメータ</a></h3>
