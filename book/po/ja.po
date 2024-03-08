@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-02-28T19:12:46+09:00\n"
+"POT-Creation-Date: 2024-03-08T18:55:44+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -3016,6 +3016,7 @@ msgstr ""
 #: src/05_development_environment/03_publish_project.md:61
 #: src/05_development_environment/05_formatter.md:14
 #: src/05_development_environment/06_linter.md:18
+#: src/05_development_environment/07_language_server.md:9
 #: src/05_development_environment/09_documentation.md:34
 msgid "Configuration"
 msgstr "設定"
@@ -3037,11 +3038,13 @@ msgstr ""
 #: src/05_development_environment/03_publish_project.md:61
 #: src/05_development_environment/05_formatter.md:14
 #: src/05_development_environment/06_linter.md:18
+#: src/05_development_environment/07_language_server.md:9
 #: src/05_development_environment/09_documentation.md:34
 msgid "Value"
 msgstr "設定値"
 
 #: src/05_development_environment/03_publish_project.md:61
+#: src/05_development_environment/07_language_server.md:9
 #: src/05_development_environment/09_documentation.md:34
 msgid "Default"
 msgstr "デフォルト"
@@ -3049,6 +3052,7 @@ msgstr "デフォルト"
 #: src/05_development_environment/03_publish_project.md:61
 #: src/05_development_environment/05_formatter.md:14
 #: src/05_development_environment/06_linter.md:18
+#: src/05_development_environment/07_language_server.md:9
 #: src/05_development_environment/09_documentation.md:34
 msgid "Description"
 msgstr "説明"
@@ -3059,11 +3063,13 @@ msgstr "bump_commit"
 
 #: src/05_development_environment/03_publish_project.md:63
 #: src/05_development_environment/03_publish_project.md:64
+#: src/05_development_environment/07_language_server.md:11
 msgid "boolean"
 msgstr "ブーリアン"
 
 #: src/05_development_environment/03_publish_project.md:63
 #: src/05_development_environment/03_publish_project.md:64
+#: src/05_development_environment/07_language_server.md:11
 msgid "false"
 msgstr "false"
 
@@ -3901,6 +3907,21 @@ msgid ""
 msgstr ""
 "`veryl-ls` は言語サーバのバイナリです。使用するにはエディタの設定やプラグイン"
 "が必要です。"
+
+#: src/05_development_environment/07_language_server.md:6
+msgid ""
+"The available configurations are below. These can be specified by each "
+"editor's config."
+msgstr ""
+"設定可能な項目は以下の通りです。これは各エディタの設定から指定できます。"
+
+#: src/05_development_environment/07_language_server.md:11
+msgid "useOperatorCompletion"
+msgstr "useOperatorCompletion"
+
+#: src/05_development_environment/07_language_server.md:11
+msgid "use operator (e.g. '>:', '>>') completion"
+msgstr "演算子（例 '>:', '>>'）の補完を有効にする"
 
 #: src/05_development_environment/08_compatibility.md:3
 msgid ""
