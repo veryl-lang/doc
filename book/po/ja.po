@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-03-08T18:55:44+09:00\n"
+"POT-Creation-Date: 2024-03-11T09:31:17+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -261,15 +261,19 @@ msgstr "互換性"
 msgid "Documentation"
 msgstr "ドキュメンテーション"
 
-#: src/SUMMARY.md:65 src/06_appendix.md:1
+#: src/SUMMARY.md:65 src/05_development_environment/10_github_action.md:1
+msgid "GitHub Action"
+msgstr "GitHub Action"
+
+#: src/SUMMARY.md:66 src/06_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:66 src/06_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:67 src/06_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:67 src/06_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:68 src/06_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -4060,6 +4064,143 @@ msgstr "\"doc\""
 #: src/05_development_environment/09_documentation.md:36
 msgid "path to output directory"
 msgstr "出力ディレクトリへのパス"
+
+#: src/05_development_environment/10_github_action.md:3
+msgid ""
+"The official GitHub action to download a prebuilt binary of Veryl is "
+"provided."
+msgstr ""
+"ビルド済みのVerylバイナリをダウンロードするための公式GitHub actionが提供されています。"
+
+#: src/05_development_environment/10_github_action.md:5
+msgid ""
+"[https://github.com/marketplace/actions/setup-veryl](https://github.com/"
+"marketplace/actions/setup-veryl)"
+msgstr ""
+"[https://github.com/marketplace/actions/setup-veryl](https://github.com/"
+"marketplace/actions/setup-veryl)"
+
+#: src/05_development_environment/10_github_action.md:7
+msgid "The examples of GitHub action script are below:"
+msgstr "GitHub actionスクリプトの例は以下の通りです。"
+
+#: src/05_development_environment/10_github_action.md:9
+msgid "Format and build check"
+msgstr "フォーマットとビルドチェック"
+
+#: src/05_development_environment/10_github_action.md:12
+#: src/05_development_environment/10_github_action.md:27
+msgid "name"
+msgstr "name"
+
+#: src/05_development_environment/10_github_action.md:12
+msgid "Check"
+msgstr "Check"
+
+#: src/05_development_environment/10_github_action.md:13
+#: src/05_development_environment/10_github_action.md:28
+msgid "push"
+msgstr "push"
+
+#: src/05_development_environment/10_github_action.md:13
+msgid "pull_request"
+msgstr "pull_request"
+
+#: src/05_development_environment/10_github_action.md:13
+#: src/05_development_environment/10_github_action.md:28
+msgid "jobs"
+msgstr "jobs"
+
+#: src/05_development_environment/10_github_action.md:15
+msgid "check"
+msgstr "check"
+
+#: src/05_development_environment/10_github_action.md:16
+#: src/05_development_environment/10_github_action.md:31
+msgid "runs-on"
+msgstr "runs-on"
+
+#: src/05_development_environment/10_github_action.md:16
+#: src/05_development_environment/10_github_action.md:31
+msgid "ubuntu-latest"
+msgstr "ubuntu-latest"
+
+#: src/05_development_environment/10_github_action.md:17
+#: src/05_development_environment/10_github_action.md:32
+msgid "steps"
+msgstr "steps"
+
+#: src/05_development_environment/10_github_action.md:18
+#: src/05_development_environment/10_github_action.md:19
+#: src/05_development_environment/10_github_action.md:33
+#: src/05_development_environment/10_github_action.md:34
+#: src/05_development_environment/10_github_action.md:36
+msgid "uses"
+msgstr "uses"
+
+#: src/05_development_environment/10_github_action.md:18
+#: src/05_development_environment/10_github_action.md:33
+msgid "actions/checkout@v4"
+msgstr "actions/checkout@v4"
+
+#: src/05_development_environment/10_github_action.md:19
+#: src/05_development_environment/10_github_action.md:34
+msgid "veryl-lang/setup-veryl@v1"
+msgstr "veryl-lang/setup-veryl@v1"
+
+#: src/05_development_environment/10_github_action.md:20
+#: src/05_development_environment/10_github_action.md:21
+#: src/05_development_environment/10_github_action.md:35
+msgid "run"
+msgstr "run"
+
+#: src/05_development_environment/10_github_action.md:20
+msgid "veryl fmt --check"
+msgstr "veryl fmt --check"
+
+#: src/05_development_environment/10_github_action.md:21
+msgid "veryl check"
+msgstr "veryl check"
+
+#: src/05_development_environment/10_github_action.md:24
+msgid "Publish document through GitHub Pages"
+msgstr "GitHub Pagesからドキュメントを公開する"
+
+#: src/05_development_environment/10_github_action.md:27
+msgid "Deploy"
+msgstr "Deploy"
+
+#: src/05_development_environment/10_github_action.md:30
+msgid "deploy"
+msgstr "deploy"
+
+#: src/05_development_environment/10_github_action.md:35
+msgid "veryl doc"
+msgstr "veryl doc"
+
+#: src/05_development_environment/10_github_action.md:36
+msgid "peaceiris/actions-gh-pages@v3"
+msgstr "peaceiris/actions-gh-pages@v3"
+
+#: src/05_development_environment/10_github_action.md:37
+msgid "with"
+msgstr "with"
+
+#: src/05_development_environment/10_github_action.md:38
+msgid "github_token"
+msgstr "github_token"
+
+#: src/05_development_environment/10_github_action.md:38
+msgid "${{ secrets.GITHUB_TOKEN }}"
+msgstr "${{ secrets.GITHUB_TOKEN }}"
+
+#: src/05_development_environment/10_github_action.md:39
+msgid "publish_dir"
+msgstr "publish_dir"
+
+#: src/05_development_environment/10_github_action.md:39
+msgid "doc"
+msgstr "doc"
 
 #: src/06_appendix/01_formal_syntax.md:3
 msgid ""
