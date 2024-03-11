@@ -428,7 +428,7 @@ module ModuleA #(
     var r_data1: logic&lt;ParamA&gt;;
 
     // value binding
-    let w_data2: logic&lt;ParamA&gt; = i_data;
+    let _w_data2: logic&lt;ParamA&gt; = i_data;
 
     // always_ff statement with reset
     //   `always_ff` can take a mandatory clock and a optional reset
@@ -474,8 +474,7 @@ module ModuleA #(
     //   each port connection is `[port_name]:[variable]`
     //   `[port_name]` means `[port_name]:[port_name]`
     inst u_module_b: ModuleB (
-        i_clk,
-        i_rst,
+        i_clk          ,
         i_data: r_data1,
         o_data: r_data2,
     );
@@ -485,13 +484,21 @@ module ModuleA #(
     inst u_module_c: ModuleC #(
         ParamA,
         ParamB: 10,
-    ) (
-        i_clk,
-        i_rst,
-        i_data: r_data1,
-        o_data: r_data2,
-    );
+    ) ();
 }
+
+module ModuleB #(
+    parameter  ParamA: u32 = 10,
+) (
+    i_clk : input  logic        ,
+    i_data: input  logic&lt;ParamA&gt;,
+    o_data: output logic&lt;ParamA&gt;,
+) {}
+
+module ModuleC #(
+    parameter  ParamA: u32 = 10,
+    parameter  ParamB: u32 = 10,
+) () {}
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="interface"><a class="header" href="#interface">Interface</a></h1>
 <pre><code class="language-veryl playground editable">// interface definition
