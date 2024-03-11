@@ -62,6 +62,7 @@
     - [Language Server](./05_development_environment/07_language_server.md)
     - [Compatibility](./05_development_environment/08_compatibility.md)
     - [Documentation](./05_development_environment/09_documentation.md)
+    - [GitHub Action](./05_development_environment/10_github_action.md)
 - [Appendix](./06_appendix.md)
     - [Formal Syntax](./06_appendix/01_formal_syntax.md)
     - [Semantic Error](./06_appendix/02_semantic_error.md)
