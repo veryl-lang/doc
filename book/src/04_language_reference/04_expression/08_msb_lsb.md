@@ -7,7 +7,7 @@
 ```veryl,playground
 module ModuleA {
     var a : logic<10>;
-    var _b: logic<10> = a[msb - 3:lsb];
-    var _c: logic<10> = a[msb - 1:lsb + 1];
+    let _b: logic<10> = a[msb - 3:lsb];
+    let _c: logic<10> = a[msb - 1:lsb + 1];
 }
 ```

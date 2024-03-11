@@ -35,6 +35,7 @@
         - [Case](./04_language_reference/05_statement/04_case.md)
         - [For](./04_language_reference/05_statement/05_for.md)
         - [Return](./04_language_reference/05_statement/06_return.md)
+        - [Let](./04_language_reference/05_statement/07_let.md)
     - [Declaration](./04_language_reference/06_declaration.md)
         - [Variable](./04_language_reference/06_declaration/01_variable.md)
         - [Parameter](./04_language_reference/06_declaration/02_parameter.md)

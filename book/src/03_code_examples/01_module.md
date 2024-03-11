@@ -20,6 +20,9 @@ module ModuleA #(
     var r_data0: logic<ParamA>;
     var r_data1: logic<ParamA>;
 
+    // value binding
+    let w_data2: logic<ParamA> = i_data;
+
     // always_ff statement with reset
     //   `always_ff` can take a mandatory clock and a optional reset
     //   `if_reset` means `if (i_rst)`. This conceals reset porality

@@ -14,7 +14,7 @@ package PackageA {
 }
 
 module ModuleA {
-    var a : logic<10> = PackageA::ParamA;
-    var _b: logic<10> = PackageA::FuncA(a);
+    let a : logic<10> = PackageA::ParamA;
+    let _b: logic<10> = PackageA::FuncA(a);
 }
 ```
