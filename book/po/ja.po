@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-03-11T09:31:17+09:00\n"
+"POT-Creation-Date: 2024-03-11T18:32:31+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -35,23 +35,23 @@ msgstr "Hello, World!"
 msgid "Code Examples"
 msgstr "コード例"
 
-#: src/SUMMARY.md:8 src/SUMMARY.md:50 src/03_code_examples/01_module.md:1
+#: src/SUMMARY.md:8 src/SUMMARY.md:51 src/03_code_examples/01_module.md:1
 #: src/04_language_reference/07_module.md:1
 msgid "Module"
 msgstr "モジュール"
 
-#: src/SUMMARY.md:9 src/SUMMARY.md:48
+#: src/SUMMARY.md:9 src/SUMMARY.md:49
 #: src/03_code_examples/02_instantiation.md:1
 #: src/04_language_reference/06_declaration/10_instantiation.md:1
 msgid "Instantiation"
 msgstr "インスタンス"
 
-#: src/SUMMARY.md:10 src/SUMMARY.md:51 src/03_code_examples/03_interface.md:1
+#: src/SUMMARY.md:10 src/SUMMARY.md:52 src/03_code_examples/03_interface.md:1
 #: src/04_language_reference/08_interface.md:1
 msgid "Interface"
 msgstr "インターフェース"
 
-#: src/SUMMARY.md:11 src/SUMMARY.md:52 src/03_code_examples/04_package.md:1
+#: src/SUMMARY.md:11 src/SUMMARY.md:53 src/03_code_examples/04_package.md:1
 #: src/04_language_reference/09_package.md:1
 msgid "Package"
 msgstr "パッケージ"
@@ -162,118 +162,122 @@ msgstr "for"
 msgid "Return"
 msgstr "return"
 
-#: src/SUMMARY.md:38 src/04_language_reference/06_declaration.md:1
+#: src/SUMMARY.md:38 src/04_language_reference/05_statement/07_let.md:1
+msgid "Let"
+msgstr "let"
+
+#: src/SUMMARY.md:39 src/04_language_reference/06_declaration.md:1
 msgid "Declaration"
 msgstr "宣言"
 
-#: src/SUMMARY.md:39 src/04_language_reference/06_declaration/01_variable.md:1
+#: src/SUMMARY.md:40 src/04_language_reference/06_declaration/01_variable.md:1
 msgid "Variable"
 msgstr "変数"
 
-#: src/SUMMARY.md:40 src/04_language_reference/06_declaration/02_parameter.md:1
+#: src/SUMMARY.md:41 src/04_language_reference/06_declaration/02_parameter.md:1
 msgid "Parameter"
 msgstr "パラメータ"
 
-#: src/SUMMARY.md:41 src/04_language_reference/06_declaration/03_register.md:1
+#: src/SUMMARY.md:42 src/04_language_reference/06_declaration/03_register.md:1
 msgid "Register"
 msgstr "レジスタ"
 
-#: src/SUMMARY.md:42
+#: src/SUMMARY.md:43
 #: src/04_language_reference/06_declaration/04_combinational.md:1
 msgid "Combinational"
 msgstr "組み合わせ回路"
 
-#: src/SUMMARY.md:43 src/04_language_reference/06_declaration/05_assign.md:1
+#: src/SUMMARY.md:44 src/04_language_reference/06_declaration/05_assign.md:1
 msgid "Assign"
 msgstr "assign"
 
-#: src/SUMMARY.md:44 src/04_language_reference/06_declaration/06_function.md:1
+#: src/SUMMARY.md:45 src/04_language_reference/06_declaration/06_function.md:1
 msgid "Function"
 msgstr "関数"
 
-#: src/SUMMARY.md:45
+#: src/SUMMARY.md:46
 #: src/04_language_reference/06_declaration/07_initial_final.md:1
 msgid "Initial / Final"
 msgstr "initial / final"
 
-#: src/SUMMARY.md:46 src/04_language_reference/06_declaration/08_attribute.md:1
+#: src/SUMMARY.md:47 src/04_language_reference/06_declaration/08_attribute.md:1
 msgid "Attribute"
 msgstr "アトリビュート"
 
-#: src/SUMMARY.md:47 src/04_language_reference/06_declaration/09_generate.md:1
+#: src/SUMMARY.md:48 src/04_language_reference/06_declaration/09_generate.md:1
 msgid "Generate"
 msgstr "生成"
 
-#: src/SUMMARY.md:49
+#: src/SUMMARY.md:50
 #: src/04_language_reference/06_declaration/11_named_block.md:1
 msgid "Named Block"
 msgstr "名前付きブロック"
 
-#: src/SUMMARY.md:53
+#: src/SUMMARY.md:54
 #: src/04_language_reference/10_systemverilog_interoperation.md:1
 msgid "SystemVerilog Interoperation"
 msgstr "SystemVerilogとの相互運用"
 
-#: src/SUMMARY.md:54 src/04_language_reference/11_visibility.md:1
+#: src/SUMMARY.md:55 src/04_language_reference/11_visibility.md:1
 msgid "Visibility"
 msgstr "可視性"
 
-#: src/SUMMARY.md:55 src/05_development_environment.md:1
+#: src/SUMMARY.md:56 src/05_development_environment.md:1
 msgid "Development Environment"
 msgstr "開発環境"
 
-#: src/SUMMARY.md:56
+#: src/SUMMARY.md:57
 #: src/05_development_environment/01_project_configuration.md:1
 msgid "Project Configuration"
 msgstr "プロジェクト設定"
 
-#: src/SUMMARY.md:57 src/05_development_environment/02_dependencies.md:1
+#: src/SUMMARY.md:58 src/05_development_environment/02_dependencies.md:1
 msgid "Dependencies"
 msgstr "依存関係"
 
-#: src/SUMMARY.md:58 src/05_development_environment/03_publish_project.md:1
+#: src/SUMMARY.md:59 src/05_development_environment/03_publish_project.md:1
 msgid "Publish Project"
 msgstr "プロジェクトを公開する"
 
-#: src/SUMMARY.md:59 src/05_development_environment/04_directory_layout.md:1
+#: src/SUMMARY.md:60 src/05_development_environment/04_directory_layout.md:1
 msgid "Directory Layout"
 msgstr "ディレクトリ構成"
 
-#: src/SUMMARY.md:60 src/01_introduction.md:48
+#: src/SUMMARY.md:61 src/01_introduction.md:48
 #: src/05_development_environment/05_formatter.md:1
 msgid "Formatter"
 msgstr "フォーマッタ"
 
-#: src/SUMMARY.md:61 src/01_introduction.md:47
+#: src/SUMMARY.md:62 src/01_introduction.md:47
 #: src/05_development_environment/06_linter.md:1
 msgid "Linter"
 msgstr "リンタ"
 
-#: src/SUMMARY.md:62 src/05_development_environment/07_language_server.md:1
+#: src/SUMMARY.md:63 src/05_development_environment/07_language_server.md:1
 msgid "Language Server"
 msgstr "言語サーバ"
 
-#: src/SUMMARY.md:63 src/05_development_environment/08_compatibility.md:1
+#: src/SUMMARY.md:64 src/05_development_environment/08_compatibility.md:1
 msgid "Compatibility"
 msgstr "互換性"
 
-#: src/SUMMARY.md:64 src/05_development_environment/09_documentation.md:1
+#: src/SUMMARY.md:65 src/05_development_environment/09_documentation.md:1
 msgid "Documentation"
 msgstr "ドキュメンテーション"
 
-#: src/SUMMARY.md:65 src/05_development_environment/10_github_action.md:1
+#: src/SUMMARY.md:66 src/05_development_environment/10_github_action.md:1
 msgid "GitHub Action"
 msgstr "GitHub Action"
 
-#: src/SUMMARY.md:66 src/06_appendix.md:1
+#: src/SUMMARY.md:67 src/06_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:67 src/06_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:68 src/06_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:68 src/06_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:69 src/06_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -776,6 +780,9 @@ msgid ""
 "    var r_data0: logic<ParamA>;\n"
 "    var r_data1: logic<ParamA>;\n"
 "\n"
+"    // value binding\n"
+"    let w_data2: logic<ParamA> = i_data;\n"
+"\n"
 "    // always_ff statement with reset\n"
 "    //   `always_ff` can take a mandatory clock and a optional reset\n"
 "    //   `if_reset` means `if (i_rst)`. This conceals reset porality\n"
@@ -821,6 +828,9 @@ msgstr ""
 "    // 変数宣言\n"
 "    var r_data0: logic<ParamA>;\n"
 "    var r_data1: logic<ParamA>;\n"
+"\n"
+"    // 値の束縛\n"
+"    let w_data2: logic<ParamA> = i_data;\n"
 "\n"
 "    // リセット付き always_ff 文\n"
 "    //   `always_ff` はクロック（必須）とリセット（オプション）を持ちます\n"
@@ -1025,8 +1035,8 @@ msgid ""
 "}\n"
 "\n"
 "module ModuleA {\n"
-"    var a : logic<10> = PackageA::ParamA;\n"
-"    var _b: logic<10> = PackageA::FuncA(a);\n"
+"    let a : logic<10> = PackageA::ParamA;\n"
+"    let _b: logic<10> = PackageA::FuncA(a);\n"
 "}\n"
 "```"
 msgstr ""
@@ -1044,8 +1054,8 @@ msgstr ""
 "}\n"
 "\n"
 "module ModuleA {\n"
-"    var a : logic<10> = PackageA::ParamA;\n"
-"    var _b: logic<10> = PackageA::FuncA(a);\n"
+"    let a : logic<10> = PackageA::ParamA;\n"
+"    let _b: logic<10> = PackageA::FuncA(a);\n"
 "}\n"
 "```"
 
@@ -1938,6 +1948,17 @@ msgstr ""
 "`return` 文は関数からの戻りを示します。`return` キーワードの後の式は関数の戻"
 "り値です。"
 
+#: src/04_language_reference/05_statement/07_let.md:3
+msgid ""
+"`let` statement represents a name bound to a value. It can be used in "
+"`always_ff`, `always_comb` and function declaration."
+msgstr ""
+"`let` 文はある名前に値を束縛します。これは `always_ff` 、 `always_comb` および関数宣言の中で使うことができます。"
+
+#: src/04_language_reference/05_statement/07_let.md:6
+msgid "`let` statement can be placed anywhere in block."
+msgstr "`let` 文はブロック中のどこにでも置くことができます。"
+
 #: src/04_language_reference/06_declaration.md:3
 msgid "In this chapter, we'll discuss about declaration."
 msgstr "この章では宣言について説明します。"
@@ -1957,8 +1978,10 @@ msgstr ""
 "を抑制します。"
 
 #: src/04_language_reference/06_declaration/01_variable.md:9
-msgid "Variable declaration with assignment can be used too."
-msgstr "変数宣言と同時に代入することもできます。"
+msgid ""
+"If you want to bind a value to a name at the declaration, `let` can be used "
+"instead of `var`."
+msgstr "宣言時に名前に値を束縛する場合は `var` の代わりに `let` を使います。"
 
 #: src/04_language_reference/06_declaration/02_parameter.md:3
 msgid ""
@@ -4070,7 +4093,8 @@ msgid ""
 "The official GitHub action to download a prebuilt binary of Veryl is "
 "provided."
 msgstr ""
-"ビルド済みのVerylバイナリをダウンロードするための公式GitHub actionが提供されています。"
+"ビルド済みのVerylバイナリをダウンロードするための公式GitHub actionが提供され"
+"ています。"
 
 #: src/05_development_environment/10_github_action.md:5
 msgid ""
@@ -4423,6 +4447,9 @@ msgid ""
 "InTerm                : /(?-u:\\b)in(?-u:"
 "\\b)/                                                                  : "
 "Token;\n"
+"LetTerm               : /(?-u:\\b)let(?-u:"
+"\\b)/                                                                 : "
+"Token;\n"
 "LocalparamTerm        : /(?-u:\\b)localparam(?-u:"
 "\\b)/                                                          : Token;\n"
 "LogicTerm             : /(?-u:\\b)logic(?-u:"
@@ -4578,6 +4605,7 @@ msgid ""
 "InstToken      : InstTerm      : Token Comments;\n"
 "InterfaceToken : InterfaceTerm : Token Comments;\n"
 "InToken        : InTerm        : Token Comments;\n"
+"LetToken       : LetTerm       : Token Comments;\n"
 "LocalparamToken: LocalparamTerm: Token Comments;\n"
 "LogicToken     : LogicTerm     : Token Comments;\n"
 "LsbToken       : LsbTerm       : Token Comments;\n"
@@ -4698,6 +4726,7 @@ msgid ""
 "Inside    : InsideToken    : VerylToken;\n"
 "Inst      : InstToken      : VerylToken;\n"
 "Interface : InterfaceToken : VerylToken;\n"
+"Let       : LetToken       : VerylToken;\n"
 "Localparam: LocalparamToken: VerylToken;\n"
 "Logic     : LogicToken     : VerylToken;\n"
 "Lsb       : LsbToken       : VerylToken;\n"
@@ -4874,13 +4903,16 @@ msgid ""
 "// "
 "----------------------------------------------------------------------------\n"
 "\n"
-"Statement: IdentifierStatement\n"
+"Statement: LetStatement\n"
+"         | IdentifierStatement\n"
 "         | IfStatement\n"
 "         | IfResetStatement\n"
 "         | ReturnStatement\n"
 "         | ForStatement\n"
 "         | CaseStatement\n"
 "         ;\n"
+"\n"
+"LetStatement: Let Identifier Colon ArrayType Equ Expression Semicolon;\n"
 "\n"
 "IdentifierStatement: ExpressionIdentifier ( FunctionCall | Assignment ) "
 "Semicolon;\n"
@@ -4924,8 +4956,9 @@ msgid ""
 "// "
 "----------------------------------------------------------------------------\n"
 "\n"
-"VarDeclaration: Var Identifier Colon ArrayType [ Equ Expression ] "
-"Semicolon;\n"
+"LetDeclaration: Let Identifier Colon ArrayType Equ Expression Semicolon;\n"
+"\n"
+"VarDeclaration: Var Identifier Colon ArrayType Semicolon;\n"
 "\n"
 "LocalparamDeclaration: Localparam Identifier Colon ( ArrayType Equ "
 "Expression | Type Equ TypeExpression ) Semicolon;\n"
@@ -5088,7 +5121,8 @@ msgid ""
 "\n"
 "ModuleGroup: { Attribute } ( LBrace { ModuleGroup } RBrace | ModuleItem );\n"
 "\n"
-"ModuleItem: VarDeclaration\n"
+"ModuleItem: LetDeclaration \n"
+"          | VarDeclaration\n"
 "          | InstDeclaration\n"
 "          | TypeDefDeclaration\n"
 "          | LocalparamDeclaration\n"
@@ -5130,7 +5164,8 @@ msgid ""
 "InterfaceGroup: { Attribute } ( LBrace { InterfaceGroup } RBrace | "
 "InterfaceItem );\n"
 "\n"
-"InterfaceItem: VarDeclaration\n"
+"InterfaceItem: LetDeclaration\n"
+"             | VarDeclaration\n"
 "             | LocalparamDeclaration\n"
 "             | ModportDeclaration\n"
 "             | InterfaceIfDeclaration\n"
