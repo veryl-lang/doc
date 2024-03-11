@@ -21,8 +21,7 @@ module ModuleA #(
     //   each port connection is `[port_name]:[variable]`
     //   `[port_name]` means `[port_name]:[port_name]`
     inst u_module_b: ModuleB (
-        i_clk,
-        i_rst,
+        i_clk          ,
         i_data: r_data1,
         o_data: r_data2,
     );
@@ -32,11 +31,19 @@ module ModuleA #(
     inst u_module_c: ModuleC #(
         ParamA,
         ParamB: 10,
-    ) (
-        i_clk,
-        i_rst,
-        i_data: r_data1,
-        o_data: r_data2,
-    );
+    ) ();
 }
+
+module ModuleB #(
+    parameter  ParamA: u32 = 10,
+) (
+    i_clk : input  logic        ,
+    i_data: input  logic<ParamA>,
+    o_data: output logic<ParamA>,
+) {}
+
+module ModuleC #(
+    parameter  ParamA: u32 = 10,
+    parameter  ParamB: u32 = 10,
+) () {}
 ```
