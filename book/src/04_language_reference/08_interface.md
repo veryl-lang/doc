@@ -10,8 +10,8 @@ In interface definitions, `modport` can be declared.
 
 ```veryl,playground
 interface InterfaceA #(
-    parameter ParamA: u32 = 0,
-    parameter ParamB: u32 = 0,
+    param ParamA: u32 = 0,
+    param ParamB: u32 = 0,
 ) {
     var a: logic;
     var b: logic;

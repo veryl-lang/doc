@@ -4,7 +4,7 @@ Module is one of top level components in source code.
 Module has overridable parameters, connection ports, and internal logic.
 
 Overridable parameters can be declared in `#()`.
-Each parameter declaration is started by `parameter` keyword.
+Each parameter declaration is started by `param` keyword.
 After the keyword, an identifier, `:`, the type of the parameter, and a default value are placed.
 
 Connection ports can be declared in `()`.
@@ -18,8 +18,8 @@ The available port directions are:
 
 ```veryl,playground
 module ModuleA #(
-    parameter ParamA: u32 = 0,
-    parameter ParamB: u32 = 0,
+    param ParamA: u32 = 0,
+    param ParamB: u32 = 0,
 ) (
     a: input  logic,
     b: input  logic,

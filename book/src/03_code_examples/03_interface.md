@@ -3,10 +3,10 @@
 ```veryl,playground,editable
 // interface definition
 interface InterfaceA #(
-    parameter ParamA: u32 = 1,
-    parameter ParamB: u32 = 1,
+    param ParamA: u32 = 1,
+    param ParamB: u32 = 1,
 ) {
-    localparam ParamC: u32 = 1;
+    local ParamC: u32 = 1;
 
     var a: logic<ParamA>;
     var b: logic<ParamA>;

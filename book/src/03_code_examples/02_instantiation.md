@@ -2,7 +2,7 @@
 
 ```veryl,playground,editable
 module ModuleA #(
-    parameter  ParamA: u32 = 10,
+    param ParamA: u32 = 10,
 ) (
     i_clk : input  logic,
     i_rst : input  logic,
@@ -35,7 +35,7 @@ module ModuleA #(
 }
 
 module ModuleB #(
-    parameter  ParamA: u32 = 10,
+    param ParamA: u32 = 10,
 ) (
     i_clk : input  logic        ,
     i_data: input  logic<ParamA>,
@@ -43,7 +43,7 @@ module ModuleB #(
 ) {}
 
 module ModuleC #(
-    parameter  ParamA: u32 = 10,
-    parameter  ParamB: u32 = 10,
+    param ParamA: u32 = 10,
+    param ParamB: u32 = 10,
 ) () {}
 ```

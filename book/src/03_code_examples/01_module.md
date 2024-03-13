@@ -3,8 +3,8 @@
 ```veryl,playground,editable
 // module definition
 module ModuleA #(
-    parameter  ParamA: u32 = 10,
-    localparam ParamB: u32 = 10, // trailing comma is allowed
+    param ParamA: u32 = 10,
+    local ParamB: u32 = 10, // trailing comma is allowed
 ) (
     i_clk : input  logic,
     i_rst : input  logic,
@@ -12,9 +12,9 @@ module ModuleA #(
     i_data: input  logic<ParamA> [2], // `[]` means unpacked array in SystemVerilog
     o_data: output logic<ParamA>    , // `<>` means packed array in SystemVerilog
 ) {
-    // localparam declaration
-    //   `parameter` is not allowed in module
-    localparam ParamC: u32 = 10;
+    // local parameter declaration
+    //   `param` is not allowed in module
+    local ParamC: u32 = 10;
 
     // variable declaration
     var r_data0: logic<ParamA>;

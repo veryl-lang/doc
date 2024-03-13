@@ -3,8 +3,8 @@
 ```veryl,playground,editable
 // package definition
 package PackageA {
-    localparam ParamA: u32 = 1;
-    localparam ParamB: u32 = 1;
+    local ParamA: u32 = 1;
+    local ParamB: u32 = 1;
 
     function FuncA (
         a: input  logic<ParamA>,

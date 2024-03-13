@@ -7,7 +7,7 @@ Parameter override is `#()`, and port connection is `()`.
 
 ```veryl,playground
 module ModuleA #(
-    parameter paramA: u32 = 1,
+    param paramA: u32 = 1,
 ) {
     var a: logic<10>;
     var b: logic<10>;

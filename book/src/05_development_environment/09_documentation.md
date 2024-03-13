@@ -13,8 +13,8 @@ In the documentation comment, [Markdown](https://www.markdownguide.org) syntax c
 /// * list item1
 pub module ModuleA #(
     /// Data width
-    parameter  ParamA: u32 = 1,
-    localparam ParamB: u32 = 1,
+    param ParamA: u32 = 1,
+    local ParamB: u32 = 1,
 ) (
     i_clk  : input  logic        , /// Clock
     i_rst_n: input  logic        , /// Reset
