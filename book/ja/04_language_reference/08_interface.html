@@ -254,8 +254,8 @@
 <p>オーバーライド可能なパラメータについてはモジュールと同じです。</p>
 <p>インターフェース定義では <code>modport</code> を宣言することができます。<code>modport</code> はモジュールのポート宣言で、ポートを束ねて接続するために使うことができます。</p>
 <pre><code class="language-veryl playground">interface InterfaceA #(
-    parameter ParamA: u32 = 0,
-    parameter ParamB: u32 = 0,
+    param ParamA: u32 = 0,
+    param ParamB: u32 = 0,
 ) {
     var a: logic;
     var b: logic;

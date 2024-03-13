@@ -253,7 +253,7 @@
 <p>Module is one of top level components in source code.
 Module has overridable parameters, connection ports, and internal logic.</p>
 <p>Overridable parameters can be declared in <code>#()</code>.
-Each parameter declaration is started by <code>parameter</code> keyword.
+Each parameter declaration is started by <code>param</code> keyword.
 After the keyword, an identifier, <code>:</code>, the type of the parameter, and a default value are placed.</p>
 <p>Connection ports can be declared in <code>()</code>.
 Each port declaration is constructed by an identifier, <code>:</code>, port direction, and the type of the port.
@@ -265,8 +265,8 @@ The available port directions are:</p>
 <li><code>modport</code>: modport of interface</li>
 </ul>
 <pre><code class="language-veryl playground">module ModuleA #(
-    parameter ParamA: u32 = 0,
-    parameter ParamB: u32 = 0,
+    param ParamA: u32 = 0,
+    param ParamB: u32 = 0,
 ) (
     a: input  logic,
     b: input  logic,

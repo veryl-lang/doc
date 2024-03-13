@@ -307,11 +307,11 @@ Multi-dimentional can be specified by <code>&lt;X, Y, Z,,,&gt;</code>.</p>
 </code></pre>
 <h2 id="type-type"><a class="header" href="#type-type">Type type</a></h2>
 <p><code>type</code> is a type which represents type kind.
-Variable of <code>type</code> can be defined as <code>parameter</code> or <code>localparam</code> only.</p>
+Variable of <code>type</code> can be defined as <code>param</code> or <code>local</code> only.</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    localparam a: type = logic;
-    localparam b: type = logic&lt;10&gt;;
-    localparam c: type = u32;
+    local a: type = logic;
+    local b: type = logic&lt;10&gt;;
+    local c: type = u32;
 }
 </code></pre>
 

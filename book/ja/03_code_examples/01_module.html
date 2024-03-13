@@ -252,8 +252,8 @@
                         <h1 id="モジュール"><a class="header" href="#モジュール">モジュール</a></h1>
 <pre><code class="language-veryl playground editable">// モジュール定義
 module ModuleA #(
-    parameter  ParamA: u32 = 10,
-    localparam ParamB: u32 = 10, // 末尾カンマが可能です
+    param ParamA: u32 = 10,
+    local ParamB: u32 = 10, // 末尾カンマが可能です
 ) (
     i_clk : input  logic,
     i_rst : input  logic,
@@ -262,8 +262,8 @@ module ModuleA #(
     o_data: output logic&lt;ParamA&gt;    , // `&lt;&gt;` は SystemVerilog のパック配列です
 ) {
     // ローカルパラメータ宣言
-    //   モジュール内では `parameter` は使えません
-    localparam ParamC: u32 = 10;
+    //   モジュール内では `param` は使えません
+    local ParamC: u32 = 10;
 
     // 変数宣言
     var r_data0: logic&lt;ParamA&gt;;

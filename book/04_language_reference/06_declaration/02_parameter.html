@@ -251,12 +251,12 @@
                     <main>
                         <h1 id="parameter"><a class="header" href="#parameter">Parameter</a></h1>
 <p>Parameter can be declarated as the same as variable.
-<code>parameter</code> keyword can be used at module header, it can be overridden at instantiation.
-<code>localparam</code> keyword can be used in module, it can’t be overridden.</p>
+<code>param</code> keyword can be used at module header, it can be overridden at instantiation.
+<code>local</code> keyword can be used in module, it can’t be overridden.</p>
 <pre><code class="language-veryl playground">module ModuleA #(
-    parameter ParamA: u32 = 1,
+    param ParamA: u32 = 1,
 ) {
-    localparam ParamB: u32 = 1;
+    local ParamB: u32 = 1;
 }
 </code></pre>
 

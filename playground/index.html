@@ -33,17 +33,17 @@
 // module declaration
 module ModuleA #(
     // module parameter
-    parameter  a : u32 = 1,
-    localparam aa: u32 = 1,
+    param a : u32 = 1,
+    local aa: u32 = 1,
 ) (
     // module port
     b  : input  logic<10>,
     bb : output logic<10>,
     bbb: inout  logic<10>,
 ) {
-    // localparam declaration
-    localparam c : u32 = 1;
-    localparam cc: u64 = 1;
+    // local parameter declaration
+    local c : u32 = 1;
+    local cc: u64 = 1;
 
     // variable declaration
     var _d  : logic        ;

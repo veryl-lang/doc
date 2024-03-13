@@ -256,8 +256,8 @@ Interface has overridable parameters, and interface definitions.</p>
 <p>In interface definitions, <code>modport</code> can be declared.
 <code>modport</code> can be used as bundled port connection at the port declaration of module.</p>
 <pre><code class="language-veryl playground">interface InterfaceA #(
-    parameter ParamA: u32 = 0,
-    parameter ParamB: u32 = 0,
+    param ParamA: u32 = 0,
+    param ParamB: u32 = 0,
 ) {
     var a: logic;
     var b: logic;

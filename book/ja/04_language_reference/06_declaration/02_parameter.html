@@ -250,11 +250,11 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="パラメータ"><a class="header" href="#パラメータ">パラメータ</a></h1>
-<p>パラメータは変数と同時に宣言できます。<code>parameter</code> キーワードはモジュールヘッダで使用することができ、インスタンス時に上書きできます。<code>localparam</code> キーワードはモジュール内で使用することができ、上書きできません。</p>
+<p>パラメータは変数と同時に宣言できます。<code>param</code> キーワードはモジュールヘッダで使用することができ、インスタンス時に上書きできます。<code>local</code> キーワードはモジュール内で使用することができ、上書きできません。</p>
 <pre><code class="language-veryl playground">module ModuleA #(
-    parameter ParamA: u32 = 1,
+    param ParamA: u32 = 1,
 ) {
-    localparam ParamB: u32 = 1;
+    local ParamB: u32 = 1;
 }
 </code></pre>
 

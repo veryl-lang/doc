@@ -258,8 +258,8 @@
 /// * リスト要素1
 pub module ModuleA #(
     /// データ幅
-    parameter  ParamA: u32 = 1,
-    localparam ParamB: u32 = 1,
+    param ParamA: u32 = 1,
+    local ParamB: u32 = 1,
 ) (
     i_clk  : input  logic        , /// クロック
     i_rst_n: input  logic        , /// リセット

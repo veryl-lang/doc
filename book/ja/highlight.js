@@ -303,7 +303,7 @@ e["after:highlightBlock"](Object.assign({block:n.el},n))})})(e),s.push(e)}
 anyNumberOfTimes:u};for(const n in R)"object"==typeof R[n]&&e.exports(R[n])
 ;return Object.assign(n,R),n})({}),te=Object.freeze({__proto__:null,
 grmr_veryl:e=>({name:"Veryl",aliases:["veryl"],case_insensitive:!1,keywords:{
-keyword:"module interface function modport package enum struct parameter localparam posedge negedge async_high async_low sync_high sync_low always_ff always_comb assign return as var inst import export logic bit tri signed u32 u64 i32 i64 f32 f64 input output inout ref if if_reset else for in case for in step repeat initial final inside outside default pub let",
+keyword:"module interface function modport package enum struct param local posedge negedge async_high async_low sync_high sync_low always_ff always_comb assign return as var inst import export logic bit tri signed u32 u64 i32 i64 f32 f64 input output inout ref if if_reset else for in case for in step repeat initial final inside outside default pub let",
 literal:""},
 contains:[e.QUOTE_STRING_MODE,e.C_BLOCK_COMMENT_MODE,e.C_LINE_COMMENT_MODE,{
 scope:"number",contains:[e.BACKSLASH_ESCAPE],variants:[{

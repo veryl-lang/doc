@@ -380,8 +380,8 @@ endmodule
 <div style="break-before: page; page-break-before: always;"></div><h1 id="モジュール"><a class="header" href="#モジュール">モジュール</a></h1>
 <pre><code class="language-veryl playground editable">// モジュール定義
 module ModuleA #(
-    parameter  ParamA: u32 = 10,
-    localparam ParamB: u32 = 10, // 末尾カンマが可能です
+    param ParamA: u32 = 10,
+    local ParamB: u32 = 10, // 末尾カンマが可能です
 ) (
     i_clk : input  logic,
     i_rst : input  logic,
@@ -390,8 +390,8 @@ module ModuleA #(
     o_data: output logic&lt;ParamA&gt;    , // `&lt;&gt;` は SystemVerilog のパック配列です
 ) {
     // ローカルパラメータ宣言
-    //   モジュール内では `parameter` は使えません
-    localparam ParamC: u32 = 10;
+    //   モジュール内では `param` は使えません
+    local ParamC: u32 = 10;
 
     // 変数宣言
     var r_data0: logic&lt;ParamA&gt;;
@@ -425,7 +425,7 @@ module ModuleA #(
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="インスタンス"><a class="header" href="#インスタンス">インスタンス</a></h1>
 <pre><code class="language-veryl playground editable">module ModuleA #(
-    parameter  ParamA: u32 = 10,
+    param ParamA: u32 = 10,
 ) (
     i_clk : input  logic,
     i_rst : input  logic,
@@ -466,10 +466,10 @@ module ModuleA #(
 <div style="break-before: page; page-break-before: always;"></div><h1 id="インターフェース"><a class="header" href="#インターフェース">インターフェース</a></h1>
 <pre><code class="language-veryl playground editable">// インターフェース定義
 interface InterfaceA #(
-    parameter ParamA: u32 = 1,
-    parameter ParamB: u32 = 1,
+    param ParamA: u32 = 1,
+    param ParamB: u32 = 1,
 ) {
-    localparam ParamC: u32 = 1;
+    local ParamC: u32 = 1;
 
     var a: logic&lt;ParamA&gt;;
     var b: logic&lt;ParamA&gt;;
@@ -503,8 +503,8 @@ module ModuleA (
 <div style="break-before: page; page-break-before: always;"></div><h1 id="パッケージ"><a class="header" href="#パッケージ">パッケージ</a></h1>
 <pre><code class="language-veryl playground editable">// パッケージ定義
 package PackageA {
-    localparam ParamA: u32 = 1;
-    localparam ParamB: u32 = 1;
+    local ParamA: u32 = 1;
+    local ParamB: u32 = 1;
 
     function FuncA (
         a: input  logic&lt;ParamA&gt;,
@@ -665,19 +665,19 @@ a = 1 || 1;
 <h2 id="幅なし整数"><a class="header" href="#幅なし整数">幅なし整数</a></h2>
 <p>ビット幅指定は省略することができます。省略された場合、トランスパイルされたコードでは適切なビット幅が付与されます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    localparam a0: u64 = 'b0101;
-    localparam a1: u64 = 'o01234567;
-    localparam a2: u64 = 'd0123456789;
-    localparam a3: u64 = 'h0123456789fffff;
+    local a0: u64 = 'b0101;
+    local a1: u64 = 'o01234567;
+    local a2: u64 = 'd0123456789;
+    local a3: u64 = 'h0123456789fffff;
 }
 </code></pre>
 <h2 id="指定ビットのセット"><a class="header" href="#指定ビットのセット">指定ビットのセット</a></h2>
 <p>“全ビットのセット” にビット幅指定を付与することもできます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    localparam a0: u64 = 1'0;
-    localparam a1: u64 = 2'1;
-    localparam a2: u64 = 3'x;
-    localparam a3: u64 = 4'z;
+    local a0: u64 = 1'0;
+    local a1: u64 = 2'1;
+    local a2: u64 = 3'x;
+    local a3: u64 = 4'z;
 }
 </code></pre>
 <h2 id="浮動小数点数"><a class="header" href="#浮動小数点数">浮動小数点数</a></h2>
@@ -744,11 +744,11 @@ a = 1 || 1;
 }
 </code></pre>
 <h2 id="type型"><a class="header" href="#type型">Type型</a></h2>
-<p><code>type</code> は型の種類を表す型です。<code>type</code> 型の変数は <code>parameter</code> か <code>localparam</code> としてのみ定義可能です。</p>
+<p><code>type</code> は型の種類を表す型です。<code>type</code> 型の変数は <code>param</code> か <code>local</code> としてのみ定義可能です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    localparam a: type = logic;
-    localparam b: type = logic&lt;10&gt;;
-    localparam c: type = u32;
+    local a: type = logic;
+    local b: type = logic&lt;10&gt;;
+    local c: type = u32;
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ユーザ定義型"><a class="header" href="#ユーザ定義型">ユーザ定義型</a></h1>
@@ -1091,11 +1091,11 @@ a = 1 || 1;
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="パラメータ"><a class="header" href="#パラメータ">パラメータ</a></h1>
-<p>パラメータは変数と同時に宣言できます。<code>parameter</code> キーワードはモジュールヘッダで使用することができ、インスタンス時に上書きできます。<code>localparam</code> キーワードはモジュール内で使用することができ、上書きできません。</p>
+<p>パラメータは変数と同時に宣言できます。<code>param</code> キーワードはモジュールヘッダで使用することができ、インスタンス時に上書きできます。<code>local</code> キーワードはモジュール内で使用することができ、上書きできません。</p>
 <pre><code class="language-veryl playground">module ModuleA #(
-    parameter ParamA: u32 = 1,
+    param ParamA: u32 = 1,
 ) {
-    localparam ParamB: u32 = 1;
+    local ParamB: u32 = 1;
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="レジスタ"><a class="header" href="#レジスタ">レジスタ</a></h1>
@@ -1206,7 +1206,7 @@ a = 1 || 1;
 <div style="break-before: page; page-break-before: always;"></div><h1 id="インスタンス-1"><a class="header" href="#インスタンス-1">インスタンス</a></h1>
 <p><code>inst</code> キーワードはモジュールやインターフェースのインスタンス化を表します。インスタンスの名前は <code>inst</code> の後に、インスタンスの型は <code>:</code> の後に書きます。<code>#()</code> でパラメータオーバーライドを、<code>()</code> でポート接続を表します。</p>
 <pre><code class="language-veryl playground">module ModuleA #(
-    parameter paramA: u32 = 1,
+    param paramA: u32 = 1,
 ) {
     var a: logic&lt;10&gt;;
     var b: logic&lt;10&gt;;
@@ -1234,7 +1234,7 @@ a = 1 || 1;
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="モジュール-1"><a class="header" href="#モジュール-1">モジュール</a></h1>
 <p>モジュールはソースコードの最上位コンポーネントの1つです。モジュールはオーバーライド可能なパラメータ、接続ポート、内部ロジックを持ちます。</p>
-<p>オーバーライド可能なパラメータは <code>#()</code> 内で宣言できます。それぞれのパラメータ宣言は <code>parameter</code> キーワードで始まり、識別子、<code>:</code>、パラメータの型、デフォルト値で構成されます。</p>
+<p>オーバーライド可能なパラメータは <code>#()</code> 内で宣言できます。それぞれのパラメータ宣言は <code>param</code> キーワードで始まり、識別子、<code>:</code>、パラメータの型、デフォルト値で構成されます。</p>
 <p>接続ポートは <code>()</code> 内で宣言できます。それぞれのポート宣言は識別子、<code>:</code>、ポートの方向、ポートの型で構成されます。利用可能なポート方向は以下の通りです。</p>
 <ul>
 <li><code>input</code>：入力ポート</li>
@@ -1243,8 +1243,8 @@ a = 1 || 1;
 <li><code>modport</code>：インターフェースのmodport</li>
 </ul>
 <pre><code class="language-veryl playground">module ModuleA #(
-    parameter ParamA: u32 = 0,
-    parameter ParamB: u32 = 0,
+    param ParamA: u32 = 0,
+    param ParamB: u32 = 0,
 ) (
     a: input  logic,
     b: input  logic,
@@ -1265,8 +1265,8 @@ a = 1 || 1;
 <p>オーバーライド可能なパラメータについてはモジュールと同じです。</p>
 <p>インターフェース定義では <code>modport</code> を宣言することができます。<code>modport</code> はモジュールのポート宣言で、ポートを束ねて接続するために使うことができます。</p>
 <pre><code class="language-veryl playground">interface InterfaceA #(
-    parameter ParamA: u32 = 0,
-    parameter ParamB: u32 = 0,
+    param ParamA: u32 = 0,
+    param ParamB: u32 = 0,
 ) {
     var a: logic;
     var b: logic;
@@ -1286,7 +1286,7 @@ a = 1 || 1;
 <p>パッケージはソースコードの最上位コンポーネントの1つです。パッケージはパラメータや関数などいくつかの宣言をまとめることができます。</p>
 <p>パッケージ内の要素にアクセスするには、<code>::</code> 記号を使って <code>PackageA::ParamA</code> のようにします。</p>
 <pre><code class="language-veryl playground">package PackageA {
-    localparam ParamA: u32 = 0;
+    local ParamA: u32 = 0;
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="systemverilogとの相互運用"><a class="header" href="#systemverilogとの相互運用">SystemVerilogとの相互運用</a></h1>
@@ -1728,8 +1728,8 @@ implicit_parameter_types = ["string"]
 /// * リスト要素1
 pub module ModuleA #(
     /// データ幅
-    parameter  ParamA: u32 = 1,
-    localparam ParamB: u32 = 1,
+    param ParamA: u32 = 1,
+    local ParamB: u32 = 1,
 ) (
     i_clk  : input  logic        , /// クロック
     i_rst_n: input  logic        , /// リセット
@@ -1869,7 +1869,7 @@ InstTerm              : /(?-u:\b)inst(?-u:\b)/                                  
 InterfaceTerm         : /(?-u:\b)interface(?-u:\b)/                                                           : Token;
 InTerm                : /(?-u:\b)in(?-u:\b)/                                                                  : Token;
 LetTerm               : /(?-u:\b)let(?-u:\b)/                                                                 : Token;
-LocalparamTerm        : /(?-u:\b)localparam(?-u:\b)/                                                          : Token;
+LocalTerm             : /(?-u:\b)local(?-u:\b)/                                                               : Token;
 LogicTerm             : /(?-u:\b)logic(?-u:\b)/                                                               : Token;
 LsbTerm               : /(?-u:\b)lsb(?-u:\b)/                                                                 : Token;
 ModportTerm           : /(?-u:\b)modport(?-u:\b)/                                                             : Token;
@@ -1879,7 +1879,7 @@ NegedgeTerm           : /(?-u:\b)negedge(?-u:\b)/                               
 OutputTerm            : /(?-u:\b)output(?-u:\b)/                                                              : Token;
 OutsideTerm           : /(?-u:\b)outside(?-u:\b)/                                                             : Token;
 PackageTerm           : /(?-u:\b)package(?-u:\b)/                                                             : Token;
-ParameterTerm         : /(?-u:\b)parameter(?-u:\b)/                                                           : Token;
+ParamTerm             : /(?-u:\b)param(?-u:\b)/                                                               : Token;
 PosedgeTerm           : /(?-u:\b)posedge(?-u:\b)/                                                             : Token;
 PubTerm               : /(?-u:\b)pub(?-u:\b)/                                                                 : Token;
 RefTerm               : /(?-u:\b)ref(?-u:\b)/                                                                 : Token;
@@ -1982,7 +1982,7 @@ InstToken      : InstTerm      : Token Comments;
 InterfaceToken : InterfaceTerm : Token Comments;
 InToken        : InTerm        : Token Comments;
 LetToken       : LetTerm       : Token Comments;
-LocalparamToken: LocalparamTerm: Token Comments;
+LocalToken     : LocalTerm     : Token Comments;
 LogicToken     : LogicTerm     : Token Comments;
 LsbToken       : LsbTerm       : Token Comments;
 ModportToken   : ModportTerm   : Token Comments;
@@ -1992,7 +1992,7 @@ NegedgeToken   : NegedgeTerm   : Token Comments;
 OutputToken    : OutputTerm    : Token Comments;
 OutsideToken   : OutsideTerm   : Token Comments;
 PackageToken   : PackageTerm   : Token Comments;
-ParameterToken : ParameterTerm : Token Comments;
+ParamToken     : ParamTerm     : Token Comments;
 PosedgeToken   : PosedgeTerm   : Token Comments;
 PubToken       : PubTerm       : Token Comments;
 RefToken       : RefTerm       : Token Comments;
@@ -2100,7 +2100,7 @@ Inside    : InsideToken    : VerylToken;
 Inst      : InstToken      : VerylToken;
 Interface : InterfaceToken : VerylToken;
 Let       : LetToken       : VerylToken;
-Localparam: LocalparamToken: VerylToken;
+Local     : LocalToken     : VerylToken;
 Logic     : LogicToken     : VerylToken;
 Lsb       : LsbToken       : VerylToken;
 Modport   : ModportToken   : VerylToken;
@@ -2110,7 +2110,7 @@ Negedge   : NegedgeToken   : VerylToken;
 Output    : OutputToken    : VerylToken;
 Outside   : OutsideToken   : VerylToken;
 Package   : PackageToken   : VerylToken;
-Parameter : ParameterToken : VerylToken;
+Param     : ParamToken     : VerylToken;
 Posedge   : PosedgeToken   : VerylToken;
 Pub       : PubToken       : VerylToken;
 Ref       : RefToken       : VerylToken;
@@ -2303,7 +2303,7 @@ LetDeclaration: Let Identifier Colon ArrayType Equ Expression Semicolon;
 
 VarDeclaration: Var Identifier Colon ArrayType Semicolon;
 
-LocalparamDeclaration: Localparam Identifier Colon ( ArrayType Equ Expression | Type Equ TypeExpression ) Semicolon;
+LocalDeclaration: Local Identifier Colon ( ArrayType Equ Expression | Type Equ TypeExpression ) Semicolon;
 
 TypeDefDeclaration: Type Identifier Equ ArrayType Semicolon;
 
@@ -2377,7 +2377,7 @@ WithParameterList: WithParameterGroup { Comma WithParameterGroup } [ Comma ];
 
 WithParameterGroup: { Attribute } ( LBrace WithParameterList RBrace | WithParameterItem );
 
-WithParameterItem: ( Parameter | Localparam ) Identifier Colon ( ArrayType Equ Expression | Type Equ TypeExpression );
+WithParameterItem: ( Param | Local ) Identifier Colon ( ArrayType Equ Expression | Type Equ TypeExpression );
 
 // ----------------------------------------------------------------------------
 // PortDeclaration
@@ -2436,7 +2436,7 @@ ModuleItem: LetDeclaration
           | VarDeclaration
           | InstDeclaration
           | TypeDefDeclaration
-          | LocalparamDeclaration
+          | LocalDeclaration
           | AlwaysFfDeclaration
           | AlwaysCombDeclaration
           | AssignDeclaration
@@ -2469,7 +2469,7 @@ InterfaceGroup: { Attribute } ( LBrace { InterfaceGroup } RBrace | InterfaceItem
 
 InterfaceItem: LetDeclaration
              | VarDeclaration
-             | LocalparamDeclaration
+             | LocalDeclaration
              | ModportDeclaration
              | InterfaceIfDeclaration
              | InterfaceForDeclaration
@@ -2491,7 +2491,7 @@ PackageDeclaration: [ Pub ] Package Identifier LBrace { PackageGroup } RBrace;
 PackageGroup: { Attribute } ( LBrace { PackageGroup } RBrace | PackageItem );
 
 PackageItem: VarDeclaration
-           | LocalparamDeclaration
+           | LocalDeclaration
            | TypeDefDeclaration
            | EnumDeclaration
            | StructUnionDeclaration

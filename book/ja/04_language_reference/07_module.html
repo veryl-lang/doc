@@ -251,7 +251,7 @@
                     <main>
                         <h1 id="モジュール"><a class="header" href="#モジュール">モジュール</a></h1>
 <p>モジュールはソースコードの最上位コンポーネントの1つです。モジュールはオーバーライド可能なパラメータ、接続ポート、内部ロジックを持ちます。</p>
-<p>オーバーライド可能なパラメータは <code>#()</code> 内で宣言できます。それぞれのパラメータ宣言は <code>parameter</code> キーワードで始まり、識別子、<code>:</code>、パラメータの型、デフォルト値で構成されます。</p>
+<p>オーバーライド可能なパラメータは <code>#()</code> 内で宣言できます。それぞれのパラメータ宣言は <code>param</code> キーワードで始まり、識別子、<code>:</code>、パラメータの型、デフォルト値で構成されます。</p>
 <p>接続ポートは <code>()</code> 内で宣言できます。それぞれのポート宣言は識別子、<code>:</code>、ポートの方向、ポートの型で構成されます。利用可能なポート方向は以下の通りです。</p>
 <ul>
 <li><code>input</code>：入力ポート</li>
@@ -260,8 +260,8 @@
 <li><code>modport</code>：インターフェースのmodport</li>
 </ul>
 <pre><code class="language-veryl playground">module ModuleA #(
-    parameter ParamA: u32 = 0,
-    parameter ParamB: u32 = 0,
+    param ParamA: u32 = 0,
+    param ParamB: u32 = 0,
 ) (
     a: input  logic,
     b: input  logic,

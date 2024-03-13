@@ -252,7 +252,7 @@
                         <h1 id="インスタンス"><a class="header" href="#インスタンス">インスタンス</a></h1>
 <p><code>inst</code> キーワードはモジュールやインターフェースのインスタンス化を表します。インスタンスの名前は <code>inst</code> の後に、インスタンスの型は <code>:</code> の後に書きます。<code>#()</code> でパラメータオーバーライドを、<code>()</code> でポート接続を表します。</p>
 <pre><code class="language-veryl playground">module ModuleA #(
-    parameter paramA: u32 = 1,
+    param paramA: u32 = 1,
 ) {
     var a: logic&lt;10&gt;;
     var b: logic&lt;10&gt;;

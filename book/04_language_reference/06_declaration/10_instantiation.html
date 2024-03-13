@@ -255,7 +255,7 @@ The name of instance is placed after <code>inst</code> keyword,
 and the type of instance is placed after <code>:</code>.
 Parameter override is <code>#()</code>, and port connection is <code>()</code>.</p>
 <pre><code class="language-veryl playground">module ModuleA #(
-    parameter paramA: u32 = 1,
+    param paramA: u32 = 1,
 ) {
     var a: logic&lt;10&gt;;
     var b: logic&lt;10&gt;;
