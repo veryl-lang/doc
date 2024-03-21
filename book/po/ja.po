@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-03-21T12:43:24+09:00\n"
+"POT-Creation-Date: 2024-03-21T15:09:32+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -2442,26 +2442,34 @@ msgstr ""
 
 #: src/05_development_environment/01_project_configuration.md:17
 msgid ""
+"[`strip_comments`](01_project_configuration.md#the-strip_comments-field) --- "
+"Whether strip comments."
+msgstr ""
+"[`strip_comments`](01_project_configuration.md#the-strip_comments-field) --- "
+"コメントを削除するかどうか"
+
+#: src/05_development_environment/01_project_configuration.md:18
+msgid ""
 "[`[format]`](01_project_configuration.md#the-format-section) --- Format "
 "settings."
 msgstr ""
 "[`[format]`](01_project_configuration.md#the-format-section) --- フォーマット"
 "設定"
 
-#: src/05_development_environment/01_project_configuration.md:18
+#: src/05_development_environment/01_project_configuration.md:19
 msgid ""
 "[`[lint]`](01_project_configuration.md#the-lint-section) --- Lint settings."
 msgstr ""
 "[`[lint]`](01_project_configuration.md#the-lint-section) --- リント設定"
 
-#: src/05_development_environment/01_project_configuration.md:19
+#: src/05_development_environment/01_project_configuration.md:20
 msgid ""
 "[`[publish]`](01_project_configuration.md#the-publish-section) --- Publish "
 "settings."
 msgstr ""
 "[`[publish]`](01_project_configuration.md#the-publish-section) --- 公開設定"
 
-#: src/05_development_environment/01_project_configuration.md:20
+#: src/05_development_environment/01_project_configuration.md:21
 msgid ""
 "[`[dependencies]`](01_project_configuration.md#the-dependencies-section) --- "
 "Library dependencies."
@@ -2469,11 +2477,11 @@ msgstr ""
 "[`[dependencies]`](01_project_configuration.md#the-dependencies-section) --- "
 "ライブラリの依存関係"
 
-#: src/05_development_environment/01_project_configuration.md:22
+#: src/05_development_environment/01_project_configuration.md:23
 msgid "The `[project]` section"
 msgstr "`[project]` セクション"
 
-#: src/05_development_environment/01_project_configuration.md:24
+#: src/05_development_environment/01_project_configuration.md:25
 msgid ""
 "The first section of `Veryl.toml` is `[project]`. The mandatory fields are "
 "`name` and `version`."
@@ -2481,11 +2489,11 @@ msgstr ""
 "`Veryl.toml` の最初のセクションは `[project]` です。`name` と `version` は必"
 "須です。"
 
-#: src/05_development_environment/01_project_configuration.md:27
+#: src/05_development_environment/01_project_configuration.md:28
 msgid "The `name` field"
 msgstr "`name` フィールド"
 
-#: src/05_development_environment/01_project_configuration.md:29
+#: src/05_development_environment/01_project_configuration.md:30
 msgid ""
 "The project name is used as prefix in the generated codes. So the name must "
 "start with alphabet or `_`, and use only alphanumeric charaters or `_`."
@@ -2494,11 +2502,11 @@ msgstr ""
 "ジェクト名はアルファベットか `_` で始まり、英数字と`_` しか使ってはいけませ"
 "ん。"
 
-#: src/05_development_environment/01_project_configuration.md:32
+#: src/05_development_environment/01_project_configuration.md:33
 msgid "The `version` field"
 msgstr "`version` フィールド"
 
-#: src/05_development_environment/01_project_configuration.md:34
+#: src/05_development_environment/01_project_configuration.md:35
 msgid ""
 "The project version should follow [Semantic Versioning](https://semver."
 "org/). The version is constructed by the following three numbers."
@@ -2506,19 +2514,19 @@ msgstr ""
 "プロジェクトのバージョンは [セマンティックバージョニング](https://semver."
 "org/)に従います。バージョンは以下の3つの数字からなります。"
 
-#: src/05_development_environment/01_project_configuration.md:37
+#: src/05_development_environment/01_project_configuration.md:38
 msgid "Major -- increment at incompatible changes"
 msgstr "メジャー -- 互換性のない変更時に上げる"
 
-#: src/05_development_environment/01_project_configuration.md:38
+#: src/05_development_environment/01_project_configuration.md:39
 msgid "Minor -- increment at adding features with backward compatibility"
 msgstr "マイナー -- 互換性のある機能追加時に上げる"
 
-#: src/05_development_environment/01_project_configuration.md:39
+#: src/05_development_environment/01_project_configuration.md:40
 msgid "Patch -- increment at bug fixes with backward compatibility"
 msgstr "バッチ -- 互換性のあるバグ修正時に上げる"
 
-#: src/05_development_environment/01_project_configuration.md:41
+#: src/05_development_environment/01_project_configuration.md:42
 msgid ""
 "```toml\n"
 "[project]\n"
@@ -2530,11 +2538,11 @@ msgstr ""
 "version = \"0.1.0\"\n"
 "```"
 
-#: src/05_development_environment/01_project_configuration.md:46
+#: src/05_development_environment/01_project_configuration.md:47
 msgid "The `authors` field"
 msgstr "`authors` フィールド"
 
-#: src/05_development_environment/01_project_configuration.md:48
+#: src/05_development_environment/01_project_configuration.md:49
 msgid ""
 "The optional `authors` field lists in an array the people or organizations "
 "that are considered the \"authors\" of the project. The format of each "
@@ -2546,7 +2554,7 @@ msgstr ""
 "メールアドレスのみ、名前と括弧で囲んだEメールアドレスといった形式がよく使われ"
 "ます。"
 
-#: src/05_development_environment/01_project_configuration.md:51
+#: src/05_development_environment/01_project_configuration.md:52
 msgid ""
 "```toml\n"
 "[project]\n"
@@ -2560,11 +2568,11 @@ msgstr ""
 "<anonymous@example.com>\"]\n"
 "```"
 
-#: src/05_development_environment/01_project_configuration.md:56
+#: src/05_development_environment/01_project_configuration.md:57
 msgid "The `description` field"
 msgstr "`description` フィールド"
 
-#: src/05_development_environment/01_project_configuration.md:58
+#: src/05_development_environment/01_project_configuration.md:59
 msgid ""
 "The `description` is a short blurb about the project. This should be plane "
 "text (not Markdown)."
@@ -2572,11 +2580,11 @@ msgstr ""
 "`description` はプロジェクトの短い説明です。マークダウンではなくプレーンテキ"
 "スト形式で書きます。"
 
-#: src/05_development_environment/01_project_configuration.md:60
+#: src/05_development_environment/01_project_configuration.md:61
 msgid "The `license` field"
 msgstr "`license` フィールド"
 
-#: src/05_development_environment/01_project_configuration.md:62
+#: src/05_development_environment/01_project_configuration.md:63
 msgid ""
 "The `license` field contains the name of license that the project is "
 "released under. The string should be follow [SPDX 2.3 license expression]"
@@ -2586,7 +2594,7 @@ msgstr ""
 "定します。指定する文字列は[SPDX 2.3 license expression](https://spdx.github."
 "io/spdx-spec/v2.3/SPDX-license-expressions)に従ってください。"
 
-#: src/05_development_environment/01_project_configuration.md:65
+#: src/05_development_environment/01_project_configuration.md:66
 msgid ""
 "```toml\n"
 "[project]\n"
@@ -2598,17 +2606,17 @@ msgstr ""
 "license = \"MIT OR Apache-2.0\"\n"
 "```"
 
-#: src/05_development_environment/01_project_configuration.md:70
+#: src/05_development_environment/01_project_configuration.md:71
 msgid "The `repository` field"
 msgstr "`repository` フィールド"
 
-#: src/05_development_environment/01_project_configuration.md:72
+#: src/05_development_environment/01_project_configuration.md:73
 msgid ""
 "The `repository` field should be a URL to the source repository for the "
 "project."
 msgstr "`repository` フィールドはプロジェクトのソースリポジトリへのURLです。"
 
-#: src/05_development_environment/01_project_configuration.md:74
+#: src/05_development_environment/01_project_configuration.md:75
 msgid ""
 "```toml\n"
 "[project]\n"
@@ -2620,19 +2628,19 @@ msgstr ""
 "repository = \"https://github.com/veryl-lang/veryl\"\n"
 "```"
 
-#: src/05_development_environment/01_project_configuration.md:79
+#: src/05_development_environment/01_project_configuration.md:80
 msgid "The `[build]` section"
 msgstr "`[build]` セクション"
 
-#: src/05_development_environment/01_project_configuration.md:81
+#: src/05_development_environment/01_project_configuration.md:82
 msgid "The `[build]` section contains the configurations of code generation."
 msgstr "`[build]` セクションはコード生成の設定です。"
 
-#: src/05_development_environment/01_project_configuration.md:83
+#: src/05_development_environment/01_project_configuration.md:84
 msgid "The `clock_type` field"
 msgstr "`clock_type` フィールド"
 
-#: src/05_development_environment/01_project_configuration.md:85
+#: src/05_development_environment/01_project_configuration.md:86
 msgid ""
 "The `clock_type` field specifies which clock edge is used to drive flip-"
 "flop. The available types are below:"
@@ -2640,83 +2648,83 @@ msgstr ""
 "`clock_type` フィールドはフリップフロップを駆動するクロックエッジを指定しま"
 "す。"
 
-#: src/05_development_environment/01_project_configuration.md:88
+#: src/05_development_environment/01_project_configuration.md:89
 msgid "`posedge` -- positive edge"
 msgstr "`posedge` -- 立ち上がりエッジ"
 
-#: src/05_development_environment/01_project_configuration.md:89
+#: src/05_development_environment/01_project_configuration.md:90
 msgid "`negedge` -- negetive edge"
 msgstr "`negedge` -- 立ち下がりエッジ"
 
-#: src/05_development_environment/01_project_configuration.md:91
+#: src/05_development_environment/01_project_configuration.md:92
 msgid "The `reset_type` field"
 msgstr "`reset_type` フィールド"
 
-#: src/05_development_environment/01_project_configuration.md:93
+#: src/05_development_environment/01_project_configuration.md:94
 msgid ""
 "The `reset_type` field specifies reset polarity and synchronisity. The "
 "available types are below:"
 msgstr "`reset_type` フィールドはリセットの極性と同期性を指定します。"
 
-#: src/05_development_environment/01_project_configuration.md:96
+#: src/05_development_environment/01_project_configuration.md:97
 msgid "`async_low` -- asynchronous and active low"
 msgstr "`async_low` -- 非同期・負極性"
 
-#: src/05_development_environment/01_project_configuration.md:97
+#: src/05_development_environment/01_project_configuration.md:98
 msgid "`async_high` -- asynchronous and active high"
 msgstr "`async_high` -- 非同期・正極性"
 
-#: src/05_development_environment/01_project_configuration.md:98
+#: src/05_development_environment/01_project_configuration.md:99
 msgid "`sync_low` -- synchronous and active low"
 msgstr "`sync_low` -- 同期・負極性"
 
-#: src/05_development_environment/01_project_configuration.md:99
+#: src/05_development_environment/01_project_configuration.md:100
 msgid "`sync_high` -- synchronous and active high"
 msgstr "`sync_high` -- 同期・正極性"
 
-#: src/05_development_environment/01_project_configuration.md:101
+#: src/05_development_environment/01_project_configuration.md:102
 msgid "The `filelist_type` field"
 msgstr "`filelist_type` フィールド"
 
-#: src/05_development_environment/01_project_configuration.md:103
+#: src/05_development_environment/01_project_configuration.md:104
 msgid ""
 "The `filelist_type` field specifies filelist format. The available types are "
 "below:"
 msgstr "`filelist_type` フィールドはファイルリストのフォーマットを指定します。"
 
-#: src/05_development_environment/01_project_configuration.md:106
+#: src/05_development_environment/01_project_configuration.md:107
 msgid "`absolute` -- plane text filelist including absolute file paths"
 msgstr "`absolute` -- プレーンテキスト形式の絶対パスのリスト"
 
-#: src/05_development_environment/01_project_configuration.md:107
+#: src/05_development_environment/01_project_configuration.md:108
 msgid "`relative` -- plane text filelist including relative file paths"
 msgstr "`relative` -- プレーンテキスト形式の相対パスのリスト"
 
-#: src/05_development_environment/01_project_configuration.md:108
+#: src/05_development_environment/01_project_configuration.md:109
 msgid "`flgen` -- [flgen](https://github.com/pezy-computing/flgen) filelist"
 msgstr ""
 "`flgen` -- [flgen](https://github.com/pezy-computing/flgen) 形式のファイルリ"
 "スト"
 
-#: src/05_development_environment/01_project_configuration.md:110
+#: src/05_development_environment/01_project_configuration.md:111
 msgid "The `target` field"
 msgstr "`target` フィールド"
 
-#: src/05_development_environment/01_project_configuration.md:112
+#: src/05_development_environment/01_project_configuration.md:113
 msgid ""
 "The `target` field specifies where the generated codes will be placed at. "
 "The available types are below:"
 msgstr "`target` フィールドはコードの生成先を指定します。"
 
-#: src/05_development_environment/01_project_configuration.md:115
+#: src/05_development_environment/01_project_configuration.md:116
 msgid "`source` -- as the same directory as the source code"
 msgstr "`source` -- ソースコードと同じディレクトリ"
 
-#: src/05_development_environment/01_project_configuration.md:116
+#: src/05_development_environment/01_project_configuration.md:117
 msgid "`directory` -- specified directory"
 msgstr "`directory` -- 特定のディレクトリ"
 
-#: src/05_development_environment/01_project_configuration.md:118
+#: src/05_development_environment/01_project_configuration.md:119
 msgid ""
 "If you want to use `directory`, you can specify the target directory by "
 "`path` key."
@@ -2724,7 +2732,7 @@ msgstr ""
 "`directory` を指定する場合は、ターゲットディレクトリを `path` キーで指定しま"
 "す。"
 
-#: src/05_development_environment/01_project_configuration.md:120
+#: src/05_development_environment/01_project_configuration.md:121
 msgid ""
 "```toml\n"
 "[build]\n"
@@ -2736,11 +2744,11 @@ msgstr ""
 "target = {type = \"directory\", path = \"[dst dir]\"}\n"
 "```"
 
-#: src/05_development_environment/01_project_configuration.md:125
+#: src/05_development_environment/01_project_configuration.md:126
 msgid "The `implicit_parameter_types` field"
 msgstr "`implicit_parameter_types` フィールド"
 
-#: src/05_development_environment/01_project_configuration.md:127
+#: src/05_development_environment/01_project_configuration.md:128
 msgid ""
 "The `implicit_parameter_types` field lists the types which will be elided in "
 "`parameter` declaration of the generated codes. This is because some EDA "
@@ -2752,7 +2760,7 @@ msgstr ""
 "を `parameter` 宣言で使うことができないためです。例えば `string` を指定する場"
 "合は以下のようにします。"
 
-#: src/05_development_environment/01_project_configuration.md:131
+#: src/05_development_environment/01_project_configuration.md:132
 #: src/05_development_environment/08_compatibility.md:18
 msgid ""
 "```toml\n"
@@ -2765,23 +2773,36 @@ msgstr ""
 "implicit_parameter_types = [\"string\"]\n"
 "```"
 
-#: src/05_development_environment/01_project_configuration.md:136
+#: src/05_development_environment/01_project_configuration.md:137
 msgid "The `omit_project_prefix` field"
 msgstr "`omit_project_prefix` フィールド"
 
-#: src/05_development_environment/01_project_configuration.md:138
+#: src/05_development_environment/01_project_configuration.md:139
 msgid ""
 "If `omit_project_prefix` is set to `true`, the project prefix of module/"
 "interface/package name will be omitted. This is `false` by default."
 msgstr ""
-"`omit_project_prefix` が `true` のとき、モジュール・インターフェース・パッケージ名のプロジェクトプレフィックスは省略されます。"
-"この値はデフォルトで `false` です。"
+"`omit_project_prefix` が `true` のとき、モジュール・インターフェース・パッ"
+"ケージ名のプロジェクトプレフィックスは省略されます。この値はデフォルトで "
+"`false` です。"
 
-#: src/05_development_environment/01_project_configuration.md:146
+#: src/05_development_environment/01_project_configuration.md:147
+msgid "The `strip_comments` field"
+msgstr "`strip_comments` フィールド"
+
+#: src/05_development_environment/01_project_configuration.md:149
+msgid ""
+"If `strip_comments` is set to `true`, all comments will be stripped. This is "
+"`false` by default."
+msgstr ""
+"`strip_comments` が `true` のとき、コメント出力は省略されます。この値はデフォルトで "
+"`false` です。"
+
+#: src/05_development_environment/01_project_configuration.md:157
 msgid "The `[format]` section"
 msgstr "`[format]` セクション"
 
-#: src/05_development_environment/01_project_configuration.md:148
+#: src/05_development_environment/01_project_configuration.md:159
 msgid ""
 "The `[format]` section contains the configurations of code formatter. "
 "Available configurations is [here](./05_formatter.md)."
@@ -2789,22 +2810,22 @@ msgstr ""
 "`[format]` セクションはコードフォーマッターの設定です。詳細は[こちら]"
 "(./05_formatter.md)。"
 
-#: src/05_development_environment/01_project_configuration.md:151
+#: src/05_development_environment/01_project_configuration.md:162
 msgid "The `[lint]` section"
 msgstr "`[lint]` セクション"
 
-#: src/05_development_environment/01_project_configuration.md:153
+#: src/05_development_environment/01_project_configuration.md:164
 msgid ""
 "The `[lint]` section contains the configurations of linter. Available "
 "configurations is [here](./06_linter.md)."
 msgstr ""
 "`[lint]` セクションはリンタの設定です。詳細は[こちら](./06_linter.md)。"
 
-#: src/05_development_environment/01_project_configuration.md:156
+#: src/05_development_environment/01_project_configuration.md:167
 msgid "The `[publish]` section"
 msgstr "`[publish]` セクション"
 
-#: src/05_development_environment/01_project_configuration.md:158
+#: src/05_development_environment/01_project_configuration.md:169
 msgid ""
 "The `[publish]` section contains the configurations of publishing. Available "
 "configurations is [here](./03_publish_project.md)."
@@ -2812,11 +2833,11 @@ msgstr ""
 "`[publish]` セクションはプロジェクト公開の設定です。詳細は[こちら]"
 "(./03_publish_project.md)。"
 
-#: src/05_development_environment/01_project_configuration.md:161
+#: src/05_development_environment/01_project_configuration.md:172
 msgid "The `[dependencies]` section"
 msgstr "`[dependencies]` セクション"
 
-#: src/05_development_environment/01_project_configuration.md:163
+#: src/05_development_environment/01_project_configuration.md:174
 msgid ""
 "The `[dependencies]` section contains library dependencies. Available "
 "configurations is [here](./02_dependencies.md)."
