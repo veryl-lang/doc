@@ -14,6 +14,7 @@
   * [`target`](01_project_configuration.md#the-target-field) --- The way of output.
   * [`implicit_parameter_types`](01_project_configuration.md#the-implicit_parameter_types-field) --- Whether implicit parameter type is enabled.
   * [`omit_project_prefix`](01_project_configuration.md#the-omit_project_prefix-field) --- Whether omit project prefix.
+  * [`strip_comments`](01_project_configuration.md#the-strip_comments-field) --- Whether strip comments.
 * [`[format]`](01_project_configuration.md#the-format-section) --- Format settings.
 * [`[lint]`](01_project_configuration.md#the-lint-section) --- Lint settings.
 * [`[publish]`](01_project_configuration.md#the-publish-section) --- Publish settings.
@@ -141,6 +142,16 @@ This is `false` by default.
 ```toml
 [build]
 omit_project_prefix = true
+```
+
+### The `strip_comments` field {#the-strip_comments-field}
+
+If `strip_comments` is set to `true`, all comments will be stripped.
+This is `false` by default.
+
+```toml
+[build]
+strip_comments = true
 ```
 
 ## The `[format]` section {#the-format-section}
