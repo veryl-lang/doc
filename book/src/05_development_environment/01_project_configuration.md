@@ -13,6 +13,7 @@
   * [`filelist_type`](01_project_configuration.md#the-filelist_type-field) --- The type of filelist.
   * [`target`](01_project_configuration.md#the-target-field) --- The way of output.
   * [`implicit_parameter_types`](01_project_configuration.md#the-implicit_parameter_types-field) --- Whether implicit parameter type is enabled.
+  * [`omit_project_prefix`](01_project_configuration.md#the-omit_project_prefix-field) --- Whether omit project prefix.
 * [`[format]`](01_project_configuration.md#the-format-section) --- Format settings.
 * [`[lint]`](01_project_configuration.md#the-lint-section) --- Lint settings.
 * [`[publish]`](01_project_configuration.md#the-publish-section) --- Publish settings.
@@ -130,6 +131,16 @@ If you want to elide `string`, you can specify like below:
 ```toml
 [build]
 implicit_parameter_types = ["string"]
+```
+
+### The `omit_project_prefix` field {#the-omit_project_prefix-field}
+
+If `omit_project_prefix` is set to `true`, the project prefix of module/interface/package name will be omitted.
+This is `false` by default.
+
+```toml
+[build]
+omit_project_prefix = true
 ```
 
 ## The `[format]` section {#the-format-section}
