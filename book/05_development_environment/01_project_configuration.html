@@ -268,6 +268,7 @@
 <li><a href="01_project_configuration.html#the-filelist_type-field"><code>filelist_type</code></a> — The type of filelist.</li>
 <li><a href="01_project_configuration.html#the-target-field"><code>target</code></a> — The way of output.</li>
 <li><a href="01_project_configuration.html#the-implicit_parameter_types-field"><code>implicit_parameter_types</code></a> — Whether implicit parameter type is enabled.</li>
+<li><a href="01_project_configuration.html#the-omit_project_prefix-field"><code>omit_project_prefix</code></a> — Whether omit project prefix.</li>
 </ul>
 </li>
 <li><a href="01_project_configuration.html#the-format-section"><code>[format]</code></a> — Format settings.</li>
@@ -354,6 +355,12 @@ This is because some EDA tools don’t support <code>parameter</code> declaratio
 If you want to elide <code>string</code>, you can specify like below:</p>
 <pre><code class="language-toml">[build]
 implicit_parameter_types = ["string"]
+</code></pre>
+<h3 id="the-omit_project_prefix-field"><a class="header" href="#the-omit_project_prefix-field">The <code>omit_project_prefix</code> field</a></h3>
+<p>If <code>omit_project_prefix</code> is set to <code>true</code>, the project prefix of module/interface/package name will be omitted.
+This is <code>false</code> by default.</p>
+<pre><code class="language-toml">[build]
+omit_project_prefix = true
 </code></pre>
 <h2 id="the-format-section"><a class="header" href="#the-format-section">The <code>[format]</code> section</a></h2>
 <p>The <code>[format]</code> section contains the configurations of code formatter.

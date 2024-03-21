@@ -1331,6 +1331,7 @@ pub package PackageA {
 <li><a href="05_development_environment/01_project_configuration.html#the-filelist_type-field"><code>filelist_type</code></a> — ファイルリストのタイプ</li>
 <li><a href="05_development_environment/01_project_configuration.html#the-target-field"><code>target</code></a> — 出力方法</li>
 <li><a href="05_development_environment/01_project_configuration.html#the-implicit_parameter_types-field"><code>implicit_parameter_types</code></a> — 暗黙のパラメータ型を有効にするかどうか</li>
+<li><a href="05_development_environment/01_project_configuration.html#the-omit_project_prefix-field"><code>omit_project_prefix</code></a> — プロジェクト名のプレフィックスを省略するかどうか</li>
 </ul>
 </li>
 <li><a href="05_development_environment/01_project_configuration.html#the-format-section"><code>[format]</code></a> — フォーマット設定</li>
@@ -1406,6 +1407,11 @@ target = {type = "directory", path = "[dst dir]"}
 <p><code>implicit_parameter_types</code> フィールドは生成コードの <code>parameter</code> 宣言で省略する型をリストアップします。いくつかのEDAツールでは特定の型（例えば <code>string</code>）を <code>parameter</code> 宣言で使うことができないためです。例えば <code>string</code> を指定する場合は以下のようにします。</p>
 <pre><code class="language-toml">[build]
 implicit_parameter_types = ["string"]
+</code></pre>
+<h3 id="the-omit_project_prefix-field"><a class="header" href="#the-omit_project_prefix-field"><code>omit_project_prefix</code> フィールド</a></h3>
+<p><code>omit_project_prefix</code> が <code>true</code> のとき、モジュール・インターフェース・パッケージ名のプロジェクトプレフィックスは省略されます。この値はデフォルトで <code>false</code> です。</p>
+<pre><code class="language-toml">[build]
+omit_project_prefix = true
 </code></pre>
 <h2 id="the-format-section"><a class="header" href="#the-format-section"><code>[format]</code> セクション</a></h2>
 <p><code>[format]</code> セクションはコードフォーマッターの設定です。詳細は<a href="05_development_environment/./05_formatter.html">こちら</a>。</p>
