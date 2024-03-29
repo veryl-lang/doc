@@ -8,7 +8,7 @@ In the documentation comment, [Markdown](https://www.markdownguide.org) syntax c
 
 Waveform description based on [WaveDrom](https://wavedrom.com) is supported too.
 In a `wavedrom` code block, the syntax of WaveDrom can be written.
-Please refer https://wavedrom.com/tutorial.html for the detailed syntax.
+Please refer [Tutorial](https://wavedrom.com/tutorial.html) for the detailed syntax.
 
 ```veryl,playground
 /// The detailed description of ModuleA
