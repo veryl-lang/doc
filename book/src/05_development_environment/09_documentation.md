@@ -6,11 +6,26 @@ All public modules, interfaces and packages will be listed in it. (See [Visibili
 If you want to add a detailed description, you can add documentation comment.
 In the documentation comment, [Markdown](https://www.markdownguide.org) syntax can be used.
 
+Waveform description based on [WaveDrom](https://wavedrom.com) is supported too.
+In a `wavedrom` code block, the syntax of WaveDrom can be written.
+Please refer https://wavedrom.com/tutorial.html for the detailed syntax.
+
 ```veryl,playground
 /// The detailed description of ModuleA
 ///
 /// * list item0
 /// * list item1
+///
+/// ```wavedrom
+/// {signal: [
+///   {name: 'clk', wave: 'p.....|...'},
+///   {name: 'dat', wave: 'x.345x|=.x', data: ['head', 'body', 'tail', 'data']},
+///   {name: 'req', wave: '0.1..0|1.0'},
+///   {},
+///   {name: 'ack', wave: '1.....|01.'}
+///
+/// ]}
+/// ```
 pub module ModuleA #(
     /// Data width
     param ParamA: u32 = 1,
