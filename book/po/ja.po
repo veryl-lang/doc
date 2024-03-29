@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-03-29T16:54:16+09:00\n"
+"POT-Creation-Date: 2024-03-29T19:18:52+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -4070,14 +4070,16 @@ msgstr ""
 "org)記法を使えます。"
 
 #: src/05_development_environment/09_documentation.md:9
+#, fuzzy
 msgid ""
 "Waveform description based on [WaveDrom](https://wavedrom.com) is supported "
 "too. In a `wavedrom` code block, the syntax of WaveDrom can be written. "
-"Please refer https://wavedrom.com/tutorial.html for the detailed syntax."
+"Please refer [Tutorial](https://wavedrom.com/tutorial.html) for the detailed "
+"syntax."
 msgstr ""
 "[WaveDrom](https://wavedrom.com) による波形記述もサポートされています。"
-"`wavedrom` コードブロック内で、WaveDromの構文を記述することができます。"
-"構文の詳細は https://wavedrom.com/tutorial.html を参照してください。"
+"`wavedrom` コードブロック内で、WaveDromの構文を記述することができます。構文の"
+"詳細は [チュートリアル](https://wavedrom.com/tutorial.html) を参照してください。"
 
 #: src/05_development_environment/09_documentation.md:13
 msgid ""
