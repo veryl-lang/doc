@@ -1895,10 +1895,24 @@ implicit_parameter_types = ["string"]
 All public modules, interfaces and packages will be listed in it. (See <a href="05_development_environment/../04_language_reference/11_visibility.html">Visibility</a> )</p>
 <p>If you want to add a detailed description, you can add documentation comment.
 In the documentation comment, <a href="https://www.markdownguide.org">Markdown</a> syntax can be used.</p>
+<p>Waveform description based on <a href="https://wavedrom.com">WaveDrom</a> is supported too.
+In a <code>wavedrom</code> code block, the syntax of WaveDrom can be written.
+Please refer https://wavedrom.com/tutorial.html for the detailed syntax.</p>
 <pre><code class="language-veryl playground">/// The detailed description of ModuleA
 ///
 /// * list item0
 /// * list item1
+///
+/// ```wavedrom
+/// {signal: [
+///   {name: 'clk', wave: 'p.....|...'},
+///   {name: 'dat', wave: 'x.345x|=.x', data: ['head', 'body', 'tail', 'data']},
+///   {name: 'req', wave: '0.1..0|1.0'},
+///   {},
+///   {name: 'ack', wave: '1.....|01.'}
+///
+/// ]}
+/// ```
 pub module ModuleA #(
     /// Data width
     param ParamA: u32 = 1,
@@ -2377,7 +2391,7 @@ ConcatenationItem: Expression [ Repeat Expression ];
 
 IfExpression: If Expression LBrace Expression RBrace { Else If Expression LBrace Expression RBrace } Else LBrace Expression RBrace;
 
-CaseExpression: Case Expression LBrace Expression Colon Expression Comma { Expression Colon Expression Comma } Defaul Colon Expression [ Comma ] RBrace;
+CaseExpression: Case Expression LBrace Expression { Comma Expression } Colon Expression Comma { Expression { Comma Expression } Colon Expression Comma } Defaul Colon Expression [ Comma ] RBrace;
 
 TypeExpression: ScalarType
               | Type LParen Expression RParen
@@ -2456,7 +2470,7 @@ ForStatement: For Identifier Colon ScalarType In Range [ Step AssignmentOperator
 
 CaseStatement: Case Expression LBrace { CaseItem } RBrace;
 
-CaseItem: ( Expression | Defaul ) Colon ( Statement | LBrace { Statement } RBrace );
+CaseItem: ( Expression { Comma Expression } | Defaul ) Colon ( Statement | LBrace { Statement } RBrace );
 
 // ----------------------------------------------------------------------------
 // Attribute
@@ -2607,7 +2621,7 @@ ModuleOptionalNamedBlock: [ Colon Identifier ] LBrace { ModuleGroup } RBrace;
 
 ModuleGroup: { Attribute } ( LBrace { ModuleGroup } RBrace | ModuleItem );
 
-ModuleItem: LetDeclaration 
+ModuleItem: LetDeclaration
           | VarDeclaration
           | InstDeclaration
           | TypeDefDeclaration

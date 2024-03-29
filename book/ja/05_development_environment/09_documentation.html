@@ -252,19 +252,31 @@
                         <h1 id="ドキュメンテーション"><a class="header" href="#ドキュメンテーション">ドキュメンテーション</a></h1>
 <p>プロジェクトのドキュメントは <code>veryl doc</code> コマンドで生成することができます。全てのパブリックなモジュールとインターフェース、パッケージがリストアップされます。（参照 <a href="../04_language_reference/11_visibility.html">可視性</a>）</p>
 <p>詳細な説明を書きたい場合はドキュメンテーションコメントを追加することもできます。ドキュメンテーションコメントでは<a href="https://www.markdownguide.org">マークダウン</a>記法を使えます。</p>
-<pre><code class="language-veryl playground">/// ModuleAの詳細説明
+<p><a href="https://wavedrom.com">WaveDrom</a> による波形記述もサポートされています。<code>wavedrom</code> コードブロック内で、WaveDromの構文を記述することができます。構文の詳細は https://wavedrom.com/tutorial.html を参照してください。</p>
+<pre><code class="language-veryl playground">/// The detailed description of ModuleA
 ///
-/// * リスト要素0
-/// * リスト要素1
+/// * list item0
+/// * list item1
+///
+/// ```wavedrom
+/// {signal: [
+///   {name: 'clk', wave: 'p.....|...'},
+///   {name: 'dat', wave: 'x.345x|=.x', data: ['head', 'body', 'tail', 'data']},
+///   {name: 'req', wave: '0.1..0|1.0'},
+///   {},
+///   {name: 'ack', wave: '1.....|01.'}
+///
+/// ]}
+/// ```
 pub module ModuleA #(
-    /// データ幅
+    /// Data width
     param ParamA: u32 = 1,
     local ParamB: u32 = 1,
 ) (
-    i_clk  : input  logic        , /// クロック
-    i_rst_n: input  logic        , /// リセット
-    i_data : input  logic&lt;ParamA&gt;, /// データ入力
-    o_data : output logic&lt;ParamA&gt;, /// データ出力
+    i_clk  : input  logic        , /// Clock
+    i_rst_n: input  logic        , /// Reset
+    i_data : input  logic&lt;ParamA&gt;, /// Data input
+    o_data : output logic&lt;ParamA&gt;, /// Data output
 ) {}
 </code></pre>
 <p>設定可能な項目は以下の通りです。これは <code>Veryl.toml</code> の <code>[doc]</code> セクションで指定できます。</p>
