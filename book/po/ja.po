@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-03-21T15:09:32+09:00\n"
+"POT-Creation-Date: 2024-03-29T16:54:16+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -2795,8 +2795,8 @@ msgid ""
 "If `strip_comments` is set to `true`, all comments will be stripped. This is "
 "`false` by default."
 msgstr ""
-"`strip_comments` が `true` のとき、コメント出力は省略されます。この値はデフォルトで "
-"`false` です。"
+"`strip_comments` が `true` のとき、コメント出力は省略されます。この値はデフォ"
+"ルトで `false` です。"
 
 #: src/05_development_environment/01_project_configuration.md:157
 msgid "The `[format]` section"
@@ -3093,7 +3093,7 @@ msgstr ""
 #: src/05_development_environment/05_formatter.md:14
 #: src/05_development_environment/06_linter.md:18
 #: src/05_development_environment/07_language_server.md:9
-#: src/05_development_environment/09_documentation.md:34
+#: src/05_development_environment/09_documentation.md:49
 msgid "Configuration"
 msgstr "設定"
 
@@ -3115,13 +3115,13 @@ msgstr ""
 #: src/05_development_environment/05_formatter.md:14
 #: src/05_development_environment/06_linter.md:18
 #: src/05_development_environment/07_language_server.md:9
-#: src/05_development_environment/09_documentation.md:34
+#: src/05_development_environment/09_documentation.md:49
 msgid "Value"
 msgstr "設定値"
 
 #: src/05_development_environment/03_publish_project.md:61
 #: src/05_development_environment/07_language_server.md:9
-#: src/05_development_environment/09_documentation.md:34
+#: src/05_development_environment/09_documentation.md:49
 msgid "Default"
 msgstr "デフォルト"
 
@@ -3129,7 +3129,7 @@ msgstr "デフォルト"
 #: src/05_development_environment/05_formatter.md:14
 #: src/05_development_environment/06_linter.md:18
 #: src/05_development_environment/07_language_server.md:9
-#: src/05_development_environment/09_documentation.md:34
+#: src/05_development_environment/09_documentation.md:49
 msgid "Description"
 msgstr "説明"
 
@@ -3182,7 +3182,7 @@ msgstr "bump_commit_mesasge"
 #: src/05_development_environment/06_linter.md:47
 #: src/05_development_environment/06_linter.md:48
 #: src/05_development_environment/06_linter.md:49
-#: src/05_development_environment/09_documentation.md:36
+#: src/05_development_environment/09_documentation.md:51
 msgid "string"
 msgstr "文字列"
 
@@ -4071,11 +4071,33 @@ msgstr ""
 
 #: src/05_development_environment/09_documentation.md:9
 msgid ""
-"```veryl,playground\n"
+"Waveform description based on [WaveDrom](https://wavedrom.com) is supported "
+"too. In a `wavedrom` code block, the syntax of WaveDrom can be written. "
+"Please refer https://wavedrom.com/tutorial.html for the detailed syntax."
+msgstr ""
+"[WaveDrom](https://wavedrom.com) による波形記述もサポートされています。"
+"`wavedrom` コードブロック内で、WaveDromの構文を記述することができます。"
+"構文の詳細は https://wavedrom.com/tutorial.html を参照してください。"
+
+#: src/05_development_environment/09_documentation.md:13
+msgid ""
+"````veryl,playground\n"
 "/// The detailed description of ModuleA\n"
 "///\n"
 "/// * list item0\n"
 "/// * list item1\n"
+"///\n"
+"/// ```wavedrom\n"
+"/// {signal: [\n"
+"///   {name: 'clk', wave: 'p.....|...'},\n"
+"///   {name: 'dat', wave: 'x.345x|=.x', data: ['head', 'body', 'tail', "
+"'data']},\n"
+"///   {name: 'req', wave: '0.1..0|1.0'},\n"
+"///   {},\n"
+"///   {name: 'ack', wave: '1.....|01.'}\n"
+"///\n"
+"/// ]}\n"
+"/// ```\n"
 "pub module ModuleA #(\n"
 "    /// Data width\n"
 "    param ParamA: u32 = 1,\n"
@@ -4086,13 +4108,25 @@ msgid ""
 "    i_data : input  logic<ParamA>, /// Data input\n"
 "    o_data : output logic<ParamA>, /// Data output\n"
 ") {}\n"
-"```"
+"````"
 msgstr ""
 "```veryl,playground\n"
 "/// ModuleAの詳細説明\n"
 "///\n"
 "/// * リスト要素0\n"
 "/// * リスト要素1\n"
+"///\n"
+"/// ```wavedrom\n"
+"/// {signal: [\n"
+"///   {name: 'clk', wave: 'p.....|...'},\n"
+"///   {name: 'dat', wave: 'x.345x|=.x', data: ['head', 'body', 'tail', "
+"'data']},\n"
+"///   {name: 'req', wave: '0.1..0|1.0'},\n"
+"///   {},\n"
+"///   {name: 'ack', wave: '1.....|01.'}\n"
+"///\n"
+"/// ]}\n"
+"/// ```\n"
 "pub module ModuleA #(\n"
 "    /// データ幅\n"
 "    param ParamA: u32 = 1,\n"
@@ -4105,7 +4139,7 @@ msgstr ""
 ") {}\n"
 "```"
 
-#: src/05_development_environment/09_documentation.md:26
+#: src/05_development_environment/09_documentation.md:41
 msgid ""
 "The available configurations are below. These can be specified in `[doc]` "
 "section of `Veryl.toml`."
@@ -4113,7 +4147,7 @@ msgstr ""
 "設定可能な項目は以下の通りです。これは `Veryl.toml` の `[doc]` セクションで指"
 "定できます。"
 
-#: src/05_development_environment/09_documentation.md:29
+#: src/05_development_environment/09_documentation.md:44
 msgid ""
 "```toml\n"
 "[doc]\n"
@@ -4125,15 +4159,15 @@ msgstr ""
 "path = \"document\"\n"
 "```"
 
-#: src/05_development_environment/09_documentation.md:36
+#: src/05_development_environment/09_documentation.md:51
 msgid "path"
 msgstr "path"
 
-#: src/05_development_environment/09_documentation.md:36
+#: src/05_development_environment/09_documentation.md:51
 msgid "\"doc\""
 msgstr "\"doc\""
 
-#: src/05_development_environment/09_documentation.md:36
+#: src/05_development_environment/09_documentation.md:51
 msgid "path to output directory"
 msgstr "出力ディレクトリへのパス"
 
@@ -4892,9 +4926,9 @@ msgid ""
 "IfExpression: If Expression LBrace Expression RBrace { Else If Expression "
 "LBrace Expression RBrace } Else LBrace Expression RBrace;\n"
 "\n"
-"CaseExpression: Case Expression LBrace Expression Colon Expression Comma "
-"{ Expression Colon Expression Comma } Defaul Colon Expression [ Comma ] "
-"RBrace;\n"
+"CaseExpression: Case Expression LBrace Expression { Comma Expression } Colon "
+"Expression Comma { Expression { Comma Expression } Colon Expression Comma } "
+"Defaul Colon Expression [ Comma ] RBrace;\n"
 "\n"
 "TypeExpression: ScalarType\n"
 "              | Type LParen Expression RParen\n"
@@ -4983,8 +5017,8 @@ msgid ""
 "\n"
 "CaseStatement: Case Expression LBrace { CaseItem } RBrace;\n"
 "\n"
-"CaseItem: ( Expression | Defaul ) Colon ( Statement | LBrace { Statement } "
-"RBrace );\n"
+"CaseItem: ( Expression { Comma Expression } | Defaul ) Colon ( Statement | "
+"LBrace { Statement } RBrace );\n"
 "\n"
 "// "
 "----------------------------------------------------------------------------\n"
@@ -5172,7 +5206,7 @@ msgid ""
 "\n"
 "ModuleGroup: { Attribute } ( LBrace { ModuleGroup } RBrace | ModuleItem );\n"
 "\n"
-"ModuleItem: LetDeclaration \n"
+"ModuleItem: LetDeclaration\n"
 "          | VarDeclaration\n"
 "          | InstDeclaration\n"
 "          | TypeDefDeclaration\n"
