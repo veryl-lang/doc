@@ -1,0 +1,495 @@
+# Features
+
+In this chapter, we introduce the features of Veryl along with clear examples.
+
+* [Real-time diagnostics](01_features.md#real-time-diagnostics)
+* [Auto formatting](01_features.md#auto-formatting)
+* [Dependency management](01_features.md#dependency-management)
+* [Trailing comma](01_features.md#trailing-comma)
+* [Abstraction of clock and reset](01_features.md#abstraction-of-clock-and-reset)
+* [Documentation comment](01_features.md#documentation-comment)
+* [Compound assignment operator in `always_ff`](01_features.md#compound-assignment-operator-in-always_ff)
+* [Individual namespace of enum variant](01_features.md#individual-namespace-of-enum-variant)
+* [`repeat` of concatenation](01_features.md#repeat-of-concatenation)
+* [`if` / `case` expression](01_features.md#if--case-expression)
+* [Range-based `for` / `inside` / `outside`](01_features.md#range-based-for--inside--outside)
+* [`msb` notation](01_features.md#msb-notation)
+* [`let` statement](01_features.md#let-statement)
+* [Named block](01_features.md#named-block)
+* [Visibility control](01_features.md#visibility-control)
+
+## Real-time diagnostics
+
+Issues such as undefined, unused, or unassigned variables are notified in real-time while editing in the editor.
+In the following example, adding the `_` prefix to variables flagged as unused explicitly indicates their unused status, suppressing warnings.
+
+![diagnostics](./img/diagnostics.gif)
+
+If the video does not play[^1]
+
+## Auto formatting
+
+In addition to the automatic formatting feature integrated with the editor,
+formatting through the command line and formatting checks in CI are also possible.
+
+![format](./img/format.gif)
+
+If the video does not play[^1]
+
+## Dependency management
+
+Veryl includes a built-in dependency management feature,
+allowing for easy incorporation of libraries by simply adding the repository path and version of the library on project settings like below.
+
+```toml
+[dependencies]
+"https://github.com/veryl-lang/sample" = "0.1.0"
+```
+
+## Trailing comma
+
+Trailing comma is a syntax where a comma is placed after the last element in a list.
+It facilitates the addition and removal of elements and reduces unnecessary differences in version control systems.
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+module ModuleA (
+    input  a,
+    input  b,
+    output o
+);
+endmodule
+```
+
+</td>
+<td>
+
+```veryl
+module ModuleA (
+    a: input logic,
+    b: input logic,
+    o: input logic,
+) {
+}
+```
+ 
+</td>
+</tr>
+</table>
+
+## Abstraction of clock and reset
+
+There is no need to specify the polarity and synchronicity of the clock and reset in the syntax;
+these can be specified during build-time configuration.
+This allows generating code for both ASICs with negative asynchronous reset
+and FPGAs with positive synchronous reset from the same Veryl code.
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+always_ff @ (posedge i_clk or negedge i_rst_n) begin
+    if (!i_rst_n) begin
+    end else begin
+    end
+end
+```
+
+</td>
+<td>
+
+```veryl
+# module ModuleA {
+always_ff (i_clk, i_rst) {
+    if_reset {
+    } else {
+    }
+}
+# }
+```
+ 
+</td>
+</tr>
+</table>
+
+## Documentation comment
+
+Writing module descriptions as documentation comments allows for automatic documentation generation.
+You can use not only plain text but also MarkDown format or waveform descriptions using [WaveDrom](https://wavedrom.com).
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+// Comment
+module ModuleA;
+endmodule
+```
+
+</td>
+<td>
+
+```veryl
+/// Documentation comment written by Markdown
+///
+/// * list
+/// * list
+/// 
+/// ```wavedrom
+/// { signal: [{ name: "Alfa", wave: "01.zx=ud.23.456789" }] }
+/// ```
+module ModuleA {
+}
+```
+ 
+</td>
+</tr>
+</table>
+
+## Compound assignment operator in `always_ff`
+
+There is no dedicated non-blocking assignment operator;
+within `always_ff`, non-blocking assignments are inferred, while within `always_comb`, blocking assignments are inferred.
+Therefore, various compound assignment operators can be used within `always_ff` just like within `always_comb`.
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+always_ff @ (posedge i_clk) begin
+    if (a) begin
+        x <= x + 1;
+    end
+end
+```
+
+</td>
+<td>
+
+```veryl
+# module ModuleA {
+always_ff (i_clk) {
+    if a {
+        x += 1;
+    }
+}
+# }
+```
+ 
+</td>
+</tr>
+</table>
+
+## Individual namespace of enum variant
+
+Variants of an enum are defined within separate namespaces for each enum,
+thus preventing unintended name collisions.
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+typedef enum logic[1:0] {
+    MemberA,
+    MemberB
+} EnumA;
+
+EnumA a;
+assign a = MemberA;
+```
+
+</td>
+<td>
+
+```veryl
+# module ModuleA {
+enum EnumA: logic<2> {
+    MemberA,
+    MemberB
+}
+
+var a: EnumA;
+assign a = EnumA::MemberA;
+# }
+```
+ 
+</td>
+</tr>
+</table>
+
+## `repeat` of concatenation
+
+By adopting the explicit `repeat` syntax as a repetition description in bit concatenation,
+readability improves over complex combinations of `{}`.
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+logic [31:0] a;
+assign a = {{2{X[9:0]}}, {12{Y}}};
+```
+
+</td>
+<td>
+
+```veryl
+# module ModuleA {
+var a: logic<32>;
+assign a = {X[9:0] repeat 2, Y repeat 12};
+# }
+```
+ 
+</td>
+</tr>
+</table>
+
+## `if` / `case` expression
+
+By adopting `if` and `case` expressions instead of the ternary operator,
+readability improves, especially when comparing a large number of items.
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+logic a;
+assign a = X == 0 ? Y0 :
+           X == 1 ? Y1 :
+           X == 2 ? Y2 : 
+                    Y3;
+```
+
+</td>
+<td>
+
+```veryl
+# module ModuleA {
+var a: logic;
+assign a = case X {
+    0      : Y0,
+    1      : Y1,
+    2      : Y2,
+    default: Y3,
+};
+# }
+```
+ 
+</td>
+</tr>
+</table>
+
+## Range-based `for` / `inside` / `outside`
+
+With notation representing closed intervals `..=` and half-open intervals `..`,
+it is possible to uniformly describe ranges using `for`, `inside`, and `outside` (which denotes the inverse of `inside`).
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+for (int i = 0; i < 10; i++) begin
+    a[i] =   X[i] inside {[1:10]};
+    b[i] = !(X[i] inside {[1:10]});
+end
+```
+
+</td>
+<td>
+
+```veryl
+# module ModuleA {
+# always_comb {
+for i: u32 in 0..10 {
+    a[i] = inside  X[i] {1..=10};
+    b[i] = outside X[i] {1..=10};
+}
+# }
+# }
+```
+ 
+</td>
+</tr>
+</table>
+
+## `msb` notation
+
+The `msb` notation, indicating the most significant bit, eliminates the need to calculate the most significant bit from parameters, making intentions clearer.
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+logic a;
+logic [WIDTH-1:0] X;
+assign a = X[WIDTH-1];
+```
+
+</td>
+<td>
+
+```veryl
+# module ModuleA {
+var a: logic;
+var X: logic<WIDTH>;
+assign a = X[msb];
+# }
+```
+ 
+</td>
+</tr>
+</table>
+
+## `let` statement
+
+There is a dedicated `let` statement available for binding values simultaneously with variable declaration,
+which can be used in various contexts that were not supported in SystemVerilog.
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+logic tmp;
+always_ff @ (posedge i_clk) begin
+    tmp = b + 1;
+    x <= tmp;
+end
+```
+
+</td>
+<td>
+
+```veryl
+# module ModuleA {
+always_ff (i_clk) {
+    let tmp: logic = b + 1;
+    x = tmp;
+}
+# }
+```
+ 
+</td>
+</tr>
+</table>
+
+## Named block
+
+You can define named blocks to limit the scope of variables.
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+if (1) begin: BlockA
+end
+```
+
+</td>
+<td>
+
+```veryl
+# module ModuleA {
+:BlockA {
+}
+# }
+```
+ 
+</td>
+</tr>
+</table>
+
+## Visibility control
+
+Modules without the `pub` keyword cannot be referenced from outside the project
+and are not included in automatic documentation generation.
+This allows distinguishing between what should be exposed externally from the project and internal implementations.
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+module ModuleA;
+endmodule
+
+module ModuleB;
+endmodule
+```
+
+</td>
+<td>
+
+```veryl
+pub module ModuleA {
+}
+
+module ModuleB {
+}
+```
+ 
+</td>
+</tr>
+</table>
+
+[^1]: Some browsers by default pause the playback of GIF animations. Please check your browser settings.
