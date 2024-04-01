@@ -253,12 +253,17 @@
 <p><code>for</code> statement represent repetition.
 Loop variable is placed before <code>in</code> keyword,
 and <a href="../04_expression/07_range.html">range</a> is placed after it.</p>
+<p><code>break</code> can be used to break the loop.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     var a: logic&lt;10&gt;;
 
     always_comb {
         for i: u32 in 0..10 {
             a += i;
+
+            if i == 5 {
+                break;
+            }
         }
     }
 }
