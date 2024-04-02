@@ -2,21 +2,21 @@
 
 In this chapter, we introduce the features of Veryl along with clear examples.
 
-* [Real-time diagnostics](01_features.md#real-time-diagnostics)
-* [Auto formatting](01_features.md#auto-formatting)
-* [Dependency management](01_features.md#dependency-management)
-* [Trailing comma](01_features.md#trailing-comma)
-* [Abstraction of clock and reset](01_features.md#abstraction-of-clock-and-reset)
-* [Documentation comment](01_features.md#documentation-comment)
-* [Compound assignment operator in `always_ff`](01_features.md#compound-assignment-operator-in-always_ff)
-* [Individual namespace of enum variant](01_features.md#individual-namespace-of-enum-variant)
-* [`repeat` of concatenation](01_features.md#repeat-of-concatenation)
-* [`if` / `case` expression](01_features.md#if--case-expression)
-* [Range-based `for` / `inside` / `outside`](01_features.md#range-based-for--inside--outside)
-* [`msb` notation](01_features.md#msb-notation)
-* [`let` statement](01_features.md#let-statement)
-* [Named block](01_features.md#named-block)
-* [Visibility control](01_features.md#visibility-control)
+* [Real-time diagnostics](02_features.md#real-time-diagnostics)
+* [Auto formatting](02_features.md#auto-formatting)
+* [Dependency management](02_features.md#dependency-management)
+* [Trailing comma](02_features.md#trailing-comma)
+* [Abstraction of clock and reset](02_features.md#abstraction-of-clock-and-reset)
+* [Documentation comment](02_features.md#documentation-comment)
+* [Compound assignment operator in `always_ff`](02_features.md#compound-assignment-operator-in-always_ff)
+* [Individual namespace of enum variant](02_features.md#individual-namespace-of-enum-variant)
+* [`repeat` of concatenation](02_features.md#repeat-of-concatenation)
+* [`if` / `case` expression](02_features.md#if--case-expression)
+* [Range-based `for` / `inside` / `outside`](02_features.md#range-based-for--inside--outside)
+* [`msb` notation](02_features.md#msb-notation)
+* [`let` statement](02_features.md#let-statement)
+* [Named block](02_features.md#named-block)
+* [Visibility control](02_features.md#visibility-control)
 
 ## Real-time diagnostics
 
