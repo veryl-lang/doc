@@ -372,79 +372,79 @@ msgid ""
 msgstr "この章ではVerylの特徴的な機能をわかりやすい例とともに紹介します。"
 
 #: src/02_features.md:5
-msgid "[Real-time diagnostics](01_features.md#real-time-diagnostics)"
-msgstr "[リアルタイム診断](01_features.md#real-time-diagnostics)"
+msgid "[Real-time diagnostics](02_features.md#real-time-diagnostics)"
+msgstr "[リアルタイム診断](02_features.md#real-time-diagnostics)"
 
 #: src/02_features.md:6
-msgid "[Auto formatting](01_features.md#auto-formatting)"
-msgstr "[自動フォーマット](01_features.md#auto-formatting)"
+msgid "[Auto formatting](02_features.md#auto-formatting)"
+msgstr "[自動フォーマット](02_features.md#auto-formatting)"
 
 #: src/02_features.md:7
-msgid "[Dependency management](01_features.md#dependency-management)"
-msgstr "[依存関係管理](01_features.md#dependency-management)"
+msgid "[Dependency management](02_features.md#dependency-management)"
+msgstr "[依存関係管理](02_features.md#dependency-management)"
 
 #: src/02_features.md:8
-msgid "[Trailing comma](01_features.md#trailing-comma)"
-msgstr "[末尾カンマ](01_features.md#trailing-comma)"
+msgid "[Trailing comma](02_features.md#trailing-comma)"
+msgstr "[末尾カンマ](02_features.md#trailing-comma)"
 
 #: src/02_features.md:9
 msgid ""
-"[Abstraction of clock and reset](01_features.md#abstraction-of-clock-and-"
+"[Abstraction of clock and reset](02_features.md#abstraction-of-clock-and-"
 "reset)"
 msgstr ""
-"[クロックとリセットの抽象化](01_features.md#abstraction-of-clock-and-reset)"
+"[クロックとリセットの抽象化](02_features.md#abstraction-of-clock-and-reset)"
 
 #: src/02_features.md:10
-msgid "[Documentation comment](01_features.md#documentation-comment)"
-msgstr "[ドキュメンテーションコメント](01_features.md#documentation-comment)"
+msgid "[Documentation comment](02_features.md#documentation-comment)"
+msgstr "[ドキュメンテーションコメント](02_features.md#documentation-comment)"
 
 #: src/02_features.md:11
 msgid ""
-"[Compound assignment operator in `always_ff`](01_features.md#compound-"
+"[Compound assignment operator in `always_ff`](02_features.md#compound-"
 "assignment-operator-in-always_ff)"
 msgstr ""
-"[`always_ff` での複合代入演算子](01_features.md#compound-assignment-operator-"
+"[`always_ff` での複合代入演算子](02_features.md#compound-assignment-operator-"
 "in-always_ff)"
 
 #: src/02_features.md:12
 msgid ""
-"[Individual namespace of enum variant](01_features.md#individual-namespace-"
+"[Individual namespace of enum variant](02_features.md#individual-namespace-"
 "of-enum-variant)"
 msgstr ""
-"[独立した名前空間を持つenumバリアント](01_features.md#individual-namespace-"
+"[独立した名前空間を持つenumバリアント](02_features.md#individual-namespace-"
 "of-enum-variant)"
 
 #: src/02_features.md:13
-msgid "[`repeat` of concatenation](01_features.md#repeat-of-concatenation)"
-msgstr "[ビット連結における `repeat`](01_features.md#repeat-of-concatenation)"
+msgid "[`repeat` of concatenation](02_features.md#repeat-of-concatenation)"
+msgstr "[ビット連結における `repeat`](02_features.md#repeat-of-concatenation)"
 
 #: src/02_features.md:14
-msgid "[`if` / `case` expression](01_features.md#if--case-expression)"
-msgstr "[`if` / `case` 式](01_features.md#if--case-expression)"
+msgid "[`if` / `case` expression](02_features.md#if--case-expression)"
+msgstr "[`if` / `case` 式](02_features.md#if--case-expression)"
 
 #: src/02_features.md:15
 msgid ""
-"[Range-based `for` / `inside` / `outside`](01_features.md#range-based-for--"
+"[Range-based `for` / `inside` / `outside`](02_features.md#range-based-for--"
 "inside--outside)"
 msgstr ""
-"[範囲 `for` / `inside` / `outside`](01_features.md#range-based-for--inside--"
+"[範囲 `for` / `inside` / `outside`](02_features.md#range-based-for--inside--"
 "outside)"
 
 #: src/02_features.md:16
-msgid "[`msb` notation](01_features.md#msb-notation)"
-msgstr "[`msb` 記法](01_features.md#msb-notation)"
+msgid "[`msb` notation](02_features.md#msb-notation)"
+msgstr "[`msb` 記法](02_features.md#msb-notation)"
 
 #: src/02_features.md:17
-msgid "[`let` statement](01_features.md#let-statement)"
-msgstr "[`let` 文](01_features.md#let-statement)"
+msgid "[`let` statement](02_features.md#let-statement)"
+msgstr "[`let` 文](02_features.md#let-statement)"
 
 #: src/02_features.md:18
-msgid "[Named block](01_features.md#named-block)"
-msgstr "[名前付きブロック](01_features.md#named-block)"
+msgid "[Named block](02_features.md#named-block)"
+msgstr "[名前付きブロック](02_features.md#named-block)"
 
 #: src/02_features.md:19
-msgid "[Visibility control](01_features.md#visibility-control)"
-msgstr "[可視性制御](01_features.md#visibility-control)"
+msgid "[Visibility control](02_features.md#visibility-control)"
+msgstr "[可視性制御](02_features.md#visibility-control)"
 
 #: src/02_features.md:21
 msgid "Real-time diagnostics"
