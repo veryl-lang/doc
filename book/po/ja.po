@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-04-09T12:14:39+09:00\n"
+"POT-Creation-Date: 2024-04-09T13:52:21+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -226,60 +226,65 @@ msgstr "SystemVerilogとの相互運用"
 msgid "Visibility"
 msgstr "可視性"
 
-#: src/SUMMARY.md:57 src/06_development_environment.md:1
+#: src/SUMMARY.md:57
+#: src/05_language_reference/12_foreign_language_integration.md:1
+msgid "Foreign Language Integration"
+msgstr ""
+
+#: src/SUMMARY.md:58 src/06_development_environment.md:1
 msgid "Development Environment"
 msgstr "開発環境"
 
-#: src/SUMMARY.md:58
+#: src/SUMMARY.md:59
 #: src/06_development_environment/01_project_configuration.md:1
 msgid "Project Configuration"
 msgstr "プロジェクト設定"
 
-#: src/SUMMARY.md:59 src/06_development_environment/02_dependencies.md:1
+#: src/SUMMARY.md:60 src/06_development_environment/02_dependencies.md:1
 msgid "Dependencies"
 msgstr "依存関係"
 
-#: src/SUMMARY.md:60 src/06_development_environment/03_publish_project.md:1
+#: src/SUMMARY.md:61 src/06_development_environment/03_publish_project.md:1
 msgid "Publish Project"
 msgstr "プロジェクトを公開する"
 
-#: src/SUMMARY.md:61 src/06_development_environment/04_directory_layout.md:1
+#: src/SUMMARY.md:62 src/06_development_environment/04_directory_layout.md:1
 msgid "Directory Layout"
 msgstr "ディレクトリ構成"
 
-#: src/SUMMARY.md:62 src/06_development_environment/05_formatter.md:1
+#: src/SUMMARY.md:63 src/06_development_environment/05_formatter.md:1
 msgid "Formatter"
 msgstr "フォーマッタ"
 
-#: src/SUMMARY.md:63 src/06_development_environment/06_linter.md:1
+#: src/SUMMARY.md:64 src/06_development_environment/06_linter.md:1
 msgid "Linter"
 msgstr "リンタ"
 
-#: src/SUMMARY.md:64 src/06_development_environment/07_language_server.md:1
+#: src/SUMMARY.md:65 src/06_development_environment/07_language_server.md:1
 msgid "Language Server"
 msgstr "言語サーバ"
 
-#: src/SUMMARY.md:65 src/06_development_environment/08_compatibility.md:1
+#: src/SUMMARY.md:66 src/06_development_environment/08_compatibility.md:1
 msgid "Compatibility"
 msgstr "互換性"
 
-#: src/SUMMARY.md:66 src/06_development_environment/09_documentation.md:1
+#: src/SUMMARY.md:67 src/06_development_environment/09_documentation.md:1
 msgid "Documentation"
 msgstr "ドキュメンテーション"
 
-#: src/SUMMARY.md:67 src/06_development_environment/10_github_action.md:1
+#: src/SUMMARY.md:68 src/06_development_environment/10_github_action.md:1
 msgid "GitHub Action"
 msgstr "GitHub Action"
 
-#: src/SUMMARY.md:68 src/07_appendix.md:1
+#: src/SUMMARY.md:69 src/07_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:69 src/07_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:70 src/07_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:70 src/07_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:71 src/07_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -2629,6 +2634,45 @@ msgstr ""
 "`pub` キーワードによって他のプロジェクトから見えるように指定することができま"
 "す。`veryl doc` コマンドはパブリックなアイテムの [ドキュメント]"
 "(../05_development_environment/09_documentation.md) のみを生成します。"
+
+#: src/05_language_reference/12_foreign_language_integration.md:3
+msgid ""
+"`embed` declaration can embed the code of foreign languages. The first "
+"argument of `embed` declaration shows the way of embedding. The following "
+"ways are supported:"
+msgstr ""
+"`embed` 宣言により他言語をコードに埋め込むことができます。"
+"`embed` 宣言の第一引数は埋め込み方法です。以下の方法がサポートされています。"
+
+#: src/05_language_reference/12_foreign_language_integration.md:7
+msgid "`\"inline\"`: expand the code as is"
+msgstr "`\"inline\"`: コードをそのまま展開する"
+
+#: src/05_language_reference/12_foreign_language_integration.md:9
+msgid ""
+"The code block are started by `lang{{{` and ended by `}}}`. The following "
+"`lang` specifiers are supported:"
+msgstr "コードブロックは `lang{{{` で始まり、`}}}` で終わります。以下の `lang` 指示子がサポートされています。"
+
+#: src/05_language_reference/12_foreign_language_integration.md:12
+msgid "`sv`: SystemVerilog"
+msgstr "`sv`: SystemVerilog"
+
+#: src/05_language_reference/12_foreign_language_integration.md:14
+msgid ""
+"```veryl,playground\n"
+"embed (\"inline\") sv{{{\n"
+"    module ModuleSv;\n"
+"    endmodule\n"
+"}}}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"embed (\"inline\") sv{{{\n"
+"    module ModuleSv;\n"
+"    endmodule\n"
+"}}}\n"
+"```"
 
 #: src/06_development_environment.md:3
 msgid ""
@@ -5754,9 +5798,6 @@ msgstr "unused_variable"
 #~ "るものの、主要なEDAツールでサポートされていないため事実上使用できません。"
 #~ "そのためユーザはそれぞれの構文が使用可能かどうかを学ぶ必要があります。"
 #~ "Veryl は古い Verilog スタイルの構文や非推奨記述をサポートしません。"
-
-#~ msgid "Transpiler to SystemVerilog"
-#~ msgstr "SystemVerilog へのトランスパイラ"
 
 #~ msgid ""
 #~ "HDL alternative languages should be transpiler to the tradisional HDLs "
