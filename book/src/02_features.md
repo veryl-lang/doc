@@ -4,6 +4,7 @@ In this chapter, we introduce the features of Veryl along with clear examples.
 
 * [Real-time diagnostics](02_features.md#real-time-diagnostics)
 * [Auto formatting](02_features.md#auto-formatting)
+* [Integrated test](02_features.md#integrated-test)
 * [Dependency management](02_features.md#dependency-management)
 * [Trailing comma](02_features.md#trailing-comma)
 * [Abstraction of clock and reset](02_features.md#abstraction-of-clock-and-reset)
@@ -35,6 +36,22 @@ formatting through the command line and formatting checks in CI are also possibl
 ![format](./img/format.gif)
 
 If the video does not play[^1]
+
+## Integrated test
+
+Test code written by SystemVerilog can be embeded in Veryl code,
+it can be executed through `veryl test` command.
+
+```veryl
+#[test(test1)]
+embed (inline) sv{{{
+    module test1;
+        initial begin
+            assert (0) else $error("error");
+        end
+    endmodule
+}}}
+```
 
 ## Dependency management
 

@@ -17,6 +17,7 @@
   * [`strip_comments`](01_project_configuration.md#the-strip_comments-field) --- Whether strip comments.
 * [`[format]`](01_project_configuration.md#the-format-section) --- Format settings.
 * [`[lint]`](01_project_configuration.md#the-lint-section) --- Lint settings.
+* [`[test]`](01_project_configuration.md#the-test-section) --- Test settings.
 * [`[publish]`](01_project_configuration.md#the-publish-section) --- Publish settings.
 * [`[dependencies]`](01_project_configuration.md#the-dependencies-section) --- Library dependencies.
 
@@ -163,6 +164,11 @@ Available configurations is [here](./05_formatter.md).
 
 The `[lint]` section contains the configurations of linter.
 Available configurations is [here](./06_linter.md).
+
+## The `[test]` section {#the-test-section}
+
+The `[test]` section contains the configurations of test by RTL simulator.
+Available configurations is [here](./07_simulator.md).
 
 ## The `[publish]` section {#the-publish-section}
 
