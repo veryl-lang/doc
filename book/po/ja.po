@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-04-09T13:52:21+09:00\n"
+"POT-Creation-Date: 2024-04-13T22:56:54+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -229,62 +229,70 @@ msgstr "可視性"
 #: src/SUMMARY.md:57
 #: src/05_language_reference/12_foreign_language_integration.md:1
 msgid "Foreign Language Integration"
-msgstr ""
+msgstr "他言語組み込み"
 
-#: src/SUMMARY.md:58 src/06_development_environment.md:1
+#: src/SUMMARY.md:58 src/05_language_reference/13_integrated_test.md:1
+msgid "Integrated Test"
+msgstr "組み込みテスト"
+
+#: src/SUMMARY.md:59 src/06_development_environment.md:1
 msgid "Development Environment"
 msgstr "開発環境"
 
-#: src/SUMMARY.md:59
+#: src/SUMMARY.md:60
 #: src/06_development_environment/01_project_configuration.md:1
 msgid "Project Configuration"
 msgstr "プロジェクト設定"
 
-#: src/SUMMARY.md:60 src/06_development_environment/02_dependencies.md:1
+#: src/SUMMARY.md:61 src/06_development_environment/02_dependencies.md:1
 msgid "Dependencies"
 msgstr "依存関係"
 
-#: src/SUMMARY.md:61 src/06_development_environment/03_publish_project.md:1
+#: src/SUMMARY.md:62 src/06_development_environment/03_publish_project.md:1
 msgid "Publish Project"
 msgstr "プロジェクトを公開する"
 
-#: src/SUMMARY.md:62 src/06_development_environment/04_directory_layout.md:1
+#: src/SUMMARY.md:63 src/06_development_environment/04_directory_layout.md:1
 msgid "Directory Layout"
 msgstr "ディレクトリ構成"
 
-#: src/SUMMARY.md:63 src/06_development_environment/05_formatter.md:1
+#: src/SUMMARY.md:64 src/06_development_environment/05_formatter.md:1
 msgid "Formatter"
 msgstr "フォーマッタ"
 
-#: src/SUMMARY.md:64 src/06_development_environment/06_linter.md:1
+#: src/SUMMARY.md:65 src/06_development_environment/06_linter.md:1
 msgid "Linter"
 msgstr "リンタ"
 
-#: src/SUMMARY.md:65 src/06_development_environment/07_language_server.md:1
+#: src/SUMMARY.md:66 src/06_development_environment/07_simulator.md:1
+msgid "Simulator"
+msgstr "シミュレータ"
+
+#: src/SUMMARY.md:67 src/06_development_environment/08_language_server.md:1
 msgid "Language Server"
 msgstr "言語サーバ"
 
-#: src/SUMMARY.md:66 src/06_development_environment/08_compatibility.md:1
+#: src/SUMMARY.md:68 src/06_development_environment/09_compatibility.md:1
 msgid "Compatibility"
 msgstr "互換性"
 
-#: src/SUMMARY.md:67 src/06_development_environment/09_documentation.md:1
+#: src/SUMMARY.md:69 src/06_development_environment/10_documentation.md:1
 msgid "Documentation"
 msgstr "ドキュメンテーション"
 
-#: src/SUMMARY.md:68 src/06_development_environment/10_github_action.md:1
+#: src/SUMMARY.md:70 src/06_development_environment/11_github_action.md:1
 msgid "GitHub Action"
 msgstr "GitHub Action"
 
-#: src/SUMMARY.md:69 src/07_appendix.md:1
+#: src/SUMMARY.md:71 src/07_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:70 src/07_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:72 src/07_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:71 src/07_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:73 src/07_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -385,25 +393,29 @@ msgid "[Auto formatting](02_features.md#auto-formatting)"
 msgstr "[自動フォーマット](01_features.md#auto-formatting)"
 
 #: src/02_features.md:7
+msgid "[Integrated test](02_features.md#integrated-test)"
+msgstr "[組み込みテスト](02_features.md#integrated-test)"
+
+#: src/02_features.md:8
 msgid "[Dependency management](02_features.md#dependency-management)"
 msgstr "[依存関係管理](01_features.md#dependency-management)"
 
-#: src/02_features.md:8
+#: src/02_features.md:9
 msgid "[Trailing comma](02_features.md#trailing-comma)"
 msgstr "[末尾カンマ](01_features.md#trailing-comma)"
 
-#: src/02_features.md:9
+#: src/02_features.md:10
 msgid ""
 "[Abstraction of clock and reset](02_features.md#abstraction-of-clock-and-"
 "reset)"
 msgstr ""
 "[クロックとリセットの抽象化](01_features.md#abstraction-of-clock-and-reset)"
 
-#: src/02_features.md:10
+#: src/02_features.md:11
 msgid "[Documentation comment](02_features.md#documentation-comment)"
 msgstr "[ドキュメンテーションコメント](01_features.md#documentation-comment)"
 
-#: src/02_features.md:11
+#: src/02_features.md:12
 msgid ""
 "[Compound assignment operator in `always_ff`](02_features.md#compound-"
 "assignment-operator-in-always_ff)"
@@ -411,7 +423,7 @@ msgstr ""
 "[`always_ff` での複合代入演算子](01_features.md#compound-assignment-operator-"
 "in-always_ff)"
 
-#: src/02_features.md:12
+#: src/02_features.md:13
 msgid ""
 "[Individual namespace of enum variant](02_features.md#individual-namespace-"
 "of-enum-variant)"
@@ -419,15 +431,15 @@ msgstr ""
 "[独立した名前空間を持つenumバリアント](01_features.md#individual-namespace-"
 "of-enum-variant)"
 
-#: src/02_features.md:13
+#: src/02_features.md:14
 msgid "[`repeat` of concatenation](02_features.md#repeat-of-concatenation)"
 msgstr "[ビット連結における `repeat`](01_features.md#repeat-of-concatenation)"
 
-#: src/02_features.md:14
+#: src/02_features.md:15
 msgid "[`if` / `case` expression](02_features.md#if--case-expression)"
 msgstr "[`if` / `case` 式](01_features.md#if--case-expression)"
 
-#: src/02_features.md:15
+#: src/02_features.md:16
 msgid ""
 "[Range-based `for` / `inside` / `outside`](02_features.md#range-based-for--"
 "inside--outside)"
@@ -435,27 +447,27 @@ msgstr ""
 "[範囲 `for` / `inside` / `outside`](01_features.md#range-based-for--inside--"
 "outside)"
 
-#: src/02_features.md:16
+#: src/02_features.md:17
 msgid "[`msb` notation](02_features.md#msb-notation)"
 msgstr "[`msb` 記法](01_features.md#msb-notation)"
 
-#: src/02_features.md:17
+#: src/02_features.md:18
 msgid "[`let` statement](02_features.md#let-statement)"
 msgstr "[`let` 文](01_features.md#let-statement)"
 
-#: src/02_features.md:18
+#: src/02_features.md:19
 msgid "[Named block](02_features.md#named-block)"
 msgstr "[名前付きブロック](01_features.md#named-block)"
 
-#: src/02_features.md:19
+#: src/02_features.md:20
 msgid "[Visibility control](02_features.md#visibility-control)"
 msgstr "[可視性制御](01_features.md#visibility-control)"
 
-#: src/02_features.md:21
+#: src/02_features.md:22
 msgid "Real-time diagnostics"
 msgstr "リアルタイム診断"
 
-#: src/02_features.md:23
+#: src/02_features.md:24
 msgid ""
 "Issues such as undefined, unused, or unassigned variables are notified in "
 "real-time while editing in the editor. In the following example, adding the "
@@ -466,19 +478,19 @@ msgstr ""
 "通知されます。次の例では、未使用変数として通知された変数に `_` プレフィックス"
 "を付加することで未使用であることを明示し、警告を抑制しています。"
 
-#: src/02_features.md:26
+#: src/02_features.md:27
 msgid "![diagnostics](./img/diagnostics.gif)"
 msgstr "![diagnostics](./img/diagnostics.gif)"
 
-#: src/02_features.md:28 src/02_features.md:37
+#: src/02_features.md:29 src/02_features.md:38
 msgid "If the video does not play[^1]"
 msgstr "ビデオが再生されない場合[^1]"
 
-#: src/02_features.md:30
+#: src/02_features.md:31
 msgid "Auto formatting"
 msgstr "自動フォーマット"
 
-#: src/02_features.md:32
+#: src/02_features.md:33
 msgid ""
 "In addition to the automatic formatting feature integrated with the editor, "
 "formatting through the command line and formatting checks in CI are also "
@@ -487,15 +499,40 @@ msgstr ""
 "エディタと連携した自動フォーマット機能のほか、コマンドラインでのフォーマット"
 "やCIでのフォーマットチェックも可能です。"
 
-#: src/02_features.md:35
+#: src/02_features.md:36
 msgid "![format](./img/format.gif)"
 msgstr "![format](./img/format.gif)"
 
-#: src/02_features.md:39
+#: src/02_features.md:40
+msgid "Integrated test"
+msgstr "組み込みテスト"
+
+#: src/02_features.md:42
+msgid ""
+"Test code written by SystemVerilog can be embeded in Veryl code, it can be "
+"executed through `veryl test` command."
+msgstr ""
+"SystemVerilogで書かれたテストコードをVerylに埋め込み、`veryl test` コマンドで実行することができます。"
+
+#: src/02_features.md:45
+msgid ""
+"```veryl\n"
+"#[test(test1)]\n"
+"embed (inline) sv{{{\n"
+"    module test1;\n"
+"        initial begin\n"
+"            assert (0) else $error(\"error\");\n"
+"        end\n"
+"    endmodule\n"
+"}}}\n"
+"```"
+msgstr ""
+
+#: src/02_features.md:56
 msgid "Dependency management"
 msgstr "依存関係管理"
 
-#: src/02_features.md:41
+#: src/02_features.md:58
 msgid ""
 "Veryl includes a built-in dependency management feature, allowing for easy "
 "incorporation of libraries by simply adding the repository path and version "
@@ -505,7 +542,7 @@ msgstr ""
 "ライブラリのリポジトリパスとバージョンを追加するだけで、簡単にライブラリを組"
 "み込むことができます。"
 
-#: src/02_features.md:44 src/06_development_environment/02_dependencies.md:6
+#: src/02_features.md:61 src/06_development_environment/02_dependencies.md:6
 msgid ""
 "```toml\n"
 "[dependencies]\n"
@@ -517,11 +554,11 @@ msgstr ""
 "\"https://github.com/veryl-lang/sample\" = \"0.1.0\"\n"
 "```"
 
-#: src/02_features.md:49
+#: src/02_features.md:66
 msgid "Trailing comma"
 msgstr "末尾カンマ"
 
-#: src/02_features.md:51
+#: src/02_features.md:68
 msgid ""
 "Trailing comma is a syntax where a comma is placed after the last element in "
 "a list. It facilitates the addition and removal of elements and reduces "
@@ -531,11 +568,11 @@ msgstr ""
 "り、要素の追加や削除が容易になり、バージョン管理システムにおける不必要な差異"
 "を減らすことができます。"
 
-#: src/02_features.md:87
+#: src/02_features.md:104
 msgid "Abstraction of clock and reset"
 msgstr "クロックとリセットの抽象化"
 
-#: src/02_features.md:89
+#: src/02_features.md:106
 msgid ""
 "There is no need to specify the polarity and synchronicity of the clock and "
 "reset in the syntax; these can be specified during build-time configuration. "
@@ -547,11 +584,11 @@ msgstr ""
 "性・非同期リセットとFPGA向けの正極性・同期リセットのそれぞれのコードを生成す"
 "ることができます。"
 
-#: src/02_features.md:125 src/05_language_reference/02_lexical_structure.md:32
+#: src/02_features.md:142 src/05_language_reference/02_lexical_structure.md:32
 msgid "Documentation comment"
 msgstr "ドキュメンテーションコメント"
 
-#: src/02_features.md:127
+#: src/02_features.md:144
 msgid ""
 "Writing module descriptions as documentation comments allows for automatic "
 "documentation generation. You can use not only plain text but also MarkDown "
@@ -561,7 +598,7 @@ msgstr ""
 "を自動生成することができます。単なるテキストだけでなく、マークダウン形式や"
 "[WaveDrom](https://wavedrom.com)による波形記述を使用することができます。"
 
-#: src/02_features.md:138
+#: src/02_features.md:155
 msgid ""
 "```verilog\n"
 "// Comment\n"
@@ -575,7 +612,7 @@ msgstr ""
 "endmodule\n"
 "```"
 
-#: src/02_features.md:147
+#: src/02_features.md:164
 msgid ""
 "````veryl\n"
 "/// Documentation comment written by Markdown\n"
@@ -603,11 +640,11 @@ msgstr ""
 "}\n"
 "````"
 
-#: src/02_features.md:164
+#: src/02_features.md:181
 msgid "Compound assignment operator in `always_ff`"
 msgstr "`always_ff` での複合代入演算子"
 
-#: src/02_features.md:166
+#: src/02_features.md:183
 msgid ""
 "There is no dedicated non-blocking assignment operator; within `always_ff`, "
 "non-blocking assignments are inferred, while within `always_comb`, blocking "
@@ -619,11 +656,11 @@ msgstr ""
 "`always_ff` 内でも `always_comb` 内と同様に様々な複合代入演算子を使用すること"
 "ができます。"
 
-#: src/02_features.md:201
+#: src/02_features.md:218
 msgid "Individual namespace of enum variant"
 msgstr "独立した名前空間を持つenumバリアント"
 
-#: src/02_features.md:203
+#: src/02_features.md:220
 msgid ""
 "Variants of an enum are defined within separate namespaces for each enum, "
 "thus preventing unintended name collisions."
@@ -631,11 +668,11 @@ msgstr ""
 "enumのバリアントはenum毎に独立した名前空間を持っており意図しない名前の衝突を"
 "防ぐことができます。"
 
-#: src/02_features.md:241
+#: src/02_features.md:258
 msgid "`repeat` of concatenation"
 msgstr "ビット連結における `repeat`"
 
-#: src/02_features.md:243
+#: src/02_features.md:260
 msgid ""
 "By adopting the explicit `repeat` syntax as a repetition description in bit "
 "concatenation, readability improves over complex combinations of `{}`."
@@ -643,11 +680,11 @@ msgstr ""
 "ビット連結における繰り返し記述として明示的な `repeat` 記法を採用し、 複雑な "
 "`{}` の組み合わせより可読性が向上しています。"
 
-#: src/02_features.md:271
+#: src/02_features.md:288
 msgid "`if` / `case` expression"
 msgstr "`if` / `case` 式"
 
-#: src/02_features.md:273
+#: src/02_features.md:290
 msgid ""
 "By adopting `if` and `case` expressions instead of the ternary operator, "
 "readability improves, especially when comparing a large number of items."
@@ -655,11 +692,11 @@ msgstr ""
 "三項演算子の代わりに if 式と case 式を採用することで、比較するアイテム数が多"
 "い場合の可読性が向上します。"
 
-#: src/02_features.md:309
+#: src/02_features.md:326
 msgid "Range-based `for` / `inside` / `outside`"
 msgstr "範囲 `for` / `inside` / `outside`"
 
-#: src/02_features.md:311
+#: src/02_features.md:328
 msgid ""
 "With notation representing closed intervals `..=` and half-open intervals `.."
 "`, it is possible to uniformly describe ranges using `for`, `inside`, and "
@@ -669,11 +706,11 @@ msgstr ""
 "一的に記述できるようにしました。また、`inside` の逆を意味する `outside` も導"
 "入しました。"
 
-#: src/02_features.md:343
+#: src/02_features.md:360
 msgid "`msb` notation"
 msgstr "`msb` 記法"
 
-#: src/02_features.md:345
+#: src/02_features.md:362
 msgid ""
 "The `msb` notation, indicating the most significant bit, eliminates the need "
 "to calculate the most significant bit from parameters, making intentions "
@@ -682,11 +719,11 @@ msgstr ""
 "最上位ビットを示す `msb` 記法により、パラメータから最上位ビットを計算する必要"
 "がなくなり、より意図を明確にすることができます。"
 
-#: src/02_features.md:374
+#: src/02_features.md:391
 msgid "`let` statement"
 msgstr "`let` 文"
 
-#: src/02_features.md:376
+#: src/02_features.md:393
 msgid ""
 "There is a dedicated `let` statement available for binding values "
 "simultaneously with variable declaration, which can be used in various "
@@ -695,20 +732,20 @@ msgstr ""
 "変数宣言と同時に値を束縛する専用の `let` 文が用意されており、SystemVerilogで"
 "はサポートされていなかった様々な場所で使用することができます。"
 
-#: src/02_features.md:409
+#: src/02_features.md:426
 msgid "Named block"
 msgstr "名前付きブロック"
 
-#: src/02_features.md:411
+#: src/02_features.md:428
 msgid "You can define named blocks to limit the scope of variables."
 msgstr ""
 "変数のスコープを限定するための名前付きブロックを定義することができます。"
 
-#: src/02_features.md:438
+#: src/02_features.md:455
 msgid "Visibility control"
 msgstr "可視性制御"
 
-#: src/02_features.md:440
+#: src/02_features.md:457
 msgid ""
 "Modules without the `pub` keyword cannot be referenced from outside the "
 "project and are not included in automatic documentation generation. This "
@@ -719,7 +756,7 @@ msgstr ""
 "ントの自動生成にも含まれません。これによりプロジェクト外に公開したいものと内"
 "部実装とを区別することができます。"
 
-#: src/02_features.md:475
+#: src/02_features.md:492
 msgid ""
 "Some browsers by default pause the playback of GIF animations. Please check "
 "your browser settings."
@@ -2641,38 +2678,72 @@ msgid ""
 "argument of `embed` declaration shows the way of embedding. The following "
 "ways are supported:"
 msgstr ""
-"`embed` 宣言により他言語をコードに埋め込むことができます。"
-"`embed` 宣言の第一引数は埋め込み方法です。以下の方法がサポートされています。"
+"`embed` 宣言により他言語をコードに埋め込むことができます。`embed` 宣言の第一"
+"引数は埋め込み方法です。以下の方法がサポートされています。"
 
 #: src/05_language_reference/12_foreign_language_integration.md:7
-msgid "`\"inline\"`: expand the code as is"
-msgstr "`\"inline\"`: コードをそのまま展開する"
+msgid "`inline`: expand the code as is"
+msgstr "`inline`: コードをそのまま展開する"
 
 #: src/05_language_reference/12_foreign_language_integration.md:9
 msgid ""
 "The code block are started by `lang{{{` and ended by `}}}`. The following "
 "`lang` specifiers are supported:"
-msgstr "コードブロックは `lang{{{` で始まり、`}}}` で終わります。以下の `lang` 指示子がサポートされています。"
+msgstr ""
+"コードブロックは `lang{{{` で始まり、`}}}` で終わります。以下の `lang` 指示子"
+"がサポートされています。"
 
 #: src/05_language_reference/12_foreign_language_integration.md:12
 msgid "`sv`: SystemVerilog"
 msgstr "`sv`: SystemVerilog"
 
-#: src/05_language_reference/12_foreign_language_integration.md:14
+#: src/05_language_reference/13_integrated_test.md:3
+msgid ""
+"Integrated test can be marked by `#[test(test_name)]` attribute. The marked "
+"block will be identified as test, and executed through `veryl test` command. "
+"The top level module of the block must have the same name as the test name."
+msgstr ""
+"組み込みテストは `#[test(test_name)]` アトリビュートでマークすることができます。"
+"マークされたブロックはテストとして認識され、 `veryl test` コマンドによって実行されます。"
+"ブロックのトップレベルモジュールはテスト名と同じでなければなりません。"
+
+#: src/05_language_reference/13_integrated_test.md:7
+msgid ""
+"The following example, a SystemVerilog source code embeded by `embed` "
+"declaration are marked as test."
+msgstr ""
+"以下の例では SystemVerilog のソースコードを `embed` 宣言で埋め込み、テストとしてマークしています。"
+
+#: src/05_language_reference/13_integrated_test.md:9
 msgid ""
 "```veryl,playground\n"
-"embed (\"inline\") sv{{{\n"
-"    module ModuleSv;\n"
+"#[test(test1)]\n"
+"embed (inline) sv{{{\n"
+"    module test1;\n"
+"        initial begin\n"
+"            assert (0) else $error(\"error\");\n"
+"        end\n"
 "    endmodule\n"
 "}}}\n"
 "```"
 msgstr ""
 "```veryl,playground\n"
-"embed (\"inline\") sv{{{\n"
-"    module ModuleSv;\n"
+"#[test(test1)]\n"
+"embed (inline) sv{{{\n"
+"    module test1;\n"
+"        initial begin\n"
+"            assert (0) else $error(\"error\");\n"
+"        end\n"
 "    endmodule\n"
 "}}}\n"
 "```"
+
+#: src/05_language_reference/13_integrated_test.md:20
+msgid ""
+"About RTL simulator used by `veryl test`, see [Simulator]"
+"(../06_development_environment/07_simulator.md)."
+msgstr ""
+"`veryl test` で使用される RTLシミュレータについては [シミュレータ](../06_development_environment/07_simulator.md) を参照してください。"
 
 #: src/06_development_environment.md:3
 msgid ""
@@ -2813,12 +2884,18 @@ msgstr ""
 
 #: src/06_development_environment/01_project_configuration.md:20
 msgid ""
+"[`[test]`](01_project_configuration.md#the-test-section) --- Test settings."
+msgstr ""
+"[`[test]`](01_project_configuration.md#the-test-section) --- テスト設定"
+
+#: src/06_development_environment/01_project_configuration.md:21
+msgid ""
 "[`[publish]`](01_project_configuration.md#the-publish-section) --- Publish "
 "settings."
 msgstr ""
 "[`[publish]`](01_project_configuration.md#the-publish-section) --- 公開設定"
 
-#: src/06_development_environment/01_project_configuration.md:21
+#: src/06_development_environment/01_project_configuration.md:22
 msgid ""
 "[`[dependencies]`](01_project_configuration.md#the-dependencies-section) --- "
 "Library dependencies."
@@ -2826,11 +2903,11 @@ msgstr ""
 "[`[dependencies]`](01_project_configuration.md#the-dependencies-section) --- "
 "ライブラリの依存関係"
 
-#: src/06_development_environment/01_project_configuration.md:23
+#: src/06_development_environment/01_project_configuration.md:24
 msgid "The `[project]` section"
 msgstr "`[project]` セクション"
 
-#: src/06_development_environment/01_project_configuration.md:25
+#: src/06_development_environment/01_project_configuration.md:26
 msgid ""
 "The first section of `Veryl.toml` is `[project]`. The mandatory fields are "
 "`name` and `version`."
@@ -2838,11 +2915,11 @@ msgstr ""
 "`Veryl.toml` の最初のセクションは `[project]` です。`name` と `version` は必"
 "須です。"
 
-#: src/06_development_environment/01_project_configuration.md:28
+#: src/06_development_environment/01_project_configuration.md:29
 msgid "The `name` field"
 msgstr "`name` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:30
+#: src/06_development_environment/01_project_configuration.md:31
 msgid ""
 "The project name is used as prefix in the generated codes. So the name must "
 "start with alphabet or `_`, and use only alphanumeric charaters or `_`."
@@ -2851,11 +2928,11 @@ msgstr ""
 "ジェクト名はアルファベットか `_` で始まり、英数字と`_` しか使ってはいけませ"
 "ん。"
 
-#: src/06_development_environment/01_project_configuration.md:33
+#: src/06_development_environment/01_project_configuration.md:34
 msgid "The `version` field"
 msgstr "`version` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:35
+#: src/06_development_environment/01_project_configuration.md:36
 msgid ""
 "The project version should follow [Semantic Versioning](https://semver."
 "org/). The version is constructed by the following three numbers."
@@ -2863,19 +2940,19 @@ msgstr ""
 "プロジェクトのバージョンは [セマンティックバージョニング](https://semver."
 "org/)に従います。バージョンは以下の3つの数字からなります。"
 
-#: src/06_development_environment/01_project_configuration.md:38
+#: src/06_development_environment/01_project_configuration.md:39
 msgid "Major -- increment at incompatible changes"
 msgstr "メジャー -- 互換性のない変更時に上げる"
 
-#: src/06_development_environment/01_project_configuration.md:39
+#: src/06_development_environment/01_project_configuration.md:40
 msgid "Minor -- increment at adding features with backward compatibility"
 msgstr "マイナー -- 互換性のある機能追加時に上げる"
 
-#: src/06_development_environment/01_project_configuration.md:40
+#: src/06_development_environment/01_project_configuration.md:41
 msgid "Patch -- increment at bug fixes with backward compatibility"
 msgstr "バッチ -- 互換性のあるバグ修正時に上げる"
 
-#: src/06_development_environment/01_project_configuration.md:42
+#: src/06_development_environment/01_project_configuration.md:43
 msgid ""
 "```toml\n"
 "[project]\n"
@@ -2887,11 +2964,11 @@ msgstr ""
 "version = \"0.1.0\"\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration.md:47
+#: src/06_development_environment/01_project_configuration.md:48
 msgid "The `authors` field"
 msgstr "`authors` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:49
+#: src/06_development_environment/01_project_configuration.md:50
 msgid ""
 "The optional `authors` field lists in an array the people or organizations "
 "that are considered the \"authors\" of the project. The format of each "
@@ -2903,7 +2980,7 @@ msgstr ""
 "メールアドレスのみ、名前と括弧で囲んだEメールアドレスといった形式がよく使われ"
 "ます。"
 
-#: src/06_development_environment/01_project_configuration.md:52
+#: src/06_development_environment/01_project_configuration.md:53
 msgid ""
 "```toml\n"
 "[project]\n"
@@ -2917,11 +2994,11 @@ msgstr ""
 "<anonymous@example.com>\"]\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration.md:57
+#: src/06_development_environment/01_project_configuration.md:58
 msgid "The `description` field"
 msgstr "`description` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:59
+#: src/06_development_environment/01_project_configuration.md:60
 msgid ""
 "The `description` is a short blurb about the project. This should be plane "
 "text (not Markdown)."
@@ -2929,11 +3006,11 @@ msgstr ""
 "`description` はプロジェクトの短い説明です。マークダウンではなくプレーンテキ"
 "スト形式で書きます。"
 
-#: src/06_development_environment/01_project_configuration.md:61
+#: src/06_development_environment/01_project_configuration.md:62
 msgid "The `license` field"
 msgstr "`license` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:63
+#: src/06_development_environment/01_project_configuration.md:64
 msgid ""
 "The `license` field contains the name of license that the project is "
 "released under. The string should be follow [SPDX 2.3 license expression]"
@@ -2943,7 +3020,7 @@ msgstr ""
 "定します。指定する文字列は[SPDX 2.3 license expression](https://spdx.github."
 "io/spdx-spec/v2.3/SPDX-license-expressions)に従ってください。"
 
-#: src/06_development_environment/01_project_configuration.md:66
+#: src/06_development_environment/01_project_configuration.md:67
 msgid ""
 "```toml\n"
 "[project]\n"
@@ -2955,17 +3032,17 @@ msgstr ""
 "license = \"MIT OR Apache-2.0\"\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration.md:71
+#: src/06_development_environment/01_project_configuration.md:72
 msgid "The `repository` field"
 msgstr "`repository` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:73
+#: src/06_development_environment/01_project_configuration.md:74
 msgid ""
 "The `repository` field should be a URL to the source repository for the "
 "project."
 msgstr "`repository` フィールドはプロジェクトのソースリポジトリへのURLです。"
 
-#: src/06_development_environment/01_project_configuration.md:75
+#: src/06_development_environment/01_project_configuration.md:76
 msgid ""
 "```toml\n"
 "[project]\n"
@@ -2977,19 +3054,19 @@ msgstr ""
 "repository = \"https://github.com/veryl-lang/veryl\"\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration.md:80
+#: src/06_development_environment/01_project_configuration.md:81
 msgid "The `[build]` section"
 msgstr "`[build]` セクション"
 
-#: src/06_development_environment/01_project_configuration.md:82
+#: src/06_development_environment/01_project_configuration.md:83
 msgid "The `[build]` section contains the configurations of code generation."
 msgstr "`[build]` セクションはコード生成の設定です。"
 
-#: src/06_development_environment/01_project_configuration.md:84
+#: src/06_development_environment/01_project_configuration.md:85
 msgid "The `clock_type` field"
 msgstr "`clock_type` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:86
+#: src/06_development_environment/01_project_configuration.md:87
 msgid ""
 "The `clock_type` field specifies which clock edge is used to drive flip-"
 "flop. The available types are below:"
@@ -2997,83 +3074,83 @@ msgstr ""
 "`clock_type` フィールドはフリップフロップを駆動するクロックエッジを指定しま"
 "す。"
 
-#: src/06_development_environment/01_project_configuration.md:89
+#: src/06_development_environment/01_project_configuration.md:90
 msgid "`posedge` -- positive edge"
 msgstr "`posedge` -- 立ち上がりエッジ"
 
-#: src/06_development_environment/01_project_configuration.md:90
+#: src/06_development_environment/01_project_configuration.md:91
 msgid "`negedge` -- negetive edge"
 msgstr "`negedge` -- 立ち下がりエッジ"
 
-#: src/06_development_environment/01_project_configuration.md:92
+#: src/06_development_environment/01_project_configuration.md:93
 msgid "The `reset_type` field"
 msgstr "`reset_type` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:94
+#: src/06_development_environment/01_project_configuration.md:95
 msgid ""
 "The `reset_type` field specifies reset polarity and synchronisity. The "
 "available types are below:"
 msgstr "`reset_type` フィールドはリセットの極性と同期性を指定します。"
 
-#: src/06_development_environment/01_project_configuration.md:97
+#: src/06_development_environment/01_project_configuration.md:98
 msgid "`async_low` -- asynchronous and active low"
 msgstr "`async_low` -- 非同期・負極性"
 
-#: src/06_development_environment/01_project_configuration.md:98
+#: src/06_development_environment/01_project_configuration.md:99
 msgid "`async_high` -- asynchronous and active high"
 msgstr "`async_high` -- 非同期・正極性"
 
-#: src/06_development_environment/01_project_configuration.md:99
+#: src/06_development_environment/01_project_configuration.md:100
 msgid "`sync_low` -- synchronous and active low"
 msgstr "`sync_low` -- 同期・負極性"
 
-#: src/06_development_environment/01_project_configuration.md:100
+#: src/06_development_environment/01_project_configuration.md:101
 msgid "`sync_high` -- synchronous and active high"
 msgstr "`sync_high` -- 同期・正極性"
 
-#: src/06_development_environment/01_project_configuration.md:102
+#: src/06_development_environment/01_project_configuration.md:103
 msgid "The `filelist_type` field"
 msgstr "`filelist_type` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:104
+#: src/06_development_environment/01_project_configuration.md:105
 msgid ""
 "The `filelist_type` field specifies filelist format. The available types are "
 "below:"
 msgstr "`filelist_type` フィールドはファイルリストのフォーマットを指定します。"
 
-#: src/06_development_environment/01_project_configuration.md:107
+#: src/06_development_environment/01_project_configuration.md:108
 msgid "`absolute` -- plane text filelist including absolute file paths"
 msgstr "`absolute` -- プレーンテキスト形式の絶対パスのリスト"
 
-#: src/06_development_environment/01_project_configuration.md:108
+#: src/06_development_environment/01_project_configuration.md:109
 msgid "`relative` -- plane text filelist including relative file paths"
 msgstr "`relative` -- プレーンテキスト形式の相対パスのリスト"
 
-#: src/06_development_environment/01_project_configuration.md:109
+#: src/06_development_environment/01_project_configuration.md:110
 msgid "`flgen` -- [flgen](https://github.com/pezy-computing/flgen) filelist"
 msgstr ""
 "`flgen` -- [flgen](https://github.com/pezy-computing/flgen) 形式のファイルリ"
 "スト"
 
-#: src/06_development_environment/01_project_configuration.md:111
+#: src/06_development_environment/01_project_configuration.md:112
 msgid "The `target` field"
 msgstr "`target` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:113
+#: src/06_development_environment/01_project_configuration.md:114
 msgid ""
 "The `target` field specifies where the generated codes will be placed at. "
 "The available types are below:"
 msgstr "`target` フィールドはコードの生成先を指定します。"
 
-#: src/06_development_environment/01_project_configuration.md:116
+#: src/06_development_environment/01_project_configuration.md:117
 msgid "`source` -- as the same directory as the source code"
 msgstr "`source` -- ソースコードと同じディレクトリ"
 
-#: src/06_development_environment/01_project_configuration.md:117
+#: src/06_development_environment/01_project_configuration.md:118
 msgid "`directory` -- specified directory"
 msgstr "`directory` -- 特定のディレクトリ"
 
-#: src/06_development_environment/01_project_configuration.md:119
+#: src/06_development_environment/01_project_configuration.md:120
 msgid ""
 "If you want to use `directory`, you can specify the target directory by "
 "`path` key."
@@ -3081,7 +3158,7 @@ msgstr ""
 "`directory` を指定する場合は、ターゲットディレクトリを `path` キーで指定しま"
 "す。"
 
-#: src/06_development_environment/01_project_configuration.md:121
+#: src/06_development_environment/01_project_configuration.md:122
 msgid ""
 "```toml\n"
 "[build]\n"
@@ -3093,11 +3170,11 @@ msgstr ""
 "target = {type = \"directory\", path = \"[dst dir]\"}\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration.md:126
+#: src/06_development_environment/01_project_configuration.md:127
 msgid "The `implicit_parameter_types` field"
 msgstr "`implicit_parameter_types` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:128
+#: src/06_development_environment/01_project_configuration.md:129
 msgid ""
 "The `implicit_parameter_types` field lists the types which will be elided in "
 "`parameter` declaration of the generated codes. This is because some EDA "
@@ -3109,8 +3186,8 @@ msgstr ""
 "を `parameter` 宣言で使うことができないためです。例えば `string` を指定する場"
 "合は以下のようにします。"
 
-#: src/06_development_environment/01_project_configuration.md:132
-#: src/06_development_environment/08_compatibility.md:18
+#: src/06_development_environment/01_project_configuration.md:133
+#: src/06_development_environment/09_compatibility.md:18
 msgid ""
 "```toml\n"
 "[build]\n"
@@ -3122,11 +3199,11 @@ msgstr ""
 "implicit_parameter_types = [\"string\"]\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration.md:137
+#: src/06_development_environment/01_project_configuration.md:138
 msgid "The `omit_project_prefix` field"
 msgstr "`omit_project_prefix` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:139
+#: src/06_development_environment/01_project_configuration.md:140
 msgid ""
 "If `omit_project_prefix` is set to `true`, the project prefix of module/"
 "interface/package name will be omitted. This is `false` by default."
@@ -3135,11 +3212,11 @@ msgstr ""
 "ケージ名のプロジェクトプレフィックスは省略されます。この値はデフォルトで "
 "`false` です。"
 
-#: src/06_development_environment/01_project_configuration.md:147
+#: src/06_development_environment/01_project_configuration.md:148
 msgid "The `strip_comments` field"
 msgstr "`strip_comments` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:149
+#: src/06_development_environment/01_project_configuration.md:150
 msgid ""
 "If `strip_comments` is set to `true`, all comments will be stripped. This is "
 "`false` by default."
@@ -3147,11 +3224,11 @@ msgstr ""
 "`strip_comments` が `true` のとき、コメント出力は省略されます。この値はデフォ"
 "ルトで `false` です。"
 
-#: src/06_development_environment/01_project_configuration.md:157
+#: src/06_development_environment/01_project_configuration.md:158
 msgid "The `[format]` section"
 msgstr "`[format]` セクション"
 
-#: src/06_development_environment/01_project_configuration.md:159
+#: src/06_development_environment/01_project_configuration.md:160
 msgid ""
 "The `[format]` section contains the configurations of code formatter. "
 "Available configurations is [here](./05_formatter.md)."
@@ -3159,22 +3236,34 @@ msgstr ""
 "`[format]` セクションはコードフォーマッターの設定です。詳細は[こちら]"
 "(./05_formatter.md)。"
 
-#: src/06_development_environment/01_project_configuration.md:162
+#: src/06_development_environment/01_project_configuration.md:163
 msgid "The `[lint]` section"
 msgstr "`[lint]` セクション"
 
-#: src/06_development_environment/01_project_configuration.md:164
+#: src/06_development_environment/01_project_configuration.md:165
 msgid ""
 "The `[lint]` section contains the configurations of linter. Available "
 "configurations is [here](./06_linter.md)."
 msgstr ""
 "`[lint]` セクションはリンタの設定です。詳細は[こちら](./06_linter.md)。"
 
-#: src/06_development_environment/01_project_configuration.md:167
+#: src/06_development_environment/01_project_configuration.md:168
+#: src/06_development_environment/07_simulator.md:21
+msgid "The `[test]` section"
+msgstr "`[test]` セクション"
+
+#: src/06_development_environment/01_project_configuration.md:170
+msgid ""
+"The `[test]` section contains the configurations of test by RTL simulator. "
+"Available configurations is [here](./07_simulator.md)."
+msgstr ""
+"`[test]` セクションはRTLシミュレータによるテストの設定です。詳細は[こちら](./07_simulator.md)。"
+
+#: src/06_development_environment/01_project_configuration.md:173
 msgid "The `[publish]` section"
 msgstr "`[publish]` セクション"
 
-#: src/06_development_environment/01_project_configuration.md:169
+#: src/06_development_environment/01_project_configuration.md:175
 msgid ""
 "The `[publish]` section contains the configurations of publishing. Available "
 "configurations is [here](./03_publish_project.md)."
@@ -3182,11 +3271,11 @@ msgstr ""
 "`[publish]` セクションはプロジェクト公開の設定です。詳細は[こちら]"
 "(./03_publish_project.md)。"
 
-#: src/06_development_environment/01_project_configuration.md:172
+#: src/06_development_environment/01_project_configuration.md:178
 msgid "The `[dependencies]` section"
 msgstr "`[dependencies]` セクション"
 
-#: src/06_development_environment/01_project_configuration.md:174
+#: src/06_development_environment/01_project_configuration.md:180
 msgid ""
 "The `[dependencies]` section contains library dependencies. Available "
 "configurations is [here](./02_dependencies.md)."
@@ -3429,8 +3518,12 @@ msgstr ""
 #: src/06_development_environment/03_publish_project.md:61
 #: src/06_development_environment/05_formatter.md:14
 #: src/06_development_environment/06_linter.md:18
-#: src/06_development_environment/07_language_server.md:9
-#: src/06_development_environment/09_documentation.md:49
+#: src/06_development_environment/07_simulator.md:25
+#: src/06_development_environment/07_simulator.md:39
+#: src/06_development_environment/07_simulator.md:48
+#: src/06_development_environment/07_simulator.md:57
+#: src/06_development_environment/08_language_server.md:9
+#: src/06_development_environment/10_documentation.md:49
 msgid "Configuration"
 msgstr "設定"
 
@@ -3451,22 +3544,30 @@ msgstr ""
 #: src/06_development_environment/03_publish_project.md:61
 #: src/06_development_environment/05_formatter.md:14
 #: src/06_development_environment/06_linter.md:18
-#: src/06_development_environment/07_language_server.md:9
-#: src/06_development_environment/09_documentation.md:49
+#: src/06_development_environment/07_simulator.md:25
+#: src/06_development_environment/07_simulator.md:39
+#: src/06_development_environment/07_simulator.md:48
+#: src/06_development_environment/07_simulator.md:57
+#: src/06_development_environment/08_language_server.md:9
+#: src/06_development_environment/10_documentation.md:49
 msgid "Value"
 msgstr "設定値"
 
 #: src/06_development_environment/03_publish_project.md:61
-#: src/06_development_environment/07_language_server.md:9
-#: src/06_development_environment/09_documentation.md:49
+#: src/06_development_environment/08_language_server.md:9
+#: src/06_development_environment/10_documentation.md:49
 msgid "Default"
 msgstr "デフォルト"
 
 #: src/06_development_environment/03_publish_project.md:61
 #: src/06_development_environment/05_formatter.md:14
 #: src/06_development_environment/06_linter.md:18
-#: src/06_development_environment/07_language_server.md:9
-#: src/06_development_environment/09_documentation.md:49
+#: src/06_development_environment/07_simulator.md:25
+#: src/06_development_environment/07_simulator.md:39
+#: src/06_development_environment/07_simulator.md:48
+#: src/06_development_environment/07_simulator.md:57
+#: src/06_development_environment/08_language_server.md:9
+#: src/06_development_environment/10_documentation.md:49
 msgid "Description"
 msgstr "説明"
 
@@ -3476,13 +3577,13 @@ msgstr "bump_commit"
 
 #: src/06_development_environment/03_publish_project.md:63
 #: src/06_development_environment/03_publish_project.md:64
-#: src/06_development_environment/07_language_server.md:11
+#: src/06_development_environment/08_language_server.md:11
 msgid "boolean"
 msgstr "ブーリアン"
 
 #: src/06_development_environment/03_publish_project.md:63
 #: src/06_development_environment/03_publish_project.md:64
-#: src/06_development_environment/07_language_server.md:11
+#: src/06_development_environment/08_language_server.md:11
 msgid "false"
 msgstr "false"
 
@@ -3519,7 +3620,7 @@ msgstr "bump_commit_mesasge"
 #: src/06_development_environment/06_linter.md:47
 #: src/06_development_environment/06_linter.md:48
 #: src/06_development_environment/06_linter.md:49
-#: src/06_development_environment/09_documentation.md:51
+#: src/06_development_environment/10_documentation.md:51
 msgid "string"
 msgstr "文字列"
 
@@ -4270,6 +4371,7 @@ msgid "regex required of wire type variable[^wire]"
 msgstr "ワイヤ変数[^wire]の必須正規表現"
 
 #: src/06_development_environment/06_linter.md:81
+#: src/06_development_environment/07_simulator.md:29
 msgid "The available values are "
 msgstr "設定可能な値は以下です。"
 
@@ -4313,7 +4415,163 @@ msgstr ""
 "ワイヤ変数とは `always_comb` で代入される変数です。合成フェーズでワイヤにマッ"
 "プされます。"
 
-#: src/06_development_environment/07_language_server.md:3
+#: src/06_development_environment/07_simulator.md:3
+msgid ""
+"Test by RTL simulator is executed through `veryl test`. Supported simulators "
+"are below:"
+msgstr ""
+"RTLシミュレータによるテストは `veryl test` で実行することができます。"
+"サポートされているシミュレータは以下の通りです。"
+
+#: src/06_development_environment/07_simulator.md:6
+msgid "[Verilator](https://www.veripool.org/verilator/)"
+msgstr "[Verilator](https://www.veripool.org/verilator/)"
+
+#: src/06_development_environment/07_simulator.md:7
+msgid ""
+"[Synopsys VCS](https://www.synopsys.com/verification/simulation/vcs.html)"
+msgstr ""
+"[Synopsys VCS](https://www.synopsys.com/verification/simulation/vcs.html)"
+
+#: src/06_development_environment/07_simulator.md:8
+msgid ""
+"[AMD Vivado Simulator](https://www.xilinx.com/products/design-tools/vivado/"
+"verification.html)"
+msgstr ""
+"[AMD Vivado Simulator](https://www.xilinx.com/products/design-tools/vivado/"
+"verification.html)"
+
+#: src/06_development_environment/07_simulator.md:10
+msgid ""
+"Verilator is the default simulator. If no simulator is specified through "
+"`Veryl.toml` and commandline option, it will be used."
+msgstr ""
+"Verilatorはデフォルトのシミュレータです。`Veryl.toml`やコマンドラインオプションでシミュレータが指定されていない場合に使用されます。"
+
+#: src/06_development_environment/07_simulator.md:13
+msgid ""
+"The available configurations are below. These can be specified in `[test]` "
+"section of `Veryl.toml`."
+msgstr ""
+"設定可能な項目は以下の通りです。これは `Veryl.toml` の `[test]` セクションで"
+"指定できます。"
+
+#: src/06_development_environment/07_simulator.md:16
+msgid ""
+"```toml\n"
+"[test]\n"
+"simulator = \"vcs\"\n"
+"```"
+msgstr ""
+"```toml\n"
+"[test]\n"
+"simulator = \"vcs\"\n"
+"```"
+
+#: src/06_development_environment/07_simulator.md:23
+msgid "This section contains configurations of test."
+msgstr "このセクションはテストの設定です。"
+
+#: src/06_development_environment/07_simulator.md:27
+msgid "simulator"
+msgstr "simulator"
+
+#: src/06_development_environment/07_simulator.md:27
+msgid "simulator name[^sim]"
+msgstr "シミュレータ名[^sim]"
+
+#: src/06_development_environment/07_simulator.md:27
+msgid "default simulator"
+msgstr "デフォルトのシミュレータ"
+
+#: src/06_development_environment/07_simulator.md:31
+msgid "`\"verilator\"`"
+msgstr "`\"verilator\"`"
+
+#: src/06_development_environment/07_simulator.md:32
+msgid "`\"vcs\"`"
+msgstr "`\"vcs\"`"
+
+#: src/06_development_environment/07_simulator.md:33
+msgid "`\"vivado\"`"
+msgstr "`\"vivado\"`"
+
+#: src/06_development_environment/07_simulator.md:35
+msgid "The `[test.verilator]` section"
+msgstr "`[test.verilator]` セクション"
+
+#: src/06_development_environment/07_simulator.md:37
+msgid "This section contains configurations of test by Verilator."
+msgstr "このセクションはVerilatorによるテストの設定です。"
+
+#: src/06_development_environment/07_simulator.md:41
+#: src/06_development_environment/07_simulator.md:50
+#: src/06_development_environment/07_simulator.md:59
+msgid "compile_args"
+msgstr "compile_args"
+
+#: src/06_development_environment/07_simulator.md:41
+#: src/06_development_environment/07_simulator.md:42
+#: src/06_development_environment/07_simulator.md:50
+#: src/06_development_environment/07_simulator.md:51
+#: src/06_development_environment/07_simulator.md:59
+#: src/06_development_environment/07_simulator.md:60
+#: src/06_development_environment/07_simulator.md:61
+msgid "\\[string\\]"
+msgstr "\\[文字列\\]"
+
+#: src/06_development_environment/07_simulator.md:41
+msgid "additional arguments to `verilator` command"
+msgstr "`verilator` コマンドへの追加の引数"
+
+#: src/06_development_environment/07_simulator.md:42
+#: src/06_development_environment/07_simulator.md:51
+#: src/06_development_environment/07_simulator.md:61
+msgid "simulate_args"
+msgstr "simulate_args"
+
+#: src/06_development_environment/07_simulator.md:42
+#: src/06_development_environment/07_simulator.md:51
+msgid "additional arguments to simulation binary"
+msgstr "シミュレーションバイナリへの追加の引数"
+
+#: src/06_development_environment/07_simulator.md:44
+msgid "The `[test.vcs]` section"
+msgstr "`[test.vcs]` セクション"
+
+#: src/06_development_environment/07_simulator.md:46
+msgid "This section contains configurations of test by VCS."
+msgstr "このセクションはVCSによるテストの設定です。"
+
+#: src/06_development_environment/07_simulator.md:50
+msgid "additional arguments to `vcs` command"
+msgstr "`vcs` コマンドへの追加の引数"
+
+#: src/06_development_environment/07_simulator.md:53
+msgid "The `[test.vivado]` section"
+msgstr "`[test.vivado]` セクション"
+
+#: src/06_development_environment/07_simulator.md:55
+msgid "This section contains configurations of test by Vivado."
+msgstr "このセクションはVivadoによるテストの設定です。"
+
+#: src/06_development_environment/07_simulator.md:59
+msgid "additional arguments to `xvlog` command"
+msgstr "`xvlog` コマンドへの追加の引数"
+
+#: src/06_development_environment/07_simulator.md:60
+msgid "elaborate_args"
+msgstr "elaborate_args"
+
+#: src/06_development_environment/07_simulator.md:60
+msgid "additional arguments to `xelab` command"
+msgstr "`xelab` コマンドへの追加の引数"
+
+#: src/06_development_environment/07_simulator.md:61
+msgid "additional arguments to `xsim` command"
+msgstr "`xsim` コマンドへの追加の引数"
+
+#: src/06_development_environment/08_language_server.md:3
 msgid ""
 "`veryl-ls` is a language server binary. If you want to use it, editor "
 "configuration or plugin to use it is required."
@@ -4321,22 +4579,22 @@ msgstr ""
 "`veryl-ls` は言語サーバのバイナリです。使用するにはエディタの設定やプラグイン"
 "が必要です。"
 
-#: src/06_development_environment/07_language_server.md:6
+#: src/06_development_environment/08_language_server.md:6
 msgid ""
 "The available configurations are below. These can be specified by each "
 "editor's config."
 msgstr ""
 "設定可能な項目は以下の通りです。これは各エディタの設定から指定できます。"
 
-#: src/06_development_environment/07_language_server.md:11
+#: src/06_development_environment/08_language_server.md:11
 msgid "useOperatorCompletion"
 msgstr "useOperatorCompletion"
 
-#: src/06_development_environment/07_language_server.md:11
+#: src/06_development_environment/08_language_server.md:11
 msgid "use operator (e.g. '>:', '>>') completion"
 msgstr "演算子（例 '>:', '>>'）の補完を有効にする"
 
-#: src/06_development_environment/08_compatibility.md:3
+#: src/06_development_environment/09_compatibility.md:3
 msgid ""
 "Some tools supporting SystemVerilog don't support some features. Code "
 "generation can be customized by configuration of `Veryl.toml` to support "
@@ -4346,19 +4604,19 @@ msgstr ""
 "ポートするために、 `Veryl.toml` の設定でコード生成をカスタマイズすることがで"
 "きます。"
 
-#: src/06_development_environment/08_compatibility.md:6
+#: src/06_development_environment/09_compatibility.md:6
 msgid "Vivado"
 msgstr "Vivado"
 
-#: src/06_development_environment/08_compatibility.md:8
+#: src/06_development_environment/09_compatibility.md:8
 msgid "String parameter"
 msgstr "文字列パラメータ"
 
-#: src/06_development_environment/08_compatibility.md:10
+#: src/06_development_environment/09_compatibility.md:10
 msgid "Vivado don't support `parameter` which is typed as `string`."
 msgstr "Vivadoは `string` 型の `parameter` をサポートしていません。"
 
-#: src/06_development_environment/08_compatibility.md:12
+#: src/06_development_environment/09_compatibility.md:12
 msgid ""
 "```verilog\n"
 "parameter string a = \"A\";\n"
@@ -4368,15 +4626,15 @@ msgstr ""
 "parameter string a = \"A\";\n"
 "```"
 
-#: src/06_development_environment/08_compatibility.md:16
+#: src/06_development_environment/09_compatibility.md:16
 msgid "So you can use `implicit_parameter_types` like below:"
 msgstr "その場合は `implicit_parameter_types` を設定してください。"
 
-#: src/06_development_environment/08_compatibility.md:23
+#: src/06_development_environment/09_compatibility.md:23
 msgid "By the configuration, the generated code becomes like below:"
 msgstr "設定すると生成コードは以下のようになります。"
 
-#: src/06_development_environment/08_compatibility.md:25
+#: src/06_development_environment/09_compatibility.md:25
 msgid ""
 "```verilog\n"
 "parameter a = \"A\";\n"
@@ -4386,7 +4644,7 @@ msgstr ""
 "parameter a = \"A\";\n"
 "```"
 
-#: src/06_development_environment/09_documentation.md:3
+#: src/06_development_environment/10_documentation.md:3
 msgid ""
 "Documant of project can be generated by `veryl doc` command. All public "
 "modules, interfaces and packages will be listed in it. (See [Visibility]"
@@ -4396,7 +4654,7 @@ msgstr ""
 "てのパブリックなモジュールとインターフェース、パッケージがリストアップされま"
 "す。（参照 [可視性](../04_language_reference/11_visibility.md)）"
 
-#: src/06_development_environment/09_documentation.md:6
+#: src/06_development_environment/10_documentation.md:6
 msgid ""
 "If you want to add a detailed description, you can add documentation "
 "comment. In the documentation comment, [Markdown](https://www.markdownguide."
@@ -4406,7 +4664,7 @@ msgstr ""
 "す。ドキュメンテーションコメントでは[マークダウン](https://www.markdownguide."
 "org)記法を使えます。"
 
-#: src/06_development_environment/09_documentation.md:9
+#: src/06_development_environment/10_documentation.md:9
 msgid ""
 "Waveform description based on [WaveDrom](https://wavedrom.com) is supported "
 "too. In a `wavedrom` code block, the syntax of WaveDrom can be written. "
@@ -4418,7 +4676,7 @@ msgstr ""
 "詳細は [チュートリアル](https://wavedrom.com/tutorial.html) を参照してくださ"
 "い。"
 
-#: src/06_development_environment/09_documentation.md:13
+#: src/06_development_environment/10_documentation.md:13
 msgid ""
 "````veryl,playground\n"
 "/// The detailed description of ModuleA\n"
@@ -4478,7 +4736,7 @@ msgstr ""
 ") {}\n"
 "```"
 
-#: src/06_development_environment/09_documentation.md:41
+#: src/06_development_environment/10_documentation.md:41
 msgid ""
 "The available configurations are below. These can be specified in `[doc]` "
 "section of `Veryl.toml`."
@@ -4486,7 +4744,7 @@ msgstr ""
 "設定可能な項目は以下の通りです。これは `Veryl.toml` の `[doc]` セクションで指"
 "定できます。"
 
-#: src/06_development_environment/09_documentation.md:44
+#: src/06_development_environment/10_documentation.md:44
 msgid ""
 "```toml\n"
 "[doc]\n"
@@ -4498,19 +4756,19 @@ msgstr ""
 "path = \"document\"\n"
 "```"
 
-#: src/06_development_environment/09_documentation.md:51
+#: src/06_development_environment/10_documentation.md:51
 msgid "path"
 msgstr "path"
 
-#: src/06_development_environment/09_documentation.md:51
+#: src/06_development_environment/10_documentation.md:51
 msgid "\"doc\""
 msgstr "\"doc\""
 
-#: src/06_development_environment/09_documentation.md:51
+#: src/06_development_environment/10_documentation.md:51
 msgid "path to output directory"
 msgstr "出力ディレクトリへのパス"
 
-#: src/06_development_environment/10_github_action.md:3
+#: src/06_development_environment/11_github_action.md:3
 msgid ""
 "The official GitHub action to download a prebuilt binary of Veryl is "
 "provided."
@@ -4518,7 +4776,7 @@ msgstr ""
 "ビルド済みのVerylバイナリをダウンロードするための公式GitHub actionが提供され"
 "ています。"
 
-#: src/06_development_environment/10_github_action.md:5
+#: src/06_development_environment/11_github_action.md:5
 msgid ""
 "[https://github.com/marketplace/actions/setup-veryl](https://github.com/"
 "marketplace/actions/setup-veryl)"
@@ -4526,125 +4784,125 @@ msgstr ""
 "[https://github.com/marketplace/actions/setup-veryl](https://github.com/"
 "marketplace/actions/setup-veryl)"
 
-#: src/06_development_environment/10_github_action.md:7
+#: src/06_development_environment/11_github_action.md:7
 msgid "The examples of GitHub action script are below:"
 msgstr "GitHub actionスクリプトの例は以下の通りです。"
 
-#: src/06_development_environment/10_github_action.md:9
+#: src/06_development_environment/11_github_action.md:9
 msgid "Format and build check"
 msgstr "フォーマットとビルドチェック"
 
-#: src/06_development_environment/10_github_action.md:12
-#: src/06_development_environment/10_github_action.md:27
+#: src/06_development_environment/11_github_action.md:12
+#: src/06_development_environment/11_github_action.md:27
 msgid "name"
 msgstr "name"
 
-#: src/06_development_environment/10_github_action.md:12
+#: src/06_development_environment/11_github_action.md:12
 msgid "Check"
 msgstr "Check"
 
-#: src/06_development_environment/10_github_action.md:13
-#: src/06_development_environment/10_github_action.md:28
+#: src/06_development_environment/11_github_action.md:13
+#: src/06_development_environment/11_github_action.md:28
 msgid "push"
 msgstr "push"
 
-#: src/06_development_environment/10_github_action.md:13
+#: src/06_development_environment/11_github_action.md:13
 msgid "pull_request"
 msgstr "pull_request"
 
-#: src/06_development_environment/10_github_action.md:13
-#: src/06_development_environment/10_github_action.md:28
+#: src/06_development_environment/11_github_action.md:13
+#: src/06_development_environment/11_github_action.md:28
 msgid "jobs"
 msgstr "jobs"
 
-#: src/06_development_environment/10_github_action.md:15
+#: src/06_development_environment/11_github_action.md:15
 msgid "check"
 msgstr "check"
 
-#: src/06_development_environment/10_github_action.md:16
-#: src/06_development_environment/10_github_action.md:31
+#: src/06_development_environment/11_github_action.md:16
+#: src/06_development_environment/11_github_action.md:31
 msgid "runs-on"
 msgstr "runs-on"
 
-#: src/06_development_environment/10_github_action.md:16
-#: src/06_development_environment/10_github_action.md:31
+#: src/06_development_environment/11_github_action.md:16
+#: src/06_development_environment/11_github_action.md:31
 msgid "ubuntu-latest"
 msgstr "ubuntu-latest"
 
-#: src/06_development_environment/10_github_action.md:17
-#: src/06_development_environment/10_github_action.md:32
+#: src/06_development_environment/11_github_action.md:17
+#: src/06_development_environment/11_github_action.md:32
 msgid "steps"
 msgstr "steps"
 
-#: src/06_development_environment/10_github_action.md:18
-#: src/06_development_environment/10_github_action.md:19
-#: src/06_development_environment/10_github_action.md:33
-#: src/06_development_environment/10_github_action.md:34
-#: src/06_development_environment/10_github_action.md:36
+#: src/06_development_environment/11_github_action.md:18
+#: src/06_development_environment/11_github_action.md:19
+#: src/06_development_environment/11_github_action.md:33
+#: src/06_development_environment/11_github_action.md:34
+#: src/06_development_environment/11_github_action.md:36
 msgid "uses"
 msgstr "uses"
 
-#: src/06_development_environment/10_github_action.md:18
-#: src/06_development_environment/10_github_action.md:33
+#: src/06_development_environment/11_github_action.md:18
+#: src/06_development_environment/11_github_action.md:33
 msgid "actions/checkout@v4"
 msgstr "actions/checkout@v4"
 
-#: src/06_development_environment/10_github_action.md:19
-#: src/06_development_environment/10_github_action.md:34
+#: src/06_development_environment/11_github_action.md:19
+#: src/06_development_environment/11_github_action.md:34
 msgid "veryl-lang/setup-veryl@v1"
 msgstr "veryl-lang/setup-veryl@v1"
 
-#: src/06_development_environment/10_github_action.md:20
-#: src/06_development_environment/10_github_action.md:21
-#: src/06_development_environment/10_github_action.md:35
+#: src/06_development_environment/11_github_action.md:20
+#: src/06_development_environment/11_github_action.md:21
+#: src/06_development_environment/11_github_action.md:35
 msgid "run"
 msgstr "run"
 
-#: src/06_development_environment/10_github_action.md:20
+#: src/06_development_environment/11_github_action.md:20
 msgid "veryl fmt --check"
 msgstr "veryl fmt --check"
 
-#: src/06_development_environment/10_github_action.md:21
+#: src/06_development_environment/11_github_action.md:21
 msgid "veryl check"
 msgstr "veryl check"
 
-#: src/06_development_environment/10_github_action.md:24
+#: src/06_development_environment/11_github_action.md:24
 msgid "Publish document through GitHub Pages"
 msgstr "GitHub Pagesからドキュメントを公開する"
 
-#: src/06_development_environment/10_github_action.md:27
+#: src/06_development_environment/11_github_action.md:27
 msgid "Deploy"
 msgstr "Deploy"
 
-#: src/06_development_environment/10_github_action.md:30
+#: src/06_development_environment/11_github_action.md:30
 msgid "deploy"
 msgstr "deploy"
 
-#: src/06_development_environment/10_github_action.md:35
+#: src/06_development_environment/11_github_action.md:35
 msgid "veryl doc"
 msgstr "veryl doc"
 
-#: src/06_development_environment/10_github_action.md:36
+#: src/06_development_environment/11_github_action.md:36
 msgid "peaceiris/actions-gh-pages@v3"
 msgstr "peaceiris/actions-gh-pages@v3"
 
-#: src/06_development_environment/10_github_action.md:37
+#: src/06_development_environment/11_github_action.md:37
 msgid "with"
 msgstr "with"
 
-#: src/06_development_environment/10_github_action.md:38
+#: src/06_development_environment/11_github_action.md:38
 msgid "github_token"
 msgstr "github_token"
 
-#: src/06_development_environment/10_github_action.md:38
+#: src/06_development_environment/11_github_action.md:38
 msgid "${{ secrets.GITHUB_TOKEN }}"
 msgstr "${{ secrets.GITHUB_TOKEN }}"
 
-#: src/06_development_environment/10_github_action.md:39
+#: src/06_development_environment/11_github_action.md:39
 msgid "publish_dir"
 msgstr "publish_dir"
 
-#: src/06_development_environment/10_github_action.md:39
+#: src/06_development_environment/11_github_action.md:39
 msgid "doc"
 msgstr "doc"
 
@@ -4665,6 +4923,11 @@ msgid ""
 "%comment \"Empty grammar generated by `parol`\"\n"
 "%user_type VerylToken = crate::veryl_token::VerylToken\n"
 "%user_type Token = crate::veryl_token::Token\n"
+"\n"
+"%scanner Embed {\n"
+"    %auto_newline_off\n"
+"    %auto_ws_off\n"
+"}\n"
 "\n"
 "%%\n"
 "\n"
@@ -4747,9 +5010,6 @@ msgid ""
 "CommaTerm             : "
 "','                                                                                   : "
 "Token;\n"
-"DollarTerm            : "
-"'$'                                                                                   : "
-"Token;\n"
 "DotDotEquTerm         : '.."
 "='                                                                                 : "
 "Token;\n"
@@ -4768,8 +5028,11 @@ msgid ""
 "LAngleTerm            : "
 "'<'                                                                                   : "
 "Token;\n"
-"LBraceTerm            : "
-"'{'                                                                                   : "
+"QuoteLBraceTerm       : "
+"\"'\\{\"                                                                                 : "
+"Token;\n"
+"LBraceTerm            : <Embed, "
+"INITIAL>'{'                                                                   : "
 "Token;\n"
 "LBracketTerm          : "
 "'['                                                                                   : "
@@ -4780,8 +5043,8 @@ msgid ""
 "RAngleTerm            : "
 "'>'                                                                                   : "
 "Token;\n"
-"RBraceTerm            : "
-"'}'                                                                                   : "
+"RBraceTerm            : <Embed, "
+"INITIAL>'}'                                                                   : "
 "Token;\n"
 "RBracketTerm          : "
 "']'                                                                                   : "
@@ -4818,6 +5081,9 @@ msgid ""
 "\\b)/                                                             : Token;\n"
 "ElseTerm              : /(?-u:\\b)else(?-u:"
 "\\b)/                                                                : "
+"Token;\n"
+"EmbedTerm             : /(?-u:\\b)embed(?-u:"
+"\\b)/                                                               : "
 "Token;\n"
 "EnumTerm              : /(?-u:\\b)enum(?-u:"
 "\\b)/                                                                : "
@@ -4945,8 +5211,13 @@ msgid ""
 "VarTerm               : /(?-u:\\b)var(?-u:"
 "\\b)/                                                                 : "
 "Token;\n"
+"DollarIdentifierTerm  : /\\$[a-zA-Z_][0-9a-zA-Z_"
+"$]*/                                                           : Token;\n"
 "IdentifierTerm        : /[a-zA-Z_][0-9a-zA-Z_"
 "$]*/                                                             : Token;\n"
+"AnyTerm               : <Embed>/"
+"[^{}]*/                                                                       : "
+"Token;\n"
 "\n"
 "// "
 "----------------------------------------------------------------------------\n"
@@ -4983,12 +5254,12 @@ msgid ""
 "ColonToken       : ColonTerm       : Token Comments;\n"
 "ColonColonToken  : ColonColonTerm  : Token Comments;\n"
 "CommaToken       : CommaTerm       : Token Comments;\n"
-"DollarToken      : DollarTerm      : Token Comments;\n"
 "DotDotToken      : DotDotTerm      : Token Comments;\n"
 "DotDotEquToken   : DotDotEquTerm   : Token Comments;\n"
 "DotToken         : DotTerm         : Token Comments;\n"
 "EquToken         : EquTerm         : Token Comments;\n"
 "HashToken        : HashTerm        : Token Comments;\n"
+"QuoteLBraceToken : QuoteLBraceTerm : Token Comments;\n"
 "LAngleToken      : LAngleTerm      : Token Comments;\n"
 "LBraceToken      : LBraceTerm      : Token Comments;\n"
 "LBracketToken    : LBracketTerm    : Token Comments;\n"
@@ -5013,6 +5284,7 @@ msgid ""
 "CaseToken      : CaseTerm      : Token Comments;\n"
 "DefaultToken   : DefaultTerm   : Token Comments;\n"
 "ElseToken      : ElseTerm      : Token Comments;\n"
+"EmbedToken     : EmbedTerm     : Token Comments;\n"
 "EnumToken      : EnumTerm      : Token Comments;\n"
 "ExportToken    : ExportTerm    : Token Comments;\n"
 "F32Token       : F32Term       : Token Comments;\n"
@@ -5063,7 +5335,8 @@ msgid ""
 "UnionToken     : UnionTerm     : Token Comments;\n"
 "VarToken       : VarTerm       : Token Comments;\n"
 "\n"
-"IdentifierToken: IdentifierTerm: Token Comments;\n"
+"DollarIdentifierToken: DollarIdentifierTerm: Token Comments;\n"
+"IdentifierToken      : IdentifierTerm      : Token Comments;\n"
 "\n"
 "// "
 "----------------------------------------------------------------------------\n"
@@ -5103,12 +5376,12 @@ msgid ""
 "Colon       : ColonToken       : VerylToken;\n"
 "ColonColon  : ColonColonToken  : VerylToken;\n"
 "Comma       : CommaToken       : VerylToken;\n"
-"Dollar      : DollarToken      : VerylToken;\n"
 "DotDot      : DotDotToken      : VerylToken;\n"
 "DotDotEqu   : DotDotEquToken   : VerylToken;\n"
 "Dot         : DotToken         : VerylToken;\n"
 "Equ         : EquToken         : VerylToken;\n"
 "Hash        : HashToken        : VerylToken;\n"
+"QuoteLBrace : QuoteLBraceToken : VerylToken;\n"
 "LAngle      : LAngleToken      : VerylToken;\n"
 "LBrace      : LBraceToken      : VerylToken;\n"
 "LBracket    : LBracketToken    : VerylToken;\n"
@@ -5136,6 +5409,7 @@ msgid ""
 "Defaul    : DefaultToken   : VerylToken; // avoid to conflict with Rust's "
 "Default trait\n"
 "Else      : ElseToken      : VerylToken;\n"
+"Embed     : EmbedToken     : VerylToken;\n"
 "Enum      : EnumToken      : VerylToken;\n"
 "Export    : ExportToken    : VerylToken;\n"
 "F32       : F32Token       : VerylToken;\n"
@@ -5187,7 +5461,8 @@ msgid ""
 "Var       : VarToken       : VerylToken;\n"
 "\n"
 "// Identifier\n"
-"Identifier: IdentifierToken: VerylToken;\n"
+"DollarIdentifier: DollarIdentifierToken: VerylToken;\n"
+"Identifier      : IdentifierToken      : VerylToken;\n"
 "\n"
 "// "
 "----------------------------------------------------------------------------\n"
@@ -5216,9 +5491,10 @@ msgid ""
 "\n"
 "HierarchicalIdentifier: Identifier { Select } { Dot Identifier "
 "{ Select } };\n"
-"ScopedIdentifier      : [ Dollar ] Identifier { ColonColon Identifier };\n"
-"ExpressionIdentifier  : [ Dollar ] Identifier ( ExpressionIdentifierScoped | "
-"ExpressionIdentifierMember );\n"
+"ScopedIdentifier      : ( DollarIdentifier | Identifier ) { ColonColon "
+"Identifier };\n"
+"ExpressionIdentifier  : ( DollarIdentifier | Identifier ) "
+"( ExpressionIdentifierScoped | ExpressionIdentifierMember );\n"
 "\n"
 "ExpressionIdentifierScoped: ColonColon Identifier { ColonColon Identifier } "
 "{ Select };\n"
@@ -5249,6 +5525,7 @@ msgid ""
 "      | ExpressionIdentifier [ FunctionCall ]\n"
 "      | LParen Expression RParen\n"
 "      | LBrace ConcatenationList RBrace\n"
+"      | QuoteLBrace ArrayLiteralList RBrace\n"
 "      | IfExpression\n"
 "      | CaseExpression\n"
 "      | StringLiteral\n"
@@ -5266,6 +5543,11 @@ msgid ""
 "ConcatenationList: ConcatenationItem { Comma ConcatenationItem } [ Comma ];\n"
 "\n"
 "ConcatenationItem: Expression [ Repeat Expression ];\n"
+"\n"
+"ArrayLiteralList: ArrayLiteralItem { Comma ArrayLiteralItem } [ Comma ];\n"
+"\n"
+"ArrayLiteralItem: ( Expression [ Repeat Expression ] | Defaul Colon "
+"Expression );\n"
 "\n"
 "IfExpression: If Expression LBrace Expression RBrace { Else If Expression "
 "LBrace Expression RBrace } Else LBrace Expression RBrace;\n"
@@ -5638,6 +5920,22 @@ msgid ""
 "\n"
 "// "
 "----------------------------------------------------------------------------\n"
+"// Embed\n"
+"// "
+"----------------------------------------------------------------------------\n"
+"\n"
+"EmbedDeclaration: Embed LParen Identifier RParen Identifier EmbedContent;\n"
+"\n"
+"EmbedContent: EmbedContentToken: VerylToken;\n"
+"\n"
+"EmbedContentToken: LBraceTerm %push(Embed) LBraceTerm LBraceTerm "
+"{ EmbedItem } RBraceTerm RBraceTerm RBraceTerm %pop();\n"
+"\n"
+"EmbedItem: LBraceTerm { EmbedItem } RBraceTerm\n"
+"         | AnyTerm;\n"
+"\n"
+"// "
+"----------------------------------------------------------------------------\n"
 "// Description\n"
 "// "
 "----------------------------------------------------------------------------\n"
@@ -5649,6 +5947,7 @@ msgid ""
 "               | InterfaceDeclaration\n"
 "               | PackageDeclaration\n"
 "               | ImportDeclaration\n"
+"               | EmbedDeclaration\n"
 "               ;\n"
 "\n"
 "// "
@@ -5762,6 +6061,21 @@ msgid "unused_variable"
 msgstr "unused_variable"
 
 #~ msgid ""
+#~ "```veryl,playground\n"
+#~ "embed (\"inline\") sv{{{\n"
+#~ "    module ModuleSv;\n"
+#~ "    endmodule\n"
+#~ "}}}\n"
+#~ "```"
+#~ msgstr ""
+#~ "```veryl,playground\n"
+#~ "embed (\"inline\") sv{{{\n"
+#~ "    module ModuleSv;\n"
+#~ "    endmodule\n"
+#~ "}}}\n"
+#~ "```"
+
+#~ msgid ""
 #~ "Veryl has symplified syntax based on SystemVerilog / Rust. \"Symplified\" "
 #~ "has two meanings. One is for parser, and another is for human."
 #~ msgstr ""
@@ -5838,9 +6152,6 @@ msgstr "unused_variable"
 #~ "さらに Veryl は SystemVerilog と相互運用可能です。Veryl では "
 #~ "SystemVerilog の module / interface / struct / enum を使えますし、逆も可能"
 #~ "です。"
-
-#~ msgid "Integrated Tools"
-#~ msgstr "ツール統合"
 
 #~ msgid ""
 #~ "Modern programming languages have development support tools like linter, "
