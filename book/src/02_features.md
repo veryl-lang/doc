@@ -180,7 +180,7 @@ module ModuleA {
 </tr>
 </table>
 
-## Compound assignment operator in `always_ff`
+## Compound assignment operator in `always_ff` {#compound-assignment-operator-in-always_ff}
 
 There is no dedicated non-blocking assignment operator;
 within `always_ff`, non-blocking assignments are inferred, while within `always_comb`, blocking assignments are inferred.
