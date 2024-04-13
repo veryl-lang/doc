@@ -19,7 +19,7 @@ In this chapter, we introduce the features of Veryl along with clear examples.
 * [Named block](02_features.md#named-block)
 * [Visibility control](02_features.md#visibility-control)
 
-## Real-time diagnostics
+## Real-time diagnostics {#real-time-diagnostics}
 
 Issues such as undefined, unused, or unassigned variables are notified in real-time while editing in the editor.
 In the following example, adding the `_` prefix to variables flagged as unused explicitly indicates their unused status, suppressing warnings.
@@ -28,7 +28,7 @@ In the following example, adding the `_` prefix to variables flagged as unused e
 
 If the video does not play[^1]
 
-## Auto formatting
+## Auto formatting {#auto-formatting}
 
 In addition to the automatic formatting feature integrated with the editor,
 formatting through the command line and formatting checks in CI are also possible.
@@ -37,7 +37,7 @@ formatting through the command line and formatting checks in CI are also possibl
 
 If the video does not play[^1]
 
-## Integrated test
+## Integrated test {#integrated-test}
 
 Test code written by SystemVerilog can be embeded in Veryl code,
 it can be executed through `veryl test` command.
@@ -53,7 +53,7 @@ embed (inline) sv{{{
 }}}
 ```
 
-## Dependency management
+## Dependency management {#dependency-management}
 
 Veryl includes a built-in dependency management feature,
 allowing for easy incorporation of libraries by simply adding the repository path and version of the library on project settings like below.
@@ -63,7 +63,7 @@ allowing for easy incorporation of libraries by simply adding the repository pat
 "https://github.com/veryl-lang/sample" = "0.1.0"
 ```
 
-## Trailing comma
+## Trailing comma {#trailing-comma}
 
 Trailing comma is a syntax where a comma is placed after the last element in a list.
 It facilitates the addition and removal of elements and reduces unnecessary differences in version control systems.
@@ -101,7 +101,7 @@ module ModuleA (
 </tr>
 </table>
 
-## Abstraction of clock and reset
+## Abstraction of clock and reset {#abstraction-of-clock-and-reset}
 
 There is no need to specify the polarity and synchronicity of the clock and reset in the syntax;
 these can be specified during build-time configuration.
@@ -141,7 +141,7 @@ always_ff (i_clk, i_rst) {
 </tr>
 </table>
 
-## Documentation comment
+## Documentation comment {#documentation-comment}
 
 Writing module descriptions as documentation comments allows for automatic documentation generation.
 You can use not only plain text but also MarkDown format or waveform descriptions using [WaveDrom](https://wavedrom.com).
@@ -219,7 +219,7 @@ always_ff (i_clk) {
 </tr>
 </table>
 
-## Individual namespace of enum variant
+## Individual namespace of enum variant {#individual-namespace-of-enum-variant}
 
 Variants of an enum are defined within separate namespaces for each enum,
 thus preventing unintended name collisions.
@@ -261,7 +261,7 @@ assign a = EnumA::MemberA;
 </tr>
 </table>
 
-## `repeat` of concatenation
+## `repeat` of concatenation {#repeat-of-concatenation}
 
 By adopting the explicit `repeat` syntax as a repetition description in bit concatenation,
 readability improves over complex combinations of `{}`.
@@ -293,7 +293,7 @@ assign a = {X[9:0] repeat 2, Y repeat 12};
 </tr>
 </table>
 
-## `if` / `case` expression
+## `if` / `case` expression {#if--case-expression}
 
 By adopting `if` and `case` expressions instead of the ternary operator,
 readability improves, especially when comparing a large number of items.
@@ -333,7 +333,7 @@ assign a = case X {
 </tr>
 </table>
 
-## Range-based `for` / `inside` / `outside`
+## Range-based `for` / `inside` / `outside` {#range-based-for--inside--outside}
 
 With notation representing closed intervals `..=` and half-open intervals `..`,
 it is possible to uniformly describe ranges using `for`, `inside`, and `outside` (which denotes the inverse of `inside`).
@@ -371,7 +371,7 @@ for i: u32 in 0..10 {
 </tr>
 </table>
 
-## `msb` notation
+## `msb` notation {#msb-notation}
 
 The `msb` notation, indicating the most significant bit, eliminates the need to calculate the most significant bit from parameters, making intentions clearer.
 
@@ -404,7 +404,7 @@ assign a = X[msb];
 </tr>
 </table>
 
-## `let` statement
+## `let` statement {#let-statement}
 
 There is a dedicated `let` statement available for binding values simultaneously with variable declaration,
 which can be used in various contexts that were not supported in SystemVerilog.
@@ -441,7 +441,7 @@ always_ff (i_clk) {
 </tr>
 </table>
 
-## Named block
+## Named block {#named-block}
 
 You can define named blocks to limit the scope of variables.
 
@@ -472,7 +472,7 @@ end
 </tr>
 </table>
 
-## Visibility control
+## Visibility control {#visibility-control}
 
 Modules without the `pub` keyword cannot be referenced from outside the project
 and are not included in automatic documentation generation.
