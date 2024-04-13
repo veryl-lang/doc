@@ -386,11 +386,11 @@ msgstr "この章ではVerylの特徴的な機能をわかりやすい例とと�
 
 #: src/02_features.md:5
 msgid "[Real-time diagnostics](02_features.md#real-time-diagnostics)"
-msgstr "[リアルタイム診断](01_features.md#real-time-diagnostics)"
+msgstr "[リアルタイム診断](02_features.md#real-time-diagnostics)"
 
 #: src/02_features.md:6
 msgid "[Auto formatting](02_features.md#auto-formatting)"
-msgstr "[自動フォーマット](01_features.md#auto-formatting)"
+msgstr "[自動フォーマット](02_features.md#auto-formatting)"
 
 #: src/02_features.md:7
 msgid "[Integrated test](02_features.md#integrated-test)"
@@ -398,29 +398,29 @@ msgstr "[組み込みテスト](02_features.md#integrated-test)"
 
 #: src/02_features.md:8
 msgid "[Dependency management](02_features.md#dependency-management)"
-msgstr "[依存関係管理](01_features.md#dependency-management)"
+msgstr "[依存関係管理](02_features.md#dependency-management)"
 
 #: src/02_features.md:9
 msgid "[Trailing comma](02_features.md#trailing-comma)"
-msgstr "[末尾カンマ](01_features.md#trailing-comma)"
+msgstr "[末尾カンマ](02_features.md#trailing-comma)"
 
 #: src/02_features.md:10
 msgid ""
 "[Abstraction of clock and reset](02_features.md#abstraction-of-clock-and-"
 "reset)"
 msgstr ""
-"[クロックとリセットの抽象化](01_features.md#abstraction-of-clock-and-reset)"
+"[クロックとリセットの抽象化](02_features.md#abstraction-of-clock-and-reset)"
 
 #: src/02_features.md:11
 msgid "[Documentation comment](02_features.md#documentation-comment)"
-msgstr "[ドキュメンテーションコメント](01_features.md#documentation-comment)"
+msgstr "[ドキュメンテーションコメント](02_features.md#documentation-comment)"
 
 #: src/02_features.md:12
 msgid ""
 "[Compound assignment operator in `always_ff`](02_features.md#compound-"
 "assignment-operator-in-always_ff)"
 msgstr ""
-"[`always_ff` での複合代入演算子](01_features.md#compound-assignment-operator-"
+"[`always_ff` での複合代入演算子](02_features.md#compound-assignment-operator-"
 "in-always_ff)"
 
 #: src/02_features.md:13
@@ -428,40 +428,40 @@ msgid ""
 "[Individual namespace of enum variant](02_features.md#individual-namespace-"
 "of-enum-variant)"
 msgstr ""
-"[独立した名前空間を持つenumバリアント](01_features.md#individual-namespace-"
+"[独立した名前空間を持つenumバリアント](02_features.md#individual-namespace-"
 "of-enum-variant)"
 
 #: src/02_features.md:14
 msgid "[`repeat` of concatenation](02_features.md#repeat-of-concatenation)"
-msgstr "[ビット連結における `repeat`](01_features.md#repeat-of-concatenation)"
+msgstr "[ビット連結における `repeat`](02_features.md#repeat-of-concatenation)"
 
 #: src/02_features.md:15
 msgid "[`if` / `case` expression](02_features.md#if--case-expression)"
-msgstr "[`if` / `case` 式](01_features.md#if--case-expression)"
+msgstr "[`if` / `case` 式](02_features.md#if--case-expression)"
 
 #: src/02_features.md:16
 msgid ""
 "[Range-based `for` / `inside` / `outside`](02_features.md#range-based-for--"
 "inside--outside)"
 msgstr ""
-"[範囲 `for` / `inside` / `outside`](01_features.md#range-based-for--inside--"
+"[範囲 `for` / `inside` / `outside`](02_features.md#range-based-for--inside--"
 "outside)"
 
 #: src/02_features.md:17
 msgid "[`msb` notation](02_features.md#msb-notation)"
-msgstr "[`msb` 記法](01_features.md#msb-notation)"
+msgstr "[`msb` 記法](02_features.md#msb-notation)"
 
 #: src/02_features.md:18
 msgid "[`let` statement](02_features.md#let-statement)"
-msgstr "[`let` 文](01_features.md#let-statement)"
+msgstr "[`let` 文](02_features.md#let-statement)"
 
 #: src/02_features.md:19
 msgid "[Named block](02_features.md#named-block)"
-msgstr "[名前付きブロック](01_features.md#named-block)"
+msgstr "[名前付きブロック](02_features.md#named-block)"
 
 #: src/02_features.md:20
 msgid "[Visibility control](02_features.md#visibility-control)"
-msgstr "[可視性制御](01_features.md#visibility-control)"
+msgstr "[可視性制御](02_features.md#visibility-control)"
 
 #: src/02_features.md:22
 msgid "Real-time diagnostics"
