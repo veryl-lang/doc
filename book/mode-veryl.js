@@ -5,7 +5,7 @@ var VerylHighlightRules = function () {
     var keywords = "always_comb|always_ff|as|assign|async_high|async_low|bit|else|enum|export|" +
         "f32|f64|final|for|function|i32|i64|if|if_reset|import|in|initial|inout|input|" +
         "inside|inst|interface|local|logic|modport|module|negedge|output|outside|" +
-        "package|param|posedge|pub|ref|repeat|return|signed|step|struct|sync_high|sync_low|tri|u32|u64|var|let|break|embed";
+        "package|param|posedge|pub|ref|repeat|return|signed|step|struct|sync_high|sync_low|tri|u32|u64|var|let|break|embed|include";
     var keywordMapper = this.createKeywordMapper({
         "keyword": keywords,
     }, "identifier", false);

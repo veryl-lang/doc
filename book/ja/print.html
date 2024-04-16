@@ -1664,6 +1664,7 @@ pub package PackageA {
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="他言語組み込み"><a class="header" href="#他言語組み込み">他言語組み込み</a></h1>
+<h2 id="embed-宣言"><a class="header" href="#embed-宣言"><code>embed</code> 宣言</a></h2>
 <p><code>embed</code> 宣言により他言語をコードに埋め込むことができます。<code>embed</code> 宣言の第一引数は埋め込み方法です。以下の方法がサポートされています。</p>
 <ul>
 <li><code>inline</code>: コードをそのまま展開する</li>
@@ -1676,6 +1677,10 @@ pub package PackageA {
     module ModuleSv;
     endmodule
 }}}
+</code></pre>
+<h2 id="include-宣言"><a class="header" href="#include-宣言"><code>include</code> 宣言</a></h2>
+<p><code>include</code> 宣言により他言語のファイルを含めることができます。<code>include</code> 宣言の第一引数は <code>embed</code> 宣言と同じです。第二引数はソースコードからの相対ファイルパスです。</p>
+<pre><code class="language-veryl">include(inline, "module.sv");
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="組み込みテスト"><a class="header" href="#組み込みテスト">組み込みテスト</a></h1>
 <p>組み込みテストは <code>#[test(test_name)]</code> アトリビュートでマークすることができます。マークされたブロックはテストとして認識され、 <code>veryl test</code> コマンドによって実行されます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>

@@ -250,6 +250,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="foreign-language-integration"><a class="header" href="#foreign-language-integration">Foreign Language Integration</a></h1>
+<h2 id="embed-declaration"><a class="header" href="#embed-declaration"><code>embed</code> declaration</a></h2>
 <p><code>embed</code> declaration can embed the code of foreign languages.
 The first argument of <code>embed</code> declaration shows the way of embedding.
 The following ways are supported:</p>
@@ -265,6 +266,11 @@ The following <code>lang</code> specifiers are supported:</p>
     module ModuleSv;
     endmodule
 }}}
+</code></pre>
+<h2 id="include-declaration"><a class="header" href="#include-declaration"><code>include</code> declaration</a></h2>
+<p><code>include</code> declaration can include a file of foreign languages.
+The first argument is the same as <code>embed</code> declaration, and the second is a relative file path from the source code.</p>
+<pre><code class="language-veryl">include(inline, "module.sv");
 </code></pre>
 
                     </main>
