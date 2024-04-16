@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-04-13T22:56:54+09:00\n"
+"POT-Creation-Date: 2024-04-16T10:19:44+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -39,23 +39,23 @@ msgstr "Hello, World!"
 msgid "Code Examples"
 msgstr "コード例"
 
-#: src/SUMMARY.md:9 src/SUMMARY.md:52 src/04_code_examples/01_module.md:1
+#: src/SUMMARY.md:9 src/SUMMARY.md:53 src/04_code_examples/01_module.md:1
 #: src/05_language_reference/07_module.md:1
 msgid "Module"
 msgstr "モジュール"
 
-#: src/SUMMARY.md:10 src/SUMMARY.md:50
+#: src/SUMMARY.md:10 src/SUMMARY.md:51
 #: src/04_code_examples/02_instantiation.md:1
 #: src/05_language_reference/06_declaration/10_instantiation.md:1
 msgid "Instantiation"
 msgstr "インスタンス"
 
-#: src/SUMMARY.md:11 src/SUMMARY.md:53 src/04_code_examples/03_interface.md:1
+#: src/SUMMARY.md:11 src/SUMMARY.md:54 src/04_code_examples/03_interface.md:1
 #: src/05_language_reference/08_interface.md:1
 msgid "Interface"
 msgstr "インターフェース"
 
-#: src/SUMMARY.md:12 src/SUMMARY.md:54 src/04_code_examples/04_package.md:1
+#: src/SUMMARY.md:12 src/SUMMARY.md:55 src/04_code_examples/04_package.md:1
 #: src/05_language_reference/09_package.md:1
 msgid "Package"
 msgstr "パッケージ"
@@ -83,216 +83,221 @@ msgstr "演算子"
 msgid "Number"
 msgstr "数値"
 
-#: src/SUMMARY.md:18 src/05_language_reference/03_data_type.md:1
+#: src/SUMMARY.md:18
+#: src/05_language_reference/02_lexical_structure/03_array_literal.md:1
+msgid "Array Literal"
+msgstr "配列リテラル"
+
+#: src/SUMMARY.md:19 src/05_language_reference/03_data_type.md:1
 msgid "Data Type"
 msgstr "データ型"
 
-#: src/SUMMARY.md:19
+#: src/SUMMARY.md:20
 #: src/05_language_reference/03_data_type/01_builtin_type.md:1
 msgid "Builtin Type"
 msgstr "組み込み型"
 
-#: src/SUMMARY.md:20
+#: src/SUMMARY.md:21
 #: src/05_language_reference/03_data_type/02_user_defined_type.md:1
 msgid "User Defined Type"
 msgstr "ユーザ定義型"
 
-#: src/SUMMARY.md:21 src/05_language_reference/03_data_type/03_array.md:1
+#: src/SUMMARY.md:22 src/05_language_reference/03_data_type/03_array.md:1
 msgid "Array"
 msgstr "配列"
 
-#: src/SUMMARY.md:22 src/05_language_reference/04_expression.md:1
+#: src/SUMMARY.md:23 src/05_language_reference/04_expression.md:1
 msgid "Expression"
 msgstr "式"
 
-#: src/SUMMARY.md:23
+#: src/SUMMARY.md:24
 #: src/05_language_reference/04_expression/01_operator_precedence.md:1
 msgid "Operator Precedence"
 msgstr "演算子の優先順位"
 
-#: src/SUMMARY.md:24 src/SUMMARY.md:34
+#: src/SUMMARY.md:25 src/SUMMARY.md:35
 #: src/05_language_reference/04_expression/02_function_call.md:1
 #: src/05_language_reference/05_statement/02_function_call.md:1
 msgid "Function Call"
 msgstr "関数呼び出し"
 
-#: src/SUMMARY.md:25
+#: src/SUMMARY.md:26
 #: src/05_language_reference/04_expression/03_concatenation.md:1
 msgid "Concatenation"
 msgstr "連結"
 
-#: src/SUMMARY.md:26 src/SUMMARY.md:35
+#: src/SUMMARY.md:27 src/SUMMARY.md:36
 #: src/05_language_reference/04_expression/04_if.md:1
 #: src/05_language_reference/05_statement/03_if.md:1
 msgid "If"
 msgstr "if"
 
-#: src/SUMMARY.md:27 src/SUMMARY.md:36
+#: src/SUMMARY.md:28 src/SUMMARY.md:37
 #: src/05_language_reference/04_expression/05_case.md:1
 #: src/05_language_reference/05_statement/04_case.md:1
 msgid "Case"
 msgstr "case"
 
-#: src/SUMMARY.md:28 src/05_language_reference/04_expression/06_bit_select.md:1
+#: src/SUMMARY.md:29 src/05_language_reference/04_expression/06_bit_select.md:1
 msgid "Bit Select"
 msgstr "ビット選択"
 
-#: src/SUMMARY.md:29 src/05_language_reference/04_expression/07_range.md:1
+#: src/SUMMARY.md:30 src/05_language_reference/04_expression/07_range.md:1
 msgid "Range"
 msgstr "範囲"
 
-#: src/SUMMARY.md:30 src/05_language_reference/04_expression/08_msb_lsb.md:1
+#: src/SUMMARY.md:31 src/05_language_reference/04_expression/08_msb_lsb.md:1
 msgid "Msb / Lsb"
 msgstr "msb / lsb"
 
-#: src/SUMMARY.md:31
+#: src/SUMMARY.md:32
 #: src/05_language_reference/04_expression/09_inside_outside.md:1
 msgid "Inside / Outside"
 msgstr "inside / outside"
 
-#: src/SUMMARY.md:32 src/05_language_reference/05_statement.md:1
+#: src/SUMMARY.md:33 src/05_language_reference/05_statement.md:1
 msgid "Statement"
 msgstr "文"
 
-#: src/SUMMARY.md:33 src/05_language_reference/05_statement/01_assignment.md:1
+#: src/SUMMARY.md:34 src/05_language_reference/05_statement/01_assignment.md:1
 msgid "Assignment"
 msgstr "代入"
 
-#: src/SUMMARY.md:37 src/05_language_reference/05_statement/05_for.md:1
+#: src/SUMMARY.md:38 src/05_language_reference/05_statement/05_for.md:1
 msgid "For"
 msgstr "for"
 
-#: src/SUMMARY.md:38 src/05_language_reference/05_statement/06_return.md:1
+#: src/SUMMARY.md:39 src/05_language_reference/05_statement/06_return.md:1
 msgid "Return"
 msgstr "return"
 
-#: src/SUMMARY.md:39 src/05_language_reference/05_statement/07_let.md:1
+#: src/SUMMARY.md:40 src/05_language_reference/05_statement/07_let.md:1
 msgid "Let"
 msgstr "let"
 
-#: src/SUMMARY.md:40 src/05_language_reference/06_declaration.md:1
+#: src/SUMMARY.md:41 src/05_language_reference/06_declaration.md:1
 msgid "Declaration"
 msgstr "宣言"
 
-#: src/SUMMARY.md:41 src/05_language_reference/06_declaration/01_variable.md:1
+#: src/SUMMARY.md:42 src/05_language_reference/06_declaration/01_variable.md:1
 msgid "Variable"
 msgstr "変数"
 
-#: src/SUMMARY.md:42 src/05_language_reference/06_declaration/02_parameter.md:1
+#: src/SUMMARY.md:43 src/05_language_reference/06_declaration/02_parameter.md:1
 msgid "Parameter"
 msgstr "パラメータ"
 
-#: src/SUMMARY.md:43 src/05_language_reference/06_declaration/03_register.md:1
+#: src/SUMMARY.md:44 src/05_language_reference/06_declaration/03_register.md:1
 msgid "Register"
 msgstr "レジスタ"
 
-#: src/SUMMARY.md:44
+#: src/SUMMARY.md:45
 #: src/05_language_reference/06_declaration/04_combinational.md:1
 msgid "Combinational"
 msgstr "組み合わせ回路"
 
-#: src/SUMMARY.md:45 src/05_language_reference/06_declaration/05_assign.md:1
+#: src/SUMMARY.md:46 src/05_language_reference/06_declaration/05_assign.md:1
 msgid "Assign"
 msgstr "assign"
 
-#: src/SUMMARY.md:46 src/05_language_reference/06_declaration/06_function.md:1
+#: src/SUMMARY.md:47 src/05_language_reference/06_declaration/06_function.md:1
 msgid "Function"
 msgstr "関数"
 
-#: src/SUMMARY.md:47
+#: src/SUMMARY.md:48
 #: src/05_language_reference/06_declaration/07_initial_final.md:1
 msgid "Initial / Final"
 msgstr "initial / final"
 
-#: src/SUMMARY.md:48 src/05_language_reference/06_declaration/08_attribute.md:1
+#: src/SUMMARY.md:49 src/05_language_reference/06_declaration/08_attribute.md:1
 msgid "Attribute"
 msgstr "アトリビュート"
 
-#: src/SUMMARY.md:49 src/05_language_reference/06_declaration/09_generate.md:1
+#: src/SUMMARY.md:50 src/05_language_reference/06_declaration/09_generate.md:1
 msgid "Generate"
 msgstr "生成"
 
-#: src/SUMMARY.md:51
+#: src/SUMMARY.md:52
 #: src/05_language_reference/06_declaration/11_named_block.md:1
 msgid "Named Block"
 msgstr "名前付きブロック"
 
-#: src/SUMMARY.md:55
+#: src/SUMMARY.md:56
 #: src/05_language_reference/10_systemverilog_interoperation.md:1
 msgid "SystemVerilog Interoperation"
 msgstr "SystemVerilogとの相互運用"
 
-#: src/SUMMARY.md:56 src/05_language_reference/11_visibility.md:1
+#: src/SUMMARY.md:57 src/05_language_reference/11_visibility.md:1
 msgid "Visibility"
 msgstr "可視性"
 
-#: src/SUMMARY.md:57
+#: src/SUMMARY.md:58
 #: src/05_language_reference/12_foreign_language_integration.md:1
 msgid "Foreign Language Integration"
 msgstr "他言語組み込み"
 
-#: src/SUMMARY.md:58 src/05_language_reference/13_integrated_test.md:1
+#: src/SUMMARY.md:59 src/05_language_reference/13_integrated_test.md:1
 msgid "Integrated Test"
 msgstr "組み込みテスト"
 
-#: src/SUMMARY.md:59 src/06_development_environment.md:1
+#: src/SUMMARY.md:60 src/06_development_environment.md:1
 msgid "Development Environment"
 msgstr "開発環境"
 
-#: src/SUMMARY.md:60
+#: src/SUMMARY.md:61
 #: src/06_development_environment/01_project_configuration.md:1
 msgid "Project Configuration"
 msgstr "プロジェクト設定"
 
-#: src/SUMMARY.md:61 src/06_development_environment/02_dependencies.md:1
+#: src/SUMMARY.md:62 src/06_development_environment/02_dependencies.md:1
 msgid "Dependencies"
 msgstr "依存関係"
 
-#: src/SUMMARY.md:62 src/06_development_environment/03_publish_project.md:1
+#: src/SUMMARY.md:63 src/06_development_environment/03_publish_project.md:1
 msgid "Publish Project"
 msgstr "プロジェクトを公開する"
 
-#: src/SUMMARY.md:63 src/06_development_environment/04_directory_layout.md:1
+#: src/SUMMARY.md:64 src/06_development_environment/04_directory_layout.md:1
 msgid "Directory Layout"
 msgstr "ディレクトリ構成"
 
-#: src/SUMMARY.md:64 src/06_development_environment/05_formatter.md:1
+#: src/SUMMARY.md:65 src/06_development_environment/05_formatter.md:1
 msgid "Formatter"
 msgstr "フォーマッタ"
 
-#: src/SUMMARY.md:65 src/06_development_environment/06_linter.md:1
+#: src/SUMMARY.md:66 src/06_development_environment/06_linter.md:1
 msgid "Linter"
 msgstr "リンタ"
 
-#: src/SUMMARY.md:66 src/06_development_environment/07_simulator.md:1
+#: src/SUMMARY.md:67 src/06_development_environment/07_simulator.md:1
 msgid "Simulator"
 msgstr "シミュレータ"
 
-#: src/SUMMARY.md:67 src/06_development_environment/08_language_server.md:1
+#: src/SUMMARY.md:68 src/06_development_environment/08_language_server.md:1
 msgid "Language Server"
 msgstr "言語サーバ"
 
-#: src/SUMMARY.md:68 src/06_development_environment/09_compatibility.md:1
+#: src/SUMMARY.md:69 src/06_development_environment/09_compatibility.md:1
 msgid "Compatibility"
 msgstr "互換性"
 
-#: src/SUMMARY.md:69 src/06_development_environment/10_documentation.md:1
+#: src/SUMMARY.md:70 src/06_development_environment/10_documentation.md:1
 msgid "Documentation"
 msgstr "ドキュメンテーション"
 
-#: src/SUMMARY.md:70 src/06_development_environment/11_github_action.md:1
+#: src/SUMMARY.md:71 src/06_development_environment/11_github_action.md:1
 msgid "GitHub Action"
 msgstr "GitHub Action"
 
-#: src/SUMMARY.md:71 src/07_appendix.md:1
+#: src/SUMMARY.md:72 src/07_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:72 src/07_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:73 src/07_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:73 src/07_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:74 src/07_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -512,7 +517,8 @@ msgid ""
 "Test code written by SystemVerilog can be embeded in Veryl code, it can be "
 "executed through `veryl test` command."
 msgstr ""
-"SystemVerilogで書かれたテストコードをVerylに埋め込み、`veryl test` コマンドで実行することができます。"
+"SystemVerilogで書かれたテストコードをVerylに埋め込み、`veryl test` コマンドで"
+"実行することができます。"
 
 #: src/02_features.md:45
 msgid ""
@@ -1816,6 +1822,31 @@ msgstr ""
 "01_23_45_67_89.01_23_45_67_89E-01_23_45_67_89\n"
 "```"
 
+#: src/05_language_reference/02_lexical_structure/03_array_literal.md:3
+msgid ""
+"`'{}` represents array literal. In the literal, expression, `repeat` keyword "
+"and `default` keyword can be placed."
+msgstr ""
+"`'{}` は配列リテラルを表します。リテラル内には式、`repeat` キーワード、`default` キーワードを配置することができます。"
+
+#: src/05_language_reference/02_lexical_structure/03_array_literal.md:6
+msgid ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    let _a: logic[3] = '{1, 2, 3};\n"
+"    let _b: logic[3] = '{1 repeat 3}; // '{1, 1, 1}\n"
+"    let _c: logic[3] = '{default: 3}; // '{3, 3, 3}\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    let _a: logic[3] = '{1, 2, 3};\n"
+"    let _b: logic[3] = '{1 repeat 3}; // '{1, 1, 1}\n"
+"    let _c: logic[3] = '{default: 3}; // '{3, 3, 3}\n"
+"}\n"
+"```"
+
 #: src/05_language_reference/03_data_type.md:3
 msgid "In this chapter, we'll discuss about data type."
 msgstr "この章ではデータ型について説明します。"
@@ -2703,16 +2734,18 @@ msgid ""
 "block will be identified as test, and executed through `veryl test` command. "
 "The top level module of the block must have the same name as the test name."
 msgstr ""
-"組み込みテストは `#[test(test_name)]` アトリビュートでマークすることができます。"
-"マークされたブロックはテストとして認識され、 `veryl test` コマンドによって実行されます。"
-"ブロックのトップレベルモジュールはテスト名と同じでなければなりません。"
+"組み込みテストは `#[test(test_name)]` アトリビュートでマークすることができま"
+"す。マークされたブロックはテストとして認識され、 `veryl test` コマンドによっ"
+"て実行されます。ブロックのトップレベルモジュールはテスト名と同じでなければな"
+"りません。"
 
 #: src/05_language_reference/13_integrated_test.md:7
 msgid ""
 "The following example, a SystemVerilog source code embeded by `embed` "
 "declaration are marked as test."
 msgstr ""
-"以下の例では SystemVerilog のソースコードを `embed` 宣言で埋め込み、テストとしてマークしています。"
+"以下の例では SystemVerilog のソースコードを `embed` 宣言で埋め込み、テストと"
+"してマークしています。"
 
 #: src/05_language_reference/13_integrated_test.md:9
 msgid ""
@@ -2743,7 +2776,8 @@ msgid ""
 "About RTL simulator used by `veryl test`, see [Simulator]"
 "(../06_development_environment/07_simulator.md)."
 msgstr ""
-"`veryl test` で使用される RTLシミュレータについては [シミュレータ](../06_development_environment/07_simulator.md) を参照してください。"
+"`veryl test` で使用される RTLシミュレータについては [シミュレータ]"
+"(../06_development_environment/07_simulator.md) を参照してください。"
 
 #: src/06_development_environment.md:3
 msgid ""
@@ -3257,7 +3291,8 @@ msgid ""
 "The `[test]` section contains the configurations of test by RTL simulator. "
 "Available configurations is [here](./07_simulator.md)."
 msgstr ""
-"`[test]` セクションはRTLシミュレータによるテストの設定です。詳細は[こちら](./07_simulator.md)。"
+"`[test]` セクションはRTLシミュレータによるテストの設定です。詳細は[こちら]"
+"(./07_simulator.md)。"
 
 #: src/06_development_environment/01_project_configuration.md:173
 msgid "The `[publish]` section"
@@ -4420,8 +4455,8 @@ msgid ""
 "Test by RTL simulator is executed through `veryl test`. Supported simulators "
 "are below:"
 msgstr ""
-"RTLシミュレータによるテストは `veryl test` で実行することができます。"
-"サポートされているシミュレータは以下の通りです。"
+"RTLシミュレータによるテストは `veryl test` で実行することができます。サポート"
+"されているシミュレータは以下の通りです。"
 
 #: src/06_development_environment/07_simulator.md:6
 msgid "[Verilator](https://www.veripool.org/verilator/)"
@@ -4446,7 +4481,8 @@ msgid ""
 "Verilator is the default simulator. If no simulator is specified through "
 "`Veryl.toml` and commandline option, it will be used."
 msgstr ""
-"Verilatorはデフォルトのシミュレータです。`Veryl.toml`やコマンドラインオプションでシミュレータが指定されていない場合に使用されます。"
+"Verilatorはデフォルトのシミュレータです。`Veryl.toml`やコマンドラインオプショ"
+"ンでシミュレータが指定されていない場合に使用されます。"
 
 #: src/06_development_environment/07_simulator.md:13
 msgid ""
