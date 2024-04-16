@@ -993,9 +993,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.115"
+version = "1.0.116"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "12dc5c46daa8e9fdf4f5e71b6cf9a53f2487da0e86e55808e2d35539666497dd"
+checksum = "3e17db7126d17feb94eb3fad46bf1a96b034e8aacbc2e775fe81505f8b0b2813"
 dependencies = [
  "itoa",
  "ryu",
@@ -1339,7 +1339,7 @@ checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
 [[package]]
 name = "veryl-analyzer"
 version = "0.8.2"
-source = "git+https://github.com/veryl-lang/veryl#15f4a6d1261f5fc1c7d69536721adef28ffd5a98"
+source = "git+https://github.com/veryl-lang/veryl#1598f3f2d052ce1a266744c3aee8825525fc96aa"
 dependencies = [
  "Inflector",
  "bimap",
@@ -1355,7 +1355,7 @@ dependencies = [
 [[package]]
 name = "veryl-emitter"
 version = "0.8.2"
-source = "git+https://github.com/veryl-lang/veryl#15f4a6d1261f5fc1c7d69536721adef28ffd5a98"
+source = "git+https://github.com/veryl-lang/veryl#1598f3f2d052ce1a266744c3aee8825525fc96aa"
 dependencies = [
  "serde",
  "strnum_bitwidth",
@@ -1367,7 +1367,7 @@ dependencies = [
 [[package]]
 name = "veryl-formatter"
 version = "0.8.2"
-source = "git+https://github.com/veryl-lang/veryl#15f4a6d1261f5fc1c7d69536721adef28ffd5a98"
+source = "git+https://github.com/veryl-lang/veryl#1598f3f2d052ce1a266744c3aee8825525fc96aa"
 dependencies = [
  "veryl-metadata",
  "veryl-parser",
@@ -1376,7 +1376,7 @@ dependencies = [
 [[package]]
 name = "veryl-metadata"
 version = "0.8.2"
-source = "git+https://github.com/veryl-lang/veryl#15f4a6d1261f5fc1c7d69536721adef28ffd5a98"
+source = "git+https://github.com/veryl-lang/veryl#1598f3f2d052ce1a266744c3aee8825525fc96aa"
 dependencies = [
  "directories",
  "fs4",
@@ -1399,7 +1399,7 @@ dependencies = [
 [[package]]
 name = "veryl-parser"
 version = "0.8.2"
-source = "git+https://github.com/veryl-lang/veryl#15f4a6d1261f5fc1c7d69536721adef28ffd5a98"
+source = "git+https://github.com/veryl-lang/veryl#1598f3f2d052ce1a266744c3aee8825525fc96aa"
 dependencies = [
  "anyhow",
  "bimap",
