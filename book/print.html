@@ -1926,8 +1926,9 @@ The available types are below:</p>
 <ul>
 <li><code>source</code> – as the same directory as the source code</li>
 <li><code>directory</code> – specified directory</li>
+<li><code>bundle</code> – specified file</li>
 </ul>
-<p>If you want to use <code>directory</code>, you can specify the target directory by <code>path</code> key.</p>
+<p>If you want to use <code>directory</code> or <code>bundle</code>, you should specify the target path by <code>path</code> key.</p>
 <pre><code class="language-toml">[build]
 target = {type = "directory", path = "[dst dir]"}
 </code></pre>
