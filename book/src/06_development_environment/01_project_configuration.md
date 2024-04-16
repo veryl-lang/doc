@@ -116,8 +116,9 @@ The available types are below:
 
 * `source` -- as the same directory as the source code
 * `directory` -- specified directory
+* `bundle` -- specified file
 
-If you want to use `directory`, you can specify the target directory by `path` key.
+If you want to use `directory` or `bundle`, you should specify the target path by `path` key.
 
 ```toml
 [build]
