@@ -337,8 +337,9 @@ repository = "https://github.com/veryl-lang/veryl"
 <ul>
 <li><code>source</code> – ソースコードと同じディレクトリ</li>
 <li><code>directory</code> – 特定のディレクトリ</li>
+<li><code>bundle</code> – 特定のファイル</li>
 </ul>
-<p><code>directory</code> を指定する場合は、ターゲットディレクトリを <code>path</code> キーで指定します。</p>
+<p><code>directory</code> あるいは <code>bundle</code> を指定する場合は、ターゲットパスを <code>path</code> キーで指定します。</p>
 <pre><code class="language-toml">[build]
 target = {type = "directory", path = "[dst dir]"}
 </code></pre>
