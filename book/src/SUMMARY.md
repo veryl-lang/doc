@@ -15,6 +15,7 @@
     - [Lexical Structure](./05_language_reference/02_lexical_structure.md)
         - [Operator](./05_language_reference/02_lexical_structure/01_operator.md)
         - [Number](./05_language_reference/02_lexical_structure/02_number.md)
+        - [Array Literal](./05_language_reference/02_lexical_structure/03_array_literal.md)
     - [Data Type](./05_language_reference/03_data_type.md)
         - [Builtin Type](./05_language_reference/03_data_type/01_builtin_type.md)
         - [User Defined Type](./05_language_reference/03_data_type/02_user_defined_type.md)
