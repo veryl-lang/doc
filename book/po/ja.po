@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-04-16T14:58:02+09:00\n"
+"POT-Creation-Date: 2024-04-16T22:26:26+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -2743,8 +2743,9 @@ msgid ""
 "argument is the same as `embed` declaration, and the second is a relative "
 "file path from the source code."
 msgstr ""
-"`include` 宣言により他言語のファイルを含めることができます。`include` 宣言の第一"
-"引数は `embed` 宣言と同じです。第二引数はソースコードからの相対ファイルパスです。"
+"`include` 宣言により他言語のファイルを含めることができます。`include` 宣言の"
+"第一引数は `embed` 宣言と同じです。第二引数はソースコードからの相対ファイルパ"
+"スです。"
 
 #: src/05_language_reference/12_foreign_language_integration.md:28
 msgid ""
@@ -3212,15 +3213,19 @@ msgstr "`source` -- ソースコードと同じディレクトリ"
 msgid "`directory` -- specified directory"
 msgstr "`directory` -- 特定のディレクトリ"
 
-#: src/06_development_environment/01_project_configuration.md:120
+#: src/06_development_environment/01_project_configuration.md:119
+msgid "`bundle` -- specified file"
+msgstr "`bundle` -- 特定のファイル"
+
+#: src/06_development_environment/01_project_configuration.md:121
 msgid ""
-"If you want to use `directory`, you can specify the target directory by "
-"`path` key."
+"If you want to use `directory` or `bundle`, you should specify the target "
+"path by `path` key."
 msgstr ""
-"`directory` を指定する場合は、ターゲットディレクトリを `path` キーで指定しま"
+"`directory` あるいは `bundle` を指定する場合は、ターゲットパスを `path` キーで指定しま"
 "す。"
 
-#: src/06_development_environment/01_project_configuration.md:122
+#: src/06_development_environment/01_project_configuration.md:123
 msgid ""
 "```toml\n"
 "[build]\n"
@@ -3232,11 +3237,11 @@ msgstr ""
 "target = {type = \"directory\", path = \"[dst dir]\"}\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration.md:127
+#: src/06_development_environment/01_project_configuration.md:128
 msgid "The `implicit_parameter_types` field"
 msgstr "`implicit_parameter_types` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:129
+#: src/06_development_environment/01_project_configuration.md:130
 msgid ""
 "The `implicit_parameter_types` field lists the types which will be elided in "
 "`parameter` declaration of the generated codes. This is because some EDA "
@@ -3248,7 +3253,7 @@ msgstr ""
 "を `parameter` 宣言で使うことができないためです。例えば `string` を指定する場"
 "合は以下のようにします。"
 
-#: src/06_development_environment/01_project_configuration.md:133
+#: src/06_development_environment/01_project_configuration.md:134
 #: src/06_development_environment/09_compatibility.md:18
 msgid ""
 "```toml\n"
@@ -3261,11 +3266,11 @@ msgstr ""
 "implicit_parameter_types = [\"string\"]\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration.md:138
+#: src/06_development_environment/01_project_configuration.md:139
 msgid "The `omit_project_prefix` field"
 msgstr "`omit_project_prefix` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:140
+#: src/06_development_environment/01_project_configuration.md:141
 msgid ""
 "If `omit_project_prefix` is set to `true`, the project prefix of module/"
 "interface/package name will be omitted. This is `false` by default."
@@ -3274,11 +3279,11 @@ msgstr ""
 "ケージ名のプロジェクトプレフィックスは省略されます。この値はデフォルトで "
 "`false` です。"
 
-#: src/06_development_environment/01_project_configuration.md:148
+#: src/06_development_environment/01_project_configuration.md:149
 msgid "The `strip_comments` field"
 msgstr "`strip_comments` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:150
+#: src/06_development_environment/01_project_configuration.md:151
 msgid ""
 "If `strip_comments` is set to `true`, all comments will be stripped. This is "
 "`false` by default."
@@ -3286,11 +3291,11 @@ msgstr ""
 "`strip_comments` が `true` のとき、コメント出力は省略されます。この値はデフォ"
 "ルトで `false` です。"
 
-#: src/06_development_environment/01_project_configuration.md:158
+#: src/06_development_environment/01_project_configuration.md:159
 msgid "The `[format]` section"
 msgstr "`[format]` セクション"
 
-#: src/06_development_environment/01_project_configuration.md:160
+#: src/06_development_environment/01_project_configuration.md:161
 msgid ""
 "The `[format]` section contains the configurations of code formatter. "
 "Available configurations is [here](./05_formatter.md)."
@@ -3298,23 +3303,23 @@ msgstr ""
 "`[format]` セクションはコードフォーマッターの設定です。詳細は[こちら]"
 "(./05_formatter.md)。"
 
-#: src/06_development_environment/01_project_configuration.md:163
+#: src/06_development_environment/01_project_configuration.md:164
 msgid "The `[lint]` section"
 msgstr "`[lint]` セクション"
 
-#: src/06_development_environment/01_project_configuration.md:165
+#: src/06_development_environment/01_project_configuration.md:166
 msgid ""
 "The `[lint]` section contains the configurations of linter. Available "
 "configurations is [here](./06_linter.md)."
 msgstr ""
 "`[lint]` セクションはリンタの設定です。詳細は[こちら](./06_linter.md)。"
 
-#: src/06_development_environment/01_project_configuration.md:168
+#: src/06_development_environment/01_project_configuration.md:169
 #: src/06_development_environment/07_simulator.md:21
 msgid "The `[test]` section"
 msgstr "`[test]` セクション"
 
-#: src/06_development_environment/01_project_configuration.md:170
+#: src/06_development_environment/01_project_configuration.md:171
 msgid ""
 "The `[test]` section contains the configurations of test by RTL simulator. "
 "Available configurations is [here](./07_simulator.md)."
@@ -3322,11 +3327,11 @@ msgstr ""
 "`[test]` セクションはRTLシミュレータによるテストの設定です。詳細は[こちら]"
 "(./07_simulator.md)。"
 
-#: src/06_development_environment/01_project_configuration.md:173
+#: src/06_development_environment/01_project_configuration.md:174
 msgid "The `[publish]` section"
 msgstr "`[publish]` セクション"
 
-#: src/06_development_environment/01_project_configuration.md:175
+#: src/06_development_environment/01_project_configuration.md:176
 msgid ""
 "The `[publish]` section contains the configurations of publishing. Available "
 "configurations is [here](./03_publish_project.md)."
@@ -3334,11 +3339,11 @@ msgstr ""
 "`[publish]` セクションはプロジェクト公開の設定です。詳細は[こちら]"
 "(./03_publish_project.md)。"
 
-#: src/06_development_environment/01_project_configuration.md:178
+#: src/06_development_environment/01_project_configuration.md:179
 msgid "The `[dependencies]` section"
 msgstr "`[dependencies]` セクション"
 
-#: src/06_development_environment/01_project_configuration.md:180
+#: src/06_development_environment/01_project_configuration.md:181
 msgid ""
 "The `[dependencies]` section contains library dependencies. Available "
 "configurations is [here](./02_dependencies.md)."
