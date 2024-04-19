@@ -251,6 +251,7 @@
                     <main>
                         <h1 id="組み込みテスト"><a class="header" href="#組み込みテスト">組み込みテスト</a></h1>
 <p>組み込みテストは <code>#[test(test_name)]</code> アトリビュートでマークすることができます。マークされたブロックはテストとして認識され、 <code>veryl test</code> コマンドによって実行されます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
+<p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>
 <p>以下の例では SystemVerilog のソースコードを <code>embed</code> 宣言で埋め込み、テストとしてマークしています。</p>
 <pre><code class="language-veryl playground">#[test(test1)]
 embed (inline) sv{{{

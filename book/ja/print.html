@@ -1684,6 +1684,7 @@ pub package PackageA {
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="組み込みテスト"><a class="header" href="#組み込みテスト">組み込みテスト</a></h1>
 <p>組み込みテストは <code>#[test(test_name)]</code> アトリビュートでマークすることができます。マークされたブロックはテストとして認識され、 <code>veryl test</code> コマンドによって実行されます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
+<p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>
 <p>以下の例では SystemVerilog のソースコードを <code>embed</code> 宣言で埋め込み、テストとしてマークしています。</p>
 <pre><code class="language-veryl playground">#[test(test1)]
 embed (inline) sv{{{
@@ -2633,10 +2634,7 @@ RealNumber: FixedPoint
 
 HierarchicalIdentifier: Identifier { Select } { Dot Identifier { Select } };
 ScopedIdentifier      : ( DollarIdentifier | Identifier ) { ColonColon Identifier };
-ExpressionIdentifier  : ( DollarIdentifier | Identifier ) ( ExpressionIdentifierScoped | ExpressionIdentifierMember );
-
-ExpressionIdentifierScoped: ColonColon Identifier { ColonColon Identifier } { Select };
-ExpressionIdentifierMember: { Select } { Dot Identifier { Select } };
+ExpressionIdentifier  : ScopedIdentifier { Select } { Dot Identifier { Select } };
 
 // ----------------------------------------------------------------------------
 // Expression
@@ -2888,7 +2886,7 @@ Direction: Input
 // Function
 // ----------------------------------------------------------------------------
 
-FunctionDeclaration: Function Identifier [ WithParameter ] [ PortDeclaration ] [ MinusGT ScalarType ] LBrace { FunctionItem } RBrace;
+FunctionDeclaration: Function Identifier [ PortDeclaration ] [ MinusGT ScalarType ] LBrace { FunctionItem } RBrace;
 
 FunctionItem: VarDeclaration
             | Statement

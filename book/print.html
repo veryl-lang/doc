@@ -1816,6 +1816,8 @@ The first argument is the same as <code>embed</code> declaration, and the second
 <p>Integrated test can be marked by <code>#[test(test_name)]</code> attribute.
 The marked block will be identified as test, and executed through <code>veryl test</code> command.
 The top level module of the block must have the same name as the test name.</p>
+<p>The messages through <code>$info</code>, <code>$warning</code>, <code>$error</code> and <code>$fatal</code> system function are handled by Veryl compiler, and shown as exectution log.
+The calls of <code>$error</code> and <code>$fatal</code> are treated as test failure.</p>
 <p>The following example, a SystemVerilog source code embeded by <code>embed</code> declaration are marked as test.</p>
 <pre><code class="language-veryl playground">#[test(test1)]
 embed (inline) sv{{{
@@ -2815,10 +2817,7 @@ RealNumber: FixedPoint
 
 HierarchicalIdentifier: Identifier { Select } { Dot Identifier { Select } };
 ScopedIdentifier      : ( DollarIdentifier | Identifier ) { ColonColon Identifier };
-ExpressionIdentifier  : ( DollarIdentifier | Identifier ) ( ExpressionIdentifierScoped | ExpressionIdentifierMember );
-
-ExpressionIdentifierScoped: ColonColon Identifier { ColonColon Identifier } { Select };
-ExpressionIdentifierMember: { Select } { Dot Identifier { Select } };
+ExpressionIdentifier  : ScopedIdentifier { Select } { Dot Identifier { Select } };
 
 // ----------------------------------------------------------------------------
 // Expression
@@ -3070,7 +3069,7 @@ Direction: Input
 // Function
 // ----------------------------------------------------------------------------
 
-FunctionDeclaration: Function Identifier [ WithParameter ] [ PortDeclaration ] [ MinusGT ScalarType ] LBrace { FunctionItem } RBrace;
+FunctionDeclaration: Function Identifier [ PortDeclaration ] [ MinusGT ScalarType ] LBrace { FunctionItem } RBrace;
 
 FunctionItem: VarDeclaration
             | Statement

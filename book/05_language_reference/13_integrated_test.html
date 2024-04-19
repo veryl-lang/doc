@@ -253,6 +253,8 @@
 <p>Integrated test can be marked by <code>#[test(test_name)]</code> attribute.
 The marked block will be identified as test, and executed through <code>veryl test</code> command.
 The top level module of the block must have the same name as the test name.</p>
+<p>The messages through <code>$info</code>, <code>$warning</code>, <code>$error</code> and <code>$fatal</code> system function are handled by Veryl compiler, and shown as exectution log.
+The calls of <code>$error</code> and <code>$fatal</code> are treated as test failure.</p>
 <p>The following example, a SystemVerilog source code embeded by <code>embed</code> declaration are marked as test.</p>
 <pre><code class="language-veryl playground">#[test(test1)]
 embed (inline) sv{{{
