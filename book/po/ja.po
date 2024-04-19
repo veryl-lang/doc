@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-04-19T11:53:02+09:00\n"
+"POT-Creation-Date: 2024-04-19T19:14:39+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -2774,8 +2774,9 @@ msgid ""
 "function are handled by Veryl compiler, and shown as exectution log. The "
 "calls of `$error` and `$fatal` are treated as test failure."
 msgstr ""
-"`$info`、`$warning`、`$error`、`$fatal` システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。"
-"`$error` と `$fatal` の呼び出しはテストの失敗として扱われます。"
+"`$info`、`$warning`、`$error`、`$fatal` システム関数によるメッセージは Veryl "
+"コンパイラにより実行ログとして表示されます。`$error` と `$fatal` の呼び出しは"
+"テストの失敗として扱われます。"
 
 #: src/05_language_reference/13_integrated_test.md:10
 msgid ""
@@ -4872,6 +4873,7 @@ msgstr "フォーマットとビルドチェック"
 
 #: src/06_development_environment/11_github_action.md:12
 #: src/06_development_environment/11_github_action.md:27
+#: src/06_development_environment/11_github_action.md:47
 msgid "name"
 msgstr "name"
 
@@ -4881,15 +4883,18 @@ msgstr "Check"
 
 #: src/06_development_environment/11_github_action.md:13
 #: src/06_development_environment/11_github_action.md:28
+#: src/06_development_environment/11_github_action.md:48
 msgid "push"
 msgstr "push"
 
 #: src/06_development_environment/11_github_action.md:13
+#: src/06_development_environment/11_github_action.md:48
 msgid "pull_request"
 msgstr "pull_request"
 
 #: src/06_development_environment/11_github_action.md:13
 #: src/06_development_environment/11_github_action.md:28
+#: src/06_development_environment/11_github_action.md:48
 msgid "jobs"
 msgstr "jobs"
 
@@ -4899,6 +4904,7 @@ msgstr "check"
 
 #: src/06_development_environment/11_github_action.md:16
 #: src/06_development_environment/11_github_action.md:31
+#: src/06_development_environment/11_github_action.md:51
 msgid "runs-on"
 msgstr "runs-on"
 
@@ -4909,6 +4915,7 @@ msgstr "ubuntu-latest"
 
 #: src/06_development_environment/11_github_action.md:17
 #: src/06_development_environment/11_github_action.md:32
+#: src/06_development_environment/11_github_action.md:52
 msgid "steps"
 msgstr "steps"
 
@@ -4917,22 +4924,28 @@ msgstr "steps"
 #: src/06_development_environment/11_github_action.md:33
 #: src/06_development_environment/11_github_action.md:34
 #: src/06_development_environment/11_github_action.md:36
+#: src/06_development_environment/11_github_action.md:53
+#: src/06_development_environment/11_github_action.md:54
+#: src/06_development_environment/11_github_action.md:55
 msgid "uses"
 msgstr "uses"
 
 #: src/06_development_environment/11_github_action.md:18
 #: src/06_development_environment/11_github_action.md:33
+#: src/06_development_environment/11_github_action.md:53
 msgid "actions/checkout@v4"
 msgstr "actions/checkout@v4"
 
 #: src/06_development_environment/11_github_action.md:19
 #: src/06_development_environment/11_github_action.md:34
+#: src/06_development_environment/11_github_action.md:54
 msgid "veryl-lang/setup-veryl@v1"
 msgstr "veryl-lang/setup-veryl@v1"
 
 #: src/06_development_environment/11_github_action.md:20
 #: src/06_development_environment/11_github_action.md:21
 #: src/06_development_environment/11_github_action.md:35
+#: src/06_development_environment/11_github_action.md:56
 msgid "run"
 msgstr "run"
 
@@ -4983,6 +4996,38 @@ msgstr "publish_dir"
 #: src/06_development_environment/11_github_action.md:39
 msgid "doc"
 msgstr "doc"
+
+#: src/06_development_environment/11_github_action.md:42
+msgid "Test by [Verilator](https://www.veripool.org/verilator/)"
+msgstr "[Verilator](https://www.veripool.org/verilator/) によるテスト"
+
+#: src/06_development_environment/11_github_action.md:44
+msgid ""
+"For this purpose, we provide GitHub action [veryl-lang/setup-verilator]"
+"(https://github.com/marketplace/actions/setup-verilator)."
+msgstr ""
+"このために GitHub action [veryl-lang/setup-verilator]"
+"(https://github.com/marketplace/actions/setup-verilator) を公開しています。"
+
+#: src/06_development_environment/11_github_action.md:47
+msgid "Test"
+msgstr "Test"
+
+#: src/06_development_environment/11_github_action.md:50
+msgid "test"
+msgstr "test"
+
+#: src/06_development_environment/11_github_action.md:51
+msgid "ubuntu-22.04"
+msgstr "ubuntu-22.04"
+
+#: src/06_development_environment/11_github_action.md:55
+msgid "veryl-lang/setup-verilator@v1"
+msgstr "veryl-lang/setup-verilator@v1"
+
+#: src/06_development_environment/11_github_action.md:56
+msgid "veryl test --sim verilator"
+msgstr "veryl test --sim verilator"
 
 #: src/07_appendix/01_formal_syntax.md:3
 msgid ""
