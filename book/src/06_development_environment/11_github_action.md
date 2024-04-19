@@ -38,3 +38,20 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: doc
 ```
+
+* Test by [Verilator](https://www.veripool.org/verilator/)
+
+For this purpose, we provide GitHub action [veryl-lang/setup-verilator](https://github.com/marketplace/actions/setup-verilator).
+
+```yaml
+name: Test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+    - uses: veryl-lang/setup-veryl@v1
+    - uses: veryl-lang/setup-verilator@v1
+    - run: veryl test --sim verilator
+```
