@@ -2422,6 +2422,21 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: doc
 </code></pre>
+<ul>
+<li>Test by <a href="https://www.veripool.org/verilator/">Verilator</a></li>
+</ul>
+<p>For this purpose, we provide GitHub action <a href="https://github.com/marketplace/actions/setup-verilator">veryl-lang/setup-verilator</a>.</p>
+<pre><code class="language-yaml">name: Test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+    - uses: veryl-lang/setup-veryl@v1
+    - uses: veryl-lang/setup-verilator@v1
+    - run: veryl test --sim verilator
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="formal-syntax"><a class="header" href="#formal-syntax">Formal Syntax</a></h1>
 <p>Veryl’s parser is based on parser generator <a href="https://github.com/jsinger67/parol">parol</a>.

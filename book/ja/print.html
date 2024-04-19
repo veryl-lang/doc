@@ -2240,6 +2240,21 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: doc
 </code></pre>
+<ul>
+<li><a href="https://www.veripool.org/verilator/">Verilator</a> によるテスト</li>
+</ul>
+<p>このために GitHub action <a href="https://github.com/marketplace/actions/setup-verilator">veryl-lang/setup-verilator</a> を公開しています。</p>
+<pre><code class="language-yaml">name: Test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+    - uses: veryl-lang/setup-veryl@v1
+    - uses: veryl-lang/setup-verilator@v1
+    - run: veryl test --sim verilator
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="補遺"><a class="header" href="#補遺">補遺</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="構文"><a class="header" href="#構文">構文</a></h1>
 <p>Veryl のパーサはパーサジェネレータ <a href="https://github.com/jsinger67/parol">parol</a>を使っています。以下の parol の構文定義が正式な構文です。</p>
