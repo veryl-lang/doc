@@ -36,7 +36,7 @@
     <div style="display:flex">
         <div>
             <h2>Source Code</h2>
-            <textarea id="source" rows="30" cols="50">
+            <textarea id="source" rows="50" cols="70">
 // module definition
 module ModuleA #(
     param ParamA: u32 = 10,
@@ -45,8 +45,8 @@ module ModuleA #(
     i_clk : input  logic,
     i_rst : input  logic,
     i_sel : input  logic,
-    i_data: input  logic<ParamA> [2], // `[]` means unpacked array in SystemVerilog
-    o_data: output logic<ParamA>    , // `<>` means packed array in SystemVerilog
+    i_data: input  logic<ParamA> [2], // `[]` means unpacked array
+    o_data: output logic<ParamA>    , // `<>` means packed array
 ) {
     // local parameter declaration
     //   `param` is not allowed in module
