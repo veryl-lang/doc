@@ -23,8 +23,15 @@
   <body>
     <header>
         <h1 class="header-title">Veryl Playground</h1>
-        <a href="#" class="button" onclick="build()">BUILD ▶</a>
-        <a href="#" class="button" onclick="format()">FORMAT ▶</a>
+        <div class="header-buttons">
+            <a href="#" class="button" onclick="build()">BUILD ▶</a>
+            <a href="#" class="button" onclick="format()">FORMAT ▶</a>
+            <select id="exampleSelect" onChange="changeExample(this.value)">
+                <option disabled selected value>Select Example</option>
+                <option value="hello.veryl">Hello, World!</option>
+                <option value="halfadder.veryl">Half Adder</option>
+            </select>
+        </div>
     </header>
     <div style="display:flex">
         <div>
@@ -84,6 +91,14 @@ module ModuleA #(
           if (err) {
             document.getElementById("output").textContent = content;
           } else {
+            document.getElementById("source").value = content;
+          }
+      }
+
+      window.changeExample = async (name) => {
+          const response = await fetch("./examples/" + name);
+          if (response.ok) {
+            const content = await response.text();
             document.getElementById("source").value = content;
           }
       }
