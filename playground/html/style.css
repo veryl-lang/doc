@@ -7,6 +7,7 @@ body {
 
 header {
     display: flex;
+    flex-wrap: wrap;
     position: relative;
     width: 100%;
     text-align: left;
@@ -27,6 +28,11 @@ header {
     font-family: 'Source Code Pro', monospace;
 }
 
+.header-buttons {
+    display: flex;
+    align-items: center;
+}
+
 .button {
     margin-left: 2rem;
     margin-top: 0.2rem;
@@ -40,6 +46,21 @@ header {
     background-color: #006400;
     font-size: 1rem;
     color: #ffffff;
+    font-family: 'Source Code Pro', monospace;
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+}
+
+#exampleSelect {
+    margin-left: 2rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    border-radius: 0.2rem;
+    padding: 0.5rem 1rem;
+    line-height: 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+    background-color: #ffffff;
     font-family: 'Source Code Pro', monospace;
     box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 }
