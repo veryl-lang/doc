@@ -37,25 +37,49 @@
         <div>
             <h2>Source Code</h2>
             <textarea id="source" rows="30" cols="50">
-// module declaration
+// module definition
 module ModuleA #(
-    // module parameter
-    param a : u32 = 1,
-    local aa: u32 = 1,
+    param ParamA: u32 = 10,
+    local ParamB: u32 = 10, // trailing comma is allowed
 ) (
-    // module port
-    b  : input  logic<10>,
-    bb : output logic<10>,
-    bbb: inout  logic<10>,
+    i_clk : input  logic,
+    i_rst : input  logic,
+    i_sel : input  logic,
+    i_data: input  logic<ParamA> [2], // `[]` means unpacked array in SystemVerilog
+    o_data: output logic<ParamA>    , // `<>` means packed array in SystemVerilog
 ) {
     // local parameter declaration
-    local c : u32 = 1;
-    local cc: u64 = 1;
+    //   `param` is not allowed in module
+    local ParamC: u32 = 10;
 
     // variable declaration
-    var _d  : logic        ;
-    var _dd : logic<10>    ;
-    var _ddd: bit  <10, 10>;
+    var r_data0: logic<ParamA>;
+    var r_data1: logic<ParamA>;
+
+    // value binding
+    let _w_data2: logic<ParamA> = i_data;
+
+    // always_ff statement with reset
+    //   `always_ff` can take a mandatory clock and a optional reset
+    //   `if_reset` means `if (i_rst)`. This conceals reset porality
+    //   `()` of `if` is not required
+    //   `=` in `always_ff` is non-blocking assignment
+    always_ff (i_clk, i_rst) {
+        if_reset {
+            r_data0 = 0;
+        } else if i_sel {
+            r_data0 = i_data[0];
+        } else {
+            r_data0 = i_data[1];
+        }
+    }
+
+    // always_ff statement without reset
+    always_ff (i_clk) {
+        r_data1 = r_data0;
+    }
+
+    assign o_data = r_data1;
 }
             </textarea>
         </div>
