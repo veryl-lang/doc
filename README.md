@@ -2,10 +2,10 @@
 
 [![Actions Status](https://github.com/veryl-lang/doc/workflows/Deploy/badge.svg)](https://github.com/veryl-lang/doc/actions)
 
-This is the documents of [Veryl](https://veryl-lang.org) Hardware Description Laugnage.
+This is the documents of [Veryl](https://veryl-lang.org/) Hardware Description Laugnage.
 
-* https://doc.veryl-lang.org/book
-* https://doc.veryl-lang.org/playground
+* https://doc.veryl-lang.org/book/
+* https://doc.veryl-lang.org/playground/
 
 ## License
 
