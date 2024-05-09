@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-04-21T23:01:28+09:00\n"
+"POT-Creation-Date: 2024-05-09T18:39:10+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -39,23 +39,23 @@ msgstr "Hello, World!"
 msgid "Code Examples"
 msgstr "コード例"
 
-#: src/SUMMARY.md:9 src/SUMMARY.md:54 src/04_code_examples/01_module.md:1
+#: src/SUMMARY.md:9 src/SUMMARY.md:55 src/04_code_examples/01_module.md:1
 #: src/05_language_reference/07_module.md:1
 msgid "Module"
 msgstr "モジュール"
 
-#: src/SUMMARY.md:10 src/SUMMARY.md:51
+#: src/SUMMARY.md:10 src/SUMMARY.md:52
 #: src/04_code_examples/02_instantiation.md:1
 #: src/05_language_reference/06_declaration/10_instantiation.md:1
 msgid "Instantiation"
 msgstr "インスタンス"
 
-#: src/SUMMARY.md:11 src/SUMMARY.md:55 src/04_code_examples/03_interface.md:1
+#: src/SUMMARY.md:11 src/SUMMARY.md:56 src/04_code_examples/03_interface.md:1
 #: src/05_language_reference/08_interface.md:1
 msgid "Interface"
 msgstr "インターフェース"
 
-#: src/SUMMARY.md:12 src/SUMMARY.md:56 src/04_code_examples/04_package.md:1
+#: src/SUMMARY.md:12 src/SUMMARY.md:57 src/04_code_examples/04_package.md:1
 #: src/05_language_reference/09_package.md:1
 msgid "Package"
 msgstr "パッケージ"
@@ -106,203 +106,212 @@ msgstr "ユーザ定義型"
 msgid "Array"
 msgstr "配列"
 
-#: src/SUMMARY.md:23 src/05_language_reference/04_expression.md:1
+#: src/SUMMARY.md:23 src/05_language_reference/03_data_type/04_clock_reset.md:1
+msgid "Clock / Reset"
+msgstr "クロックとリセット"
+
+#: src/SUMMARY.md:24 src/05_language_reference/04_expression.md:1
 msgid "Expression"
 msgstr "式"
 
-#: src/SUMMARY.md:24
+#: src/SUMMARY.md:25
 #: src/05_language_reference/04_expression/01_operator_precedence.md:1
 msgid "Operator Precedence"
 msgstr "演算子の優先順位"
 
-#: src/SUMMARY.md:25 src/SUMMARY.md:35
+#: src/SUMMARY.md:26 src/SUMMARY.md:36
 #: src/05_language_reference/04_expression/02_function_call.md:1
 #: src/05_language_reference/05_statement/02_function_call.md:1
 msgid "Function Call"
 msgstr "関数呼び出し"
 
-#: src/SUMMARY.md:26
+#: src/SUMMARY.md:27
 #: src/05_language_reference/04_expression/03_concatenation.md:1
 msgid "Concatenation"
 msgstr "連結"
 
-#: src/SUMMARY.md:27 src/SUMMARY.md:36
+#: src/SUMMARY.md:28 src/SUMMARY.md:37
 #: src/05_language_reference/04_expression/04_if.md:1
 #: src/05_language_reference/05_statement/03_if.md:1
 msgid "If"
 msgstr "if"
 
-#: src/SUMMARY.md:28 src/SUMMARY.md:37
+#: src/SUMMARY.md:29 src/SUMMARY.md:38
 #: src/05_language_reference/04_expression/05_case.md:1
 #: src/05_language_reference/05_statement/04_case.md:1
 msgid "Case"
 msgstr "case"
 
-#: src/SUMMARY.md:29 src/05_language_reference/04_expression/06_bit_select.md:1
+#: src/SUMMARY.md:30 src/05_language_reference/04_expression/06_bit_select.md:1
 msgid "Bit Select"
 msgstr "ビット選択"
 
-#: src/SUMMARY.md:30 src/05_language_reference/04_expression/07_range.md:1
+#: src/SUMMARY.md:31 src/05_language_reference/04_expression/07_range.md:1
 msgid "Range"
 msgstr "範囲"
 
-#: src/SUMMARY.md:31 src/05_language_reference/04_expression/08_msb_lsb.md:1
+#: src/SUMMARY.md:32 src/05_language_reference/04_expression/08_msb_lsb.md:1
 msgid "Msb / Lsb"
 msgstr "msb / lsb"
 
-#: src/SUMMARY.md:32
+#: src/SUMMARY.md:33
 #: src/05_language_reference/04_expression/09_inside_outside.md:1
 msgid "Inside / Outside"
 msgstr "inside / outside"
 
-#: src/SUMMARY.md:33 src/05_language_reference/05_statement.md:1
+#: src/SUMMARY.md:34 src/05_language_reference/05_statement.md:1
 msgid "Statement"
 msgstr "文"
 
-#: src/SUMMARY.md:34 src/05_language_reference/05_statement/01_assignment.md:1
+#: src/SUMMARY.md:35 src/05_language_reference/05_statement/01_assignment.md:1
 msgid "Assignment"
 msgstr "代入"
 
-#: src/SUMMARY.md:38 src/05_language_reference/05_statement/05_for.md:1
+#: src/SUMMARY.md:39 src/05_language_reference/05_statement/05_for.md:1
 msgid "For"
 msgstr "for"
 
-#: src/SUMMARY.md:39 src/05_language_reference/05_statement/06_return.md:1
+#: src/SUMMARY.md:40 src/05_language_reference/05_statement/06_return.md:1
 msgid "Return"
 msgstr "return"
 
-#: src/SUMMARY.md:40 src/05_language_reference/05_statement/07_let.md:1
+#: src/SUMMARY.md:41 src/05_language_reference/05_statement/07_let.md:1
 msgid "Let"
 msgstr "let"
 
-#: src/SUMMARY.md:41 src/05_language_reference/06_declaration.md:1
+#: src/SUMMARY.md:42 src/05_language_reference/06_declaration.md:1
 msgid "Declaration"
 msgstr "宣言"
 
-#: src/SUMMARY.md:42 src/05_language_reference/06_declaration/01_variable.md:1
+#: src/SUMMARY.md:43 src/05_language_reference/06_declaration/01_variable.md:1
 msgid "Variable"
 msgstr "変数"
 
-#: src/SUMMARY.md:43 src/05_language_reference/06_declaration/02_parameter.md:1
+#: src/SUMMARY.md:44 src/05_language_reference/06_declaration/02_parameter.md:1
 msgid "Parameter"
 msgstr "パラメータ"
 
-#: src/SUMMARY.md:44 src/05_language_reference/06_declaration/03_register.md:1
+#: src/SUMMARY.md:45 src/05_language_reference/06_declaration/03_register.md:1
 msgid "Register"
 msgstr "レジスタ"
 
-#: src/SUMMARY.md:45
+#: src/SUMMARY.md:46
 #: src/05_language_reference/06_declaration/04_combinational.md:1
 msgid "Combinational"
 msgstr "組み合わせ回路"
 
-#: src/SUMMARY.md:46 src/05_language_reference/06_declaration/05_assign.md:1
+#: src/SUMMARY.md:47 src/05_language_reference/06_declaration/05_assign.md:1
 msgid "Assign"
 msgstr "assign"
 
-#: src/SUMMARY.md:47 src/05_language_reference/06_declaration/06_function.md:1
+#: src/SUMMARY.md:48 src/05_language_reference/06_declaration/06_function.md:1
 msgid "Function"
 msgstr "関数"
 
-#: src/SUMMARY.md:48
+#: src/SUMMARY.md:49
 #: src/05_language_reference/06_declaration/07_initial_final.md:1
 msgid "Initial / Final"
 msgstr "initial / final"
 
-#: src/SUMMARY.md:49 src/05_language_reference/06_declaration/08_attribute.md:1
+#: src/SUMMARY.md:50 src/05_language_reference/06_declaration/08_attribute.md:1
 msgid "Attribute"
 msgstr "アトリビュート"
 
-#: src/SUMMARY.md:50 src/05_language_reference/06_declaration/09_generate.md:1
+#: src/SUMMARY.md:51 src/05_language_reference/06_declaration/09_generate.md:1
 msgid "Generate"
 msgstr "生成"
 
-#: src/SUMMARY.md:52
+#: src/SUMMARY.md:53
 #: src/05_language_reference/06_declaration/11_named_block.md:1
 msgid "Named Block"
 msgstr "名前付きブロック"
 
-#: src/SUMMARY.md:53
+#: src/SUMMARY.md:54
 #: src/05_language_reference/06_declaration/12_import_export.md:1
 msgid "Import / Export"
 msgstr "Import / Export"
 
-#: src/SUMMARY.md:57
+#: src/SUMMARY.md:58
 #: src/05_language_reference/10_systemverilog_interoperation.md:1
 msgid "SystemVerilog Interoperation"
 msgstr "SystemVerilogとの相互運用"
 
-#: src/SUMMARY.md:58 src/05_language_reference/11_visibility.md:1
+#: src/SUMMARY.md:59 src/05_language_reference/11_visibility.md:1
 msgid "Visibility"
 msgstr "可視性"
 
-#: src/SUMMARY.md:59
+#: src/SUMMARY.md:60
 #: src/05_language_reference/12_foreign_language_integration.md:1
 msgid "Foreign Language Integration"
 msgstr "他言語組み込み"
 
-#: src/SUMMARY.md:60 src/05_language_reference/13_integrated_test.md:1
+#: src/SUMMARY.md:61 src/05_language_reference/13_integrated_test.md:1
 msgid "Integrated Test"
 msgstr "組み込みテスト"
 
-#: src/SUMMARY.md:61 src/06_development_environment.md:1
+#: src/SUMMARY.md:62 src/02_features.md:67
+#: src/05_language_reference/14_generics.md:1
+msgid "Generics"
+msgstr "ジェネリクス"
+
+#: src/SUMMARY.md:63 src/06_development_environment.md:1
 msgid "Development Environment"
 msgstr "開発環境"
 
-#: src/SUMMARY.md:62
+#: src/SUMMARY.md:64
 #: src/06_development_environment/01_project_configuration.md:1
 msgid "Project Configuration"
 msgstr "プロジェクト設定"
 
-#: src/SUMMARY.md:63 src/06_development_environment/02_dependencies.md:1
+#: src/SUMMARY.md:65 src/06_development_environment/02_dependencies.md:1
 msgid "Dependencies"
 msgstr "依存関係"
 
-#: src/SUMMARY.md:64 src/06_development_environment/03_publish_project.md:1
+#: src/SUMMARY.md:66 src/06_development_environment/03_publish_project.md:1
 msgid "Publish Project"
 msgstr "プロジェクトを公開する"
 
-#: src/SUMMARY.md:65 src/06_development_environment/04_directory_layout.md:1
+#: src/SUMMARY.md:67 src/06_development_environment/04_directory_layout.md:1
 msgid "Directory Layout"
 msgstr "ディレクトリ構成"
 
-#: src/SUMMARY.md:66 src/06_development_environment/05_formatter.md:1
+#: src/SUMMARY.md:68 src/06_development_environment/05_formatter.md:1
 msgid "Formatter"
 msgstr "フォーマッタ"
 
-#: src/SUMMARY.md:67 src/06_development_environment/06_linter.md:1
+#: src/SUMMARY.md:69 src/06_development_environment/06_linter.md:1
 msgid "Linter"
 msgstr "リンタ"
 
-#: src/SUMMARY.md:68 src/06_development_environment/07_simulator.md:1
+#: src/SUMMARY.md:70 src/06_development_environment/07_simulator.md:1
 msgid "Simulator"
 msgstr "シミュレータ"
 
-#: src/SUMMARY.md:69 src/06_development_environment/08_language_server.md:1
+#: src/SUMMARY.md:71 src/06_development_environment/08_language_server.md:1
 msgid "Language Server"
 msgstr "言語サーバ"
 
-#: src/SUMMARY.md:70 src/06_development_environment/09_compatibility.md:1
+#: src/SUMMARY.md:72 src/06_development_environment/09_compatibility.md:1
 msgid "Compatibility"
 msgstr "互換性"
 
-#: src/SUMMARY.md:71 src/06_development_environment/10_documentation.md:1
+#: src/SUMMARY.md:73 src/06_development_environment/10_documentation.md:1
 msgid "Documentation"
 msgstr "ドキュメンテーション"
 
-#: src/SUMMARY.md:72 src/06_development_environment/11_github_action.md:1
+#: src/SUMMARY.md:74 src/06_development_environment/11_github_action.md:1
 msgid "GitHub Action"
 msgstr "GitHub Action"
 
-#: src/SUMMARY.md:73 src/07_appendix.md:1
+#: src/SUMMARY.md:75 src/07_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:74 src/07_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:76 src/07_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:75 src/07_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:77 src/07_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -411,21 +420,25 @@ msgid "[Dependency management](02_features.md#dependency-management)"
 msgstr "[依存関係管理](02_features.md#dependency-management)"
 
 #: src/02_features.md:9
+msgid "[Generics](02_features.md#generics)"
+msgstr "[ジェネリクス](02_features.md#generics)"
+
+#: src/02_features.md:10
 msgid "[Trailing comma](02_features.md#trailing-comma)"
 msgstr "[末尾カンマ](02_features.md#trailing-comma)"
 
-#: src/02_features.md:10
+#: src/02_features.md:11
 msgid ""
 "[Abstraction of clock and reset](02_features.md#abstraction-of-clock-and-"
 "reset)"
 msgstr ""
 "[クロックとリセットの抽象化](02_features.md#abstraction-of-clock-and-reset)"
 
-#: src/02_features.md:11
+#: src/02_features.md:12
 msgid "[Documentation comment](02_features.md#documentation-comment)"
 msgstr "[ドキュメンテーションコメント](02_features.md#documentation-comment)"
 
-#: src/02_features.md:12
+#: src/02_features.md:13
 msgid ""
 "[Compound assignment operator in `always_ff`](02_features.md#compound-"
 "assignment-operator-in-always_ff)"
@@ -433,7 +446,7 @@ msgstr ""
 "[`always_ff` での複合代入演算子](02_features.md#compound-assignment-operator-"
 "in-always_ff)"
 
-#: src/02_features.md:13
+#: src/02_features.md:14
 msgid ""
 "[Individual namespace of enum variant](02_features.md#individual-namespace-"
 "of-enum-variant)"
@@ -441,15 +454,15 @@ msgstr ""
 "[独立した名前空間を持つenumバリアント](02_features.md#individual-namespace-"
 "of-enum-variant)"
 
-#: src/02_features.md:14
+#: src/02_features.md:15
 msgid "[`repeat` of concatenation](02_features.md#repeat-of-concatenation)"
 msgstr "[ビット連結における `repeat`](02_features.md#repeat-of-concatenation)"
 
-#: src/02_features.md:15
+#: src/02_features.md:16
 msgid "[`if` / `case` expression](02_features.md#if--case-expression)"
 msgstr "[`if` / `case` 式](02_features.md#if--case-expression)"
 
-#: src/02_features.md:16
+#: src/02_features.md:17
 msgid ""
 "[Range-based `for` / `inside` / `outside`](02_features.md#range-based-for--"
 "inside--outside)"
@@ -457,27 +470,27 @@ msgstr ""
 "[範囲 `for` / `inside` / `outside`](02_features.md#range-based-for--inside--"
 "outside)"
 
-#: src/02_features.md:17
+#: src/02_features.md:18
 msgid "[`msb` notation](02_features.md#msb-notation)"
 msgstr "[`msb` 記法](02_features.md#msb-notation)"
 
-#: src/02_features.md:18
+#: src/02_features.md:19
 msgid "[`let` statement](02_features.md#let-statement)"
 msgstr "[`let` 文](02_features.md#let-statement)"
 
-#: src/02_features.md:19
+#: src/02_features.md:20
 msgid "[Named block](02_features.md#named-block)"
 msgstr "[名前付きブロック](02_features.md#named-block)"
 
-#: src/02_features.md:20
+#: src/02_features.md:21
 msgid "[Visibility control](02_features.md#visibility-control)"
 msgstr "[可視性制御](02_features.md#visibility-control)"
 
-#: src/02_features.md:22
+#: src/02_features.md:23
 msgid "Real-time diagnostics"
 msgstr "リアルタイム診断"
 
-#: src/02_features.md:24
+#: src/02_features.md:25
 msgid ""
 "Issues such as undefined, unused, or unassigned variables are notified in "
 "real-time while editing in the editor. In the following example, adding the "
@@ -488,19 +501,19 @@ msgstr ""
 "通知されます。次の例では、未使用変数として通知された変数に `_` プレフィックス"
 "を付加することで未使用であることを明示し、警告を抑制しています。"
 
-#: src/02_features.md:27
+#: src/02_features.md:28
 msgid "![diagnostics](./img/diagnostics.gif)"
 msgstr "![diagnostics](./img/diagnostics.gif)"
 
-#: src/02_features.md:29 src/02_features.md:38
+#: src/02_features.md:30 src/02_features.md:39
 msgid "If the video does not play[^1]"
 msgstr "ビデオが再生されない場合[^1]"
 
-#: src/02_features.md:31
+#: src/02_features.md:32
 msgid "Auto formatting"
 msgstr "自動フォーマット"
 
-#: src/02_features.md:33
+#: src/02_features.md:34
 msgid ""
 "In addition to the automatic formatting feature integrated with the editor, "
 "formatting through the command line and formatting checks in CI are also "
@@ -509,15 +522,15 @@ msgstr ""
 "エディタと連携した自動フォーマット機能のほか、コマンドラインでのフォーマット"
 "やCIでのフォーマットチェックも可能です。"
 
-#: src/02_features.md:36
+#: src/02_features.md:37
 msgid "![format](./img/format.gif)"
 msgstr "![format](./img/format.gif)"
 
-#: src/02_features.md:40
+#: src/02_features.md:41
 msgid "Integrated test"
 msgstr "組み込みテスト"
 
-#: src/02_features.md:42
+#: src/02_features.md:43
 msgid ""
 "Test code written by SystemVerilog can be embeded in Veryl code, it can be "
 "executed through `veryl test` command."
@@ -525,7 +538,7 @@ msgstr ""
 "SystemVerilogで書かれたテストコードをVerylに埋め込み、`veryl test` コマンドで"
 "実行することができます。"
 
-#: src/02_features.md:45
+#: src/02_features.md:46
 msgid ""
 "```veryl\n"
 "#[test(test1)]\n"
@@ -539,11 +552,11 @@ msgid ""
 "```"
 msgstr ""
 
-#: src/02_features.md:56
+#: src/02_features.md:57
 msgid "Dependency management"
 msgstr "依存関係管理"
 
-#: src/02_features.md:58
+#: src/02_features.md:59
 msgid ""
 "Veryl includes a built-in dependency management feature, allowing for easy "
 "incorporation of libraries by simply adding the repository path and version "
@@ -553,7 +566,7 @@ msgstr ""
 "ライブラリのリポジトリパスとバージョンを追加するだけで、簡単にライブラリを組"
 "み込むことができます。"
 
-#: src/02_features.md:61 src/06_development_environment/02_dependencies.md:6
+#: src/02_features.md:62 src/06_development_environment/02_dependencies.md:6
 msgid ""
 "```toml\n"
 "[dependencies]\n"
@@ -565,11 +578,21 @@ msgstr ""
 "\"https://github.com/veryl-lang/sample\" = \"0.1.0\"\n"
 "```"
 
-#: src/02_features.md:66
+#: src/02_features.md:69
+msgid ""
+"Code generation through generics achieves more reusable code than "
+"traditional parameter override. Prarmeters in function like the follwoign "
+"example, but also module names of instantiation, type names of struct "
+"definition, and so on can be parameterized."
+msgstr ""
+"ジェネリクスによるコード生成は従来のパラメータオーバーライドよりさらに再利用性の高いコードを記述することができます。"
+"以下の例のような関数のパラメータだけでなく、インスタンスのモジュール名や構造体定義の型名もパラメータ化することができます。"
+
+#: src/02_features.md:123
 msgid "Trailing comma"
 msgstr "末尾カンマ"
 
-#: src/02_features.md:68
+#: src/02_features.md:125
 msgid ""
 "Trailing comma is a syntax where a comma is placed after the last element in "
 "a list. It facilitates the addition and removal of elements and reduces "
@@ -579,11 +602,11 @@ msgstr ""
 "り、要素の追加や削除が容易になり、バージョン管理システムにおける不必要な差異"
 "を減らすことができます。"
 
-#: src/02_features.md:104
+#: src/02_features.md:161
 msgid "Abstraction of clock and reset"
 msgstr "クロックとリセットの抽象化"
 
-#: src/02_features.md:106
+#: src/02_features.md:163
 msgid ""
 "There is no need to specify the polarity and synchronicity of the clock and "
 "reset in the syntax; these can be specified during build-time configuration. "
@@ -595,11 +618,18 @@ msgstr ""
 "性・非同期リセットとFPGA向けの正極性・同期リセットのそれぞれのコードを生成す"
 "ることができます。"
 
-#: src/02_features.md:142 src/05_language_reference/02_lexical_structure.md:32
+#: src/02_features.md:168
+msgid ""
+"Additionally, explicit `clock` and `reset` type enables to check whether "
+"clock and reset are correctly connected to registers."
+msgstr ""
+"さらに、明示的な `clock` と `reset` 型により、レジスタへのクロック・リセット接続が正しく行われているかどうかを確認することができます。"
+
+#: src/02_features.md:213 src/05_language_reference/02_lexical_structure.md:33
 msgid "Documentation comment"
 msgstr "ドキュメンテーションコメント"
 
-#: src/02_features.md:144
+#: src/02_features.md:215
 msgid ""
 "Writing module descriptions as documentation comments allows for automatic "
 "documentation generation. You can use not only plain text but also MarkDown "
@@ -609,7 +639,7 @@ msgstr ""
 "を自動生成することができます。単なるテキストだけでなく、マークダウン形式や"
 "[WaveDrom](https://wavedrom.com)による波形記述を使用することができます。"
 
-#: src/02_features.md:155
+#: src/02_features.md:226
 msgid ""
 "```verilog\n"
 "// Comment\n"
@@ -623,7 +653,7 @@ msgstr ""
 "endmodule\n"
 "```"
 
-#: src/02_features.md:164
+#: src/02_features.md:235
 msgid ""
 "````veryl\n"
 "/// Documentation comment written by Markdown\n"
@@ -651,11 +681,11 @@ msgstr ""
 "}\n"
 "````"
 
-#: src/02_features.md:181
+#: src/02_features.md:252
 msgid "Compound assignment operator in `always_ff`"
 msgstr "`always_ff` での複合代入演算子"
 
-#: src/02_features.md:183
+#: src/02_features.md:254
 msgid ""
 "There is no dedicated non-blocking assignment operator; within `always_ff`, "
 "non-blocking assignments are inferred, while within `always_comb`, blocking "
@@ -667,11 +697,11 @@ msgstr ""
 "`always_ff` 内でも `always_comb` 内と同様に様々な複合代入演算子を使用すること"
 "ができます。"
 
-#: src/02_features.md:218
+#: src/02_features.md:289
 msgid "Individual namespace of enum variant"
 msgstr "独立した名前空間を持つenumバリアント"
 
-#: src/02_features.md:220
+#: src/02_features.md:291
 msgid ""
 "Variants of an enum are defined within separate namespaces for each enum, "
 "thus preventing unintended name collisions."
@@ -679,11 +709,11 @@ msgstr ""
 "enumのバリアントはenum毎に独立した名前空間を持っており意図しない名前の衝突を"
 "防ぐことができます。"
 
-#: src/02_features.md:258
+#: src/02_features.md:329
 msgid "`repeat` of concatenation"
 msgstr "ビット連結における `repeat`"
 
-#: src/02_features.md:260
+#: src/02_features.md:331
 msgid ""
 "By adopting the explicit `repeat` syntax as a repetition description in bit "
 "concatenation, readability improves over complex combinations of `{}`."
@@ -691,11 +721,11 @@ msgstr ""
 "ビット連結における繰り返し記述として明示的な `repeat` 記法を採用し、 複雑な "
 "`{}` の組み合わせより可読性が向上しています。"
 
-#: src/02_features.md:288
+#: src/02_features.md:359
 msgid "`if` / `case` expression"
 msgstr "`if` / `case` 式"
 
-#: src/02_features.md:290
+#: src/02_features.md:361
 msgid ""
 "By adopting `if` and `case` expressions instead of the ternary operator, "
 "readability improves, especially when comparing a large number of items."
@@ -703,11 +733,11 @@ msgstr ""
 "三項演算子の代わりに if 式と case 式を採用することで、比較するアイテム数が多"
 "い場合の可読性が向上します。"
 
-#: src/02_features.md:326
+#: src/02_features.md:397
 msgid "Range-based `for` / `inside` / `outside`"
 msgstr "範囲 `for` / `inside` / `outside`"
 
-#: src/02_features.md:328
+#: src/02_features.md:399
 msgid ""
 "With notation representing closed intervals `..=` and half-open intervals `.."
 "`, it is possible to uniformly describe ranges using `for`, `inside`, and "
@@ -717,11 +747,11 @@ msgstr ""
 "一的に記述できるようにしました。また、`inside` の逆を意味する `outside` も導"
 "入しました。"
 
-#: src/02_features.md:360
+#: src/02_features.md:431
 msgid "`msb` notation"
 msgstr "`msb` 記法"
 
-#: src/02_features.md:362
+#: src/02_features.md:433
 msgid ""
 "The `msb` notation, indicating the most significant bit, eliminates the need "
 "to calculate the most significant bit from parameters, making intentions "
@@ -730,11 +760,11 @@ msgstr ""
 "最上位ビットを示す `msb` 記法により、パラメータから最上位ビットを計算する必要"
 "がなくなり、より意図を明確にすることができます。"
 
-#: src/02_features.md:391
+#: src/02_features.md:462
 msgid "`let` statement"
 msgstr "`let` 文"
 
-#: src/02_features.md:393
+#: src/02_features.md:464
 msgid ""
 "There is a dedicated `let` statement available for binding values "
 "simultaneously with variable declaration, which can be used in various "
@@ -743,20 +773,20 @@ msgstr ""
 "変数宣言と同時に値を束縛する専用の `let` 文が用意されており、SystemVerilogで"
 "はサポートされていなかった様々な場所で使用することができます。"
 
-#: src/02_features.md:426
+#: src/02_features.md:497
 msgid "Named block"
 msgstr "名前付きブロック"
 
-#: src/02_features.md:428
+#: src/02_features.md:499
 msgid "You can define named blocks to limit the scope of variables."
 msgstr ""
 "変数のスコープを限定するための名前付きブロックを定義することができます。"
 
-#: src/02_features.md:455
+#: src/02_features.md:526
 msgid "Visibility control"
 msgstr "可視性制御"
 
-#: src/02_features.md:457
+#: src/02_features.md:528
 msgid ""
 "Modules without the `pub` keyword cannot be referenced from outside the "
 "project and are not included in automatic documentation generation. This "
@@ -767,7 +797,7 @@ msgstr ""
 "ントの自動生成にも含まれません。これによりプロジェクト外に公開したいものと内"
 "部実装とを区別することができます。"
 
-#: src/02_features.md:492
+#: src/02_features.md:563
 msgid ""
 "Some browsers by default pause the playback of GIF animations. Please check "
 "your browser settings."
@@ -1122,9 +1152,11 @@ msgid ""
 "    param ParamA: u32 = 10,\n"
 "    local ParamB: u32 = 10, // trailing comma is allowed\n"
 ") (\n"
-"    i_clk : input  logic,\n"
-"    i_rst : input  logic,\n"
-"    i_sel : input  logic,\n"
+"    i_clk : input  clock            , // `clock` is a special type for "
+"clock\n"
+"    i_rst : input  reset            , // `reset` is a special type for "
+"reset\n"
+"    i_sel : input  logic            ,\n"
 "    i_data: input  logic<ParamA> [2], // `[]` means unpacked array in "
 "SystemVerilog\n"
 "    o_data: output logic<ParamA>    , // `<>` means packed array in "
@@ -1171,9 +1203,9 @@ msgstr ""
 "    param ParamA: u32 = 10,\n"
 "    local ParamB: u32 = 10, // 末尾カンマが可能です\n"
 ") (\n"
-"    i_clk : input  logic,\n"
-"    i_rst : input  logic,\n"
-"    i_sel : input  logic,\n"
+"    i_clk : input  clock            , // `clock` はクロックのための特別な型です\n"
+"    i_rst : input  reset            , // `reset` はリセットのための特別な型です\n"
+"    i_sel : input  logic            ,\n"
 "    i_data: input  logic<ParamA> [2], // `[]` は SystemVerilog のアンパック配"
 "列です\n"
 "    o_data: output logic<ParamA>    , // `<>` は SystemVerilog のパック配列で"
@@ -1188,7 +1220,7 @@ msgstr ""
 "    var r_data1: logic<ParamA>;\n"
 "\n"
 "    // 値の束縛\n"
-"    let w_data2: logic<ParamA> = i_data;\n"
+"    let _w_data2: logic<ParamA> = i_data;\n"
 "\n"
 "    // リセット付き always_ff 文\n"
 "    //   `always_ff` はクロック（必須）とリセット（オプション）を持ちます\n"
@@ -1221,8 +1253,8 @@ msgid ""
 "module ModuleA #(\n"
 "    param ParamA: u32 = 10,\n"
 ") (\n"
-"    i_clk : input  logic,\n"
-"    i_rst : input  logic,\n"
+"    i_clk : input  clock        ,\n"
+"    i_rst : input  reset        ,\n"
 "    i_data: input  logic<ParamA>,\n"
 "    o_data: output logic<ParamA>,\n"
 ") {\n"
@@ -1245,19 +1277,18 @@ msgid ""
 "\n"
 "    // instance declaration with parameter override\n"
 "    //   notation of parameter connection is the same as port\n"
-"    inst u_module_c: ModuleC #(\n"
-"        ParamA,\n"
-"        ParamB: 10,\n"
-"    ) ();\n"
+"    inst u_module_c: ModuleC #(ParamA, ParamB: 10,);\n"
 "}\n"
 "\n"
 "module ModuleB #(\n"
 "    param ParamA: u32 = 10,\n"
 ") (\n"
-"    i_clk : input  logic        ,\n"
+"    i_clk : input  clock        ,\n"
 "    i_data: input  logic<ParamA>,\n"
 "    o_data: output logic<ParamA>,\n"
-") {}\n"
+") {\n"
+"    assign o_data = 1;\n"
+"}\n"
 "\n"
 "module ModuleC #(\n"
 "    param ParamA: u32 = 10,\n"
@@ -1269,8 +1300,8 @@ msgstr ""
 "module ModuleA #(\n"
 "    param ParamA: u32 = 10,\n"
 ") (\n"
-"    i_clk : input  logic,\n"
-"    i_rst : input  logic,\n"
+"    i_clk : input  clock        ,\n"
+"    i_rst : input  reset        ,\n"
 "    i_data: input  logic<ParamA>,\n"
 "    o_data: output logic<ParamA>,\n"
 ") {\n"
@@ -1286,24 +1317,30 @@ msgstr ""
 "    //   各ポートの接続は `[port_name]:[variable]` のような形式になります\n"
 "    //   `[port_name]` は `[port_name]:[port_name]` を意味します\n"
 "    inst u_module_b: ModuleB (\n"
-"        i_clk,\n"
-"        i_rst,\n"
+"        i_clk          ,\n"
 "        i_data: r_data1,\n"
 "        o_data: r_data2,\n"
 "    );\n"
 "\n"
 "    // パラメータオーバーライド付きインスタンス宣言\n"
 "    //   パラメータの接続記法はポートと同様です\n"
-"    inst u_module_c: ModuleC #(\n"
-"        ParamA,\n"
-"        ParamB: 10,\n"
-"    ) (\n"
-"        i_clk,\n"
-"        i_rst,\n"
-"        i_data: r_data1,\n"
-"        o_data: r_data2,\n"
-"    );\n"
+"    inst u_module_c: ModuleC #(ParamA, ParamB: 10,);\n"
 "}\n"
+"\n"
+"module ModuleB #(\n"
+"    param ParamA: u32 = 10,\n"
+") (\n"
+"    i_clk : input  clock        ,\n"
+"    i_data: input  logic<ParamA>,\n"
+"    o_data: output logic<ParamA>,\n"
+") {\n"
+"    assign o_data = 1;\n"
+"}\n"
+"\n"
+"module ModuleC #(\n"
+"    param ParamA: u32 = 10,\n"
+"    param ParamB: u32 = 10,\n"
+") () {}\n"
 "```"
 
 #: src/04_code_examples/03_interface.md:3
@@ -1335,8 +1372,8 @@ msgid ""
 "}\n"
 "\n"
 "module ModuleA (\n"
-"    i_clk     : input logic               ,\n"
-"    i_rst     : input logic               ,\n"
+"    i_clk: input clock,\n"
+"    i_rst: input reset,\n"
 "    // port declaration by modport\n"
 "    intf_a_mst: modport InterfaceA::master,\n"
 "    intf_a_slv: modport InterfaceA::slave ,\n"
@@ -1373,8 +1410,8 @@ msgstr ""
 "}\n"
 "\n"
 "module ModuleA (\n"
-"    i_clk     : input logic               ,\n"
-"    i_rst     : input logic               ,\n"
+"    i_clk: input clock,\n"
+"    i_rst: input reset,\n"
 "    // modport によるポート宣言\n"
 "    intf_a_mst: modport InterfaceA::master,\n"
 "    intf_a_slv: modport InterfaceA::slave ,\n"
@@ -1393,7 +1430,7 @@ msgid ""
 "    local ParamB: u32 = 1;\n"
 "\n"
 "    function FuncA (\n"
-"        a: input  logic<ParamA>,\n"
+"        a: input logic<ParamA>,\n"
 "    ) -> logic<ParamA> {\n"
 "        return a + 1;\n"
 "    }\n"
@@ -1412,7 +1449,7 @@ msgstr ""
 "    local ParamB: u32 = 1;\n"
 "\n"
 "    function FuncA (\n"
-"        a: input  logic<ParamA>,\n"
+"        a: input logic<ParamA>,\n"
 "    ) -> logic<ParamA> {\n"
 "        return a + 1;\n"
 "    }\n"
@@ -1435,7 +1472,7 @@ msgstr ""
 "Veryl のソースコードはいくつかの `module`、`interface`、`package` からなりま"
 "す。"
 
-#: src/05_language_reference/01_source_code_structure.md:19
+#: src/05_language_reference/01_source_code_structure.md:15
 msgid ""
 "The name of `module`, `interface` and `package` in the transpiled code will "
 "added project name as prefix. In the sample code, `project_` will be added. "
@@ -1497,6 +1534,7 @@ msgid ""
 "\n"
 "comment\n"
 "*/\n"
+"\n"
 "```"
 msgstr ""
 "```veryl,playground\n"
@@ -1509,9 +1547,10 @@ msgstr ""
 "\n"
 "コメント\n"
 "*/\n"
+"\n"
 "```"
 
-#: src/05_language_reference/02_lexical_structure.md:34
+#: src/05_language_reference/02_lexical_structure.md:35
 msgid ""
 "Signle line comment starts with `///` is treated as documentation comment. "
 "Documentation comment is used for document generation."
@@ -1519,21 +1558,23 @@ msgstr ""
 "`///` ではじまる行コメントはドキュメンテーションコメントとして扱われます。ド"
 "キュメンテーションコメントはドキュメントの生成に使われます。"
 
-#: src/05_language_reference/02_lexical_structure.md:37
+#: src/05_language_reference/02_lexical_structure.md:38
 msgid ""
 "```veryl,playground\n"
 "/// documentation comment\n"
+"\n"
 "```"
 msgstr ""
 "```veryl,playground\n"
 "/// ドキュメンテーションコメント\n"
+"\n"
 "```"
 
-#: src/05_language_reference/02_lexical_structure.md:41
+#: src/05_language_reference/02_lexical_structure.md:43
 msgid "Identifier"
 msgstr "識別子"
 
-#: src/05_language_reference/02_lexical_structure.md:43
+#: src/05_language_reference/02_lexical_structure.md:45
 msgid ""
 "Identifier is composed with ASCII alphabet and number and `_`. Leading "
 "number is not allowed. The following regular expression shows the definition."
@@ -1541,11 +1582,11 @@ msgstr ""
 "識別子は ASCII のアルファベットと数値、 `_` からなります。先頭が数値であって"
 "はなりません。正式な定義は以下の正規表現です。"
 
-#: src/05_language_reference/02_lexical_structure.md:51
+#: src/05_language_reference/02_lexical_structure.md:53
 msgid "String"
 msgstr "文字列"
 
-#: src/05_language_reference/02_lexical_structure.md:53
+#: src/05_language_reference/02_lexical_structure.md:55
 msgid ""
 "String is surrounded by `\"`. Escape by `\\` can be used like `\\\"`, `\\n` "
 "and so on."
@@ -1553,7 +1594,7 @@ msgstr ""
 "`\"` で囲んだものが文字列になります。`\\\"` や `\\n` のように `\\` によるエス"
 "ケープも可能です。"
 
-#: src/05_language_reference/02_lexical_structure.md:56
+#: src/05_language_reference/02_lexical_structure.md:58
 msgid ""
 "```\n"
 "\"Hello, World!\"\n"
@@ -1839,17 +1880,17 @@ msgstr ""
 msgid ""
 "```veryl,playground\n"
 "module ModuleA {\n"
-"    let _a: logic[3] = '{1, 2, 3};\n"
-"    let _b: logic[3] = '{1 repeat 3}; // '{1, 1, 1}\n"
-"    let _c: logic[3] = '{default: 3}; // '{3, 3, 3}\n"
+"    let _a: logic [3] = '{1, 2, 3};\n"
+"    let _b: logic [3] = '{1 repeat 3}; // '{1, 1, 1}\n"
+"    let _c: logic [3] = '{default: 3}; // '{3, 3, 3}\n"
 "}\n"
 "```"
 msgstr ""
 "```veryl,playground\n"
 "module ModuleA {\n"
-"    let _a: logic[3] = '{1, 2, 3};\n"
-"    let _b: logic[3] = '{1 repeat 3}; // '{1, 1, 1}\n"
-"    let _c: logic[3] = '{default: 3}; // '{3, 3, 3}\n"
+"    let _a: logic [3] = '{1, 2, 3};\n"
+"    let _b: logic [3] = '{1 repeat 3}; // '{1, 1, 1}\n"
+"    let _c: logic [3] = '{default: 3}; // '{3, 3, 3}\n"
 "}\n"
 "```"
 
@@ -1926,19 +1967,33 @@ msgstr "`f64`：64ビット浮動小数点数"
 msgid "Both of them are represented as described by IEEE Std 754."
 msgstr "いずれも IEEE Std 754 準拠の表現です。"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:67
+#: src/05_language_reference/03_data_type/01_builtin_type.md:65
 msgid "String type"
 msgstr "文字列型"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:69
+#: src/05_language_reference/03_data_type/01_builtin_type.md:67
 msgid "`string` is string type."
 msgstr "`string` は文字列を表す型です。"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:77
+#: src/05_language_reference/03_data_type/01_builtin_type.md:69
+msgid ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    let _a: string = \"\";\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    let _a: string = \"\";\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/03_data_type/01_builtin_type.md:75
 msgid "Type type"
 msgstr "Type型"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:79
+#: src/05_language_reference/03_data_type/01_builtin_type.md:77
 msgid ""
 "`type` is a type which represents type kind. Variable of `type` can be "
 "defined as `param` or `local` only."
@@ -2010,9 +2065,66 @@ msgstr ""
 "任意のデータ型に対して `[]` と付与することで配列を定義することができます。配"
 "列の長さは `[]` 内の値で指定します。"
 
-#: src/05_language_reference/03_data_type/03_array.md:22
+#: src/05_language_reference/03_data_type/03_array.md:29
 msgid "Multi-dimentional array can be defined by `[X, Y, Z,,,]`."
 msgstr "`[X, Y, Z,,,]` のように多次元配列も定義できます。"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:3
+msgid ""
+"`clock` is a special types to represent clock wiring.  There are 3 variants "
+"to specify clock polarity."
+msgstr ""
+"`clock` はクロック配線を表す特別な型です。"
+"クロックの極性を指定するため以下の3種類があります。"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:6
+msgid "`clock`: clock type of which polarity is specified by the build option"
+msgstr "`clock`: ビルド時の設定で指定される極性を持つクロック型"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:7
+msgid "`clock_posedge`: clock type of which polarity is positive"
+msgstr "`clock_posedge`: 正極性のクロック型"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:8
+msgid "`clock_negedge`: clock type of which polarity is negative"
+msgstr "`clock_negedge`: 負極性のクロック型"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:10
+msgid ""
+"`reset` is a special types to represent reset wiring.  There are 5 variants "
+"to specify reset polarity and synchronicity."
+msgstr ""
+"`reset` はリセット配線を表す特別な型です。"
+"リセットの極性と同期・非同期を指定するため以下の5種類があります。"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:13
+msgid ""
+"`reset`: reset type of which polarity and synchronicity are specified by the "
+"build option"
+msgstr "`reset`: ビルド時の設定で指定される極性と同期性を持つリセット型"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:14
+msgid "`reset_async_high`: async/high active reset type"
+msgstr "`reset_async_high`: 正極性の非同期リセット型"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:15
+msgid "`reset_async_low`: async/low active reset type"
+msgstr "`reset_async_low`: 負極性の非同期リセット型"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:16
+msgid "`reset_sync_high`: sync/active high reset type"
+msgstr "`reset_sync_high`: 正極性の同期リセット型"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:17
+msgid "`reset_sync_low`: sync/active low reset type"
+msgstr "`reset_sync_low`: 負極性の同期リセット型"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:19
+msgid ""
+"If there is no special requirement, `clock` and `reset` are recommended for "
+"code reusability."
+msgstr ""
+"特別な要件がなければ、コードの再利用を高めるため `clock` と `reset` の使用を推奨します。"
 
 #: src/05_language_reference/04_expression.md:3
 msgid ""
@@ -2396,12 +2508,14 @@ msgstr ""
 #: src/05_language_reference/06_declaration/03_register.md:6
 msgid ""
 "`always_ff` has mandatory clock variable, optional reset variable, and `{}` "
-"block. Clock and reset are placed in `()`."
+"block. Clock and reset are placed in `()`. The specified clock and reset "
+"should have `clock` / `reset` type and the witdh of them should be 1bit."
 msgstr ""
 "`always_ff` は必須のクロック変数、オプションのリセット変数、`{}` ブロックをと"
 "ります。クロックとリセットは `()` に書きます。"
+"指定されたクロックとリセットは `clock` / `reset` 型を持ち、そのビット幅は1ビットでなければなりません。"
 
-#: src/05_language_reference/06_declaration/03_register.md:9
+#: src/05_language_reference/06_declaration/03_register.md:10
 msgid ""
 "`if_reset` is a special keyword which can be used in `always_ff`. It means "
 "reset condition of the register variable. If `if_reset` is used, `always_ff` "
@@ -2494,18 +2608,18 @@ msgid ""
 "```veryl,playground\n"
 "module ModuleA {\n"
 "    #[sv(\"ram_style=\\\"block\\\"\")]\n"
-"    var _a: logic<10>;\n"
+"    let _a: logic<10> = 1;\n"
 "    #[sv(\"mark_debug=\\\"true\\\"\")]\n"
-"    var _b: logic<10>;\n"
+"    let _b: logic<10> = 1;\n"
 "}\n"
 "```"
 msgstr ""
 "```veryl,playground\n"
 "module ModuleA {\n"
 "    #[sv(\"ram_style=\\\"block\\\"\")]\n"
-"    var _a: logic<10>;\n"
+"    let _a: logic<10> = 1;\n"
 "    #[sv(\"mark_debug=\\\"true\\\"\")]\n"
-"    var _b: logic<10>;\n"
+"    let _b: logic<10> = 1;\n"
 "}\n"
 "```"
 
@@ -2563,8 +2677,8 @@ msgid ""
 "module ModuleA #(\n"
 "    param paramA: u32 = 1,\n"
 ") {\n"
-"    var a: logic<10>;\n"
-"    var b: logic<10>;\n"
+"    let a: logic<10> = 1;\n"
+"    let b: logic<10> = 1;\n"
 "\n"
 "    inst instB: ModuleB #(\n"
 "        paramA    , // Parameter assignment by name\n"
@@ -2574,14 +2688,22 @@ msgid ""
 "        bb: b,\n"
 "    );\n"
 "}\n"
+"\n"
+"module ModuleB #(\n"
+"    param paramA: u32 = 1,\n"
+"    param paramB: u32 = 1,\n"
+") (\n"
+"    a : input logic<10>,\n"
+"    bb: input logic<10>,\n"
+") {}\n"
 "```"
 msgstr ""
 "```veryl,playground\n"
 "module ModuleA #(\n"
 "    param paramA: u32 = 1,\n"
 ") {\n"
-"    var a: logic<10>;\n"
-"    var b: logic<10>;\n"
+"    let a: logic<10> = 1;\n"
+"    let b: logic<10> = 1;\n"
 "\n"
 "    inst instB: ModuleB #(\n"
 "        paramA    , // 名前によるパラメータ代入\n"
@@ -2591,6 +2713,14 @@ msgstr ""
 "        bb: b,\n"
 "    );\n"
 "}\n"
+"\n"
+"module ModuleB #(\n"
+"    param paramA: u32 = 1,\n"
+"    param paramB: u32 = 1,\n"
+") (\n"
+"    a : input logic<10>,\n"
+"    bb: input logic<10>,\n"
+") {}\n"
 "```"
 
 #: src/05_language_reference/06_declaration/11_named_block.md:3
@@ -2607,9 +2737,10 @@ msgid ""
 "at the top level or as a module/interface/package item. Wildcard pattern "
 "like `package::*` can be used as an argument of `import` declaration."
 msgstr ""
-"`import` 宣言は他のパッケージからシンボルをインポートします。"
-"モジュール、インターフェース、パッケージの要素としてだけでなくトップレベルにも配置することができます。"
-"`import` 宣言の引数には `package::*` のようなワイルドカードパターンを使用することができます。"
+"`import` 宣言は他のパッケージからシンボルをインポートします。モジュール、イン"
+"ターフェース、パッケージの要素としてだけでなくトップレベルにも配置することが"
+"できます。`import` 宣言の引数には `package::*` のようなワイルドカードパターン"
+"を使用することができます。"
 
 #: src/05_language_reference/06_declaration/12_import_export.md:7
 msgid ""
@@ -2646,8 +2777,8 @@ msgid ""
 "`export` declaration exports symbols from the package to other. `export *` "
 "represents to export all symbols."
 msgstr ""
-"`export` 宣言は宣言したパッケージからシンボルをエクスポートします。"
-"全てのシンボルをエクスポートするには `export *` を使用します。"
+"`export` 宣言は宣言したパッケージからシンボルをエクスポートします。全てのシン"
+"ボルをエクスポートするには `export *` を使用します。"
 
 #: src/05_language_reference/07_module.md:3
 msgid ""
@@ -2870,6 +3001,132 @@ msgid ""
 msgstr ""
 "`veryl test` で使用される RTLシミュレータについては [シミュレータ]"
 "(../06_development_environment/07_simulator.md) を参照してください。"
+
+#: src/05_language_reference/14_generics.md:3
+msgid ""
+"Generics can define parameterized items which can't achieved by parameter "
+"override. The following items support generics:"
+msgstr ""
+"ジェネリクスはパラメータオーバーライドでは実現できないアイテムのパラメータ化を可能にします。"
+"以下のアイテムがジェネリクスをサポートしています。"
+
+#: src/05_language_reference/14_generics.md:6
+msgid "function"
+msgstr "関数"
+
+#: src/05_language_reference/14_generics.md:7
+msgid "module"
+msgstr "モジュール"
+
+#: src/05_language_reference/14_generics.md:8
+msgid "interface"
+msgstr "インターフェース"
+
+#: src/05_language_reference/14_generics.md:9
+msgid "package"
+msgstr "パッケージ"
+
+#: src/05_language_reference/14_generics.md:10
+msgid "struct"
+msgstr "構造体"
+
+#: src/05_language_reference/14_generics.md:11
+msgid "union"
+msgstr "ユニオン"
+
+#: src/05_language_reference/14_generics.md:13
+msgid ""
+"Each generic definition has generic parameters (often an uppercase letter is "
+"used like `T`) which can be placed as identifier or expression in the "
+"definition. Generic parameters are declarated after item's identifier with "
+"`::<>`."
+msgstr ""
+"それぞれのジェネリック定義はジェネリックパラメータ（`T` のような大文字1文字がよく使われます）"
+"を持ち、定義内で識別子や式として配置できます。"
+"ジェネリックパラメータはアイテムの識別子の後に `::<>` を用いて宣言します。"
+
+#: src/05_language_reference/14_generics.md:16
+msgid ""
+"At the usage of generics, actual parameters can be given through `::<>`. As "
+"the actual parameters, numeric literal and identifier concatenated by `::` "
+"can be used."
+msgstr ""
+"ジェネリクスを使用するためには `::<>` を用いて実パラメータを与えます。"
+"実パラメータとしては数値リテラルと `::` で連結された識別子を使用することができます。"
+
+#: src/05_language_reference/14_generics.md:19
+msgid ""
+"Additionally, the actual parameters should be accessible at the position of "
+"the generics declaration. For example, module names can be used as actual "
+"parameters because it is accessible through the whole project. On the other "
+"hand, local parameters can't be used as actual parameters in many cases. "
+"This is caused by that the local parameters is not accessible from the "
+"potision of the generics declaration."
+msgstr ""
+"さらに、実パラメータはジェネリクス定義位置から参照できなければなりません。"
+"例えば、モジュール名はプロジェクト全体から参照できるので、実パラメータとして使用できます。"
+"一方、ローカルパラメータは多くの場合、実パラメータとして使用できません。"
+"これはローカルパラメータがジェネリクス定義位置からは参照できない場合に発生します。"
+
+#: src/05_language_reference/14_generics.md:24
+msgid "Generic Function"
+msgstr "ジェネリック関数"
+
+#: src/05_language_reference/14_generics.md:39
+msgid "Generic Module/Interface"
+msgstr "ジェネリックモジュール/インターフェース"
+
+#: src/05_language_reference/14_generics.md:55
+msgid "Generic Package"
+msgstr "ジェネリックパッケージ"
+
+#: src/05_language_reference/14_generics.md:68
+msgid "Generic Struct"
+msgstr "ジェネリック構造体"
+
+#: src/05_language_reference/14_generics.md:70
+msgid ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    type TypeA = i32;\n"
+"\n"
+"    struct StructA::<T> {\n"
+"        A: T,\n"
+"    }\n"
+"\n"
+"    // local defined type can be used\n"
+"    // because `TypeA` is accessible at the definition of `StructA`\n"
+"    var _a: StructA::<TypeA>          ;\n"
+"    var _b: StructA::<PackageA::TypeB>;\n"
+"    var _c: StructA::<PackageA::TypeC>;\n"
+"}\n"
+"\n"
+"package PackageA {\n"
+"    type TypeB = u32;\n"
+"    type TypeC = u64;\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    type TypeA = i32;\n"
+"\n"
+"    struct StructA::<T> {\n"
+"        A: T,\n"
+"    }\n"
+"\n"
+"    // ローカルに定位された型が使用できています\n"
+"    // これは `TypeA` が `StructA` の定義位置から参照できるためです\n"
+"    var _a: StructA::<TypeA>          ;\n"
+"    var _b: StructA::<PackageA::TypeB>;\n"
+"    var _c: StructA::<PackageA::TypeC>;\n"
+"}\n"
+"\n"
+"package PackageA {\n"
+"    type TypeB = u32;\n"
+"    type TypeC = u64;\n"
+"}\n"
+"```"
 
 #: src/06_development_environment.md:3
 msgid ""
@@ -3654,7 +3911,7 @@ msgstr ""
 #: src/06_development_environment/07_simulator.md:48
 #: src/06_development_environment/07_simulator.md:57
 #: src/06_development_environment/08_language_server.md:9
-#: src/06_development_environment/10_documentation.md:49
+#: src/06_development_environment/10_documentation.md:51
 msgid "Configuration"
 msgstr "設定"
 
@@ -3680,13 +3937,13 @@ msgstr ""
 #: src/06_development_environment/07_simulator.md:48
 #: src/06_development_environment/07_simulator.md:57
 #: src/06_development_environment/08_language_server.md:9
-#: src/06_development_environment/10_documentation.md:49
+#: src/06_development_environment/10_documentation.md:51
 msgid "Value"
 msgstr "設定値"
 
 #: src/06_development_environment/03_publish_project.md:61
 #: src/06_development_environment/08_language_server.md:9
-#: src/06_development_environment/10_documentation.md:49
+#: src/06_development_environment/10_documentation.md:51
 msgid "Default"
 msgstr "デフォルト"
 
@@ -3698,7 +3955,7 @@ msgstr "デフォルト"
 #: src/06_development_environment/07_simulator.md:48
 #: src/06_development_environment/07_simulator.md:57
 #: src/06_development_environment/08_language_server.md:9
-#: src/06_development_environment/10_documentation.md:49
+#: src/06_development_environment/10_documentation.md:51
 msgid "Description"
 msgstr "説明"
 
@@ -3751,7 +4008,7 @@ msgstr "bump_commit_mesasge"
 #: src/06_development_environment/06_linter.md:47
 #: src/06_development_environment/06_linter.md:48
 #: src/06_development_environment/06_linter.md:49
-#: src/06_development_environment/10_documentation.md:51
+#: src/06_development_environment/10_documentation.md:53
 msgid "string"
 msgstr "文字列"
 
@@ -4836,7 +5093,9 @@ msgid ""
 "    i_rst_n: input  logic        , /// Reset\n"
 "    i_data : input  logic<ParamA>, /// Data input\n"
 "    o_data : output logic<ParamA>, /// Data output\n"
-") {}\n"
+") {\n"
+"    assign o_data = 0;\n"
+"}\n"
 "````"
 msgstr ""
 "```veryl,playground\n"
@@ -4865,10 +5124,12 @@ msgstr ""
 "    i_rst_n: input  logic        , /// リセット\n"
 "    i_data : input  logic<ParamA>, /// データ入力\n"
 "    o_data : output logic<ParamA>, /// データ出力\n"
-") {}\n"
+") {\n"
+"    assign o_data = 0;\n"
+"}\n"
 "```"
 
-#: src/06_development_environment/10_documentation.md:41
+#: src/06_development_environment/10_documentation.md:43
 msgid ""
 "The available configurations are below. These can be specified in `[doc]` "
 "section of `Veryl.toml`."
@@ -4876,7 +5137,7 @@ msgstr ""
 "設定可能な項目は以下の通りです。これは `Veryl.toml` の `[doc]` セクションで指"
 "定できます。"
 
-#: src/06_development_environment/10_documentation.md:44
+#: src/06_development_environment/10_documentation.md:46
 msgid ""
 "```toml\n"
 "[doc]\n"
@@ -4888,15 +5149,15 @@ msgstr ""
 "path = \"document\"\n"
 "```"
 
-#: src/06_development_environment/10_documentation.md:51
+#: src/06_development_environment/10_documentation.md:53
 msgid "path"
 msgstr "path"
 
-#: src/06_development_environment/10_documentation.md:51
+#: src/06_development_environment/10_documentation.md:53
 msgid "\"doc\""
 msgstr "\"doc\""
 
-#: src/06_development_environment/10_documentation.md:51
+#: src/06_development_environment/10_documentation.md:53
 msgid "path to output directory"
 msgstr "出力ディレクトリへのパス"
 
@@ -5240,10 +5501,6 @@ msgid ""
 "\\b)/                                                           : Token;\n"
 "AssignTerm            : /(?-u:\\b)assign(?-u:"
 "\\b)/                                                              : Token;\n"
-"AsyncHighTerm         : /(?-u:\\b)async_high(?-u:"
-"\\b)/                                                          : Token;\n"
-"AsyncLowTerm          : /(?-u:\\b)async_low(?-u:"
-"\\b)/                                                           : Token;\n"
 "AsTerm                : /(?-u:\\b)as(?-u:"
 "\\b)/                                                                  : "
 "Token;\n"
@@ -5253,6 +5510,13 @@ msgid ""
 "CaseTerm              : /(?-u:\\b)case(?-u:"
 "\\b)/                                                                : "
 "Token;\n"
+"ClockTerm             : /(?-u:\\b)clock(?-u:"
+"\\b)/                                                               : "
+"Token;\n"
+"ClockPosedgeTerm      : /(?-u:\\b)clock_posedge(?-u:"
+"\\b)/                                                       : Token;\n"
+"ClockNegedgeTerm      : /(?-u:\\b)clock_negedge(?-u:"
+"\\b)/                                                       : Token;\n"
 "DefaultTerm           : /(?-u:\\b)default(?-u:"
 "\\b)/                                                             : Token;\n"
 "ElseTerm              : /(?-u:\\b)else(?-u:"
@@ -5332,8 +5596,6 @@ msgid ""
 "MsbTerm               : /(?-u:\\b)msb(?-u:"
 "\\b)/                                                                 : "
 "Token;\n"
-"NegedgeTerm           : /(?-u:\\b)negedge(?-u:"
-"\\b)/                                                             : Token;\n"
 "OutputTerm            : /(?-u:\\b)output(?-u:"
 "\\b)/                                                              : Token;\n"
 "OutsideTerm           : /(?-u:\\b)outside(?-u:"
@@ -5343,8 +5605,6 @@ msgid ""
 "ParamTerm             : /(?-u:\\b)param(?-u:"
 "\\b)/                                                               : "
 "Token;\n"
-"PosedgeTerm           : /(?-u:\\b)posedge(?-u:"
-"\\b)/                                                             : Token;\n"
 "PubTerm               : /(?-u:\\b)pub(?-u:"
 "\\b)/                                                                 : "
 "Token;\n"
@@ -5353,6 +5613,17 @@ msgid ""
 "Token;\n"
 "RepeatTerm            : /(?-u:\\b)repeat(?-u:"
 "\\b)/                                                              : Token;\n"
+"ResetTerm             : /(?-u:\\b)reset(?-u:"
+"\\b)/                                                               : "
+"Token;\n"
+"ResetAsyncHighTerm    : /(?-u:\\b)reset_async_high(?-u:"
+"\\b)/                                                    : Token;\n"
+"ResetAsyncLowTerm     : /(?-u:\\b)reset_async_low(?-u:"
+"\\b)/                                                     : Token;\n"
+"ResetSyncHighTerm     : /(?-u:\\b)reset_sync_high(?-u:"
+"\\b)/                                                     : Token;\n"
+"ResetSyncLowTerm      : /(?-u:\\b)reset_sync_low(?-u:"
+"\\b)/                                                      : Token;\n"
 "ReturnTerm            : /(?-u:\\b)return(?-u:"
 "\\b)/                                                              : Token;\n"
 "BreakTerm             : /(?-u:\\b)break(?-u:"
@@ -5367,10 +5638,6 @@ msgid ""
 "\\b)/                                                              : Token;\n"
 "StructTerm            : /(?-u:\\b)struct(?-u:"
 "\\b)/                                                              : Token;\n"
-"SyncHighTerm          : /(?-u:\\b)sync_high(?-u:"
-"\\b)/                                                           : Token;\n"
-"SyncLowTerm           : /(?-u:\\b)sync_low(?-u:"
-"\\b)/                                                            : Token;\n"
 "TriTerm               : /(?-u:\\b)tri(?-u:"
 "\\b)/                                                                 : "
 "Token;\n"
@@ -5452,67 +5719,69 @@ msgid ""
 "SemicolonToken   : SemicolonTerm   : Token Comments;\n"
 "StarToken        : StarTerm        : Token Comments;\n"
 "\n"
-"AlwaysCombToken: AlwaysCombTerm: Token Comments;\n"
-"AlwaysFfToken  : AlwaysFfTerm  : Token Comments;\n"
-"AsToken        : AsTerm        : Token Comments;\n"
-"AssignToken    : AssignTerm    : Token Comments;\n"
-"AsyncHighToken : AsyncHighTerm : Token Comments;\n"
-"AsyncLowToken  : AsyncLowTerm  : Token Comments;\n"
-"BitToken       : BitTerm       : Token Comments;\n"
-"CaseToken      : CaseTerm      : Token Comments;\n"
-"DefaultToken   : DefaultTerm   : Token Comments;\n"
-"ElseToken      : ElseTerm      : Token Comments;\n"
-"EmbedToken     : EmbedTerm     : Token Comments;\n"
-"EnumToken      : EnumTerm      : Token Comments;\n"
-"ExportToken    : ExportTerm    : Token Comments;\n"
-"F32Token       : F32Term       : Token Comments;\n"
-"F64Token       : F64Term       : Token Comments;\n"
-"FinalToken     : FinalTerm     : Token Comments;\n"
-"ForToken       : ForTerm       : Token Comments;\n"
-"FunctionToken  : FunctionTerm  : Token Comments;\n"
-"I32Token       : I32Term       : Token Comments;\n"
-"I64Token       : I64Term       : Token Comments;\n"
-"IfResetToken   : IfResetTerm   : Token Comments;\n"
-"IfToken        : IfTerm        : Token Comments;\n"
-"ImportToken    : ImportTerm    : Token Comments;\n"
-"IncludeToken   : IncludeTerm   : Token Comments;\n"
-"InitialToken   : InitialTerm   : Token Comments;\n"
-"InoutToken     : InoutTerm     : Token Comments;\n"
-"InputToken     : InputTerm     : Token Comments;\n"
-"InsideToken    : InsideTerm    : Token Comments;\n"
-"InstToken      : InstTerm      : Token Comments;\n"
-"InterfaceToken : InterfaceTerm : Token Comments;\n"
-"InToken        : InTerm        : Token Comments;\n"
-"LetToken       : LetTerm       : Token Comments;\n"
-"LocalToken     : LocalTerm     : Token Comments;\n"
-"LogicToken     : LogicTerm     : Token Comments;\n"
-"LsbToken       : LsbTerm       : Token Comments;\n"
-"ModportToken   : ModportTerm   : Token Comments;\n"
-"ModuleToken    : ModuleTerm    : Token Comments;\n"
-"MsbToken       : MsbTerm       : Token Comments;\n"
-"NegedgeToken   : NegedgeTerm   : Token Comments;\n"
-"OutputToken    : OutputTerm    : Token Comments;\n"
-"OutsideToken   : OutsideTerm   : Token Comments;\n"
-"PackageToken   : PackageTerm   : Token Comments;\n"
-"ParamToken     : ParamTerm     : Token Comments;\n"
-"PosedgeToken   : PosedgeTerm   : Token Comments;\n"
-"PubToken       : PubTerm       : Token Comments;\n"
-"RefToken       : RefTerm       : Token Comments;\n"
-"RepeatToken    : RepeatTerm    : Token Comments;\n"
-"ReturnToken    : ReturnTerm    : Token Comments;\n"
-"BreakToken     : BreakTerm     : Token Comments;\n"
-"SignedToken    : SignedTerm    : Token Comments;\n"
-"StepToken      : StepTerm      : Token Comments;\n"
-"StringToken    : StringTerm    : Token Comments;\n"
-"StructToken    : StructTerm    : Token Comments;\n"
-"SyncHighToken  : SyncHighTerm  : Token Comments;\n"
-"SyncLowToken   : SyncLowTerm   : Token Comments;\n"
-"TriToken       : TriTerm       : Token Comments;\n"
-"TypeToken      : TypeTerm      : Token Comments;\n"
-"U32Token       : U32Term       : Token Comments;\n"
-"U64Token       : U64Term       : Token Comments;\n"
-"UnionToken     : UnionTerm     : Token Comments;\n"
-"VarToken       : VarTerm       : Token Comments;\n"
+"AlwaysCombToken    : AlwaysCombTerm    : Token Comments;\n"
+"AlwaysFfToken      : AlwaysFfTerm      : Token Comments;\n"
+"AsToken            : AsTerm            : Token Comments;\n"
+"AssignToken        : AssignTerm        : Token Comments;\n"
+"BitToken           : BitTerm           : Token Comments;\n"
+"CaseToken          : CaseTerm          : Token Comments;\n"
+"ClockToken         : ClockTerm         : Token Comments;\n"
+"ClockPosedgeToken  : ClockPosedgeTerm  : Token Comments;\n"
+"ClockNegedgeToken  : ClockNegedgeTerm  : Token Comments;\n"
+"DefaultToken       : DefaultTerm       : Token Comments;\n"
+"ElseToken          : ElseTerm          : Token Comments;\n"
+"EmbedToken         : EmbedTerm         : Token Comments;\n"
+"EnumToken          : EnumTerm          : Token Comments;\n"
+"ExportToken        : ExportTerm        : Token Comments;\n"
+"F32Token           : F32Term           : Token Comments;\n"
+"F64Token           : F64Term           : Token Comments;\n"
+"FinalToken         : FinalTerm         : Token Comments;\n"
+"ForToken           : ForTerm           : Token Comments;\n"
+"FunctionToken      : FunctionTerm      : Token Comments;\n"
+"I32Token           : I32Term           : Token Comments;\n"
+"I64Token           : I64Term           : Token Comments;\n"
+"IfResetToken       : IfResetTerm       : Token Comments;\n"
+"IfToken            : IfTerm            : Token Comments;\n"
+"ImportToken        : ImportTerm        : Token Comments;\n"
+"IncludeToken       : IncludeTerm       : Token Comments;\n"
+"InitialToken       : InitialTerm       : Token Comments;\n"
+"InoutToken         : InoutTerm         : Token Comments;\n"
+"InputToken         : InputTerm         : Token Comments;\n"
+"InsideToken        : InsideTerm        : Token Comments;\n"
+"InstToken          : InstTerm          : Token Comments;\n"
+"InterfaceToken     : InterfaceTerm     : Token Comments;\n"
+"InToken            : InTerm            : Token Comments;\n"
+"LetToken           : LetTerm           : Token Comments;\n"
+"LocalToken         : LocalTerm         : Token Comments;\n"
+"LogicToken         : LogicTerm         : Token Comments;\n"
+"LsbToken           : LsbTerm           : Token Comments;\n"
+"ModportToken       : ModportTerm       : Token Comments;\n"
+"ModuleToken        : ModuleTerm        : Token Comments;\n"
+"MsbToken           : MsbTerm           : Token Comments;\n"
+"OutputToken        : OutputTerm        : Token Comments;\n"
+"OutsideToken       : OutsideTerm       : Token Comments;\n"
+"PackageToken       : PackageTerm       : Token Comments;\n"
+"ParamToken         : ParamTerm         : Token Comments;\n"
+"PubToken           : PubTerm           : Token Comments;\n"
+"RefToken           : RefTerm           : Token Comments;\n"
+"RepeatToken        : RepeatTerm        : Token Comments;\n"
+"ResetToken         : ResetTerm         : Token Comments;\n"
+"ResetAsyncHighToken: ResetAsyncHighTerm: Token Comments;\n"
+"ResetAsyncLowToken : ResetAsyncLowTerm : Token Comments;\n"
+"ResetSyncHighToken : ResetSyncHighTerm : Token Comments;\n"
+"ResetSyncLowToken  : ResetSyncLowTerm  : Token Comments;\n"
+"ReturnToken        : ReturnTerm        : Token Comments;\n"
+"BreakToken         : BreakTerm         : Token Comments;\n"
+"SignedToken        : SignedTerm        : Token Comments;\n"
+"StepToken          : StepTerm          : Token Comments;\n"
+"StringToken        : StringTerm        : Token Comments;\n"
+"StructToken        : StructTerm        : Token Comments;\n"
+"TriToken           : TriTerm           : Token Comments;\n"
+"TypeToken          : TypeTerm          : Token Comments;\n"
+"U32Token           : U32Term           : Token Comments;\n"
+"U64Token           : U64Term           : Token Comments;\n"
+"UnionToken         : UnionTerm         : Token Comments;\n"
+"VarToken           : VarTerm           : Token Comments;\n"
 "\n"
 "DollarIdentifierToken: DollarIdentifierTerm: Token Comments;\n"
 "IdentifierToken      : IdentifierTerm      : Token Comments;\n"
@@ -5576,69 +5845,71 @@ msgid ""
 "Star        : StarToken        : VerylToken;\n"
 "\n"
 "// Keyword\n"
-"AlwaysComb: AlwaysCombToken: VerylToken;\n"
-"AlwaysFf  : AlwaysFfToken  : VerylToken;\n"
-"As        : AsToken        : VerylToken;\n"
-"Assign    : AssignToken    : VerylToken;\n"
-"AsyncHigh : AsyncHighToken : VerylToken;\n"
-"AsyncLow  : AsyncLowToken  : VerylToken;\n"
-"Bit       : BitToken       : VerylToken;\n"
-"Break     : BreakToken     : VerylToken;\n"
-"Case      : CaseToken      : VerylToken;\n"
-"Defaul    : DefaultToken   : VerylToken; // avoid to conflict with Rust's "
-"Default trait\n"
-"Else      : ElseToken      : VerylToken;\n"
-"Embed     : EmbedToken     : VerylToken;\n"
-"Enum      : EnumToken      : VerylToken;\n"
-"Export    : ExportToken    : VerylToken;\n"
-"F32       : F32Token       : VerylToken;\n"
-"F64       : F64Token       : VerylToken;\n"
-"Final     : FinalToken     : VerylToken;\n"
-"For       : ForToken       : VerylToken;\n"
-"Function  : FunctionToken  : VerylToken;\n"
-"I32       : I32Token       : VerylToken;\n"
-"I64       : I64Token       : VerylToken;\n"
-"If        : IfToken        : VerylToken;\n"
-"IfReset   : IfResetToken   : VerylToken;\n"
-"Import    : ImportToken    : VerylToken;\n"
-"In        : InToken        : VerylToken;\n"
-"Include   : IncludeToken   : VerylToken;\n"
-"Initial   : InitialToken   : VerylToken;\n"
-"Inout     : InoutToken     : VerylToken;\n"
-"Input     : InputToken     : VerylToken;\n"
-"Inside    : InsideToken    : VerylToken;\n"
-"Inst      : InstToken      : VerylToken;\n"
-"Interface : InterfaceToken : VerylToken;\n"
-"Let       : LetToken       : VerylToken;\n"
-"Local     : LocalToken     : VerylToken;\n"
-"Logic     : LogicToken     : VerylToken;\n"
-"Lsb       : LsbToken       : VerylToken;\n"
-"Modport   : ModportToken   : VerylToken;\n"
-"Module    : ModuleToken    : VerylToken;\n"
-"Msb       : MsbToken       : VerylToken;\n"
-"Negedge   : NegedgeToken   : VerylToken;\n"
-"Output    : OutputToken    : VerylToken;\n"
-"Outside   : OutsideToken   : VerylToken;\n"
-"Package   : PackageToken   : VerylToken;\n"
-"Param     : ParamToken     : VerylToken;\n"
-"Posedge   : PosedgeToken   : VerylToken;\n"
-"Pub       : PubToken       : VerylToken;\n"
-"Ref       : RefToken       : VerylToken;\n"
-"Repeat    : RepeatToken    : VerylToken;\n"
-"Return    : ReturnToken    : VerylToken;\n"
-"Signed    : SignedToken    : VerylToken;\n"
-"Step      : StepToken      : VerylToken;\n"
-"Strin     : StringToken    : VerylToken; // avoid to conflict with Rust's "
-"String struct\n"
-"Struct    : StructToken    : VerylToken;\n"
-"SyncHigh  : SyncHighToken  : VerylToken;\n"
-"SyncLow   : SyncLowToken   : VerylToken;\n"
-"Tri       : TriToken       : VerylToken;\n"
-"Type      : TypeToken      : VerylToken;\n"
-"U32       : U32Token       : VerylToken;\n"
-"U64       : U64Token       : VerylToken;\n"
-"Union     : UnionToken     : VerylToken;\n"
-"Var       : VarToken       : VerylToken;\n"
+"AlwaysComb    : AlwaysCombToken    : VerylToken;\n"
+"AlwaysFf      : AlwaysFfToken      : VerylToken;\n"
+"As            : AsToken            : VerylToken;\n"
+"Assign        : AssignToken        : VerylToken;\n"
+"Bit           : BitToken           : VerylToken;\n"
+"Break         : BreakToken         : VerylToken;\n"
+"Case          : CaseToken          : VerylToken;\n"
+"Clock         : ClockToken         : VerylToken;\n"
+"ClockPosedge  : ClockPosedgeToken  : VerylToken;\n"
+"ClockNegedge  : ClockNegedgeToken  : VerylToken;\n"
+"Defaul        : DefaultToken       : VerylToken; // avoid to conflict with "
+"Rust's Default trait\n"
+"Else          : ElseToken          : VerylToken;\n"
+"Embed         : EmbedToken         : VerylToken;\n"
+"Enum          : EnumToken          : VerylToken;\n"
+"Export        : ExportToken        : VerylToken;\n"
+"F32           : F32Token           : VerylToken;\n"
+"F64           : F64Token           : VerylToken;\n"
+"Final         : FinalToken         : VerylToken;\n"
+"For           : ForToken           : VerylToken;\n"
+"Function      : FunctionToken      : VerylToken;\n"
+"I32           : I32Token           : VerylToken;\n"
+"I64           : I64Token           : VerylToken;\n"
+"If            : IfToken            : VerylToken;\n"
+"IfReset       : IfResetToken       : VerylToken;\n"
+"Import        : ImportToken        : VerylToken;\n"
+"In            : InToken            : VerylToken;\n"
+"Include       : IncludeToken       : VerylToken;\n"
+"Initial       : InitialToken       : VerylToken;\n"
+"Inout         : InoutToken         : VerylToken;\n"
+"Input         : InputToken         : VerylToken;\n"
+"Inside        : InsideToken        : VerylToken;\n"
+"Inst          : InstToken          : VerylToken;\n"
+"Interface     : InterfaceToken     : VerylToken;\n"
+"Let           : LetToken           : VerylToken;\n"
+"Local         : LocalToken         : VerylToken;\n"
+"Logic         : LogicToken         : VerylToken;\n"
+"Lsb           : LsbToken           : VerylToken;\n"
+"Modport       : ModportToken       : VerylToken;\n"
+"Module        : ModuleToken        : VerylToken;\n"
+"Msb           : MsbToken           : VerylToken;\n"
+"Output        : OutputToken        : VerylToken;\n"
+"Outside       : OutsideToken       : VerylToken;\n"
+"Package       : PackageToken       : VerylToken;\n"
+"Param         : ParamToken         : VerylToken;\n"
+"Pub           : PubToken           : VerylToken;\n"
+"Ref           : RefToken           : VerylToken;\n"
+"Repeat        : RepeatToken        : VerylToken;\n"
+"Reset         : ResetToken         : VerylToken;\n"
+"ResetAsyncHigh: ResetAsyncHighToken: VerylToken;\n"
+"ResetAsyncLow : ResetAsyncLowToken : VerylToken;\n"
+"ResetSyncHigh : ResetSyncHighToken : VerylToken;\n"
+"ResetSyncLow  : ResetSyncLowToken  : VerylToken;\n"
+"Return        : ReturnToken        : VerylToken;\n"
+"Signed        : SignedToken        : VerylToken;\n"
+"Step          : StepToken          : VerylToken;\n"
+"Strin         : StringToken        : VerylToken; // avoid to conflict with "
+"Rust's String struct\n"
+"Struct        : StructToken        : VerylToken;\n"
+"Tri           : TriToken           : VerylToken;\n"
+"Type          : TypeToken          : VerylToken;\n"
+"U32           : U32Token           : VerylToken;\n"
+"U64           : U64Token           : VerylToken;\n"
+"Union         : UnionToken         : VerylToken;\n"
+"Var           : VarToken           : VerylToken;\n"
 "\n"
 "// Identifier\n"
 "DollarIdentifier: DollarIdentifierToken: VerylToken;\n"
@@ -5776,7 +6047,18 @@ msgid ""
 "\n"
 "FixedType: U32 | U64 | I32 | I64 | F32 | F64 | Strin;\n"
 "\n"
-"VariableType: ( Logic | Bit | ScopedIdentifier ) [ Width ];\n"
+"VariableType: ( Clock\n"
+"              | ClockPosedge\n"
+"              | ClockNegedge\n"
+"              | Reset\n"
+"              | ResetAsyncHigh\n"
+"              | ResetAsyncLow\n"
+"              | ResetSyncHigh\n"
+"              | ResetSyncLow\n"
+"              | Logic\n"
+"              | Bit\n"
+"              | ScopedIdentifier\n"
+"              ) [ Width ];\n"
 "\n"
 "TypeModifier: Tri | Signed;\n"
 "\n"
@@ -5858,10 +6140,9 @@ msgid ""
 "AlwaysFfDeclaration: AlwaysFf LParen AlwaysFfClock [ Comma AlwaysFfReset ] "
 "RParen LBrace { Statement } RBrace;\n"
 "\n"
-"AlwaysFfClock: [ Posedge | Negedge ] HierarchicalIdentifier;\n"
+"AlwaysFfClock: HierarchicalIdentifier;\n"
 "\n"
-"AlwaysFfReset: [ AsyncLow | AsyncHigh | SyncLow | SyncHigh ] "
-"HierarchicalIdentifier;\n"
+"AlwaysFfReset: HierarchicalIdentifier;\n"
 "\n"
 "AlwaysCombDeclaration: AlwaysComb LBrace { Statement } RBrace;\n"
 "\n"
