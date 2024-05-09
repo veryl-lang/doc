@@ -35,7 +35,9 @@ pub module ModuleA #(
     i_rst_n: input  logic        , /// Reset
     i_data : input  logic<ParamA>, /// Data input
     o_data : output logic<ParamA>, /// Data output
-) {}
+) {
+    assign o_data = 0;
+}
 ```
 
 The available configurations are below.

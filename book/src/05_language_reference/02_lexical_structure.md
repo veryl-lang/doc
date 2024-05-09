@@ -27,6 +27,7 @@ line
 
 comment
 */
+
 ```
 
 ### Documentation comment
@@ -36,6 +37,7 @@ Documentation comment is used for document generation.
 
 ```veryl,playground
 /// documentation comment
+
 ```
 
 ## Identifier

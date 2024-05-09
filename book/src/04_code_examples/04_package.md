@@ -7,7 +7,7 @@ package PackageA {
     local ParamB: u32 = 1;
 
     function FuncA (
-        a: input  logic<ParamA>,
+        a: input logic<ParamA>,
     ) -> logic<ParamA> {
         return a + 1;
     }

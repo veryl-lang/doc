@@ -14,6 +14,11 @@ module ModuleA {
     var _b: logic<10>    ;
     var _c: logic<10, 10>;
     var _d: u32          ;
-    let _e: logic        = 1;
+    let _e: logic         = 1;
+
+    assign _a = 1;
+    assign _b = 1;
+    assign _c = 1;
+    assign _d = 1;
 }
 ```

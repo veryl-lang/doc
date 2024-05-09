@@ -7,12 +7,9 @@ The "private" means they are not visible from other project.
 `veryl doc` will generate [documents](../05_development_environment/09_documentation.md) of public items only.
 
 ```veryl,playground
-pub module ModuleA {
-}
+pub module ModuleA {}
 
-pub interface InterfaceA {
-}
+pub interface InterfaceA {}
 
-pub package PackageA {
-}
+pub package PackageA {}
 ```

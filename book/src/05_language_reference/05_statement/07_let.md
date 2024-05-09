@@ -7,7 +7,7 @@ It can be used in `always_ff`, `always_comb` and function declaration.
 
 ```veryl,playground
 module ModuleA (
-    i_clk: input  logic,
+    i_clk: input clock,
 ) {
     var a: logic;
     var b: logic;

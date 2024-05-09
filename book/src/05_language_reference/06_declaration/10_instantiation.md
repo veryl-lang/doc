@@ -9,8 +9,8 @@ Parameter override is `#()`, and port connection is `()`.
 module ModuleA #(
     param paramA: u32 = 1,
 ) {
-    var a: logic<10>;
-    var b: logic<10>;
+    let a: logic<10> = 1;
+    let b: logic<10> = 1;
 
     inst instB: ModuleB #(
         paramA    , // Parameter assignment by name
@@ -20,4 +20,12 @@ module ModuleA #(
         bb: b,
     );
 }
+
+module ModuleB #(
+    param paramA: u32 = 1,
+    param paramB: u32 = 1,
+) (
+    a : input logic<10>,
+    bb: input logic<10>,
+) {}
 ```

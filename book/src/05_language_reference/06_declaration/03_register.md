@@ -5,6 +5,7 @@ Register variable will be mapped to flip-flop in synthesis phase.
 
 `always_ff` has mandatory clock variable, optional reset variable, and `{}` block.
 Clock and reset are placed in `()`.
+The specified clock and reset should have `clock` / `reset` type and the witdh of them should be 1bit.
 
 `if_reset` is a special keyword which can be used in `always_ff`.
 It means reset condition of the register variable.
@@ -14,8 +15,8 @@ The actual porality and synchronisity can be configured through `[build]` sectio
 
 ```veryl,playground
 module ModuleA (
-    i_clk: input logic,
-    i_rst: input logic,
+    i_clk: input clock,
+    i_rst: input reset,
 ) {
     var a: logic<10>;
     var b: logic<10>;

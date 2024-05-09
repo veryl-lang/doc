@@ -4,8 +4,8 @@
 module ModuleA #(
     param ParamA: u32 = 10,
 ) (
-    i_clk : input  logic,
-    i_rst : input  logic,
+    i_clk : input  clock        ,
+    i_rst : input  reset        ,
     i_data: input  logic<ParamA>,
     o_data: output logic<ParamA>,
 ) {
@@ -28,19 +28,18 @@ module ModuleA #(
 
     // instance declaration with parameter override
     //   notation of parameter connection is the same as port
-    inst u_module_c: ModuleC #(
-        ParamA,
-        ParamB: 10,
-    ) ();
+    inst u_module_c: ModuleC #(ParamA, ParamB: 10,);
 }
 
 module ModuleB #(
     param ParamA: u32 = 10,
 ) (
-    i_clk : input  logic        ,
+    i_clk : input  clock        ,
     i_data: input  logic<ParamA>,
     o_data: output logic<ParamA>,
-) {}
+) {
+    assign o_data = 1;
+}
 
 module ModuleC #(
     param ParamA: u32 = 10,

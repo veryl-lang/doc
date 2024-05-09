@@ -9,9 +9,9 @@ the right expression of the arm will be returned.
 
 ```veryl,playground
 module ModuleA {
-    var a: logic<10>;
+    let a: logic<10> = 1;
     var b: logic<10>;
-    var c: logic<10>;
+    let c: logic<10> = 1;
 
     assign b = case a {
         0      : 1,

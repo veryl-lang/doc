@@ -51,12 +51,12 @@ Each  union variant should have the same packed width as each other union varian
 ```veryl,playground
 module A {
     union UnionA {
-        variant_a: logic<8>,
-        variant_b: logic<2, 4>,
-        variant_c: logic<4, 2>,
+        variant_a: logic<8>      ,
+        variant_b: logic<2, 4>   ,
+        variant_c: logic<4, 2>   ,
         variant_d: logic<2, 2, 2>,
     }
-    var a: UnionA;
+    var a          : UnionA;
     assign a.variant_a = 8'haa;
 }
 ```
@@ -67,8 +67,8 @@ The `type` keyword can be used to define a type alias to scalar or array types.
 
 ```veryl,playground
 module A {
-    type word_t = logic<16>;
-    type regfile_t = word_t [16];
-    type octbyte = bit<8> [8];
+    type word_t    = logic <16>     ;
+    type regfile_t = word_t     [16];
+    type octbyte   = bit   <8>  [8] ;
 }
 ```

@@ -10,8 +10,8 @@ It will be transpiled to SystemVerilog attribute `(*  *)`.
 ```veryl,playground
 module ModuleA {
     #[sv("ram_style=\"block\"")]
-    var _a: logic<10>;
+    let _a: logic<10> = 1;
     #[sv("mark_debug=\"true\"")]
-    var _b: logic<10>;
+    let _b: logic<10> = 1;
 }
 ```

@@ -27,8 +27,8 @@ interface InterfaceA #(
 }
 
 module ModuleA (
-    i_clk     : input logic               ,
-    i_rst     : input logic               ,
+    i_clk: input clock,
+    i_rst: input reset,
     // port declaration by modport
     intf_a_mst: modport InterfaceA::master,
     intf_a_slv: modport InterfaceA::slave ,

@@ -8,7 +8,7 @@ Veryl don't check the existence of the items.
 module ModuleA {
     let _a: logic = $sv::PackageA::ParamA;
 
-    inst b: $sv::ModuleB ();
-    inst c: $sv::InterfaceC ();
+    inst b: $sv::ModuleB;
+    inst c: $sv::InterfaceC;
 }
 ```

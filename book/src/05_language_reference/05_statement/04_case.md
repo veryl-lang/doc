@@ -5,7 +5,7 @@ The right-hand of arm is statement.
 
 ```veryl,playground
 module ModuleA {
-    var a: logic<10>;
+    let a: logic<10> = 1;
     var b: logic<10>;
 
     always_comb {
@@ -13,10 +13,10 @@ module ModuleA {
             0: b = 1;
             1: b = 2;
             2: {
-                b = 3;
-                b = 3;
-                b = 3;
-            }
+                   b = 3;
+                   b = 3;
+                   b = 3;
+               }
             default: b = 4;
         }
     }

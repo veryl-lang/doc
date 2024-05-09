@@ -31,7 +31,7 @@ If you want to use many versions of the same dependency path, you can specify ea
 After adding dependencies to `Veryl.toml`, you can use `moudle`, `interface` and `package` in the dependencies.
 The following example uses `delay` module in the `veryl_sample` dependency.
 
-```veryl,playground
+```veryl
 module ModuleA (
     i_clk  : input  logic,
     i_rst_n: input  logic,

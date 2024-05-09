@@ -19,9 +19,9 @@ There are other assignment operators:
 
 ```veryl,playground
 module ModuleA (
-    i_clk: input logic,
+    i_clk: input clock,
 ) {
-    var a: logic<10>;
+    let a: logic<10> = 1;
     var b: logic<10>;
     var c: logic<10>;
     var d: logic<10>;

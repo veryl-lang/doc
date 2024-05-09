@@ -6,11 +6,11 @@ The named block has an individual namespace.
 ```veryl,playground
 module ModuleA {
     :labelA {
-        var _a: logic<10>;
+        let _a: logic<10> = 1;
     }
 
     :labelB {
-        var _a: logic<10>;
+        let _a: logic<10> = 1;
     }
 }
 ```

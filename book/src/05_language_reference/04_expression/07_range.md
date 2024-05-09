@@ -10,11 +10,9 @@ Range can be used at some description like `for` statement.
 ```veryl,playground
 module ModuleA {
     initial {
-        for _i: u32 in 0..10 {
-        }
+        for _i: u32 in 0..10 {}
 
-        for _j: u32 in 0..=10 {
-        }
+        for _j: u32 in 0..=10 {}
     }
 }
 ```

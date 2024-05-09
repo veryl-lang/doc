@@ -6,9 +6,9 @@ module ModuleA #(
     param ParamA: u32 = 10,
     local ParamB: u32 = 10, // trailing comma is allowed
 ) (
-    i_clk : input  logic,
-    i_rst : input  logic,
-    i_sel : input  logic,
+    i_clk : input  clock            , // `clock` is a special type for clock
+    i_rst : input  reset            , // `reset` is a special type for reset
+    i_sel : input  logic            ,
     i_data: input  logic<ParamA> [2], // `[]` means unpacked array in SystemVerilog
     o_data: output logic<ParamA>    , // `<>` means packed array in SystemVerilog
 ) {

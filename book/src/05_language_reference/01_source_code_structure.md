@@ -3,17 +3,13 @@
 Veryl's source code is composed by some `module`, `interface` and `package`.
 
 ```veryl,playground
-module ModuleA {
-}
+module ModuleA {}
 
-module ModuleB {
-}
+module ModuleB {}
 
-interface InterfaceA {
-}
+interface InterfaceA {}
 
-package PackageA {
-}
+package PackageA {}
 ```
 
 The name of `module`, `interface` and `package` in the transpiled code will added project name as prefix.

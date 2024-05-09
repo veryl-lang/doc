@@ -8,9 +8,9 @@ Multi-dimentional can be specified by `<X, Y, Z,,,>`.
 
 ```veryl,playground
 module ModuleA {
-    var _a: logic;
-    var _b: logic<10>;
-    var _c: logic<10, 10>;
+    let _a: logic         = 1;
+    let _b: logic<10>     = 1;
+    let _c: logic<10, 10> = 1;
 }
 ```
 
@@ -22,9 +22,9 @@ Multi-dimentional can be specified by `<X, Y, Z,,,>`.
 
 ```veryl,playground
 module ModuleA {
-    var _a: bit;
-    var _b: bit<10>;
-    var _c: bit<10, 10>;
+    let _a: bit         = 1;
+    let _b: bit<10>     = 1;
+    let _c: bit<10, 10> = 1;
 }
 ```
 
@@ -39,10 +39,10 @@ There are some integer types:
 
 ```veryl,playground
 module ModuleA {
-    var _a: u32;
-    var _b: u64;
-    var _c: i32;
-    var _d: i64;
+    let _a: u32 = 1;
+    let _b: u64 = 1;
+    let _c: i32 = 1;
+    let _d: i64 = 1;
 }
 ```
 
@@ -57,10 +57,8 @@ Both of them are represented as described by IEEE Std 754.
 
 ```veryl,playground
 module ModuleA {
-    var _a: u32;
-    var _b: u64;
-    var _c: i32;
-    var _d: i64;
+    let _a: f32 = 1.0;
+    let _b: f64 = 1.0;
 }
 ```
 
@@ -70,7 +68,7 @@ module ModuleA {
 
 ```veryl,playground
 module ModuleA {
-    var _a: string;
+    let _a: string = "";
 }
 ```
 

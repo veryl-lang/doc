@@ -6,6 +6,7 @@ In this chapter, we introduce the features of Veryl along with clear examples.
 * [Auto formatting](02_features.md#auto-formatting)
 * [Integrated test](02_features.md#integrated-test)
 * [Dependency management](02_features.md#dependency-management)
+* [Generics](02_features.md#generics)
 * [Trailing comma](02_features.md#trailing-comma)
 * [Abstraction of clock and reset](02_features.md#abstraction-of-clock-and-reset)
 * [Documentation comment](02_features.md#documentation-comment)
@@ -63,6 +64,64 @@ allowing for easy incorporation of libraries by simply adding the repository pat
 "https://github.com/veryl-lang/sample" = "0.1.0"
 ```
 
+## Generics {#generics}
+
+Code generation through generics achieves more reusable code than traditional parameter override.
+Prarmeters in function like the follwoign example, but also module names of instantiation, type names of struct definition, and so on can be parameterized.
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+function automatic logic [20-1:0] FuncA_20 (
+    input logic [20-1:0] a
+);
+    return a + 1;
+endfunction
+
+function automatic logic [10-1:0] FuncA_10 (
+    input logic [10-1:0] a
+);
+    return a + 1;
+endfunction
+
+logic [10-1:0] a;
+logic [20-1:0] b;
+always_comb begin
+    a = FuncA_10(1);
+    b = FuncA_20(1);
+end
+```
+
+</td>
+<td>
+
+```veryl
+# module ModuleA {
+function FuncA::<T> (
+    a: input logic<T>,
+) -> logic<T> {
+    return a + 1;
+}
+
+var a: logic<10>;
+var b: logic<10>;
+always_comb {
+    a = FuncA::<10>(1);
+    b = FuncA::<20>(1);
+}
+# }
+```
+ 
+</td>
+</tr>
+</table>
+
 ## Trailing comma {#trailing-comma}
 
 Trailing comma is a syntax where a comma is placed after the last element in a list.
@@ -108,6 +167,8 @@ these can be specified during build-time configuration.
 This allows generating code for both ASICs with negative asynchronous reset
 and FPGAs with positive synchronous reset from the same Veryl code.
 
+Additionally, explicit `clock` and `reset` type enables to check whether clock and reset are correctly connected to registers.
+
 <table>
 <tr>
 <th>SystemVerilog</th>
@@ -117,24 +178,34 @@ and FPGAs with positive synchronous reset from the same Veryl code.
 <td>
 
 ```verilog
+module ModuleA (
+    input logic i_clk,
+    input logic i_rst_n
+);
+
 always_ff @ (posedge i_clk or negedge i_rst_n) begin
     if (!i_rst_n) begin
     end else begin
     end
 end
+
+endmodule
 ```
 
 </td>
 <td>
 
 ```veryl
-# module ModuleA {
-always_ff (i_clk, i_rst) {
-    if_reset {
-    } else {
+module ModuleA (
+    i_clk: input clock,
+    i_rst: input reset,
+){
+    always_ff (i_clk, i_rst) {
+        if_reset {
+        } else {
+        }
     }
 }
-# }
 ```
  
 </td>
