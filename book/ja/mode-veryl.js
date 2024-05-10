@@ -2,10 +2,10 @@ ace.define("ace/mode/veryl_highlight_rules",["require","exports","module","ace/l
 var oop = require("../lib/oop");
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 var VerylHighlightRules = function () {
-    var keywords = "always_comb|always_ff|as|assign|async_high|async_low|bit|else|enum|export|" +
+    var keywords = "always_comb|always_ff|as|assign|bit|clock|clock_posedge|clock_negedge|else|enum|export|" +
         "f32|f64|final|for|function|i32|i64|if|if_reset|import|in|initial|inout|input|" +
-        "inside|inst|interface|local|logic|modport|module|negedge|output|outside|" +
-        "package|param|posedge|pub|ref|repeat|return|signed|step|struct|sync_high|sync_low|tri|u32|u64|var|let|break|embed|include";
+        "inside|inst|interface|local|logic|modport|module|output|outside|" +
+        "package|param|pub|ref|repeat|reset|reset_async_high|reset_async_low|reset_sync_high|reset_sync_low|return|signed|step|struct|tri|u32|u64|var|let|break|embed|include";
     var keywordMapper = this.createKeywordMapper({
         "keyword": keywords,
     }, "identifier", false);
