@@ -31,10 +31,10 @@ pub module ModuleA #(
     param ParamA: u32 = 1,
     local ParamB: u32 = 1,
 ) (
-    i_clk  : input  clock        , /// Clock
-    i_rst_n: input  reset        , /// Reset
-    i_data : input  logic<ParamA>, /// Data input
-    o_data : output logic<ParamA>, /// Data output
+    i_clk : input  clock        , /// Clock
+    i_rst : input  reset        , /// Reset
+    i_data: input  logic<ParamA>, /// Data input
+    o_data: output logic<ParamA>, /// Data output
 ) {
     assign o_data = 0;
 }

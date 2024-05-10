@@ -33,16 +33,16 @@ The following example uses `delay` module in the `veryl_sample` dependency.
 
 ```veryl
 module ModuleA (
-    i_clk  : input  clock,
-    i_rst_n: input  reset,
-    i_d    : input  logic,
-    o_d    : output logic,
+    i_clk: input  clock,
+    i_rst: input  reset,
+    i_d  : input  logic,
+    o_d  : output logic,
 ) {
     inst u_delay: veryl_sample::delay (
-        i_clk  ,
-        i_rst_n,
-        i_d    ,
-        o_d    ,
+        i_clk,
+        i_rst,
+        i_d  ,
+        o_d  ,
     );
 }
 ```
