@@ -168,6 +168,7 @@ This allows generating code for both ASICs with negative asynchronous reset
 and FPGAs with positive synchronous reset from the same Veryl code.
 
 Additionally, explicit `clock` and `reset` type enables to check whether clock and reset are correctly connected to registers.
+If there is a single clock and reset in the module, the connection can be omitted.
 
 <table>
 <tr>
@@ -200,7 +201,7 @@ module ModuleA (
     i_clk: input clock,
     i_rst: input reset,
 ){
-    always_ff (i_clk, i_rst) {
+    always_ff {
         if_reset {
         } else {
         }

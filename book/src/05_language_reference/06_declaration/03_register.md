@@ -13,6 +13,8 @@ If `if_reset` is used, `always_ff` must have reset variable.
 `if_reset` can be conceal reset porality and synchronisity.
 The actual porality and synchronisity can be configured through `[build]` section of `Veryl.toml`.
 
+If there is a single clock and reset in the module, clock and reset specification can be omitted.
+
 ```veryl,playground
 module ModuleA (
     i_clk: input clock,
@@ -20,6 +22,7 @@ module ModuleA (
 ) {
     var a: logic<10>;
     var b: logic<10>;
+    var c: logic<10>;
 
     always_ff (i_clk) {
         a = 1;
@@ -30,6 +33,14 @@ module ModuleA (
             b = 0;
         } else {
             b = 1;
+        }
+    }
+
+    always_ff {
+        if_reset {
+            c = 0;
+        } else {
+            c = 1;
         }
     }
 }

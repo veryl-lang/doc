@@ -19,6 +19,7 @@ module ModuleA #(
     // variable declaration
     var r_data0: logic<ParamA>;
     var r_data1: logic<ParamA>;
+    var r_data2: logic<ParamA>;
 
     // value binding
     let _w_data2: logic<ParamA> = i_data;
@@ -41,6 +42,12 @@ module ModuleA #(
     // always_ff statement without reset
     always_ff (i_clk) {
         r_data1 = r_data0;
+    }
+
+    // clock and reset can be omitted
+    // if there is a single clock and reset in the module
+    always_ff {
+        r_data2 = r_data1;
     }
 
     assign o_data = r_data1;
