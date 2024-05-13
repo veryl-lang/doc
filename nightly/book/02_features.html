@@ -466,7 +466,7 @@ end
 </code></pre>
 </td>
 <td>
-<pre><code class="language-veryl">always_ff (i_clk) {
+<pre><code class="language-veryl">always_ff {
     if a {
         x += 1;
     }
@@ -621,7 +621,7 @@ end
 </code></pre>
 </td>
 <td>
-<pre><code class="language-veryl">always_ff (i_clk) {
+<pre><code class="language-veryl">always_ff {
     let tmp: logic = b + 1;
     x = tmp;
 }
