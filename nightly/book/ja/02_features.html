@@ -370,7 +370,7 @@ endmodule
 </table>
 <h2 id="abstraction-of-clock-and-reset"><a class="header" href="#abstraction-of-clock-and-reset">クロックとリセットの抽象化</a></h2>
 <p>クロックの極性やリセットの極性と同期性を構文上指定する必要はなく、ビルド時の設定で指定することができます。これにより同じVerylのコードからASIC向けの負極性・非同期リセットとFPGA向けの正極性・同期リセットのそれぞれのコードを生成することができます。</p>
-<p>さらに、明示的な <code>clock</code> と <code>reset</code> 型により、レジスタへのクロック・リセット接続が正しく行われているかどうかを確認することができます。</p>
+<p>さらに、明示的な <code>clock</code> と <code>reset</code> 型により、レジスタへのクロック・リセット接続が正しく行われているかどうかを確認することができます。モジュール内にクロックとリセットが1つだけの場合、レジスタへの接続を省略することもできます。</p>
 <table>
 <tr>
 <th>SystemVerilog</th>
@@ -397,7 +397,7 @@ endmodule
     i_clk: input clock,
     i_rst: input reset,
 ){
-    always_ff (i_clk, i_rst) {
+    always_ff {
         if_reset {
         } else {
         }

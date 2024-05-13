@@ -260,12 +260,14 @@ It means reset condition of the register variable.
 If <code>if_reset</code> is used, <code>always_ff</code> must have reset variable.
 <code>if_reset</code> can be conceal reset porality and synchronisity.
 The actual porality and synchronisity can be configured through <code>[build]</code> section of <code>Veryl.toml</code>.</p>
+<p>If there is a single clock and reset in the module, clock and reset specification can be omitted.</p>
 <pre><code class="language-veryl playground">module ModuleA (
     i_clk: input clock,
     i_rst: input reset,
 ) {
     var a: logic&lt;10&gt;;
     var b: logic&lt;10&gt;;
+    var c: logic&lt;10&gt;;
 
     always_ff (i_clk) {
         a = 1;
@@ -276,6 +278,14 @@ The actual porality and synchronisity can be configured through <code>[build]</c
             b = 0;
         } else {
             b = 1;
+        }
+    }
+
+    always_ff {
+        if_reset {
+            c = 0;
+        } else {
+            c = 1;
         }
     }
 }

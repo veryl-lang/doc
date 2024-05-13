@@ -381,7 +381,7 @@ endmodule
 </table>
 <h2 id="abstraction-of-clock-and-reset"><a class="header" href="#abstraction-of-clock-and-reset">クロックとリセットの抽象化</a></h2>
 <p>クロックの極性やリセットの極性と同期性を構文上指定する必要はなく、ビルド時の設定で指定することができます。これにより同じVerylのコードからASIC向けの負極性・非同期リセットとFPGA向けの正極性・同期リセットのそれぞれのコードを生成することができます。</p>
-<p>さらに、明示的な <code>clock</code> と <code>reset</code> 型により、レジスタへのクロック・リセット接続が正しく行われているかどうかを確認することができます。</p>
+<p>さらに、明示的な <code>clock</code> と <code>reset</code> 型により、レジスタへのクロック・リセット接続が正しく行われているかどうかを確認することができます。モジュール内にクロックとリセットが1つだけの場合、レジスタへの接続を省略することもできます。</p>
 <table>
 <tr>
 <th>SystemVerilog</th>
@@ -408,7 +408,7 @@ endmodule
     i_clk: input clock,
     i_rst: input reset,
 ){
-    always_ff (i_clk, i_rst) {
+    always_ff {
         if_reset {
         } else {
         }
@@ -796,6 +796,7 @@ module ModuleA #(
     // 変数宣言
     var r_data0: logic&lt;ParamA&gt;;
     var r_data1: logic&lt;ParamA&gt;;
+    var r_data2: logic&lt;ParamA&gt;;
 
     // 値の束縛
     let _w_data2: logic&lt;ParamA&gt; = i_data;
@@ -818,6 +819,12 @@ module ModuleA #(
     // リセットなし always_ff 文
     always_ff (i_clk) {
         r_data1 = r_data0;
+    }
+
+    // モジュール内にクロックとリセットが1つしかない場合
+    // クロックとリセットの指定は省略できます
+    always_ff {
+        r_data2 = r_data1;
     }
 
     assign o_data = r_data1;
@@ -1596,12 +1603,14 @@ package PackageA {
 <p>レジスタ変数とは <code>always_ff</code> で代入される変数です。合成フェーズでフリップフロップにマップされます。</p>
 <p><code>always_ff</code> は必須のクロック変数、オプションのリセット変数、<code>{}</code> ブロックをとります。クロックとリセットは <code>()</code> に書きます。指定されたクロックとリセットは <code>clock</code> / <code>reset</code> 型を持ち、そのビット幅は1ビットでなければなりません。</p>
 <p><code>if_reset</code> は <code>always_ff</code> に書ける特別なキーワードで、そのレジスタ変数のリセット条件を示します。<code>if_reset</code> を使う場合は <code>always_ff</code> のリセット変数は必須です。これを使うことで、リセットの極性と同期性を隠ぺいすることができます。実際の極性と同期性は <code>Veryl.toml</code> の <code>[build]</code> セクションで設定できます。</p>
+<p>モジュール内にクロックとリセットが1つしかない場合、クロックとリセットの指定は省略できます。</p>
 <pre><code class="language-veryl playground">module ModuleA (
     i_clk: input clock,
     i_rst: input reset,
 ) {
     var a: logic&lt;10&gt;;
     var b: logic&lt;10&gt;;
+    var c: logic&lt;10&gt;;
 
     always_ff (i_clk) {
         a = 1;
@@ -1612,6 +1621,14 @@ package PackageA {
             b = 0;
         } else {
             b = 1;
+        }
+    }
+
+    always_ff {
+        if_reset {
+            c = 0;
+        } else {
+            c = 1;
         }
     }
 }

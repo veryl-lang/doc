@@ -253,12 +253,14 @@
 <p>レジスタ変数とは <code>always_ff</code> で代入される変数です。合成フェーズでフリップフロップにマップされます。</p>
 <p><code>always_ff</code> は必須のクロック変数、オプションのリセット変数、<code>{}</code> ブロックをとります。クロックとリセットは <code>()</code> に書きます。指定されたクロックとリセットは <code>clock</code> / <code>reset</code> 型を持ち、そのビット幅は1ビットでなければなりません。</p>
 <p><code>if_reset</code> は <code>always_ff</code> に書ける特別なキーワードで、そのレジスタ変数のリセット条件を示します。<code>if_reset</code> を使う場合は <code>always_ff</code> のリセット変数は必須です。これを使うことで、リセットの極性と同期性を隠ぺいすることができます。実際の極性と同期性は <code>Veryl.toml</code> の <code>[build]</code> セクションで設定できます。</p>
+<p>モジュール内にクロックとリセットが1つしかない場合、クロックとリセットの指定は省略できます。</p>
 <pre><code class="language-veryl playground">module ModuleA (
     i_clk: input clock,
     i_rst: input reset,
 ) {
     var a: logic&lt;10&gt;;
     var b: logic&lt;10&gt;;
+    var c: logic&lt;10&gt;;
 
     always_ff (i_clk) {
         a = 1;
@@ -269,6 +271,14 @@
             b = 0;
         } else {
             b = 1;
+        }
+    }
+
+    always_ff {
+        if_reset {
+            c = 0;
+        } else {
+            c = 1;
         }
     }
 }

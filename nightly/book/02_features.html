@@ -379,7 +379,8 @@ endmodule
 these can be specified during build-time configuration.
 This allows generating code for both ASICs with negative asynchronous reset
 and FPGAs with positive synchronous reset from the same Veryl code.</p>
-<p>Additionally, explicit <code>clock</code> and <code>reset</code> type enables to check whether clock and reset are correctly connected to registers.</p>
+<p>Additionally, explicit <code>clock</code> and <code>reset</code> type enables to check whether clock and reset are correctly connected to registers.
+If there is a single clock and reset in the module, the connection can be omitted.</p>
 <table>
 <tr>
 <th>SystemVerilog</th>
@@ -406,7 +407,7 @@ endmodule
     i_clk: input clock,
     i_rst: input reset,
 ){
-    always_ff (i_clk, i_rst) {
+    always_ff {
         if_reset {
         } else {
         }

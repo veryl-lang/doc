@@ -394,7 +394,8 @@ endmodule
 these can be specified during build-time configuration.
 This allows generating code for both ASICs with negative asynchronous reset
 and FPGAs with positive synchronous reset from the same Veryl code.</p>
-<p>Additionally, explicit <code>clock</code> and <code>reset</code> type enables to check whether clock and reset are correctly connected to registers.</p>
+<p>Additionally, explicit <code>clock</code> and <code>reset</code> type enables to check whether clock and reset are correctly connected to registers.
+If there is a single clock and reset in the module, the connection can be omitted.</p>
 <table>
 <tr>
 <th>SystemVerilog</th>
@@ -421,7 +422,7 @@ endmodule
     i_clk: input clock,
     i_rst: input reset,
 ){
-    always_ff (i_clk, i_rst) {
+    always_ff {
         if_reset {
         } else {
         }
@@ -833,6 +834,7 @@ module ModuleA #(
     // variable declaration
     var r_data0: logic&lt;ParamA&gt;;
     var r_data1: logic&lt;ParamA&gt;;
+    var r_data2: logic&lt;ParamA&gt;;
 
     // value binding
     let _w_data2: logic&lt;ParamA&gt; = i_data;
@@ -855,6 +857,12 @@ module ModuleA #(
     // always_ff statement without reset
     always_ff (i_clk) {
         r_data1 = r_data0;
+    }
+
+    // clock and reset can be omitted
+    // if there is a single clock and reset in the module
+    always_ff {
+        r_data2 = r_data1;
     }
 
     assign o_data = r_data1;
@@ -1698,12 +1706,14 @@ It means reset condition of the register variable.
 If <code>if_reset</code> is used, <code>always_ff</code> must have reset variable.
 <code>if_reset</code> can be conceal reset porality and synchronisity.
 The actual porality and synchronisity can be configured through <code>[build]</code> section of <code>Veryl.toml</code>.</p>
+<p>If there is a single clock and reset in the module, clock and reset specification can be omitted.</p>
 <pre><code class="language-veryl playground">module ModuleA (
     i_clk: input clock,
     i_rst: input reset,
 ) {
     var a: logic&lt;10&gt;;
     var b: logic&lt;10&gt;;
+    var c: logic&lt;10&gt;;
 
     always_ff (i_clk) {
         a = 1;
@@ -1714,6 +1724,14 @@ The actual porality and synchronisity can be configured through <code>[build]</c
             b = 0;
         } else {
             b = 1;
+        }
+    }
+
+    always_ff {
+        if_reset {
+            c = 0;
+        } else {
+            c = 1;
         }
     }
 }
