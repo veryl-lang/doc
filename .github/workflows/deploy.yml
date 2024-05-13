@@ -32,6 +32,10 @@ jobs:
           cargo install mdbook-i18n-helpers --locked --version 0.3.0
       - name: Build mdbook plugin
         run: cargo install --git https://github.com/veryl-lang/veryl mdbook-veryl
+      - name: Replace wasm path for nightly
+        if: ${{ ! startsWith(github.ref, 'refs/tags/v') }}
+        run: |
+          sed -i 's/playground\/pkg\/veryl_wasm.js/nightly\/playground\/pkg\/veryl_wasm.js/g' book/theme/index.hbs
       - name: Build mdbook
         run: mdbook build
         working-directory: book
