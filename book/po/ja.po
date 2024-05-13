@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-05-10T10:11:39+09:00\n"
+"POT-Creation-Date: 2024-05-13T14:08:12+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -623,16 +623,18 @@ msgstr ""
 #: src/02_features.md:168
 msgid ""
 "Additionally, explicit `clock` and `reset` type enables to check whether "
-"clock and reset are correctly connected to registers."
+"clock and reset are correctly connected to registers. If there is a single "
+"clock and reset in the module, the connection can be omitted."
 msgstr ""
 "さらに、明示的な `clock` と `reset` 型により、レジスタへのクロック・リセット"
 "接続が正しく行われているかどうかを確認することができます。"
+"モジュール内にクロックとリセットが1つだけの場合、レジスタへの接続を省略することもできます。"
 
-#: src/02_features.md:213 src/05_language_reference/02_lexical_structure.md:33
+#: src/02_features.md:214 src/05_language_reference/02_lexical_structure.md:33
 msgid "Documentation comment"
 msgstr "ドキュメンテーションコメント"
 
-#: src/02_features.md:215
+#: src/02_features.md:216
 msgid ""
 "Writing module descriptions as documentation comments allows for automatic "
 "documentation generation. You can use not only plain text but also MarkDown "
@@ -642,7 +644,7 @@ msgstr ""
 "を自動生成することができます。単なるテキストだけでなく、マークダウン形式や"
 "[WaveDrom](https://wavedrom.com)による波形記述を使用することができます。"
 
-#: src/02_features.md:226
+#: src/02_features.md:227
 msgid ""
 "```verilog\n"
 "// Comment\n"
@@ -656,7 +658,7 @@ msgstr ""
 "endmodule\n"
 "```"
 
-#: src/02_features.md:235
+#: src/02_features.md:236
 msgid ""
 "````veryl\n"
 "/// Documentation comment written by Markdown\n"
@@ -684,11 +686,11 @@ msgstr ""
 "}\n"
 "````"
 
-#: src/02_features.md:252
+#: src/02_features.md:253
 msgid "Compound assignment operator in `always_ff`"
 msgstr "`always_ff` での複合代入演算子"
 
-#: src/02_features.md:254
+#: src/02_features.md:255
 msgid ""
 "There is no dedicated non-blocking assignment operator; within `always_ff`, "
 "non-blocking assignments are inferred, while within `always_comb`, blocking "
@@ -700,11 +702,11 @@ msgstr ""
 "`always_ff` 内でも `always_comb` 内と同様に様々な複合代入演算子を使用すること"
 "ができます。"
 
-#: src/02_features.md:289
+#: src/02_features.md:290
 msgid "Individual namespace of enum variant"
 msgstr "独立した名前空間を持つenumバリアント"
 
-#: src/02_features.md:291
+#: src/02_features.md:292
 msgid ""
 "Variants of an enum are defined within separate namespaces for each enum, "
 "thus preventing unintended name collisions."
@@ -712,11 +714,11 @@ msgstr ""
 "enumのバリアントはenum毎に独立した名前空間を持っており意図しない名前の衝突を"
 "防ぐことができます。"
 
-#: src/02_features.md:329
+#: src/02_features.md:330
 msgid "`repeat` of concatenation"
 msgstr "ビット連結における `repeat`"
 
-#: src/02_features.md:331
+#: src/02_features.md:332
 msgid ""
 "By adopting the explicit `repeat` syntax as a repetition description in bit "
 "concatenation, readability improves over complex combinations of `{}`."
@@ -724,11 +726,11 @@ msgstr ""
 "ビット連結における繰り返し記述として明示的な `repeat` 記法を採用し、 複雑な "
 "`{}` の組み合わせより可読性が向上しています。"
 
-#: src/02_features.md:359
+#: src/02_features.md:360
 msgid "`if` / `case` expression"
 msgstr "`if` / `case` 式"
 
-#: src/02_features.md:361
+#: src/02_features.md:362
 msgid ""
 "By adopting `if` and `case` expressions instead of the ternary operator, "
 "readability improves, especially when comparing a large number of items."
@@ -736,11 +738,11 @@ msgstr ""
 "三項演算子の代わりに if 式と case 式を採用することで、比較するアイテム数が多"
 "い場合の可読性が向上します。"
 
-#: src/02_features.md:397
+#: src/02_features.md:398
 msgid "Range-based `for` / `inside` / `outside`"
 msgstr "範囲 `for` / `inside` / `outside`"
 
-#: src/02_features.md:399
+#: src/02_features.md:400
 msgid ""
 "With notation representing closed intervals `..=` and half-open intervals `.."
 "`, it is possible to uniformly describe ranges using `for`, `inside`, and "
@@ -750,11 +752,11 @@ msgstr ""
 "一的に記述できるようにしました。また、`inside` の逆を意味する `outside` も導"
 "入しました。"
 
-#: src/02_features.md:431
+#: src/02_features.md:432
 msgid "`msb` notation"
 msgstr "`msb` 記法"
 
-#: src/02_features.md:433
+#: src/02_features.md:434
 msgid ""
 "The `msb` notation, indicating the most significant bit, eliminates the need "
 "to calculate the most significant bit from parameters, making intentions "
@@ -763,11 +765,11 @@ msgstr ""
 "最上位ビットを示す `msb` 記法により、パラメータから最上位ビットを計算する必要"
 "がなくなり、より意図を明確にすることができます。"
 
-#: src/02_features.md:462
+#: src/02_features.md:463
 msgid "`let` statement"
 msgstr "`let` 文"
 
-#: src/02_features.md:464
+#: src/02_features.md:465
 msgid ""
 "There is a dedicated `let` statement available for binding values "
 "simultaneously with variable declaration, which can be used in various "
@@ -776,20 +778,20 @@ msgstr ""
 "変数宣言と同時に値を束縛する専用の `let` 文が用意されており、SystemVerilogで"
 "はサポートされていなかった様々な場所で使用することができます。"
 
-#: src/02_features.md:497
+#: src/02_features.md:498
 msgid "Named block"
 msgstr "名前付きブロック"
 
-#: src/02_features.md:499
+#: src/02_features.md:500
 msgid "You can define named blocks to limit the scope of variables."
 msgstr ""
 "変数のスコープを限定するための名前付きブロックを定義することができます。"
 
-#: src/02_features.md:526
+#: src/02_features.md:527
 msgid "Visibility control"
 msgstr "可視性制御"
 
-#: src/02_features.md:528
+#: src/02_features.md:529
 msgid ""
 "Modules without the `pub` keyword cannot be referenced from outside the "
 "project and are not included in automatic documentation generation. This "
@@ -800,7 +802,7 @@ msgstr ""
 "ントの自動生成にも含まれません。これによりプロジェクト外に公開したいものと内"
 "部実装とを区別することができます。"
 
-#: src/02_features.md:563
+#: src/02_features.md:564
 msgid ""
 "Some browsers by default pause the playback of GIF animations. Please check "
 "your browser settings."
@@ -1172,6 +1174,7 @@ msgid ""
 "    // variable declaration\n"
 "    var r_data0: logic<ParamA>;\n"
 "    var r_data1: logic<ParamA>;\n"
+"    var r_data2: logic<ParamA>;\n"
 "\n"
 "    // value binding\n"
 "    let _w_data2: logic<ParamA> = i_data;\n"
@@ -1194,6 +1197,12 @@ msgid ""
 "    // always_ff statement without reset\n"
 "    always_ff (i_clk) {\n"
 "        r_data1 = r_data0;\n"
+"    }\n"
+"\n"
+"    // clock and reset can be omitted\n"
+"    // if there is a single clock and reset in the module\n"
+"    always_ff {\n"
+"        r_data2 = r_data1;\n"
 "    }\n"
 "\n"
 "    assign o_data = r_data1;\n"
@@ -1223,6 +1232,7 @@ msgstr ""
 "    // 変数宣言\n"
 "    var r_data0: logic<ParamA>;\n"
 "    var r_data1: logic<ParamA>;\n"
+"    var r_data2: logic<ParamA>;\n"
 "\n"
 "    // 値の束縛\n"
 "    let _w_data2: logic<ParamA> = i_data;\n"
@@ -1246,6 +1256,12 @@ msgstr ""
 "    // リセットなし always_ff 文\n"
 "    always_ff (i_clk) {\n"
 "        r_data1 = r_data0;\n"
+"    }\n"
+"\n"
+"    // モジュール内にクロックとリセットが1つしかない場合\n"
+"    // クロックとリセットの指定は省略できます\n"
+"    always_ff {\n"
+"        r_data2 = r_data1;\n"
 "    }\n"
 "\n"
 "    assign o_data = r_data1;\n"
@@ -2533,6 +2549,13 @@ msgstr ""
 "セット条件を示します。`if_reset` を使う場合は `always_ff` のリセット変数は必"
 "須です。これを使うことで、リセットの極性と同期性を隠ぺいすることができます。"
 "実際の極性と同期性は `Veryl.toml` の `[build]` セクションで設定できます。"
+
+#: src/05_language_reference/06_declaration/03_register.md:16
+msgid ""
+"If there is a single clock and reset in the module, clock and reset "
+"specification can be omitted."
+msgstr ""
+"モジュール内にクロックとリセットが1つしかない場合、クロックとリセットの指定は省略できます。"
 
 #: src/05_language_reference/06_declaration/04_combinational.md:3
 msgid ""
@@ -6158,8 +6181,10 @@ msgid ""
 "\n"
 "TypeDefDeclaration: Type Identifier Equ ArrayType Semicolon;\n"
 "\n"
-"AlwaysFfDeclaration: AlwaysFf LParen AlwaysFfClock [ Comma AlwaysFfReset ] "
-"RParen LBrace { Statement } RBrace;\n"
+"AlwaysFfDeclaration: AlwaysFf [ AlwayfFfEventList ] LBrace { Statement } "
+"RBrace;\n"
+"\n"
+"AlwayfFfEventList: LParen AlwaysFfClock [ Comma AlwaysFfReset ] RParen;\n"
 "\n"
 "AlwaysFfClock: HierarchicalIdentifier;\n"
 "\n"
