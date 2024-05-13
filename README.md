@@ -4,8 +4,12 @@
 
 This is the documents of [Veryl](https://veryl-lang.org/) Hardware Description Laugnage.
 
-* https://doc.veryl-lang.org/book/
-* https://doc.veryl-lang.org/playground/
+* stable
+    * https://doc.veryl-lang.org/book/
+    * https://doc.veryl-lang.org/playground/
+* nightly
+    * https://doc.veryl-lang.org/nightly/book/
+    * https://doc.veryl-lang.org/nightly/playground/
 
 ## License
 
