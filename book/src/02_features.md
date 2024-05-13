@@ -279,7 +279,7 @@ end
 
 ```veryl
 # module ModuleA {
-always_ff (i_clk) {
+always_ff {
     if a {
         x += 1;
     }
@@ -502,7 +502,7 @@ end
 
 ```veryl
 # module ModuleA {
-always_ff (i_clk) {
+always_ff {
     let tmp: logic = b + 1;
     x = tmp;
 }
