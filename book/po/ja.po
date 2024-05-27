@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-05-13T14:08:12+09:00\n"
+"POT-Creation-Date: 2024-05-27T10:43:05+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -254,64 +254,95 @@ msgstr "組み込みテスト"
 msgid "Generics"
 msgstr "ジェネリクス"
 
-#: src/SUMMARY.md:63 src/06_development_environment.md:1
+#: src/SUMMARY.md:63
+#: src/05_language_reference/14_generics/01_default_parameter.md:1
+msgid "Default Parameter"
+msgstr "デフォルトパラメータ"
+
+#: src/SUMMARY.md:64 src/06_development_environment.md:1
 msgid "Development Environment"
 msgstr "開発環境"
 
-#: src/SUMMARY.md:64
+#: src/SUMMARY.md:65
 #: src/06_development_environment/01_project_configuration.md:1
 msgid "Project Configuration"
 msgstr "プロジェクト設定"
 
-#: src/SUMMARY.md:65 src/06_development_environment/02_dependencies.md:1
+#: src/SUMMARY.md:66
+#: src/06_development_environment/01_project_configuration/01_build.md:1
+msgid "Build"
+msgstr "Build"
+
+#: src/SUMMARY.md:67
+#: src/06_development_environment/01_project_configuration/02_format.md:1
+msgid "Format"
+msgstr "Format"
+
+#: src/SUMMARY.md:68
+#: src/06_development_environment/01_project_configuration/03_lint.md:1
+msgid "Lint"
+msgstr "Lint"
+
+#: src/SUMMARY.md:69
+#: src/06_development_environment/01_project_configuration/04_test.md:1
+#: src/06_development_environment/11_github_action.md:47
+msgid "Test"
+msgstr "Test"
+
+#: src/SUMMARY.md:70
+#: src/06_development_environment/01_project_configuration/05_publish.md:1
+msgid "Publish"
+msgstr "Publish"
+
+#: src/SUMMARY.md:71 src/06_development_environment/02_dependencies.md:1
 msgid "Dependencies"
 msgstr "依存関係"
 
-#: src/SUMMARY.md:66 src/06_development_environment/03_publish_project.md:1
+#: src/SUMMARY.md:72 src/06_development_environment/03_publish_project.md:1
 msgid "Publish Project"
 msgstr "プロジェクトを公開する"
 
-#: src/SUMMARY.md:67 src/06_development_environment/04_directory_layout.md:1
+#: src/SUMMARY.md:73 src/06_development_environment/04_directory_layout.md:1
 msgid "Directory Layout"
 msgstr "ディレクトリ構成"
 
-#: src/SUMMARY.md:68 src/06_development_environment/05_formatter.md:1
+#: src/SUMMARY.md:74 src/06_development_environment/05_formatter.md:1
 msgid "Formatter"
 msgstr "フォーマッタ"
 
-#: src/SUMMARY.md:69 src/06_development_environment/06_linter.md:1
+#: src/SUMMARY.md:75 src/06_development_environment/06_linter.md:1
 msgid "Linter"
 msgstr "リンタ"
 
-#: src/SUMMARY.md:70 src/06_development_environment/07_simulator.md:1
+#: src/SUMMARY.md:76 src/06_development_environment/07_simulator.md:1
 msgid "Simulator"
 msgstr "シミュレータ"
 
-#: src/SUMMARY.md:71 src/06_development_environment/08_language_server.md:1
+#: src/SUMMARY.md:77 src/06_development_environment/08_language_server.md:1
 msgid "Language Server"
 msgstr "言語サーバ"
 
-#: src/SUMMARY.md:72 src/06_development_environment/09_compatibility.md:1
+#: src/SUMMARY.md:78 src/06_development_environment/09_compatibility.md:1
 msgid "Compatibility"
 msgstr "互換性"
 
-#: src/SUMMARY.md:73 src/06_development_environment/10_documentation.md:1
+#: src/SUMMARY.md:79 src/06_development_environment/10_documentation.md:1
 msgid "Documentation"
 msgstr "ドキュメンテーション"
 
-#: src/SUMMARY.md:74 src/06_development_environment/11_github_action.md:1
+#: src/SUMMARY.md:80 src/06_development_environment/11_github_action.md:1
 msgid "GitHub Action"
 msgstr "GitHub Action"
 
-#: src/SUMMARY.md:75 src/07_appendix.md:1
+#: src/SUMMARY.md:81 src/07_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:76 src/07_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:82 src/07_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:77 src/07_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:83 src/07_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -627,8 +658,8 @@ msgid ""
 "clock and reset in the module, the connection can be omitted."
 msgstr ""
 "さらに、明示的な `clock` と `reset` 型により、レジスタへのクロック・リセット"
-"接続が正しく行われているかどうかを確認することができます。"
-"モジュール内にクロックとリセットが1つだけの場合、レジスタへの接続を省略することもできます。"
+"接続が正しく行われているかどうかを確認することができます。モジュール内にク"
+"ロックとリセットが1つだけの場合、レジスタへの接続を省略することもできます。"
 
 #: src/02_features.md:214 src/05_language_reference/02_lexical_structure.md:33
 msgid "Documentation comment"
@@ -2555,7 +2586,8 @@ msgid ""
 "If there is a single clock and reset in the module, clock and reset "
 "specification can be omitted."
 msgstr ""
-"モジュール内にクロックとリセットが1つしかない場合、クロックとリセットの指定は省略できます。"
+"モジュール内にクロックとリセットが1つしかない場合、クロックとリセットの指定は"
+"省略できます。"
 
 #: src/05_language_reference/06_declaration/04_combinational.md:3
 msgid ""
@@ -3159,6 +3191,65 @@ msgstr ""
 "}\n"
 "```"
 
+#: src/05_language_reference/14_generics/01_default_parameter.md:3
+msgid ""
+"Generic parameter can take a default value through `=` after the generic "
+"parameter. If the parameter specifications at call site is omitted, the "
+"default value is used."
+msgstr ""
+"ジェネリックパラメータはその後に `=` を加えることででフォルト値を指定することができます。"
+"呼び出し側でパラメータ指定が省略された場合にデフォルト値が使われます。"
+
+#: src/05_language_reference/14_generics/01_default_parameter.md:19
+msgid ""
+"Default parameters should be placed at the last of generic parameter list. "
+"If not, it causes ambiguous which parameters are omitted."
+msgstr ""
+"デフォルトパラメータはジェネリックパラメータリストの最後に置く必要があります。"
+"そうでなければ、どのパラメータが省略されたかが曖昧になるためです。"
+
+#: src/05_language_reference/14_generics/01_default_parameter.md:22
+msgid ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    function FuncA::<T, U = 1> (\n"
+"        a: input logic<T>,\n"
+"    ) -> logic<T> {\n"
+"        return a + U;\n"
+"    }\n"
+"\n"
+"    // Error\n"
+"    //function FuncA::<T = 1, U> (\n"
+"    //    a: input logic<T>,\n"
+"    //) -> logic<T> {\n"
+"    //    return a + U;\n"
+"    //}\n"
+"\n"
+"    let _a: logic<10> = FuncA::<10>(1);\n"
+"    let _b: logic<20> = FuncA::<20, 2>(1);\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    function FuncA::<T, U = 1> (\n"
+"        a: input logic<T>,\n"
+"    ) -> logic<T> {\n"
+"        return a + U;\n"
+"    }\n"
+"\n"
+"    // エラー\n"
+"    //function FuncA::<T = 1, U> (\n"
+"    //    a: input logic<T>,\n"
+"    //) -> logic<T> {\n"
+"    //    return a + U;\n"
+"    //}\n"
+"\n"
+"    let _a: logic<10> = FuncA::<10>(1);\n"
+"    let _b: logic<20> = FuncA::<20, 2>(1);\n"
+"}\n"
+"```"
+
 #: src/06_development_environment.md:3
 msgid ""
 "In this chapter, we'll discuss about development environment including "
@@ -3229,87 +3320,32 @@ msgstr ""
 
 #: src/06_development_environment/01_project_configuration.md:11
 msgid ""
-"[`clock_type`](01_project_configuration.md#the-clock_type-field) --- The "
-"type of clock."
-msgstr ""
-"[`clock_type`](01_project_configuration.md#the-clock_type-field) --- クロック"
-"タイプ"
-
-#: src/06_development_environment/01_project_configuration.md:12
-msgid ""
-"[`reset_type`](01_project_configuration.md#the-reset_type-field) --- The "
-"type of reset."
-msgstr ""
-"[`reset_type`](01_project_configuration.md#the-reset_type-field) --- リセット"
-"タイプ"
-
-#: src/06_development_environment/01_project_configuration.md:13
-msgid ""
-"[`filelist_type`](01_project_configuration.md#the-filelist_type-field) --- "
-"The type of filelist."
-msgstr ""
-"[`filelist_type`](01_project_configuration.md#the-filelist_type-field) --- "
-"ファイルリストのタイプ"
-
-#: src/06_development_environment/01_project_configuration.md:14
-msgid ""
-"[`target`](01_project_configuration.md#the-target-field) --- The way of "
-"output."
-msgstr "[`target`](01_project_configuration.md#the-target-field) --- 出力方法"
-
-#: src/06_development_environment/01_project_configuration.md:15
-msgid ""
-"[`implicit_parameter_types`](01_project_configuration.md#the-"
-"implicit_parameter_types-field) --- Whether implicit parameter type is "
-"enabled."
-msgstr ""
-"[`implicit_parameter_types`](01_project_configuration.md#the-"
-"implicit_parameter_types-field) --- 暗黙のパラメータ型を有効にするかどうか"
-
-#: src/06_development_environment/01_project_configuration.md:16
-msgid ""
-"[`omit_project_prefix`](01_project_configuration.md#the-omit_project_prefix-"
-"field) --- Whether omit project prefix."
-msgstr ""
-"[`omit_project_prefix`](01_project_configuration.md#the-omit_project_prefix-"
-"field) --- プロジェクト名のプレフィックスを省略するかどうか"
-
-#: src/06_development_environment/01_project_configuration.md:17
-msgid ""
-"[`strip_comments`](01_project_configuration.md#the-strip_comments-field) --- "
-"Whether strip comments."
-msgstr ""
-"[`strip_comments`](01_project_configuration.md#the-strip_comments-field) --- "
-"コメントを削除するかどうか"
-
-#: src/06_development_environment/01_project_configuration.md:18
-msgid ""
 "[`[format]`](01_project_configuration.md#the-format-section) --- Format "
 "settings."
 msgstr ""
 "[`[format]`](01_project_configuration.md#the-format-section) --- フォーマット"
 "設定"
 
-#: src/06_development_environment/01_project_configuration.md:19
+#: src/06_development_environment/01_project_configuration.md:12
 msgid ""
 "[`[lint]`](01_project_configuration.md#the-lint-section) --- Lint settings."
 msgstr ""
 "[`[lint]`](01_project_configuration.md#the-lint-section) --- リント設定"
 
-#: src/06_development_environment/01_project_configuration.md:20
+#: src/06_development_environment/01_project_configuration.md:13
 msgid ""
 "[`[test]`](01_project_configuration.md#the-test-section) --- Test settings."
 msgstr ""
 "[`[test]`](01_project_configuration.md#the-test-section) --- テスト設定"
 
-#: src/06_development_environment/01_project_configuration.md:21
+#: src/06_development_environment/01_project_configuration.md:14
 msgid ""
 "[`[publish]`](01_project_configuration.md#the-publish-section) --- Publish "
 "settings."
 msgstr ""
 "[`[publish]`](01_project_configuration.md#the-publish-section) --- 公開設定"
 
-#: src/06_development_environment/01_project_configuration.md:22
+#: src/06_development_environment/01_project_configuration.md:15
 msgid ""
 "[`[dependencies]`](01_project_configuration.md#the-dependencies-section) --- "
 "Library dependencies."
@@ -3317,11 +3353,11 @@ msgstr ""
 "[`[dependencies]`](01_project_configuration.md#the-dependencies-section) --- "
 "ライブラリの依存関係"
 
-#: src/06_development_environment/01_project_configuration.md:24
+#: src/06_development_environment/01_project_configuration.md:17
 msgid "The `[project]` section"
 msgstr "`[project]` セクション"
 
-#: src/06_development_environment/01_project_configuration.md:26
+#: src/06_development_environment/01_project_configuration.md:19
 msgid ""
 "The first section of `Veryl.toml` is `[project]`. The mandatory fields are "
 "`name` and `version`."
@@ -3329,11 +3365,11 @@ msgstr ""
 "`Veryl.toml` の最初のセクションは `[project]` です。`name` と `version` は必"
 "須です。"
 
-#: src/06_development_environment/01_project_configuration.md:29
+#: src/06_development_environment/01_project_configuration.md:22
 msgid "The `name` field"
 msgstr "`name` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:31
+#: src/06_development_environment/01_project_configuration.md:24
 msgid ""
 "The project name is used as prefix in the generated codes. So the name must "
 "start with alphabet or `_`, and use only alphanumeric charaters or `_`."
@@ -3342,11 +3378,11 @@ msgstr ""
 "ジェクト名はアルファベットか `_` で始まり、英数字と`_` しか使ってはいけませ"
 "ん。"
 
-#: src/06_development_environment/01_project_configuration.md:34
+#: src/06_development_environment/01_project_configuration.md:27
 msgid "The `version` field"
 msgstr "`version` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:36
+#: src/06_development_environment/01_project_configuration.md:29
 msgid ""
 "The project version should follow [Semantic Versioning](https://semver."
 "org/). The version is constructed by the following three numbers."
@@ -3354,19 +3390,19 @@ msgstr ""
 "プロジェクトのバージョンは [セマンティックバージョニング](https://semver."
 "org/)に従います。バージョンは以下の3つの数字からなります。"
 
-#: src/06_development_environment/01_project_configuration.md:39
+#: src/06_development_environment/01_project_configuration.md:32
 msgid "Major -- increment at incompatible changes"
 msgstr "メジャー -- 互換性のない変更時に上げる"
 
-#: src/06_development_environment/01_project_configuration.md:40
+#: src/06_development_environment/01_project_configuration.md:33
 msgid "Minor -- increment at adding features with backward compatibility"
 msgstr "マイナー -- 互換性のある機能追加時に上げる"
 
-#: src/06_development_environment/01_project_configuration.md:41
+#: src/06_development_environment/01_project_configuration.md:34
 msgid "Patch -- increment at bug fixes with backward compatibility"
 msgstr "バッチ -- 互換性のあるバグ修正時に上げる"
 
-#: src/06_development_environment/01_project_configuration.md:43
+#: src/06_development_environment/01_project_configuration.md:36
 msgid ""
 "```toml\n"
 "[project]\n"
@@ -3378,11 +3414,11 @@ msgstr ""
 "version = \"0.1.0\"\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration.md:48
+#: src/06_development_environment/01_project_configuration.md:41
 msgid "The `authors` field"
 msgstr "`authors` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:50
+#: src/06_development_environment/01_project_configuration.md:43
 msgid ""
 "The optional `authors` field lists in an array the people or organizations "
 "that are considered the \"authors\" of the project. The format of each "
@@ -3394,7 +3430,7 @@ msgstr ""
 "メールアドレスのみ、名前と括弧で囲んだEメールアドレスといった形式がよく使われ"
 "ます。"
 
-#: src/06_development_environment/01_project_configuration.md:53
+#: src/06_development_environment/01_project_configuration.md:46
 msgid ""
 "```toml\n"
 "[project]\n"
@@ -3408,11 +3444,11 @@ msgstr ""
 "<anonymous@example.com>\"]\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration.md:58
+#: src/06_development_environment/01_project_configuration.md:51
 msgid "The `description` field"
 msgstr "`description` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:60
+#: src/06_development_environment/01_project_configuration.md:53
 msgid ""
 "The `description` is a short blurb about the project. This should be plane "
 "text (not Markdown)."
@@ -3420,11 +3456,11 @@ msgstr ""
 "`description` はプロジェクトの短い説明です。マークダウンではなくプレーンテキ"
 "スト形式で書きます。"
 
-#: src/06_development_environment/01_project_configuration.md:62
+#: src/06_development_environment/01_project_configuration.md:55
 msgid "The `license` field"
 msgstr "`license` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:64
+#: src/06_development_environment/01_project_configuration.md:57
 msgid ""
 "The `license` field contains the name of license that the project is "
 "released under. The string should be follow [SPDX 2.3 license expression]"
@@ -3434,7 +3470,7 @@ msgstr ""
 "定します。指定する文字列は[SPDX 2.3 license expression](https://spdx.github."
 "io/spdx-spec/v2.3/SPDX-license-expressions)に従ってください。"
 
-#: src/06_development_environment/01_project_configuration.md:67
+#: src/06_development_environment/01_project_configuration.md:60
 msgid ""
 "```toml\n"
 "[project]\n"
@@ -3446,17 +3482,17 @@ msgstr ""
 "license = \"MIT OR Apache-2.0\"\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration.md:72
+#: src/06_development_environment/01_project_configuration.md:65
 msgid "The `repository` field"
 msgstr "`repository` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:74
+#: src/06_development_environment/01_project_configuration.md:67
 msgid ""
 "The `repository` field should be a URL to the source repository for the "
 "project."
 msgstr "`repository` フィールドはプロジェクトのソースリポジトリへのURLです。"
 
-#: src/06_development_environment/01_project_configuration.md:76
+#: src/06_development_environment/01_project_configuration.md:69
 msgid ""
 "```toml\n"
 "[project]\n"
@@ -3468,19 +3504,87 @@ msgstr ""
 "repository = \"https://github.com/veryl-lang/veryl\"\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration.md:81
+#: src/06_development_environment/01_project_configuration.md:74
 msgid "The `[build]` section"
 msgstr "`[build]` セクション"
 
-#: src/06_development_environment/01_project_configuration.md:83
-msgid "The `[build]` section contains the configurations of code generation."
+#: src/06_development_environment/01_project_configuration.md:76
+msgid ""
+"The `[build]` section contains the configurations of code generation. "
+"Available configurations is [here](./01_project_configuration/01_build.md)."
+msgstr ""
+"`[build]` セクションはコード生成の設定です。詳細は[こちら]"
+"(./01_project_configuration/01_build.md)。"
+
+#: src/06_development_environment/01_project_configuration.md:79
+msgid "The `[format]` section"
+msgstr "`[format]` セクション"
+
+#: src/06_development_environment/01_project_configuration.md:81
+msgid ""
+"The `[format]` section contains the configurations of code formatter. "
+"Available configurations is [here](./01_project_configuration/02_format.md)."
+msgstr ""
+"`[format]` セクションはコードフォーマッターの設定です。詳細は[こちら]"
+"(./01_project_configuration/02_format.md)。"
+
+#: src/06_development_environment/01_project_configuration.md:84
+msgid "The `[lint]` section"
+msgstr "`[lint]` セクション"
+
+#: src/06_development_environment/01_project_configuration.md:86
+msgid ""
+"The `[lint]` section contains the configurations of linter. Available "
+"configurations is [here](./01_project_configuration/03_lint.md)."
+msgstr ""
+"`[lint]` セクションはリンタの設定です。詳細は[こちら](./01_project_configuration/03_lint.md)。"
+
+#: src/06_development_environment/01_project_configuration.md:89
+#: src/06_development_environment/01_project_configuration/04_test.md:12
+msgid "The `[test]` section"
+msgstr "`[test]` セクション"
+
+#: src/06_development_environment/01_project_configuration.md:91
+msgid ""
+"The `[test]` section contains the configurations of test by RTL simulator. "
+"Available configurations is [here](./01_project_configuration/04_test.md)."
+msgstr ""
+"`[test]` セクションはRTLシミュレータによるテストの設定です。詳細は[こちら]"
+"(./01_project_configuration/04_test.md)。"
+
+#: src/06_development_environment/01_project_configuration.md:94
+msgid "The `[publish]` section"
+msgstr "`[publish]` セクション"
+
+#: src/06_development_environment/01_project_configuration.md:96
+msgid ""
+"The `[publish]` section contains the configurations of publishing. Available "
+"configurations is [here](./01_project_configuration/05_publish.md)."
+msgstr ""
+"`[publish]` セクションはプロジェクト公開の設定です。詳細は[こちら]"
+"(./01_project_configuration/05_publish.md)。"
+
+#: src/06_development_environment/01_project_configuration.md:99
+msgid "The `[dependencies]` section"
+msgstr "`[dependencies]` セクション"
+
+#: src/06_development_environment/01_project_configuration.md:101
+msgid ""
+"The `[dependencies]` section contains library dependencies. Available "
+"configurations is [here](./02_dependencies.md)."
+msgstr ""
+"`[dependencies]` セクションはライブラリの依存関係です。詳細は[こちら]"
+"(./02_dependencies.md)。"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:3
+msgid "`[build]` section specifies the configuration for code generation."
 msgstr "`[build]` セクションはコード生成の設定です。"
 
-#: src/06_development_environment/01_project_configuration.md:85
+#: src/06_development_environment/01_project_configuration/01_build.md:5
 msgid "The `clock_type` field"
 msgstr "`clock_type` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:87
+#: src/06_development_environment/01_project_configuration/01_build.md:7
 msgid ""
 "The `clock_type` field specifies which clock edge is used to drive flip-"
 "flop. The available types are below:"
@@ -3488,87 +3592,87 @@ msgstr ""
 "`clock_type` フィールドはフリップフロップを駆動するクロックエッジを指定しま"
 "す。"
 
-#: src/06_development_environment/01_project_configuration.md:90
+#: src/06_development_environment/01_project_configuration/01_build.md:10
 msgid "`posedge` -- positive edge"
 msgstr "`posedge` -- 立ち上がりエッジ"
 
-#: src/06_development_environment/01_project_configuration.md:91
+#: src/06_development_environment/01_project_configuration/01_build.md:11
 msgid "`negedge` -- negetive edge"
 msgstr "`negedge` -- 立ち下がりエッジ"
 
-#: src/06_development_environment/01_project_configuration.md:93
+#: src/06_development_environment/01_project_configuration/01_build.md:13
 msgid "The `reset_type` field"
 msgstr "`reset_type` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:95
+#: src/06_development_environment/01_project_configuration/01_build.md:15
 msgid ""
 "The `reset_type` field specifies reset polarity and synchronisity. The "
 "available types are below:"
 msgstr "`reset_type` フィールドはリセットの極性と同期性を指定します。"
 
-#: src/06_development_environment/01_project_configuration.md:98
+#: src/06_development_environment/01_project_configuration/01_build.md:18
 msgid "`async_low` -- asynchronous and active low"
 msgstr "`async_low` -- 非同期・負極性"
 
-#: src/06_development_environment/01_project_configuration.md:99
+#: src/06_development_environment/01_project_configuration/01_build.md:19
 msgid "`async_high` -- asynchronous and active high"
 msgstr "`async_high` -- 非同期・正極性"
 
-#: src/06_development_environment/01_project_configuration.md:100
+#: src/06_development_environment/01_project_configuration/01_build.md:20
 msgid "`sync_low` -- synchronous and active low"
 msgstr "`sync_low` -- 同期・負極性"
 
-#: src/06_development_environment/01_project_configuration.md:101
+#: src/06_development_environment/01_project_configuration/01_build.md:21
 msgid "`sync_high` -- synchronous and active high"
 msgstr "`sync_high` -- 同期・正極性"
 
-#: src/06_development_environment/01_project_configuration.md:103
+#: src/06_development_environment/01_project_configuration/01_build.md:23
 msgid "The `filelist_type` field"
 msgstr "`filelist_type` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:105
+#: src/06_development_environment/01_project_configuration/01_build.md:25
 msgid ""
 "The `filelist_type` field specifies filelist format. The available types are "
 "below:"
 msgstr "`filelist_type` フィールドはファイルリストのフォーマットを指定します。"
 
-#: src/06_development_environment/01_project_configuration.md:108
+#: src/06_development_environment/01_project_configuration/01_build.md:28
 msgid "`absolute` -- plane text filelist including absolute file paths"
 msgstr "`absolute` -- プレーンテキスト形式の絶対パスのリスト"
 
-#: src/06_development_environment/01_project_configuration.md:109
+#: src/06_development_environment/01_project_configuration/01_build.md:29
 msgid "`relative` -- plane text filelist including relative file paths"
 msgstr "`relative` -- プレーンテキスト形式の相対パスのリスト"
 
-#: src/06_development_environment/01_project_configuration.md:110
+#: src/06_development_environment/01_project_configuration/01_build.md:30
 msgid "`flgen` -- [flgen](https://github.com/pezy-computing/flgen) filelist"
 msgstr ""
 "`flgen` -- [flgen](https://github.com/pezy-computing/flgen) 形式のファイルリ"
 "スト"
 
-#: src/06_development_environment/01_project_configuration.md:112
+#: src/06_development_environment/01_project_configuration/01_build.md:32
 msgid "The `target` field"
 msgstr "`target` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:114
+#: src/06_development_environment/01_project_configuration/01_build.md:34
 msgid ""
 "The `target` field specifies where the generated codes will be placed at. "
 "The available types are below:"
 msgstr "`target` フィールドはコードの生成先を指定します。"
 
-#: src/06_development_environment/01_project_configuration.md:117
+#: src/06_development_environment/01_project_configuration/01_build.md:37
 msgid "`source` -- as the same directory as the source code"
 msgstr "`source` -- ソースコードと同じディレクトリ"
 
-#: src/06_development_environment/01_project_configuration.md:118
+#: src/06_development_environment/01_project_configuration/01_build.md:38
 msgid "`directory` -- specified directory"
 msgstr "`directory` -- 特定のディレクトリ"
 
-#: src/06_development_environment/01_project_configuration.md:119
+#: src/06_development_environment/01_project_configuration/01_build.md:39
 msgid "`bundle` -- specified file"
 msgstr "`bundle` -- 特定のファイル"
 
-#: src/06_development_environment/01_project_configuration.md:121
+#: src/06_development_environment/01_project_configuration/01_build.md:41
 msgid ""
 "If you want to use `directory` or `bundle`, you should specify the target "
 "path by `path` key."
@@ -3576,7 +3680,7 @@ msgstr ""
 "`directory` あるいは `bundle` を指定する場合は、ターゲットパスを `path` キー"
 "で指定します。"
 
-#: src/06_development_environment/01_project_configuration.md:123
+#: src/06_development_environment/01_project_configuration/01_build.md:43
 msgid ""
 "```toml\n"
 "[build]\n"
@@ -3588,11 +3692,11 @@ msgstr ""
 "target = {type = \"directory\", path = \"[dst dir]\"}\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration.md:128
+#: src/06_development_environment/01_project_configuration/01_build.md:48
 msgid "The `implicit_parameter_types` field"
 msgstr "`implicit_parameter_types` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:130
+#: src/06_development_environment/01_project_configuration/01_build.md:50
 msgid ""
 "The `implicit_parameter_types` field lists the types which will be elided in "
 "`parameter` declaration of the generated codes. This is because some EDA "
@@ -3604,7 +3708,7 @@ msgstr ""
 "を `parameter` 宣言で使うことができないためです。例えば `string` を指定する場"
 "合は以下のようにします。"
 
-#: src/06_development_environment/01_project_configuration.md:134
+#: src/06_development_environment/01_project_configuration/01_build.md:54
 #: src/06_development_environment/09_compatibility.md:18
 msgid ""
 "```toml\n"
@@ -3617,11 +3721,11 @@ msgstr ""
 "implicit_parameter_types = [\"string\"]\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration.md:139
+#: src/06_development_environment/01_project_configuration/01_build.md:59
 msgid "The `omit_project_prefix` field"
 msgstr "`omit_project_prefix` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:141
+#: src/06_development_environment/01_project_configuration/01_build.md:61
 msgid ""
 "If `omit_project_prefix` is set to `true`, the project prefix of module/"
 "interface/package name will be omitted. This is `false` by default."
@@ -3630,11 +3734,11 @@ msgstr ""
 "ケージ名のプロジェクトプレフィックスは省略されます。この値はデフォルトで "
 "`false` です。"
 
-#: src/06_development_environment/01_project_configuration.md:149
+#: src/06_development_environment/01_project_configuration/01_build.md:69
 msgid "The `strip_comments` field"
 msgstr "`strip_comments` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:151
+#: src/06_development_environment/01_project_configuration/01_build.md:71
 msgid ""
 "If `strip_comments` is set to `true`, all comments will be stripped. This is "
 "`false` by default."
@@ -3642,65 +3746,942 @@ msgstr ""
 "`strip_comments` が `true` のとき、コメント出力は省略されます。この値はデフォ"
 "ルトで `false` です。"
 
-#: src/06_development_environment/01_project_configuration.md:159
-msgid "The `[format]` section"
-msgstr "`[format]` セクション"
+#: src/06_development_environment/01_project_configuration/01_build.md:79
+msgid "The `*_prefix` and `*_suffix` field"
+msgstr "`*_prefix` と `*_suffix` フィールド"
 
-#: src/06_development_environment/01_project_configuration.md:161
+#: src/06_development_environment/01_project_configuration/01_build.md:81
 msgid ""
-"The `[format]` section contains the configurations of code formatter. "
-"Available configurations is [here](./05_formatter.md)."
+"`*_prefix` and `*_suffix` represent additional prefix and suffix for the "
+"generated code.  The available configurations are below:"
 msgstr ""
-"`[format]` セクションはコードフォーマッターの設定です。詳細は[こちら]"
-"(./05_formatter.md)。"
 
-#: src/06_development_environment/01_project_configuration.md:164
-msgid "The `[lint]` section"
-msgstr "`[lint]` セクション"
-
-#: src/06_development_environment/01_project_configuration.md:166
+#: src/06_development_environment/01_project_configuration/01_build.md:84
 msgid ""
-"The `[lint]` section contains the configurations of linter. Available "
-"configurations is [here](./06_linter.md)."
+"`clock_posedge_prefix`: Prefix for `clock` type at `clock_type = posedge`"
 msgstr ""
-"`[lint]` セクションはリンタの設定です。詳細は[こちら](./06_linter.md)。"
+"`clock_posedge_prefix`: `clock_type = posedge` のときの `clock` 型のプレフィックス"
 
-#: src/06_development_environment/01_project_configuration.md:169
-#: src/06_development_environment/07_simulator.md:21
-msgid "The `[test]` section"
-msgstr "`[test]` セクション"
-
-#: src/06_development_environment/01_project_configuration.md:171
+#: src/06_development_environment/01_project_configuration/01_build.md:85
 msgid ""
-"The `[test]` section contains the configurations of test by RTL simulator. "
-"Available configurations is [here](./07_simulator.md)."
+"`clock_posedge_suffix`: Suffix for `clock` type at `clock_type = posedge`"
 msgstr ""
-"`[test]` セクションはRTLシミュレータによるテストの設定です。詳細は[こちら]"
-"(./07_simulator.md)。"
+"`clock_posedge_suffix`: `clock_type = posedge` のときの `clock` 型のサフィックス"
 
-#: src/06_development_environment/01_project_configuration.md:174
-msgid "The `[publish]` section"
-msgstr "`[publish]` セクション"
-
-#: src/06_development_environment/01_project_configuration.md:176
+#: src/06_development_environment/01_project_configuration/01_build.md:86
 msgid ""
-"The `[publish]` section contains the configurations of publishing. Available "
-"configurations is [here](./03_publish_project.md)."
+"`clock_negedge_prefix`: Prefix for `clock` type at `clock_type = negedge`"
 msgstr ""
-"`[publish]` セクションはプロジェクト公開の設定です。詳細は[こちら]"
-"(./03_publish_project.md)。"
+"`clock_negedge_prefix`: `clock_type = negedge` のときの `clock` 型のプレフィックス"
 
-#: src/06_development_environment/01_project_configuration.md:179
-msgid "The `[dependencies]` section"
-msgstr "`[dependencies]` セクション"
-
-#: src/06_development_environment/01_project_configuration.md:181
+#: src/06_development_environment/01_project_configuration/01_build.md:87
 msgid ""
-"The `[dependencies]` section contains library dependencies. Available "
-"configurations is [here](./02_dependencies.md)."
+"`clock_negedge_suffix`: Suffix for `clock` type at `clock_type = negedge`"
 msgstr ""
-"`[dependencies]` セクションはライブラリの依存関係です。詳細は[こちら]"
-"(./02_dependencies.md)。"
+"`clock_negedge_suffix`: `clock_type = negedge` のときの `clock` 型のサフィックス"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:88
+msgid "`reset_high_prefix`: Prefix for `reset` type at `reset_type = *_high`"
+msgstr ""
+"`reset_high_prefix`: `reset_type = *_high` のときの `reset` 型のプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:89
+msgid "`reset_high_suffix`: Suffix for `reset` type at `reset_type = *_high`"
+msgstr ""
+"`reset_high_suffix`: `reset_type = *_high` のときの `reset` 型のサフィックス"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:90
+msgid "`reset_low_prefix`: Prefix for `reset` type at `reset_type = *_low`"
+msgstr ""
+"`reset_low_prefix`: `reset_type = *_low` のときの `reset` 型のプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:91
+msgid "`reset_low_suffix`: Suffix for `reset` type at `reset_type = *_low`"
+msgstr ""
+"`reset_low_suffix`: `reset_type = *_low` のときの `reset` 型のサフィックス"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:3
+msgid ""
+"`[format]` section specifies the configuration for formatter like below:"
+msgstr "`[format]` セクションはフォーマッタの設定です。"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:10
+#: src/06_development_environment/01_project_configuration/03_lint.md:10
+#: src/06_development_environment/01_project_configuration/04_test.md:10
+#: src/06_development_environment/01_project_configuration/05_publish.md:11
+msgid "Available configurations"
+msgstr "設定"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:12
+#: src/06_development_environment/01_project_configuration/03_lint.md:16
+#: src/06_development_environment/01_project_configuration/04_test.md:16
+#: src/06_development_environment/01_project_configuration/04_test.md:30
+#: src/06_development_environment/01_project_configuration/04_test.md:39
+#: src/06_development_environment/01_project_configuration/04_test.md:48
+#: src/06_development_environment/01_project_configuration/05_publish.md:13
+#: src/06_development_environment/03_publish_project.md:53
+#: src/06_development_environment/08_language_server.md:9
+#: src/06_development_environment/10_documentation.md:51
+msgid "Configuration"
+msgstr "設定"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:12
+#: src/06_development_environment/01_project_configuration/03_lint.md:16
+#: src/06_development_environment/01_project_configuration/04_test.md:16
+#: src/06_development_environment/01_project_configuration/04_test.md:30
+#: src/06_development_environment/01_project_configuration/04_test.md:39
+#: src/06_development_environment/01_project_configuration/04_test.md:48
+#: src/06_development_environment/01_project_configuration/05_publish.md:13
+#: src/06_development_environment/08_language_server.md:9
+#: src/06_development_environment/10_documentation.md:51
+msgid "Value"
+msgstr "設定値"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:12
+#: src/06_development_environment/01_project_configuration/03_lint.md:16
+#: src/06_development_environment/01_project_configuration/04_test.md:16
+#: src/06_development_environment/01_project_configuration/04_test.md:30
+#: src/06_development_environment/01_project_configuration/04_test.md:39
+#: src/06_development_environment/01_project_configuration/04_test.md:48
+#: src/06_development_environment/01_project_configuration/05_publish.md:13
+#: src/06_development_environment/08_language_server.md:9
+#: src/06_development_environment/10_documentation.md:51
+msgid "Description"
+msgstr "説明"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:14
+msgid "indent_width"
+msgstr "indent_width"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:14
+msgid "integer"
+msgstr "整数"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:14
+msgid "indent width by space"
+msgstr "インデントのスペース幅"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:3
+msgid "`[lint]` section specifies the configuration for linter like below:"
+msgstr "`[lint]` セクションはリンターの設定です。"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:5
+msgid ""
+"```toml\n"
+"[lint.naming]\n"
+"case_enum = \"snake\"\n"
+"```"
+msgstr ""
+"```toml\n"
+"[lint.naming]\n"
+"case_enum = \"snake\"\n"
+"```"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:12
+msgid "The `[lint.naming]` section"
+msgstr "`[lint.naming]` セクション"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:14
+msgid "This section contains configurations of naming conventions."
+msgstr "このセクションは命名規則の設定です。"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:18
+msgid "case_enum"
+msgstr "case_enum"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:18
+#: src/06_development_environment/01_project_configuration/03_lint.md:19
+#: src/06_development_environment/01_project_configuration/03_lint.md:20
+#: src/06_development_environment/01_project_configuration/03_lint.md:21
+#: src/06_development_environment/01_project_configuration/03_lint.md:22
+#: src/06_development_environment/01_project_configuration/03_lint.md:23
+#: src/06_development_environment/01_project_configuration/03_lint.md:24
+#: src/06_development_environment/01_project_configuration/03_lint.md:25
+#: src/06_development_environment/01_project_configuration/03_lint.md:26
+#: src/06_development_environment/01_project_configuration/03_lint.md:27
+#: src/06_development_environment/01_project_configuration/03_lint.md:28
+#: src/06_development_environment/01_project_configuration/03_lint.md:29
+#: src/06_development_environment/01_project_configuration/03_lint.md:30
+#: src/06_development_environment/01_project_configuration/03_lint.md:31
+#: src/06_development_environment/01_project_configuration/03_lint.md:32
+msgid "case type[^casetype]"
+msgstr "ケースタイプ[^casetype]"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:18
+msgid "case style of `enum`"
+msgstr "`enum` のケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:19
+msgid "case_function"
+msgstr "case_function"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:19
+msgid "case style of `function`"
+msgstr "`function` のケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:20
+msgid "case_instance"
+msgstr "case_instance"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:20
+msgid "case style of instance"
+msgstr "インスタンスのケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:21
+msgid "case_interface"
+msgstr "case_interface"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:21
+msgid "case style of `interface`"
+msgstr "`interface` のケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:22
+msgid "case_modport"
+msgstr "case_modport"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:22
+msgid "case style of `modport`"
+msgstr "`modport` のケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:23
+msgid "case_module"
+msgstr "case_module"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:23
+msgid "case style of `module`"
+msgstr "`module` のケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:24
+msgid "case_package"
+msgstr "case_package"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:24
+msgid "case style of `package`"
+msgstr "`package` のケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:25
+msgid "case_parameter"
+msgstr "case_parameter"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:25
+msgid "case style of `parameter`"
+msgstr "`parameter` のケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:26
+msgid "case_port_inout"
+msgstr "case_port_inout"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:26
+msgid "case style of `inout` port"
+msgstr "`inout` ポートのケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:27
+msgid "case_port_input"
+msgstr "case_port_input"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:27
+msgid "case style of `input` port"
+msgstr "`input` ポートのケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:28
+msgid "case_port_modport"
+msgstr "case_port_modport"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:28
+msgid "case style of `modport` port"
+msgstr "`modport` ポートのケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:29
+msgid "case_port_output"
+msgstr "case_port_output"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:29
+msgid "case style of `output` port"
+msgstr "`output` ポートのケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:30
+msgid "case_reg"
+msgstr "case_reg"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:30
+msgid "case style of register type variable[^reg]"
+msgstr "レジスタ変数[^reg]のケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:31
+msgid "case_struct"
+msgstr "case_struct"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:31
+msgid "case style of `struct`"
+msgstr "`struct` のケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:32
+msgid "case_wire"
+msgstr "case_wire"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:32
+msgid "case style of wire type variable[^wire]"
+msgstr "ワイヤ変数[^wire]のケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:33
+msgid "prefix_enum"
+msgstr "prefix_enum"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:33
+#: src/06_development_environment/01_project_configuration/03_lint.md:34
+#: src/06_development_environment/01_project_configuration/03_lint.md:35
+#: src/06_development_environment/01_project_configuration/03_lint.md:36
+#: src/06_development_environment/01_project_configuration/03_lint.md:37
+#: src/06_development_environment/01_project_configuration/03_lint.md:38
+#: src/06_development_environment/01_project_configuration/03_lint.md:39
+#: src/06_development_environment/01_project_configuration/03_lint.md:40
+#: src/06_development_environment/01_project_configuration/03_lint.md:41
+#: src/06_development_environment/01_project_configuration/03_lint.md:42
+#: src/06_development_environment/01_project_configuration/03_lint.md:43
+#: src/06_development_environment/01_project_configuration/03_lint.md:44
+#: src/06_development_environment/01_project_configuration/03_lint.md:45
+#: src/06_development_environment/01_project_configuration/03_lint.md:46
+#: src/06_development_environment/01_project_configuration/03_lint.md:47
+#: src/06_development_environment/01_project_configuration/05_publish.md:17
+#: src/06_development_environment/01_project_configuration/05_publish.md:18
+#: src/06_development_environment/10_documentation.md:53
+msgid "string"
+msgstr "文字列"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:33
+msgid "prefix of `enum`"
+msgstr "`enum` のプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:34
+msgid "prefix_function"
+msgstr "prefix_function"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:34
+msgid "prefix of `function`"
+msgstr "`function` のプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:35
+msgid "prefix_instance"
+msgstr "prefix_instance"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:35
+msgid "prefix of instance"
+msgstr "インスタンスのプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:36
+msgid "prefix_interface"
+msgstr "prefix_interface"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:36
+msgid "prefix of `interface`"
+msgstr "`interface` のプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:37
+msgid "prefix_modport"
+msgstr "prefix_modport"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:37
+msgid "prefix of `modport`"
+msgstr "`modport` のプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:38
+msgid "prefix_module"
+msgstr "prefix_module"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:38
+msgid "prefix of `module`"
+msgstr "`module` のプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:39
+msgid "prefix_package"
+msgstr "prefix_package"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:39
+msgid "prefix of `package`"
+msgstr "`package` のプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:40
+msgid "prefix_parameter"
+msgstr "prefix_parameter"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:40
+msgid "prefix of `parameter`"
+msgstr "`parameter` のプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:41
+msgid "prefix_port_inout"
+msgstr "prefix_port_inout"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:41
+msgid "prefix of `inout` port"
+msgstr "`inout` ポートのプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:42
+msgid "prefix_port_input"
+msgstr "prefix_port_input"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:42
+msgid "prefix of `input` port"
+msgstr "`input` ポートのプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:43
+msgid "prefix_port_modport"
+msgstr "prefix_port_modport"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:43
+msgid "prefix of `modport` port"
+msgstr "`modport` ポートのプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:44
+msgid "prefix_port_output"
+msgstr "prefix_port_output"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:44
+msgid "prefix of `output` port"
+msgstr "`output` ポートのプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:45
+msgid "prefix_reg"
+msgstr "prefix_reg"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:45
+msgid "prefix of register type variable[^reg]"
+msgstr "レジスタ変数[^reg]のプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:46
+msgid "prefix_struct"
+msgstr "prefix_struct"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:46
+msgid "prefix of `struct`"
+msgstr "`struct` のプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:47
+msgid "prefix_wire"
+msgstr "prefix_wire"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:47
+msgid "prefix of wire type variable[^wire]"
+msgstr "ワイヤ変数[^wire]のプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:48
+msgid "re_forbidden_enum"
+msgstr "re_forbidden_enum"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:48
+#: src/06_development_environment/01_project_configuration/03_lint.md:49
+#: src/06_development_environment/01_project_configuration/03_lint.md:50
+#: src/06_development_environment/01_project_configuration/03_lint.md:51
+#: src/06_development_environment/01_project_configuration/03_lint.md:52
+#: src/06_development_environment/01_project_configuration/03_lint.md:53
+#: src/06_development_environment/01_project_configuration/03_lint.md:54
+#: src/06_development_environment/01_project_configuration/03_lint.md:55
+#: src/06_development_environment/01_project_configuration/03_lint.md:56
+#: src/06_development_environment/01_project_configuration/03_lint.md:57
+#: src/06_development_environment/01_project_configuration/03_lint.md:58
+#: src/06_development_environment/01_project_configuration/03_lint.md:59
+#: src/06_development_environment/01_project_configuration/03_lint.md:60
+#: src/06_development_environment/01_project_configuration/03_lint.md:61
+#: src/06_development_environment/01_project_configuration/03_lint.md:62
+#: src/06_development_environment/01_project_configuration/03_lint.md:63
+#: src/06_development_environment/01_project_configuration/03_lint.md:64
+#: src/06_development_environment/01_project_configuration/03_lint.md:65
+#: src/06_development_environment/01_project_configuration/03_lint.md:66
+#: src/06_development_environment/01_project_configuration/03_lint.md:67
+#: src/06_development_environment/01_project_configuration/03_lint.md:68
+#: src/06_development_environment/01_project_configuration/03_lint.md:69
+#: src/06_development_environment/01_project_configuration/03_lint.md:70
+#: src/06_development_environment/01_project_configuration/03_lint.md:71
+#: src/06_development_environment/01_project_configuration/03_lint.md:72
+#: src/06_development_environment/01_project_configuration/03_lint.md:73
+#: src/06_development_environment/01_project_configuration/03_lint.md:74
+#: src/06_development_environment/01_project_configuration/03_lint.md:75
+#: src/06_development_environment/01_project_configuration/03_lint.md:76
+#: src/06_development_environment/01_project_configuration/03_lint.md:77
+msgid "regex[^regex]"
+msgstr "正規表現[^regex]"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:48
+msgid "regex forbidden of `enum`"
+msgstr "`enum` の禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:49
+msgid "re_forbidden_function"
+msgstr "re_forbidden_function"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:49
+msgid "regex forbidden of `function`"
+msgstr "`function` の禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:50
+msgid "re_forbidden_instance"
+msgstr "re_forbidden_instance"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:50
+msgid "regex forbidden of instance"
+msgstr "インスタンスの禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:51
+msgid "re_forbidden_interface"
+msgstr "re_forbidden_interface"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:51
+msgid "regex forbidden of `interface`"
+msgstr "`interface` の禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:52
+msgid "re_forbidden_modport"
+msgstr "re_forbidden_modport"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:52
+msgid "regex forbidden of `modport`"
+msgstr "`modport` の禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:53
+msgid "re_forbidden_module"
+msgstr "re_forbidden_module"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:53
+msgid "regex forbidden of `module`"
+msgstr "`module` の禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:54
+msgid "re_forbidden_package"
+msgstr "re_forbidden_package"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:54
+msgid "regex forbidden of `package`"
+msgstr "`package` の禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:55
+msgid "re_forbidden_parameter"
+msgstr "re_forbidden_parameter"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:55
+msgid "regex forbidden of `parameter`"
+msgstr "`parameter` の禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:56
+msgid "re_forbidden_port_inout"
+msgstr "re_forbidden_port_inout"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:56
+msgid "regex forbidden of `inout` port"
+msgstr "`inout` ポートの禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:57
+msgid "re_forbidden_port_input"
+msgstr "re_forbidden_port_input"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:57
+msgid "regex forbidden of `input` port"
+msgstr "`input` ポートの禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:58
+msgid "re_forbidden_port_modport"
+msgstr "re_forbidden_port_modport"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:58
+msgid "regex forbidden of `modport` port"
+msgstr "`modport` ポートの禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:59
+msgid "re_forbidden_port_output"
+msgstr "re_forbidden_port_output"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:59
+msgid "regex forbidden of `output` port"
+msgstr "`output` ポートの禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:60
+msgid "re_forbidden_reg"
+msgstr "re_forbidden_reg"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:60
+msgid "regex forbidden of register type variable[^reg]"
+msgstr "レジスタ変数[^reg]の禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:61
+msgid "re_forbidden_struct"
+msgstr "re_forbidden_struct"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:61
+msgid "regex forbidden of `struct`"
+msgstr "`struct` の禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:62
+msgid "re_forbidden_wire"
+msgstr "re_forbidden_wire"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:62
+msgid "regex forbidden of wire type variable[^wire]"
+msgstr "ワイヤ変数[^wire]の禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:63
+msgid "re_required_enum"
+msgstr "re_required_enum"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:63
+msgid "regex required of `enum`"
+msgstr "`enum` の必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:64
+msgid "re_required_function"
+msgstr "re_required_function"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:64
+msgid "regex required of `function`"
+msgstr "`function` の必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:65
+msgid "re_required_instance"
+msgstr "re_required_instance"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:65
+msgid "regex required of instance"
+msgstr "インスタンスの必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:66
+msgid "re_required_interface"
+msgstr "re_required_interface"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:66
+msgid "regex required of `interface`"
+msgstr "`interface` の必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:67
+msgid "re_required_modport"
+msgstr "re_required_modport"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:67
+msgid "regex required of `modport`"
+msgstr "`modport` の必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:68
+msgid "re_required_module"
+msgstr "re_required_module"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:68
+msgid "regex required of `module`"
+msgstr "`module` の必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:69
+msgid "re_required_package"
+msgstr "re_required_package"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:69
+msgid "regex required of `package`"
+msgstr "`package` の必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:70
+msgid "re_required_parameter"
+msgstr "re_required_parameter"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:70
+msgid "regex required of `parameter`"
+msgstr "`parameter` の必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:71
+msgid "re_required_port_inout"
+msgstr "re_required_port_inout"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:71
+msgid "regex required of `inout` port"
+msgstr "`inout` ポートの必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:72
+msgid "re_required_port_input"
+msgstr "re_required_port_input"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:72
+msgid "regex required of `input` port"
+msgstr "`input` ポートの必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:73
+msgid "re_required_port_modport"
+msgstr "re_required_port_modport"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:73
+msgid "regex required of `modport` port"
+msgstr "`modport` ポートの必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:74
+msgid "re_required_port_output"
+msgstr "re_required_port_output"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:74
+msgid "regex required of `output` port"
+msgstr "`output` ポートの必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:75
+msgid "re_required_reg"
+msgstr "re_required_reg"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:75
+msgid "regex required of register type variable[^reg]"
+msgstr "レジスタ変数[^reg]の必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:76
+msgid "re_required_struct"
+msgstr "re_required_struct"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:76
+msgid "regex required of `struct`"
+msgstr "`struct` の必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:77
+msgid "re_required_wire"
+msgstr "re_required_wire"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:77
+msgid "regex required of wire type variable[^wire]"
+msgstr "ワイヤ変数[^wire]の必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:79
+#: src/06_development_environment/01_project_configuration/04_test.md:20
+msgid "The available values are "
+msgstr "設定可能な値は以下です。"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:81
+msgid "`\"snake\"` -- snake_case"
+msgstr "`\"snake\"` -- snake_case"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:82
+msgid "`\"screaming_snake\"` -- SCREAMING_SNAKE_CASE"
+msgstr "`\"screaming_snake\"` -- SCREAMING_SNAKE_CASE"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:83
+msgid "`\"lower_camel\"` -- lowerCamelCase"
+msgstr "`\"lower_camel\"` -- lowerCamelCase"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:84
+msgid "`\"upper_camel\"` -- UpperCamelCase"
+msgstr "`\"upper_camel\"` -- UpperCamelCase"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:86
+msgid ""
+"Regular expression string like `\".*\"`. The available syntax is [here]"
+"(https://docs.rs/regex/latest/regex/#syntax)."
+msgstr ""
+"`\".*\"`のような正規表現です。使用可能な構文は[こちら](https://docs.rs/regex/"
+"latest/regex/#syntax)."
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:88
+msgid ""
+"Register type means that the variable is assigned in `always_ff`. It will be "
+"mapped to flip-flop in synthesis phase."
+msgstr ""
+"レジスタ変数とは `always_ff` で代入される変数です。合成フェーズでフリップフ"
+"ロップにマップされます。"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:90
+msgid ""
+"Wire type means that the variable is assigned in `always_comb`. It will be "
+"mapped to wire in synthesis phase."
+msgstr ""
+"ワイヤ変数とは `always_comb` で代入される変数です。合成フェーズでワイヤにマッ"
+"プされます。"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:3
+msgid ""
+"`[test]` section specifies the configuration for integrated unit test like "
+"below:"
+msgstr ""
+"`[test]` セクションは以下のように組み込みユニットテストの設定を指定します。"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:5
+msgid ""
+"```toml\n"
+"[test]\n"
+"simulator = \"vcs\"\n"
+"```"
+msgstr ""
+"```toml\n"
+"[test]\n"
+"simulator = \"vcs\"\n"
+"```"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:14
+msgid "This section contains configurations of test."
+msgstr "このセクションはテストの設定です。"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:18
+msgid "simulator"
+msgstr "simulator"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:18
+msgid "simulator name[^sim]"
+msgstr "シミュレータ名[^sim]"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:18
+msgid "default simulator"
+msgstr "デフォルトのシミュレータ"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:22
+msgid "`\"verilator\"`"
+msgstr "`\"verilator\"`"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:23
+msgid "`\"vcs\"`"
+msgstr "`\"vcs\"`"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:24
+msgid "`\"vivado\"`"
+msgstr "`\"vivado\"`"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:26
+msgid "The `[test.verilator]` section"
+msgstr "`[test.verilator]` セクション"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:28
+msgid "This section contains configurations of test by Verilator."
+msgstr "このセクションはVerilatorによるテストの設定です。"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:32
+#: src/06_development_environment/01_project_configuration/04_test.md:41
+#: src/06_development_environment/01_project_configuration/04_test.md:50
+msgid "compile_args"
+msgstr "compile_args"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:32
+#: src/06_development_environment/01_project_configuration/04_test.md:33
+#: src/06_development_environment/01_project_configuration/04_test.md:41
+#: src/06_development_environment/01_project_configuration/04_test.md:42
+#: src/06_development_environment/01_project_configuration/04_test.md:50
+#: src/06_development_environment/01_project_configuration/04_test.md:51
+#: src/06_development_environment/01_project_configuration/04_test.md:52
+msgid "\\[string\\]"
+msgstr "\\[文字列\\]"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:32
+msgid "additional arguments to `verilator` command"
+msgstr "`verilator` コマンドへの追加の引数"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:33
+#: src/06_development_environment/01_project_configuration/04_test.md:42
+#: src/06_development_environment/01_project_configuration/04_test.md:52
+msgid "simulate_args"
+msgstr "simulate_args"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:33
+#: src/06_development_environment/01_project_configuration/04_test.md:42
+msgid "additional arguments to simulation binary"
+msgstr "シミュレーションバイナリへの追加の引数"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:35
+msgid "The `[test.vcs]` section"
+msgstr "`[test.vcs]` セクション"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:37
+msgid "This section contains configurations of test by VCS."
+msgstr "このセクションはVCSによるテストの設定です。"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:41
+msgid "additional arguments to `vcs` command"
+msgstr "`vcs` コマンドへの追加の引数"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:44
+msgid "The `[test.vivado]` section"
+msgstr "`[test.vivado]` セクション"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:46
+msgid "This section contains configurations of test by Vivado."
+msgstr "このセクションはVivadoによるテストの設定です。"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:50
+msgid "additional arguments to `xvlog` command"
+msgstr "`xvlog` コマンドへの追加の引数"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:51
+msgid "elaborate_args"
+msgstr "elaborate_args"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:51
+msgid "additional arguments to `xelab` command"
+msgstr "`xelab` コマンドへの追加の引数"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:52
+msgid "additional arguments to `xsim` command"
+msgstr "`xsim` コマンドへの追加の引数"
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:3
+msgid ""
+"`[publish]` section specifies the configuration for publishing a project "
+"like below:"
+msgstr ""
+"`[publish]` セクションは以下のようにプロジェクト公開の設定を指定します。"
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:5
+msgid ""
+"```toml\n"
+"[publish]\n"
+"bump_commit = true\n"
+"bump_commit_message = \"Bump\"\n"
+"```"
+msgstr ""
+"```toml\n"
+"[publish]\n"
+"bump_commit = true\n"
+"bump_commit_message = \"Bump\"\n"
+"```"
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:13
+#: src/06_development_environment/08_language_server.md:9
+#: src/06_development_environment/10_documentation.md:51
+msgid "Default"
+msgstr "デフォルト"
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:15
+msgid "bump_commit"
+msgstr "bump_commit"
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:15
+#: src/06_development_environment/01_project_configuration/05_publish.md:16
+#: src/06_development_environment/08_language_server.md:11
+msgid "boolean"
+msgstr "ブーリアン"
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:15
+#: src/06_development_environment/01_project_configuration/05_publish.md:16
+#: src/06_development_environment/08_language_server.md:11
+msgid "false"
+msgstr "false"
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:15
+msgid "automatic commit after bump"
+msgstr "バージョンアップ後の自動コミット"
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:16
+msgid "publish_commit"
+msgstr "publish_commit"
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:16
+msgid "automatic commit after publish"
+msgstr "公開後の自動コミット"
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:17
+msgid "bump_commit_mesasge"
+msgstr "bump_commit_mesasge"
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:17
+msgid "\"chore: Bump version\""
+msgstr "\"chore: Bump version\""
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:17
+msgid "commit message after bump"
+msgstr "バージョンアップ後のコミットメッセージ"
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:18
+msgid "publish_commit_mesasge"
+msgstr "publish_commit_mesasge"
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:18
+msgid "\"chore: Publish\""
+msgstr "\"chore: Publish\""
+
+#: src/06_development_environment/01_project_configuration/05_publish.md:18
+msgid "commit message after publish"
+msgstr "公開後のコミットメッセージ"
 
 #: src/06_development_environment/02_dependencies.md:3
 msgid ""
@@ -3933,135 +4914,13 @@ msgstr ""
 "と同様に、`Veryl.toml` の`[publish]` セクションに `bump_commit` を設定すれば"
 "自動でcommitされます。"
 
-#: src/06_development_environment/03_publish_project.md:53
-#: src/06_development_environment/03_publish_project.md:61
-#: src/06_development_environment/05_formatter.md:14
-#: src/06_development_environment/06_linter.md:18
-#: src/06_development_environment/07_simulator.md:25
-#: src/06_development_environment/07_simulator.md:39
-#: src/06_development_environment/07_simulator.md:48
-#: src/06_development_environment/07_simulator.md:57
-#: src/06_development_environment/08_language_server.md:9
-#: src/06_development_environment/10_documentation.md:51
-msgid "Configuration"
-msgstr "設定"
-
 #: src/06_development_environment/03_publish_project.md:55
 msgid ""
-"```toml\n"
-"[publish]\n"
-"bump_commit = true\n"
-"bump_commit_message = \"Bump\"\n"
-"```"
+"The available configurations are [here]"
+"(./01_project_configuration/05_publish.md)."
 msgstr ""
-"```toml\n"
-"[publish]\n"
-"bump_commit = true\n"
-"bump_commit_message = \"Bump\"\n"
-"```"
-
-#: src/06_development_environment/03_publish_project.md:61
-#: src/06_development_environment/05_formatter.md:14
-#: src/06_development_environment/06_linter.md:18
-#: src/06_development_environment/07_simulator.md:25
-#: src/06_development_environment/07_simulator.md:39
-#: src/06_development_environment/07_simulator.md:48
-#: src/06_development_environment/07_simulator.md:57
-#: src/06_development_environment/08_language_server.md:9
-#: src/06_development_environment/10_documentation.md:51
-msgid "Value"
-msgstr "設定値"
-
-#: src/06_development_environment/03_publish_project.md:61
-#: src/06_development_environment/08_language_server.md:9
-#: src/06_development_environment/10_documentation.md:51
-msgid "Default"
-msgstr "デフォルト"
-
-#: src/06_development_environment/03_publish_project.md:61
-#: src/06_development_environment/05_formatter.md:14
-#: src/06_development_environment/06_linter.md:18
-#: src/06_development_environment/07_simulator.md:25
-#: src/06_development_environment/07_simulator.md:39
-#: src/06_development_environment/07_simulator.md:48
-#: src/06_development_environment/07_simulator.md:57
-#: src/06_development_environment/08_language_server.md:9
-#: src/06_development_environment/10_documentation.md:51
-msgid "Description"
-msgstr "説明"
-
-#: src/06_development_environment/03_publish_project.md:63
-msgid "bump_commit"
-msgstr "bump_commit"
-
-#: src/06_development_environment/03_publish_project.md:63
-#: src/06_development_environment/03_publish_project.md:64
-#: src/06_development_environment/08_language_server.md:11
-msgid "boolean"
-msgstr "ブーリアン"
-
-#: src/06_development_environment/03_publish_project.md:63
-#: src/06_development_environment/03_publish_project.md:64
-#: src/06_development_environment/08_language_server.md:11
-msgid "false"
-msgstr "false"
-
-#: src/06_development_environment/03_publish_project.md:63
-msgid "automatic commit after bump"
-msgstr "バージョンアップ後の自動コミット"
-
-#: src/06_development_environment/03_publish_project.md:64
-msgid "publish_commit"
-msgstr "publish_commit"
-
-#: src/06_development_environment/03_publish_project.md:64
-msgid "automatic commit after publish"
-msgstr "公開後の自動コミット"
-
-#: src/06_development_environment/03_publish_project.md:65
-msgid "bump_commit_mesasge"
-msgstr "bump_commit_mesasge"
-
-#: src/06_development_environment/03_publish_project.md:65
-#: src/06_development_environment/03_publish_project.md:66
-#: src/06_development_environment/06_linter.md:35
-#: src/06_development_environment/06_linter.md:36
-#: src/06_development_environment/06_linter.md:37
-#: src/06_development_environment/06_linter.md:38
-#: src/06_development_environment/06_linter.md:39
-#: src/06_development_environment/06_linter.md:40
-#: src/06_development_environment/06_linter.md:41
-#: src/06_development_environment/06_linter.md:42
-#: src/06_development_environment/06_linter.md:43
-#: src/06_development_environment/06_linter.md:44
-#: src/06_development_environment/06_linter.md:45
-#: src/06_development_environment/06_linter.md:46
-#: src/06_development_environment/06_linter.md:47
-#: src/06_development_environment/06_linter.md:48
-#: src/06_development_environment/06_linter.md:49
-#: src/06_development_environment/10_documentation.md:53
-msgid "string"
-msgstr "文字列"
-
-#: src/06_development_environment/03_publish_project.md:65
-msgid "\"chore: Bump version\""
-msgstr "\"chore: Bump version\""
-
-#: src/06_development_environment/03_publish_project.md:65
-msgid "commit message after bump"
-msgstr "バージョンアップ後のコミットメッセージ"
-
-#: src/06_development_environment/03_publish_project.md:66
-msgid "publish_commit_mesasge"
-msgstr "publish_commit_mesasge"
-
-#: src/06_development_environment/03_publish_project.md:66
-msgid "\"chore: Publish\""
-msgstr "\"chore: Publish\""
-
-#: src/06_development_environment/03_publish_project.md:66
-msgid "commit message after publish"
-msgstr "公開後のコミットメッセージ"
+"全設定の説明は[こちら]"
+"(./01_project_configuration/05_publish.md)。"
 
 #: src/06_development_environment/04_directory_layout.md:3
 msgid ""
@@ -4204,23 +5063,11 @@ msgstr ""
 
 #: src/06_development_environment/05_formatter.md:6
 msgid ""
-"The available configurations are below. These can be specified in `[format]` "
-"section of `Veryl.toml`."
+"The available configurations are [here](./01_project_configuration/02_format."
+"md)."
 msgstr ""
-"設定可能な項目は以下の通りです。これは `Veryl.toml` の `[format]` セクション"
-"で指定できます。"
-
-#: src/06_development_environment/05_formatter.md:16
-msgid "indent_width"
-msgstr "indent_width"
-
-#: src/06_development_environment/05_formatter.md:16
-msgid "integer"
-msgstr "整数"
-
-#: src/06_development_environment/05_formatter.md:16
-msgid "indent width by space"
-msgstr "インデントのスペース幅"
+"全設定の説明は[こちら]"
+"(./01_project_configuration/02_format.md)。"
 
 #: src/06_development_environment/06_linter.md:3
 msgid ""
@@ -4232,607 +5079,11 @@ msgstr ""
 
 #: src/06_development_environment/06_linter.md:6
 msgid ""
-"The available configurations are below. These can be specified in `[lint]` "
-"section of `Veryl.toml`."
+"The available configurations are [here](./01_project_configuration/03_lint."
+"md)."
 msgstr ""
-"設定可能な項目は以下の通りです。これは `Veryl.toml` の `[lint]` セクションで"
-"指定できます。"
-
-#: src/06_development_environment/06_linter.md:9
-msgid ""
-"```toml\n"
-"[lint.naming]\n"
-"case_enum = \"snake\"\n"
-"```"
-msgstr ""
-"```toml\n"
-"[lint.naming]\n"
-"case_enum = \"snake\"\n"
-"```"
-
-#: src/06_development_environment/06_linter.md:14
-msgid "The `[lint.naming]` section"
-msgstr "`[lint.naming]` セクション"
-
-#: src/06_development_environment/06_linter.md:16
-msgid "This section contains configurations of naming conventions."
-msgstr "このセクションは命名規則の設定です。"
-
-#: src/06_development_environment/06_linter.md:20
-msgid "case_enum"
-msgstr "case_enum"
-
-#: src/06_development_environment/06_linter.md:20
-#: src/06_development_environment/06_linter.md:21
-#: src/06_development_environment/06_linter.md:22
-#: src/06_development_environment/06_linter.md:23
-#: src/06_development_environment/06_linter.md:24
-#: src/06_development_environment/06_linter.md:25
-#: src/06_development_environment/06_linter.md:26
-#: src/06_development_environment/06_linter.md:27
-#: src/06_development_environment/06_linter.md:28
-#: src/06_development_environment/06_linter.md:29
-#: src/06_development_environment/06_linter.md:30
-#: src/06_development_environment/06_linter.md:31
-#: src/06_development_environment/06_linter.md:32
-#: src/06_development_environment/06_linter.md:33
-#: src/06_development_environment/06_linter.md:34
-msgid "case type[^casetype]"
-msgstr "ケースタイプ[^casetype]"
-
-#: src/06_development_environment/06_linter.md:20
-msgid "case style of `enum`"
-msgstr "`enum` のケーススタイル"
-
-#: src/06_development_environment/06_linter.md:21
-msgid "case_function"
-msgstr "case_function"
-
-#: src/06_development_environment/06_linter.md:21
-msgid "case style of `function`"
-msgstr "`function` のケーススタイル"
-
-#: src/06_development_environment/06_linter.md:22
-msgid "case_instance"
-msgstr "case_instance"
-
-#: src/06_development_environment/06_linter.md:22
-msgid "case style of instance"
-msgstr "インスタンスのケーススタイル"
-
-#: src/06_development_environment/06_linter.md:23
-msgid "case_interface"
-msgstr "case_interface"
-
-#: src/06_development_environment/06_linter.md:23
-msgid "case style of `interface`"
-msgstr "`interface` のケーススタイル"
-
-#: src/06_development_environment/06_linter.md:24
-msgid "case_modport"
-msgstr "case_modport"
-
-#: src/06_development_environment/06_linter.md:24
-msgid "case style of `modport`"
-msgstr "`modport` のケーススタイル"
-
-#: src/06_development_environment/06_linter.md:25
-msgid "case_module"
-msgstr "case_module"
-
-#: src/06_development_environment/06_linter.md:25
-msgid "case style of `module`"
-msgstr "`module` のケーススタイル"
-
-#: src/06_development_environment/06_linter.md:26
-msgid "case_package"
-msgstr "case_package"
-
-#: src/06_development_environment/06_linter.md:26
-msgid "case style of `package`"
-msgstr "`package` のケーススタイル"
-
-#: src/06_development_environment/06_linter.md:27
-msgid "case_parameter"
-msgstr "case_parameter"
-
-#: src/06_development_environment/06_linter.md:27
-msgid "case style of `parameter`"
-msgstr "`parameter` のケーススタイル"
-
-#: src/06_development_environment/06_linter.md:28
-msgid "case_port_inout"
-msgstr "case_port_inout"
-
-#: src/06_development_environment/06_linter.md:28
-msgid "case style of `inout` port"
-msgstr "`inout` ポートのケーススタイル"
-
-#: src/06_development_environment/06_linter.md:29
-msgid "case_port_input"
-msgstr "case_port_input"
-
-#: src/06_development_environment/06_linter.md:29
-msgid "case style of `input` port"
-msgstr "`input` ポートのケーススタイル"
-
-#: src/06_development_environment/06_linter.md:30
-msgid "case_port_modport"
-msgstr "case_port_modport"
-
-#: src/06_development_environment/06_linter.md:30
-msgid "case style of `modport` port"
-msgstr "`modport` ポートのケーススタイル"
-
-#: src/06_development_environment/06_linter.md:31
-msgid "case_port_output"
-msgstr "case_port_output"
-
-#: src/06_development_environment/06_linter.md:31
-msgid "case style of `output` port"
-msgstr "`output` ポートのケーススタイル"
-
-#: src/06_development_environment/06_linter.md:32
-msgid "case_reg"
-msgstr "case_reg"
-
-#: src/06_development_environment/06_linter.md:32
-msgid "case style of register type variable[^reg]"
-msgstr "レジスタ変数[^reg]のケーススタイル"
-
-#: src/06_development_environment/06_linter.md:33
-msgid "case_struct"
-msgstr "case_struct"
-
-#: src/06_development_environment/06_linter.md:33
-msgid "case style of `struct`"
-msgstr "`struct` のケーススタイル"
-
-#: src/06_development_environment/06_linter.md:34
-msgid "case_wire"
-msgstr "case_wire"
-
-#: src/06_development_environment/06_linter.md:34
-msgid "case style of wire type variable[^wire]"
-msgstr "ワイヤ変数[^wire]のケーススタイル"
-
-#: src/06_development_environment/06_linter.md:35
-msgid "prefix_enum"
-msgstr "prefix_enum"
-
-#: src/06_development_environment/06_linter.md:35
-msgid "prefix of `enum`"
-msgstr "`enum` のプレフィックス"
-
-#: src/06_development_environment/06_linter.md:36
-msgid "prefix_function"
-msgstr "prefix_function"
-
-#: src/06_development_environment/06_linter.md:36
-msgid "prefix of `function`"
-msgstr "`function` のプレフィックス"
-
-#: src/06_development_environment/06_linter.md:37
-msgid "prefix_instance"
-msgstr "prefix_instance"
-
-#: src/06_development_environment/06_linter.md:37
-msgid "prefix of instance"
-msgstr "インスタンスのプレフィックス"
-
-#: src/06_development_environment/06_linter.md:38
-msgid "prefix_interface"
-msgstr "prefix_interface"
-
-#: src/06_development_environment/06_linter.md:38
-msgid "prefix of `interface`"
-msgstr "`interface` のプレフィックス"
-
-#: src/06_development_environment/06_linter.md:39
-msgid "prefix_modport"
-msgstr "prefix_modport"
-
-#: src/06_development_environment/06_linter.md:39
-msgid "prefix of `modport`"
-msgstr "`modport` のプレフィックス"
-
-#: src/06_development_environment/06_linter.md:40
-msgid "prefix_module"
-msgstr "prefix_module"
-
-#: src/06_development_environment/06_linter.md:40
-msgid "prefix of `module`"
-msgstr "`module` のプレフィックス"
-
-#: src/06_development_environment/06_linter.md:41
-msgid "prefix_package"
-msgstr "prefix_package"
-
-#: src/06_development_environment/06_linter.md:41
-msgid "prefix of `package`"
-msgstr "`package` のプレフィックス"
-
-#: src/06_development_environment/06_linter.md:42
-msgid "prefix_parameter"
-msgstr "prefix_parameter"
-
-#: src/06_development_environment/06_linter.md:42
-msgid "prefix of `parameter`"
-msgstr "`parameter` のプレフィックス"
-
-#: src/06_development_environment/06_linter.md:43
-msgid "prefix_port_inout"
-msgstr "prefix_port_inout"
-
-#: src/06_development_environment/06_linter.md:43
-msgid "prefix of `inout` port"
-msgstr "`inout` ポートのプレフィックス"
-
-#: src/06_development_environment/06_linter.md:44
-msgid "prefix_port_input"
-msgstr "prefix_port_input"
-
-#: src/06_development_environment/06_linter.md:44
-msgid "prefix of `input` port"
-msgstr "`input` ポートのプレフィックス"
-
-#: src/06_development_environment/06_linter.md:45
-msgid "prefix_port_modport"
-msgstr "prefix_port_modport"
-
-#: src/06_development_environment/06_linter.md:45
-msgid "prefix of `modport` port"
-msgstr "`modport` ポートのプレフィックス"
-
-#: src/06_development_environment/06_linter.md:46
-msgid "prefix_port_output"
-msgstr "prefix_port_output"
-
-#: src/06_development_environment/06_linter.md:46
-msgid "prefix of `output` port"
-msgstr "`output` ポートのプレフィックス"
-
-#: src/06_development_environment/06_linter.md:47
-msgid "prefix_reg"
-msgstr "prefix_reg"
-
-#: src/06_development_environment/06_linter.md:47
-msgid "prefix of register type variable[^reg]"
-msgstr "レジスタ変数[^reg]のプレフィックス"
-
-#: src/06_development_environment/06_linter.md:48
-msgid "prefix_struct"
-msgstr "prefix_struct"
-
-#: src/06_development_environment/06_linter.md:48
-msgid "prefix of `struct`"
-msgstr "`struct` のプレフィックス"
-
-#: src/06_development_environment/06_linter.md:49
-msgid "prefix_wire"
-msgstr "prefix_wire"
-
-#: src/06_development_environment/06_linter.md:49
-msgid "prefix of wire type variable[^wire]"
-msgstr "ワイヤ変数[^wire]のプレフィックス"
-
-#: src/06_development_environment/06_linter.md:50
-msgid "re_forbidden_enum"
-msgstr "re_forbidden_enum"
-
-#: src/06_development_environment/06_linter.md:50
-#: src/06_development_environment/06_linter.md:51
-#: src/06_development_environment/06_linter.md:52
-#: src/06_development_environment/06_linter.md:53
-#: src/06_development_environment/06_linter.md:54
-#: src/06_development_environment/06_linter.md:55
-#: src/06_development_environment/06_linter.md:56
-#: src/06_development_environment/06_linter.md:57
-#: src/06_development_environment/06_linter.md:58
-#: src/06_development_environment/06_linter.md:59
-#: src/06_development_environment/06_linter.md:60
-#: src/06_development_environment/06_linter.md:61
-#: src/06_development_environment/06_linter.md:62
-#: src/06_development_environment/06_linter.md:63
-#: src/06_development_environment/06_linter.md:64
-#: src/06_development_environment/06_linter.md:65
-#: src/06_development_environment/06_linter.md:66
-#: src/06_development_environment/06_linter.md:67
-#: src/06_development_environment/06_linter.md:68
-#: src/06_development_environment/06_linter.md:69
-#: src/06_development_environment/06_linter.md:70
-#: src/06_development_environment/06_linter.md:71
-#: src/06_development_environment/06_linter.md:72
-#: src/06_development_environment/06_linter.md:73
-#: src/06_development_environment/06_linter.md:74
-#: src/06_development_environment/06_linter.md:75
-#: src/06_development_environment/06_linter.md:76
-#: src/06_development_environment/06_linter.md:77
-#: src/06_development_environment/06_linter.md:78
-#: src/06_development_environment/06_linter.md:79
-msgid "regex[^regex]"
-msgstr "正規表現[^regex]"
-
-#: src/06_development_environment/06_linter.md:50
-msgid "regex forbidden of `enum`"
-msgstr "`enum` の禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:51
-msgid "re_forbidden_function"
-msgstr "re_forbidden_function"
-
-#: src/06_development_environment/06_linter.md:51
-msgid "regex forbidden of `function`"
-msgstr "`function` の禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:52
-msgid "re_forbidden_instance"
-msgstr "re_forbidden_instance"
-
-#: src/06_development_environment/06_linter.md:52
-msgid "regex forbidden of instance"
-msgstr "インスタンスの禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:53
-msgid "re_forbidden_interface"
-msgstr "re_forbidden_interface"
-
-#: src/06_development_environment/06_linter.md:53
-msgid "regex forbidden of `interface`"
-msgstr "`interface` の禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:54
-msgid "re_forbidden_modport"
-msgstr "re_forbidden_modport"
-
-#: src/06_development_environment/06_linter.md:54
-msgid "regex forbidden of `modport`"
-msgstr "`modport` の禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:55
-msgid "re_forbidden_module"
-msgstr "re_forbidden_module"
-
-#: src/06_development_environment/06_linter.md:55
-msgid "regex forbidden of `module`"
-msgstr "`module` の禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:56
-msgid "re_forbidden_package"
-msgstr "re_forbidden_package"
-
-#: src/06_development_environment/06_linter.md:56
-msgid "regex forbidden of `package`"
-msgstr "`package` の禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:57
-msgid "re_forbidden_parameter"
-msgstr "re_forbidden_parameter"
-
-#: src/06_development_environment/06_linter.md:57
-msgid "regex forbidden of `parameter`"
-msgstr "`parameter` の禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:58
-msgid "re_forbidden_port_inout"
-msgstr "re_forbidden_port_inout"
-
-#: src/06_development_environment/06_linter.md:58
-msgid "regex forbidden of `inout` port"
-msgstr "`inout` ポートの禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:59
-msgid "re_forbidden_port_input"
-msgstr "re_forbidden_port_input"
-
-#: src/06_development_environment/06_linter.md:59
-msgid "regex forbidden of `input` port"
-msgstr "`input` ポートの禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:60
-msgid "re_forbidden_port_modport"
-msgstr "re_forbidden_port_modport"
-
-#: src/06_development_environment/06_linter.md:60
-msgid "regex forbidden of `modport` port"
-msgstr "`modport` ポートの禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:61
-msgid "re_forbidden_port_output"
-msgstr "re_forbidden_port_output"
-
-#: src/06_development_environment/06_linter.md:61
-msgid "regex forbidden of `output` port"
-msgstr "`output` ポートの禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:62
-msgid "re_forbidden_reg"
-msgstr "re_forbidden_reg"
-
-#: src/06_development_environment/06_linter.md:62
-msgid "regex forbidden of register type variable[^reg]"
-msgstr "レジスタ変数[^reg]の禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:63
-msgid "re_forbidden_struct"
-msgstr "re_forbidden_struct"
-
-#: src/06_development_environment/06_linter.md:63
-msgid "regex forbidden of `struct`"
-msgstr "`struct` の禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:64
-msgid "re_forbidden_wire"
-msgstr "re_forbidden_wire"
-
-#: src/06_development_environment/06_linter.md:64
-msgid "regex forbidden of wire type variable[^wire]"
-msgstr "ワイヤ変数[^wire]の禁止正規表現"
-
-#: src/06_development_environment/06_linter.md:65
-msgid "re_required_enum"
-msgstr "re_required_enum"
-
-#: src/06_development_environment/06_linter.md:65
-msgid "regex required of `enum`"
-msgstr "`enum` の必須正規表現"
-
-#: src/06_development_environment/06_linter.md:66
-msgid "re_required_function"
-msgstr "re_required_function"
-
-#: src/06_development_environment/06_linter.md:66
-msgid "regex required of `function`"
-msgstr "`function` の必須正規表現"
-
-#: src/06_development_environment/06_linter.md:67
-msgid "re_required_instance"
-msgstr "re_required_instance"
-
-#: src/06_development_environment/06_linter.md:67
-msgid "regex required of instance"
-msgstr "インスタンスの必須正規表現"
-
-#: src/06_development_environment/06_linter.md:68
-msgid "re_required_interface"
-msgstr "re_required_interface"
-
-#: src/06_development_environment/06_linter.md:68
-msgid "regex required of `interface`"
-msgstr "`interface` の必須正規表現"
-
-#: src/06_development_environment/06_linter.md:69
-msgid "re_required_modport"
-msgstr "re_required_modport"
-
-#: src/06_development_environment/06_linter.md:69
-msgid "regex required of `modport`"
-msgstr "`modport` の必須正規表現"
-
-#: src/06_development_environment/06_linter.md:70
-msgid "re_required_module"
-msgstr "re_required_module"
-
-#: src/06_development_environment/06_linter.md:70
-msgid "regex required of `module`"
-msgstr "`module` の必須正規表現"
-
-#: src/06_development_environment/06_linter.md:71
-msgid "re_required_package"
-msgstr "re_required_package"
-
-#: src/06_development_environment/06_linter.md:71
-msgid "regex required of `package`"
-msgstr "`package` の必須正規表現"
-
-#: src/06_development_environment/06_linter.md:72
-msgid "re_required_parameter"
-msgstr "re_required_parameter"
-
-#: src/06_development_environment/06_linter.md:72
-msgid "regex required of `parameter`"
-msgstr "`parameter` の必須正規表現"
-
-#: src/06_development_environment/06_linter.md:73
-msgid "re_required_port_inout"
-msgstr "re_required_port_inout"
-
-#: src/06_development_environment/06_linter.md:73
-msgid "regex required of `inout` port"
-msgstr "`inout` ポートの必須正規表現"
-
-#: src/06_development_environment/06_linter.md:74
-msgid "re_required_port_input"
-msgstr "re_required_port_input"
-
-#: src/06_development_environment/06_linter.md:74
-msgid "regex required of `input` port"
-msgstr "`input` ポートの必須正規表現"
-
-#: src/06_development_environment/06_linter.md:75
-msgid "re_required_port_modport"
-msgstr "re_required_port_modport"
-
-#: src/06_development_environment/06_linter.md:75
-msgid "regex required of `modport` port"
-msgstr "`modport` ポートの必須正規表現"
-
-#: src/06_development_environment/06_linter.md:76
-msgid "re_required_port_output"
-msgstr "re_required_port_output"
-
-#: src/06_development_environment/06_linter.md:76
-msgid "regex required of `output` port"
-msgstr "`output` ポートの必須正規表現"
-
-#: src/06_development_environment/06_linter.md:77
-msgid "re_required_reg"
-msgstr "re_required_reg"
-
-#: src/06_development_environment/06_linter.md:77
-msgid "regex required of register type variable[^reg]"
-msgstr "レジスタ変数[^reg]の必須正規表現"
-
-#: src/06_development_environment/06_linter.md:78
-msgid "re_required_struct"
-msgstr "re_required_struct"
-
-#: src/06_development_environment/06_linter.md:78
-msgid "regex required of `struct`"
-msgstr "`struct` の必須正規表現"
-
-#: src/06_development_environment/06_linter.md:79
-msgid "re_required_wire"
-msgstr "re_required_wire"
-
-#: src/06_development_environment/06_linter.md:79
-msgid "regex required of wire type variable[^wire]"
-msgstr "ワイヤ変数[^wire]の必須正規表現"
-
-#: src/06_development_environment/06_linter.md:81
-#: src/06_development_environment/07_simulator.md:29
-msgid "The available values are "
-msgstr "設定可能な値は以下です。"
-
-#: src/06_development_environment/06_linter.md:83
-msgid "`\"snake\"` -- snake_case"
-msgstr "`\"snake\"` -- snake_case"
-
-#: src/06_development_environment/06_linter.md:84
-msgid "`\"screaming_snake\"` -- SCREAMING_SNAKE_CASE"
-msgstr "`\"screaming_snake\"` -- SCREAMING_SNAKE_CASE"
-
-#: src/06_development_environment/06_linter.md:85
-msgid "`\"lower_camel\"` -- lowerCamelCase"
-msgstr "`\"lower_camel\"` -- lowerCamelCase"
-
-#: src/06_development_environment/06_linter.md:86
-msgid "`\"upper_camel\"` -- UpperCamelCase"
-msgstr "`\"upper_camel\"` -- UpperCamelCase"
-
-#: src/06_development_environment/06_linter.md:88
-msgid ""
-"Regular expression string like `\".*\"`. The available syntax is [here]"
-"(https://docs.rs/regex/latest/regex/#syntax)."
-msgstr ""
-"`\".*\"`のような正規表現です。使用可能な構文は[こちら](https://docs.rs/regex/"
-"latest/regex/#syntax)."
-
-#: src/06_development_environment/06_linter.md:90
-msgid ""
-"Register type means that the variable is assigned in `always_ff`. It will be "
-"mapped to flip-flop in synthesis phase."
-msgstr ""
-"レジスタ変数とは `always_ff` で代入される変数です。合成フェーズでフリップフ"
-"ロップにマップされます。"
-
-#: src/06_development_environment/06_linter.md:92
-msgid ""
-"Wire type means that the variable is assigned in `always_comb`. It will be "
-"mapped to wire in synthesis phase."
-msgstr ""
-"ワイヤ変数とは `always_comb` で代入される変数です。合成フェーズでワイヤにマッ"
-"プされます。"
+"全設定の説明は[こちら]"
+"(./01_project_configuration/03_lint.md)。"
 
 #: src/06_development_environment/07_simulator.md:3
 msgid ""
@@ -4870,126 +5121,11 @@ msgstr ""
 
 #: src/06_development_environment/07_simulator.md:13
 msgid ""
-"The available configurations are below. These can be specified in `[test]` "
-"section of `Veryl.toml`."
+"The available configurations are [here](./01_project_configuration/04_test."
+"md)."
 msgstr ""
-"設定可能な項目は以下の通りです。これは `Veryl.toml` の `[test]` セクションで"
-"指定できます。"
-
-#: src/06_development_environment/07_simulator.md:16
-msgid ""
-"```toml\n"
-"[test]\n"
-"simulator = \"vcs\"\n"
-"```"
-msgstr ""
-"```toml\n"
-"[test]\n"
-"simulator = \"vcs\"\n"
-"```"
-
-#: src/06_development_environment/07_simulator.md:23
-msgid "This section contains configurations of test."
-msgstr "このセクションはテストの設定です。"
-
-#: src/06_development_environment/07_simulator.md:27
-msgid "simulator"
-msgstr "simulator"
-
-#: src/06_development_environment/07_simulator.md:27
-msgid "simulator name[^sim]"
-msgstr "シミュレータ名[^sim]"
-
-#: src/06_development_environment/07_simulator.md:27
-msgid "default simulator"
-msgstr "デフォルトのシミュレータ"
-
-#: src/06_development_environment/07_simulator.md:31
-msgid "`\"verilator\"`"
-msgstr "`\"verilator\"`"
-
-#: src/06_development_environment/07_simulator.md:32
-msgid "`\"vcs\"`"
-msgstr "`\"vcs\"`"
-
-#: src/06_development_environment/07_simulator.md:33
-msgid "`\"vivado\"`"
-msgstr "`\"vivado\"`"
-
-#: src/06_development_environment/07_simulator.md:35
-msgid "The `[test.verilator]` section"
-msgstr "`[test.verilator]` セクション"
-
-#: src/06_development_environment/07_simulator.md:37
-msgid "This section contains configurations of test by Verilator."
-msgstr "このセクションはVerilatorによるテストの設定です。"
-
-#: src/06_development_environment/07_simulator.md:41
-#: src/06_development_environment/07_simulator.md:50
-#: src/06_development_environment/07_simulator.md:59
-msgid "compile_args"
-msgstr "compile_args"
-
-#: src/06_development_environment/07_simulator.md:41
-#: src/06_development_environment/07_simulator.md:42
-#: src/06_development_environment/07_simulator.md:50
-#: src/06_development_environment/07_simulator.md:51
-#: src/06_development_environment/07_simulator.md:59
-#: src/06_development_environment/07_simulator.md:60
-#: src/06_development_environment/07_simulator.md:61
-msgid "\\[string\\]"
-msgstr "\\[文字列\\]"
-
-#: src/06_development_environment/07_simulator.md:41
-msgid "additional arguments to `verilator` command"
-msgstr "`verilator` コマンドへの追加の引数"
-
-#: src/06_development_environment/07_simulator.md:42
-#: src/06_development_environment/07_simulator.md:51
-#: src/06_development_environment/07_simulator.md:61
-msgid "simulate_args"
-msgstr "simulate_args"
-
-#: src/06_development_environment/07_simulator.md:42
-#: src/06_development_environment/07_simulator.md:51
-msgid "additional arguments to simulation binary"
-msgstr "シミュレーションバイナリへの追加の引数"
-
-#: src/06_development_environment/07_simulator.md:44
-msgid "The `[test.vcs]` section"
-msgstr "`[test.vcs]` セクション"
-
-#: src/06_development_environment/07_simulator.md:46
-msgid "This section contains configurations of test by VCS."
-msgstr "このセクションはVCSによるテストの設定です。"
-
-#: src/06_development_environment/07_simulator.md:50
-msgid "additional arguments to `vcs` command"
-msgstr "`vcs` コマンドへの追加の引数"
-
-#: src/06_development_environment/07_simulator.md:53
-msgid "The `[test.vivado]` section"
-msgstr "`[test.vivado]` セクション"
-
-#: src/06_development_environment/07_simulator.md:55
-msgid "This section contains configurations of test by Vivado."
-msgstr "このセクションはVivadoによるテストの設定です。"
-
-#: src/06_development_environment/07_simulator.md:59
-msgid "additional arguments to `xvlog` command"
-msgstr "`xvlog` コマンドへの追加の引数"
-
-#: src/06_development_environment/07_simulator.md:60
-msgid "elaborate_args"
-msgstr "elaborate_args"
-
-#: src/06_development_environment/07_simulator.md:60
-msgid "additional arguments to `xelab` command"
-msgstr "`xelab` コマンドへの追加の引数"
-
-#: src/06_development_environment/07_simulator.md:61
-msgid "additional arguments to `xsim` command"
-msgstr "`xsim` コマンドへの追加の引数"
+"全設定の説明は[こちら]"
+"(./01_project_configuration/04_test.md)。"
 
 #: src/06_development_environment/08_language_server.md:3
 msgid ""
@@ -5353,10 +5489,6 @@ msgid ""
 msgstr ""
 "このために GitHub action [veryl-lang/setup-verilator](https://github.com/"
 "marketplace/actions/setup-verilator) を公開しています。"
-
-#: src/06_development_environment/11_github_action.md:47
-msgid "Test"
-msgstr "Test"
 
 #: src/06_development_environment/11_github_action.md:50
 msgid "test"
@@ -6279,7 +6411,7 @@ msgid ""
 "WithGenericParameterList: WithGenericParameterItem { Comma "
 "WithGenericParameterItem } [ Comma ];\n"
 "\n"
-"WithGenericParameterItem: Identifier;\n"
+"WithGenericParameterItem: Identifier [ Equ WithGenericArgumentItem ];\n"
 "\n"
 "// "
 "----------------------------------------------------------------------------\n"
@@ -6287,8 +6419,8 @@ msgid ""
 "// "
 "----------------------------------------------------------------------------\n"
 "\n"
-"WithGenericArgument: ColonColonLAngle %push(Generic) WithGenericArgumentList "
-"RAngle %pop();\n"
+"WithGenericArgument: ColonColonLAngle %push(Generic) "
+"[ WithGenericArgumentList ] RAngle %pop();\n"
 "\n"
 "WithGenericArgumentList: WithGenericArgumentItem { Comma "
 "WithGenericArgumentItem } [ Comma ];\n"
@@ -6461,7 +6593,7 @@ msgid ""
 "EmbedContent: EmbedContentToken: VerylToken;\n"
 "\n"
 "EmbedContentToken: LBraceTerm %push(Embed) LBraceTerm LBraceTerm "
-"{ EmbedItem } RBraceTerm RBraceTerm RBraceTerm %pop();\n"
+"{ EmbedItem } RBraceTerm RBraceTerm RBraceTerm %pop() Comments;\n"
 "\n"
 "EmbedItem: LBraceTerm { EmbedItem } RBraceTerm\n"
 "         | AnyTerm;\n"
@@ -6601,6 +6733,77 @@ msgstr "unknown_port"
 #: src/07_appendix/02_semantic_error.md:51
 msgid "unused_variable"
 msgstr "unused_variable"
+
+#~ msgid ""
+#~ "[`clock_type`](01_project_configuration.md#the-clock_type-field) --- The "
+#~ "type of clock."
+#~ msgstr ""
+#~ "[`clock_type`](01_project_configuration.md#the-clock_type-field) --- ク"
+#~ "ロックタイプ"
+
+#~ msgid ""
+#~ "[`reset_type`](01_project_configuration.md#the-reset_type-field) --- The "
+#~ "type of reset."
+#~ msgstr ""
+#~ "[`reset_type`](01_project_configuration.md#the-reset_type-field) --- リ"
+#~ "セットタイプ"
+
+#~ msgid ""
+#~ "[`filelist_type`](01_project_configuration.md#the-filelist_type-field) "
+#~ "--- The type of filelist."
+#~ msgstr ""
+#~ "[`filelist_type`](01_project_configuration.md#the-filelist_type-field) "
+#~ "--- ファイルリストのタイプ"
+
+#~ msgid ""
+#~ "[`target`](01_project_configuration.md#the-target-field) --- The way of "
+#~ "output."
+#~ msgstr ""
+#~ "[`target`](01_project_configuration.md#the-target-field) --- 出力方法"
+
+#~ msgid ""
+#~ "[`implicit_parameter_types`](01_project_configuration.md#the-"
+#~ "implicit_parameter_types-field) --- Whether implicit parameter type is "
+#~ "enabled."
+#~ msgstr ""
+#~ "[`implicit_parameter_types`](01_project_configuration.md#the-"
+#~ "implicit_parameter_types-field) --- 暗黙のパラメータ型を有効にするかどうか"
+
+#~ msgid ""
+#~ "[`omit_project_prefix`](01_project_configuration.md#the-"
+#~ "omit_project_prefix-field) --- Whether omit project prefix."
+#~ msgstr ""
+#~ "[`omit_project_prefix`](01_project_configuration.md#the-"
+#~ "omit_project_prefix-field) --- プロジェクト名のプレフィックスを省略するか"
+#~ "どうか"
+
+#~ msgid ""
+#~ "[`strip_comments`](01_project_configuration.md#the-strip_comments-field) "
+#~ "--- Whether strip comments."
+#~ msgstr ""
+#~ "[`strip_comments`](01_project_configuration.md#the-strip_comments-field) "
+#~ "--- コメントを削除するかどうか"
+
+#~ msgid ""
+#~ "The available configurations are below. These can be specified in "
+#~ "`[format]` section of `Veryl.toml`."
+#~ msgstr ""
+#~ "設定可能な項目は以下の通りです。これは `Veryl.toml` の `[format]` セクショ"
+#~ "ンで指定できます。"
+
+#~ msgid ""
+#~ "The available configurations are below. These can be specified in "
+#~ "`[lint]` section of `Veryl.toml`."
+#~ msgstr ""
+#~ "設定可能な項目は以下の通りです。これは `Veryl.toml` の `[lint]` セクション"
+#~ "で指定できます。"
+
+#~ msgid ""
+#~ "The available configurations are below. These can be specified in "
+#~ "`[test]` section of `Veryl.toml`."
+#~ msgstr ""
+#~ "設定可能な項目は以下の通りです。これは `Veryl.toml` の `[test]` セクション"
+#~ "で指定できます。"
 
 #~ msgid ""
 #~ "```veryl,playground\n"
