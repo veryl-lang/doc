@@ -3755,6 +3755,8 @@ msgid ""
 "`*_prefix` and `*_suffix` represent additional prefix and suffix for the "
 "generated code.  The available configurations are below:"
 msgstr ""
+"`*_prefix` と `*_suffix` はコード生成時の追加のプレフィックスとサフィックスを指定します。"
+"指定可能な設定は以下の通りです。"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:84
 msgid ""
