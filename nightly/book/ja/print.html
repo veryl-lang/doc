@@ -3172,13 +3172,13 @@ WithGenericParameter: ColonColonLAngle WithGenericParameterList RAngle;
 
 WithGenericParameterList: WithGenericParameterItem { Comma WithGenericParameterItem } [ Comma ];
 
-WithGenericParameterItem: Identifier;
+WithGenericParameterItem: Identifier [ Equ WithGenericArgumentItem ];
 
 // ----------------------------------------------------------------------------
 // WithGenericArgument
 // ----------------------------------------------------------------------------
 
-WithGenericArgument: ColonColonLAngle %push(Generic) WithGenericArgumentList RAngle %pop();
+WithGenericArgument: ColonColonLAngle %push(Generic) [ WithGenericArgumentList ] RAngle %pop();
 
 WithGenericArgumentList: WithGenericArgumentItem { Comma WithGenericArgumentItem } [ Comma ];
 
@@ -3318,7 +3318,7 @@ EmbedDeclaration: Embed LParen Identifier RParen Identifier EmbedContent;
 
 EmbedContent: EmbedContentToken: VerylToken;
 
-EmbedContentToken: LBraceTerm %push(Embed) LBraceTerm LBraceTerm { EmbedItem } RBraceTerm RBraceTerm RBraceTerm %pop();
+EmbedContentToken: LBraceTerm %push(Embed) LBraceTerm LBraceTerm { EmbedItem } RBraceTerm RBraceTerm RBraceTerm %pop() Comments;
 
 EmbedItem: LBraceTerm { EmbedItem } RBraceTerm
          | AnyTerm;
