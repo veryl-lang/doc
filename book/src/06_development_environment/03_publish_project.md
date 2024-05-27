@@ -52,15 +52,4 @@ $ veryl publish --bump patch
 
 ### Configuration
 
-```toml
-[publish]
-bump_commit = true
-bump_commit_message = "Bump"
-```
-
-| Configuration             | Value                | Default               | Description                                     |
-|---------------------------|----------------------|-----------------------|-------------------------------------------------|
-| bump_commit               | boolean              | false                 | automatic commit after bump                     |
-| publish_commit            | boolean              | false                 | automatic commit after publish                  |
-| bump_commit_mesasge       | string               | "chore: Bump version" | commit message after bump                       |
-| publish_commit_mesasge    | string               | "chore: Publish"      | commit message after publish                    |
+The available configurations are [here](./01_project_configuration/05_publish.md).

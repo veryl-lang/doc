@@ -8,13 +8,6 @@
   * [`license`](01_project_configuration.md#the-license-field) --- The project license.
   * [`repository`](01_project_configuration.md#the-repository-field) --- URL of the project source repository.
 * [`[build]`](01_project_configuration.md#the-build-section) --- Build settings.
-  * [`clock_type`](01_project_configuration.md#the-clock_type-field) --- The type of clock.
-  * [`reset_type`](01_project_configuration.md#the-reset_type-field) --- The type of reset.
-  * [`filelist_type`](01_project_configuration.md#the-filelist_type-field) --- The type of filelist.
-  * [`target`](01_project_configuration.md#the-target-field) --- The way of output.
-  * [`implicit_parameter_types`](01_project_configuration.md#the-implicit_parameter_types-field) --- Whether implicit parameter type is enabled.
-  * [`omit_project_prefix`](01_project_configuration.md#the-omit_project_prefix-field) --- Whether omit project prefix.
-  * [`strip_comments`](01_project_configuration.md#the-strip_comments-field) --- Whether strip comments.
 * [`[format]`](01_project_configuration.md#the-format-section) --- Format settings.
 * [`[lint]`](01_project_configuration.md#the-lint-section) --- Lint settings.
 * [`[test]`](01_project_configuration.md#the-test-section) --- Test settings.
@@ -81,100 +74,27 @@ repository = "https://github.com/veryl-lang/veryl"
 ## The `[build]` section {#the-build-section}
 
 The `[build]` section contains the configurations of code generation.
-
-### The `clock_type` field {#the-clock_type-field}
-
-The `clock_type` field specifies which clock edge is used to drive flip-flop.
-The available types are below:
-
-* `posedge` -- positive edge
-* `negedge` -- negetive edge
-
-### The `reset_type` field {#the-reset_type-field}
-
-The `reset_type` field specifies reset polarity and synchronisity.
-The available types are below:
-
-* `async_low` -- asynchronous and active low
-* `async_high` -- asynchronous and active high
-* `sync_low` -- synchronous and active low
-* `sync_high` -- synchronous and active high
-
-### The `filelist_type` field {#the-filelist_type-field}
-
-The `filelist_type` field specifies filelist format.
-The available types are below:
-
-* `absolute` -- plane text filelist including absolute file paths
-* `relative` -- plane text filelist including relative file paths
-* `flgen` -- [flgen](https://github.com/pezy-computing/flgen) filelist
-
-### The `target` field {#the-target-field}
-
-The `target` field specifies where the generated codes will be placed at.
-The available types are below:
-
-* `source` -- as the same directory as the source code
-* `directory` -- specified directory
-* `bundle` -- specified file
-
-If you want to use `directory` or `bundle`, you should specify the target path by `path` key.
-
-```toml
-[build]
-target = {type = "directory", path = "[dst dir]"}
-```
-
-### The `implicit_parameter_types` field {#the-implicit_parameter_types-field}
-
-The `implicit_parameter_types` field lists the types which will be elided in `parameter` declaration of the generated codes.
-This is because some EDA tools don't support `parameter` declaration with specific types (ex.`string`).
-If you want to elide `string`, you can specify like below:
-
-```toml
-[build]
-implicit_parameter_types = ["string"]
-```
-
-### The `omit_project_prefix` field {#the-omit_project_prefix-field}
-
-If `omit_project_prefix` is set to `true`, the project prefix of module/interface/package name will be omitted.
-This is `false` by default.
-
-```toml
-[build]
-omit_project_prefix = true
-```
-
-### The `strip_comments` field {#the-strip_comments-field}
-
-If `strip_comments` is set to `true`, all comments will be stripped.
-This is `false` by default.
-
-```toml
-[build]
-strip_comments = true
-```
+Available configurations is [here](./01_project_configuration/01_build.md).
 
 ## The `[format]` section {#the-format-section}
 
 The `[format]` section contains the configurations of code formatter.
-Available configurations is [here](./05_formatter.md).
+Available configurations is [here](./01_project_configuration/02_format.md).
 
 ## The `[lint]` section {#the-lint-section}
 
 The `[lint]` section contains the configurations of linter.
-Available configurations is [here](./06_linter.md).
+Available configurations is [here](./01_project_configuration/03_lint.md).
 
 ## The `[test]` section {#the-test-section}
 
 The `[test]` section contains the configurations of test by RTL simulator.
-Available configurations is [here](./07_simulator.md).
+Available configurations is [here](./01_project_configuration/04_test.md).
 
 ## The `[publish]` section {#the-publish-section}
 
 The `[publish]` section contains the configurations of publishing.
-Available configurations is [here](./03_publish_project.md).
+Available configurations is [here](./01_project_configuration/05_publish.md).
 
 ## The `[dependencies]` section {#the-dependencies-section}
 
