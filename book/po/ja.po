@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-05-27T10:43:05+09:00\n"
+"POT-Creation-Date: 2024-06-05T10:50:35+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -3197,16 +3197,17 @@ msgid ""
 "parameter. If the parameter specifications at call site is omitted, the "
 "default value is used."
 msgstr ""
-"ジェネリックパラメータはその後に `=` を加えることででフォルト値を指定することができます。"
-"呼び出し側でパラメータ指定が省略された場合にデフォルト値が使われます。"
+"ジェネリックパラメータはその後に `=` を加えることででフォルト値を指定すること"
+"ができます。呼び出し側でパラメータ指定が省略された場合にデフォルト値が使われ"
+"ます。"
 
 #: src/05_language_reference/14_generics/01_default_parameter.md:19
 msgid ""
 "Default parameters should be placed at the last of generic parameter list. "
 "If not, it causes ambiguous which parameters are omitted."
 msgstr ""
-"デフォルトパラメータはジェネリックパラメータリストの最後に置く必要があります。"
-"そうでなければ、どのパラメータが省略されたかが曖昧になるためです。"
+"デフォルトパラメータはジェネリックパラメータリストの最後に置く必要がありま"
+"す。そうでなければ、どのパラメータが省略されたかが曖昧になるためです。"
 
 #: src/05_language_reference/14_generics/01_default_parameter.md:22
 msgid ""
@@ -3537,7 +3538,8 @@ msgid ""
 "The `[lint]` section contains the configurations of linter. Available "
 "configurations is [here](./01_project_configuration/03_lint.md)."
 msgstr ""
-"`[lint]` セクションはリンタの設定です。詳細は[こちら](./01_project_configuration/03_lint.md)。"
+"`[lint]` セクションはリンタの設定です。詳細は[こちら]"
+"(./01_project_configuration/03_lint.md)。"
 
 #: src/06_development_environment/01_project_configuration.md:89
 #: src/06_development_environment/01_project_configuration/04_test.md:12
@@ -3755,37 +3757,42 @@ msgid ""
 "`*_prefix` and `*_suffix` represent additional prefix and suffix for the "
 "generated code.  The available configurations are below:"
 msgstr ""
-"`*_prefix` と `*_suffix` はコード生成時の追加のプレフィックスとサフィックスを指定します。"
-"指定可能な設定は以下の通りです。"
+"`*_prefix` と `*_suffix` はコード生成時の追加のプレフィックスとサフィックスを"
+"指定します。指定可能な設定は以下の通りです。"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:84
 msgid ""
 "`clock_posedge_prefix`: Prefix for `clock` type at `clock_type = posedge`"
 msgstr ""
-"`clock_posedge_prefix`: `clock_type = posedge` のときの `clock` 型のプレフィックス"
+"`clock_posedge_prefix`: `clock_type = posedge` のときの `clock` 型のプレ"
+"フィックス"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:85
 msgid ""
 "`clock_posedge_suffix`: Suffix for `clock` type at `clock_type = posedge`"
 msgstr ""
-"`clock_posedge_suffix`: `clock_type = posedge` のときの `clock` 型のサフィックス"
+"`clock_posedge_suffix`: `clock_type = posedge` のときの `clock` 型のサフィッ"
+"クス"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:86
 msgid ""
 "`clock_negedge_prefix`: Prefix for `clock` type at `clock_type = negedge`"
 msgstr ""
-"`clock_negedge_prefix`: `clock_type = negedge` のときの `clock` 型のプレフィックス"
+"`clock_negedge_prefix`: `clock_type = negedge` のときの `clock` 型のプレ"
+"フィックス"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:87
 msgid ""
 "`clock_negedge_suffix`: Suffix for `clock` type at `clock_type = negedge`"
 msgstr ""
-"`clock_negedge_suffix`: `clock_type = negedge` のときの `clock` 型のサフィックス"
+"`clock_negedge_suffix`: `clock_type = negedge` のときの `clock` 型のサフィッ"
+"クス"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:88
 msgid "`reset_high_prefix`: Prefix for `reset` type at `reset_type = *_high`"
 msgstr ""
-"`reset_high_prefix`: `reset_type = *_high` のときの `reset` 型のプレフィックス"
+"`reset_high_prefix`: `reset_type = *_high` のときの `reset` 型のプレフィック"
+"ス"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:89
 msgid "`reset_high_suffix`: Suffix for `reset` type at `reset_type = *_high`"
@@ -3906,6 +3913,8 @@ msgstr "case_enum"
 #: src/06_development_environment/01_project_configuration/03_lint.md:30
 #: src/06_development_environment/01_project_configuration/03_lint.md:31
 #: src/06_development_environment/01_project_configuration/03_lint.md:32
+#: src/06_development_environment/01_project_configuration/03_lint.md:33
+#: src/06_development_environment/01_project_configuration/03_lint.md:34
 msgid "case type[^casetype]"
 msgstr "ケースタイプ[^casetype]"
 
@@ -4018,19 +4027,33 @@ msgid "case style of `struct`"
 msgstr "`struct` のケーススタイル"
 
 #: src/06_development_environment/01_project_configuration/03_lint.md:32
+msgid "case_union"
+msgstr "case_union"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:32
+msgid "case style of `union`"
+msgstr "`union` のケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:33
+msgid "case_var"
+msgstr "case_var"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:33
+msgid "case style of variable"
+msgstr "変数のケーススタイル"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:34
 msgid "case_wire"
 msgstr "case_wire"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:32
+#: src/06_development_environment/01_project_configuration/03_lint.md:34
 msgid "case style of wire type variable[^wire]"
 msgstr "ワイヤ変数[^wire]のケーススタイル"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:33
+#: src/06_development_environment/01_project_configuration/03_lint.md:35
 msgid "prefix_enum"
 msgstr "prefix_enum"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:33
-#: src/06_development_environment/01_project_configuration/03_lint.md:34
 #: src/06_development_environment/01_project_configuration/03_lint.md:35
 #: src/06_development_environment/01_project_configuration/03_lint.md:36
 #: src/06_development_environment/01_project_configuration/03_lint.md:37
@@ -4044,136 +4067,152 @@ msgstr "prefix_enum"
 #: src/06_development_environment/01_project_configuration/03_lint.md:45
 #: src/06_development_environment/01_project_configuration/03_lint.md:46
 #: src/06_development_environment/01_project_configuration/03_lint.md:47
+#: src/06_development_environment/01_project_configuration/03_lint.md:48
+#: src/06_development_environment/01_project_configuration/03_lint.md:49
+#: src/06_development_environment/01_project_configuration/03_lint.md:50
+#: src/06_development_environment/01_project_configuration/03_lint.md:51
 #: src/06_development_environment/01_project_configuration/05_publish.md:17
 #: src/06_development_environment/01_project_configuration/05_publish.md:18
 #: src/06_development_environment/10_documentation.md:53
 msgid "string"
 msgstr "文字列"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:33
+#: src/06_development_environment/01_project_configuration/03_lint.md:35
 msgid "prefix of `enum`"
 msgstr "`enum` のプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:34
+#: src/06_development_environment/01_project_configuration/03_lint.md:36
 msgid "prefix_function"
 msgstr "prefix_function"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:34
+#: src/06_development_environment/01_project_configuration/03_lint.md:36
 msgid "prefix of `function`"
 msgstr "`function` のプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:35
+#: src/06_development_environment/01_project_configuration/03_lint.md:37
 msgid "prefix_instance"
 msgstr "prefix_instance"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:35
+#: src/06_development_environment/01_project_configuration/03_lint.md:37
 msgid "prefix of instance"
 msgstr "インスタンスのプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:36
+#: src/06_development_environment/01_project_configuration/03_lint.md:38
 msgid "prefix_interface"
 msgstr "prefix_interface"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:36
+#: src/06_development_environment/01_project_configuration/03_lint.md:38
 msgid "prefix of `interface`"
 msgstr "`interface` のプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:37
+#: src/06_development_environment/01_project_configuration/03_lint.md:39
 msgid "prefix_modport"
 msgstr "prefix_modport"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:37
+#: src/06_development_environment/01_project_configuration/03_lint.md:39
 msgid "prefix of `modport`"
 msgstr "`modport` のプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:38
+#: src/06_development_environment/01_project_configuration/03_lint.md:40
 msgid "prefix_module"
 msgstr "prefix_module"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:38
+#: src/06_development_environment/01_project_configuration/03_lint.md:40
 msgid "prefix of `module`"
 msgstr "`module` のプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:39
+#: src/06_development_environment/01_project_configuration/03_lint.md:41
 msgid "prefix_package"
 msgstr "prefix_package"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:39
+#: src/06_development_environment/01_project_configuration/03_lint.md:41
 msgid "prefix of `package`"
 msgstr "`package` のプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:40
+#: src/06_development_environment/01_project_configuration/03_lint.md:42
 msgid "prefix_parameter"
 msgstr "prefix_parameter"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:40
+#: src/06_development_environment/01_project_configuration/03_lint.md:42
 msgid "prefix of `parameter`"
 msgstr "`parameter` のプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:41
+#: src/06_development_environment/01_project_configuration/03_lint.md:43
 msgid "prefix_port_inout"
 msgstr "prefix_port_inout"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:41
+#: src/06_development_environment/01_project_configuration/03_lint.md:43
 msgid "prefix of `inout` port"
 msgstr "`inout` ポートのプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:42
+#: src/06_development_environment/01_project_configuration/03_lint.md:44
 msgid "prefix_port_input"
 msgstr "prefix_port_input"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:42
+#: src/06_development_environment/01_project_configuration/03_lint.md:44
 msgid "prefix of `input` port"
 msgstr "`input` ポートのプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:43
+#: src/06_development_environment/01_project_configuration/03_lint.md:45
 msgid "prefix_port_modport"
 msgstr "prefix_port_modport"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:43
+#: src/06_development_environment/01_project_configuration/03_lint.md:45
 msgid "prefix of `modport` port"
 msgstr "`modport` ポートのプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:44
+#: src/06_development_environment/01_project_configuration/03_lint.md:46
 msgid "prefix_port_output"
 msgstr "prefix_port_output"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:44
+#: src/06_development_environment/01_project_configuration/03_lint.md:46
 msgid "prefix of `output` port"
 msgstr "`output` ポートのプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:45
+#: src/06_development_environment/01_project_configuration/03_lint.md:47
 msgid "prefix_reg"
 msgstr "prefix_reg"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:45
+#: src/06_development_environment/01_project_configuration/03_lint.md:47
 msgid "prefix of register type variable[^reg]"
 msgstr "レジスタ変数[^reg]のプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:46
+#: src/06_development_environment/01_project_configuration/03_lint.md:48
 msgid "prefix_struct"
 msgstr "prefix_struct"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:46
+#: src/06_development_environment/01_project_configuration/03_lint.md:48
 msgid "prefix of `struct`"
 msgstr "`struct` のプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:47
+#: src/06_development_environment/01_project_configuration/03_lint.md:49
+msgid "prefix_union"
+msgstr "prefix_union"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:49
+msgid "prefix of `union`"
+msgstr "`union` のプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:50
+msgid "prefix_var"
+msgstr "prefix_var"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:50
+msgid "prefix of variable"
+msgstr "変数のプレフィックス"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:51
 msgid "prefix_wire"
 msgstr "prefix_wire"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:47
+#: src/06_development_environment/01_project_configuration/03_lint.md:51
 msgid "prefix of wire type variable[^wire]"
 msgstr "ワイヤ変数[^wire]のプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:48
+#: src/06_development_environment/01_project_configuration/03_lint.md:52
 msgid "re_forbidden_enum"
 msgstr "re_forbidden_enum"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:48
-#: src/06_development_environment/01_project_configuration/03_lint.md:49
-#: src/06_development_environment/01_project_configuration/03_lint.md:50
-#: src/06_development_environment/01_project_configuration/03_lint.md:51
 #: src/06_development_environment/01_project_configuration/03_lint.md:52
 #: src/06_development_environment/01_project_configuration/03_lint.md:53
 #: src/06_development_environment/01_project_configuration/03_lint.md:54
@@ -4200,267 +4239,307 @@ msgstr "re_forbidden_enum"
 #: src/06_development_environment/01_project_configuration/03_lint.md:75
 #: src/06_development_environment/01_project_configuration/03_lint.md:76
 #: src/06_development_environment/01_project_configuration/03_lint.md:77
+#: src/06_development_environment/01_project_configuration/03_lint.md:78
+#: src/06_development_environment/01_project_configuration/03_lint.md:79
+#: src/06_development_environment/01_project_configuration/03_lint.md:80
+#: src/06_development_environment/01_project_configuration/03_lint.md:81
+#: src/06_development_environment/01_project_configuration/03_lint.md:82
+#: src/06_development_environment/01_project_configuration/03_lint.md:83
+#: src/06_development_environment/01_project_configuration/03_lint.md:84
+#: src/06_development_environment/01_project_configuration/03_lint.md:85
 msgid "regex[^regex]"
 msgstr "正規表現[^regex]"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:48
+#: src/06_development_environment/01_project_configuration/03_lint.md:52
 msgid "regex forbidden of `enum`"
 msgstr "`enum` の禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:49
+#: src/06_development_environment/01_project_configuration/03_lint.md:53
 msgid "re_forbidden_function"
 msgstr "re_forbidden_function"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:49
+#: src/06_development_environment/01_project_configuration/03_lint.md:53
 msgid "regex forbidden of `function`"
 msgstr "`function` の禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:50
+#: src/06_development_environment/01_project_configuration/03_lint.md:54
 msgid "re_forbidden_instance"
 msgstr "re_forbidden_instance"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:50
+#: src/06_development_environment/01_project_configuration/03_lint.md:54
 msgid "regex forbidden of instance"
 msgstr "インスタンスの禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:51
+#: src/06_development_environment/01_project_configuration/03_lint.md:55
 msgid "re_forbidden_interface"
 msgstr "re_forbidden_interface"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:51
+#: src/06_development_environment/01_project_configuration/03_lint.md:55
 msgid "regex forbidden of `interface`"
 msgstr "`interface` の禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:52
+#: src/06_development_environment/01_project_configuration/03_lint.md:56
 msgid "re_forbidden_modport"
 msgstr "re_forbidden_modport"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:52
+#: src/06_development_environment/01_project_configuration/03_lint.md:56
 msgid "regex forbidden of `modport`"
 msgstr "`modport` の禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:53
+#: src/06_development_environment/01_project_configuration/03_lint.md:57
 msgid "re_forbidden_module"
 msgstr "re_forbidden_module"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:53
+#: src/06_development_environment/01_project_configuration/03_lint.md:57
 msgid "regex forbidden of `module`"
 msgstr "`module` の禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:54
+#: src/06_development_environment/01_project_configuration/03_lint.md:58
 msgid "re_forbidden_package"
 msgstr "re_forbidden_package"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:54
+#: src/06_development_environment/01_project_configuration/03_lint.md:58
 msgid "regex forbidden of `package`"
 msgstr "`package` の禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:55
+#: src/06_development_environment/01_project_configuration/03_lint.md:59
 msgid "re_forbidden_parameter"
 msgstr "re_forbidden_parameter"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:55
+#: src/06_development_environment/01_project_configuration/03_lint.md:59
 msgid "regex forbidden of `parameter`"
 msgstr "`parameter` の禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:56
+#: src/06_development_environment/01_project_configuration/03_lint.md:60
 msgid "re_forbidden_port_inout"
 msgstr "re_forbidden_port_inout"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:56
+#: src/06_development_environment/01_project_configuration/03_lint.md:60
 msgid "regex forbidden of `inout` port"
 msgstr "`inout` ポートの禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:57
+#: src/06_development_environment/01_project_configuration/03_lint.md:61
 msgid "re_forbidden_port_input"
 msgstr "re_forbidden_port_input"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:57
+#: src/06_development_environment/01_project_configuration/03_lint.md:61
 msgid "regex forbidden of `input` port"
 msgstr "`input` ポートの禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:58
+#: src/06_development_environment/01_project_configuration/03_lint.md:62
 msgid "re_forbidden_port_modport"
 msgstr "re_forbidden_port_modport"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:58
+#: src/06_development_environment/01_project_configuration/03_lint.md:62
 msgid "regex forbidden of `modport` port"
 msgstr "`modport` ポートの禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:59
+#: src/06_development_environment/01_project_configuration/03_lint.md:63
 msgid "re_forbidden_port_output"
 msgstr "re_forbidden_port_output"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:59
+#: src/06_development_environment/01_project_configuration/03_lint.md:63
 msgid "regex forbidden of `output` port"
 msgstr "`output` ポートの禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:60
+#: src/06_development_environment/01_project_configuration/03_lint.md:64
 msgid "re_forbidden_reg"
 msgstr "re_forbidden_reg"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:60
+#: src/06_development_environment/01_project_configuration/03_lint.md:64
 msgid "regex forbidden of register type variable[^reg]"
 msgstr "レジスタ変数[^reg]の禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:61
+#: src/06_development_environment/01_project_configuration/03_lint.md:65
 msgid "re_forbidden_struct"
 msgstr "re_forbidden_struct"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:61
+#: src/06_development_environment/01_project_configuration/03_lint.md:65
 msgid "regex forbidden of `struct`"
 msgstr "`struct` の禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:62
+#: src/06_development_environment/01_project_configuration/03_lint.md:66
+msgid "re_forbidden_union"
+msgstr "re_forbidden_union"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:66
+msgid "regex forbidden of `union`"
+msgstr "`union` の禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:67
+msgid "re_forbidden_var"
+msgstr "re_forbidden_var"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:67
+msgid "regex forbidden of variable"
+msgstr "変数の禁止正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:68
 msgid "re_forbidden_wire"
 msgstr "re_forbidden_wire"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:62
+#: src/06_development_environment/01_project_configuration/03_lint.md:68
 msgid "regex forbidden of wire type variable[^wire]"
 msgstr "ワイヤ変数[^wire]の禁止正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:63
+#: src/06_development_environment/01_project_configuration/03_lint.md:69
 msgid "re_required_enum"
 msgstr "re_required_enum"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:63
+#: src/06_development_environment/01_project_configuration/03_lint.md:69
 msgid "regex required of `enum`"
 msgstr "`enum` の必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:64
+#: src/06_development_environment/01_project_configuration/03_lint.md:70
 msgid "re_required_function"
 msgstr "re_required_function"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:64
+#: src/06_development_environment/01_project_configuration/03_lint.md:70
 msgid "regex required of `function`"
 msgstr "`function` の必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:65
+#: src/06_development_environment/01_project_configuration/03_lint.md:71
 msgid "re_required_instance"
 msgstr "re_required_instance"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:65
+#: src/06_development_environment/01_project_configuration/03_lint.md:71
 msgid "regex required of instance"
 msgstr "インスタンスの必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:66
+#: src/06_development_environment/01_project_configuration/03_lint.md:72
 msgid "re_required_interface"
 msgstr "re_required_interface"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:66
+#: src/06_development_environment/01_project_configuration/03_lint.md:72
 msgid "regex required of `interface`"
 msgstr "`interface` の必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:67
+#: src/06_development_environment/01_project_configuration/03_lint.md:73
 msgid "re_required_modport"
 msgstr "re_required_modport"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:67
+#: src/06_development_environment/01_project_configuration/03_lint.md:73
 msgid "regex required of `modport`"
 msgstr "`modport` の必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:68
+#: src/06_development_environment/01_project_configuration/03_lint.md:74
 msgid "re_required_module"
 msgstr "re_required_module"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:68
+#: src/06_development_environment/01_project_configuration/03_lint.md:74
 msgid "regex required of `module`"
 msgstr "`module` の必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:69
+#: src/06_development_environment/01_project_configuration/03_lint.md:75
 msgid "re_required_package"
 msgstr "re_required_package"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:69
+#: src/06_development_environment/01_project_configuration/03_lint.md:75
 msgid "regex required of `package`"
 msgstr "`package` の必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:70
+#: src/06_development_environment/01_project_configuration/03_lint.md:76
 msgid "re_required_parameter"
 msgstr "re_required_parameter"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:70
+#: src/06_development_environment/01_project_configuration/03_lint.md:76
 msgid "regex required of `parameter`"
 msgstr "`parameter` の必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:71
+#: src/06_development_environment/01_project_configuration/03_lint.md:77
 msgid "re_required_port_inout"
 msgstr "re_required_port_inout"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:71
+#: src/06_development_environment/01_project_configuration/03_lint.md:77
 msgid "regex required of `inout` port"
 msgstr "`inout` ポートの必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:72
+#: src/06_development_environment/01_project_configuration/03_lint.md:78
 msgid "re_required_port_input"
 msgstr "re_required_port_input"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:72
+#: src/06_development_environment/01_project_configuration/03_lint.md:78
 msgid "regex required of `input` port"
 msgstr "`input` ポートの必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:73
+#: src/06_development_environment/01_project_configuration/03_lint.md:79
 msgid "re_required_port_modport"
 msgstr "re_required_port_modport"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:73
+#: src/06_development_environment/01_project_configuration/03_lint.md:79
 msgid "regex required of `modport` port"
 msgstr "`modport` ポートの必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:74
+#: src/06_development_environment/01_project_configuration/03_lint.md:80
 msgid "re_required_port_output"
 msgstr "re_required_port_output"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:74
+#: src/06_development_environment/01_project_configuration/03_lint.md:80
 msgid "regex required of `output` port"
 msgstr "`output` ポートの必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:75
+#: src/06_development_environment/01_project_configuration/03_lint.md:81
 msgid "re_required_reg"
 msgstr "re_required_reg"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:75
+#: src/06_development_environment/01_project_configuration/03_lint.md:81
 msgid "regex required of register type variable[^reg]"
 msgstr "レジスタ変数[^reg]の必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:76
+#: src/06_development_environment/01_project_configuration/03_lint.md:82
 msgid "re_required_struct"
 msgstr "re_required_struct"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:76
+#: src/06_development_environment/01_project_configuration/03_lint.md:82
 msgid "regex required of `struct`"
 msgstr "`struct` の必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:77
+#: src/06_development_environment/01_project_configuration/03_lint.md:83
+msgid "re_required_union"
+msgstr "re_required_union"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:83
+msgid "regex required of `union`"
+msgstr "`union` の必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:84
+msgid "re_required_var"
+msgstr "re_required_var"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:84
+msgid "regex required of variable"
+msgstr "変数の必須正規表現"
+
+#: src/06_development_environment/01_project_configuration/03_lint.md:85
 msgid "re_required_wire"
 msgstr "re_required_wire"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:77
+#: src/06_development_environment/01_project_configuration/03_lint.md:85
 msgid "regex required of wire type variable[^wire]"
 msgstr "ワイヤ変数[^wire]の必須正規表現"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:79
+#: src/06_development_environment/01_project_configuration/03_lint.md:87
 #: src/06_development_environment/01_project_configuration/04_test.md:20
 msgid "The available values are "
 msgstr "設定可能な値は以下です。"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:81
+#: src/06_development_environment/01_project_configuration/03_lint.md:89
 msgid "`\"snake\"` -- snake_case"
 msgstr "`\"snake\"` -- snake_case"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:82
+#: src/06_development_environment/01_project_configuration/03_lint.md:90
 msgid "`\"screaming_snake\"` -- SCREAMING_SNAKE_CASE"
 msgstr "`\"screaming_snake\"` -- SCREAMING_SNAKE_CASE"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:83
+#: src/06_development_environment/01_project_configuration/03_lint.md:91
 msgid "`\"lower_camel\"` -- lowerCamelCase"
 msgstr "`\"lower_camel\"` -- lowerCamelCase"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:84
+#: src/06_development_environment/01_project_configuration/03_lint.md:92
 msgid "`\"upper_camel\"` -- UpperCamelCase"
 msgstr "`\"upper_camel\"` -- UpperCamelCase"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:86
+#: src/06_development_environment/01_project_configuration/03_lint.md:94
 msgid ""
 "Regular expression string like `\".*\"`. The available syntax is [here]"
 "(https://docs.rs/regex/latest/regex/#syntax)."
@@ -4468,7 +4547,7 @@ msgstr ""
 "`\".*\"`のような正規表現です。使用可能な構文は[こちら](https://docs.rs/regex/"
 "latest/regex/#syntax)."
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:88
+#: src/06_development_environment/01_project_configuration/03_lint.md:96
 msgid ""
 "Register type means that the variable is assigned in `always_ff`. It will be "
 "mapped to flip-flop in synthesis phase."
@@ -4476,7 +4555,7 @@ msgstr ""
 "レジスタ変数とは `always_ff` で代入される変数です。合成フェーズでフリップフ"
 "ロップにマップされます。"
 
-#: src/06_development_environment/01_project_configuration/03_lint.md:90
+#: src/06_development_environment/01_project_configuration/03_lint.md:98
 msgid ""
 "Wire type means that the variable is assigned in `always_comb`. It will be "
 "mapped to wire in synthesis phase."
@@ -4920,9 +4999,7 @@ msgstr ""
 msgid ""
 "The available configurations are [here]"
 "(./01_project_configuration/05_publish.md)."
-msgstr ""
-"全設定の説明は[こちら]"
-"(./01_project_configuration/05_publish.md)。"
+msgstr "全設定の説明は[こちら](./01_project_configuration/05_publish.md)。"
 
 #: src/06_development_environment/04_directory_layout.md:3
 msgid ""
@@ -5067,9 +5144,7 @@ msgstr ""
 msgid ""
 "The available configurations are [here](./01_project_configuration/02_format."
 "md)."
-msgstr ""
-"全設定の説明は[こちら]"
-"(./01_project_configuration/02_format.md)。"
+msgstr "全設定の説明は[こちら](./01_project_configuration/02_format.md)。"
 
 #: src/06_development_environment/06_linter.md:3
 msgid ""
@@ -5083,9 +5158,7 @@ msgstr ""
 msgid ""
 "The available configurations are [here](./01_project_configuration/03_lint."
 "md)."
-msgstr ""
-"全設定の説明は[こちら]"
-"(./01_project_configuration/03_lint.md)。"
+msgstr "全設定の説明は[こちら](./01_project_configuration/03_lint.md)。"
 
 #: src/06_development_environment/07_simulator.md:3
 msgid ""
@@ -5125,9 +5198,7 @@ msgstr ""
 msgid ""
 "The available configurations are [here](./01_project_configuration/04_test."
 "md)."
-msgstr ""
-"全設定の説明は[こちら]"
-"(./01_project_configuration/04_test.md)。"
+msgstr "全設定の説明は[こちら](./01_project_configuration/04_test.md)。"
 
 #: src/06_development_environment/08_language_server.md:3
 msgid ""
@@ -6453,6 +6524,7 @@ msgid ""
 "         | Inout\n"
 "         | Ref\n"
 "         | Modport\n"
+"         | Import\n"
 "         ;\n"
 "\n"
 "// "
