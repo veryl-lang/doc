@@ -29,6 +29,8 @@ This section contains configurations of naming conventions.
 | case_port_output          | case type[^casetype] | case style of `output` port                     |
 | case_reg                  | case type[^casetype] | case style of register type variable[^reg]      |
 | case_struct               | case type[^casetype] | case style of `struct`                          |
+| case_union                | case type[^casetype] | case style of `union`                           |
+| case_var                  | case type[^casetype] | case style of variable                          |
 | case_wire                 | case type[^casetype] | case style of wire type variable[^wire]         |
 | prefix_enum               | string               | prefix of `enum`                                |
 | prefix_function           | string               | prefix of `function`                            |
@@ -44,6 +46,8 @@ This section contains configurations of naming conventions.
 | prefix_port_output        | string               | prefix of `output` port                         |
 | prefix_reg                | string               | prefix of register type variable[^reg]          |
 | prefix_struct             | string               | prefix of `struct`                              |
+| prefix_union              | string               | prefix of `union`                               |
+| prefix_var                | string               | prefix of variable                              |
 | prefix_wire               | string               | prefix of wire type variable[^wire]             |
 | re_forbidden_enum         | regex[^regex]        | regex forbidden of `enum`                       |
 | re_forbidden_function     | regex[^regex]        | regex forbidden of `function`                   |
@@ -59,6 +63,8 @@ This section contains configurations of naming conventions.
 | re_forbidden_port_output  | regex[^regex]        | regex forbidden of `output` port                |
 | re_forbidden_reg          | regex[^regex]        | regex forbidden of register type variable[^reg] |
 | re_forbidden_struct       | regex[^regex]        | regex forbidden of `struct`                     |
+| re_forbidden_union        | regex[^regex]        | regex forbidden of `union`                      |
+| re_forbidden_var          | regex[^regex]        | regex forbidden of variable                     |
 | re_forbidden_wire         | regex[^regex]        | regex forbidden of wire type variable[^wire]    |
 | re_required_enum          | regex[^regex]        | regex required of `enum`                        |
 | re_required_function      | regex[^regex]        | regex required of `function`                    |
@@ -74,6 +80,8 @@ This section contains configurations of naming conventions.
 | re_required_port_output   | regex[^regex]        | regex required of `output` port                 |
 | re_required_reg           | regex[^regex]        | regex required of register type variable[^reg]  |
 | re_required_struct        | regex[^regex]        | regex required of `struct`                      |
+| re_required_union         | regex[^regex]        | regex required of `union`                       |
+| re_required_var           | regex[^regex]        | regex required of variable                      |
 | re_required_wire          | regex[^regex]        | regex required of wire type variable[^wire]     |
 
 [^casetype]: The available values are 
