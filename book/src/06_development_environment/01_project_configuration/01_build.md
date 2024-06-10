@@ -89,3 +89,19 @@ The available configurations are below:
 * `reset_high_suffix`: Suffix for `reset` type at `reset_type = *_high`
 * `reset_low_prefix`: Prefix for `reset` type at `reset_type = *_low`
 * `reset_low_suffix`: Suffix for `reset` type at `reset_type = *_low`
+
+## The `sourcemap_target` field {#sourcemap-target}
+
+The `sourcemap_target` field specifies where the generated source maps will be placed at.
+The available types are below:
+
+* `target` -- as the same directory as the target code
+* `directory` -- specified directory
+* `none` -- no source map
+
+If you want to use `directory`, you should specify the target path by `path` key.
+
+```toml
+[build]
+target = {type = "directory", path = "[dst dir]"}
+```
