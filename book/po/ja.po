@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-06-05T10:50:35+09:00\n"
+"POT-Creation-Date: 2024-06-10T19:17:57+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -334,15 +334,19 @@ msgstr "ドキュメンテーション"
 msgid "GitHub Action"
 msgstr "GitHub Action"
 
-#: src/SUMMARY.md:81 src/07_appendix.md:1
+#: src/SUMMARY.md:81 src/06_development_environment/12_source_map.md:1
+msgid "Source Map"
+msgstr "ソースマップ"
+
+#: src/SUMMARY.md:82 src/07_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:82 src/07_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:83 src/07_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:83 src/07_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:84 src/07_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -2123,7 +2127,7 @@ msgstr "`[X, Y, Z,,,]` のように多次元配列も定義できます。"
 
 #: src/05_language_reference/03_data_type/04_clock_reset.md:3
 msgid ""
-"`clock` is a special types to represent clock wiring.  There are 3 variants "
+"`clock` is a special types to represent clock wiring. There are 3 variants "
 "to specify clock polarity."
 msgstr ""
 "`clock` はクロック配線を表す特別な型です。クロックの極性を指定するため以下の3"
@@ -2143,7 +2147,7 @@ msgstr "`clock_negedge`: 負極性のクロック型"
 
 #: src/05_language_reference/03_data_type/04_clock_reset.md:10
 msgid ""
-"`reset` is a special types to represent reset wiring.  There are 5 variants "
+"`reset` is a special types to represent reset wiring. There are 5 variants "
 "to specify reset polarity and synchronicity."
 msgstr ""
 "`reset` はリセット配線を表す特別な型です。リセットの極性と同期・非同期を指定"
@@ -2225,21 +2229,12 @@ msgid "Highest"
 msgstr "高い"
 
 #: src/05_language_reference/04_expression/01_operator_precedence.md:8
-msgid "`+` `-` `!` `~` `&` `~&` "
-msgstr "`+` `-` `!` `~` `&` `~&` "
-
-#: src/05_language_reference/04_expression/01_operator_precedence.md:8
-#: src/05_language_reference/04_expression/01_operator_precedence.md:17
-msgid "\\|"
-msgstr "\\|"
-
-#: src/05_language_reference/04_expression/01_operator_precedence.md:8
-msgid "~\\|"
-msgstr "~\\|"
-
-#: src/05_language_reference/04_expression/01_operator_precedence.md:8
-msgid " `^` `~^` `^~` (unary)"
-msgstr " `^` `~^` `^~` (単項)"
+msgid ""
+"`+` `-` `!` `~` `&` `~&` <code>\\|</code> <code>~\\|</code> `^` `~^` `^~` "
+"(unary)"
+msgstr ""
+"`+` `-` `!` `~` `&` `~&` <code>\\|</code> <code>~\\|</code> `^` `~^` `^~` "
+"(単項)"
 
 #: src/05_language_reference/04_expression/01_operator_precedence.md:9
 msgid "`**`"
@@ -2274,28 +2269,24 @@ msgid "`^` `~^` `^~` (binary)"
 msgstr "`^` `~^` `^~` (二項)"
 
 #: src/05_language_reference/04_expression/01_operator_precedence.md:17
-msgid " (binary)"
-msgstr " (二項)"
+msgid "<code>\\|</code> (binary)"
+msgstr "<code>\\|</code> (二項)"
 
 #: src/05_language_reference/04_expression/01_operator_precedence.md:18
 msgid "`&&`"
 msgstr "`&&`"
 
 #: src/05_language_reference/04_expression/01_operator_precedence.md:19
-msgid "\\|\\|"
-msgstr "\\|\\|"
+msgid "<code>\\|\\|</code>"
+msgstr "<code>\\|\\|</code>"
 
 #: src/05_language_reference/04_expression/01_operator_precedence.md:20
-msgid "`=` `+=` `-=` `*=` `/=` `%=` `&=` `^=` "
-msgstr "`=` `+=` `-=` `*=` `/=` `%=` `&=` `^=` "
-
-#: src/05_language_reference/04_expression/01_operator_precedence.md:20
-msgid "\\|="
-msgstr "\\|="
-
-#: src/05_language_reference/04_expression/01_operator_precedence.md:20
-msgid " `<<=` `>>=` `<<<=` `>>>=`"
-msgstr " `<<=` `>>=` `<<<=` `>>>=`"
+msgid ""
+"`=` `+=` `-=` `*=` `/=` `%=` `&=` `^=` <code>\\|=</code> <br> `<<=` `>>=` "
+"`<<<=` `>>>=`"
+msgstr ""
+"`=` `+=` `-=` `*=` `/=` `%=` `&=` `^=` <code>\\|=</code> <br> `<<=` `>>=` "
+"`<<<=` `>>>=`"
 
 #: src/05_language_reference/04_expression/01_operator_precedence.md:20
 #: src/05_language_reference/04_expression/01_operator_precedence.md:21
@@ -2898,7 +2889,7 @@ msgstr "オーバーライド可能なパラメータについてはモジュー
 
 #: src/05_language_reference/08_interface.md:8
 msgid ""
-"In interface definitions, `modport` can be declared.  `modport` can be used "
+"In interface definitions, `modport` can be declared. `modport` can be used "
 "as bundled port connection at the port declaration of module."
 msgstr ""
 "インターフェース定義では `modport` を宣言することができます。`modport` はモ"
@@ -3667,6 +3658,7 @@ msgid "`source` -- as the same directory as the source code"
 msgstr "`source` -- ソースコードと同じディレクトリ"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:38
+#: src/06_development_environment/01_project_configuration/01_build.md:99
 msgid "`directory` -- specified directory"
 msgstr "`directory` -- 特定のディレクトリ"
 
@@ -3683,6 +3675,7 @@ msgstr ""
 "で指定します。"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:43
+#: src/06_development_environment/01_project_configuration/01_build.md:104
 msgid ""
 "```toml\n"
 "[build]\n"
@@ -3755,7 +3748,7 @@ msgstr "`*_prefix` と `*_suffix` フィールド"
 #: src/06_development_environment/01_project_configuration/01_build.md:81
 msgid ""
 "`*_prefix` and `*_suffix` represent additional prefix and suffix for the "
-"generated code.  The available configurations are below:"
+"generated code. The available configurations are below:"
 msgstr ""
 "`*_prefix` と `*_suffix` はコード生成時の追加のプレフィックスとサフィックスを"
 "指定します。指定可能な設定は以下の通りです。"
@@ -3808,6 +3801,32 @@ msgstr ""
 msgid "`reset_low_suffix`: Suffix for `reset` type at `reset_type = *_low`"
 msgstr ""
 "`reset_low_suffix`: `reset_type = *_low` のときの `reset` 型のサフィックス"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:93
+msgid "The `sourcemap_target` field"
+msgstr "`sourcemap_target` フィールド"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:95
+msgid ""
+"The `sourcemap_target` field specifies where the generated source maps will "
+"be placed at. The available types are below:"
+msgstr "`sourcemap_target` フィールドはソースマップの生成先を指定します。指定可能な設定は以下の通りです。"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:98
+msgid "`target` -- as the same directory as the target code"
+msgstr "`target` -- ターゲットコードと同じディレクトリ"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:100
+msgid "`none` -- no source map"
+msgstr "`none` -- ソースマップなし"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:102
+msgid ""
+"If you want to use `directory`, you should specify the target path by `path` "
+"key."
+msgstr ""
+"`directory` を指定する場合は、ターゲットパスを `path` キー"
+"で指定します。"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:3
 msgid ""
@@ -4520,7 +4539,7 @@ msgstr "ワイヤ変数[^wire]の必須正規表現"
 
 #: src/06_development_environment/01_project_configuration/03_lint.md:87
 #: src/06_development_environment/01_project_configuration/04_test.md:20
-msgid "The available values are "
+msgid "The available values are"
 msgstr "設定可能な値は以下です。"
 
 #: src/06_development_environment/01_project_configuration/03_lint.md:89
@@ -5579,6 +5598,52 @@ msgstr "veryl-lang/setup-verilator@v1"
 msgid "veryl test --sim verilator"
 msgstr "veryl test --sim verilator"
 
+#: src/06_development_environment/12_source_map.md:3
+msgid ""
+"Source map is a file to be used for tracking location from SystemVerilog to "
+"Veryl. By this file, a file path, line and column of SystemVerilog can be "
+"translated into the position in Veryl."
+msgstr ""
+"ソースマップはSystemVerilogからVerylへ位置情報を追跡するために使用されるファイルです。"
+"このファイルによって、SystemVerilogのファイルパス・行・列をVeryl上の位置に変換することができます。"
+
+#: src/06_development_environment/12_source_map.md:6
+msgid ""
+"By default, Veryl generates source map at the same directory as generated "
+"SystemVerilog with `.sv.map` extension. Source map generation can be "
+"configured through [`sourcemap_target` field]"
+"(./01_project_configuration/01_build.md#sourcemap-target) in `Veryl.toml`."
+msgstr ""
+"デフォルトではVerylは生成されたSystemVerilogと同じディレクトリに拡張子 `.sv.map` のソースマップを生成します。"
+"ソースマップの生成は `Veryl.toml` の [`sourcemap_target` フィールド](./01_project_configuration/01_build.md#sourcemap-target)"
+"で制御することができます。"
+
+#: src/06_development_environment/12_source_map.md:9
+msgid ""
+"The format of source map follows [Source Map Revision 3](https://sourcemaps."
+"info/spec.html). The convention of linking generated code to source map is "
+"almost the same as JavaScript, but relative path is used only:"
+msgstr ""
+"ソースマップの形式は [Source Map Revision 3](https://sourcemaps.info/spec.html) に従います。"
+"生成されたコードとマップのリンク方法はJavaScriptのものとほとんど同じですが、相対パスのみが使われます。"
+
+#: src/06_development_environment/12_source_map.md:12
+msgid ""
+"```systemverilog\n"
+"//# sourceMappingURL=<relative path>\n"
+"```"
+msgstr ""
+"```systemverilog\n"
+"//# sourceMappingURL=<relative path>\n"
+"```"
+
+#: src/06_development_environment/12_source_map.md:16
+msgid ""
+"So, if there is the above comment at the end of a SystemVerilog file, it "
+"shows source map can be used."
+msgstr ""
+"従って、上記のコメントがSystemVerilogファイルの末尾にあればソースマップが利用可能です。"
+
 #: src/07_appendix/01_formal_syntax.md:3
 msgid ""
 "Veryl's parser is based on parser generator [parol](https://github.com/"
@@ -5625,9 +5690,8 @@ msgid ""
 "[0-9]+(?:_[0-9]+)*[eE][+-]?[0-9]+(?:_[0-9]+)*/                   : Token;\n"
 "FixedPointTerm        : <INITIAL, Generic       >/[0-9]+(?:_[0-9]+)*\\."
 "[0-9]+(?:_[0-9]+)*/                                              : Token;\n"
-"BasedTerm             : <INITIAL, Generic       >/(?:[0-9]+(?:"
-"_[0-9]+)*)?'[bodh][0-9a-fA-FxzXZ]+(?:_[0-9a-fA-FxzXZ]+)*/                : "
-"Token;\n"
+"BasedTerm             : <INITIAL, Generic       >/(?:[0-9]+(?:_[0-9]+)*)?'s?"
+"[bodh][0-9a-fA-FxzXZ]+(?:_[0-9a-fA-FxzXZ]+)*/              : Token;\n"
 "AllBitTerm            : <INITIAL, Generic       >/(?:[0-9]+(?:"
 "_[0-9]+)*)?'[01xzXZ]/                                                    : "
 "Token;\n"
@@ -6807,6 +6871,30 @@ msgstr "unknown_port"
 #: src/07_appendix/02_semantic_error.md:51
 msgid "unused_variable"
 msgstr "unused_variable"
+
+#~ msgid "`+` `-` `!` `~` `&` `~&` "
+#~ msgstr "`+` `-` `!` `~` `&` `~&` "
+
+#~ msgid "\\|"
+#~ msgstr "\\|"
+
+#~ msgid "~\\|"
+#~ msgstr "~\\|"
+
+#~ msgid " `^` `~^` `^~` (unary)"
+#~ msgstr " `^` `~^` `^~` (単項)"
+
+#~ msgid " (binary)"
+#~ msgstr " (二項)"
+
+#~ msgid "\\|\\|"
+#~ msgstr "\\|\\|"
+
+#~ msgid "\\|="
+#~ msgstr "\\|="
+
+#~ msgid " `<<=` `>>=` `<<<=` `>>>=`"
+#~ msgstr " `<<=` `>>=` `<<<=` `>>>=`"
 
 #~ msgid ""
 #~ "[`clock_type`](01_project_configuration.md#the-clock_type-field) --- The "
