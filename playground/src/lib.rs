@@ -97,7 +97,8 @@ pub fn build(source: &str) -> Result {
                 }
                 text
             } else {
-                let mut emitter = Emitter::new(&metadata);
+                let mut emitter =
+                    Emitter::new(&metadata, &PathBuf::new(), &PathBuf::new(), &PathBuf::new());
                 emitter.emit("project", &parser.veryl);
                 emitter.as_str().to_owned()
             };
