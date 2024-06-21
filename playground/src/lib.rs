@@ -97,8 +97,12 @@ pub fn build(source: &str) -> Result {
                 }
                 text
             } else {
-                let mut emitter =
-                    Emitter::new(&metadata, &PathBuf::new(), &PathBuf::new(), &PathBuf::new());
+                let mut emitter = Emitter::new(
+                    &metadata,
+                    &PathBuf::from("input.veryl"),
+                    &PathBuf::from("input.sv"),
+                    &PathBuf::from("input.sv.map"),
+                );
                 emitter.emit("project", &parser.veryl);
                 emitter.as_str().to_owned()
             };
@@ -139,7 +143,7 @@ mod tests {
     fn get_default_code() -> String {
         let path = std::env::var("CARGO_MANIFEST_DIR").unwrap();
         let mut path = PathBuf::from(path);
-        path.push("playground");
+        path.push("html");
         path.push("index.html");
         let text = std::fs::read_to_string(path).unwrap();
         let mut code = false;
