@@ -6,7 +6,5 @@
     "veryl_wasm.js"
   ],
   "module": "veryl_wasm.js",
-  "sideEffects": [
-    "./snippets/*"
-  ]
+  "sideEffects": false
 }
