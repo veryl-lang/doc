@@ -107,7 +107,6 @@ pub fn build(source: &str) -> Result {
                 emitter.as_str().to_owned()
             };
 
-            panic!();
             Result { err, content }
         }
         Err(e) => Result {
