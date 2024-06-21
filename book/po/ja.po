@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-06-17T11:05:15+09:00\n"
+"POT-Creation-Date: 2024-06-21T13:59:16+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -249,7 +249,7 @@ msgstr "他言語組み込み"
 msgid "Integrated Test"
 msgstr "組み込みテスト"
 
-#: src/SUMMARY.md:62 src/02_features.md:67
+#: src/SUMMARY.md:62 src/02_features.md:68
 #: src/05_language_reference/14_generics.md:1
 msgid "Generics"
 msgstr "ジェネリクス"
@@ -259,94 +259,104 @@ msgstr "ジェネリクス"
 msgid "Default Parameter"
 msgstr "デフォルトパラメータ"
 
-#: src/SUMMARY.md:64 src/06_development_environment.md:1
+#: src/SUMMARY.md:64 src/02_features.md:124
+#: src/05_language_reference/15_clock_domain_annotation.md:1
+msgid "Clock Domain Annotation"
+msgstr "クロックドメインアノテーション"
+
+#: src/SUMMARY.md:65
+#: src/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.md:1
+msgid "Unsafe CDC"
+msgstr "Unsafe CDC"
+
+#: src/SUMMARY.md:66 src/06_development_environment.md:1
 msgid "Development Environment"
 msgstr "開発環境"
 
-#: src/SUMMARY.md:65
+#: src/SUMMARY.md:67
 #: src/06_development_environment/01_project_configuration.md:1
 msgid "Project Configuration"
 msgstr "プロジェクト設定"
 
-#: src/SUMMARY.md:66
+#: src/SUMMARY.md:68
 #: src/06_development_environment/01_project_configuration/01_build.md:1
 msgid "Build"
 msgstr "Build"
 
-#: src/SUMMARY.md:67
+#: src/SUMMARY.md:69
 #: src/06_development_environment/01_project_configuration/02_format.md:1
 msgid "Format"
 msgstr "Format"
 
-#: src/SUMMARY.md:68
+#: src/SUMMARY.md:70
 #: src/06_development_environment/01_project_configuration/03_lint.md:1
 msgid "Lint"
 msgstr "Lint"
 
-#: src/SUMMARY.md:69
+#: src/SUMMARY.md:71
 #: src/06_development_environment/01_project_configuration/04_test.md:1
 #: src/06_development_environment/11_github_action.md:47
 msgid "Test"
 msgstr "Test"
 
-#: src/SUMMARY.md:70
+#: src/SUMMARY.md:72
 #: src/06_development_environment/01_project_configuration/05_publish.md:1
 msgid "Publish"
 msgstr "Publish"
 
-#: src/SUMMARY.md:71 src/06_development_environment/02_dependencies.md:1
+#: src/SUMMARY.md:73 src/06_development_environment/02_dependencies.md:1
 msgid "Dependencies"
 msgstr "依存関係"
 
-#: src/SUMMARY.md:72 src/06_development_environment/03_publish_project.md:1
+#: src/SUMMARY.md:74 src/06_development_environment/03_publish_project.md:1
 msgid "Publish Project"
 msgstr "プロジェクトを公開する"
 
-#: src/SUMMARY.md:73 src/06_development_environment/04_directory_layout.md:1
+#: src/SUMMARY.md:75 src/06_development_environment/04_directory_layout.md:1
 msgid "Directory Layout"
 msgstr "ディレクトリ構成"
 
-#: src/SUMMARY.md:74 src/06_development_environment/05_formatter.md:1
+#: src/SUMMARY.md:76 src/06_development_environment/05_formatter.md:1
 msgid "Formatter"
 msgstr "フォーマッタ"
 
-#: src/SUMMARY.md:75 src/06_development_environment/06_linter.md:1
+#: src/SUMMARY.md:77 src/06_development_environment/06_linter.md:1
 msgid "Linter"
 msgstr "リンタ"
 
-#: src/SUMMARY.md:76 src/06_development_environment/07_simulator.md:1
+#: src/SUMMARY.md:78 src/06_development_environment/07_simulator.md:1
 msgid "Simulator"
 msgstr "シミュレータ"
 
-#: src/SUMMARY.md:77 src/06_development_environment/08_language_server.md:1
+#: src/SUMMARY.md:79 src/06_development_environment/08_language_server.md:1
 msgid "Language Server"
 msgstr "言語サーバ"
 
-#: src/SUMMARY.md:78 src/06_development_environment/09_compatibility.md:1
+#: src/SUMMARY.md:80 src/06_development_environment/09_compatibility.md:1
 msgid "Compatibility"
 msgstr "互換性"
 
-#: src/SUMMARY.md:79 src/06_development_environment/10_documentation.md:1
+#: src/SUMMARY.md:81 src/06_development_environment/10_documentation.md:1
 msgid "Documentation"
 msgstr "ドキュメンテーション"
 
-#: src/SUMMARY.md:80 src/06_development_environment/11_github_action.md:1
+#: src/SUMMARY.md:82 src/06_development_environment/11_github_action.md:1
 msgid "GitHub Action"
 msgstr "GitHub Action"
 
-#: src/SUMMARY.md:81 src/06_development_environment/12_source_map.md:1
+#: src/SUMMARY.md:83 src/06_development_environment/12_source_map.md:1
 msgid "Source Map"
 msgstr "ソースマップ"
 
-#: src/SUMMARY.md:82 src/07_appendix.md:1
+#: src/SUMMARY.md:84 src/07_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:83 src/07_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:85 src/07_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:84 src/07_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:86 src/07_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -459,21 +469,25 @@ msgid "[Generics](02_features.md#generics)"
 msgstr "[ジェネリクス](02_features.md#generics)"
 
 #: src/02_features.md:10
+msgid "[Clock Domain Annotation](02_features.md#clock-domain-annotation)"
+msgstr "[クロックドメインアノテーション](02_features.md#clock-domain-annotation)"
+
+#: src/02_features.md:11
 msgid "[Trailing comma](02_features.md#trailing-comma)"
 msgstr "[末尾カンマ](02_features.md#trailing-comma)"
 
-#: src/02_features.md:11
+#: src/02_features.md:12
 msgid ""
 "[Abstraction of clock and reset](02_features.md#abstraction-of-clock-and-"
 "reset)"
 msgstr ""
 "[クロックとリセットの抽象化](02_features.md#abstraction-of-clock-and-reset)"
 
-#: src/02_features.md:12
+#: src/02_features.md:13
 msgid "[Documentation comment](02_features.md#documentation-comment)"
 msgstr "[ドキュメンテーションコメント](02_features.md#documentation-comment)"
 
-#: src/02_features.md:13
+#: src/02_features.md:14
 msgid ""
 "[Compound assignment operator in `always_ff`](02_features.md#compound-"
 "assignment-operator-in-always_ff)"
@@ -481,7 +495,7 @@ msgstr ""
 "[`always_ff` での複合代入演算子](02_features.md#compound-assignment-operator-"
 "in-always_ff)"
 
-#: src/02_features.md:14
+#: src/02_features.md:15
 msgid ""
 "[Individual namespace of enum variant](02_features.md#individual-namespace-"
 "of-enum-variant)"
@@ -489,15 +503,15 @@ msgstr ""
 "[独立した名前空間を持つenumバリアント](02_features.md#individual-namespace-"
 "of-enum-variant)"
 
-#: src/02_features.md:15
+#: src/02_features.md:16
 msgid "[`repeat` of concatenation](02_features.md#repeat-of-concatenation)"
 msgstr "[ビット連結における `repeat`](02_features.md#repeat-of-concatenation)"
 
-#: src/02_features.md:16
+#: src/02_features.md:17
 msgid "[`if` / `case` expression](02_features.md#if--case-expression)"
 msgstr "[`if` / `case` 式](02_features.md#if--case-expression)"
 
-#: src/02_features.md:17
+#: src/02_features.md:18
 msgid ""
 "[Range-based `for` / `inside` / `outside`](02_features.md#range-based-for--"
 "inside--outside)"
@@ -505,27 +519,27 @@ msgstr ""
 "[範囲 `for` / `inside` / `outside`](02_features.md#range-based-for--inside--"
 "outside)"
 
-#: src/02_features.md:18
+#: src/02_features.md:19
 msgid "[`msb` notation](02_features.md#msb-notation)"
 msgstr "[`msb` 記法](02_features.md#msb-notation)"
 
-#: src/02_features.md:19
+#: src/02_features.md:20
 msgid "[`let` statement](02_features.md#let-statement)"
 msgstr "[`let` 文](02_features.md#let-statement)"
 
-#: src/02_features.md:20
+#: src/02_features.md:21
 msgid "[Named block](02_features.md#named-block)"
 msgstr "[名前付きブロック](02_features.md#named-block)"
 
-#: src/02_features.md:21
+#: src/02_features.md:22
 msgid "[Visibility control](02_features.md#visibility-control)"
 msgstr "[可視性制御](02_features.md#visibility-control)"
 
-#: src/02_features.md:23
+#: src/02_features.md:24
 msgid "Real-time diagnostics"
 msgstr "リアルタイム診断"
 
-#: src/02_features.md:25
+#: src/02_features.md:26
 msgid ""
 "Issues such as undefined, unused, or unassigned variables are notified in "
 "real-time while editing in the editor. In the following example, adding the "
@@ -536,19 +550,19 @@ msgstr ""
 "通知されます。次の例では、未使用変数として通知された変数に `_` プレフィックス"
 "を付加することで未使用であることを明示し、警告を抑制しています。"
 
-#: src/02_features.md:28
+#: src/02_features.md:29
 msgid "![diagnostics](./img/diagnostics.gif)"
 msgstr "![diagnostics](./img/diagnostics.gif)"
 
-#: src/02_features.md:30 src/02_features.md:39
+#: src/02_features.md:31 src/02_features.md:40
 msgid "If the video does not play[^1]"
 msgstr "ビデオが再生されない場合[^1]"
 
-#: src/02_features.md:32
+#: src/02_features.md:33
 msgid "Auto formatting"
 msgstr "自動フォーマット"
 
-#: src/02_features.md:34
+#: src/02_features.md:35
 msgid ""
 "In addition to the automatic formatting feature integrated with the editor, "
 "formatting through the command line and formatting checks in CI are also "
@@ -557,15 +571,15 @@ msgstr ""
 "エディタと連携した自動フォーマット機能のほか、コマンドラインでのフォーマット"
 "やCIでのフォーマットチェックも可能です。"
 
-#: src/02_features.md:37
+#: src/02_features.md:38
 msgid "![format](./img/format.gif)"
 msgstr "![format](./img/format.gif)"
 
-#: src/02_features.md:41
+#: src/02_features.md:42
 msgid "Integrated test"
 msgstr "組み込みテスト"
 
-#: src/02_features.md:43
+#: src/02_features.md:44
 msgid ""
 "Test code written by SystemVerilog can be embeded in Veryl code, it can be "
 "executed through `veryl test` command."
@@ -573,7 +587,7 @@ msgstr ""
 "SystemVerilogで書かれたテストコードをVerylに埋め込み、`veryl test` コマンドで"
 "実行することができます。"
 
-#: src/02_features.md:46
+#: src/02_features.md:47
 msgid ""
 "```veryl\n"
 "#[test(test1)]\n"
@@ -587,11 +601,11 @@ msgid ""
 "```"
 msgstr ""
 
-#: src/02_features.md:57
+#: src/02_features.md:58
 msgid "Dependency management"
 msgstr "依存関係管理"
 
-#: src/02_features.md:59
+#: src/02_features.md:60
 msgid ""
 "Veryl includes a built-in dependency management feature, allowing for easy "
 "incorporation of libraries by simply adding the repository path and version "
@@ -601,7 +615,7 @@ msgstr ""
 "ライブラリのリポジトリパスとバージョンを追加するだけで、簡単にライブラリを組"
 "み込むことができます。"
 
-#: src/02_features.md:62 src/06_development_environment/02_dependencies.md:6
+#: src/02_features.md:63 src/06_development_environment/02_dependencies.md:6
 msgid ""
 "```toml\n"
 "[dependencies]\n"
@@ -613,7 +627,7 @@ msgstr ""
 "\"https://github.com/veryl-lang/sample\" = \"0.1.0\"\n"
 "```"
 
-#: src/02_features.md:69
+#: src/02_features.md:70
 msgid ""
 "Code generation through generics achieves more reusable code than "
 "traditional parameter override. Prarmeters in function like the follwoign "
@@ -625,11 +639,56 @@ msgstr ""
 "でなく、インスタンスのモジュール名や構造体定義の型名もパラメータ化することが"
 "できます。"
 
-#: src/02_features.md:123
+#: src/02_features.md:126
+msgid ""
+"If there are some clocks in a module, explicit clock domain annotation and "
+"`unsafe (cdc)` block at the clock domain boundaries are required. By the "
+"annotation, Veryl compiler detects unexpected clock domain crossing as "
+"error, and explicit `unsafe (cdc)` block eases to review clock domain "
+"crossing."
+msgstr ""
+"モジュール内に複数のクロックがある場合、明示的なクロックドメインアノテーションと"
+"クロックドメイン境界への `unsafe (cdc)` ブロックが必要です。"
+"Veryl コンパイラは意図しないクロックドメインクロッシングをエラーとして検出し、"
+"明示的な `unsafe (cdc)` ブロックによりレビューが容易になります。"
+
+#: src/02_features.md:137
+msgid ""
+"```verilog\n"
+"module ModuleA (\n"
+"    input  i_clk_a,\n"
+"    input  i_dat_a,\n"
+"    output o_dat_a,\n"
+"    input  i_clk_b,\n"
+"    input  i_dat_b,\n"
+"    output o_dat_b\n"
+");\n"
+"    // Carefully!!!\n"
+"    // From i_clk_a to i_clk_b\n"
+"    assign o_dat_b = i_dat_a;\n"
+"endmodule\n"
+"```"
+msgstr ""
+"```verilog\n"
+"module ModuleA (\n"
+"    input  i_clk_a,\n"
+"    input  i_dat_a,\n"
+"    output o_dat_a,\n"
+"    input  i_clk_b,\n"
+"    input  i_dat_b,\n"
+"    output o_dat_b\n"
+");\n"
+"    // 注意!!!\n"
+"    // i_clk_a から i_clk_b へ\n"
+"    assign o_dat_b = i_dat_a;\n"
+"endmodule\n"
+"```"
+
+#: src/02_features.md:174
 msgid "Trailing comma"
 msgstr "末尾カンマ"
 
-#: src/02_features.md:125
+#: src/02_features.md:176
 msgid ""
 "Trailing comma is a syntax where a comma is placed after the last element in "
 "a list. It facilitates the addition and removal of elements and reduces "
@@ -639,11 +698,11 @@ msgstr ""
 "り、要素の追加や削除が容易になり、バージョン管理システムにおける不必要な差異"
 "を減らすことができます。"
 
-#: src/02_features.md:161
+#: src/02_features.md:212
 msgid "Abstraction of clock and reset"
 msgstr "クロックとリセットの抽象化"
 
-#: src/02_features.md:163
+#: src/02_features.md:214
 msgid ""
 "There is no need to specify the polarity and synchronicity of the clock and "
 "reset in the syntax; these can be specified during build-time configuration. "
@@ -655,7 +714,7 @@ msgstr ""
 "性・非同期リセットとFPGA向けの正極性・同期リセットのそれぞれのコードを生成す"
 "ることができます。"
 
-#: src/02_features.md:168
+#: src/02_features.md:219
 msgid ""
 "Additionally, explicit `clock` and `reset` type enables to check whether "
 "clock and reset are correctly connected to registers. If there is a single "
@@ -665,11 +724,11 @@ msgstr ""
 "接続が正しく行われているかどうかを確認することができます。モジュール内にク"
 "ロックとリセットが1つだけの場合、レジスタへの接続を省略することもできます。"
 
-#: src/02_features.md:214 src/05_language_reference/02_lexical_structure.md:33
+#: src/02_features.md:265 src/05_language_reference/02_lexical_structure.md:33
 msgid "Documentation comment"
 msgstr "ドキュメンテーションコメント"
 
-#: src/02_features.md:216
+#: src/02_features.md:267
 msgid ""
 "Writing module descriptions as documentation comments allows for automatic "
 "documentation generation. You can use not only plain text but also MarkDown "
@@ -679,7 +738,7 @@ msgstr ""
 "を自動生成することができます。単なるテキストだけでなく、マークダウン形式や"
 "[WaveDrom](https://wavedrom.com)による波形記述を使用することができます。"
 
-#: src/02_features.md:227
+#: src/02_features.md:278
 msgid ""
 "```verilog\n"
 "// Comment\n"
@@ -693,7 +752,7 @@ msgstr ""
 "endmodule\n"
 "```"
 
-#: src/02_features.md:236
+#: src/02_features.md:287
 msgid ""
 "````veryl\n"
 "/// Documentation comment written by Markdown\n"
@@ -721,11 +780,11 @@ msgstr ""
 "}\n"
 "````"
 
-#: src/02_features.md:253
+#: src/02_features.md:304
 msgid "Compound assignment operator in `always_ff`"
 msgstr "`always_ff` での複合代入演算子"
 
-#: src/02_features.md:255
+#: src/02_features.md:306
 msgid ""
 "There is no dedicated non-blocking assignment operator; within `always_ff`, "
 "non-blocking assignments are inferred, while within `always_comb`, blocking "
@@ -737,11 +796,11 @@ msgstr ""
 "`always_ff` 内でも `always_comb` 内と同様に様々な複合代入演算子を使用すること"
 "ができます。"
 
-#: src/02_features.md:290
+#: src/02_features.md:341
 msgid "Individual namespace of enum variant"
 msgstr "独立した名前空間を持つenumバリアント"
 
-#: src/02_features.md:292
+#: src/02_features.md:343
 msgid ""
 "Variants of an enum are defined within separate namespaces for each enum, "
 "thus preventing unintended name collisions."
@@ -749,11 +808,11 @@ msgstr ""
 "enumのバリアントはenum毎に独立した名前空間を持っており意図しない名前の衝突を"
 "防ぐことができます。"
 
-#: src/02_features.md:330
+#: src/02_features.md:381
 msgid "`repeat` of concatenation"
 msgstr "ビット連結における `repeat`"
 
-#: src/02_features.md:332
+#: src/02_features.md:383
 msgid ""
 "By adopting the explicit `repeat` syntax as a repetition description in bit "
 "concatenation, readability improves over complex combinations of `{}`."
@@ -761,11 +820,11 @@ msgstr ""
 "ビット連結における繰り返し記述として明示的な `repeat` 記法を採用し、 複雑な "
 "`{}` の組み合わせより可読性が向上しています。"
 
-#: src/02_features.md:360
+#: src/02_features.md:411
 msgid "`if` / `case` expression"
 msgstr "`if` / `case` 式"
 
-#: src/02_features.md:362
+#: src/02_features.md:413
 msgid ""
 "By adopting `if` and `case` expressions instead of the ternary operator, "
 "readability improves, especially when comparing a large number of items."
@@ -773,11 +832,11 @@ msgstr ""
 "三項演算子の代わりに if 式と case 式を採用することで、比較するアイテム数が多"
 "い場合の可読性が向上します。"
 
-#: src/02_features.md:398
+#: src/02_features.md:449
 msgid "Range-based `for` / `inside` / `outside`"
 msgstr "範囲 `for` / `inside` / `outside`"
 
-#: src/02_features.md:400
+#: src/02_features.md:451
 msgid ""
 "With notation representing closed intervals `..=` and half-open intervals `.."
 "`, it is possible to uniformly describe ranges using `for`, `inside`, and "
@@ -787,11 +846,11 @@ msgstr ""
 "一的に記述できるようにしました。また、`inside` の逆を意味する `outside` も導"
 "入しました。"
 
-#: src/02_features.md:432
+#: src/02_features.md:483
 msgid "`msb` notation"
 msgstr "`msb` 記法"
 
-#: src/02_features.md:434
+#: src/02_features.md:485
 msgid ""
 "The `msb` notation, indicating the most significant bit, eliminates the need "
 "to calculate the most significant bit from parameters, making intentions "
@@ -800,11 +859,11 @@ msgstr ""
 "最上位ビットを示す `msb` 記法により、パラメータから最上位ビットを計算する必要"
 "がなくなり、より意図を明確にすることができます。"
 
-#: src/02_features.md:463
+#: src/02_features.md:514
 msgid "`let` statement"
 msgstr "`let` 文"
 
-#: src/02_features.md:465
+#: src/02_features.md:516
 msgid ""
 "There is a dedicated `let` statement available for binding values "
 "simultaneously with variable declaration, which can be used in various "
@@ -813,20 +872,20 @@ msgstr ""
 "変数宣言と同時に値を束縛する専用の `let` 文が用意されており、SystemVerilogで"
 "はサポートされていなかった様々な場所で使用することができます。"
 
-#: src/02_features.md:498
+#: src/02_features.md:549
 msgid "Named block"
 msgstr "名前付きブロック"
 
-#: src/02_features.md:500
+#: src/02_features.md:551
 msgid "You can define named blocks to limit the scope of variables."
 msgstr ""
 "変数のスコープを限定するための名前付きブロックを定義することができます。"
 
-#: src/02_features.md:527
+#: src/02_features.md:578
 msgid "Visibility control"
 msgstr "可視性制御"
 
-#: src/02_features.md:529
+#: src/02_features.md:580
 msgid ""
 "Modules without the `pub` keyword cannot be referenced from outside the "
 "project and are not included in automatic documentation generation. This "
@@ -837,7 +896,7 @@ msgstr ""
 "ントの自動生成にも含まれません。これによりプロジェクト外に公開したいものと内"
 "部実装とを区別することができます。"
 
-#: src/02_features.md:564
+#: src/02_features.md:615
 msgid ""
 "Some browsers by default pause the playback of GIF animations. Please check "
 "your browser settings."
@@ -2339,10 +2398,9 @@ msgid ""
 msgstr ""
 "もう一つの条件式が `case` です。`case` は `値: 式` という形式の条件を複数持ち"
 "ます。もし `case` キーワードの後の式と条件の左側の値が一致すれば、その条件の"
-"右側の式が返されます。値としては `..=` のような範囲も指定できます。"
-"`default` はそれ以外の条件が全て失敗したときに返される"
-"特別な条件です。case 式は常になんらかの値に評価される必要があるため "
-"`default` は必須です。"
+"右側の式が返されます。値としては `..=` のような範囲も指定できます。`default` "
+"はそれ以外の条件が全て失敗したときに返される特別な条件です。case 式は常になん"
+"らかの値に評価される必要があるため `default` は必須です。"
 
 #: src/05_language_reference/04_expression/05_case_switch.md:25
 msgid ""
@@ -2350,8 +2408,8 @@ msgid ""
 "`expression: expression`, and if the left expression is evaluated to 1, the "
 "right expression of the arm will be returned."
 msgstr ""
-"`switch` は `case` のもう一つの形式です。"
-"`switch` は `式: 式` という形式を持ち、左側の式の評価結果が1の場合に、右側の式が返されます。"
+"`switch` は `case` のもう一つの形式です。`switch` は `式: 式` という形式を持"
+"ち、左側の式の評価結果が1の場合に、右側の式が返されます。"
 
 #: src/05_language_reference/04_expression/06_bit_select.md:3
 msgid ""
@@ -2487,8 +2545,8 @@ msgid ""
 "same as [Case / Switch expression](../04_expression/05_case_switch.md) "
 "except that the right-hand of arm is statement."
 msgstr ""
-"`case` と `switch` は文として使うこともできます。"
-"各アームの右辺が文になる点を除けば [Case / Switch 式](../04_expression/05_case_switch.md) と同じです。"
+"`case` と `switch` は文として使うこともできます。各アームの右辺が文になる点を"
+"除けば [Case / Switch 式](../04_expression/05_case_switch.md) と同じです。"
 
 #: src/05_language_reference/05_statement/05_for.md:3
 msgid ""
@@ -3256,6 +3314,147 @@ msgstr ""
 "    let _b: logic<20> = FuncA::<20, 2>(1);\n"
 "}\n"
 "```"
+
+#: src/05_language_reference/15_clock_domain_annotation.md:3
+msgid ""
+"If there are some clocks in a module, explicit clock domain annotation like "
+"`'a` is required. The annotation shows which clock domain each signals "
+"belong."
+msgstr ""
+"モジュール内に複数のクロックがある場合、`'a` のような明示的なクロックドメインアノテーションが"
+"必要です。アノテーションはそれぞれの信号がどのクロックドメインに所属するかを示します。"
+
+#: src/05_language_reference/15_clock_domain_annotation.md:6
+msgid ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    // belong clock domain 'a\n"
+"    i_clk_a: input  'a clock,\n"
+"    i_dat_a: input  'a logic,\n"
+"    o_dat_a: output 'a logic,\n"
+"\n"
+"    // belong clock domain 'b\n"
+"    i_clk_b: input  'b clock,\n"
+"    i_dat_b: input  'b logic,\n"
+"    o_dat_b: output 'b logic,\n"
+") {\n"
+"    // assignment in the same clock domain is safe\n"
+"    assign o_dat_a = i_dat_a;\n"
+"    assign o_dat_b = i_dat_b;\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    // クロックドメイン 'a に所属\n"
+"    i_clk_a: input  'a clock,\n"
+"    i_dat_a: input  'a logic,\n"
+"    o_dat_a: output 'a logic,\n"
+"\n"
+"    // クロックドメイン 'b に所属\n"
+"    i_clk_b: input  'b clock,\n"
+"    i_dat_b: input  'b logic,\n"
+"    o_dat_b: output 'b logic,\n"
+") {\n"
+"    // 同じクロックドメイン内の代入は安全\n"
+"    assign o_dat_a = i_dat_a;\n"
+"    assign o_dat_b = i_dat_b;\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/15_clock_domain_annotation.md:24
+msgid ""
+"If there is single clock only in a module, the annotation can be omitted."
+msgstr ""
+"モジュール内にクロックが1つしかない場合、アノテーションは省略できます。"
+
+#: src/05_language_reference/15_clock_domain_annotation.md:36
+msgid ""
+"`'_` is a special clock domain which means implicit clock domain. This can "
+"be used to specify that some clocks belong the same implicit clock domain."
+msgstr ""
+"`'_` は暗黙のクロックドメインを表す特別なクロックドメインです。"
+"これは複数のクロックが同じ暗黙のクロックドメインに所属することを示すために使用できます。"
+
+#: src/05_language_reference/15_clock_domain_annotation.md:39
+msgid ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    // all signals belong implicit clock domain\n"
+"    i_clk   : input  '_ clock,\n"
+"    i_clk_x2: input  '_ clock,\n"
+"    i_dat   : input     logic,\n"
+"    o_dat   : output    logic,\n"
+") {\n"
+"    assign o_dat = i_dat;\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    // 全ての信号は暗黙のクロックドメインに所属\n"
+"    i_clk   : input  '_ clock,\n"
+"    i_clk_x2: input  '_ clock,\n"
+"    i_dat   : input     logic,\n"
+"    o_dat   : output    logic,\n"
+") {\n"
+"    assign o_dat = i_dat;\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.md:3
+msgid ""
+"Veryl compiler detects clock domain crossing as error. So explicit `unsafe "
+"(cdc)` block is required for clock domain crossing. In the block, clock "
+"domain crossing error is suppressed, so designer should check whether it is "
+"safe carefully."
+msgstr ""
+"Veryl コンパイラはクロックドメインクロッシングをエラーとして検出します。"
+"そのためクロックドメインクロッシングを行う場所には明示的な `unsafe (cdc)` ブロックが必要です。"
+"ブロック内ではクロックドメインクロッシングのチェックが抑制されるため、設計者は"
+"それが安全かどうか注意深く確認する必要があります。"
+
+#: src/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.md:7
+msgid ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk_a: input  'a clock,\n"
+"    i_dat_a: input  'a logic,\n"
+"    i_clk_b: input  'b clock,\n"
+"    o_dat_b: output 'b logic,\n"
+") {\n"
+"    // Error \"Clock domain crossing is detected\"\n"
+"    //assign o_dat_b = i_dat_a;\n"
+"\n"
+"    unsafe (cdc) {\n"
+"        assign o_dat_b = i_dat_a;\n"
+"    }\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk_a: input  'a clock,\n"
+"    i_dat_a: input  'a logic,\n"
+"    i_clk_b: input  'b clock,\n"
+"    o_dat_b: output 'b logic,\n"
+") {\n"
+"    // エラー \"Clock domain crossing is detected\"\n"
+"    //assign o_dat_b = i_dat_a;\n"
+"\n"
+"    unsafe (cdc) {\n"
+"        assign o_dat_b = i_dat_a;\n"
+"    }\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.md:23
+msgid ""
+"Typically, synchronizer cells are inserted to the boundaries between clock "
+"domains. `unsafe (cdc)` block is required for this usage too."
+msgstr ""
+"クロックドメイン境界には通常シンクロナイザセルが挿入されます。"
+"この場合も `unsafe (cdc)` ブロックが必要です。"
 
 #: src/06_development_environment.md:3
 msgid ""
@@ -5797,6 +5996,9 @@ msgid ""
 "QuoteLBraceTerm       : <INITIAL, Generic       >"
 "\"'\\{\"                                                                                 : "
 "Token;\n"
+"QuoteTerm             : <INITIAL, Generic       >"
+"\"'\"                                                                                   : "
+"Token;\n"
 "LBraceTerm            : <INITIAL, Generic, "
 "Embed>'{'                                                                                   : "
 "Token;\n"
@@ -5985,6 +6187,8 @@ msgid ""
 "UnionTerm             : <INITIAL, Generic       >/(?-u:\\b)union(?-u:"
 "\\b)/                                                               : "
 "Token;\n"
+"UnsafeTerm            : <INITIAL, Generic       >/(?-u:\\b)unsafe(?-u:"
+"\\b)/                                                              : Token;\n"
 "VarTerm               : <INITIAL, Generic       >/(?-u:\\b)var(?-u:"
 "\\b)/                                                                 : "
 "Token;\n"
@@ -6038,6 +6242,7 @@ msgid ""
 "EquToken             : EquTerm             : Token Comments;\n"
 "HashToken            : HashTerm            : Token Comments;\n"
 "QuoteLBraceToken     : QuoteLBraceTerm     : Token Comments;\n"
+"QuoteToken           : QuoteTerm           : Token Comments;\n"
 "LAngleToken          : LAngleTerm          : Token Comments;\n"
 "LBraceToken          : LBraceTerm          : Token Comments;\n"
 "LBracketToken        : LBracketTerm        : Token Comments;\n"
@@ -6115,6 +6320,7 @@ msgid ""
 "U32Token           : U32Term           : Token Comments;\n"
 "U64Token           : U64Term           : Token Comments;\n"
 "UnionToken         : UnionTerm         : Token Comments;\n"
+"UnsafeToken        : UnsafeTerm        : Token Comments;\n"
 "VarToken           : VarTerm           : Token Comments;\n"
 "\n"
 "DollarIdentifierToken: DollarIdentifierTerm: Token Comments;\n"
@@ -6165,6 +6371,7 @@ msgid ""
 "Equ             : EquToken             : VerylToken;\n"
 "Hash            : HashToken            : VerylToken;\n"
 "QuoteLBrace     : QuoteLBraceToken     : VerylToken;\n"
+"Quote           : QuoteToken           : VerylToken;\n"
 "LAngle          : LAngleToken          : VerylToken;\n"
 "LBrace          : LBraceToken          : VerylToken;\n"
 "LBracket        : LBracketToken        : VerylToken;\n"
@@ -6245,6 +6452,7 @@ msgid ""
 "U32           : U32Token           : VerylToken;\n"
 "U64           : U64Token           : VerylToken;\n"
 "Union         : UnionToken         : VerylToken;\n"
+"Unsafe        : UnsafeToken        : VerylToken;\n"
 "Var           : VarToken           : VerylToken;\n"
 "\n"
 "// Identifier\n"
@@ -6410,6 +6618,14 @@ msgid ""
 "\n"
 "// "
 "----------------------------------------------------------------------------\n"
+"// ClockDomain\n"
+"// "
+"----------------------------------------------------------------------------\n"
+"\n"
+"ClockDomain: Quote Identifier;\n"
+"\n"
+"// "
+"----------------------------------------------------------------------------\n"
 "// Statement\n"
 "// "
 "----------------------------------------------------------------------------\n"
@@ -6425,7 +6641,8 @@ msgid ""
 "         | SwitchStatement\n"
 "         ;\n"
 "\n"
-"LetStatement: Let Identifier Colon ArrayType Equ Expression Semicolon;\n"
+"LetStatement: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression "
+"Semicolon;\n"
 "\n"
 "IdentifierStatement: ExpressionIdentifier ( FunctionCall | Assignment ) "
 "Semicolon;\n"
@@ -6480,9 +6697,10 @@ msgid ""
 "// "
 "----------------------------------------------------------------------------\n"
 "\n"
-"LetDeclaration: Let Identifier Colon ArrayType Equ Expression Semicolon;\n"
+"LetDeclaration: Let Identifier Colon [ ClockDomain ] ArrayType Equ "
+"Expression Semicolon;\n"
 "\n"
-"VarDeclaration: Var Identifier Colon ArrayType Semicolon;\n"
+"VarDeclaration: Var Identifier Colon [ ClockDomain ] ArrayType Semicolon;\n"
 "\n"
 "LocalDeclaration: Local Identifier Colon ( ArrayType Equ Expression | Type "
 "Equ TypeExpression ) Semicolon;\n"
@@ -6619,8 +6837,12 @@ msgid ""
 "PortDeclarationGroup: { Attribute } ( LBrace PortDeclarationList RBrace | "
 "PortDeclarationItem );\n"
 "\n"
-"PortDeclarationItem: Identifier Colon ( Direction ArrayType | Interface "
-"[ Array ] );\n"
+"PortDeclarationItem: Identifier Colon ( PortTypeConcrete | "
+"PortTypeAbstract );\n"
+"\n"
+"PortTypeConcrete: Direction [ ClockDomain ] ArrayType;\n"
+"\n"
+"PortTypeAbstract: [ ClockDomain ] Interface [ Array ];\n"
 "\n"
 "Direction: Input\n"
 "         | Output\n"
@@ -6653,6 +6875,14 @@ msgid ""
 "\n"
 "ExportDeclaration: Export ( Star | ScopedIdentifier [ ColonColon Star ] ) "
 "Semicolon;\n"
+"\n"
+"// "
+"----------------------------------------------------------------------------\n"
+"// Unsafe\n"
+"// "
+"----------------------------------------------------------------------------\n"
+"\n"
+"UnsafeBlock: Unsafe LParen Identifier RParen LBrace { ModuleGroup } RBrace;\n"
 "\n"
 "// "
 "----------------------------------------------------------------------------\n"
@@ -6693,6 +6923,7 @@ msgid ""
 "          | ImportDeclaration\n"
 "          | InitialDeclaration\n"
 "          | FinalDeclaration\n"
+"          | UnsafeBlock\n"
 "          ;\n"
 "\n"
 "// "
