@@ -104,7 +104,7 @@ function playground_text(playground, hidden = true) {
                 hljs.highlightBlock(result_block);
             }
         } catch (error) {
-            result_block.innerHTML = error;
+            result_block.innerHTML = "Unexpected error";
         }
     }
 
