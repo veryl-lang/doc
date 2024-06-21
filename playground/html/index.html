@@ -112,14 +112,18 @@ module ModuleA #(
       }
 
       window.format = () => {
-          const src = document.getElementById('source').value;
-          const result = format(src);
-          const content = result.content();
-          const err = result.err();
-          if (err) {
-            document.getElementById("output").textContent = content;
-          } else {
-            document.getElementById("source").value = content;
+          try {
+              const src = document.getElementById('source').value;
+              const result = format(src);
+              const content = result.content();
+              const err = result.err();
+              if (err) {
+                document.getElementById("output").textContent = content;
+              } else {
+                document.getElementById("source").value = content;
+              }
+          } catch (error) {
+            document.getElementById("output").textContent = error;
           }
       }
 
