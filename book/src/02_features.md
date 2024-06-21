@@ -7,6 +7,7 @@ In this chapter, we introduce the features of Veryl along with clear examples.
 * [Integrated test](02_features.md#integrated-test)
 * [Dependency management](02_features.md#dependency-management)
 * [Generics](02_features.md#generics)
+* [Clock Domain Annotation](02_features.md#clock-domain-annotation)
 * [Trailing comma](02_features.md#trailing-comma)
 * [Abstraction of clock and reset](02_features.md#abstraction-of-clock-and-reset)
 * [Documentation comment](02_features.md#documentation-comment)
@@ -116,6 +117,56 @@ always_comb {
     b = FuncA::<20>(1);
 }
 # }
+```
+ 
+</td>
+</tr>
+</table>
+
+## Clock Domain Annotation {#clock-domain-annotation}
+
+If there are some clocks in a module, explicit clock domain annotation and `unsafe (cdc)` block at the clock domain boundaries are required.
+By the annotation, Veryl compiler detects unexpected clock domain crossing as error, and explicit `unsafe (cdc)` block eases to review clock domain crossing.
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+module ModuleA (
+    input  i_clk_a,
+    input  i_dat_a,
+    output o_dat_a,
+    input  i_clk_b,
+    input  i_dat_b,
+    output o_dat_b
+);
+    // Carefully!!!
+    // From i_clk_a to i_clk_b
+    assign o_dat_b = i_dat_a;
+endmodule
+```
+
+</td>
+<td>
+
+```veryl
+module ModuleA (
+    i_clk_a: input  'a clock,
+    i_dat_a: input  'a logic,
+    i_dat_a: output 'a logic,
+    i_clk_b: input  'b clock,
+    i_dat_b: input  'b logic,
+    i_dat_b: output 'b logic,
+) {
+    unsafe (cdc) {
+        assign o_dat_b = i_dat_a;
+    }
+}
 ```
  
 </td>
