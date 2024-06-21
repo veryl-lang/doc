@@ -1,4 +1,4 @@
-use miette::{ErrReport, GraphicalReportHandler, GraphicalTheme, ThemeCharacters, ThemeStyles};
+use miette::{GraphicalReportHandler, GraphicalTheme, Report, ThemeCharacters, ThemeStyles};
 use semver::Version;
 use std::collections::HashMap;
 use std::path::PathBuf;
@@ -35,7 +35,7 @@ impl Result {
     }
 }
 
-fn render_err(err: ErrReport) -> String {
+fn render_err(err: Report) -> String {
     let mut out = String::new();
     GraphicalReportHandler::new_themed(GraphicalTheme {
         characters: ThemeCharacters::emoji(),
