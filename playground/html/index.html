@@ -95,15 +95,19 @@ module ModuleA #(
         });
 
       window.build = () => {
-          const src = document.getElementById('source').value;
-          const result = build(src);
-          const content = result.content();
-          const err = result.err();
-          if (err) {
-            document.getElementById("output").textContent = content;
-          } else {
-            document.getElementById("output").textContent = content;
-            hljs.highlightAll();
+          try {
+              const src = document.getElementById('source').value;
+              const result = build(src);
+              const content = result.content();
+              const err = result.err();
+              if (err) {
+                document.getElementById("output").textContent = content;
+              } else {
+                document.getElementById("output").textContent = content;
+                hljs.highlightAll();
+              }
+          } catch (error) {
+            document.getElementById("output").textContent = error;
           }
       }
 
