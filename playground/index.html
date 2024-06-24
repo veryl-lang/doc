@@ -89,9 +89,10 @@ module ModuleA #(
         </div>
     </div>
     <script type="module">
-      import init, {build, format} from "./pkg/veryl_wasm.js";
+      import init, {set_hook, build, format} from "./pkg/veryl_wasm.js";
       init()
         .then(() => {
+            set_hook();
         });
 
       window.build = () => {
