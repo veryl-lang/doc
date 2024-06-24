@@ -95,7 +95,7 @@ module ModuleA #(
         });
 
       window.build = () => {
-          try {
+          //try {
               const src = document.getElementById('source').value;
               const result = build(src);
               const content = result.content();
@@ -106,13 +106,13 @@ module ModuleA #(
                 document.getElementById("output").textContent = content;
                 hljs.highlightAll();
               }
-          } catch (error) {
-            document.getElementById("output").textContent = "Unexpected error";
-          }
+          //} catch (error) {
+          //  document.getElementById("output").textContent = "Unexpected error";
+          //}
       }
 
       window.format = () => {
-          try {
+          //try {
               const src = document.getElementById('source').value;
               const result = format(src);
               const content = result.content();
@@ -122,9 +122,9 @@ module ModuleA #(
               } else {
                 document.getElementById("source").value = content;
               }
-          } catch (error) {
-            document.getElementById("output").textContent = "Unexpected error";
-          }
+          //} catch (error) {
+          //  document.getElementById("output").textContent = "Unexpected error";
+          //}
       }
 
       window.changeExample = async (name) => {
