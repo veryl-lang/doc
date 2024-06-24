@@ -73,6 +73,11 @@ fn metadata() -> Metadata {
 }
 
 #[wasm_bindgen]
+pub fn set_hook() {
+    console_error_panic_hook::set_once();
+}
+
+#[wasm_bindgen]
 pub fn build(source: &str) -> Result {
     let metadata = metadata();
     match Parser::parse(source, &"") {

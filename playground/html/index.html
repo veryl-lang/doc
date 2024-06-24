@@ -89,13 +89,14 @@ module ModuleA #(
         </div>
     </div>
     <script type="module">
-      import init, {build, format} from "./pkg/veryl_wasm.js";
+      import init, {set_hook, build, format} from "./pkg/veryl_wasm.js";
       init()
         .then(() => {
+            set_hook();
         });
 
       window.build = () => {
-          //try {
+          try {
               const src = document.getElementById('source').value;
               const result = build(src);
               const content = result.content();
@@ -106,13 +107,13 @@ module ModuleA #(
                 document.getElementById("output").textContent = content;
                 hljs.highlightAll();
               }
-          //} catch (error) {
-          //  document.getElementById("output").textContent = "Unexpected error";
-          //}
+          } catch (error) {
+            document.getElementById("output").textContent = "Unexpected error";
+          }
       }
 
       window.format = () => {
-          //try {
+          try {
               const src = document.getElementById('source').value;
               const result = format(src);
               const content = result.content();
@@ -122,9 +123,9 @@ module ModuleA #(
               } else {
                 document.getElementById("source").value = content;
               }
-          //} catch (error) {
-          //  document.getElementById("output").textContent = "Unexpected error";
-          //}
+          } catch (error) {
+            document.getElementById("output").textContent = "Unexpected error";
+          }
       }
 
       window.changeExample = async (name) => {
