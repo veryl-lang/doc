@@ -144,6 +144,7 @@ pub fn format(source: &str) -> Result {
 mod tests {
     use super::*;
     use std::path::PathBuf;
+    use wasm_bindgen_test::*;
 
     fn get_default_code() -> String {
         let path = std::env::var("CARGO_MANIFEST_DIR").unwrap();
@@ -167,6 +168,52 @@ mod tests {
         code_text
     }
 
+    const SRC: &str = "// module definition
+module ModuleA #(
+    param ParamA: u32 = 10,
+    local ParamB: u32 = 10, // trailing comma is allowed
+) (
+    i_clk : input  clock            ,
+    i_rst : input  reset            ,
+    i_sel : input  logic            ,
+    i_data: input  logic<ParamA> [2], // `[]` means unpacked array
+    o_data: output logic<ParamA>    , // `<>` means packed array
+) {
+    // local parameter declaration
+    //   `param` is not allowed in module
+    local ParamC: u32 = 10;
+
+    // variable declaration
+    var r_data0: logic<ParamA>;
+    var r_data1: logic<ParamA>;
+
+    // value binding
+    let _w_data2: logic<ParamA> = i_data;
+
+    // always_ff statement with reset
+    //   `always_ff` can take a mandatory clock and a optional reset
+    //   `if_reset` means `if (i_rst)`. This conceals reset porality
+    //   `()` of `if` is not required
+    //   `=` in `always_ff` is non-blocking assignment
+    always_ff (i_clk, i_rst) {
+        if_reset {
+            r_data0 = 0;
+        } else if i_sel {
+            r_data0 = i_data[0];
+        } else {
+            r_data0 = i_data[1];
+        }
+    }
+
+    // always_ff statement without reset
+    always_ff (i_clk) {
+        r_data1 = r_data0;
+    }
+
+    assign o_data = r_data1;
+}
+";
+
     #[test]
     fn build_default_code() {
         let text = get_default_code();
@@ -183,5 +230,21 @@ mod tests {
 
         assert_eq!(ret.err, false);
         assert_eq!(ret.content, text);
+    }
+
+    #[wasm_bindgen_test]
+    fn build_on_wasm() {
+        let ret = build(&SRC);
+
+        assert_eq!(ret.err, false);
+        assert_ne!(ret.content, "");
+    }
+
+    #[wasm_bindgen_test]
+    fn format_on_wasm() {
+        let ret = format(&SRC);
+
+        assert_eq!(ret.err, false);
+        assert_eq!(ret.content, SRC);
     }
 }
