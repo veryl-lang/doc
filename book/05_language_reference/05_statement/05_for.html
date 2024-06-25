@@ -22,19 +22,39 @@
                 // See these pages for details:
                 // https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
                 // https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics
-                let base = "https://doc.veryl-lang.org/book";
-        let canonical_href = `${base}/05_language_reference/05_statement/05_for.md`;
-
-                // mdbook gives us a string ending in ".md", we replace it with ".html":
-                canonical_href = canonical_href.slice(0, -"md".length) + "html";
-                if (canonical_href.endsWith("/index.html")) {
-                    canonical_href = canonical_href.slice(0, -"index.html".length);
+        
+                function gen_canonical_href(lang) {
+                    let base = "https://doc.veryl-lang.org/book";
+                    let canonical_href;
+                    if (lang == "en") {
+                        canonical_href = `${base}/05_language_reference/05_statement/05_for.md`;
+                    } else {
+                        canonical_href = `${base}/${lang}/05_language_reference/05_statement/05_for.md`;
+                    }
+                    canonical_href = canonical_href.slice(0, -"md".length) + "html";
+                    if (canonical_href.endsWith("/index.html")) {
+                        canonical_href = canonical_href.slice(0, -"index.html".length);
+                    }
+                    return canonical_href;
                 }
         
+        const canonical_href = gen_canonical_href("en");
+
                 let link = document.createElement("link");
                 link.rel = "canonical";
                 link.href = canonical_href;
                 document.head.appendChild(link);
+        
+                const langs = ["en", "ja"];
+                for (const lang of langs) {
+                    const canonical_href = gen_canonical_href(lang);
+        
+                    let link = document.createElement("link");
+                    link.rel = "alternate";
+                    link.hreflang = lang;
+                    link.href = canonical_href;
+                    document.head.appendChild(link);
+                }
             })()
         </script>
         
