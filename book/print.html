@@ -19,7 +19,7 @@
         </script>
         
         <script>
-            (function () {
+            document.addEventListener("DOMContentLoaded", function () {
                 // See these pages for details:
                 // https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
                 // https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics
@@ -56,7 +56,7 @@
                     link.href = canonical_href;
                     document.head.appendChild(link);
                 }
-            })()
+            });
         </script>
         
         <meta property="og:url" content="https://github.com/veryl-lang/veryl" />
