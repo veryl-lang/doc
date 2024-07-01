@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-06-21T13:59:16+09:00\n"
+"POT-Creation-Date: 2024-07-01T12:50:56+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -470,7 +470,8 @@ msgstr "[ジェネリクス](02_features.md#generics)"
 
 #: src/02_features.md:10
 msgid "[Clock Domain Annotation](02_features.md#clock-domain-annotation)"
-msgstr "[クロックドメインアノテーション](02_features.md#clock-domain-annotation)"
+msgstr ""
+"[クロックドメインアノテーション](02_features.md#clock-domain-annotation)"
 
 #: src/02_features.md:11
 msgid "[Trailing comma](02_features.md#trailing-comma)"
@@ -647,10 +648,10 @@ msgid ""
 "error, and explicit `unsafe (cdc)` block eases to review clock domain "
 "crossing."
 msgstr ""
-"モジュール内に複数のクロックがある場合、明示的なクロックドメインアノテーションと"
-"クロックドメイン境界への `unsafe (cdc)` ブロックが必要です。"
-"Veryl コンパイラは意図しないクロックドメインクロッシングをエラーとして検出し、"
-"明示的な `unsafe (cdc)` ブロックによりレビューが容易になります。"
+"モジュール内に複数のクロックがある場合、明示的なクロックドメインアノテーショ"
+"ンとクロックドメイン境界への `unsafe (cdc)` ブロックが必要です。Veryl コンパ"
+"イラは意図しないクロックドメインクロッシングをエラーとして検出し、明示的な "
+"`unsafe (cdc)` ブロックによりレビューが容易になります。"
 
 #: src/02_features.md:137
 msgid ""
@@ -1698,10 +1699,26 @@ msgstr ""
 "はなりません。正式な定義は以下の正規表現です。"
 
 #: src/05_language_reference/02_lexical_structure.md:53
+msgid "Raw Identifier"
+msgstr "生識別子"
+
+#: src/05_language_reference/02_lexical_structure.md:55
+msgid ""
+"Some keywords of Veryl can be used as identifier in SystemVerilog. To access "
+"these identifiers, raw identifier can be used. For example, `clock` which is "
+"a keyword of Veryl can be used as identifier like `r#clock`. The `r#clock` "
+"will be transpiled to `clock` in SystemVerilog."
+msgstr ""
+"Veryl のいくつかのキーワードは SystemVerilog では識別子として使用できるため、"
+"これらの識別子にアクセスするために生識別子を使います。"
+"例えば、`clock` は Veryl のキーワードなので `r#clock` とします。"
+"`r#clock` は SystemVerilog では `clock` にトランスパイルされます。"
+
+#: src/05_language_reference/02_lexical_structure.md:60
 msgid "String"
 msgstr "文字列"
 
-#: src/05_language_reference/02_lexical_structure.md:55
+#: src/05_language_reference/02_lexical_structure.md:62
 msgid ""
 "String is surrounded by `\"`. Escape by `\\` can be used like `\\\"`, `\\n` "
 "and so on."
@@ -1709,7 +1726,7 @@ msgstr ""
 "`\"` で囲んだものが文字列になります。`\\\"` や `\\n` のように `\\` によるエス"
 "ケープも可能です。"
 
-#: src/05_language_reference/02_lexical_structure.md:58
+#: src/05_language_reference/02_lexical_structure.md:65
 msgid ""
 "```\n"
 "\"Hello, World!\"\n"
@@ -2994,6 +3011,41 @@ msgstr ""
 "SystemVerilogソースコードの \"ModuleA\" は `$sv::ModuleA` です。Veryl はこれ"
 "らの要素が実際に存在するかどうかは確認しません。"
 
+#: src/05_language_reference/10_systemverilog_interoperation.md:16
+msgid ""
+"To access some identifiers which are used as Veryl's keywords, raw "
+"identifier can be used."
+msgstr ""
+"Veryl のキーワードとして使われている識別子にアクセスするには生識別子を使います。"
+
+#: src/05_language_reference/10_systemverilog_interoperation.md:19
+msgid ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk: input clock,\n"
+") {\n"
+"    inst a: $sv::ModuleA (\n"
+"        // clock: i_clk\n"
+"        // ^ this is syntax error because `clock` is a keyword\n"
+"        // Instead of it, `r#clock` can be used\n"
+"        r#clock: i_clk,\n"
+"    );\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk: input clock,\n"
+") {\n"
+"    inst a: $sv::ModuleA (\n"
+"        // clock: i_clk\n"
+"        // ^ `clock` はキーワードなので構文エラー\n"
+"        // 代わりに `r#clock` を使います\n"
+"        r#clock: i_clk,\n"
+"    );\n"
+"}\n"
+"```"
+
 #: src/05_language_reference/11_visibility.md:3
 msgid ""
 "By default, all top level items of a project (module, interface and package) "
@@ -3321,8 +3373,9 @@ msgid ""
 "`'a` is required. The annotation shows which clock domain each signals "
 "belong."
 msgstr ""
-"モジュール内に複数のクロックがある場合、`'a` のような明示的なクロックドメインアノテーションが"
-"必要です。アノテーションはそれぞれの信号がどのクロックドメインに所属するかを示します。"
+"モジュール内に複数のクロックがある場合、`'a` のような明示的なクロックドメイン"
+"アノテーションが必要です。アノテーションはそれぞれの信号がどのクロックドメイ"
+"ンに所属するかを示します。"
 
 #: src/05_language_reference/15_clock_domain_annotation.md:6
 msgid ""
@@ -3373,8 +3426,8 @@ msgid ""
 "`'_` is a special clock domain which means implicit clock domain. This can "
 "be used to specify that some clocks belong the same implicit clock domain."
 msgstr ""
-"`'_` は暗黙のクロックドメインを表す特別なクロックドメインです。"
-"これは複数のクロックが同じ暗黙のクロックドメインに所属することを示すために使用できます。"
+"`'_` は暗黙のクロックドメインを表す特別なクロックドメインです。これは複数のク"
+"ロックが同じ暗黙のクロックドメインに所属することを示すために使用できます。"
 
 #: src/05_language_reference/15_clock_domain_annotation.md:39
 msgid ""
@@ -3409,10 +3462,10 @@ msgid ""
 "domain crossing error is suppressed, so designer should check whether it is "
 "safe carefully."
 msgstr ""
-"Veryl コンパイラはクロックドメインクロッシングをエラーとして検出します。"
-"そのためクロックドメインクロッシングを行う場所には明示的な `unsafe (cdc)` ブロックが必要です。"
-"ブロック内ではクロックドメインクロッシングのチェックが抑制されるため、設計者は"
-"それが安全かどうか注意深く確認する必要があります。"
+"Veryl コンパイラはクロックドメインクロッシングをエラーとして検出します。その"
+"ためクロックドメインクロッシングを行う場所には明示的な `unsafe (cdc)` ブロッ"
+"クが必要です。ブロック内ではクロックドメインクロッシングのチェックが抑制され"
+"るため、設計者はそれが安全かどうか注意深く確認する必要があります。"
 
 #: src/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.md:7
 msgid ""
@@ -3453,8 +3506,8 @@ msgid ""
 "Typically, synchronizer cells are inserted to the boundaries between clock "
 "domains. `unsafe (cdc)` block is required for this usage too."
 msgstr ""
-"クロックドメイン境界には通常シンクロナイザセルが挿入されます。"
-"この場合も `unsafe (cdc)` ブロックが必要です。"
+"クロックドメイン境界には通常シンクロナイザセルが挿入されます。この場合も "
+"`unsafe (cdc)` ブロックが必要です。"
 
 #: src/06_development_environment.md:3
 msgid ""
