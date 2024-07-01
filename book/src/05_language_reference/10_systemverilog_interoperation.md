@@ -12,3 +12,19 @@ module ModuleA {
     inst c: $sv::InterfaceC;
 }
 ```
+
+To access some identifiers which are used as Veryl's keywords, raw identifier can be used.
+
+
+```veryl,playground
+module ModuleA (
+    i_clk: input clock,
+) {
+    inst a: $sv::ModuleA (
+        // clock: i_clk
+        // ^ this is syntax error because `clock` is a keyword
+        // Instead of it, `r#clock` can be used
+        r#clock: i_clk,
+    );
+}
+```

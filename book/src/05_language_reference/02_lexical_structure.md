@@ -50,6 +50,13 @@ The following regular expression shows the definition.
 [a-zA-Z_][a-zA-Z0-9_]*
 ```
 
+## Raw Identifier
+
+Some keywords of Veryl can be used as identifier in SystemVerilog.
+To access these identifiers, raw identifier can be used.
+For example, `clock` which is a keyword of Veryl can be used as identifier like `r#clock`.
+The `r#clock` will be transpiled to `clock` in SystemVerilog.
+
 ## String
 
 String is surrounded by `"`.
