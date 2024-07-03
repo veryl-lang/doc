@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /nightly/
+Sitemap: https://doc.veryl-lang.org/book/sitemap.xml

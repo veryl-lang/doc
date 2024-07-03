@@ -278,6 +278,18 @@
     inst c: $sv::InterfaceC;
 }
 </code></pre>
+<p>Veryl のキーワードとして使われている識別子にアクセスするには生識別子を使います。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    inst a: $sv::ModuleA (
+        // clock: i_clk
+        // ^ `clock` はキーワードなので構文エラー
+        // 代わりに `r#clock` を使います
+        r#clock: i_clk,
+    );
+}
+</code></pre>
 
                     </main>
 

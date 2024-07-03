@@ -297,6 +297,8 @@
 <p>識別子は ASCII のアルファベットと数値、 <code>_</code> からなります。先頭が数値であってはなりません。正式な定義は以下の正規表現です。</p>
 <pre><code>[a-zA-Z_][a-zA-Z0-9_]*
 </code></pre>
+<h2 id="生識別子"><a class="header" href="#生識別子">生識別子</a></h2>
+<p>Veryl のいくつかのキーワードは SystemVerilog では識別子として使用できるため、これらの識別子にアクセスするために生識別子を使います。例えば、<code>clock</code> は Veryl のキーワードなので <code>r#clock</code> とします。<code>r#clock</code> は SystemVerilog では <code>clock</code> にトランスパイルされます。</p>
 <h2 id="文字列"><a class="header" href="#文字列">文字列</a></h2>
 <p><code>"</code> で囲んだものが文字列になります。<code>\"</code> や <code>\n</code> のように <code>\</code> によるエスケープも可能です。</p>
 <pre><code>"Hello, World!"

@@ -303,6 +303,11 @@ Leading number is not allowed.
 The following regular expression shows the definition.</p>
 <pre><code>[a-zA-Z_][a-zA-Z0-9_]*
 </code></pre>
+<h2 id="raw-identifier"><a class="header" href="#raw-identifier">Raw Identifier</a></h2>
+<p>Some keywords of Veryl can be used as identifier in SystemVerilog.
+To access these identifiers, raw identifier can be used.
+For example, <code>clock</code> which is a keyword of Veryl can be used as identifier like <code>r#clock</code>.
+The <code>r#clock</code> will be transpiled to <code>clock</code> in SystemVerilog.</p>
 <h2 id="string"><a class="header" href="#string">String</a></h2>
 <p>String is surrounded by <code>"</code>.
 Escape by <code>\</code> can be used like <code>\"</code>, <code>\n</code> and so on.</p>

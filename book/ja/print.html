@@ -1033,6 +1033,8 @@ package PackageA {}
 <p>識別子は ASCII のアルファベットと数値、 <code>_</code> からなります。先頭が数値であってはなりません。正式な定義は以下の正規表現です。</p>
 <pre><code>[a-zA-Z_][a-zA-Z0-9_]*
 </code></pre>
+<h2 id="生識別子"><a class="header" href="#生識別子">生識別子</a></h2>
+<p>Veryl のいくつかのキーワードは SystemVerilog では識別子として使用できるため、これらの識別子にアクセスするために生識別子を使います。例えば、<code>clock</code> は Veryl のキーワードなので <code>r#clock</code> とします。<code>r#clock</code> は SystemVerilog では <code>clock</code> にトランスパイルされます。</p>
 <h2 id="文字列"><a class="header" href="#文字列">文字列</a></h2>
 <p><code>"</code> で囲んだものが文字列になります。<code>\"</code> や <code>\n</code> のように <code>\</code> によるエスケープも可能です。</p>
 <pre><code>"Hello, World!"
@@ -1930,6 +1932,18 @@ package PackageC {
     inst c: $sv::InterfaceC;
 }
 </code></pre>
+<p>Veryl のキーワードとして使われている識別子にアクセスするには生識別子を使います。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    inst a: $sv::ModuleA (
+        // clock: i_clk
+        // ^ `clock` はキーワードなので構文エラー
+        // 代わりに `r#clock` を使います
+        r#clock: i_clk,
+    );
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="可視性"><a class="header" href="#可視性">可視性</a></h1>
 <p>デフォルトではプロジェクトのトップレベルアイテム（モジュール、インターフェース、パッケージ）はプライベートです。プライベートとは他のプロジェクトから参照できないことを意味します。</p>
 <p><code>pub</code> キーワードによって他のプロジェクトから見えるように指定することができます。<code>veryl doc</code> コマンドはパブリックなアイテムの <a href="05_language_reference/../05_development_environment/09_documentation.html">ドキュメント</a> のみを生成します。</p>
@@ -2746,6 +2760,15 @@ jobs:
 <pre><code class="language-systemverilog">//# sourceMappingURL=&lt;relative path&gt;
 </code></pre>
 <p>従って、上記のコメントがSystemVerilogファイルの末尾にあればソースマップが利用可能です。</p>
+<h2 id="sourcemap-resolver"><a class="header" href="#sourcemap-resolver">sourcemap-resolver</a></h2>
+<p><code>sourcemap-resolver</code> は Veryl コンパイラに同梱されており、任意のテキストファイルに以下のような注釈を付けることができます。</p>
+<pre><code>ERROR: [VRFC 10-4982] syntax error near 'endmodule' [/path/test.sv:23]
+                                                     ^-- /path/test.veryl:18:18
+</code></pre>
+<p>最初の行が元のテキストで、2行目が <code>sourcemap-resolver</code> により追加された行です。使用例は以下の通りです。</p>
+<pre><code>$ sourcemap-resolver test.log      # annotate the existing log
+$ [command] | sourcemap-resolver   # on-the-fly annotation by pipe
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="補遺"><a class="header" href="#補遺">補遺</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="構文"><a class="header" href="#構文">構文</a></h1>
 <p>Veryl のパーサはパーサジェネレータ <a href="https://github.com/jsinger67/parol">parol</a>を使っています。以下の parol の構文定義が正式な構文です。</p>
@@ -2882,7 +2905,7 @@ UnionTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)union(?-u:\b)/  
 UnsafeTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)unsafe(?-u:\b)/                                                              : Token;
 VarTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)var(?-u:\b)/                                                                 : Token;
 DollarIdentifierTerm  : &lt;INITIAL, Generic       &gt;/\$[a-zA-Z_][0-9a-zA-Z_$]*/                                                           : Token;
-IdentifierTerm        : &lt;INITIAL, Generic       &gt;/[a-zA-Z_][0-9a-zA-Z_$]*/                                                             : Token;
+IdentifierTerm        : &lt;INITIAL, Generic       &gt;/(?:r#)?[a-zA-Z_][0-9a-zA-Z_$]*/                                                      : Token;
 AnyTerm               : &lt;                  Embed&gt;/[^{}]*/                                                                              : Token;
 
 // ----------------------------------------------------------------------------

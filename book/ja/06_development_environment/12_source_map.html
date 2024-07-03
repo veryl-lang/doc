@@ -276,6 +276,15 @@
 <pre><code class="language-systemverilog">//# sourceMappingURL=&lt;relative path&gt;
 </code></pre>
 <p>従って、上記のコメントがSystemVerilogファイルの末尾にあればソースマップが利用可能です。</p>
+<h2 id="sourcemap-resolver"><a class="header" href="#sourcemap-resolver">sourcemap-resolver</a></h2>
+<p><code>sourcemap-resolver</code> は Veryl コンパイラに同梱されており、任意のテキストファイルに以下のような注釈を付けることができます。</p>
+<pre><code>ERROR: [VRFC 10-4982] syntax error near 'endmodule' [/path/test.sv:23]
+                                                     ^-- /path/test.veryl:18:18
+</code></pre>
+<p>最初の行が元のテキストで、2行目が <code>sourcemap-resolver</code> により追加された行です。使用例は以下の通りです。</p>
+<pre><code>$ sourcemap-resolver test.log      # annotate the existing log
+$ [command] | sourcemap-resolver   # on-the-fly annotation by pipe
+</code></pre>
 
                     </main>
 

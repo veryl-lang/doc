@@ -1080,6 +1080,11 @@ Leading number is not allowed.
 The following regular expression shows the definition.</p>
 <pre><code>[a-zA-Z_][a-zA-Z0-9_]*
 </code></pre>
+<h2 id="raw-identifier"><a class="header" href="#raw-identifier">Raw Identifier</a></h2>
+<p>Some keywords of Veryl can be used as identifier in SystemVerilog.
+To access these identifiers, raw identifier can be used.
+For example, <code>clock</code> which is a keyword of Veryl can be used as identifier like <code>r#clock</code>.
+The <code>r#clock</code> will be transpiled to <code>clock</code> in SystemVerilog.</p>
 <h2 id="string"><a class="header" href="#string">String</a></h2>
 <p>String is surrounded by <code>"</code>.
 Escape by <code>\</code> can be used like <code>\"</code>, <code>\n</code> and so on.</p>
@@ -2060,6 +2065,18 @@ Veryl don’t check the existence of the items.</p>
     inst c: $sv::InterfaceC;
 }
 </code></pre>
+<p>To access some identifiers which are used as Veryl’s keywords, raw identifier can be used.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    inst a: $sv::ModuleA (
+        // clock: i_clk
+        // ^ this is syntax error because `clock` is a keyword
+        // Instead of it, `r#clock` can be used
+        r#clock: i_clk,
+    );
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="visibility"><a class="header" href="#visibility">Visibility</a></h1>
 <p>By default, all top level items of a project (module, interface and package) are private.
 The “private” means they are not visible from other project.</p>
@@ -2950,6 +2967,16 @@ The convention of linking generated code to source map is almost the same as Jav
 <pre><code class="language-systemverilog">//# sourceMappingURL=&lt;relative path&gt;
 </code></pre>
 <p>So, if there is the above comment at the end of a SystemVerilog file, it shows source map can be used.</p>
+<h2 id="sourcemap-resolver"><a class="header" href="#sourcemap-resolver">sourcemap-resolver</a></h2>
+<p><code>sourcemap-resolver</code> which is shipped togather Veryl compiler can be used to annotate arbitrary text file like below:</p>
+<pre><code>ERROR: [VRFC 10-4982] syntax error near 'endmodule' [/path/test.sv:23]
+                                                     ^-- /path/test.veryl:18:18
+</code></pre>
+<p>The first line is the original text, and the second line is added by <code>sourcemap-resolver</code>.
+The usage examples are below:</p>
+<pre><code>$ sourcemap-resolver test.log      # annotate the existing log
+$ [command] | sourcemap-resolver   # on-the-fly annotation by pipe
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="formal-syntax"><a class="header" href="#formal-syntax">Formal Syntax</a></h1>
 <p>Veryl’s parser is based on parser generator <a href="https://github.com/jsinger67/parol">parol</a>.
@@ -3087,7 +3114,7 @@ UnionTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)union(?-u:\b)/  
 UnsafeTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)unsafe(?-u:\b)/                                                              : Token;
 VarTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)var(?-u:\b)/                                                                 : Token;
 DollarIdentifierTerm  : &lt;INITIAL, Generic       &gt;/\$[a-zA-Z_][0-9a-zA-Z_$]*/                                                           : Token;
-IdentifierTerm        : &lt;INITIAL, Generic       &gt;/[a-zA-Z_][0-9a-zA-Z_$]*/                                                             : Token;
+IdentifierTerm        : &lt;INITIAL, Generic       &gt;/(?:r#)?[a-zA-Z_][0-9a-zA-Z_$]*/                                                      : Token;
 AnyTerm               : &lt;                  Embed&gt;/[^{}]*/                                                                              : Token;
 
 // ----------------------------------------------------------------------------
