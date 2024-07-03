@@ -30,6 +30,8 @@ jobs:
       - name: Install mdbook-i18n-helpers
         run: |
           cargo install mdbook-i18n-helpers --locked --version 0.3.0
+      - name: Install static-sitemap-cli
+        run: npm install static-sitemap-cli
       - name: Build mdbook plugin
         run: cargo install --git https://github.com/veryl-lang/veryl mdbook-veryl
       - name: Replace wasm path for nightly
@@ -61,6 +63,9 @@ jobs:
             mdbook build -d book/$po_lang
             echo "::endgroup::"
           done
+      - name: Generate sitemap
+        working-directory: book/book
+        run: npx sscli --no-clean --base https://doc.veryl-lang.org/book
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
