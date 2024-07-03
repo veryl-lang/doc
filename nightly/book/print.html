@@ -2967,6 +2967,16 @@ The convention of linking generated code to source map is almost the same as Jav
 <pre><code class="language-systemverilog">//# sourceMappingURL=&lt;relative path&gt;
 </code></pre>
 <p>So, if there is the above comment at the end of a SystemVerilog file, it shows source map can be used.</p>
+<h2 id="sourcemap-resolver"><a class="header" href="#sourcemap-resolver">sourcemap-resolver</a></h2>
+<p><code>sourcemap-resolver</code> which is shipped togather Veryl compiler can be used to annotate arbitrary text file like below:</p>
+<pre><code>ERROR: [VRFC 10-4982] syntax error near 'endmodule' [/path/test.sv:23]
+                                                     ^-- /path/test.veryl:18:18
+</code></pre>
+<p>The first line is the original text, and the second line is added by <code>sourcemap-resolver</code>.
+The usage examples are below:</p>
+<pre><code>$ sourcemap-resolver test.log      # annotate the existing log
+$ [command] | sourcemap-resolver   # on-the-fly annotation by pipe
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="formal-syntax"><a class="header" href="#formal-syntax">Formal Syntax</a></h1>
 <p>Veryl’s parser is based on parser generator <a href="https://github.com/jsinger67/parol">parol</a>.
