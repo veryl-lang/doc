@@ -64,6 +64,7 @@ jobs:
             echo "::endgroup::"
           done
       - name: Generate sitemap
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         working-directory: book/book
         run: npx sscli --no-clean --base https://doc.veryl-lang.org/book
       - name: Upload artifact
