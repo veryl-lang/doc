@@ -119,6 +119,8 @@ jobs:
         with:
           name: playground
           path: public/playground
+      - name: Copy robots.txt
+        run: cp robots.txt public/
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
