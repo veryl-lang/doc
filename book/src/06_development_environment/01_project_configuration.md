@@ -22,7 +22,7 @@ The mandatory fields are `name` and `version`.
 ### The `name` field {#the-name-field}
 
 The project name is used as prefix in the generated codes.
-So the name must start with alphabet or `_`, and use only alphanumeric charaters or `_`.
+So the name must start with alphabet or `_`, and use only alphanumeric characters or `_`.
 
 ### The `version` field {#the-version-field}
 

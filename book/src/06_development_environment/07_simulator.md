@@ -8,6 +8,6 @@ Supported simulators are below:
 * [AMD Vivado Simulator](https://www.xilinx.com/products/design-tools/vivado/verification.html)
 
 Verilator is the default simulator.
-If no simulator is specified through `Veryl.toml` and commandline option, it will be used.
+If no simulator is specified through `Veryl.toml` and command-line option, it will be used.
 
 The available configurations are [here](./01_project_configuration/04_test.md).
