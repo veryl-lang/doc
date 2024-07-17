@@ -24,7 +24,7 @@ $ tree
 ```
 
 Veryl gathers all `*.veryl` files and generates codes at the same directory as the source by default.
-You can show the behaviour explicitly by the following configuration.
+You can show the behavior explicitly by the following configuration.
 
 ```toml
 [build]

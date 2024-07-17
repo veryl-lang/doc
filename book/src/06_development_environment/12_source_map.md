@@ -17,7 +17,7 @@ So, if there is the above comment at the end of a SystemVerilog file, it shows s
 
 ## sourcemap-resolver
 
-`sourcemap-resolver` which is shipped togather Veryl compiler can be used to annotate arbitrary text file like below:
+`sourcemap-resolver` which is shipped together Veryl compiler can be used to annotate arbitrary text file like below:
 
 ```
 ERROR: [VRFC 10-4982] syntax error near 'endmodule' [/path/test.sv:23]

@@ -28,7 +28,7 @@ If you want to use many versions of the same dependency path, you can specify ea
 
 ## Usage of dependency
 
-After adding dependencies to `Veryl.toml`, you can use `moudle`, `interface` and `package` in the dependencies.
+After adding dependencies to `Veryl.toml`, you can use `module`, `interface` and `package` in the dependencies.
 The following example uses `delay` module in the `veryl_sample` dependency.
 
 ```veryl
@@ -48,7 +48,7 @@ module ModuleA (
 ```
 
 > Note: The result of play button in the above code is not exact because it doesn't use dependency resolution.
-> Actually the module name becomes `veryl_samlle_delay`
+> Actually the module name becomes `veryl_sample_delay`
 
 ## Version Requirement
 
@@ -71,5 +71,5 @@ This is because
 * `0.2.0` is not compatible with `0.1.0`.
 * `0.1.1` is the latest in the compatible versions.
 
-The `version` field allows other version requirement reprensentation like `=0.1.0`.
+The `version` field allows other version requirement representation like `=0.1.0`.
 Please see version requirement of Rust for detailed information: [Specifying Dependencies](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-cratesio).
