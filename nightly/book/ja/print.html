@@ -494,10 +494,10 @@ endmodule
 </code></pre>
 </td>
 <td>
-<pre><code class="language-veryl">/// Documentation comment written by Markdown
+<pre><code class="language-veryl">/// マークダウン形式のドキュメンテーションコメント
 ///
-/// * list
-/// * list
+/// * リスト
+/// * リスト
 /// 
 /// ```wavedrom
 /// { signal: [{ name: "Alfa", wave: "01.zx=ud.23.456789" }] }
@@ -1329,13 +1329,13 @@ a = 1 || 1;
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="クロックとリセット"><a class="header" href="#クロックとリセット">クロックとリセット</a></h1>
-<p><code>clock</code> is a special types to represent clock wiring.  There are 3 variants to specify clock polarity.</p>
+<p><code>clock</code> はクロック配線を表す特別な型です。クロックの極性を指定するため以下の3種類があります。</p>
 <ul>
 <li><code>clock</code>: ビルド時の設定で指定される極性を持つクロック型</li>
 <li><code>clock_posedge</code>: 正極性のクロック型</li>
 <li><code>clock_negedge</code>: 負極性のクロック型</li>
 </ul>
-<p><code>reset</code> is a special types to represent reset wiring.  There are 5 variants to specify reset polarity and synchronicity.</p>
+<p><code>reset</code> はリセット配線を表す特別な型です。リセットの極性と同期・非同期を指定するため以下の5種類があります。</p>
 <ul>
 <li><code>reset</code>: ビルド時の設定で指定される極性と同期性を持つリセット型</li>
 <li><code>reset_async_high</code>: 正極性の非同期リセット型</li>
@@ -1389,7 +1389,7 @@ a = 1 || 1;
 <p>式内での演算子の優先順位は SystemVerilog とほとんど同じです。</p>
 <div class="table-wrapper"><table><thead><tr><th>演算子</th><th>結合性</th><th>優先順位</th></tr></thead><tbody>
 <tr><td><code>()</code> <code>[]</code> <code>::</code> <code>.</code></td><td>左</td><td>高い</td></tr>
-<tr><td><code>+</code> <code>-</code> <code>!</code> <code>~</code> <code>&amp;</code> <code>~&amp;</code> <code>|</code> <code>~|</code> <code>^</code> <code>~^</code> <code>^~</code> (unary)</td><td>左</td><td></td></tr>
+<tr><td><code>+</code> <code>-</code> <code>!</code> <code>~</code> <code>&amp;</code> <code>~&amp;</code> <code>|</code> <code>~|</code> <code>^</code> <code>~^</code> <code>^~</code> (単項)</td><td>左</td><td></td></tr>
 <tr><td><code>**</code></td><td>左</td><td></td></tr>
 <tr><td><code>*</code> <code>/</code> <code>%</code></td><td>左</td><td></td></tr>
 <tr><td><code>+</code> <code>-</code> (二項)</td><td>左</td><td></td></tr>
@@ -1398,7 +1398,7 @@ a = 1 || 1;
 <tr><td><code>==</code> <code>!=</code> <code>===</code> <code>!==</code> <code>==?</code> <code>!=?</code></td><td>左</td><td></td></tr>
 <tr><td><code>&amp;</code> (二項)</td><td>左</td><td></td></tr>
 <tr><td><code>^</code> <code>~^</code> <code>^~</code> (二項)</td><td>左</td><td></td></tr>
-<tr><td><code>|</code> (binary)</td><td>左</td><td></td></tr>
+<tr><td><code>|</code> (二項)</td><td>左</td><td></td></tr>
 <tr><td><code>&amp;&amp;</code></td><td>左</td><td></td></tr>
 <tr><td><code>||</code></td><td>左</td><td></td></tr>
 <tr><td><code>=</code> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> <code>%=</code> <code>&amp;=</code> <code>^=</code> <code>|=</code> <br> <code>&lt;&lt;=</code> <code>&gt;&gt;=</code> <code>&lt;&lt;&lt;=</code> <code>&gt;&gt;&gt;=</code></td><td>なし</td><td></td></tr>
@@ -1897,7 +1897,7 @@ package PackageC {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="インターフェース-1"><a class="header" href="#インターフェース-1">インターフェース</a></h1>
 <p>インターフェースはソースコードの最上位コンポーネントの1つです。インターフェースはオーバーライド可能なパラメータ、インターフェース定義を持ちます。</p>
 <p>オーバーライド可能なパラメータについてはモジュールと同じです。</p>
-<p>In interface definitions, <code>modport</code> can be declared.  <code>modport</code> can be used as bundled port connection at the port declaration of module.</p>
+<p>インターフェース定義では <code>modport</code> を宣言することができます。<code>modport</code> はモジュールのポート宣言で、ポートを束ねて接続するために使うことができます。</p>
 <pre><code class="language-veryl playground">interface InterfaceA #(
     param ParamA: u32 = 0,
     param ParamB: u32 = 0,
@@ -2270,7 +2270,7 @@ omit_project_prefix = true
 strip_comments = true
 </code></pre>
 <h2 id="_prefix-と-_suffix-フィールド"><a class="header" href="#_prefix-と-_suffix-フィールド"><code>*_prefix</code> と <code>*_suffix</code> フィールド</a></h2>
-<p><code>*_prefix</code> and <code>*_suffix</code> represent additional prefix and suffix for the generated code.  The available configurations are below:</p>
+<p><code>*_prefix</code> と <code>*_suffix</code> はコード生成時の追加のプレフィックスとサフィックスを指定します。指定可能な設定は以下の通りです。</p>
 <ul>
 <li><code>clock_posedge_prefix</code>: <code>clock_type = posedge</code> のときの <code>clock</code> 型のプレフィックス</li>
 <li><code>clock_posedge_suffix</code>: <code>clock_type = posedge</code> のときの <code>clock</code> 型のサフィックス</li>
@@ -2381,7 +2381,7 @@ case_enum = "snake"
 </tbody></table>
 </div>
 <div class="footnote-definition" id="casetype"><sup class="footnote-definition-label">1</sup>
-<p>The available values are</p>
+<p>設定可能な値は以下です。</p>
 </div>
 <ul>
 <li><code>"snake"</code> – snake_case</li>
@@ -2411,7 +2411,7 @@ simulator = "vcs"
 </tbody></table>
 </div>
 <div class="footnote-definition" id="sim"><sup class="footnote-definition-label">1</sup>
-<p>The available values are</p>
+<p>設定可能な値は以下です。</p>
 </div>
 <ul>
 <li><code>"verilator"</code></li>
@@ -2665,13 +2665,13 @@ implicit_parameter_types = ["string"]
 <pre><code class="language-verilog">parameter a = "A";
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ドキュメンテーション"><a class="header" href="#ドキュメンテーション">ドキュメンテーション</a></h1>
-<p>プロジェクトのドキュメントは <code>veryl doc</code> コマンドで生成することができます。全てのパブリックなモジュールとインターフェース、パッケージがリストアップされます。（参照 <a href="06_development_environment/../04_language_reference/11_visibility.html">可視性</a>）</p>
+<p>プロジェクトのドキュメントは <code>veryl doc</code> コマンドで生成することができます。全てのパブリックなモジュールとインターフェース、パッケージがリストアップされます。（参照 <a href="06_development_environment/../05_language_reference/11_visibility.html">可視性</a>）</p>
 <p>詳細な説明を書きたい場合はドキュメンテーションコメントを追加することもできます。ドキュメンテーションコメントでは<a href="https://www.markdownguide.org">マークダウン</a>記法を使えます。</p>
 <p><a href="https://wavedrom.com">WaveDrom</a> による波形記述もサポートされています。<code>wavedrom</code> コードブロック内で、WaveDromの構文を記述することができます。構文の詳細は <a href="https://wavedrom.com/tutorial.html">チュートリアル</a> を参照してください。</p>
-<pre><code class="language-veryl playground">/// The detailed description of ModuleA
+<pre><code class="language-veryl playground">/// ModuleAの詳細説明
 ///
-/// * list item0
-/// * list item1
+/// * リスト要素0
+/// * リスト要素1
 ///
 /// ```wavedrom
 /// {signal: [
@@ -2684,14 +2684,14 @@ implicit_parameter_types = ["string"]
 /// ]}
 /// ```
 pub module ModuleA #(
-    /// Data width
+    /// データ幅
     param ParamA: u32 = 1,
     local ParamB: u32 = 1,
 ) (
-    i_clk : input  clock        , /// Clock
-    i_rst : input  reset        , /// Reset
-    i_data: input  logic&lt;ParamA&gt;, /// Data input
-    o_data: output logic&lt;ParamA&gt;, /// Data output
+    i_clk : input  clock        , /// クロック
+    i_rst : input  reset        , /// リセット
+    i_data: input  logic&lt;ParamA&gt;, /// データ入力
+    o_data: output logic&lt;ParamA&gt;, /// データ出力
 ) {
     assign o_data = 0;
 }
