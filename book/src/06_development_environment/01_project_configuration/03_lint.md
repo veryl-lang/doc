@@ -57,6 +57,27 @@ This section contains configurations of naming conventions.
 | prefix_union                 | string               | prefix of `union`                               |
 | prefix_var                   | string               | prefix of variable                              |
 | prefix_wire                  | string               | prefix of wire type variable[^wire]             |
+| suffix_enum                  | string               | suffix of `enum`                                |
+| suffix_function              | string               | suffix of `function`                            |
+| suffix_function_inout        | string               | suffix of `inout` argument                      |
+| suffix_function_input        | string               | suffix of `input` argument                      |
+| suffix_function_output       | string               | suffix of `output` argument                     |
+| suffix_function_ref          | string               | suffix of `ref` argument                        |
+| suffix_instance              | string               | suffix of instance                              |
+| suffix_interface             | string               | suffix of `interface`                           |
+| suffix_modport               | string               | suffix of `modport`                             |
+| suffix_module                | string               | suffix of `module`                              |
+| suffix_package               | string               | suffix of `package`                             |
+| suffix_parameter             | string               | suffix of `parameter`                           |
+| suffix_port_inout            | string               | suffix of `inout` port                          |
+| suffix_port_input            | string               | suffix of `input` port                          |
+| suffix_port_modport          | string               | suffix of `modport` port                        |
+| suffix_port_output           | string               | suffix of `output` port                         |
+| suffix_reg                   | string               | suffix of register type variable[^reg]          |
+| suffix_struct                | string               | suffix of `struct`                              |
+| suffix_union                 | string               | suffix of `union`                               |
+| suffix_var                   | string               | suffix of variable                              |
+| suffix_wire                  | string               | suffix of wire type variable[^wire]             |
 | re_forbidden_enum            | regex[^regex]        | regex forbidden of `enum`                       |
 | re_forbidden_function        | regex[^regex]        | regex forbidden of `function`                   |
 | re_forbidden_function_inout  | regex[^regex]        | regex forbidden of `inout` argument             |
