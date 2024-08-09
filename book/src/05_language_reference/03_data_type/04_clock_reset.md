@@ -20,14 +20,14 @@ If there is no special requirement, `clock` and `reset` are recommended for code
 
 ```veryl,playground
 module ModuleA (
-    i_clk    : input clock           ,
-    i_clk_p  : input clock_posedge   ,
-    i_clk_n  : input clock_negedge   ,
-    i_rst    : input reset           ,
-    i_rst_a  : input reset_async_high,
-    i_rst_a_n: input reset_async_low ,
-    i_rst_s  : input reset_sync_high ,
-    i_rst_s_n: input reset_sync_low  ,
+    i_clk    : input '_ clock           ,
+    i_clk_p  : input '_ clock_posedge   ,
+    i_clk_n  : input '_ clock_negedge   ,
+    i_rst    : input '_ reset           ,
+    i_rst_a  : input '_ reset_async_high,
+    i_rst_a_n: input '_ reset_async_low ,
+    i_rst_s  : input '_ reset_sync_high ,
+    i_rst_s_n: input '_ reset_sync_low  ,
 ) {
     var a: logic;
     var b: logic;
