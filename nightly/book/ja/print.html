@@ -1345,14 +1345,14 @@ a = 1 || 1;
 </ul>
 <p>特別な要件がなければ、コードの再利用を高めるため <code>clock</code> と <code>reset</code> の使用を推奨します。</p>
 <pre><code class="language-veryl playground">module ModuleA (
-    i_clk    : input clock           ,
-    i_clk_p  : input clock_posedge   ,
-    i_clk_n  : input clock_negedge   ,
-    i_rst    : input reset           ,
-    i_rst_a  : input reset_async_high,
-    i_rst_a_n: input reset_async_low ,
-    i_rst_s  : input reset_sync_high ,
-    i_rst_s_n: input reset_sync_low  ,
+    i_clk    : input '_ clock           ,
+    i_clk_p  : input '_ clock_posedge   ,
+    i_clk_n  : input '_ clock_negedge   ,
+    i_rst    : input '_ reset           ,
+    i_rst_a  : input '_ reset_async_high,
+    i_rst_a_n: input '_ reset_async_low ,
+    i_rst_s  : input '_ reset_sync_high ,
+    i_rst_s_n: input '_ reset_sync_low  ,
 ) {
     var a: logic;
     var b: logic;
@@ -2352,6 +2352,27 @@ case_enum = "snake"
 <tr><td>prefix_union</td><td>文字列</td><td><code>union</code> のプレフィックス</td></tr>
 <tr><td>prefix_var</td><td>文字列</td><td>変数のプレフィックス</td></tr>
 <tr><td>prefix_wire</td><td>文字列</td><td>ワイヤ変数<sup class="footnote-reference"><a href="#wire">3</a></sup>のプレフィックス</td></tr>
+<tr><td>suffix_enum</td><td>文字列</td><td><code>enum</code> のサフィックス</td></tr>
+<tr><td>suffix_function</td><td>文字列</td><td><code>function</code> のサフィックス</td></tr>
+<tr><td>suffix_function_inout</td><td>文字列</td><td><code>inout</code> 引数のサフィックス</td></tr>
+<tr><td>suffix_function_input</td><td>文字列</td><td><code>input</code> 引数のサフィックス</td></tr>
+<tr><td>suffix_function_output</td><td>文字列</td><td><code>output</code> 引数のサフィックス</td></tr>
+<tr><td>suffix_function_ref</td><td>文字列</td><td><code>ref</code> 引数のサフィックス</td></tr>
+<tr><td>suffix_instance</td><td>文字列</td><td>インスタンスのサフィックス</td></tr>
+<tr><td>suffix_interface</td><td>文字列</td><td><code>interface</code> のサフィックス</td></tr>
+<tr><td>suffix_modport</td><td>文字列</td><td><code>modport</code> のサフィックス</td></tr>
+<tr><td>suffix_module</td><td>文字列</td><td><code>module</code> のサフィックス</td></tr>
+<tr><td>suffix_package</td><td>文字列</td><td><code>package</code> のサフィックス</td></tr>
+<tr><td>suffix_parameter</td><td>文字列</td><td><code>parameter</code> のサフィックス</td></tr>
+<tr><td>suffix_port_inout</td><td>文字列</td><td><code>inout</code> ポートのサフィックス</td></tr>
+<tr><td>suffix_port_input</td><td>文字列</td><td><code>input</code> ポートのサフィックス</td></tr>
+<tr><td>suffix_port_modport</td><td>文字列</td><td><code>modport</code> ポートのサフィックス</td></tr>
+<tr><td>suffix_port_output</td><td>文字列</td><td><code>output</code> ポートのサフィックス</td></tr>
+<tr><td>suffix_reg</td><td>文字列</td><td>レジスタ変数<sup class="footnote-reference"><a href="#reg">2</a></sup>のサフィックス</td></tr>
+<tr><td>suffix_struct</td><td>文字列</td><td><code>struct</code> のサフィックス</td></tr>
+<tr><td>suffix_union</td><td>文字列</td><td><code>union</code> のサフィックス</td></tr>
+<tr><td>suffix_var</td><td>文字列</td><td>変数のサフィックス</td></tr>
+<tr><td>suffix_wire</td><td>文字列</td><td>ワイヤ変数<sup class="footnote-reference"><a href="#wire">3</a></sup>のサフィックス</td></tr>
 <tr><td>re_forbidden_enum</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>enum</code> の禁止正規表現</td></tr>
 <tr><td>re_forbidden_function</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>function</code> の禁止正規表現</td></tr>
 <tr><td>re_forbidden_function_inout</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>inout</code> 引数の禁止正規表現</td></tr>
