@@ -280,6 +280,10 @@ case_enum = "snake"
 <div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Value</th><th>Description</th></tr></thead><tbody>
 <tr><td>case_enum</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>enum</code></td></tr>
 <tr><td>case_function</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>function</code></td></tr>
+<tr><td>case_function_inout</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>inout</code> argument</td></tr>
+<tr><td>case_function_input</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>input</code> argument</td></tr>
+<tr><td>case_function_output</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>output</code> argument</td></tr>
+<tr><td>case_function_ref</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>ref</code> argument</td></tr>
 <tr><td>case_instance</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of instance</td></tr>
 <tr><td>case_interface</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>interface</code></td></tr>
 <tr><td>case_modport</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>modport</code></td></tr>
@@ -297,6 +301,10 @@ case_enum = "snake"
 <tr><td>case_wire</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of wire type variable<sup class="footnote-reference"><a href="#wire">3</a></sup></td></tr>
 <tr><td>prefix_enum</td><td>string</td><td>prefix of <code>enum</code></td></tr>
 <tr><td>prefix_function</td><td>string</td><td>prefix of <code>function</code></td></tr>
+<tr><td>prefix_function_inout</td><td>string</td><td>prefix of <code>inout</code> argument</td></tr>
+<tr><td>prefix_function_input</td><td>string</td><td>prefix of <code>input</code> argument</td></tr>
+<tr><td>prefix_function_output</td><td>string</td><td>prefix of <code>output</code> argument</td></tr>
+<tr><td>prefix_function_ref</td><td>string</td><td>prefix of <code>ref</code> argument</td></tr>
 <tr><td>prefix_instance</td><td>string</td><td>prefix of instance</td></tr>
 <tr><td>prefix_interface</td><td>string</td><td>prefix of <code>interface</code></td></tr>
 <tr><td>prefix_modport</td><td>string</td><td>prefix of <code>modport</code></td></tr>
@@ -312,8 +320,33 @@ case_enum = "snake"
 <tr><td>prefix_union</td><td>string</td><td>prefix of <code>union</code></td></tr>
 <tr><td>prefix_var</td><td>string</td><td>prefix of variable</td></tr>
 <tr><td>prefix_wire</td><td>string</td><td>prefix of wire type variable<sup class="footnote-reference"><a href="#wire">3</a></sup></td></tr>
+<tr><td>suffix_enum</td><td>string</td><td>suffix of <code>enum</code></td></tr>
+<tr><td>suffix_function</td><td>string</td><td>suffix of <code>function</code></td></tr>
+<tr><td>suffix_function_inout</td><td>string</td><td>suffix of <code>inout</code> argument</td></tr>
+<tr><td>suffix_function_input</td><td>string</td><td>suffix of <code>input</code> argument</td></tr>
+<tr><td>suffix_function_output</td><td>string</td><td>suffix of <code>output</code> argument</td></tr>
+<tr><td>suffix_function_ref</td><td>string</td><td>suffix of <code>ref</code> argument</td></tr>
+<tr><td>suffix_instance</td><td>string</td><td>suffix of instance</td></tr>
+<tr><td>suffix_interface</td><td>string</td><td>suffix of <code>interface</code></td></tr>
+<tr><td>suffix_modport</td><td>string</td><td>suffix of <code>modport</code></td></tr>
+<tr><td>suffix_module</td><td>string</td><td>suffix of <code>module</code></td></tr>
+<tr><td>suffix_package</td><td>string</td><td>suffix of <code>package</code></td></tr>
+<tr><td>suffix_parameter</td><td>string</td><td>suffix of <code>parameter</code></td></tr>
+<tr><td>suffix_port_inout</td><td>string</td><td>suffix of <code>inout</code> port</td></tr>
+<tr><td>suffix_port_input</td><td>string</td><td>suffix of <code>input</code> port</td></tr>
+<tr><td>suffix_port_modport</td><td>string</td><td>suffix of <code>modport</code> port</td></tr>
+<tr><td>suffix_port_output</td><td>string</td><td>suffix of <code>output</code> port</td></tr>
+<tr><td>suffix_reg</td><td>string</td><td>suffix of register type variable<sup class="footnote-reference"><a href="#reg">2</a></sup></td></tr>
+<tr><td>suffix_struct</td><td>string</td><td>suffix of <code>struct</code></td></tr>
+<tr><td>suffix_union</td><td>string</td><td>suffix of <code>union</code></td></tr>
+<tr><td>suffix_var</td><td>string</td><td>suffix of variable</td></tr>
+<tr><td>suffix_wire</td><td>string</td><td>suffix of wire type variable<sup class="footnote-reference"><a href="#wire">3</a></sup></td></tr>
 <tr><td>re_forbidden_enum</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>enum</code></td></tr>
 <tr><td>re_forbidden_function</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>function</code></td></tr>
+<tr><td>re_forbidden_function_inout</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>inout</code> argument</td></tr>
+<tr><td>re_forbidden_function_input</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>input</code> argument</td></tr>
+<tr><td>re_forbidden_function_output</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>output</code> argument</td></tr>
+<tr><td>re_forbidden_function_ref</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>ref</code> argument</td></tr>
 <tr><td>re_forbidden_instance</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of instance</td></tr>
 <tr><td>re_forbidden_interface</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>interface</code></td></tr>
 <tr><td>re_forbidden_modport</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>modport</code></td></tr>
@@ -331,6 +364,10 @@ case_enum = "snake"
 <tr><td>re_forbidden_wire</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of wire type variable<sup class="footnote-reference"><a href="#wire">3</a></sup></td></tr>
 <tr><td>re_required_enum</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>enum</code></td></tr>
 <tr><td>re_required_function</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>function</code></td></tr>
+<tr><td>re_required_function_inout</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>inout</code> argument</td></tr>
+<tr><td>re_required_function_input</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>input</code> argument</td></tr>
+<tr><td>re_required_function_output</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>output</code> argument</td></tr>
+<tr><td>re_required_function_ref</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>ref</code> argument</td></tr>
 <tr><td>re_required_instance</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of instance</td></tr>
 <tr><td>re_required_interface</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>interface</code></td></tr>
 <tr><td>re_required_modport</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>modport</code></td></tr>
