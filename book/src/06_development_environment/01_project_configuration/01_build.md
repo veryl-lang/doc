@@ -105,3 +105,14 @@ If you want to use `directory`, you should specify the target path by `path` key
 [build]
 target = {type = "directory", path = "[dst dir]"}
 ```
+
+## The `expand_inside_operation` field
+
+If `expand_inside_operation` is set to `true`, operations using `inside` operator will be expended to logic using `==?` operator.
+This is because some EDA tools don't support `inside` operator.
+This is `false` by default.
+
+```toml
+[build]
+expand_inside_operation = true
+```

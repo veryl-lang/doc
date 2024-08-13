@@ -25,3 +25,17 @@ By the configuration, the generated code becomes like below:
 ```verilog
 parameter a = "A";
 ```
+
+## Quartus
+
+### `inside` operator
+
+Quartus don't support `inside` operator.
+So you can use `expand_inside_operation` like below:
+
+```toml
+[build]
+expand_inside_operation = true
+```
+
+By the configuration, operations using `inside` operator will be expanded to logic using `==?` operator.
