@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-08-09T15:16:31+09:00\n"
+"POT-Creation-Date: 2024-08-13T13:54:48+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -4097,6 +4097,20 @@ msgid ""
 msgstr ""
 "`directory` を指定する場合は、ターゲットパスを `path` キーで指定します。"
 
+#: src/06_development_environment/01_project_configuration/01_build.md:109
+msgid "The `expand_inside_operation` field"
+msgstr "`expand_inside_operation` フィールド"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:111
+msgid ""
+"If `expand_inside_operation` is set to `true`, operations using `inside` "
+"operator will be expended to logic using `==?` operator. This is because "
+"some EDA tools don't support `inside` operator. This is `false` by default."
+msgstr ""
+"`expand_inside_operation` が `true` のとき、`inside` 演算子を使った演算は"
+"`==?` 演算子を使った論理に展開されます。これはいくつかのEDAツールが"
+"`inside` 演算子をサポートしていないためです。この値はデフォルトで `false` です。"
+
 #: src/06_development_environment/01_project_configuration/02_format.md:3
 msgid ""
 "`[format]` section specifies the configuration for formatter like below:"
@@ -5893,6 +5907,30 @@ msgstr ""
 "```verilog\n"
 "parameter a = \"A\";\n"
 "```"
+
+#: src/06_development_environment/09_compatibility.md:29
+msgid "Quartus"
+msgstr "Quartus"
+
+#: src/06_development_environment/09_compatibility.md:31
+msgid "`inside` operator"
+msgstr "`inside` 演算子"
+
+#: src/06_development_environment/09_compatibility.md:33
+msgid ""
+"Quartus don't support `inside` operator. So you can use "
+"`expand_inside_operation` like below:"
+msgstr ""
+"Quartus は `inside` 演算子をサポートしていません。"
+"その場合は `expand_inside_operation` を設定してください。"
+
+
+#: src/06_development_environment/09_compatibility.md:41
+msgid ""
+"By the configuration, operations using `inside` operator will be expanded to "
+"logic using `==?` operator."
+msgstr ""
+"設定すると、 `inside` 演算子を使った演算は `==?` 演算子を使った論理に展開されます。"
 
 #: src/06_development_environment/10_documentation.md:3
 msgid ""
