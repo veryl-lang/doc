@@ -156,12 +156,12 @@ endmodule
 
 ```veryl
 module ModuleA (
-    i_clk_a: input  'a clock,
-    i_dat_a: input  'a logic,
-    i_dat_a: output 'a logic,
-    i_clk_b: input  'b clock,
-    i_dat_b: input  'b logic,
-    i_dat_b: output 'b logic,
+    i_clk_a: input  `a clock,
+    i_dat_a: input  `a logic,
+    i_dat_a: output `a logic,
+    i_clk_b: input  `b clock,
+    i_dat_b: input  `b logic,
+    i_dat_b: output `b logic,
 ) {
     unsafe (cdc) {
         assign o_dat_b = i_dat_a;
