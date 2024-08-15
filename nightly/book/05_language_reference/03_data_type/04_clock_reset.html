@@ -288,14 +288,14 @@ There are 5 variants to specify reset polarity and synchronicity.</p>
 </ul>
 <p>If there is no special requirement, <code>clock</code> and <code>reset</code> are recommended for code reusability.</p>
 <pre><code class="language-veryl playground">module ModuleA (
-    i_clk    : input '_ clock           ,
-    i_clk_p  : input '_ clock_posedge   ,
-    i_clk_n  : input '_ clock_negedge   ,
-    i_rst    : input '_ reset           ,
-    i_rst_a  : input '_ reset_async_high,
-    i_rst_a_n: input '_ reset_async_low ,
-    i_rst_s  : input '_ reset_sync_high ,
-    i_rst_s_n: input '_ reset_sync_low  ,
+    i_clk    : input `_ clock           ,
+    i_clk_p  : input `_ clock_posedge   ,
+    i_clk_n  : input `_ clock_negedge   ,
+    i_rst    : input `_ reset           ,
+    i_rst_a  : input `_ reset_async_high,
+    i_rst_a_n: input `_ reset_async_low ,
+    i_rst_s  : input `_ reset_sync_high ,
+    i_rst_s_n: input `_ reset_sync_low  ,
 ) {
     var a: logic;
     var b: logic;
