@@ -6,7 +6,7 @@ The marked block will be identified as test, and executed through `veryl test` c
 There are two way to describe integrated test:
 
 * SystemVerilog test
-* [Cocotb](https://www.cocotb.org) test
+* [cocotb](https://www.cocotb.org) test
 
 About RTL simulator used by `veryl test`, see [Simulator](../06_development_environment/07_simulator.md).
 If `--wave` option is specified, waveforms are generated.
@@ -32,9 +32,9 @@ embed (inline) sv{{{
 }}}
 ```
 
-## Cocotb test
+## cocotb test
 
-Cocotb test can be described with `cocotb` specifier.
+cocotb test can be described with `cocotb` specifier.
 The target module name for test should be specified by the second argument of `#[test]` attribute.
 
 ```veryl,playground
