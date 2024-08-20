@@ -1986,6 +1986,7 @@ embed (inline) sv{{{
 }}}
 </code></pre>
 <p><code>veryl test</code> で使用される RTLシミュレータについては <a href="05_language_reference/../06_development_environment/07_simulator.html">シミュレータ</a> を参照してください。</p>
+<p><code>--wave</code> オプションが指定された場合、波形を生成します。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ジェネリクス"><a class="header" href="#ジェネリクス">ジェネリクス</a></h1>
 <p>ジェネリクスはパラメータオーバーライドでは実現できないアイテムのパラメータ化を可能にします。以下のアイテムがジェネリクスをサポートしています。</p>
 <ul>
@@ -2290,7 +2291,7 @@ strip_comments = true
 </ul>
 <p><code>directory</code> を指定する場合は、ターゲットパスを <code>path</code> キーで指定します。</p>
 <pre><code class="language-toml">[build]
-target = {type = "directory", path = "[dst dir]"}
+sourcemap_target = {type = "directory", path = "[dst dir]"}
 </code></pre>
 <h2 id="expand_inside_operation-フィールド"><a class="header" href="#expand_inside_operation-フィールド"><code>expand_inside_operation</code> フィールド</a></h2>
 <p><code>expand_inside_operation</code> が <code>true</code> のとき、<code>inside</code> 演算子を使った演算は<code>==?</code> 演算子を使った論理に展開されます。これはいくつかのEDAツールが<code>inside</code> 演算子をサポートしていないためです。この値はデフォルトで <code>false</code> です。</p>
@@ -2481,7 +2482,18 @@ simulator = "vcs"
 <tr><td>elaborate_args</td><td>[文字列]</td><td><code>xelab</code> コマンドへの追加の引数</td></tr>
 <tr><td>simulate_args</td><td>[文字列]</td><td><code>xsim</code> コマンドへの追加の引数</td></tr>
 </tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="publish"><a class="header" href="#publish">Publish</a></h1>
+</div>
+<h2 id="waveform_target-フィールド"><a class="header" href="#waveform_target-フィールド"><code>waveform_target</code> フィールド</a></h2>
+<p><code>waveform_target</code> フィールドは波形の生成先を指定します。</p>
+<ul>
+<li><code>target</code> – ターゲットコードと同じディレクトリ</li>
+<li><code>directory</code> – 特定のディレクトリ</li>
+</ul>
+<p><code>directory</code> を指定する場合は、ターゲットパスを <code>path</code> キーで指定します。</p>
+<pre><code class="language-toml">[build]
+waveform_target = {type = "directory", path = "[dst dir]"}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="publish"><a class="header" href="#publish">Publish</a></h1>
 <p><code>[publish]</code> セクションは以下のようにプロジェクト公開の設定を指定します。</p>
 <pre><code class="language-toml">[publish]
 bump_commit = true

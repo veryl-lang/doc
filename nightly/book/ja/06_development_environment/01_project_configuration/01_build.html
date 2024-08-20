@@ -339,7 +339,7 @@ strip_comments = true
 </ul>
 <p><code>directory</code> を指定する場合は、ターゲットパスを <code>path</code> キーで指定します。</p>
 <pre><code class="language-toml">[build]
-target = {type = "directory", path = "[dst dir]"}
+sourcemap_target = {type = "directory", path = "[dst dir]"}
 </code></pre>
 <h2 id="expand_inside_operation-フィールド"><a class="header" href="#expand_inside_operation-フィールド"><code>expand_inside_operation</code> フィールド</a></h2>
 <p><code>expand_inside_operation</code> が <code>true</code> のとき、<code>inside</code> 演算子を使った演算は<code>==?</code> 演算子を使った論理に展開されます。これはいくつかのEDAツールが<code>inside</code> 演算子をサポートしていないためです。この値はデフォルトで <code>false</code> です。</p>

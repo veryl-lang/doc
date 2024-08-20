@@ -311,6 +311,17 @@ simulator = "vcs"
 <tr><td>simulate_args</td><td>[文字列]</td><td><code>xsim</code> コマンドへの追加の引数</td></tr>
 </tbody></table>
 </div>
+<h2 id="waveform_target-フィールド"><a class="header" href="#waveform_target-フィールド"><code>waveform_target</code> フィールド</a></h2>
+<p><code>waveform_target</code> フィールドは波形の生成先を指定します。</p>
+<ul>
+<li><code>target</code> – ターゲットコードと同じディレクトリ</li>
+<li><code>directory</code> – 特定のディレクトリ</li>
+</ul>
+<p><code>directory</code> を指定する場合は、ターゲットパスを <code>path</code> キーで指定します。</p>
+<pre><code class="language-toml">[build]
+waveform_target = {type = "directory", path = "[dst dir]"}
+</code></pre>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

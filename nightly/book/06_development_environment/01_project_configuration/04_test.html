@@ -311,6 +311,18 @@ simulator = "vcs"
 <tr><td>simulate_args</td><td>[string]</td><td>additional arguments to <code>xsim</code> command</td></tr>
 </tbody></table>
 </div>
+<h2 id="the-waveform_target-field"><a class="header" href="#the-waveform_target-field">The <code>waveform_target</code> field</a></h2>
+<p>The <code>waveform_target</code> field specifies where the generated waveforms will be placed at.
+The available types are below:</p>
+<ul>
+<li><code>target</code> – as the same directory as the target code</li>
+<li><code>directory</code> – specified directory</li>
+</ul>
+<p>If you want to use <code>directory</code>, you should specify the target path by <code>path</code> key.</p>
+<pre><code class="language-toml">[build]
+waveform_target = {type = "directory", path = "[dst dir]"}
+</code></pre>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

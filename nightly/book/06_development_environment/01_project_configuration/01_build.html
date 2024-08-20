@@ -349,7 +349,7 @@ The available types are below:</p>
 </ul>
 <p>If you want to use <code>directory</code>, you should specify the target path by <code>path</code> key.</p>
 <pre><code class="language-toml">[build]
-target = {type = "directory", path = "[dst dir]"}
+sourcemap_target = {type = "directory", path = "[dst dir]"}
 </code></pre>
 <h2 id="the-expand_inside_operation-field"><a class="header" href="#the-expand_inside_operation-field">The <code>expand_inside_operation</code> field</a></h2>
 <p>If <code>expand_inside_operation</code> is set to <code>true</code>, operations using <code>inside</code> operator will be expended to logic using <code>==?</code> operator.
