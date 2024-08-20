@@ -103,7 +103,7 @@ If you want to use `directory`, you should specify the target path by `path` key
 
 ```toml
 [build]
-target = {type = "directory", path = "[dst dir]"}
+sourcemap_target = {type = "directory", path = "[dst dir]"}
 ```
 
 ## The `expand_inside_operation` field

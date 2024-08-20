@@ -50,3 +50,18 @@ This section contains configurations of test by Vivado.
 | compile_args   | [string] | additional arguments to `xvlog` command |
 | elaborate_args | [string] | additional arguments to `xelab` command |
 | simulate_args  | [string] | additional arguments to `xsim` command  |
+
+## The `waveform_target` field
+
+The `waveform_target` field specifies where the generated waveforms will be placed at.
+The available types are below:
+
+* `target` -- as the same directory as the target code
+* `directory` -- specified directory
+
+If you want to use `directory`, you should specify the target path by `path` key.
+
+```toml
+[build]
+waveform_target = {type = "directory", path = "[dst dir]"}
+```

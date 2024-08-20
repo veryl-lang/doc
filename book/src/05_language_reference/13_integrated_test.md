@@ -21,3 +21,5 @@ embed (inline) sv{{{
 ```
 
 About RTL simulator used by `veryl test`, see [Simulator](../06_development_environment/07_simulator.md).
+
+If `--wave` option is specified, waveforms are generated.
