@@ -270,7 +270,15 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="組み込みテスト"><a class="header" href="#組み込みテスト">組み込みテスト</a></h1>
-<p>組み込みテストは <code>#[test(test_name)]</code> アトリビュートでマークすることができます。マークされたブロックはテストとして認識され、 <code>veryl test</code> コマンドによって実行されます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
+<p>組み込みテストは <code>#[test(test_name)]</code> アトリビュートでマークすることができます。マークされたブロックはテストとして認識され、 <code>veryl test</code> コマンドによって実行されます。</p>
+<p>組み込みテストにはいくつかの種類があります。</p>
+<ul>
+<li>SystemVerilogテスト</li>
+<li><a href="https://www.cocotb.org">cocotb</a> テスト</li>
+</ul>
+<p><code>veryl test</code> で使用される RTLシミュレータについては <a href="../06_development_environment/07_simulator.html">シミュレータ</a> を参照してください。<code>--wave</code> オプションで波形を生成することもできます。</p>
+<h2 id="systemverilogテスト"><a class="header" href="#systemverilogテスト">SystemVerilogテスト</a></h2>
+<p>SystemVerilog テストは <code>inline</code> 指定子で記述することができます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
 <p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>
 <p>以下の例では SystemVerilog のソースコードを <code>embed</code> 宣言で埋め込み、テストとしてマークしています。</p>
 <pre><code class="language-veryl playground">#[test(test1)]
@@ -282,8 +290,13 @@ embed (inline) sv{{{
     endmodule
 }}}
 </code></pre>
-<p><code>veryl test</code> で使用される RTLシミュレータについては <a href="../06_development_environment/07_simulator.html">シミュレータ</a> を参照してください。</p>
-<p><code>--wave</code> オプションが指定された場合、波形を生成します。</p>
+<h2 id="cocotb-テスト"><a class="header" href="#cocotb-テスト">cocotb テスト</a></h2>
+<p>cocotb テストは <code>cocotb</code> 指定子で記述することができます。テスト対象のモジュール名は <code>#[test]</code> アトリビュートの第二引数で指定します。</p>
+<pre><code class="language-veryl playground">#[test(test1, ModuleA)]
+embed (cocotb) py{{{
+    # cocotb code
+}}}
+</code></pre>
 
                     </main>
 

@@ -274,10 +274,12 @@
 <p><code>embed</code> 宣言により他言語をコードに埋め込むことができます。<code>embed</code> 宣言の第一引数は埋め込み方法です。以下の方法がサポートされています。</p>
 <ul>
 <li><code>inline</code>: コードをそのまま展開する</li>
+<li><code>cocotb</code>: cocotb テストとして扱う</li>
 </ul>
 <p>コードブロックは <code>lang{{{</code> で始まり、<code>}}}</code> で終わります。以下の <code>lang</code> 指示子がサポートされています。</p>
 <ul>
 <li><code>sv</code>: SystemVerilog</li>
+<li><code>py</code>: Python</li>
 </ul>
 <pre><code class="language-veryl playground">embed (inline) sv{{{
     module ModuleSv;
