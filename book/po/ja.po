@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-08-15T16:55:04+09:00\n"
+"POT-Creation-Date: 2024-08-20T12:28:09+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -3180,6 +3180,11 @@ msgstr ""
 "`veryl test` で使用される RTLシミュレータについては [シミュレータ]"
 "(../06_development_environment/07_simulator.md) を参照してください。"
 
+#: src/05_language_reference/13_integrated_test.md:25
+msgid "If `--wave` option is specified, waveforms are generated."
+msgstr ""
+"`--wave` オプションが指定された場合、波形を生成します。"
+
 #: src/05_language_reference/14_generics.md:3
 msgid ""
 "Generics can define parameterized items which can't achieved by parameter "
@@ -3374,9 +3379,9 @@ msgid ""
 "`` `a `` is required. The annotation shows which clock domain each signals "
 "belong."
 msgstr ""
-"モジュール内に複数のクロックがある場合、`` `a `` のような明示的なクロックドメイン"
-"アノテーションが必要です。アノテーションはそれぞれの信号がどのクロックドメイ"
-"ンに所属するかを示します。"
+"モジュール内に複数のクロックがある場合、`` `a `` のような明示的なクロックドメ"
+"インアノテーションが必要です。アノテーションはそれぞれの信号がどのクロックド"
+"メインに所属するかを示します。"
 
 #: src/05_language_reference/15_clock_domain_annotation.md:6
 msgid ""
@@ -3428,8 +3433,9 @@ msgid ""
 "can be used to specify that some clocks belong the same implicit clock "
 "domain."
 msgstr ""
-"`` `_ `` は暗黙のクロックドメインを表す特別なクロックドメインです。これは複数のク"
-"ロックが同じ暗黙のクロックドメインに所属することを示すために使用できます。"
+"`` `_ `` は暗黙のクロックドメインを表す特別なクロックドメインです。これは複数"
+"のクロックが同じ暗黙のクロックドメインに所属することを示すために使用できま"
+"す。"
 
 #: src/05_language_reference/15_clock_domain_annotation.md:39
 msgid ""
@@ -3928,6 +3934,7 @@ msgstr "`source` -- ソースコードと同じディレクトリ"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:38
 #: src/06_development_environment/01_project_configuration/01_build.md:99
+#: src/06_development_environment/01_project_configuration/04_test.md:60
 msgid "`directory` -- specified directory"
 msgstr "`directory` -- 特定のディレクトリ"
 
@@ -3944,7 +3951,6 @@ msgstr ""
 "で指定します。"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:43
-#: src/06_development_environment/01_project_configuration/01_build.md:104
 msgid ""
 "```toml\n"
 "[build]\n"
@@ -4084,6 +4090,7 @@ msgstr ""
 "定は以下の通りです。"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:98
+#: src/06_development_environment/01_project_configuration/04_test.md:59
 msgid "`target` -- as the same directory as the target code"
 msgstr "`target` -- ターゲットコードと同じディレクトリ"
 
@@ -4092,11 +4099,24 @@ msgid "`none` -- no source map"
 msgstr "`none` -- ソースマップなし"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:102
+#: src/06_development_environment/01_project_configuration/04_test.md:62
 msgid ""
 "If you want to use `directory`, you should specify the target path by `path` "
 "key."
 msgstr ""
 "`directory` を指定する場合は、ターゲットパスを `path` キーで指定します。"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:104
+msgid ""
+"```toml\n"
+"[build]\n"
+"sourcemap_target = {type = \"directory\", path = \"[dst dir]\"}\n"
+"```"
+msgstr ""
+"```toml\n"
+"[build]\n"
+"sourcemap_target = {type = \"directory\", path = \"[dst dir]\"}\n"
+"```"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:109
 msgid "The `expand_inside_operation` field"
@@ -5320,6 +5340,28 @@ msgstr "`xelab` コマンドへの追加の引数"
 #: src/06_development_environment/01_project_configuration/04_test.md:52
 msgid "additional arguments to `xsim` command"
 msgstr "`xsim` コマンドへの追加の引数"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:54
+msgid "The `waveform_target` field"
+msgstr "`waveform_target` フィールド"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:56
+msgid ""
+"The `waveform_target` field specifies where the generated waveforms will be "
+"placed at. The available types are below:"
+msgstr "`waveform_target` フィールドは波形の生成先を指定します。"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:64
+msgid ""
+"```toml\n"
+"[build]\n"
+"waveform_target = {type = \"directory\", path = \"[dst dir]\"}\n"
+"```"
+msgstr ""
+"```toml\n"
+"[build]\n"
+"waveform_target = {type = \"directory\", path = \"[dst dir]\"}\n"
+"```"
 
 #: src/06_development_environment/01_project_configuration/05_publish.md:3
 msgid ""
