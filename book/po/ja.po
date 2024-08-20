@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-08-20T18:20:56+09:00\n"
+"POT-Creation-Date: 2024-08-20T19:12:03+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -269,94 +269,98 @@ msgstr "クロックドメインアノテーション"
 msgid "Unsafe CDC"
 msgstr "Unsafe CDC"
 
-#: src/SUMMARY.md:66 src/06_development_environment.md:1
+#: src/SUMMARY.md:66 src/05_language_reference/16_standard_library.md:1
+msgid "Standard Library"
+msgstr "標準ライブラリ"
+
+#: src/SUMMARY.md:67 src/06_development_environment.md:1
 msgid "Development Environment"
 msgstr "開発環境"
 
-#: src/SUMMARY.md:67
+#: src/SUMMARY.md:68
 #: src/06_development_environment/01_project_configuration.md:1
 msgid "Project Configuration"
 msgstr "プロジェクト設定"
 
-#: src/SUMMARY.md:68
+#: src/SUMMARY.md:69
 #: src/06_development_environment/01_project_configuration/01_build.md:1
 msgid "Build"
 msgstr "Build"
 
-#: src/SUMMARY.md:69
+#: src/SUMMARY.md:70
 #: src/06_development_environment/01_project_configuration/02_format.md:1
 msgid "Format"
 msgstr "Format"
 
-#: src/SUMMARY.md:70
+#: src/SUMMARY.md:71
 #: src/06_development_environment/01_project_configuration/03_lint.md:1
 msgid "Lint"
 msgstr "Lint"
 
-#: src/SUMMARY.md:71
+#: src/SUMMARY.md:72
 #: src/06_development_environment/01_project_configuration/04_test.md:1
 #: src/06_development_environment/11_github_action.md:47
 msgid "Test"
 msgstr "Test"
 
-#: src/SUMMARY.md:72
+#: src/SUMMARY.md:73
 #: src/06_development_environment/01_project_configuration/05_publish.md:1
 msgid "Publish"
 msgstr "Publish"
 
-#: src/SUMMARY.md:73 src/06_development_environment/02_dependencies.md:1
+#: src/SUMMARY.md:74 src/06_development_environment/02_dependencies.md:1
 msgid "Dependencies"
 msgstr "依存関係"
 
-#: src/SUMMARY.md:74 src/06_development_environment/03_publish_project.md:1
+#: src/SUMMARY.md:75 src/06_development_environment/03_publish_project.md:1
 msgid "Publish Project"
 msgstr "プロジェクトを公開する"
 
-#: src/SUMMARY.md:75 src/06_development_environment/04_directory_layout.md:1
+#: src/SUMMARY.md:76 src/06_development_environment/04_directory_layout.md:1
 msgid "Directory Layout"
 msgstr "ディレクトリ構成"
 
-#: src/SUMMARY.md:76 src/06_development_environment/05_formatter.md:1
+#: src/SUMMARY.md:77 src/06_development_environment/05_formatter.md:1
 msgid "Formatter"
 msgstr "フォーマッタ"
 
-#: src/SUMMARY.md:77 src/06_development_environment/06_linter.md:1
+#: src/SUMMARY.md:78 src/06_development_environment/06_linter.md:1
 msgid "Linter"
 msgstr "リンタ"
 
-#: src/SUMMARY.md:78 src/06_development_environment/07_simulator.md:1
+#: src/SUMMARY.md:79 src/06_development_environment/07_simulator.md:1
 msgid "Simulator"
 msgstr "シミュレータ"
 
-#: src/SUMMARY.md:79 src/06_development_environment/08_language_server.md:1
+#: src/SUMMARY.md:80 src/06_development_environment/08_language_server.md:1
 msgid "Language Server"
 msgstr "言語サーバ"
 
-#: src/SUMMARY.md:80 src/06_development_environment/09_compatibility.md:1
+#: src/SUMMARY.md:81 src/06_development_environment/09_compatibility.md:1
 msgid "Compatibility"
 msgstr "互換性"
 
-#: src/SUMMARY.md:81 src/06_development_environment/10_documentation.md:1
+#: src/SUMMARY.md:82 src/06_development_environment/10_documentation.md:1
 msgid "Documentation"
 msgstr "ドキュメンテーション"
 
-#: src/SUMMARY.md:82 src/06_development_environment/11_github_action.md:1
+#: src/SUMMARY.md:83 src/06_development_environment/11_github_action.md:1
 msgid "GitHub Action"
 msgstr "GitHub Action"
 
-#: src/SUMMARY.md:83 src/06_development_environment/12_source_map.md:1
+#: src/SUMMARY.md:84 src/06_development_environment/12_source_map.md:1
 msgid "Source Map"
 msgstr "ソースマップ"
 
-#: src/SUMMARY.md:84 src/07_appendix.md:1
+#: src/SUMMARY.md:85 src/07_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:85 src/07_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:86 src/07_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:86 src/07_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:87 src/07_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -3552,6 +3556,69 @@ msgid ""
 msgstr ""
 "クロックドメイン境界には通常シンクロナイザセルが挿入されます。この場合も "
 "`unsafe (cdc)` ブロックが必要です。"
+
+#: src/05_language_reference/16_standard_library.md:3
+msgid ""
+"Veryl provides some useful and general modules as standard library. Standard "
+"library is under `std` namespace, and it can be used without adding "
+"dependency."
+msgstr ""
+"Verylはいくつかの便利な汎用モジュールを標準ライブラリとして提供しています。"
+"標準ライブラリは `std` 名前空間にあり、依存関係を追加することなく使用できます。"
+
+#: src/05_language_reference/16_standard_library.md:8
+msgid ""
+"The public API of standard library may be changed until Veryl 1.0 release."
+msgstr ""
+"標準ライブラリの公開APIは Veryl 1.0 がリリースされるまでは変更される可能性があります。"
+
+#: src/05_language_reference/16_standard_library.md:12
+msgid ""
+"```veryl\n"
+"module ModuleA {\n"
+"    // std::fifo is FIFO module in standard library\n"
+"    inst u: std::fifo (\n"
+"        i_clk        : _,\n"
+"        i_rst        : _,\n"
+"        i_clear      : _,\n"
+"        o_empty      : _,\n"
+"        o_almost_full: _,\n"
+"        o_full       : _,\n"
+"        o_word_count : _,\n"
+"        i_push       : _,\n"
+"        i_data       : _,\n"
+"        i_pop        : _,\n"
+"        o_data       : _,\n"
+"    );\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl\n"
+"module ModuleA {\n"
+"    // std::fifo は標準ライブラリの FIFO モジュール\n"
+"    inst u: std::fifo (\n"
+"        i_clk        : _,\n"
+"        i_rst        : _,\n"
+"        i_clear      : _,\n"
+"        o_empty      : _,\n"
+"        o_almost_full: _,\n"
+"        o_full       : _,\n"
+"        o_word_count : _,\n"
+"        i_push       : _,\n"
+"        i_data       : _,\n"
+"        i_pop        : _,\n"
+"        o_data       : _,\n"
+"    );\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/16_standard_library.md:31
+msgid ""
+"The full list and document of standard library is [https://std.veryl-lang."
+"org](https://std.veryl-lang.org)."
+msgstr ""
+"標準ライブラリの完全なリストとドキュメントは [https://std.veryl-lang."
+"org](https://std.veryl-lang.org) にあります。"
 
 #: src/06_development_environment.md:3
 msgid ""
