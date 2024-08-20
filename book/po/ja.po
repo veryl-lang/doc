@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-08-20T12:28:09+09:00\n"
+"POT-Creation-Date: 2024-08-20T18:15:14+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -3083,7 +3083,11 @@ msgstr ""
 msgid "`inline`: expand the code as is"
 msgstr "`inline`: コードをそのまま展開する"
 
-#: src/05_language_reference/12_foreign_language_integration.md:11
+#: src/05_language_reference/12_foreign_language_integration.md:10
+msgid "`cocotb`: treated as cocotb based test"
+msgstr "`cocotb`: cocotb テストとして扱う"
+
+#: src/05_language_reference/12_foreign_language_integration.md:12
 msgid ""
 "The code block are started by `lang{{{` and ended by `}}}`. The following "
 "`lang` specifiers are supported:"
@@ -3091,15 +3095,19 @@ msgstr ""
 "コードブロックは `lang{{{` で始まり、`}}}` で終わります。以下の `lang` 指示子"
 "がサポートされています。"
 
-#: src/05_language_reference/12_foreign_language_integration.md:14
+#: src/05_language_reference/12_foreign_language_integration.md:15
 msgid "`sv`: SystemVerilog"
 msgstr "`sv`: SystemVerilog"
 
-#: src/05_language_reference/12_foreign_language_integration.md:23
+#: src/05_language_reference/12_foreign_language_integration.md:16
+msgid "`py`: Python"
+msgstr "`py`: Python"
+
+#: src/05_language_reference/12_foreign_language_integration.md:25
 msgid "`include` declaration"
 msgstr "`include` 宣言"
 
-#: src/05_language_reference/12_foreign_language_integration.md:25
+#: src/05_language_reference/12_foreign_language_integration.md:27
 msgid ""
 "`include` declaration can include a file of foreign languages. The first "
 "argument is the same as `embed` declaration, and the second is a relative "
@@ -3109,7 +3117,7 @@ msgstr ""
 "第一引数は `embed` 宣言と同じです。第二引数はソースコードからの相対ファイルパ"
 "スです。"
 
-#: src/05_language_reference/12_foreign_language_integration.md:28
+#: src/05_language_reference/12_foreign_language_integration.md:30
 msgid ""
 "```veryl\n"
 "include(inline, \"module.sv\");\n"
@@ -3122,15 +3130,45 @@ msgstr ""
 #: src/05_language_reference/13_integrated_test.md:3
 msgid ""
 "Integrated test can be marked by `#[test(test_name)]` attribute. The marked "
-"block will be identified as test, and executed through `veryl test` command. "
-"The top level module of the block must have the same name as the test name."
+"block will be identified as test, and executed through `veryl test` command."
 msgstr ""
 "組み込みテストは `#[test(test_name)]` アトリビュートでマークすることができま"
 "す。マークされたブロックはテストとして認識され、 `veryl test` コマンドによっ"
-"て実行されます。ブロックのトップレベルモジュールはテスト名と同じでなければな"
+"て実行されます。"
+
+#: src/05_language_reference/13_integrated_test.md:6
+msgid "There are two way to describe integrated test:"
+msgstr "組み込みテストにはいくつかの種類があります。"
+
+#: src/05_language_reference/13_integrated_test.md:8
+#: src/05_language_reference/13_integrated_test.md:14
+msgid "SystemVerilog test"
+msgstr "SystemVerilogテスト"
+
+#: src/05_language_reference/13_integrated_test.md:9
+msgid "[Cocotb](https://www.cocotb.org) test"
+msgstr "[Cocotb](https://www.cocotb.org) テスト"
+
+#: src/05_language_reference/13_integrated_test.md:11
+msgid ""
+"About RTL simulator used by `veryl test`, see [Simulator]"
+"(../06_development_environment/07_simulator.md). If `--wave` option is "
+"specified, waveforms are generated."
+msgstr ""
+"`veryl test` で使用される RTLシミュレータについては [シミュレータ]"
+"(../06_development_environment/07_simulator.md) を参照してください。"
+"`--wave` オプションで波形を生成することもできます。"
+
+#: src/05_language_reference/13_integrated_test.md:16
+msgid ""
+"SystemVerilog test can be described with `inline` specifier. The top level "
+"module of the block must have the same name as the test name."
+msgstr ""
+"SystemVerilog テストは `inline` 指定子で記述することができます。"
+"ブロックのトップレベルモジュールはテスト名と同じでなければな"
 "りません。"
 
-#: src/05_language_reference/13_integrated_test.md:7
+#: src/05_language_reference/13_integrated_test.md:19
 msgid ""
 "The messages through `$info`, `$warning`, `$error` and `$fatal` system "
 "function are handled by Veryl compiler, and shown as exectution log. The "
@@ -3140,7 +3178,7 @@ msgstr ""
 "コンパイラにより実行ログとして表示されます。`$error` と `$fatal` の呼び出しは"
 "テストの失敗として扱われます。"
 
-#: src/05_language_reference/13_integrated_test.md:10
+#: src/05_language_reference/13_integrated_test.md:22
 msgid ""
 "The following example, a SystemVerilog source code embeded by `embed` "
 "declaration are marked as test."
@@ -3148,7 +3186,7 @@ msgstr ""
 "以下の例では SystemVerilog のソースコードを `embed` 宣言で埋め込み、テストと"
 "してマークしています。"
 
-#: src/05_language_reference/13_integrated_test.md:12
+#: src/05_language_reference/13_integrated_test.md:24
 msgid ""
 "```veryl,playground\n"
 "#[test(test1)]\n"
@@ -3172,18 +3210,17 @@ msgstr ""
 "}}}\n"
 "```"
 
-#: src/05_language_reference/13_integrated_test.md:23
-msgid ""
-"About RTL simulator used by `veryl test`, see [Simulator]"
-"(../06_development_environment/07_simulator.md)."
-msgstr ""
-"`veryl test` で使用される RTLシミュレータについては [シミュレータ]"
-"(../06_development_environment/07_simulator.md) を参照してください。"
+#: src/05_language_reference/13_integrated_test.md:35
+msgid "Cocotb test"
+msgstr "Cocotb テスト"
 
-#: src/05_language_reference/13_integrated_test.md:25
-msgid "If `--wave` option is specified, waveforms are generated."
+#: src/05_language_reference/13_integrated_test.md:37
+msgid ""
+"Cocotb test can be described with `cocotb` specifier. The target module name "
+"for test should be specified by the second argument of `#[test]` attribute."
 msgstr ""
-"`--wave` オプションが指定された場合、波形を生成します。"
+"Cocotb テストは `cocotb` 指定子で記述することができます。"
+"テスト対象のモジュール名は `#[test]` アトリビュートの第二引数で指定します。"
 
 #: src/05_language_reference/14_generics.md:3
 msgid ""
@@ -7646,6 +7683,9 @@ msgstr "unknown_port"
 #: src/07_appendix/02_semantic_error.md:51
 msgid "unused_variable"
 msgstr "unused_variable"
+
+#~ msgid "If `--wave` option is specified, waveforms are generated."
+#~ msgstr "`--wave` オプションが指定された場合、波形を生成します。"
 
 #~ msgid "Case"
 #~ msgstr "case"
