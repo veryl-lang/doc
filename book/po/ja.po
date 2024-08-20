@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-08-20T18:15:14+09:00\n"
+"POT-Creation-Date: 2024-08-20T18:20:56+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -3146,8 +3146,8 @@ msgid "SystemVerilog test"
 msgstr "SystemVerilogテスト"
 
 #: src/05_language_reference/13_integrated_test.md:9
-msgid "[Cocotb](https://www.cocotb.org) test"
-msgstr "[Cocotb](https://www.cocotb.org) テスト"
+msgid "[cocotb](https://www.cocotb.org) test"
+msgstr "[cocotb](https://www.cocotb.org) テスト"
 
 #: src/05_language_reference/13_integrated_test.md:11
 msgid ""
@@ -3156,17 +3156,16 @@ msgid ""
 "specified, waveforms are generated."
 msgstr ""
 "`veryl test` で使用される RTLシミュレータについては [シミュレータ]"
-"(../06_development_environment/07_simulator.md) を参照してください。"
-"`--wave` オプションで波形を生成することもできます。"
+"(../06_development_environment/07_simulator.md) を参照してください。`--wave` "
+"オプションで波形を生成することもできます。"
 
 #: src/05_language_reference/13_integrated_test.md:16
 msgid ""
 "SystemVerilog test can be described with `inline` specifier. The top level "
 "module of the block must have the same name as the test name."
 msgstr ""
-"SystemVerilog テストは `inline` 指定子で記述することができます。"
-"ブロックのトップレベルモジュールはテスト名と同じでなければな"
-"りません。"
+"SystemVerilog テストは `inline` 指定子で記述することができます。ブロックの"
+"トップレベルモジュールはテスト名と同じでなければなりません。"
 
 #: src/05_language_reference/13_integrated_test.md:19
 msgid ""
@@ -3211,16 +3210,16 @@ msgstr ""
 "```"
 
 #: src/05_language_reference/13_integrated_test.md:35
-msgid "Cocotb test"
-msgstr "Cocotb テスト"
+msgid "cocotb test"
+msgstr "cocotb テスト"
 
 #: src/05_language_reference/13_integrated_test.md:37
 msgid ""
-"Cocotb test can be described with `cocotb` specifier. The target module name "
+"cocotb test can be described with `cocotb` specifier. The target module name "
 "for test should be specified by the second argument of `#[test]` attribute."
 msgstr ""
-"Cocotb テストは `cocotb` 指定子で記述することができます。"
-"テスト対象のモジュール名は `#[test]` アトリビュートの第二引数で指定します。"
+"cocotb テストは `cocotb` 指定子で記述することができます。テスト対象のモジュー"
+"ル名は `#[test]` アトリビュートの第二引数で指定します。"
 
 #: src/05_language_reference/14_generics.md:3
 msgid ""
