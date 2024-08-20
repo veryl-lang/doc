@@ -63,6 +63,7 @@
         - [Default Parameter](./05_language_reference/14_generics/01_default_parameter.md)
     - [Clock Domain Annotation](./05_language_reference/15_clock_domain_annotation.md)
         - [Unsafe CDC](./05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.md)
+    - [Standard Library](./05_language_reference/16_standard_library.md)
 - [Development Environment](./06_development_environment.md)
     - [Project Configuration](./06_development_environment/01_project_configuration.md)
         - [Build](./06_development_environment/01_project_configuration/01_build.md)
