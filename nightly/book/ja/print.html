@@ -2736,6 +2736,12 @@ target = {type = "directory", path = "target"}
 </ul>
 <p>Verilatorはデフォルトのシミュレータです。<code>Veryl.toml</code>やコマンドラインオプションでシミュレータが指定されていない場合に使用されます。</p>
 <p>全設定の説明は<a href="06_development_environment/./01_project_configuration/04_test.html">こちら</a>。</p>
+<h2 id="cocotb"><a class="header" href="#cocotb">cocotb</a></h2>
+<p><code>cocotb</code> テストを実行するには <code>cocotb</code> がインストールされた <code>python3</code> の環境が必要です。サポートされている <code>cocotb</code> のバージョンは 1.9.0 のみです。</p>
+<p>例えば以下のコマンドでインストールすることができます。</p>
+<pre><code class="language-console">$ pip3 install cocotb==1.9.0
+</code></pre>
+<p>シミュレータバックエンドとしては Verilator のみサポートされています。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="言語サーバ"><a class="header" href="#言語サーバ">言語サーバ</a></h1>
 <p><code>veryl-ls</code> は言語サーバのバイナリです。使用するにはエディタの設定やプラグインが必要です。</p>
 <p>設定可能な項目は以下の通りです。これは各エディタの設定から指定できます。</p>

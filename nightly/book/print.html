@@ -2938,6 +2938,13 @@ Supported simulators are below:</p>
 <p>Verilator is the default simulator.
 If no simulator is specified through <code>Veryl.toml</code> and command-line option, it will be used.</p>
 <p>The available configurations are <a href="06_development_environment/./01_project_configuration/04_test.html">here</a>.</p>
+<h2 id="cocotb"><a class="header" href="#cocotb">cocotb</a></h2>
+<p><code>cocotb</code> tests require <code>python3</code> environment in which <code>cocotb</code> is installed.
+The supported version of <code>cocotb</code> is 1.9.0 only.</p>
+<p>For example, it can be installed by the following command.</p>
+<pre><code class="language-console">$ pip3 install cocotb==1.9.0
+</code></pre>
+<p>As simulator backend, Verilator is only supported.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="language-server"><a class="header" href="#language-server">Language Server</a></h1>
 <p><code>veryl-ls</code> is a language server binary.
 If you want to use it, editor configuration or plugin to use it is required.</p>
