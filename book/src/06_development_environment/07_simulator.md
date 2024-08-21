@@ -11,3 +11,16 @@ Verilator is the default simulator.
 If no simulator is specified through `Veryl.toml` and command-line option, it will be used.
 
 The available configurations are [here](./01_project_configuration/04_test.md).
+
+## cocotb
+
+`cocotb` tests require `python3` environment in which `cocotb` is installed.
+The supported version of `cocotb` is 1.9.0 only.
+
+For example, it can be installed by the following command.
+
+```console
+$ pip3 install cocotb==1.9.0
+```
+
+As simulator backend, Verilator is only supported.
