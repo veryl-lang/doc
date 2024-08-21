@@ -27,6 +27,7 @@ https://doc.veryl-lang.org/book/05_language_reference/12_foreign_language_integr
 https://doc.veryl-lang.org/book/05_language_reference/13_integrated_test.html
 https://doc.veryl-lang.org/book/05_language_reference/14_generics.html
 https://doc.veryl-lang.org/book/05_language_reference/15_clock_domain_annotation.html
+https://doc.veryl-lang.org/book/05_language_reference/16_standard_library.html
 https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration.html
 https://doc.veryl-lang.org/book/06_development_environment/02_dependencies.html
 https://doc.veryl-lang.org/book/06_development_environment/03_publish_project.html
@@ -113,6 +114,7 @@ https://doc.veryl-lang.org/book/ja/05_language_reference/12_foreign_language_int
 https://doc.veryl-lang.org/book/ja/05_language_reference/13_integrated_test.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/14_generics.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/15_clock_domain_annotation.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/16_standard_library.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/02_dependencies.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/03_publish_project.html
