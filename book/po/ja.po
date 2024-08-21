@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-08-20T19:12:03+09:00\n"
+"POT-Creation-Date: 2024-08-21T10:51:27+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -3563,14 +3563,15 @@ msgid ""
 "library is under `std` namespace, and it can be used without adding "
 "dependency."
 msgstr ""
-"Verylはいくつかの便利な汎用モジュールを標準ライブラリとして提供しています。"
-"標準ライブラリは `std` 名前空間にあり、依存関係を追加することなく使用できます。"
+"Verylはいくつかの便利な汎用モジュールを標準ライブラリとして提供しています。標"
+"準ライブラリは `std` 名前空間にあり、依存関係を追加することなく使用できます。"
 
 #: src/05_language_reference/16_standard_library.md:8
 msgid ""
 "The public API of standard library may be changed until Veryl 1.0 release."
 msgstr ""
-"標準ライブラリの公開APIは Veryl 1.0 がリリースされるまでは変更される可能性があります。"
+"標準ライブラリの公開APIは Veryl 1.0 がリリースされるまでは変更される可能性が"
+"あります。"
 
 #: src/05_language_reference/16_standard_library.md:12
 msgid ""
@@ -3617,8 +3618,8 @@ msgid ""
 "The full list and document of standard library is [https://std.veryl-lang."
 "org](https://std.veryl-lang.org)."
 msgstr ""
-"標準ライブラリの完全なリストとドキュメントは [https://std.veryl-lang."
-"org](https://std.veryl-lang.org) にあります。"
+"標準ライブラリの完全なリストとドキュメントは [https://std.veryl-lang.org]"
+"(https://std.veryl-lang.org) にあります。"
 
 #: src/06_development_environment.md:3
 msgid ""
@@ -5980,6 +5981,28 @@ msgid ""
 "The available configurations are [here](./01_project_configuration/04_test."
 "md)."
 msgstr "全設定の説明は[こちら](./01_project_configuration/04_test.md)。"
+
+#: src/06_development_environment/07_simulator.md:15
+msgid "cocotb"
+msgstr "cocotb"
+
+#: src/06_development_environment/07_simulator.md:17
+msgid ""
+"`cocotb` tests require `python3` environment in which `cocotb` is installed. "
+"The supported version of `cocotb` is 1.9.0 only."
+msgstr ""
+"`cocotb` テストを実行するには `cocotb` がインストールされた `python3` の環境が必要です。"
+"サポートされている `cocotb` のバージョンは 1.9.0 のみです。"
+
+#: src/06_development_environment/07_simulator.md:20
+msgid "For example, it can be installed by the following command."
+msgstr ""
+"例えば以下のコマンドでインストールすることができます。"
+
+#: src/06_development_environment/07_simulator.md:26
+msgid "As simulator backend, Verilator is only supported."
+msgstr ""
+"シミュレータバックエンドとしては Verilator のみサポートされています。"
 
 #: src/06_development_environment/08_language_server.md:3
 msgid ""
