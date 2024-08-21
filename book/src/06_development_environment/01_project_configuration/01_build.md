@@ -116,3 +116,12 @@ This is `false` by default.
 [build]
 expand_inside_operation = true
 ```
+
+## The `exclude_std` field
+
+If `exclude_std` is set to `true`, standard library will not be included.
+
+```toml
+[build]
+exclude_std = true
+```
