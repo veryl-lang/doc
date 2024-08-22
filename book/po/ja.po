@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-08-22T12:41:10+09:00\n"
+"POT-Creation-Date: 2024-08-22T18:29:54+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -586,11 +586,11 @@ msgstr "組み込みテスト"
 
 #: src/02_features.md:44
 msgid ""
-"Test code written by SystemVerilog can be embeded in Veryl code, it can be "
-"executed through `veryl test` command."
+"Test code written by SystemVerilog or [cocotb](https://www.cocotb.org) can "
+"be embeded in Veryl code, it can be executed through `veryl test` command."
 msgstr ""
-"SystemVerilogで書かれたテストコードをVerylに埋め込み、`veryl test` コマンドで"
-"実行することができます。"
+"SystemVerilogまたは[cocotb](https://www.cocotb.org)で書かれたテストコードを"
+"Verylに埋め込み、`veryl test` コマンドで実行することができます。"
 
 #: src/02_features.md:47
 msgid ""
@@ -736,14 +736,26 @@ msgstr "ドキュメンテーションコメント"
 #: src/02_features.md:267
 msgid ""
 "Writing module descriptions as documentation comments allows for automatic "
-"documentation generation. You can use not only plain text but also MarkDown "
-"format or waveform descriptions using [WaveDrom](https://wavedrom.com)."
+"documentation generation. You can use not only plain text but also the "
+"following formats:"
 msgstr ""
 "ドキュメンテーションコメントとしてモジュールの説明を書いておくとドキュメント"
-"を自動生成することができます。単なるテキストだけでなく、マークダウン形式や"
-"[WaveDrom](https://wavedrom.com)による波形記述を使用することができます。"
+"を自動生成することができます。単なるテキストだけでなく、以下のフォーマットを"
+"使用することができます。"
 
-#: src/02_features.md:278
+#: src/02_features.md:270
+msgid "[Markdown](https://www.markdownguide.org)"
+msgstr "[Markdown](https://www.markdownguide.org)"
+
+#: src/02_features.md:271
+msgid "Waveform using [WaveDrom](https://wavedrom.com)"
+msgstr "[WaveDrom](https://wavedrom.com)による波形記述"
+
+#: src/02_features.md:272
+msgid "Diagram using [Mermaid](https://mermaid.js.org)"
+msgstr "[Mermaid](https://mermaid.js.org)によるダイアグラム記述"
+
+#: src/02_features.md:282
 msgid ""
 "```verilog\n"
 "// Comment\n"
@@ -757,7 +769,7 @@ msgstr ""
 "endmodule\n"
 "```"
 
-#: src/02_features.md:287
+#: src/02_features.md:291
 msgid ""
 "````veryl\n"
 "/// Documentation comment written by Markdown\n"
@@ -785,11 +797,11 @@ msgstr ""
 "}\n"
 "````"
 
-#: src/02_features.md:304
+#: src/02_features.md:308
 msgid "Compound assignment operator in `always_ff`"
 msgstr "`always_ff` での複合代入演算子"
 
-#: src/02_features.md:306
+#: src/02_features.md:310
 msgid ""
 "There is no dedicated non-blocking assignment operator; within `always_ff`, "
 "non-blocking assignments are inferred, while within `always_comb`, blocking "
@@ -801,11 +813,11 @@ msgstr ""
 "`always_ff` 内でも `always_comb` 内と同様に様々な複合代入演算子を使用すること"
 "ができます。"
 
-#: src/02_features.md:341
+#: src/02_features.md:345
 msgid "Individual namespace of enum variant"
 msgstr "独立した名前空間を持つenumバリアント"
 
-#: src/02_features.md:343
+#: src/02_features.md:347
 msgid ""
 "Variants of an enum are defined within separate namespaces for each enum, "
 "thus preventing unintended name collisions."
@@ -813,11 +825,11 @@ msgstr ""
 "enumのバリアントはenum毎に独立した名前空間を持っており意図しない名前の衝突を"
 "防ぐことができます。"
 
-#: src/02_features.md:381
+#: src/02_features.md:385
 msgid "`repeat` of concatenation"
 msgstr "ビット連結における `repeat`"
 
-#: src/02_features.md:383
+#: src/02_features.md:387
 msgid ""
 "By adopting the explicit `repeat` syntax as a repetition description in bit "
 "concatenation, readability improves over complex combinations of `{}`."
@@ -825,11 +837,11 @@ msgstr ""
 "ビット連結における繰り返し記述として明示的な `repeat` 記法を採用し、 複雑な "
 "`{}` の組み合わせより可読性が向上しています。"
 
-#: src/02_features.md:411
+#: src/02_features.md:415
 msgid "`if` / `case` expression"
 msgstr "`if` / `case` 式"
 
-#: src/02_features.md:413
+#: src/02_features.md:417
 msgid ""
 "By adopting `if` and `case` expressions instead of the ternary operator, "
 "readability improves, especially when comparing a large number of items."
@@ -837,11 +849,11 @@ msgstr ""
 "三項演算子の代わりに if 式と case 式を採用することで、比較するアイテム数が多"
 "い場合の可読性が向上します。"
 
-#: src/02_features.md:449
+#: src/02_features.md:453
 msgid "Range-based `for` / `inside` / `outside`"
 msgstr "範囲 `for` / `inside` / `outside`"
 
-#: src/02_features.md:451
+#: src/02_features.md:455
 msgid ""
 "With notation representing closed intervals `..=` and half-open intervals `.."
 "`, it is possible to uniformly describe ranges using `for`, `inside`, and "
@@ -851,11 +863,11 @@ msgstr ""
 "一的に記述できるようにしました。また、`inside` の逆を意味する `outside` も導"
 "入しました。"
 
-#: src/02_features.md:483
+#: src/02_features.md:487
 msgid "`msb` notation"
 msgstr "`msb` 記法"
 
-#: src/02_features.md:485
+#: src/02_features.md:489
 msgid ""
 "The `msb` notation, indicating the most significant bit, eliminates the need "
 "to calculate the most significant bit from parameters, making intentions "
@@ -864,11 +876,11 @@ msgstr ""
 "最上位ビットを示す `msb` 記法により、パラメータから最上位ビットを計算する必要"
 "がなくなり、より意図を明確にすることができます。"
 
-#: src/02_features.md:514
+#: src/02_features.md:518
 msgid "`let` statement"
 msgstr "`let` 文"
 
-#: src/02_features.md:516
+#: src/02_features.md:520
 msgid ""
 "There is a dedicated `let` statement available for binding values "
 "simultaneously with variable declaration, which can be used in various "
@@ -877,20 +889,20 @@ msgstr ""
 "変数宣言と同時に値を束縛する専用の `let` 文が用意されており、SystemVerilogで"
 "はサポートされていなかった様々な場所で使用することができます。"
 
-#: src/02_features.md:549
+#: src/02_features.md:553
 msgid "Named block"
 msgstr "名前付きブロック"
 
-#: src/02_features.md:551
+#: src/02_features.md:555
 msgid "You can define named blocks to limit the scope of variables."
 msgstr ""
 "変数のスコープを限定するための名前付きブロックを定義することができます。"
 
-#: src/02_features.md:578
+#: src/02_features.md:582
 msgid "Visibility control"
 msgstr "可視性制御"
 
-#: src/02_features.md:580
+#: src/02_features.md:584
 msgid ""
 "Modules without the `pub` keyword cannot be referenced from outside the "
 "project and are not included in automatic documentation generation. This "
@@ -901,7 +913,7 @@ msgstr ""
 "ントの自動生成にも含まれません。これによりプロジェクト外に公開したいものと内"
 "部実装とを区別することができます。"
 
-#: src/02_features.md:615
+#: src/02_features.md:619
 msgid ""
 "Some browsers by default pause the playback of GIF animations. Please check "
 "your browser settings."
@@ -2172,7 +2184,8 @@ msgid ""
 "If the type of `enum` is omitted, it will be infered from the variants "
 "automatically."
 msgstr ""
-"`enum` の型が省略されている場合、適切なサイズの型がバリアントから自動的に推定されます。"
+"`enum` の型が省略されている場合、適切なサイズの型がバリアントから自動的に推定"
+"されます。"
 
 #: src/05_language_reference/03_data_type/02_user_defined_type.md:60
 msgid "Union"
@@ -4274,7 +4287,7 @@ msgstr "設定"
 #: src/06_development_environment/01_project_configuration/05_publish.md:13
 #: src/06_development_environment/03_publish_project.md:53
 #: src/06_development_environment/08_language_server.md:9
-#: src/06_development_environment/10_documentation.md:51
+#: src/06_development_environment/10_documentation.md:59
 msgid "Configuration"
 msgstr "設定"
 
@@ -4286,7 +4299,7 @@ msgstr "設定"
 #: src/06_development_environment/01_project_configuration/04_test.md:48
 #: src/06_development_environment/01_project_configuration/05_publish.md:13
 #: src/06_development_environment/08_language_server.md:9
-#: src/06_development_environment/10_documentation.md:51
+#: src/06_development_environment/10_documentation.md:59
 msgid "Value"
 msgstr "設定値"
 
@@ -4298,7 +4311,7 @@ msgstr "設定値"
 #: src/06_development_environment/01_project_configuration/04_test.md:48
 #: src/06_development_environment/01_project_configuration/05_publish.md:13
 #: src/06_development_environment/08_language_server.md:9
-#: src/06_development_environment/10_documentation.md:51
+#: src/06_development_environment/10_documentation.md:59
 msgid "Description"
 msgstr "説明"
 
@@ -4578,7 +4591,7 @@ msgstr "prefix_enum"
 #: src/06_development_environment/01_project_configuration/03_lint.md:80
 #: src/06_development_environment/01_project_configuration/05_publish.md:17
 #: src/06_development_environment/01_project_configuration/05_publish.md:18
-#: src/06_development_environment/10_documentation.md:53
+#: src/06_development_environment/10_documentation.md:61
 msgid "string"
 msgstr "文字列"
 
@@ -5507,7 +5520,7 @@ msgstr ""
 
 #: src/06_development_environment/01_project_configuration/05_publish.md:13
 #: src/06_development_environment/08_language_server.md:9
-#: src/06_development_environment/10_documentation.md:51
+#: src/06_development_environment/10_documentation.md:59
 msgid "Default"
 msgstr "デフォルト"
 
@@ -6137,18 +6150,36 @@ msgstr ""
 "org)記法を使えます。"
 
 #: src/06_development_environment/10_documentation.md:9
-msgid ""
-"Waveform description based on [WaveDrom](https://wavedrom.com) is supported "
-"too. In a `wavedrom` code block, the syntax of WaveDrom can be written. "
-"Please refer [Tutorial](https://wavedrom.com/tutorial.html) for the detailed "
-"syntax."
-msgstr ""
-"[WaveDrom](https://wavedrom.com) による波形記述もサポートされています。"
-"`wavedrom` コードブロック内で、WaveDromの構文を記述することができます。構文の"
-"詳細は [チュートリアル](https://wavedrom.com/tutorial.html) を参照してくださ"
-"い。"
+msgid "The following formats are supported too."
+msgstr "以下のフォーマットもサポートされています。"
 
-#: src/06_development_environment/10_documentation.md:13
+#: src/06_development_environment/10_documentation.md:11
+msgid "Waveform description based on [WaveDrom](https://wavedrom.com)"
+msgstr "[WaveDrom](https://wavedrom.com)による波形記述"
+
+#: src/06_development_environment/10_documentation.md:12
+msgid "Diagram description based on [Mermaid](https://mermaid.js.org)"
+msgstr "[Mermaid](https://mermaid.js.org)によるダイアグラム記述"
+
+#: src/06_development_environment/10_documentation.md:14
+msgid "Each syntax can be used in `wavedrom` and `mermaid` code block."
+msgstr "それぞれの構文は `wavedrom` と `mermaid` コードブロック内で使用できます。"
+
+#: src/06_development_environment/10_documentation.md:16
+msgid "Please refer the following for the detailed syntax."
+msgstr "詳細な構文は以下を参照してください。"
+
+#: src/06_development_environment/10_documentation.md:18
+msgid "[Tutorials | Mermaid](https://mermaid.js.org/ecosystem/tutorials.html)"
+msgstr "[Tutorials | Mermaid](https://mermaid.js.org/ecosystem/tutorials.html)"
+
+#: src/06_development_environment/10_documentation.md:19
+msgid ""
+"[Hitchhiker's Guide to the WaveDrom](https://wavedrom.com/tutorial.html)"
+msgstr ""
+"[Hitchhiker's Guide to the WaveDrom](https://wavedrom.com/tutorial.html)"
+
+#: src/06_development_environment/10_documentation.md:21
 msgid ""
 "````veryl,playground\n"
 "/// The detailed description of ModuleA\n"
@@ -6212,7 +6243,7 @@ msgstr ""
 "}\n"
 "```"
 
-#: src/06_development_environment/10_documentation.md:43
+#: src/06_development_environment/10_documentation.md:51
 msgid ""
 "The available configurations are below. These can be specified in `[doc]` "
 "section of `Veryl.toml`."
@@ -6220,7 +6251,7 @@ msgstr ""
 "設定可能な項目は以下の通りです。これは `Veryl.toml` の `[doc]` セクションで指"
 "定できます。"
 
-#: src/06_development_environment/10_documentation.md:46
+#: src/06_development_environment/10_documentation.md:54
 msgid ""
 "```toml\n"
 "[doc]\n"
@@ -6232,15 +6263,15 @@ msgstr ""
 "path = \"document\"\n"
 "```"
 
-#: src/06_development_environment/10_documentation.md:53
+#: src/06_development_environment/10_documentation.md:61
 msgid "path"
 msgstr "path"
 
-#: src/06_development_environment/10_documentation.md:53
+#: src/06_development_environment/10_documentation.md:61
 msgid "\"doc\""
 msgstr "\"doc\""
 
-#: src/06_development_environment/10_documentation.md:53
+#: src/06_development_environment/10_documentation.md:61
 msgid "path to output directory"
 msgstr "出力ディレクトリへのパス"
 
@@ -7789,6 +7820,17 @@ msgstr "unknown_port"
 msgid "unused_variable"
 msgstr "unused_variable"
 
+#~ msgid ""
+#~ "Waveform description based on [WaveDrom](https://wavedrom.com) is "
+#~ "supported too. In a `wavedrom` code block, the syntax of WaveDrom can be "
+#~ "written. Please refer [Tutorial](https://wavedrom.com/tutorial.html) for "
+#~ "the detailed syntax."
+#~ msgstr ""
+#~ "[WaveDrom](https://wavedrom.com) による波形記述もサポートされています。"
+#~ "`wavedrom` コードブロック内で、WaveDromの構文を記述することができます。構"
+#~ "文の詳細は [チュートリアル](https://wavedrom.com/tutorial.html) を参照して"
+#~ "ください。"
+
 #~ msgid "If `--wave` option is specified, waveforms are generated."
 #~ msgstr "`--wave` オプションが指定された場合、波形を生成します。"
 
@@ -7994,9 +8036,6 @@ msgstr "unused_variable"
 #~ "モダンなプログラミング言語ではリンタやフォーマッタ、言語サーバといったサ"
 #~ "ポートツールが標準で揃っています。Veryl でもそれらを最初からサポートしま"
 #~ "す。"
-
-#~ msgid "The following tools are supported."
-#~ msgstr "以下のツールがサポートされています。"
 
 #~ msgid "Language server"
 #~ msgstr "言語サーバ"
