@@ -311,7 +311,7 @@
 <p><img src="./img/format.gif" alt="format" /></p>
 <p>ビデオが再生されない場合<sup class="footnote-reference"><a href="#1">1</a></sup></p>
 <h2 id="integrated-test"><a class="header" href="#integrated-test">組み込みテスト</a></h2>
-<p>SystemVerilogで書かれたテストコードをVerylに埋め込み、<code>veryl test</code> コマンドで実行することができます。</p>
+<p>SystemVerilogまたは<a href="https://www.cocotb.org">cocotb</a>で書かれたテストコードをVerylに埋め込み、<code>veryl test</code> コマンドで実行することができます。</p>
 <pre><code class="language-veryl">#[test(test1)]
 embed (inline) sv{{{
     module test1;
@@ -480,7 +480,12 @@ endmodule
 </tr>
 </table>
 <h2 id="documentation-comment"><a class="header" href="#documentation-comment">ドキュメンテーションコメント</a></h2>
-<p>ドキュメンテーションコメントとしてモジュールの説明を書いておくとドキュメントを自動生成することができます。単なるテキストだけでなく、マークダウン形式や<a href="https://wavedrom.com">WaveDrom</a>による波形記述を使用することができます。</p>
+<p>ドキュメンテーションコメントとしてモジュールの説明を書いておくとドキュメントを自動生成することができます。単なるテキストだけでなく、以下のフォーマットを使用することができます。</p>
+<ul>
+<li><a href="https://www.markdownguide.org">Markdown</a></li>
+<li><a href="https://wavedrom.com">WaveDrom</a>による波形記述</li>
+<li><a href="https://mermaid.js.org">Mermaid</a>によるダイアグラム記述</li>
+</ul>
 <table>
 <tr>
 <th>SystemVerilog</th>
@@ -2786,7 +2791,17 @@ expand_inside_operation = true
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ドキュメンテーション"><a class="header" href="#ドキュメンテーション">ドキュメンテーション</a></h1>
 <p>プロジェクトのドキュメントは <code>veryl doc</code> コマンドで生成することができます。全てのパブリックなモジュールとインターフェース、パッケージがリストアップされます。（参照 <a href="06_development_environment/../05_language_reference/11_visibility.html">可視性</a>）</p>
 <p>詳細な説明を書きたい場合はドキュメンテーションコメントを追加することもできます。ドキュメンテーションコメントでは<a href="https://www.markdownguide.org">マークダウン</a>記法を使えます。</p>
-<p><a href="https://wavedrom.com">WaveDrom</a> による波形記述もサポートされています。<code>wavedrom</code> コードブロック内で、WaveDromの構文を記述することができます。構文の詳細は <a href="https://wavedrom.com/tutorial.html">チュートリアル</a> を参照してください。</p>
+<p>以下のフォーマットもサポートされています。</p>
+<ul>
+<li><a href="https://wavedrom.com">WaveDrom</a>による波形記述</li>
+<li><a href="https://mermaid.js.org">Mermaid</a>によるダイアグラム記述</li>
+</ul>
+<p>それぞれの構文は <code>wavedrom</code> と <code>mermaid</code> コードブロック内で使用できます。</p>
+<p>詳細な構文は以下を参照してください。</p>
+<ul>
+<li><a href="https://mermaid.js.org/ecosystem/tutorials.html">Tutorials | Mermaid</a></li>
+<li><a href="https://wavedrom.com/tutorial.html">Hitchhiker’s Guide to the WaveDrom</a></li>
+</ul>
 <pre><code class="language-veryl playground">/// ModuleAの詳細説明
 ///
 /// * リスト要素0

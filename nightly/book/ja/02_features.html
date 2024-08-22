@@ -300,7 +300,7 @@
 <p><img src="./img/format.gif" alt="format" /></p>
 <p>ビデオが再生されない場合<sup class="footnote-reference"><a href="#1">1</a></sup></p>
 <h2 id="integrated-test"><a class="header" href="#integrated-test">組み込みテスト</a></h2>
-<p>SystemVerilogで書かれたテストコードをVerylに埋め込み、<code>veryl test</code> コマンドで実行することができます。</p>
+<p>SystemVerilogまたは<a href="https://www.cocotb.org">cocotb</a>で書かれたテストコードをVerylに埋め込み、<code>veryl test</code> コマンドで実行することができます。</p>
 <pre><code class="language-veryl">#[test(test1)]
 embed (inline) sv{{{
     module test1;
@@ -469,7 +469,12 @@ endmodule
 </tr>
 </table>
 <h2 id="documentation-comment"><a class="header" href="#documentation-comment">ドキュメンテーションコメント</a></h2>
-<p>ドキュメンテーションコメントとしてモジュールの説明を書いておくとドキュメントを自動生成することができます。単なるテキストだけでなく、マークダウン形式や<a href="https://wavedrom.com">WaveDrom</a>による波形記述を使用することができます。</p>
+<p>ドキュメンテーションコメントとしてモジュールの説明を書いておくとドキュメントを自動生成することができます。単なるテキストだけでなく、以下のフォーマットを使用することができます。</p>
+<ul>
+<li><a href="https://www.markdownguide.org">Markdown</a></li>
+<li><a href="https://wavedrom.com">WaveDrom</a>による波形記述</li>
+<li><a href="https://mermaid.js.org">Mermaid</a>によるダイアグラム記述</li>
+</ul>
 <table>
 <tr>
 <th>SystemVerilog</th>

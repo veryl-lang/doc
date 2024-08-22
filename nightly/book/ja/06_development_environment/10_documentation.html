@@ -272,7 +272,17 @@
                         <h1 id="ドキュメンテーション"><a class="header" href="#ドキュメンテーション">ドキュメンテーション</a></h1>
 <p>プロジェクトのドキュメントは <code>veryl doc</code> コマンドで生成することができます。全てのパブリックなモジュールとインターフェース、パッケージがリストアップされます。（参照 <a href="../05_language_reference/11_visibility.html">可視性</a>）</p>
 <p>詳細な説明を書きたい場合はドキュメンテーションコメントを追加することもできます。ドキュメンテーションコメントでは<a href="https://www.markdownguide.org">マークダウン</a>記法を使えます。</p>
-<p><a href="https://wavedrom.com">WaveDrom</a> による波形記述もサポートされています。<code>wavedrom</code> コードブロック内で、WaveDromの構文を記述することができます。構文の詳細は <a href="https://wavedrom.com/tutorial.html">チュートリアル</a> を参照してください。</p>
+<p>以下のフォーマットもサポートされています。</p>
+<ul>
+<li><a href="https://wavedrom.com">WaveDrom</a>による波形記述</li>
+<li><a href="https://mermaid.js.org">Mermaid</a>によるダイアグラム記述</li>
+</ul>
+<p>それぞれの構文は <code>wavedrom</code> と <code>mermaid</code> コードブロック内で使用できます。</p>
+<p>詳細な構文は以下を参照してください。</p>
+<ul>
+<li><a href="https://mermaid.js.org/ecosystem/tutorials.html">Tutorials | Mermaid</a></li>
+<li><a href="https://wavedrom.com/tutorial.html">Hitchhiker’s Guide to the WaveDrom</a></li>
+</ul>
 <pre><code class="language-veryl playground">/// ModuleAの詳細説明
 ///
 /// * リスト要素0
