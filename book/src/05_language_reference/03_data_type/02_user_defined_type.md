@@ -43,6 +43,20 @@ module A {
     assign a = EnumA::member_a;
 }
 ```
+
+If the type of `enum` is omitted, it will be infered from the variants automatically.
+
+```veryl,playground
+module A {
+    enum EnumA {
+        member_a,
+        member_b,
+        member_c = 3,
+    }
+}
+```
+
+
 ## Union
 
 A Veryl `union` is a packed, untagged sum type and is transpiled to SystemVerilog's `packed union`.
