@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-08-21T11:06:12+09:00\n"
+"POT-Creation-Date: 2024-08-22T12:41:10+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -2167,11 +2167,18 @@ msgstr ""
 "持ち、`=` で指定することができます。指定されなかった場合は自動的に割り当てら"
 "れます。"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:46
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:47
+msgid ""
+"If the type of `enum` is omitted, it will be infered from the variants "
+"automatically."
+msgstr ""
+"`enum` の型が省略されている場合、適切なサイズの型がバリアントから自動的に推定されます。"
+
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:60
 msgid "Union"
 msgstr "ユニオン"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:48
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:62
 msgid ""
 "A Veryl `union` is a packed, untagged sum type and is transpiled to "
 "SystemVerilog's `packed union`. Each  union variant should have the same "
@@ -2181,11 +2188,11 @@ msgstr ""
 "にトランスパイルされます。ユニオンのそれぞれのバリアントの幅は同じでなければ"
 "なりません。"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:64
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:78
 msgid "Typedef"
 msgstr "型定義"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:66
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:80
 msgid ""
 "The `type` keyword can be used to define a type alias to scalar or array "
 "types."
@@ -7367,7 +7374,8 @@ msgid ""
 "\n"
 "ModportItem: Identifier Colon Direction;\n"
 "\n"
-"EnumDeclaration: Enum Identifier Colon ScalarType LBrace EnumList RBrace;\n"
+"EnumDeclaration: Enum Identifier [ Colon ScalarType ] LBrace EnumList "
+"RBrace;\n"
 "\n"
 "EnumList: EnumGroup { Comma EnumGroup } [ Comma ];\n"
 "\n"
