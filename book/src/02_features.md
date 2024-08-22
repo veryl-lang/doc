@@ -41,7 +41,7 @@ If the video does not play[^1]
 
 ## Integrated test {#integrated-test}
 
-Test code written by SystemVerilog can be embeded in Veryl code,
+Test code written by SystemVerilog or [cocotb](https://www.cocotb.org) can be embeded in Veryl code,
 it can be executed through `veryl test` command.
 
 ```veryl
@@ -267,7 +267,11 @@ module ModuleA (
 ## Documentation comment {#documentation-comment}
 
 Writing module descriptions as documentation comments allows for automatic documentation generation.
-You can use not only plain text but also MarkDown format or waveform descriptions using [WaveDrom](https://wavedrom.com).
+You can use not only plain text but also the following formats:
+
+* [Markdown](https://www.markdownguide.org)
+* Waveform using [WaveDrom](https://wavedrom.com)
+* Diagram using [Mermaid](https://mermaid.js.org)
 
 <table>
 <tr>

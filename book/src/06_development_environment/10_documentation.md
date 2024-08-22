@@ -6,9 +6,17 @@ All public modules, interfaces and packages will be listed in it. (See [Visibili
 If you want to add a detailed description, you can add documentation comment.
 In the documentation comment, [Markdown](https://www.markdownguide.org) syntax can be used.
 
-Waveform description based on [WaveDrom](https://wavedrom.com) is supported too.
-In a `wavedrom` code block, the syntax of WaveDrom can be written.
-Please refer [Tutorial](https://wavedrom.com/tutorial.html) for the detailed syntax.
+The following formats are supported too.
+
+* Waveform description based on [WaveDrom](https://wavedrom.com)
+* Diagram description based on [Mermaid](https://mermaid.js.org)
+
+Each syntax can be used in `wavedrom` and `mermaid` code block.
+
+Please refer the following for the detailed syntax.
+
+* [Tutorials | Mermaid](https://mermaid.js.org/ecosystem/tutorials.html)
+* [Hitchhiker's Guide to the WaveDrom](https://wavedrom.com/tutorial.html)
 
 ```veryl,playground
 /// The detailed description of ModuleA
