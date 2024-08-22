@@ -1,0 +1,787 @@
+<!DOCTYPE HTML>
+<html lang="ja" class="light" dir="ltr">
+    <head prefix="og: http://ogp.me/ns#">
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>特徴 - The Veryl Hardware Description Language</title>
+
+
+        <!-- Custom HTML head -->
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NXW2P6CCF3"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+        
+            gtag('config', 'G-NXW2P6CCF3');
+        </script>
+        
+        <script>
+            (function () {
+                // See these pages for details:
+                // https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
+                // https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics
+        
+                function gen_canonical_href(lang) {
+                    let base = "https://doc.veryl-lang.org/book";
+                    let canonical_href;
+                    if (lang == "en") {
+                        canonical_href = `${base}/02_features.md`;
+                    } else {
+                        canonical_href = `${base}/${lang}/02_features.md`;
+                    }
+                    canonical_href = canonical_href.slice(0, -"md".length) + "html";
+                    if (canonical_href.endsWith("/index.html")) {
+                        canonical_href = canonical_href.slice(0, -"index.html".length);
+                    }
+                    return canonical_href;
+                }
+        
+        const canonical_href = gen_canonical_href("ja");
+
+                let link = document.createElement("link");
+                link.rel = "canonical";
+                link.href = canonical_href;
+                document.head.appendChild(link);
+        
+                const langs = ["en", "ja"];
+                for (const lang of langs) {
+                    const canonical_href = gen_canonical_href(lang);
+        
+                    let link = document.createElement("link");
+                    link.rel = "alternate";
+                    link.hreflang = lang;
+                    link.href = canonical_href;
+                    document.head.appendChild(link);
+                }
+            })()
+        </script>
+        
+        <meta property="og:url" content="https://github.com/veryl-lang/veryl" />
+        <meta property="og:title" content="Veryl: A Modern Hardware Description Language" />
+        <meta property="og:description" content="Veryl is a hardware description language which is designed as a SystemVerilog alternative." />
+        <meta property="og:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/css/language-picker.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="01_introduction.html"><strong aria-hidden="true">1.</strong> 概要</a></li><li class="chapter-item expanded "><a href="02_features.html" class="active"><strong aria-hidden="true">2.</strong> 特徴</a></li><li class="chapter-item expanded "><a href="03_getting_started.html"><strong aria-hidden="true">3.</strong> はじめに</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="03_getting_started/01_installation.html"><strong aria-hidden="true">3.1.</strong> インストール</a></li><li class="chapter-item "><a href="03_getting_started/02_hello_world.html"><strong aria-hidden="true">3.2.</strong> Hello, World!</a></li></ol></li><li class="chapter-item expanded "><a href="04_code_examples.html"><strong aria-hidden="true">4.</strong> コード例</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="04_code_examples/01_module.html"><strong aria-hidden="true">4.1.</strong> モジュール</a></li><li class="chapter-item "><a href="04_code_examples/02_instantiation.html"><strong aria-hidden="true">4.2.</strong> インスタンス</a></li><li class="chapter-item "><a href="04_code_examples/03_interface.html"><strong aria-hidden="true">4.3.</strong> インターフェース</a></li><li class="chapter-item "><a href="04_code_examples/04_package.html"><strong aria-hidden="true">4.4.</strong> パッケージ</a></li></ol></li><li class="chapter-item expanded "><a href="05_language_reference.html"><strong aria-hidden="true">5.</strong> 言語リファレンス</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="05_language_reference/01_source_code_structure.html"><strong aria-hidden="true">5.1.</strong> ソースコードの構造</a></li><li class="chapter-item "><a href="05_language_reference/02_lexical_structure.html"><strong aria-hidden="true">5.2.</strong> 字句構造</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="05_language_reference/02_lexical_structure/01_operator.html"><strong aria-hidden="true">5.2.1.</strong> 演算子</a></li><li class="chapter-item "><a href="05_language_reference/02_lexical_structure/02_number.html"><strong aria-hidden="true">5.2.2.</strong> 数値</a></li><li class="chapter-item "><a href="05_language_reference/02_lexical_structure/03_array_literal.html"><strong aria-hidden="true">5.2.3.</strong> 配列リテラル</a></li></ol></li><li class="chapter-item "><a href="05_language_reference/03_data_type.html"><strong aria-hidden="true">5.3.</strong> データ型</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="05_language_reference/03_data_type/01_builtin_type.html"><strong aria-hidden="true">5.3.1.</strong> 組み込み型</a></li><li class="chapter-item "><a href="05_language_reference/03_data_type/02_user_defined_type.html"><strong aria-hidden="true">5.3.2.</strong> ユーザ定義型</a></li><li class="chapter-item "><a href="05_language_reference/03_data_type/03_array.html"><strong aria-hidden="true">5.3.3.</strong> 配列</a></li><li class="chapter-item "><a href="05_language_reference/03_data_type/04_clock_reset.html"><strong aria-hidden="true">5.3.4.</strong> クロックとリセット</a></li></ol></li><li class="chapter-item "><a href="05_language_reference/04_expression.html"><strong aria-hidden="true">5.4.</strong> 式</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="05_language_reference/04_expression/01_operator_precedence.html"><strong aria-hidden="true">5.4.1.</strong> 演算子の優先順位</a></li><li class="chapter-item "><a href="05_language_reference/04_expression/02_function_call.html"><strong aria-hidden="true">5.4.2.</strong> 関数呼び出し</a></li><li class="chapter-item "><a href="05_language_reference/04_expression/03_concatenation.html"><strong aria-hidden="true">5.4.3.</strong> 連結</a></li><li class="chapter-item "><a href="05_language_reference/04_expression/04_if.html"><strong aria-hidden="true">5.4.4.</strong> if</a></li><li class="chapter-item "><a href="05_language_reference/04_expression/05_case_switch.html"><strong aria-hidden="true">5.4.5.</strong> Case / Switch</a></li><li class="chapter-item "><a href="05_language_reference/04_expression/06_bit_select.html"><strong aria-hidden="true">5.4.6.</strong> ビット選択</a></li><li class="chapter-item "><a href="05_language_reference/04_expression/07_range.html"><strong aria-hidden="true">5.4.7.</strong> 範囲</a></li><li class="chapter-item "><a href="05_language_reference/04_expression/08_msb_lsb.html"><strong aria-hidden="true">5.4.8.</strong> msb / lsb</a></li><li class="chapter-item "><a href="05_language_reference/04_expression/09_inside_outside.html"><strong aria-hidden="true">5.4.9.</strong> inside / outside</a></li></ol></li><li class="chapter-item "><a href="05_language_reference/05_statement.html"><strong aria-hidden="true">5.5.</strong> 文</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="05_language_reference/05_statement/01_assignment.html"><strong aria-hidden="true">5.5.1.</strong> 代入</a></li><li class="chapter-item "><a href="05_language_reference/05_statement/02_function_call.html"><strong aria-hidden="true">5.5.2.</strong> 関数呼び出し</a></li><li class="chapter-item "><a href="05_language_reference/05_statement/03_if.html"><strong aria-hidden="true">5.5.3.</strong> if</a></li><li class="chapter-item "><a href="05_language_reference/05_statement/04_case_switch.html"><strong aria-hidden="true">5.5.4.</strong> Case / Switch</a></li><li class="chapter-item "><a href="05_language_reference/05_statement/05_for.html"><strong aria-hidden="true">5.5.5.</strong> for</a></li><li class="chapter-item "><a href="05_language_reference/05_statement/06_return.html"><strong aria-hidden="true">5.5.6.</strong> return</a></li><li class="chapter-item "><a href="05_language_reference/05_statement/07_let.html"><strong aria-hidden="true">5.5.7.</strong> let</a></li></ol></li><li class="chapter-item "><a href="05_language_reference/06_declaration.html"><strong aria-hidden="true">5.6.</strong> 宣言</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="05_language_reference/06_declaration/01_variable.html"><strong aria-hidden="true">5.6.1.</strong> 変数</a></li><li class="chapter-item "><a href="05_language_reference/06_declaration/02_parameter.html"><strong aria-hidden="true">5.6.2.</strong> パラメータ</a></li><li class="chapter-item "><a href="05_language_reference/06_declaration/03_register.html"><strong aria-hidden="true">5.6.3.</strong> レジスタ</a></li><li class="chapter-item "><a href="05_language_reference/06_declaration/04_combinational.html"><strong aria-hidden="true">5.6.4.</strong> 組み合わせ回路</a></li><li class="chapter-item "><a href="05_language_reference/06_declaration/05_assign.html"><strong aria-hidden="true">5.6.5.</strong> assign</a></li><li class="chapter-item "><a href="05_language_reference/06_declaration/06_function.html"><strong aria-hidden="true">5.6.6.</strong> 関数</a></li><li class="chapter-item "><a href="05_language_reference/06_declaration/07_initial_final.html"><strong aria-hidden="true">5.6.7.</strong> initial / final</a></li><li class="chapter-item "><a href="05_language_reference/06_declaration/08_attribute.html"><strong aria-hidden="true">5.6.8.</strong> アトリビュート</a></li><li class="chapter-item "><a href="05_language_reference/06_declaration/09_generate.html"><strong aria-hidden="true">5.6.9.</strong> 生成</a></li><li class="chapter-item "><a href="05_language_reference/06_declaration/10_instantiation.html"><strong aria-hidden="true">5.6.10.</strong> インスタンス</a></li><li class="chapter-item "><a href="05_language_reference/06_declaration/11_named_block.html"><strong aria-hidden="true">5.6.11.</strong> 名前付きブロック</a></li><li class="chapter-item "><a href="05_language_reference/06_declaration/12_import_export.html"><strong aria-hidden="true">5.6.12.</strong> Import / Export</a></li></ol></li><li class="chapter-item "><a href="05_language_reference/07_module.html"><strong aria-hidden="true">5.7.</strong> モジュール</a></li><li class="chapter-item "><a href="05_language_reference/08_interface.html"><strong aria-hidden="true">5.8.</strong> インターフェース</a></li><li class="chapter-item "><a href="05_language_reference/09_package.html"><strong aria-hidden="true">5.9.</strong> パッケージ</a></li><li class="chapter-item "><a href="05_language_reference/10_systemverilog_interoperation.html"><strong aria-hidden="true">5.10.</strong> SystemVerilogとの相互運用</a></li><li class="chapter-item "><a href="05_language_reference/11_visibility.html"><strong aria-hidden="true">5.11.</strong> 可視性</a></li><li class="chapter-item "><a href="05_language_reference/12_foreign_language_integration.html"><strong aria-hidden="true">5.12.</strong> 他言語組み込み</a></li><li class="chapter-item "><a href="05_language_reference/13_integrated_test.html"><strong aria-hidden="true">5.13.</strong> 組み込みテスト</a></li><li class="chapter-item "><a href="05_language_reference/14_generics.html"><strong aria-hidden="true">5.14.</strong> ジェネリクス</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="05_language_reference/14_generics/01_default_parameter.html"><strong aria-hidden="true">5.14.1.</strong> デフォルトパラメータ</a></li></ol></li><li class="chapter-item "><a href="05_language_reference/15_clock_domain_annotation.html"><strong aria-hidden="true">5.15.</strong> クロックドメインアノテーション</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.html"><strong aria-hidden="true">5.15.1.</strong> Unsafe CDC</a></li></ol></li><li class="chapter-item "><a href="05_language_reference/16_standard_library.html"><strong aria-hidden="true">5.16.</strong> 標準ライブラリ</a></li></ol></li><li class="chapter-item expanded "><a href="06_development_environment.html"><strong aria-hidden="true">6.</strong> 開発環境</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="06_development_environment/01_project_configuration.html"><strong aria-hidden="true">6.1.</strong> プロジェクト設定</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="06_development_environment/01_project_configuration/01_build.html"><strong aria-hidden="true">6.1.1.</strong> Build</a></li><li class="chapter-item "><a href="06_development_environment/01_project_configuration/02_format.html"><strong aria-hidden="true">6.1.2.</strong> Format</a></li><li class="chapter-item "><a href="06_development_environment/01_project_configuration/03_lint.html"><strong aria-hidden="true">6.1.3.</strong> Lint</a></li><li class="chapter-item "><a href="06_development_environment/01_project_configuration/04_test.html"><strong aria-hidden="true">6.1.4.</strong> Test</a></li><li class="chapter-item "><a href="06_development_environment/01_project_configuration/05_publish.html"><strong aria-hidden="true">6.1.5.</strong> Publish</a></li></ol></li><li class="chapter-item "><a href="06_development_environment/02_dependencies.html"><strong aria-hidden="true">6.2.</strong> 依存関係</a></li><li class="chapter-item "><a href="06_development_environment/03_publish_project.html"><strong aria-hidden="true">6.3.</strong> プロジェクトを公開する</a></li><li class="chapter-item "><a href="06_development_environment/04_directory_layout.html"><strong aria-hidden="true">6.4.</strong> ディレクトリ構成</a></li><li class="chapter-item "><a href="06_development_environment/05_formatter.html"><strong aria-hidden="true">6.5.</strong> フォーマッタ</a></li><li class="chapter-item "><a href="06_development_environment/06_linter.html"><strong aria-hidden="true">6.6.</strong> リンタ</a></li><li class="chapter-item "><a href="06_development_environment/07_simulator.html"><strong aria-hidden="true">6.7.</strong> シミュレータ</a></li><li class="chapter-item "><a href="06_development_environment/08_language_server.html"><strong aria-hidden="true">6.8.</strong> 言語サーバ</a></li><li class="chapter-item "><a href="06_development_environment/09_compatibility.html"><strong aria-hidden="true">6.9.</strong> 互換性</a></li><li class="chapter-item "><a href="06_development_environment/10_documentation.html"><strong aria-hidden="true">6.10.</strong> ドキュメンテーション</a></li><li class="chapter-item "><a href="06_development_environment/11_github_action.html"><strong aria-hidden="true">6.11.</strong> GitHub Action</a></li><li class="chapter-item "><a href="06_development_environment/12_source_map.html"><strong aria-hidden="true">6.12.</strong> ソースマップ</a></li></ol></li><li class="chapter-item expanded "><a href="07_appendix.html"><strong aria-hidden="true">7.</strong> 補遺</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="07_appendix/01_formal_syntax.html"><strong aria-hidden="true">7.1.</strong> 構文</a></li><li class="chapter-item "><a href="07_appendix/02_semantic_error.html"><strong aria-hidden="true">7.2.</strong> セマンティックエラー</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Veryl Hardware Description Language</h1>
+
+                    <div class="right-buttons">
+                        <button id="language-toggle" class="icon-button" type="button"
+                                title="Change language" aria-label="Change language"
+                                aria-haspopup="true" aria-expanded="false"
+                                aria-controls="language-list">
+                            <i class="fa fa-globe"></i>
+                        </button>
+                        <ul id="language-list" class="theme-popup" aria-label="Languages" role="menu">
+                          <li role="none"><button role="menuitem" class="theme">
+                              <a id="en">English</a>
+                          </button></li>
+                          <li role="none"><button role="menuitem" class="theme">
+                              <a id="ja">日本語</a>
+                          </button></li>
+                        </ul>
+
+                        <script>
+                          let langToggle = document.getElementById("language-toggle");
+                          let langList = document.getElementById("language-list");
+                          langToggle.addEventListener("click", (event) => {
+                              langList.style.display = langList.style.display == "block" ? "none" : "block";
+                          });
+                          let selectedLang = document.getElementById("ja");
+                          if (selectedLang) {
+                              selectedLang.parentNode.classList.add("theme-selected");
+                          }
+
+                          // The path to the root, taking the current
+                          // language into account.
+                          let full_path_to_root = "../";
+                          // The page path (mdbook only gives us
+                          // access to the path to the Markdown file).
+                          let path = "02_features.md".replace(/\.md$/, ".html");
+                          for (let lang of langList.querySelectorAll("a")) {
+                              if (lang.id == "en") {
+                                  lang.href = `${full_path_to_root}${path}`;
+                              } else {
+                                  lang.href = `${full_path_to_root}${lang.id}/${path}`;
+                              }
+                          }
+                        </script>
+
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="特徴"><a class="header" href="#特徴">特徴</a></h1>
+<p>この章ではVerylの特徴的な機能をわかりやすい例とともに紹介します。</p>
+<ul>
+<li><a href="02_features.html#real-time-diagnostics">リアルタイム診断</a></li>
+<li><a href="02_features.html#auto-formatting">自動フォーマット</a></li>
+<li><a href="02_features.html#integrated-test">組み込みテスト</a></li>
+<li><a href="02_features.html#dependency-management">依存関係管理</a></li>
+<li><a href="02_features.html#generics">ジェネリクス</a></li>
+<li><a href="02_features.html#clock-domain-annotation">クロックドメインアノテーション</a></li>
+<li><a href="02_features.html#trailing-comma">末尾カンマ</a></li>
+<li><a href="02_features.html#abstraction-of-clock-and-reset">クロックとリセットの抽象化</a></li>
+<li><a href="02_features.html#documentation-comment">ドキュメンテーションコメント</a></li>
+<li><a href="02_features.html#compound-assignment-operator-in-always_ff"><code>always_ff</code> での複合代入演算子</a></li>
+<li><a href="02_features.html#individual-namespace-of-enum-variant">独立した名前空間を持つenumバリアント</a></li>
+<li><a href="02_features.html#repeat-of-concatenation">ビット連結における <code>repeat</code></a></li>
+<li><a href="02_features.html#if--case-expression"><code>if</code> / <code>case</code> 式</a></li>
+<li><a href="02_features.html#range-based-for--inside--outside">範囲 <code>for</code> / <code>inside</code> / <code>outside</code></a></li>
+<li><a href="02_features.html#msb-notation"><code>msb</code> 記法</a></li>
+<li><a href="02_features.html#let-statement"><code>let</code> 文</a></li>
+<li><a href="02_features.html#named-block">名前付きブロック</a></li>
+<li><a href="02_features.html#visibility-control">可視性制御</a></li>
+</ul>
+<h2 id="real-time-diagnostics"><a class="header" href="#real-time-diagnostics">リアルタイム診断</a></h2>
+<p>変数の未定義・未使用・未代入といった問題はエディタでの編集中にリアルタイムに通知されます。次の例では、未使用変数として通知された変数に <code>_</code> プレフィックスを付加することで未使用であることを明示し、警告を抑制しています。</p>
+<p><img src="./img/diagnostics.gif" alt="diagnostics" /></p>
+<p>ビデオが再生されない場合<sup class="footnote-reference"><a href="#1">1</a></sup></p>
+<h2 id="auto-formatting"><a class="header" href="#auto-formatting">自動フォーマット</a></h2>
+<p>エディタと連携した自動フォーマット機能のほか、コマンドラインでのフォーマットやCIでのフォーマットチェックも可能です。</p>
+<p><img src="./img/format.gif" alt="format" /></p>
+<p>ビデオが再生されない場合<sup class="footnote-reference"><a href="#1">1</a></sup></p>
+<h2 id="integrated-test"><a class="header" href="#integrated-test">組み込みテスト</a></h2>
+<p>SystemVerilogで書かれたテストコードをVerylに埋め込み、<code>veryl test</code> コマンドで実行することができます。</p>
+<pre><code class="language-veryl">#[test(test1)]
+embed (inline) sv{{{
+    module test1;
+        initial begin
+            assert (0) else $error("error");
+        end
+    endmodule
+}}}
+</code></pre>
+<h2 id="dependency-management"><a class="header" href="#dependency-management">依存関係管理</a></h2>
+<p>Verylには依存関係の管理機能が組み込まれており、プロジェクト設定に以下のようにライブラリのリポジトリパスとバージョンを追加するだけで、簡単にライブラリを組み込むことができます。</p>
+<pre><code class="language-toml">[dependencies]
+"https://github.com/veryl-lang/sample" = "0.1.0"
+</code></pre>
+<h2 id="generics"><a class="header" href="#generics">ジェネリクス</a></h2>
+<p>ジェネリクスによるコード生成は従来のパラメータオーバーライドよりさらに再利用性の高いコードを記述することができます。以下の例のような関数のパラメータだけでなく、インスタンスのモジュール名や構造体定義の型名もパラメータ化することができます。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">function automatic logic [20-1:0] FuncA_20 (
+    input logic [20-1:0] a
+);
+    return a + 1;
+endfunction
+
+function automatic logic [10-1:0] FuncA_10 (
+    input logic [10-1:0] a
+);
+    return a + 1;
+endfunction
+
+logic [10-1:0] a;
+logic [20-1:0] b;
+always_comb begin
+    a = FuncA_10(1);
+    b = FuncA_20(1);
+end
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">function FuncA::&lt;T&gt; (
+    a: input logic&lt;T&gt;,
+) -&gt; logic&lt;T&gt; {
+    return a + 1;
+}
+
+var a: logic&lt;10&gt;;
+var b: logic&lt;10&gt;;
+always_comb {
+    a = FuncA::&lt;10&gt;(1);
+    b = FuncA::&lt;20&gt;(1);
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="clock-domain-annotation"><a class="header" href="#clock-domain-annotation">クロックドメインアノテーション</a></h2>
+<p>モジュール内に複数のクロックがある場合、明示的なクロックドメインアノテーションとクロックドメイン境界への <code>unsafe (cdc)</code> ブロックが必要です。Veryl コンパイラは意図しないクロックドメインクロッシングをエラーとして検出し、明示的な <code>unsafe (cdc)</code> ブロックによりレビューが容易になります。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">module ModuleA (
+    input  i_clk_a,
+    input  i_dat_a,
+    output o_dat_a,
+    input  i_clk_b,
+    input  i_dat_b,
+    output o_dat_b
+);
+    // 注意!!!
+    // i_clk_a から i_clk_b へ
+    assign o_dat_b = i_dat_a;
+endmodule
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">module ModuleA (
+    i_clk_a: input  `a clock,
+    i_dat_a: input  `a logic,
+    i_dat_a: output `a logic,
+    i_clk_b: input  `b clock,
+    i_dat_b: input  `b logic,
+    i_dat_b: output `b logic,
+) {
+    unsafe (cdc) {
+        assign o_dat_b = i_dat_a;
+    }
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="trailing-comma"><a class="header" href="#trailing-comma">末尾カンマ</a></h2>
+<p>末尾カンマは、リストの最後の要素の後ろにカンマが置かれる構文です。これにより、要素の追加や削除が容易になり、バージョン管理システムにおける不必要な差異を減らすことができます。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">module ModuleA (
+    input  a,
+    input  b,
+    output o
+);
+endmodule
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">module ModuleA (
+    a: input logic,
+    b: input logic,
+    o: input logic,
+) {
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="abstraction-of-clock-and-reset"><a class="header" href="#abstraction-of-clock-and-reset">クロックとリセットの抽象化</a></h2>
+<p>クロックの極性やリセットの極性と同期性を構文上指定する必要はなく、ビルド時の設定で指定することができます。これにより同じVerylのコードからASIC向けの負極性・非同期リセットとFPGA向けの正極性・同期リセットのそれぞれのコードを生成することができます。</p>
+<p>さらに、明示的な <code>clock</code> と <code>reset</code> 型により、レジスタへのクロック・リセット接続が正しく行われているかどうかを確認することができます。モジュール内にクロックとリセットが1つだけの場合、レジスタへの接続を省略することもできます。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">module ModuleA (
+    input logic i_clk,
+    input logic i_rst_n
+);
+
+always_ff @ (posedge i_clk or negedge i_rst_n) begin
+    if (!i_rst_n) begin
+    end else begin
+    end
+end
+
+endmodule
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">module ModuleA (
+    i_clk: input clock,
+    i_rst: input reset,
+){
+    always_ff {
+        if_reset {
+        } else {
+        }
+    }
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="documentation-comment"><a class="header" href="#documentation-comment">ドキュメンテーションコメント</a></h2>
+<p>ドキュメンテーションコメントとしてモジュールの説明を書いておくとドキュメントを自動生成することができます。単なるテキストだけでなく、マークダウン形式や<a href="https://wavedrom.com">WaveDrom</a>による波形記述を使用することができます。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">// コメント
+module ModuleA;
+endmodule
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">/// マークダウン形式のドキュメンテーションコメント
+///
+/// * リスト
+/// * リスト
+/// 
+/// ```wavedrom
+/// { signal: [{ name: "Alfa", wave: "01.zx=ud.23.456789" }] }
+/// ```
+module ModuleA {
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="compound-assignment-operator-in-always_ff"><a class="header" href="#compound-assignment-operator-in-always_ff"><code>always_ff</code> での複合代入演算子</a></h2>
+<p>ノンブロッキング専用の代入演算子はなく、<code>always_ff</code> 内ではノンブロッキング代入が、 <code>always_comb</code> 内ではブロッキング代入が推論されます。そのため <code>always_ff</code> 内でも <code>always_comb</code> 内と同様に様々な複合代入演算子を使用することができます。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">always_ff @ (posedge i_clk) begin
+    if (a) begin
+        x &lt;= x + 1;
+    end
+end
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">always_ff {
+    if a {
+        x += 1;
+    }
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="individual-namespace-of-enum-variant"><a class="header" href="#individual-namespace-of-enum-variant">独立した名前空間を持つenumバリアント</a></h2>
+<p>enumのバリアントはenum毎に独立した名前空間を持っており意図しない名前の衝突を防ぐことができます。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">typedef enum logic[1:0] {
+    MemberA,
+    MemberB
+} EnumA;
+
+EnumA a;
+assign a = MemberA;
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">enum EnumA: logic&lt;2&gt; {
+    MemberA,
+    MemberB
+}
+
+var a: EnumA;
+assign a = EnumA::MemberA;
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="repeat-of-concatenation"><a class="header" href="#repeat-of-concatenation">ビット連結における <code>repeat</code></a></h2>
+<p>ビット連結における繰り返し記述として明示的な <code>repeat</code> 記法を採用し、 複雑な <code>{}</code> の組み合わせより可読性が向上しています。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">logic [31:0] a;
+assign a = {{2{X[9:0]}}, {12{Y}}};
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">var a: logic&lt;32&gt;;
+assign a = {X[9:0] repeat 2, Y repeat 12};
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="if--case-expression"><a class="header" href="#if--case-expression"><code>if</code> / <code>case</code> 式</a></h2>
+<p>三項演算子の代わりに if 式と case 式を採用することで、比較するアイテム数が多い場合の可読性が向上します。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">logic a;
+assign a = X == 0 ? Y0 :
+           X == 1 ? Y1 :
+           X == 2 ? Y2 : 
+                    Y3;
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">var a: logic;
+assign a = case X {
+    0      : Y0,
+    1      : Y1,
+    2      : Y2,
+    default: Y3,
+};
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="range-based-for--inside--outside"><a class="header" href="#range-based-for--inside--outside">範囲 <code>for</code> / <code>inside</code> / <code>outside</code></a></h2>
+<p>閉区間 <code>..=</code> と半開区間 <code>..</code> を表す記法を導入し、 <code>for</code> 、<code>inside</code> で範囲を統一的に記述できるようにしました。また、<code>inside</code> の逆を意味する <code>outside</code> も導入しました。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">for (int i = 0; i &lt; 10; i++) begin
+    a[i] =   X[i] inside {[1:10]};
+    b[i] = !(X[i] inside {[1:10]});
+end
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">for i: u32 in 0..10 {
+    a[i] = inside  X[i] {1..=10};
+    b[i] = outside X[i] {1..=10};
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="msb-notation"><a class="header" href="#msb-notation"><code>msb</code> 記法</a></h2>
+<p>最上位ビットを示す <code>msb</code> 記法により、パラメータから最上位ビットを計算する必要がなくなり、より意図を明確にすることができます。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">logic a;
+logic [WIDTH-1:0] X;
+assign a = X[WIDTH-1];
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">var a: logic;
+var X: logic&lt;WIDTH&gt;;
+assign a = X[msb];
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="let-statement"><a class="header" href="#let-statement"><code>let</code> 文</a></h2>
+<p>変数宣言と同時に値を束縛する専用の <code>let</code> 文が用意されており、SystemVerilogではサポートされていなかった様々な場所で使用することができます。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">logic tmp;
+always_ff @ (posedge i_clk) begin
+    tmp = b + 1;
+    x &lt;= tmp;
+end
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">always_ff {
+    let tmp: logic = b + 1;
+    x = tmp;
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="named-block"><a class="header" href="#named-block">名前付きブロック</a></h2>
+<p>変数のスコープを限定するための名前付きブロックを定義することができます。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">if (1) begin: BlockA
+end
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">:BlockA {
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="visibility-control"><a class="header" href="#visibility-control">可視性制御</a></h2>
+<p><code>pub</code> キーワードの付かないモジュールはプロジェクト外から参照できず、ドキュメントの自動生成にも含まれません。これによりプロジェクト外に公開したいものと内部実装とを区別することができます。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">module ModuleA;
+endmodule
+
+module ModuleB;
+endmodule
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">pub module ModuleA {
+}
+
+module ModuleB {
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>いくつかのブラウザはデフォルトでGIF動画の再生を停止しています。ブラウザの設定を確認してください。</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="01_introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="03_getting_started.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="01_introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="03_getting_started.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="ace.js"></script>
+        <script src="editor.js"></script>
+        <script src="mode-rust.js"></script>
+        <script src="theme-dawn.js"></script>
+        <script src="theme-tomorrow_night.js"></script>
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+        <script type="module">
+            import init, {build, format} from "https://doc.veryl-lang.org/nightly/playground/pkg/veryl_wasm.js";
+            init().then(() => {});
+            window.build = build;
+        </script>
+
+        <!-- Custom JS scripts -->
+        <script src="mode-veryl.js"></script>
+        <script src="editor.js"></script>
+
+
+    </div>
+    </body>
+</html>
