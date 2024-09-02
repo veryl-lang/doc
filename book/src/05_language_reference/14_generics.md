@@ -13,6 +13,16 @@ The following items support generics:
 Each generic definition has generic parameters (often an uppercase letter is used like `T`) which can be placed as identifier or expression in the definition.
 Generic parameters are declarated after item's identifier with `::<>`.
 
+Each generic parameter should have generic bound after colon like `T: const`.
+Generic bound represents what value can be passed to the generic parameter.
+The available generic bounds are below:
+
+* `const`: means constant value can be passed
+* `type` : means arbitrary type can be passed
+* named prototype
+
+Named prototype is a special generic bound. See [Prototype](14_generics/02_prototype.md) for details.
+
 At the usage of generics, actual parameters can be given through `::<>`.
 As the actual parameters, numeric literal and identifier concatenated by `::` can be used.
 
@@ -25,7 +35,7 @@ This is caused by that the local parameters is not accessible from the potision 
 
 ```veryl,playground
 module ModuleA {
-    function FuncA::<T> (
+    function FuncA::<T: const> (
         a: input logic<T>,
     ) -> logic<T> {
         return a + 1;
@@ -44,12 +54,14 @@ module ModuleA {
     inst u1: ModuleB::<ModuleD>;
 }
 
-module ModuleB::<T> {
+proto module ProtoA;
+
+module ModuleB::<T: ProtoA> {
     inst u: T;
 }
 
-module ModuleC {}
-module ModuleD {}
+module ModuleC for ProtoA {}
+module ModuleD for ProtoA {}
 ```
 
 ## Generic Package
@@ -60,7 +72,7 @@ module ModuleA {
     local B: u32 = PackageA::<2>::X;
 }
 
-package PackageA::<T> {
+package PackageA::<T: const> {
     local X: u32 = T;
 }
 ```
@@ -71,7 +83,7 @@ package PackageA::<T> {
 module ModuleA {
     type TypeA = i32;
 
-    struct StructA::<T> {
+    struct StructA::<T: type> {
         A: T,
     }
 

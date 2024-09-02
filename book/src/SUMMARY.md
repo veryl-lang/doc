@@ -61,6 +61,7 @@
     - [Integrated Test](./05_language_reference/13_integrated_test.md)
     - [Generics](./05_language_reference/14_generics.md)
         - [Default Parameter](./05_language_reference/14_generics/01_default_parameter.md)
+        - [Prototype](./05_language_reference/14_generics/02_prototype.md)
     - [Clock Domain Annotation](./05_language_reference/15_clock_domain_annotation.md)
         - [Unsafe CDC](./05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.md)
     - [Standard Library](./05_language_reference/16_standard_library.md)

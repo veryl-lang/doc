@@ -104,7 +104,7 @@ end
 
 ```veryl
 # module ModuleA {
-function FuncA::<T> (
+function FuncA::<T: const> (
     a: input logic<T>,
 ) -> logic<T> {
     return a + 1;
