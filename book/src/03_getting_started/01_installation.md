@@ -21,6 +21,8 @@ You can install with [cargo](https://crates.io/crates/veryl).
 cargo install veryl veryl-ls
 ```
 
+To build Veryl, Rust 1.77.0+ is required.
+
 ## Editor integration
 
 [Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code) and [Vim](https://github.com/vim/vim) / [Neovim](https://neovim.io) are supported officially.
