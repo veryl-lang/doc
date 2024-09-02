@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-08-22T18:29:54+09:00\n"
+"POT-Creation-Date: 2024-09-02T12:00:55+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -259,108 +259,112 @@ msgstr "ジェネリクス"
 msgid "Default Parameter"
 msgstr "デフォルトパラメータ"
 
-#: src/SUMMARY.md:64 src/02_features.md:124
+#: src/SUMMARY.md:64 src/05_language_reference/14_generics/02_prototype.md:1
+msgid "Prototype"
+msgstr "プロトタイプ"
+
+#: src/SUMMARY.md:65 src/02_features.md:124
 #: src/05_language_reference/15_clock_domain_annotation.md:1
 msgid "Clock Domain Annotation"
 msgstr "クロックドメインアノテーション"
 
-#: src/SUMMARY.md:65
+#: src/SUMMARY.md:66
 #: src/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.md:1
 msgid "Unsafe CDC"
 msgstr "Unsafe CDC"
 
-#: src/SUMMARY.md:66 src/05_language_reference/16_standard_library.md:1
+#: src/SUMMARY.md:67 src/05_language_reference/16_standard_library.md:1
 msgid "Standard Library"
 msgstr "標準ライブラリ"
 
-#: src/SUMMARY.md:67 src/06_development_environment.md:1
+#: src/SUMMARY.md:68 src/06_development_environment.md:1
 msgid "Development Environment"
 msgstr "開発環境"
 
-#: src/SUMMARY.md:68
+#: src/SUMMARY.md:69
 #: src/06_development_environment/01_project_configuration.md:1
 msgid "Project Configuration"
 msgstr "プロジェクト設定"
 
-#: src/SUMMARY.md:69
+#: src/SUMMARY.md:70
 #: src/06_development_environment/01_project_configuration/01_build.md:1
 msgid "Build"
 msgstr "Build"
 
-#: src/SUMMARY.md:70
+#: src/SUMMARY.md:71
 #: src/06_development_environment/01_project_configuration/02_format.md:1
 msgid "Format"
 msgstr "Format"
 
-#: src/SUMMARY.md:71
+#: src/SUMMARY.md:72
 #: src/06_development_environment/01_project_configuration/03_lint.md:1
 msgid "Lint"
 msgstr "Lint"
 
-#: src/SUMMARY.md:72
+#: src/SUMMARY.md:73
 #: src/06_development_environment/01_project_configuration/04_test.md:1
 #: src/06_development_environment/11_github_action.md:47
 msgid "Test"
 msgstr "Test"
 
-#: src/SUMMARY.md:73
+#: src/SUMMARY.md:74
 #: src/06_development_environment/01_project_configuration/05_publish.md:1
 msgid "Publish"
 msgstr "Publish"
 
-#: src/SUMMARY.md:74 src/06_development_environment/02_dependencies.md:1
+#: src/SUMMARY.md:75 src/06_development_environment/02_dependencies.md:1
 msgid "Dependencies"
 msgstr "依存関係"
 
-#: src/SUMMARY.md:75 src/06_development_environment/03_publish_project.md:1
+#: src/SUMMARY.md:76 src/06_development_environment/03_publish_project.md:1
 msgid "Publish Project"
 msgstr "プロジェクトを公開する"
 
-#: src/SUMMARY.md:76 src/06_development_environment/04_directory_layout.md:1
+#: src/SUMMARY.md:77 src/06_development_environment/04_directory_layout.md:1
 msgid "Directory Layout"
 msgstr "ディレクトリ構成"
 
-#: src/SUMMARY.md:77 src/06_development_environment/05_formatter.md:1
+#: src/SUMMARY.md:78 src/06_development_environment/05_formatter.md:1
 msgid "Formatter"
 msgstr "フォーマッタ"
 
-#: src/SUMMARY.md:78 src/06_development_environment/06_linter.md:1
+#: src/SUMMARY.md:79 src/06_development_environment/06_linter.md:1
 msgid "Linter"
 msgstr "リンタ"
 
-#: src/SUMMARY.md:79 src/06_development_environment/07_simulator.md:1
+#: src/SUMMARY.md:80 src/06_development_environment/07_simulator.md:1
 msgid "Simulator"
 msgstr "シミュレータ"
 
-#: src/SUMMARY.md:80 src/06_development_environment/08_language_server.md:1
+#: src/SUMMARY.md:81 src/06_development_environment/08_language_server.md:1
 msgid "Language Server"
 msgstr "言語サーバ"
 
-#: src/SUMMARY.md:81 src/06_development_environment/09_compatibility.md:1
+#: src/SUMMARY.md:82 src/06_development_environment/09_compatibility.md:1
 msgid "Compatibility"
 msgstr "互換性"
 
-#: src/SUMMARY.md:82 src/06_development_environment/10_documentation.md:1
+#: src/SUMMARY.md:83 src/06_development_environment/10_documentation.md:1
 msgid "Documentation"
 msgstr "ドキュメンテーション"
 
-#: src/SUMMARY.md:83 src/06_development_environment/11_github_action.md:1
+#: src/SUMMARY.md:84 src/06_development_environment/11_github_action.md:1
 msgid "GitHub Action"
 msgstr "GitHub Action"
 
-#: src/SUMMARY.md:84 src/06_development_environment/12_source_map.md:1
+#: src/SUMMARY.md:85 src/06_development_environment/12_source_map.md:1
 msgid "Source Map"
 msgstr "ソースマップ"
 
-#: src/SUMMARY.md:85 src/07_appendix.md:1
+#: src/SUMMARY.md:86 src/07_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:86 src/07_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:87 src/07_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:87 src/07_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:88 src/07_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -975,10 +979,14 @@ msgstr ""
 "きます。"
 
 #: src/03_getting_started/01_installation.md:24
+msgid "To build Veryl, Rust 1.77.0+ is required."
+msgstr "Verylをビルドするには Rust 1.77.0 以上が必要です。"
+
+#: src/03_getting_started/01_installation.md:26
 msgid "Editor integration"
 msgstr "エディタ設定"
 
-#: src/03_getting_started/01_installation.md:26
+#: src/03_getting_started/01_installation.md:28
 msgid ""
 "[Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-"
 "studio-code) and [Vim](https://github.com/vim/vim) / [Neovim](https://neovim."
@@ -988,11 +996,11 @@ msgstr ""
 "visual-studio-code) と [Vim](https://github.com/vim/vim) / [Neovim](https://"
 "neovim.io) がサポートされています。"
 
-#: src/03_getting_started/01_installation.md:28
+#: src/03_getting_started/01_installation.md:30
 msgid "Visual Studio Code"
 msgstr "Visual Studio Code"
 
-#: src/03_getting_started/01_installation.md:30
+#: src/03_getting_started/01_installation.md:32
 msgid ""
 "For Visual Studio Code, Veryl extension is provided. The extension provides "
 "file type detection, syntex highlight and language server integration. You "
@@ -1003,7 +1011,7 @@ msgstr ""
 "の検出とシンタックスハイライト、言語サーバの組み込みを提供します。拡張パネル"
 "から \"Veryl\" で検索するか、以下の URL からインストールしてください。"
 
-#: src/03_getting_started/01_installation.md:34
+#: src/03_getting_started/01_installation.md:36
 msgid ""
 "[Veryl extension for Visual Studio Code](https://marketplace.visualstudio."
 "com/items?itemName=dalance.vscode-veryl)"
@@ -1011,11 +1019,11 @@ msgstr ""
 "[Veryl extension for Visual Studio Code](https://marketplace.visualstudio."
 "com/items?itemName=dalance.vscode-veryl)"
 
-#: src/03_getting_started/01_installation.md:36
+#: src/03_getting_started/01_installation.md:38
 msgid "Vim / Neovim"
 msgstr "Vim / Neovim"
 
-#: src/03_getting_started/01_installation.md:38
+#: src/03_getting_started/01_installation.md:40
 msgid ""
 "For Vim / Neovim, Veryl plugin is provided. The plugin provides file type "
 "detection, syntex highlight. There are some instructions for plugin "
@@ -1025,15 +1033,15 @@ msgstr ""
 "タイプの検出とシンタックスハイライトを提供します。プラグインのインストールと"
 "言語サーバの組み込みは以下の URL を参照してください。"
 
-#: src/03_getting_started/01_installation.md:42
+#: src/03_getting_started/01_installation.md:44
 msgid "[Vim / Neovim plugin](https://github.com/veryl-lang/veryl.vim)"
 msgstr "[Vim / Neovim plugin](https://github.com/veryl-lang/veryl.vim)"
 
-#: src/03_getting_started/01_installation.md:44
+#: src/03_getting_started/01_installation.md:46
 msgid "Other Editors"
 msgstr "そのほかのエディタ"
 
-#: src/03_getting_started/01_installation.md:46
+#: src/03_getting_started/01_installation.md:48
 msgid ""
 "Veryl provides language server. So other editors supporting language server "
 "(ex. Emacs) can use it."
@@ -3290,6 +3298,36 @@ msgstr ""
 
 #: src/05_language_reference/14_generics.md:16
 msgid ""
+"Each generic parameter should have generic bound after colon like `T: "
+"const`. Generic bound represents what value can be passed to the generic "
+"parameter. The available generic bounds are below:"
+msgstr ""
+"各ジェネリックパラメータにはコロンの後に `T: const` のようなジェネリック境界が必要です。"
+"ジェネリック境界はどのような値をそのパラメータに渡すことができるかを示します。"
+"使用可能なジェネリック境界は以下の通りです。"
+
+#: src/05_language_reference/14_generics.md:20
+msgid "`const`: means constant value can be passed"
+msgstr "`const`: 定数値を渡すことができる"
+
+#: src/05_language_reference/14_generics.md:21
+msgid "`type` : means arbitrary type can be passed"
+msgstr "`type`: 任意の型を渡すことができる"
+
+#: src/05_language_reference/14_generics.md:22
+msgid "named prototype"
+msgstr "名前付きプロトタイプ"
+
+#: src/05_language_reference/14_generics.md:24
+msgid ""
+"Named prototype is a special generic bound. See [Prototype]"
+"(14_generics/02_prototype.md) for details."
+msgstr ""
+"名前付きプロトタイプは特別なジェネリック境界です。"
+"詳細は [プロトタイプ](14_generics/02_prototype.md) を参照してください。"
+
+#: src/05_language_reference/14_generics.md:26
+msgid ""
 "At the usage of generics, actual parameters can be given through `::<>`. As "
 "the actual parameters, numeric literal and identifier concatenated by `::` "
 "can be used."
@@ -3298,7 +3336,7 @@ msgstr ""
 "メータとしては数値リテラルと `::` で連結された識別子を使用することができま"
 "す。"
 
-#: src/05_language_reference/14_generics.md:19
+#: src/05_language_reference/14_generics.md:29
 msgid ""
 "Additionally, the actual parameters should be accessible at the position of "
 "the generics declaration. For example, module names can be used as actual "
@@ -3313,29 +3351,29 @@ msgstr ""
 "ません。これはローカルパラメータがジェネリクス定義位置からは参照できない場合"
 "に発生します。"
 
-#: src/05_language_reference/14_generics.md:24
+#: src/05_language_reference/14_generics.md:34
 msgid "Generic Function"
 msgstr "ジェネリック関数"
 
-#: src/05_language_reference/14_generics.md:39
+#: src/05_language_reference/14_generics.md:49
 msgid "Generic Module/Interface"
 msgstr "ジェネリックモジュール/インターフェース"
 
-#: src/05_language_reference/14_generics.md:55
+#: src/05_language_reference/14_generics.md:67
 msgid "Generic Package"
 msgstr "ジェネリックパッケージ"
 
-#: src/05_language_reference/14_generics.md:68
+#: src/05_language_reference/14_generics.md:80
 msgid "Generic Struct"
 msgstr "ジェネリック構造体"
 
-#: src/05_language_reference/14_generics.md:70
+#: src/05_language_reference/14_generics.md:82
 msgid ""
 "```veryl,playground\n"
 "module ModuleA {\n"
 "    type TypeA = i32;\n"
 "\n"
-"    struct StructA::<T> {\n"
+"    struct StructA::<T: type> {\n"
 "        A: T,\n"
 "    }\n"
 "\n"
@@ -3356,7 +3394,7 @@ msgstr ""
 "module ModuleA {\n"
 "    type TypeA = i32;\n"
 "\n"
-"    struct StructA::<T> {\n"
+"    struct StructA::<T: type> {\n"
 "        A: T,\n"
 "    }\n"
 "\n"
@@ -3395,7 +3433,7 @@ msgstr ""
 msgid ""
 "```veryl,playground\n"
 "module ModuleA {\n"
-"    function FuncA::<T, U = 1> (\n"
+"    function FuncA::<T: const, U: const = 1> (\n"
 "        a: input logic<T>,\n"
 "    ) -> logic<T> {\n"
 "        return a + U;\n"
@@ -3415,7 +3453,7 @@ msgid ""
 msgstr ""
 "```veryl,playground\n"
 "module ModuleA {\n"
-"    function FuncA::<T, U = 1> (\n"
+"    function FuncA::<T: const, U: const = 1> (\n"
 "        a: input logic<T>,\n"
 "    ) -> logic<T> {\n"
 "        return a + U;\n"
@@ -3432,6 +3470,36 @@ msgstr ""
 "    let _b: logic<20> = FuncA::<20, 2>(1);\n"
 "}\n"
 "```"
+
+#: src/05_language_reference/14_generics/02_prototype.md:3
+msgid ""
+"Prototype is a special generic bound. It represents prototype which can be "
+"passed to the generic parameter. Currently module prototype is supported "
+"only."
+msgstr ""
+"プロトタイプは特別なジェネリック境界で、ジェネリックパラメータに渡せるプロトタイプを示します。"
+"現在はモジュールプロトタイプのみがサポートされています。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:6
+msgid ""
+"In the following example, `ProtoA` is a module prototype which has parameter "
+"`A` and port `i_dat` and `o_dat`. By binding like `T: ProtoA`, it is "
+"represented that the generic parameter `T` should have the parameters and "
+"ports."
+msgstr ""
+"以下の例では、`ProtoA` がパラメータ `A` とポート `i_dat` `o_dat` を持つモジュールプロトタイプです。"
+"`T: ProtoA` のように制約することで、ジェネリックパラメータ `T` がそれらのパラメータとポートを持つ必要があることが示されます。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:9
+msgid ""
+"To use prototype, `for` implementation is required. `ModuleC` and `ModuleD` "
+"have `for ProroA` specifier which means the module satisfies the condision "
+"of `ProroA`. So the modules can be used as the generic parameter `T` of "
+"`ModuleB`."
+msgstr ""
+"プロトタイプを使うには `for` による実装が必要です。"
+"`ModuleC` と `ModuleD` は `for ProtoA` 指定により、 `ProtoA` の条件を満たすことが示されています。"
+"これにより、それらのモジュールは `ModuleB` の ジェネリックパラメータ `T` として使用できるようになります。"
 
 #: src/05_language_reference/15_clock_domain_annotation.md:3
 msgid ""
@@ -6163,7 +6231,8 @@ msgstr "[Mermaid](https://mermaid.js.org)によるダイアグラム記述"
 
 #: src/06_development_environment/10_documentation.md:14
 msgid "Each syntax can be used in `wavedrom` and `mermaid` code block."
-msgstr "それぞれの構文は `wavedrom` と `mermaid` コードブロック内で使用できます。"
+msgstr ""
+"それぞれの構文は `wavedrom` と `mermaid` コードブロック内で使用できます。"
 
 #: src/06_development_environment/10_documentation.md:16
 msgid "Please refer the following for the detailed syntax."
@@ -6708,6 +6777,9 @@ msgid ""
 "\\b)/                                                       : Token;\n"
 "ClockNegedgeTerm      : <INITIAL, Generic       >/(?-u:\\b)clock_negedge(?-u:"
 "\\b)/                                                       : Token;\n"
+"ConstTerm             : <INITIAL, Generic       >/(?-u:\\b)const(?-u:"
+"\\b)/                                                               : "
+"Token;\n"
 "DefaultTerm           : <INITIAL, Generic       >/(?-u:\\b)default(?-u:"
 "\\b)/                                                             : Token;\n"
 "ElseTerm              : <INITIAL, Generic       >/(?-u:\\b)else(?-u:"
@@ -6794,6 +6866,9 @@ msgid ""
 "PackageTerm           : <INITIAL, Generic       >/(?-u:\\b)package(?-u:"
 "\\b)/                                                             : Token;\n"
 "ParamTerm             : <INITIAL, Generic       >/(?-u:\\b)param(?-u:"
+"\\b)/                                                               : "
+"Token;\n"
+"ProtoTerm             : <INITIAL, Generic       >/(?-u:\\b)proto(?-u:"
 "\\b)/                                                               : "
 "Token;\n"
 "PubTerm               : <INITIAL, Generic       >/(?-u:\\b)pub(?-u:"
@@ -6926,6 +7001,7 @@ msgid ""
 "ClockToken         : ClockTerm         : Token Comments;\n"
 "ClockPosedgeToken  : ClockPosedgeTerm  : Token Comments;\n"
 "ClockNegedgeToken  : ClockNegedgeTerm  : Token Comments;\n"
+"ConstToken         : ConstTerm         : Token Comments;\n"
 "DefaultToken       : DefaultTerm       : Token Comments;\n"
 "ElseToken          : ElseTerm          : Token Comments;\n"
 "EmbedToken         : EmbedTerm         : Token Comments;\n"
@@ -6960,6 +7036,7 @@ msgid ""
 "OutsideToken       : OutsideTerm       : Token Comments;\n"
 "PackageToken       : PackageTerm       : Token Comments;\n"
 "ParamToken         : ParamTerm         : Token Comments;\n"
+"ProtoToken         : ProtoTerm         : Token Comments;\n"
 "PubToken           : PubTerm           : Token Comments;\n"
 "RefToken           : RefTerm           : Token Comments;\n"
 "RepeatToken        : RepeatTerm        : Token Comments;\n"
@@ -7057,6 +7134,7 @@ msgid ""
 "Clock         : ClockToken         : VerylToken;\n"
 "ClockPosedge  : ClockPosedgeToken  : VerylToken;\n"
 "ClockNegedge  : ClockNegedgeToken  : VerylToken;\n"
+"Const         : ConstToken         : VerylToken;\n"
 "Defaul        : DefaultToken       : VerylToken; // avoid to conflict with "
 "Rust's Default trait\n"
 "Else          : ElseToken          : VerylToken;\n"
@@ -7092,6 +7170,7 @@ msgid ""
 "Outside       : OutsideToken       : VerylToken;\n"
 "Package       : PackageToken       : VerylToken;\n"
 "Param         : ParamToken         : VerylToken;\n"
+"Proto         : ProtoToken         : VerylToken;\n"
 "Pub           : PubToken           : VerylToken;\n"
 "Ref           : RefToken           : VerylToken;\n"
 "Repeat        : RepeatToken        : VerylToken;\n"
@@ -7257,22 +7336,21 @@ msgid ""
 "\n"
 "FixedType: U32 | U64 | I32 | I64 | F32 | F64 | Strin;\n"
 "\n"
-"VariableType: ( Clock\n"
-"              | ClockPosedge\n"
-"              | ClockNegedge\n"
-"              | Reset\n"
-"              | ResetAsyncHigh\n"
-"              | ResetAsyncLow\n"
-"              | ResetSyncHigh\n"
-"              | ResetSyncLow\n"
-"              | Logic\n"
-"              | Bit\n"
-"              | ScopedIdentifier\n"
-"              ) [ Width ];\n"
+"VariableType: Clock\n"
+"            | ClockPosedge\n"
+"            | ClockNegedge\n"
+"            | Reset\n"
+"            | ResetAsyncHigh\n"
+"            | ResetAsyncLow\n"
+"            | ResetSyncHigh\n"
+"            | ResetSyncLow\n"
+"            | Logic\n"
+"            | Bit\n"
+"            | ScopedIdentifier;\n"
 "\n"
 "TypeModifier: Tri | Signed;\n"
 "\n"
-"ScalarType: { TypeModifier } ( VariableType | FixedType );\n"
+"ScalarType: { TypeModifier } ( VariableType [ Width ] | FixedType );\n"
 "\n"
 "ArrayType: ScalarType [ Array ];\n"
 "\n"
@@ -7478,12 +7556,17 @@ msgid ""
 "// "
 "----------------------------------------------------------------------------\n"
 "\n"
+"GenericBound: Const\n"
+"            | Type\n"
+"            | ScopedIdentifier;\n"
+"\n"
 "WithGenericParameter: ColonColonLAngle WithGenericParameterList RAngle;\n"
 "\n"
 "WithGenericParameterList: WithGenericParameterItem { Comma "
 "WithGenericParameterItem } [ Comma ];\n"
 "\n"
-"WithGenericParameterItem: Identifier [ Equ WithGenericArgumentItem ];\n"
+"WithGenericParameterItem: Identifier Colon GenericBound [ Equ "
+"WithGenericArgumentItem ];\n"
 "\n"
 "// "
 "----------------------------------------------------------------------------\n"
@@ -7568,8 +7651,9 @@ msgid ""
 "// "
 "----------------------------------------------------------------------------\n"
 "\n"
-"ModuleDeclaration: [ Pub ] Module Identifier [ WithGenericParameter ] "
-"[ WithParameter ] [ PortDeclaration ] LBrace { ModuleGroup } RBrace;\n"
+"ModuleDeclaration: [ Pub ] Module Identifier [ WithGenericParameter ] [ For "
+"ScopedIdentifier ] [ WithParameter ] [ PortDeclaration ] LBrace "
+"{ ModuleGroup } RBrace;\n"
 "\n"
 "ModuleIfDeclaration: If Expression ModuleNamedBlock { Else If Expression "
 "ModuleOptionalNamedBlock } [ Else ModuleOptionalNamedBlock ];\n"
@@ -7670,6 +7754,15 @@ msgid ""
 "\n"
 "// "
 "----------------------------------------------------------------------------\n"
+"// Proto\n"
+"// "
+"----------------------------------------------------------------------------\n"
+"\n"
+"ProtoModuleDeclaration: [ Pub ] Proto Module Identifier [ WithParameter ] "
+"[ PortDeclaration ] Semicolon;\n"
+"\n"
+"// "
+"----------------------------------------------------------------------------\n"
 "// Embed\n"
 "// "
 "----------------------------------------------------------------------------\n"
@@ -7705,6 +7798,7 @@ msgid ""
 "DescriptionItem: ModuleDeclaration\n"
 "               | InterfaceDeclaration\n"
 "               | PackageDeclaration\n"
+"               | ProtoModuleDeclaration\n"
 "               | ImportDeclaration\n"
 "               | EmbedDeclaration\n"
 "               | IncludeDeclaration\n"
