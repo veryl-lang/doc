@@ -68,12 +68,12 @@ module ModuleD for ProtoA {}
 
 ```veryl,playground
 module ModuleA {
-    local A: u32 = PackageA::<1>::X;
-    local B: u32 = PackageA::<2>::X;
+    const A: u32 = PackageA::<1>::X;
+    const B: u32 = PackageA::<2>::X;
 }
 
 package PackageA::<T: const> {
-    local X: u32 = T;
+    const X: u32 = T;
 }
 ```
 

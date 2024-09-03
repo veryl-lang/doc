@@ -75,12 +75,12 @@ module ModuleA {
 ## Type type
 
 `type` is a type which represents type kind.
-Variable of `type` can be defined as `param` or `local` only.
+Variable of `type` can be defined as `param` or `const` only.
 
 ```veryl,playground
 module ModuleA {
-    local a: type = logic;
-    local b: type = logic<10>;
-    local c: type = u32;
+    const a: type = logic;
+    const b: type = logic<10>;
+    const c: type = u32;
 }
 ```

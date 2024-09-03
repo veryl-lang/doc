@@ -75,10 +75,10 @@ If it is omitted, the appropriate width will be filled in the translated code.
 
 ```veryl,playground
 module ModuleA {
-    local a0: u64 = 'b0101;
-    local a1: u64 = 'o01234567;
-    local a2: u64 = 'd0123456789;
-    local a3: u64 = 'h0123456789fffff;
+    const a0: u64 = 'b0101;
+    const a1: u64 = 'o01234567;
+    const a2: u64 = 'd0123456789;
+    const a3: u64 = 'h0123456789fffff;
 }
 ```
 
@@ -88,10 +88,10 @@ The bit width specification can be added to "set all bits".
 
 ```veryl,playground
 module ModuleA {
-    local a0: u64 = 1'0;
-    local a1: u64 = 2'1;
-    local a2: u64 = 3'x;
-    local a3: u64 = 4'z;
+    const a0: u64 = 1'0;
+    const a1: u64 = 2'1;
+    const a2: u64 = 3'x;
+    const a3: u64 = 4'z;
 }
 ```
 

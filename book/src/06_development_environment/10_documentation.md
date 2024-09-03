@@ -37,7 +37,7 @@ Please refer the following for the detailed syntax.
 pub module ModuleA #(
     /// Data width
     param ParamA: u32 = 1,
-    local ParamB: u32 = 1,
+    const ParamB: u32 = 1,
 ) (
     i_clk : input  clock        , /// Clock
     i_rst : input  reset        , /// Reset

@@ -6,7 +6,7 @@ interface InterfaceA #(
     param ParamA: u32 = 1,
     param ParamB: u32 = 1,
 ) {
-    local ParamC: u32 = 1;
+    const ParamC: u32 = 1;
 
     var a: logic<ParamA>;
     var b: logic<ParamA>;

@@ -7,6 +7,6 @@ To access an item in a package, `::` symbol can be used like `PackageA::ParamA`.
 
 ```veryl,playground
 package PackageA {
-    local ParamA: u32 = 0;
+    const ParamA: u32 = 0;
 }
 ```

@@ -4,7 +4,7 @@
 // module definition
 module ModuleA #(
     param ParamA: u32 = 10,
-    local ParamB: u32 = 10, // trailing comma is allowed
+    const ParamB: u32 = 10, // trailing comma is allowed
 ) (
     i_clk : input  clock            , // `clock` is a special type for clock
     i_rst : input  reset            , // `reset` is a special type for reset
@@ -12,9 +12,9 @@ module ModuleA #(
     i_data: input  logic<ParamA> [2], // `[]` means unpacked array in SystemVerilog
     o_data: output logic<ParamA>    , // `<>` means packed array in SystemVerilog
 ) {
-    // local parameter declaration
+    // const parameter declaration
     //   `param` is not allowed in module
-    local ParamC: u32 = 10;
+    const ParamC: u32 = 10;
 
     // variable declaration
     var r_data0: logic<ParamA>;

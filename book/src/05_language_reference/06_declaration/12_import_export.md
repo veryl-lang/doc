@@ -14,7 +14,7 @@ module ModuleA {
 }
 
 package PackageA {
-    local paramA: u32 = 1;
+    const paramA: u32 = 1;
 }
 ```
 
@@ -23,7 +23,7 @@ package PackageA {
 
 ```veryl,playground
 package PackageA {
-    local paramA: u32 = 1;
+    const paramA: u32 = 1;
 }
 
 package PackageB {
