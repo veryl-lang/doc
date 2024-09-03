@@ -315,6 +315,32 @@ Otherwise, it is assigned automatically.</p>
     }
 }
 </code></pre>
+<h3 id="enum-encoding"><a class="header" href="#enum-encoding">Enum Encoding</a></h3>
+<p>By default, the value of each variant is assigned sequentially if it is omitted.
+If you want to specify value encoding, <code>#[enum_encoding]</code> attribute can be used.
+The available encodings are here:</p>
+<ul>
+<li><code>sequential</code></li>
+<li><code>onehot</code></li>
+<li><code>gray</code></li>
+</ul>
+<pre><code class="language-veryl playground">module A {
+    #[enum_encoding(sequential)]
+    enum EnumA {
+        member_a,
+    }
+
+    #[enum_encoding(onehot)]
+    enum EnumB {
+        member_a,
+    }
+
+    #[enum_encoding(gray)]
+    enum EnumC {
+        member_a,
+    }
+}
+</code></pre>
 <h2 id="union"><a class="header" href="#union">Union</a></h2>
 <p>A Veryl <code>union</code> is a packed, untagged sum type and is transpiled to SystemVerilog’s <code>packed union</code>.
 Each  union variant should have the same packed width as each other union variant.</p>

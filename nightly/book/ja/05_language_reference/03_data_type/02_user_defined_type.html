@@ -309,6 +309,30 @@
     }
 }
 </code></pre>
+<h3 id="列挙型エンコーディング"><a class="header" href="#列挙型エンコーディング">列挙型エンコーディング</a></h3>
+<p>デフォルトでは各バリアントの値が省略されたときは0から順に割り当てられます。この割り当てのエンコードを指定したい場合は、<code>#[enum_encoding]</code> アトリビュートを指定できます。使用できるエンコードは以下の通りです。</p>
+<ul>
+<li><code>sequential</code></li>
+<li><code>onehot</code></li>
+<li><code>gray</code></li>
+</ul>
+<pre><code class="language-veryl playground">module A {
+    #[enum_encoding(sequential)]
+    enum EnumA {
+        member_a,
+    }
+
+    #[enum_encoding(onehot)]
+    enum EnumB {
+        member_a,
+    }
+
+    #[enum_encoding(gray)]
+    enum EnumC {
+        member_a,
+    }
+}
+</code></pre>
 <h2 id="ユニオン"><a class="header" href="#ユニオン">ユニオン</a></h2>
 <p><code>union</code> はパックされたタグなしの直和型で、SystemVerilog では <code>packed union</code> にトランスパイルされます。ユニオンのそれぞれのバリアントの幅は同じでなければなりません。</p>
 <pre><code class="language-veryl playground">module A {
