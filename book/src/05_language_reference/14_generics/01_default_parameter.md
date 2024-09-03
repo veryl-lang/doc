@@ -28,7 +28,7 @@ module ModuleA {
     }
 
     // Error
-    //function FuncA::<T = 1, U> (
+    //function FuncA::<T: const = 1, U: const> (
     //    a: input logic<T>,
     //) -> logic<T> {
     //    return a + U;

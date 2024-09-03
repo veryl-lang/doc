@@ -1,7 +1,7 @@
 # Standard Library
 
 Veryl provides some useful and general modules as standard library.
-Standard library is under `std` namespace, and it can be used without adding dependency.
+Standard library is under `$std` namespace, and it can be used without adding dependency.
 
 <div class="warning">
 
@@ -11,8 +11,8 @@ The public API of standard library may be changed until Veryl 1.0 release.
 
 ```veryl
 module ModuleA {
-    // std::fifo is FIFO module in standard library
-    inst u: std::fifo (
+    // $std::fifo is FIFO module in standard library
+    inst u: $std::fifo (
         i_clk        : _,
         i_rst        : _,
         i_clear      : _,
