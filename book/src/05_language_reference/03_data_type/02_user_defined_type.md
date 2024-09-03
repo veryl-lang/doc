@@ -56,6 +56,34 @@ module A {
 }
 ```
 
+### Enum Encoding
+
+By default, the value of each variant is assigned sequentially if it is omitted.
+If you want to specify value encoding, `#[enum_encoding]` attribute can be used.
+The available encodings are here:
+
+* `sequential`
+* `onehot`
+* `gray`
+
+```veryl,playground
+module A {
+    #[enum_encoding(sequential)]
+    enum EnumA {
+        member_a,
+    }
+
+    #[enum_encoding(onehot)]
+    enum EnumB {
+        member_a,
+    }
+
+    #[enum_encoding(gray)]
+    enum EnumC {
+        member_a,
+    }
+}
+```
 
 ## Union
 
