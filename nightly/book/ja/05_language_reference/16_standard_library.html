@@ -270,13 +270,13 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="標準ライブラリ"><a class="header" href="#標準ライブラリ">標準ライブラリ</a></h1>
-<p>Verylはいくつかの便利な汎用モジュールを標準ライブラリとして提供しています。標準ライブラリは <code>std</code> 名前空間にあり、依存関係を追加することなく使用できます。</p>
+<p>Verylはいくつかの便利な汎用モジュールを標準ライブラリとして提供しています。標準ライブラリは <code>$std</code> 名前空間にあり、依存関係を追加することなく使用できます。</p>
 <div class="warning">
 <p>標準ライブラリの公開APIは Veryl 1.0 がリリースされるまでは変更される可能性があります。</p>
 </div>
 <pre><code class="language-veryl">module ModuleA {
-    // std::fifo は標準ライブラリの FIFO モジュール
-    inst u: std::fifo (
+    // $std::fifo は標準ライブラリの FIFO モジュール
+    inst u: $std::fifo (
         i_clk        : _,
         i_rst        : _,
         i_clear      : _,
