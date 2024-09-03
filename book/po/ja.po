@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-09-03T09:44:42+09:00\n"
+"POT-Creation-Date: 2024-09-03T09:52:03+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -2195,11 +2195,37 @@ msgstr ""
 "`enum` の型が省略されている場合、適切なサイズの型がバリアントから自動的に推定"
 "されます。"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:60
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:59
+msgid "Enum Encoding"
+msgstr "列挙型エンコーディング"
+
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:61
+msgid ""
+"By default, the value of each variant is assigned sequentially if it is "
+"omitted. If you want to specify value encoding, `#[enum_encoding]` attribute "
+"can be used. The available encodings are here:"
+msgstr ""
+"デフォルトでは各バリアントの値が省略されたときは0から順に割り当てられます。"
+"この割り当てのエンコードを指定したい場合は、`#[enum_encoding]` アトリビュートを指定できます。"
+"使用できるエンコードは以下の通りです。"
+
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:65
+msgid "`sequential`"
+msgstr "`sequential`"
+
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:66
+msgid "`onehot`"
+msgstr "`onehot`"
+
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:67
+msgid "`gray`"
+msgstr "`gray`"
+
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:88
 msgid "Union"
 msgstr "ユニオン"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:62
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:90
 msgid ""
 "A Veryl `union` is a packed, untagged sum type and is transpiled to "
 "SystemVerilog's `packed union`. Each  union variant should have the same "
@@ -2209,11 +2235,11 @@ msgstr ""
 "にトランスパイルされます。ユニオンのそれぞれのバリアントの幅は同じでなければ"
 "なりません。"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:78
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:106
 msgid "Typedef"
 msgstr "型定義"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:80
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:108
 msgid ""
 "The `type` keyword can be used to define a type alias to scalar or array "
 "types."
@@ -3654,7 +3680,8 @@ msgid ""
 "dependency."
 msgstr ""
 "Verylはいくつかの便利な汎用モジュールを標準ライブラリとして提供しています。標"
-"準ライブラリは `$std` 名前空間にあり、依存関係を追加することなく使用できます。"
+"準ライブラリは `$std` 名前空間にあり、依存関係を追加することなく使用できま"
+"す。"
 
 #: src/05_language_reference/16_standard_library.md:8
 msgid ""
