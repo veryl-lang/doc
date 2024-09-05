@@ -1,27 +1,35 @@
 # Installation
 
-You can install Veryl by downloading binary.
-If you have Rust development environment, you can use `cargo` instead of it.
+Veryl can be intalled through the official toolchain installer `verylup`.
 
 ## Requirement
 
 Veryl uses `git` command internally. Please confirm `git` can be launched.
 
-## Choose a way of installation
+## Install verylup
 
 ### Download binary
 
-Download from [release page](https://github.com/veryl-lang/veryl/releases/latest), and extract to the directory in PATH.
+Download from [release page](https://github.com/veryl-lang/verylup/releases/latest), and extract to the directory in `PATH`.
 
 ### Cargo
 
-You can install with [cargo](https://crates.io/crates/veryl).
+You can install with [cargo](https://crates.io/crates/verylup).
 
 ```
-cargo install veryl veryl-ls
+cargo install verylup
 ```
 
-To build Veryl, Rust 1.77.0+ is required.
+## Setup verylup
+
+After installing verylup, the following command is required once at first.
+It downloads the latest toolchain and creates `veryl` and `veryl-ls` command at the same location as verylup.
+
+```
+verylup setup
+```
+
+Now `veryl` command can be used!
 
 ## Editor integration
 
