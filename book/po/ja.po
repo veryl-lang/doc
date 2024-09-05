@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-09-03T12:31:15+09:00\n"
+"POT-Creation-Date: 2024-09-05T19:00:59+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -356,15 +356,19 @@ msgstr "GitHub Action"
 msgid "Source Map"
 msgstr "ソースマップ"
 
-#: src/SUMMARY.md:86 src/07_appendix.md:1
+#: src/SUMMARY.md:86 src/06_development_environment/13_verylup.md:1
+msgid "verylup"
+msgstr "verylup"
+
+#: src/SUMMARY.md:87 src/07_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:87 src/07_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:88 src/07_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:88 src/07_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:89 src/07_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -935,58 +939,69 @@ msgstr ""
 
 #: src/03_getting_started/01_installation.md:3
 msgid ""
-"You can install Veryl by downloading binary. If you have Rust development "
-"environment, you can use `cargo` instead of it."
+"Veryl can be intalled through the official toolchain installer `verylup`."
 msgstr ""
-"Veryl バイナリをダウンロードしてインストールできます。もし Rust ユーザであれ"
-"ば `cargo` コマンドでインストールすることもできます。"
+"Veryl は公式のツールチェーンインストーラ `verylup` を使ってインストールできます。"
 
-#: src/03_getting_started/01_installation.md:6
+#: src/03_getting_started/01_installation.md:5
 msgid "Requirement"
 msgstr "要件"
 
-#: src/03_getting_started/01_installation.md:8
+#: src/03_getting_started/01_installation.md:7
 msgid ""
 "Veryl uses `git` command internally. Please confirm `git` can be launched."
 msgstr ""
 "Veryl は `git` コマンドを内部で使用します。 `git` が起動できることを確認して"
 "おいてください。"
 
-#: src/03_getting_started/01_installation.md:10
-msgid "Choose a way of installation"
-msgstr "インストール方法の選択"
+#: src/03_getting_started/01_installation.md:9
+msgid "Install verylup"
+msgstr "verylup のインストール"
 
-#: src/03_getting_started/01_installation.md:12
+#: src/03_getting_started/01_installation.md:11
 msgid "Download binary"
 msgstr "バイナリのダウンロード"
 
-#: src/03_getting_started/01_installation.md:14
+#: src/03_getting_started/01_installation.md:13
 msgid ""
-"Download from [release page](https://github.com/veryl-lang/veryl/releases/"
-"latest), and extract to the directory in PATH."
+"Download from [release page](https://github.com/veryl-lang/verylup/releases/"
+"latest), and extract to the directory in `PATH`."
 msgstr ""
-"[リリースページ](https://github.com/veryl-lang/veryl/releases/latest)からダウ"
+"[リリースページ](https://github.com/veryl-lang/verylup/releases/latest)からダウ"
 "ンロードして、パスの通ったところに展開してください。"
 
-#: src/03_getting_started/01_installation.md:16
+#: src/03_getting_started/01_installation.md:15
 msgid "Cargo"
 msgstr "Cargo"
 
-#: src/03_getting_started/01_installation.md:18
-msgid "You can install with [cargo](https://crates.io/crates/veryl)."
+#: src/03_getting_started/01_installation.md:17
+msgid "You can install with [cargo](https://crates.io/crates/verylup)."
 msgstr ""
-"[cargo](https://crates.io/crates/veryl) コマンドからインストールすることもで"
+"[cargo](https://crates.io/crates/verylup) コマンドからインストールすることもで"
 "きます。"
 
-#: src/03_getting_started/01_installation.md:24
-msgid "To build Veryl, Rust 1.77.0+ is required."
-msgstr "Verylをビルドするには Rust 1.77.0 以上が必要です。"
+#: src/03_getting_started/01_installation.md:23
+msgid "Setup verylup"
+msgstr "verylup のセットアップ"
 
-#: src/03_getting_started/01_installation.md:26
+#: src/03_getting_started/01_installation.md:25
+msgid ""
+"After installing verylup, the following command is required once at first. "
+"It downloads the latest toolchain and creates `veryl` and `veryl-ls` command "
+"at the same location as verylup."
+msgstr ""
+"verylup をインストールした後、以下のコマンドを1回実行してください。"
+"最新のツールチェーンをダウンロードし、`veryl` と `veryl-ls` コマンドをverylupと同じ場所に作成します。"
+
+#: src/03_getting_started/01_installation.md:32
+msgid "Now `veryl` command can be used!"
+msgstr "これで `veryl` コマンドが使えるようになりました。"
+
+#: src/03_getting_started/01_installation.md:34
 msgid "Editor integration"
 msgstr "エディタ設定"
 
-#: src/03_getting_started/01_installation.md:28
+#: src/03_getting_started/01_installation.md:36
 msgid ""
 "[Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-"
 "studio-code) and [Vim](https://github.com/vim/vim) / [Neovim](https://neovim."
@@ -996,11 +1011,11 @@ msgstr ""
 "visual-studio-code) と [Vim](https://github.com/vim/vim) / [Neovim](https://"
 "neovim.io) がサポートされています。"
 
-#: src/03_getting_started/01_installation.md:30
+#: src/03_getting_started/01_installation.md:38
 msgid "Visual Studio Code"
 msgstr "Visual Studio Code"
 
-#: src/03_getting_started/01_installation.md:32
+#: src/03_getting_started/01_installation.md:40
 msgid ""
 "For Visual Studio Code, Veryl extension is provided. The extension provides "
 "file type detection, syntex highlight and language server integration. You "
@@ -1011,7 +1026,7 @@ msgstr ""
 "の検出とシンタックスハイライト、言語サーバの組み込みを提供します。拡張パネル"
 "から \"Veryl\" で検索するか、以下の URL からインストールしてください。"
 
-#: src/03_getting_started/01_installation.md:36
+#: src/03_getting_started/01_installation.md:44
 msgid ""
 "[Veryl extension for Visual Studio Code](https://marketplace.visualstudio."
 "com/items?itemName=dalance.vscode-veryl)"
@@ -1019,11 +1034,11 @@ msgstr ""
 "[Veryl extension for Visual Studio Code](https://marketplace.visualstudio."
 "com/items?itemName=dalance.vscode-veryl)"
 
-#: src/03_getting_started/01_installation.md:38
+#: src/03_getting_started/01_installation.md:46
 msgid "Vim / Neovim"
 msgstr "Vim / Neovim"
 
-#: src/03_getting_started/01_installation.md:40
+#: src/03_getting_started/01_installation.md:48
 msgid ""
 "For Vim / Neovim, Veryl plugin is provided. The plugin provides file type "
 "detection, syntex highlight. There are some instructions for plugin "
@@ -1033,15 +1048,15 @@ msgstr ""
 "タイプの検出とシンタックスハイライトを提供します。プラグインのインストールと"
 "言語サーバの組み込みは以下の URL を参照してください。"
 
-#: src/03_getting_started/01_installation.md:44
+#: src/03_getting_started/01_installation.md:52
 msgid "[Vim / Neovim plugin](https://github.com/veryl-lang/veryl.vim)"
 msgstr "[Vim / Neovim plugin](https://github.com/veryl-lang/veryl.vim)"
 
-#: src/03_getting_started/01_installation.md:46
+#: src/03_getting_started/01_installation.md:54
 msgid "Other Editors"
 msgstr "そのほかのエディタ"
 
-#: src/03_getting_started/01_installation.md:48
+#: src/03_getting_started/01_installation.md:56
 msgid ""
 "Veryl provides language server. So other editors supporting language server "
 "(ex. Emacs) can use it."
@@ -6621,6 +6636,80 @@ msgstr ""
 "最初の行が元のテキストで、2行目が `sourcemap-resolver` により追加された行で"
 "す。使用例は以下の通りです。"
 
+#: src/06_development_environment/13_verylup.md:3
+msgid ""
+"[verylup](https://github.com/veryl-lang/verylup) is the official toolchain "
+"installer of Veryl. It eases to update and switch toolchains."
+msgstr ""
+"[verylup](https://github.com/veryl-lang/verylup) はVerylの公式ツールチェーンインストーラです。"
+"ツールチェーンの更新や切り替えを簡単に行うことができます。"
+
+#: src/06_development_environment/13_verylup.md:6
+msgid "Update toolchain"
+msgstr "ツールチェーンの更新"
+
+#: src/06_development_environment/13_verylup.md:8
+msgid "The following command updates Veryl toolchain to the latest version."
+msgstr "以下のコマンドはVerylツールチェーンを最新版に更新します。"
+
+#: src/06_development_environment/13_verylup.md:14
+msgid "Install a specific toolchain"
+msgstr "特定のツールチェーンをインストール"
+
+#: src/06_development_environment/13_verylup.md:16
+msgid ""
+"If you want to use a specific version of Veryl, `verylup install` can be "
+"used."
+msgstr ""
+"もし特定のバージョンのVerylを使用したい場合は、`verylup install` を使うことができます。"
+
+#: src/06_development_environment/13_verylup.md:22
+msgid ""
+"After installing it, `+` version specifier can be used in `veryl` command "
+"like below:"
+msgstr ""
+"インストール後、`veryl` コマンドで `+` によるバージョン指定が可能になります。"
+
+#: src/06_development_environment/13_verylup.md:28
+msgid "For Veryl Developer"
+msgstr "Veryl開発者向け"
+
+#: src/06_development_environment/13_verylup.md:30
+msgid ""
+"For Veryl developer, a special toolchain target `local` is prepared. If "
+"`veryup install local` is executed in your local Veryl repository, the built "
+"toolchain is installed as `local` toolchain. `local` becomes the default "
+"toolchain if it exists."
+msgstr ""
+"Veryl の開発者向けに、特別なツールチェーン `local` が用意されています。"
+"`verylup install local` をローカルのVerylリポジトリ上で実行すると、"
+"ビルドしたツールチェーンを `local` ツールチェーンとしてインストールします。"
+"`local` ツールチェーンが存在するときはデフォルトのツールチェーンになります。"
+
+#: src/06_development_environment/13_verylup.md:34
+msgid ""
+"```\n"
+"// Build and install the toolchain from local Veryl repository\n"
+"verylup install local\n"
+"\n"
+"// Use the built toolchain\n"
+"veryl build\n"
+"\n"
+"// Use the latest toolchain\n"
+"veryl +latest build\n"
+"```"
+msgstr ""
+"```\n"
+"// ローカルのVerylリポジトリでビルドしたツールチェーンをインストール\n"
+"verylup install local\n"
+"\n"
+"// ビルドしたツールチェーンを使う\n"
+"veryl build\n"
+"\n"
+"// 最新のツールチェーンを使う\n"
+"veryl +latest build\n"
+"```"
+
 #: src/07_appendix/01_formal_syntax.md:3
 msgid ""
 "Veryl's parser is based on parser generator [parol](https://github.com/"
@@ -7682,6 +7771,8 @@ msgid ""
 "ModuleForDeclaration: For Identifier In Range [ Step AssignmentOperator "
 "Expression ] ModuleNamedBlock;\n"
 "\n"
+"ModuleBlockDeclaration: ModuleNamedBlock;\n"
+"\n"
 "ModuleNamedBlock: Colon Identifier LBrace { ModuleGroup } RBrace;\n"
 "\n"
 "ModuleOptionalNamedBlock: [ Colon Identifier ] LBrace { ModuleGroup } "
@@ -7700,9 +7791,9 @@ msgid ""
 "          | FunctionDeclaration\n"
 "          | ModuleIfDeclaration\n"
 "          | ModuleForDeclaration\n"
+"          | ModuleBlockDeclaration\n"
 "          | EnumDeclaration\n"
 "          | StructUnionDeclaration\n"
-"          | ModuleNamedBlock\n"
 "          | ImportDeclaration\n"
 "          | InitialDeclaration\n"
 "          | FinalDeclaration\n"
@@ -7725,6 +7816,8 @@ msgid ""
 "InterfaceForDeclaration: For Identifier In Range [ Step AssignmentOperator "
 "Expression ] InterfaceNamedBlock;\n"
 "\n"
+"InterfaceBlockDeclaration: InterfaceNamedBlock;\n"
+"\n"
 "InterfaceNamedBlock: Colon Identifier LBrace { InterfaceGroup } RBrace;\n"
 "\n"
 "InterfaceOptionalNamedBlock: [ Colon Identifier ] LBrace { InterfaceGroup } "
@@ -7739,10 +7832,10 @@ msgid ""
 "             | ModportDeclaration\n"
 "             | InterfaceIfDeclaration\n"
 "             | InterfaceForDeclaration\n"
+"             | InterfaceBlockDeclaration\n"
 "             | TypeDefDeclaration\n"
 "             | EnumDeclaration\n"
 "             | StructUnionDeclaration\n"
-"             | InterfaceNamedBlock\n"
 "             | FunctionDeclaration\n"
 "             | ImportDeclaration\n"
 "             | InitialDeclaration\n"
@@ -7934,6 +8027,19 @@ msgstr "unknown_port"
 #: src/07_appendix/02_semantic_error.md:51
 msgid "unused_variable"
 msgstr "unused_variable"
+
+#~ msgid ""
+#~ "You can install Veryl by downloading binary. If you have Rust development "
+#~ "environment, you can use `cargo` instead of it."
+#~ msgstr ""
+#~ "Veryl バイナリをダウンロードしてインストールできます。もし Rust ユーザであ"
+#~ "れば `cargo` コマンドでインストールすることもできます。"
+
+#~ msgid "Choose a way of installation"
+#~ msgstr "インストール方法の選択"
+
+#~ msgid "To build Veryl, Rust 1.77.0+ is required."
+#~ msgstr "Verylをビルドするには Rust 1.77.0 以上が必要です。"
 
 #~ msgid ""
 #~ "Waveform description based on [WaveDrom](https://wavedrom.com) is "
