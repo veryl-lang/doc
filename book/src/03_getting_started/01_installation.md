@@ -1,6 +1,9 @@
 # Installation
 
 Veryl can be intalled through the official toolchain installer `verylup`.
+We recommend to use `verylup` because it provides some usefule features like toolchain update.
+
+If you want install without internet connection, you can download from [release page](https://github.com/veryl-lang/veryl/releases/latest) directly too.
 
 ## Requirement
 
@@ -54,3 +57,23 @@ There are some instructions for plugin installation and language server integrat
 ### Other Editors
 
 Veryl provides language server. So other editors supporting language server (ex. Emacs) can use it.
+
+## Shell Completion
+
+Shell completion script for `veryl` and `verylup` is provided through `verylup completion`.
+For example, the following command generates completion script for zsh.
+
+```
+verylup completion zsh veryl   > _veryl
+verylup completion zsh verylup > _verylup
+```
+
+Supported shells are below:
+
+* Bash
+* Elvish
+* Fish
+* PowerShell
+* Zsh
+
+Please refer the documentation of each shell for usage of generated scripts.

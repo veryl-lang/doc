@@ -5,7 +5,7 @@ It eases to update and switch toolchains.
 
 ## Update toolchain
 
-The following command updates Veryl toolchain to the latest version.
+The following command updates Veryl toolchain and verylup to the latest version.
 
 ```
 verylup update
@@ -24,6 +24,17 @@ After installing it, `+` version specifier can be used in `veryl` command like b
 ```
 veryl +0.12.0 build
 ```
+
+## Toolchain override for directories
+
+If you want to use a specific version of Veryl for specific directories, `verylup override` can be used.
+
+```
+verylup override set 0.12.0
+```
+
+`verylup override` can be executed in arbitrary directories in a Veryl project.
+After this command, the default toolchain becomes `0.12.0` in the project.
 
 ## For Veryl Developer
 
