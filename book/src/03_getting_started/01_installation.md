@@ -3,7 +3,7 @@
 Veryl can be intalled through the official toolchain installer `verylup`.
 We recommend to use `verylup` because it provides some usefule features like toolchain update.
 
-If you want install without internet connection, you can download from [release page](https://github.com/veryl-lang/veryl/releases/latest) directly too.
+> Note: If you want install without internet connection, you can download from [release page](https://github.com/veryl-lang/veryl/releases/latest) directly instead of verylup.
 
 ## Requirement
 
