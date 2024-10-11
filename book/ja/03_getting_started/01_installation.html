@@ -270,7 +270,10 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="インストール"><a class="header" href="#インストール">インストール</a></h1>
-<p>Veryl は公式のツールチェーンインストーラ <code>verylup</code> を使ってインストールできます。</p>
+<p>Veryl は公式のツールチェーンインストーラ <code>verylup</code> を使ってインストールできます。ツールチェーンのアップデートなど便利な機能があるので <code>verylup</code> の使用を推奨します。</p>
+<blockquote>
+<p>注: インターネットアクセスのない環境にインストールしたい場合は <a href="../06_development_environment/13_verylup.html#offline-installation">オフラインインストール</a> が利用できます。</p>
+</blockquote>
 <h2 id="要件"><a class="header" href="#要件">要件</a></h2>
 <p>Veryl は <code>git</code> コマンドを内部で使用します。 <code>git</code> が起動できることを確認しておいてください。</p>
 <h2 id="verylup-のインストール"><a class="header" href="#verylup-のインストール">verylup のインストール</a></h2>
@@ -295,6 +298,20 @@
 <p><a href="https://github.com/veryl-lang/veryl.vim">Vim / Neovim plugin</a></p>
 <h3 id="そのほかのエディタ"><a class="header" href="#そのほかのエディタ">そのほかのエディタ</a></h3>
 <p>Veryl は言語サーバを提供しているので、言語サーバをサポートしているエディタ（例えば Emacs）であれば利用できます。</p>
+<h2 id="シェル補完"><a class="header" href="#シェル補完">シェル補完</a></h2>
+<p><code>veryl</code> と <code>verylup</code> のシェル補完スクリプトは <code>verylup completion</code> によって提供されます。例えば以下のコマンドはzsh向けの補完スクリプトを生成します。</p>
+<pre><code>verylup completion zsh veryl   &gt; _veryl
+verylup completion zsh verylup &gt; _verylup
+</code></pre>
+<p>サポートされているシェルは以下の通りです。</p>
+<ul>
+<li>Bash</li>
+<li>Elvish</li>
+<li>Fish</li>
+<li>PowerShell</li>
+<li>Zsh</li>
+</ul>
+<p>生成されたスクリプトの使い方は各シェルのドキュメントを参照してください。</p>
 
                     </main>
 

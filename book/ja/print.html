@@ -740,7 +740,10 @@ module ModuleB {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="はじめに"><a class="header" href="#はじめに">はじめに</a></h1>
 <p>Veryl を使ってみましょう。この章では Veryl のインストール、サンプルプロジェクトの作成とビルドまでを行います。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="インストール"><a class="header" href="#インストール">インストール</a></h1>
-<p>Veryl は公式のツールチェーンインストーラ <code>verylup</code> を使ってインストールできます。</p>
+<p>Veryl は公式のツールチェーンインストーラ <code>verylup</code> を使ってインストールできます。ツールチェーンのアップデートなど便利な機能があるので <code>verylup</code> の使用を推奨します。</p>
+<blockquote>
+<p>注: インターネットアクセスのない環境にインストールしたい場合は <a href="03_getting_started/../06_development_environment/13_verylup.html#offline-installation">オフラインインストール</a> が利用できます。</p>
+</blockquote>
 <h2 id="要件"><a class="header" href="#要件">要件</a></h2>
 <p>Veryl は <code>git</code> コマンドを内部で使用します。 <code>git</code> が起動できることを確認しておいてください。</p>
 <h2 id="verylup-のインストール"><a class="header" href="#verylup-のインストール">verylup のインストール</a></h2>
@@ -765,6 +768,20 @@ module ModuleB {
 <p><a href="https://github.com/veryl-lang/veryl.vim">Vim / Neovim plugin</a></p>
 <h3 id="そのほかのエディタ"><a class="header" href="#そのほかのエディタ">そのほかのエディタ</a></h3>
 <p>Veryl は言語サーバを提供しているので、言語サーバをサポートしているエディタ（例えば Emacs）であれば利用できます。</p>
+<h2 id="シェル補完"><a class="header" href="#シェル補完">シェル補完</a></h2>
+<p><code>veryl</code> と <code>verylup</code> のシェル補完スクリプトは <code>verylup completion</code> によって提供されます。例えば以下のコマンドはzsh向けの補完スクリプトを生成します。</p>
+<pre><code>verylup completion zsh veryl   &gt; _veryl
+verylup completion zsh verylup &gt; _verylup
+</code></pre>
+<p>サポートされているシェルは以下の通りです。</p>
+<ul>
+<li>Bash</li>
+<li>Elvish</li>
+<li>Fish</li>
+<li>PowerShell</li>
+<li>Zsh</li>
+</ul>
+<p>生成されたスクリプトの使い方は各シェルのドキュメントを参照してください。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="hello-world"><a class="header" href="#hello-world">Hello, World!</a></h1>
 <h2 id="プロジェクトを作る"><a class="header" href="#プロジェクトを作る">プロジェクトを作る</a></h2>
 <p>まず始めに、新しい Veryl プロジェクトを作りましょう。</p>
@@ -2985,7 +3002,7 @@ $ [command] | sourcemap-resolver   # on-the-fly annotation by pipe
 <div style="break-before: page; page-break-before: always;"></div><h1 id="verylup"><a class="header" href="#verylup">verylup</a></h1>
 <p><a href="https://github.com/veryl-lang/verylup">verylup</a> はVerylの公式ツールチェーンインストーラです。ツールチェーンの更新や切り替えを簡単に行うことができます。</p>
 <h2 id="ツールチェーンの更新"><a class="header" href="#ツールチェーンの更新">ツールチェーンの更新</a></h2>
-<p>以下のコマンドはVerylツールチェーンを最新版に更新します。</p>
+<p>以下のコマンドはVerylツールチェーンとverylupを最新版に更新します。</p>
 <pre><code>verylup update
 </code></pre>
 <h2 id="特定のツールチェーンをインストール"><a class="header" href="#特定のツールチェーンをインストール">特定のツールチェーンをインストール</a></h2>
@@ -2994,6 +3011,23 @@ $ [command] | sourcemap-resolver   # on-the-fly annotation by pipe
 </code></pre>
 <p>インストール後、<code>veryl</code> コマンドで <code>+</code> によるバージョン指定が可能になります。</p>
 <pre><code>veryl +0.12.0 build
+</code></pre>
+<h2 id="ディレクトリ毎のツールチェーンオーバーライド"><a class="header" href="#ディレクトリ毎のツールチェーンオーバーライド">ディレクトリ毎のツールチェーンオーバーライド</a></h2>
+<p>もし特定にディレクトリで特定のバージョンのVerylを使用したい場合は、<code>verylup override</code> を使うことができます。</p>
+<pre><code>verylup override set 0.12.0
+</code></pre>
+<p><code>verylup override</code> はVerylプロジェクト内の任意のディレクトリで実行できます。このコマンドを実行すると、そのプロジェクトのデフォルトのツールチェーンは <code>0.12.0</code> になります。</p>
+<h2 id="offline-installation"><a class="header" href="#offline-installation">オフラインインストール</a></h2>
+<p>インターネットアクセスのない環境にインストールしたい場合は、オフラインインストールが利用できます。オフラインインストールの手順は以下の通りです。</p>
+<ul>
+<li>最新のツールチェーンパッケージを<a href="https://github.com/veryl-lang/veryl/releases/latest">Veryl リリースページ</a>からダウンロードする</li>
+<li>以下のように<code>veryl setup</code> を <code>--pkg</code> 指定付きで実行する</li>
+</ul>
+<pre><code>verylup setup --offline --pkg veryl-x86_64-linux.zip
+</code></pre>
+<p>ツールチェーンの更新やインストールもセットアップと同様に <code>--pkg</code> 指定が必要です。</p>
+<pre><code>verylup update --pkg veryl-x86_64-linux.zip
+verylup install 0.12.0 --pkg veryl-x86_64-linux.zip
 </code></pre>
 <h2 id="veryl開発者向け"><a class="header" href="#veryl開発者向け">Veryl開発者向け</a></h2>
 <p>Veryl の開発者向けに、特別なツールチェーン <code>local</code> が用意されています。<code>verylup install local</code> をローカルのVerylリポジトリ上で実行すると、ビルドしたツールチェーンを <code>local</code> ツールチェーンとしてインストールします。<code>local</code> ツールチェーンが存在するときはデフォルトのツールチェーンになります。</p>

@@ -46,8 +46,7 @@ function getDataViewMemory0() {
     }
     return cachedDataViewMemory0;
 }
-/**
-*/
+
 export function set_hook() {
     wasm.set_hook();
 }
@@ -108,9 +107,9 @@ function passStringToWasm0(arg, malloc, realloc) {
     return ptr;
 }
 /**
-* @param {string} source
-* @returns {Result}
-*/
+ * @param {string} source
+ * @returns {Result}
+ */
 export function build(source) {
     const ptr0 = passStringToWasm0(source, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
     const len0 = WASM_VECTOR_LEN;
@@ -119,9 +118,9 @@ export function build(source) {
 }
 
 /**
-* @param {string} source
-* @returns {Result}
-*/
+ * @param {string} source
+ * @returns {Result}
+ */
 export function format(source) {
     const ptr0 = passStringToWasm0(source, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
     const len0 = WASM_VECTOR_LEN;
@@ -141,8 +140,7 @@ function addHeapObject(obj) {
 const ResultFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
     : new FinalizationRegistry(ptr => wasm.__wbg_result_free(ptr >>> 0, 1));
-/**
-*/
+
 export class Result {
 
     static __wrap(ptr) {
@@ -165,15 +163,15 @@ export class Result {
         wasm.__wbg_result_free(ptr, 0);
     }
     /**
-    * @returns {boolean}
-    */
+     * @returns {boolean}
+     */
     err() {
         const ret = wasm.result_err(this.__wbg_ptr);
         return ret !== 0;
     }
     /**
-    * @returns {string}
-    */
+     * @returns {string}
+     */
     content() {
         let deferred1_0;
         let deferred1_1;
@@ -200,7 +198,7 @@ async function __wbg_load(module, imports) {
 
             } catch (e) {
                 if (module.headers.get('Content-Type') != 'application/wasm') {
-                    console.warn("`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", e);
+                    console.warn("`WebAssembly.instantiateStreaming` failed because your server does not serve Wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", e);
 
                 } else {
                     throw e;
@@ -277,10 +275,13 @@ function initSync(module) {
     if (wasm !== undefined) return wasm;
 
 
-    if (typeof module !== 'undefined' && Object.getPrototypeOf(module) === Object.prototype)
-    ({module} = module)
-    else
-    console.warn('using deprecated parameters for `initSync()`; pass a single object instead')
+    if (typeof module !== 'undefined') {
+        if (Object.getPrototypeOf(module) === Object.prototype) {
+            ({module} = module)
+        } else {
+            console.warn('using deprecated parameters for `initSync()`; pass a single object instead')
+        }
+    }
 
     const imports = __wbg_get_imports();
 
@@ -299,10 +300,13 @@ async function __wbg_init(module_or_path) {
     if (wasm !== undefined) return wasm;
 
 
-    if (typeof module_or_path !== 'undefined' && Object.getPrototypeOf(module_or_path) === Object.prototype)
-    ({module_or_path} = module_or_path)
-    else
-    console.warn('using deprecated parameters for the initialization function; pass a single object instead')
+    if (typeof module_or_path !== 'undefined') {
+        if (Object.getPrototypeOf(module_or_path) === Object.prototype) {
+            ({module_or_path} = module_or_path)
+        } else {
+            console.warn('using deprecated parameters for the initialization function; pass a single object instead')
+        }
+    }
 
     if (typeof module_or_path === 'undefined') {
         module_or_path = new URL('veryl_wasm_bg.wasm', import.meta.url);

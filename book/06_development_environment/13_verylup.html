@@ -273,7 +273,7 @@
 <p><a href="https://github.com/veryl-lang/verylup">verylup</a> is the official toolchain installer of Veryl.
 It eases to update and switch toolchains.</p>
 <h2 id="update-toolchain"><a class="header" href="#update-toolchain">Update toolchain</a></h2>
-<p>The following command updates Veryl toolchain to the latest version.</p>
+<p>The following command updates Veryl toolchain and verylup to the latest version.</p>
 <pre><code>verylup update
 </code></pre>
 <h2 id="install-a-specific-toolchain"><a class="header" href="#install-a-specific-toolchain">Install a specific toolchain</a></h2>
@@ -282,6 +282,25 @@ It eases to update and switch toolchains.</p>
 </code></pre>
 <p>After installing it, <code>+</code> version specifier can be used in <code>veryl</code> command like below:</p>
 <pre><code>veryl +0.12.0 build
+</code></pre>
+<h2 id="toolchain-override-for-directories"><a class="header" href="#toolchain-override-for-directories">Toolchain override for directories</a></h2>
+<p>If you want to use a specific version of Veryl for specific directories, <code>verylup override</code> can be used.</p>
+<pre><code>verylup override set 0.12.0
+</code></pre>
+<p><code>verylup override</code> can be executed in arbitrary directories in a Veryl project.
+After this command, the default toolchain becomes <code>0.12.0</code> in the project.</p>
+<h2 id="offline-installation"><a class="header" href="#offline-installation">Offline installation</a></h2>
+<p>If you want to verylup on an environment without internet access, offline installation can be used.
+The procedure of offline installation is below:</p>
+<ul>
+<li>Download the latest toolchain package from <a href="https://github.com/veryl-lang/veryl/releases">Veryl release page</a>.</li>
+<li>Execute <code>veryl setup</code> with <code>--pkg</code> specification like the following command.</li>
+</ul>
+<pre><code>verylup setup --offline --pkg veryl-x86_64-linux.zip
+</code></pre>
+<p>If you want to update/install toolchain, <code>--pkg</code> specification is required as the same as setup.</p>
+<pre><code>verylup update --pkg veryl-x86_64-linux.zip
+verylup install 0.12.0 --pkg veryl-x86_64-linux.zip
 </code></pre>
 <h2 id="for-veryl-developer"><a class="header" href="#for-veryl-developer">For Veryl Developer</a></h2>
 <p>For Veryl developer, a special toolchain target <code>local</code> is prepared.

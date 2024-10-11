@@ -272,7 +272,7 @@
                         <h1 id="verylup"><a class="header" href="#verylup">verylup</a></h1>
 <p><a href="https://github.com/veryl-lang/verylup">verylup</a> はVerylの公式ツールチェーンインストーラです。ツールチェーンの更新や切り替えを簡単に行うことができます。</p>
 <h2 id="ツールチェーンの更新"><a class="header" href="#ツールチェーンの更新">ツールチェーンの更新</a></h2>
-<p>以下のコマンドはVerylツールチェーンを最新版に更新します。</p>
+<p>以下のコマンドはVerylツールチェーンとverylupを最新版に更新します。</p>
 <pre><code>verylup update
 </code></pre>
 <h2 id="特定のツールチェーンをインストール"><a class="header" href="#特定のツールチェーンをインストール">特定のツールチェーンをインストール</a></h2>
@@ -281,6 +281,23 @@
 </code></pre>
 <p>インストール後、<code>veryl</code> コマンドで <code>+</code> によるバージョン指定が可能になります。</p>
 <pre><code>veryl +0.12.0 build
+</code></pre>
+<h2 id="ディレクトリ毎のツールチェーンオーバーライド"><a class="header" href="#ディレクトリ毎のツールチェーンオーバーライド">ディレクトリ毎のツールチェーンオーバーライド</a></h2>
+<p>もし特定にディレクトリで特定のバージョンのVerylを使用したい場合は、<code>verylup override</code> を使うことができます。</p>
+<pre><code>verylup override set 0.12.0
+</code></pre>
+<p><code>verylup override</code> はVerylプロジェクト内の任意のディレクトリで実行できます。このコマンドを実行すると、そのプロジェクトのデフォルトのツールチェーンは <code>0.12.0</code> になります。</p>
+<h2 id="offline-installation"><a class="header" href="#offline-installation">オフラインインストール</a></h2>
+<p>インターネットアクセスのない環境にインストールしたい場合は、オフラインインストールが利用できます。オフラインインストールの手順は以下の通りです。</p>
+<ul>
+<li>最新のツールチェーンパッケージを<a href="https://github.com/veryl-lang/veryl/releases/latest">Veryl リリースページ</a>からダウンロードする</li>
+<li>以下のように<code>veryl setup</code> を <code>--pkg</code> 指定付きで実行する</li>
+</ul>
+<pre><code>verylup setup --offline --pkg veryl-x86_64-linux.zip
+</code></pre>
+<p>ツールチェーンの更新やインストールもセットアップと同様に <code>--pkg</code> 指定が必要です。</p>
+<pre><code>verylup update --pkg veryl-x86_64-linux.zip
+verylup install 0.12.0 --pkg veryl-x86_64-linux.zip
 </code></pre>
 <h2 id="veryl開発者向け"><a class="header" href="#veryl開発者向け">Veryl開発者向け</a></h2>
 <p>Veryl の開発者向けに、特別なツールチェーン <code>local</code> が用意されています。<code>verylup install local</code> をローカルのVerylリポジトリ上で実行すると、ビルドしたツールチェーンを <code>local</code> ツールチェーンとしてインストールします。<code>local</code> ツールチェーンが存在するときはデフォルトのツールチェーンになります。</p>

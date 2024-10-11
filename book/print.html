@@ -765,7 +765,11 @@ module ModuleB {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h1>
 <p>Let’s start to use Veryl. In this section, we will install Veryl, create an example project, and build it.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
-<p>Veryl can be intalled through the official toolchain installer <code>verylup</code>.</p>
+<p>Veryl can be intalled through the official toolchain installer <code>verylup</code>.
+We recommend to use <code>verylup</code> because it provides some usefule features like toolchain update.</p>
+<blockquote>
+<p>Note: If you want install on an enviromnent without internet access, you can use <a href="03_getting_started/../06_development_environment/13_verylup.html#offline-installation">offline installation</a>.</p>
+</blockquote>
 <h2 id="requirement"><a class="header" href="#requirement">Requirement</a></h2>
 <p>Veryl uses <code>git</code> command internally. Please confirm <code>git</code> can be launched.</p>
 <h2 id="install-verylup"><a class="header" href="#install-verylup">Install verylup</a></h2>
@@ -795,6 +799,21 @@ There are some instructions for plugin installation and language server integrat
 <p><a href="https://github.com/veryl-lang/veryl.vim">Vim / Neovim plugin</a></p>
 <h3 id="other-editors"><a class="header" href="#other-editors">Other Editors</a></h3>
 <p>Veryl provides language server. So other editors supporting language server (ex. Emacs) can use it.</p>
+<h2 id="shell-completion"><a class="header" href="#shell-completion">Shell Completion</a></h2>
+<p>Shell completion script for <code>veryl</code> and <code>verylup</code> is provided through <code>verylup completion</code>.
+For example, the following command generates completion script for zsh.</p>
+<pre><code>verylup completion zsh veryl   &gt; _veryl
+verylup completion zsh verylup &gt; _verylup
+</code></pre>
+<p>Supported shells are below:</p>
+<ul>
+<li>Bash</li>
+<li>Elvish</li>
+<li>Fish</li>
+<li>PowerShell</li>
+<li>Zsh</li>
+</ul>
+<p>Please refer the documentation of each shell for usage of generated scripts.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="hello-world"><a class="header" href="#hello-world">Hello, World!</a></h1>
 <h2 id="create-project"><a class="header" href="#create-project">Create Project</a></h2>
 <p>At first, a new Veryl project can be created by:</p>
@@ -3207,7 +3226,7 @@ $ [command] | sourcemap-resolver   # on-the-fly annotation by pipe
 <p><a href="https://github.com/veryl-lang/verylup">verylup</a> is the official toolchain installer of Veryl.
 It eases to update and switch toolchains.</p>
 <h2 id="update-toolchain"><a class="header" href="#update-toolchain">Update toolchain</a></h2>
-<p>The following command updates Veryl toolchain to the latest version.</p>
+<p>The following command updates Veryl toolchain and verylup to the latest version.</p>
 <pre><code>verylup update
 </code></pre>
 <h2 id="install-a-specific-toolchain"><a class="header" href="#install-a-specific-toolchain">Install a specific toolchain</a></h2>
@@ -3216,6 +3235,25 @@ It eases to update and switch toolchains.</p>
 </code></pre>
 <p>After installing it, <code>+</code> version specifier can be used in <code>veryl</code> command like below:</p>
 <pre><code>veryl +0.12.0 build
+</code></pre>
+<h2 id="toolchain-override-for-directories"><a class="header" href="#toolchain-override-for-directories">Toolchain override for directories</a></h2>
+<p>If you want to use a specific version of Veryl for specific directories, <code>verylup override</code> can be used.</p>
+<pre><code>verylup override set 0.12.0
+</code></pre>
+<p><code>verylup override</code> can be executed in arbitrary directories in a Veryl project.
+After this command, the default toolchain becomes <code>0.12.0</code> in the project.</p>
+<h2 id="offline-installation"><a class="header" href="#offline-installation">Offline installation</a></h2>
+<p>If you want to verylup on an environment without internet access, offline installation can be used.
+The procedure of offline installation is below:</p>
+<ul>
+<li>Download the latest toolchain package from <a href="https://github.com/veryl-lang/veryl/releases">Veryl release page</a>.</li>
+<li>Execute <code>veryl setup</code> with <code>--pkg</code> specification like the following command.</li>
+</ul>
+<pre><code>verylup setup --offline --pkg veryl-x86_64-linux.zip
+</code></pre>
+<p>If you want to update/install toolchain, <code>--pkg</code> specification is required as the same as setup.</p>
+<pre><code>verylup update --pkg veryl-x86_64-linux.zip
+verylup install 0.12.0 --pkg veryl-x86_64-linux.zip
 </code></pre>
 <h2 id="for-veryl-developer"><a class="header" href="#for-veryl-developer">For Veryl Developer</a></h2>
 <p>For Veryl developer, a special toolchain target <code>local</code> is prepared.
