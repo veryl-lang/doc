@@ -36,6 +36,25 @@ verylup override set 0.12.0
 `verylup override` can be executed in arbitrary directories in a Veryl project.
 After this command, the default toolchain becomes `0.12.0` in the project.
 
+## Offline installation {#offline-installation}
+
+If you want to verylup on an environment without internet access, offline installation can be used.
+The procedure of offline installation is below:
+
+* Download the latest toolchain package from [Veryl release page](https://github.com/veryl-lang/veryl/releases).
+* Execute `veryl setup` with `--pkg` specification like the following command.
+
+```
+verylup setup --offline --pkg veryl-x86_64-linux.zip
+```
+
+If you want to update/install toolchain, `--pkg` specification is required as the same as setup.
+
+```
+verylup update --pkg veryl-x86_64-linux.zip
+verylup install 0.12.0 --pkg veryl-x86_64-linux.zip
+```
+
 ## For Veryl Developer
 
 For Veryl developer, a special toolchain target `local` is prepared.
