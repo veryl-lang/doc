@@ -768,7 +768,7 @@ module ModuleB {
 <p>Veryl can be intalled through the official toolchain installer <code>verylup</code>.
 We recommend to use <code>verylup</code> because it provides some usefule features like toolchain update.</p>
 <blockquote>
-<p>Note: If you want install without internet connection, you can download from <a href="https://github.com/veryl-lang/veryl/releases/latest">release page</a> directly instead of verylup.</p>
+<p>Note: If you want install on an enviromnent without internet access, you can use <a href="03_getting_started/../06_development_environment/13_verylup.html#offline-installation">offline installation</a>.</p>
 </blockquote>
 <h2 id="requirement"><a class="header" href="#requirement">Requirement</a></h2>
 <p>Veryl uses <code>git</code> command internally. Please confirm <code>git</code> can be launched.</p>
@@ -3242,6 +3242,19 @@ It eases to update and switch toolchains.</p>
 </code></pre>
 <p><code>verylup override</code> can be executed in arbitrary directories in a Veryl project.
 After this command, the default toolchain becomes <code>0.12.0</code> in the project.</p>
+<h2 id="offline-installation"><a class="header" href="#offline-installation">Offline installation</a></h2>
+<p>If you want to verylup on an environment without internet access, offline installation can be used.
+The procedure of offline installation is below:</p>
+<ul>
+<li>Download the latest toolchain package from <a href="https://github.com/veryl-lang/veryl/releases">Veryl release page</a>.</li>
+<li>Execute <code>veryl setup</code> with <code>--pkg</code> specification like the following command.</li>
+</ul>
+<pre><code>verylup setup --offline --pkg veryl-x86_64-linux.zip
+</code></pre>
+<p>If you want to update/install toolchain, <code>--pkg</code> specification is required as the same as setup.</p>
+<pre><code>verylup update --pkg veryl-x86_64-linux.zip
+verylup install 0.12.0 --pkg veryl-x86_64-linux.zip
+</code></pre>
 <h2 id="for-veryl-developer"><a class="header" href="#for-veryl-developer">For Veryl Developer</a></h2>
 <p>For Veryl developer, a special toolchain target <code>local</code> is prepared.
 If <code>verylup install local</code> is executed in your local Veryl repository, the built toolchain is installed as <code>local</code> toolchain.
