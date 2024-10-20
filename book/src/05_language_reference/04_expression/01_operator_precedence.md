@@ -18,4 +18,4 @@ In expression, operator precedence is almost the same as SystemVerilog.
 |`&&`                                                                                  |Left         |          |
 |<code>\|\|</code>                                                                     |Left         |          |
 |`=` `+=` `-=` `*=` `/=` `%=` `&=` `^=` <code>\|=</code> <br> `<<=` `>>=` `<<<=` `>>>=`|None         |          |
-|`{}` `inside` `outside`                                                               |None         |Lowest    |
+|`{}` `inside` `outside` `if` `case` `switch`                                          |None         |Lowest    |
