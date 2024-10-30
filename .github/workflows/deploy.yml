@@ -79,7 +79,9 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          # 1.82.0 can't be used by reference type issue
+          # https://github.com/rustwasm/wasm-bindgen/issues/4211
+          toolchain: 1.81.0
       - uses: Swatinem/rust-cache@v2
       - uses: jetli/wasm-pack-action@v0.4.0
       - name: Test

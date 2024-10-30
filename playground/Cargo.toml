@@ -30,3 +30,9 @@ wasm-bindgen-test = "0.3.42"
 codegen-units = 1
 # for wasm-pack
 opt-level = "z"
+
+[profile.dev.build-override]
+opt-level = 3
+
+[profile.release.build-override]
+opt-level = 3

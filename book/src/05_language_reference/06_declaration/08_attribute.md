@@ -2,9 +2,9 @@
 
 Attribute can annotate some declarations like variable declaration.
 
-## SV Attribute
+## `sv` Attribute
 
-SV attribute represents SystemVerilog attribute.
+`sv` attribute represents SystemVerilog attribute.
 It will be transpiled to SystemVerilog attribute `(*  *)`.
 
 ```veryl,playground
@@ -13,5 +13,41 @@ module ModuleA {
     let _a: logic<10> = 1;
     #[sv("mark_debug=\"true\"")]
     let _b: logic<10> = 1;
+}
+```
+
+## `allow` Attribute
+
+`allow` attribute is used to disable specified lint check.
+
+```veryl,playground
+module ModuleA {
+    #[allow(unused_variable)]
+    let a: logic<10> = 1;
+}
+```
+
+Available lint names are below:
+
+* `unused_variable`
+* `missing_reset_statement`
+* `missing_port`
+
+## `ifdef`/`ifndef` Attribute
+
+`ifdef` and `ifndef` attribute is used to control whether the annotated code block is enabled by defined value.
+If `DEFINE_A` is defined, the code block with `#[ifdef(DEFINE_A)]` is enabled, and the code block with `#[ifndef(DEFINE_A)]` is disabled.
+
+```veryl,playground
+module ModuleA {
+    #[ifdef(DEFINE_A)]
+    {
+        let _a: logic<10> = 1;
+    }
+
+    #[ifndef(DEFINE_A)]
+    {
+        let _b: logic<10> = 1;
+    }
 }
 ```
