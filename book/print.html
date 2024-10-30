@@ -1191,8 +1191,8 @@ a = 1 || 1;
 32'b01_xz_XZ
 
 // octal
-32'o01234567xzXZ
-32'o01_23_45_67_xz_XZ
+36'o01234567xzXZ
+36'o01_23_45_67_xz_XZ
 
 // decimal
 32'd0123456789
@@ -1537,7 +1537,7 @@ It can be evaluated to a value.</p>
 <tr><td><code>&amp;&amp;</code></td><td>Left</td><td></td></tr>
 <tr><td><code>||</code></td><td>Left</td><td></td></tr>
 <tr><td><code>=</code> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> <code>%=</code> <code>&amp;=</code> <code>^=</code> <code>|=</code> <br> <code>&lt;&lt;=</code> <code>&gt;&gt;=</code> <code>&lt;&lt;&lt;=</code> <code>&gt;&gt;&gt;=</code></td><td>None</td><td></td></tr>
-<tr><td><code>{}</code></td><td>None</td><td>Lowest</td></tr>
+<tr><td><code>{}</code> <code>inside</code> <code>outside</code> <code>if</code> <code>case</code> <code>switch</code></td><td>None</td><td>Lowest</td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="function-call"><a class="header" href="#function-call">Function Call</a></h1>
 <p>Function can be call by <code>function_name(argument)</code>.
@@ -1627,6 +1627,28 @@ Bit range selection can be specified by <code>[expression:expression]</code>.</p
 
     assign b = a[3];
     assign c = a[4:0];
+}
+</code></pre>
+<h2 id="select-by-position-and-width"><a class="header" href="#select-by-position-and-width">Select by position and width</a></h2>
+<p><code>+:</code> and <code>-:</code> notation can select by start position and width.
+<code>[A+:B]</code> means <code>[(A+B-1):A]</code>, and <code>[A-:B]</code> means <code>[A:(A-B+1)]</code>.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a: logic&lt;10&gt; = 1;
+    var b: logic&lt;10&gt;;
+    var c: logic&lt;10&gt;;
+
+    assign b = a[3+:1];
+    assign c = a[4-:2];
+}
+</code></pre>
+<h2 id="select-by-index-with-step"><a class="header" href="#select-by-index-with-step">Select by index with step</a></h2>
+<p><code>step</code> notation can select by index with step.
+<code>[A step B]</code> means “select index <code>A</code> in step <code>B</code>”, so it equals <code>[(B*A)+:B]</code>.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a: logic&lt;10&gt; = 1;
+    var b: logic&lt;10&gt;;
+
+    assign b = a[2 step 3];
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="range"><a class="header" href="#range">Range</a></h1>
@@ -1955,14 +1977,42 @@ Both will be ignored logical synthesis, and can be used as debug or assertion.</
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="attribute"><a class="header" href="#attribute">Attribute</a></h1>
 <p>Attribute can annotate some declarations like variable declaration.</p>
-<h2 id="sv-attribute"><a class="header" href="#sv-attribute">SV Attribute</a></h2>
-<p>SV attribute represents SystemVerilog attribute.
+<h2 id="sv-attribute"><a class="header" href="#sv-attribute"><code>sv</code> Attribute</a></h2>
+<p><code>sv</code> attribute represents SystemVerilog attribute.
 It will be transpiled to SystemVerilog attribute <code>(*  *)</code>.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     #[sv("ram_style=\"block\"")]
     let _a: logic&lt;10&gt; = 1;
     #[sv("mark_debug=\"true\"")]
     let _b: logic&lt;10&gt; = 1;
+}
+</code></pre>
+<h2 id="allow-attribute"><a class="header" href="#allow-attribute"><code>allow</code> Attribute</a></h2>
+<p><code>allow</code> attribute is used to disable specified lint check.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    #[allow(unused_variable)]
+    let a: logic&lt;10&gt; = 1;
+}
+</code></pre>
+<p>Available lint names are below:</p>
+<ul>
+<li><code>unused_variable</code></li>
+<li><code>missing_reset_statement</code></li>
+<li><code>missing_port</code></li>
+</ul>
+<h2 id="ifdefifndef-attribute"><a class="header" href="#ifdefifndef-attribute"><code>ifdef</code>/<code>ifndef</code> Attribute</a></h2>
+<p><code>ifdef</code> and <code>ifndef</code> attribute is used to control whether the annotated code block is enabled by defined value.
+If <code>DEFINE_A</code> is defined, the code block with <code>#[ifdef(DEFINE_A)]</code> is enabled, and the code block with <code>#[ifndef(DEFINE_A)]</code> is disabled.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    #[ifdef(DEFINE_A)]
+    {
+        let _a: logic&lt;10&gt; = 1;
+    }
+
+    #[ifndef(DEFINE_A)]
+    {
+        let _b: logic&lt;10&gt; = 1;
+    }
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="generate"><a class="header" href="#generate">Generate</a></h1>
@@ -3687,7 +3737,7 @@ RealNumber: FixedPoint
 
 HierarchicalIdentifier: Identifier { Select } { Dot Identifier { Select } };
 ScopedIdentifier      : ( DollarIdentifier | Identifier [ WithGenericArgument ] ) { ColonColon Identifier [ WithGenericArgument ] };
-ExpressionIdentifier  : ScopedIdentifier { Select } { Dot Identifier { Select } };
+ExpressionIdentifier  : ScopedIdentifier [ Width ] { Select } { Dot Identifier { Select } };
 
 // ----------------------------------------------------------------------------
 // Expression
@@ -3719,6 +3769,8 @@ Factor: Number
       | ( Msb | Lsb )
       | InsideExpression
       | OutsideExpression
+      | TypeExpression
+      | FactorType
       ;
 
 FunctionCall: LParen [ ArgumentList ] RParen;
@@ -3741,9 +3793,7 @@ CaseExpression: Case Expression LBrace CaseCondition Colon Expression Comma { Ca
 
 SwitchExpression: Switch LBrace SwitchCondition Colon Expression Comma { SwitchCondition Colon Expression Comma } Defaul Colon Expression [ Comma ] RBrace;
 
-TypeExpression: ScalarType
-              | Type LParen Expression RParen
-              ;
+TypeExpression: Type LParen Expression RParen;
 
 InsideExpression: Inside Expression LBrace RangeList RBrace;
 
@@ -3790,12 +3840,15 @@ VariableType: Clock
             | ResetSyncHigh
             | ResetSyncLow
             | Logic
-            | Bit
-            | ScopedIdentifier;
+            | Bit;
+
+UserDefinedType: ScopedIdentifier;
 
 TypeModifier: Tri | Signed;
 
-ScalarType: { TypeModifier } ( VariableType [ Width ] | FixedType );
+FactorType: ( VariableType [ Width ] | FixedType );
+
+ScalarType: { TypeModifier } ( UserDefinedType [ Width ] | FactorType );
 
 ArrayType: ScalarType [ Array ];
 
@@ -3813,7 +3866,7 @@ CastingType: U32
            | ResetAsyncLow
            | ResetSyncHigh
            | ResetSyncLow
-           | ScopedIdentifier
+           | UserDefinedType
            ;
 
 // ----------------------------------------------------------------------------
@@ -3888,7 +3941,7 @@ LetDeclaration: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Se
 
 VarDeclaration: Var Identifier Colon [ ClockDomain ] ArrayType Semicolon;
 
-ConstDeclaration: Const Identifier Colon ( ArrayType Equ Expression | Type Equ TypeExpression ) Semicolon;
+ConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Equ Expression Semicolon;
 
 TypeDefDeclaration: Type Identifier Equ ArrayType Semicolon;
 
@@ -3964,7 +4017,7 @@ WithParameterList: WithParameterGroup { Comma WithParameterGroup } [ Comma ];
 
 WithParameterGroup: { Attribute } ( LBrace WithParameterList RBrace | WithParameterItem );
 
-WithParameterItem: ( Param | Const ) Identifier Colon ( ArrayType Equ Expression | Type Equ TypeExpression );
+WithParameterItem: ( Param | Const ) Identifier Colon ( ArrayType | Type ) Equ Expression;
 
 // ----------------------------------------------------------------------------
 // WithGenericParameter

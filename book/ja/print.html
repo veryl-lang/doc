@@ -1137,8 +1137,8 @@ a = 1 || 1;
 32'b01_xz_XZ
 
 // 8進数
-32'o01234567xzXZ
-32'o01_23_45_67_xz_XZ
+36'o01234567xzXZ
+36'o01_23_45_67_xz_XZ
 
 // 10進数
 32'd0123456789
@@ -1462,7 +1462,7 @@ a = 1 || 1;
 <tr><td><code>&amp;&amp;</code></td><td>左</td><td></td></tr>
 <tr><td><code>||</code></td><td>左</td><td></td></tr>
 <tr><td><code>=</code> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> <code>%=</code> <code>&amp;=</code> <code>^=</code> <code>|=</code> <br> <code>&lt;&lt;=</code> <code>&gt;&gt;=</code> <code>&lt;&lt;&lt;=</code> <code>&gt;&gt;&gt;=</code></td><td>なし</td><td></td></tr>
-<tr><td><code>{}</code></td><td>なし</td><td>低い</td></tr>
+<tr><td><code>{}</code> <code>inside</code> <code>outside</code> <code>if</code> <code>case</code> <code>switch</code></td><td>なし</td><td>低い</td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="関数呼び出し"><a class="header" href="#関数呼び出し">関数呼び出し</a></h1>
 <p>関数は <code>function_name(argument)</code> の形式で呼び出すことができます。<code>$clog2</code> のような SystemVerilog のシステム関数も使えます。</p>
@@ -1538,6 +1538,26 @@ package PackageA {
 
     assign b = a[3];
     assign c = a[4:0];
+}
+</code></pre>
+<h2 id="位置と幅による選択"><a class="header" href="#位置と幅による選択">位置と幅による選択</a></h2>
+<p><code>+:</code> と <code>-:</code> 記法は開始位置と幅により選択することができます。<code>[A+:B]</code> は <code>[(A+B-1):A]</code> を、 <code>[A-:B]</code> は <code>[A:(A-B+1)]</code> を意味します。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a: logic&lt;10&gt; = 1;
+    var b: logic&lt;10&gt;;
+    var c: logic&lt;10&gt;;
+
+    assign b = a[3+:1];
+    assign c = a[4-:2];
+}
+</code></pre>
+<h2 id="ステップ付きインデックスによる選択"><a class="header" href="#ステップ付きインデックスによる選択">ステップ付きインデックスによる選択</a></h2>
+<p><code>step</code> 記法はステップ付きのインデックスにより選択することができます。<code>[A step B]</code> は “ステップ <code>B</code> で分割したときのインデックス <code>A</code> を選択する” を意味し、<code>[(B*A)+:B]</code> と等しくなります。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a: logic&lt;10&gt; = 1;
+    var b: logic&lt;10&gt;;
+
+    assign b = a[2 step 3];
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="範囲"><a class="header" href="#範囲">範囲</a></h1>
@@ -1837,13 +1857,40 @@ package PackageA {
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="アトリビュート"><a class="header" href="#アトリビュート">アトリビュート</a></h1>
 <p>アトリビュートは変数宣言などいくつかの宣言に注釈を付けることができます。</p>
-<h2 id="sv-アトリビュート"><a class="header" href="#sv-アトリビュート">SV アトリビュート</a></h2>
-<p>SV アトリビュートは SystemVerilog のアトリビュートを表し、<code>(*  *)</code> という形式の SystemVerilog アトリビュートに変換されます。</p>
+<h2 id="sv-アトリビュート"><a class="header" href="#sv-アトリビュート"><code>sv</code> アトリビュート</a></h2>
+<p><code>sv</code> アトリビュートは SystemVerilog のアトリビュートを表し、<code>(*  *)</code> という形式の SystemVerilog アトリビュートに変換されます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     #[sv("ram_style=\"block\"")]
     let _a: logic&lt;10&gt; = 1;
     #[sv("mark_debug=\"true\"")]
     let _b: logic&lt;10&gt; = 1;
+}
+</code></pre>
+<h2 id="allow-アトリビュート"><a class="header" href="#allow-アトリビュート"><code>allow</code> アトリビュート</a></h2>
+<p><code>allow</code> アトリビュートは指定されたリントチェックを無効化するために使用できます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    #[allow(unused_variable)]
+    let a: logic&lt;10&gt; = 1;
+}
+</code></pre>
+<p>指定可能なリント名は以下の通りです。</p>
+<ul>
+<li>unused_variable</li>
+<li>missing_reset_statement</li>
+<li>missing_port</li>
+</ul>
+<h2 id="ifdefifndef-アトリビュート"><a class="header" href="#ifdefifndef-アトリビュート"><code>ifdef</code>/<code>ifndef</code> アトリビュート</a></h2>
+<p><code>ifdef</code> と <code>ifndef</code> アトリビュートは定義された値によってコードブロックを有効にするかどうかを制御するために使用することができます。もし <code>DEFINE_A</code> が定義されていれば、<code>#[ifdef(DEFINE_A)]</code> のついたコードブロックは有効に、<code>#[ifndef(DEFINE_A)]</code> のついたコードブロックは無効になります。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    #[ifdef(DEFINE_A)]
+    {
+        let _a: logic&lt;10&gt; = 1;
+    }
+
+    #[ifndef(DEFINE_A)]
+    {
+        let _b: logic&lt;10&gt; = 1;
+    }
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="生成"><a class="header" href="#生成">生成</a></h1>
@@ -3458,7 +3505,7 @@ RealNumber: FixedPoint
 
 HierarchicalIdentifier: Identifier { Select } { Dot Identifier { Select } };
 ScopedIdentifier      : ( DollarIdentifier | Identifier [ WithGenericArgument ] ) { ColonColon Identifier [ WithGenericArgument ] };
-ExpressionIdentifier  : ScopedIdentifier { Select } { Dot Identifier { Select } };
+ExpressionIdentifier  : ScopedIdentifier [ Width ] { Select } { Dot Identifier { Select } };
 
 // ----------------------------------------------------------------------------
 // Expression
@@ -3490,6 +3537,8 @@ Factor: Number
       | ( Msb | Lsb )
       | InsideExpression
       | OutsideExpression
+      | TypeExpression
+      | FactorType
       ;
 
 FunctionCall: LParen [ ArgumentList ] RParen;
@@ -3512,9 +3561,7 @@ CaseExpression: Case Expression LBrace CaseCondition Colon Expression Comma { Ca
 
 SwitchExpression: Switch LBrace SwitchCondition Colon Expression Comma { SwitchCondition Colon Expression Comma } Defaul Colon Expression [ Comma ] RBrace;
 
-TypeExpression: ScalarType
-              | Type LParen Expression RParen
-              ;
+TypeExpression: Type LParen Expression RParen;
 
 InsideExpression: Inside Expression LBrace RangeList RBrace;
 
@@ -3561,12 +3608,15 @@ VariableType: Clock
             | ResetSyncHigh
             | ResetSyncLow
             | Logic
-            | Bit
-            | ScopedIdentifier;
+            | Bit;
+
+UserDefinedType: ScopedIdentifier;
 
 TypeModifier: Tri | Signed;
 
-ScalarType: { TypeModifier } ( VariableType [ Width ] | FixedType );
+FactorType: ( VariableType [ Width ] | FixedType );
+
+ScalarType: { TypeModifier } ( UserDefinedType [ Width ] | FactorType );
 
 ArrayType: ScalarType [ Array ];
 
@@ -3584,7 +3634,7 @@ CastingType: U32
            | ResetAsyncLow
            | ResetSyncHigh
            | ResetSyncLow
-           | ScopedIdentifier
+           | UserDefinedType
            ;
 
 // ----------------------------------------------------------------------------
@@ -3659,7 +3709,7 @@ LetDeclaration: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Se
 
 VarDeclaration: Var Identifier Colon [ ClockDomain ] ArrayType Semicolon;
 
-ConstDeclaration: Const Identifier Colon ( ArrayType Equ Expression | Type Equ TypeExpression ) Semicolon;
+ConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Equ Expression Semicolon;
 
 TypeDefDeclaration: Type Identifier Equ ArrayType Semicolon;
 
@@ -3735,7 +3785,7 @@ WithParameterList: WithParameterGroup { Comma WithParameterGroup } [ Comma ];
 
 WithParameterGroup: { Attribute } ( LBrace WithParameterList RBrace | WithParameterItem );
 
-WithParameterItem: ( Param | Const ) Identifier Colon ( ArrayType Equ Expression | Type Equ TypeExpression );
+WithParameterItem: ( Param | Const ) Identifier Colon ( ArrayType | Type ) Equ Expression;
 
 // ----------------------------------------------------------------------------
 // WithGenericParameter

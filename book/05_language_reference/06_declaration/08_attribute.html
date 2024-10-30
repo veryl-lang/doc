@@ -271,14 +271,42 @@
                     <main>
                         <h1 id="attribute"><a class="header" href="#attribute">Attribute</a></h1>
 <p>Attribute can annotate some declarations like variable declaration.</p>
-<h2 id="sv-attribute"><a class="header" href="#sv-attribute">SV Attribute</a></h2>
-<p>SV attribute represents SystemVerilog attribute.
+<h2 id="sv-attribute"><a class="header" href="#sv-attribute"><code>sv</code> Attribute</a></h2>
+<p><code>sv</code> attribute represents SystemVerilog attribute.
 It will be transpiled to SystemVerilog attribute <code>(*  *)</code>.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     #[sv("ram_style=\"block\"")]
     let _a: logic&lt;10&gt; = 1;
     #[sv("mark_debug=\"true\"")]
     let _b: logic&lt;10&gt; = 1;
+}
+</code></pre>
+<h2 id="allow-attribute"><a class="header" href="#allow-attribute"><code>allow</code> Attribute</a></h2>
+<p><code>allow</code> attribute is used to disable specified lint check.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    #[allow(unused_variable)]
+    let a: logic&lt;10&gt; = 1;
+}
+</code></pre>
+<p>Available lint names are below:</p>
+<ul>
+<li><code>unused_variable</code></li>
+<li><code>missing_reset_statement</code></li>
+<li><code>missing_port</code></li>
+</ul>
+<h2 id="ifdefifndef-attribute"><a class="header" href="#ifdefifndef-attribute"><code>ifdef</code>/<code>ifndef</code> Attribute</a></h2>
+<p><code>ifdef</code> and <code>ifndef</code> attribute is used to control whether the annotated code block is enabled by defined value.
+If <code>DEFINE_A</code> is defined, the code block with <code>#[ifdef(DEFINE_A)]</code> is enabled, and the code block with <code>#[ifndef(DEFINE_A)]</code> is disabled.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    #[ifdef(DEFINE_A)]
+    {
+        let _a: logic&lt;10&gt; = 1;
+    }
+
+    #[ifndef(DEFINE_A)]
+    {
+        let _b: logic&lt;10&gt; = 1;
+    }
 }
 </code></pre>
 

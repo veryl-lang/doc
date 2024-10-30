@@ -280,6 +280,26 @@
     assign c = a[4:0];
 }
 </code></pre>
+<h2 id="位置と幅による選択"><a class="header" href="#位置と幅による選択">位置と幅による選択</a></h2>
+<p><code>+:</code> と <code>-:</code> 記法は開始位置と幅により選択することができます。<code>[A+:B]</code> は <code>[(A+B-1):A]</code> を、 <code>[A-:B]</code> は <code>[A:(A-B+1)]</code> を意味します。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a: logic&lt;10&gt; = 1;
+    var b: logic&lt;10&gt;;
+    var c: logic&lt;10&gt;;
+
+    assign b = a[3+:1];
+    assign c = a[4-:2];
+}
+</code></pre>
+<h2 id="ステップ付きインデックスによる選択"><a class="header" href="#ステップ付きインデックスによる選択">ステップ付きインデックスによる選択</a></h2>
+<p><code>step</code> 記法はステップ付きのインデックスにより選択することができます。<code>[A step B]</code> は “ステップ <code>B</code> で分割したときのインデックス <code>A</code> を選択する” を意味し、<code>[(B*A)+:B]</code> と等しくなります。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a: logic&lt;10&gt; = 1;
+    var b: logic&lt;10&gt;;
+
+    assign b = a[2 step 3];
+}
+</code></pre>
 
                     </main>
 
