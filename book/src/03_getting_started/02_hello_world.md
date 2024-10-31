@@ -29,7 +29,7 @@ name = "hello"
 version = "0.1.0"
 ```
 
-The description of all configuration is [here](../05_development_environment/01_project_configuration.md).
+The description of all configuration is [here](../06_development_environment/01_project_configuration.md).
 
 ## Write Code
 
