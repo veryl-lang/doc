@@ -39,7 +39,7 @@
                     return canonical_href;
                 }
         
-        const canonical_href = gen_canonical_href("en");
+                const canonical_href = gen_canonical_href("en");
 
                 let link = document.createElement("link");
                 link.rel = "canonical";
@@ -176,7 +176,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -442,9 +442,9 @@ endmodule
 </td>
 <td>
 <pre><code class="language-veryl">module ModuleA (
-    a: input logic,
-    b: input logic,
-    o: input logic,
+    a: input  logic,
+    b: input  logic,
+    o: output logic,
 ) {
 }
 </code></pre>
@@ -3879,7 +3879,9 @@ ClockDomain: BackQuote Identifier;
 // Statement
 // ----------------------------------------------------------------------------
 
-StatementBlock: LBrace { StatementBlockItem } RBrace;
+StatementBlock: LBrace { StatementBlockGroup } RBrace;
+
+StatementBlockGroup: { Attribute } ( LBrace { StatementBlockGroup } RBrace | StatementBlockItem );
 
 StatementBlockItem: VarDeclaration | LetStatement | Statement;
 

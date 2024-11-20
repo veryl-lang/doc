@@ -39,7 +39,7 @@
                     return canonical_href;
                 }
         
-        const canonical_href = gen_canonical_href("ja");
+                const canonical_href = gen_canonical_href("ja");
 
                 let link = document.createElement("link");
                 link.rel = "canonical";
@@ -176,7 +176,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -431,9 +431,9 @@ endmodule
 </td>
 <td>
 <pre><code class="language-veryl">module ModuleA (
-    a: input logic,
-    b: input logic,
-    o: input logic,
+    a: input  logic,
+    b: input  logic,
+    o: output logic,
 ) {
 }
 </code></pre>
@@ -802,7 +802,7 @@ $ tree
 name = "hello"
 version = "0.1.0"
 </code></pre>
-<p>全設定の説明は<a href="03_getting_started/../05_development_environment/01_project_configuration.html">こちら</a>。</p>
+<p>The description of all configuration is <a href="03_getting_started/../06_development_environment/01_project_configuration.html">here</a>.</p>
 <h2 id="コードを書く"><a class="header" href="#コードを書く">コードを書く</a></h2>
 <p>ソースコードはプロジェクトディレクトリ内のどこに書いても構いません。これは Veryl プロジェクトが独立したプロジェクトである場合もあれば、他のSystemVerilog プロジェクトに組み込まれている場合もあるからです。Veryl のソースコードの拡張子は <code>.veryl</code> です。</p>
 <p>例えば以下のコードを <code>src/hello.veryl</code> に書いてみましょう。</p>
@@ -3647,7 +3647,9 @@ ClockDomain: BackQuote Identifier;
 // Statement
 // ----------------------------------------------------------------------------
 
-StatementBlock: LBrace { StatementBlockItem } RBrace;
+StatementBlock: LBrace { StatementBlockGroup } RBrace;
+
+StatementBlockGroup: { Attribute } ( LBrace { StatementBlockGroup } RBrace | StatementBlockItem );
 
 StatementBlockItem: VarDeclaration | LetStatement | Statement;
 
