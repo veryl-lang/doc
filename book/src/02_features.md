@@ -200,9 +200,9 @@ endmodule
 
 ```veryl
 module ModuleA (
-    a: input logic,
-    b: input logic,
-    o: input logic,
+    a: input  logic,
+    b: input  logic,
+    o: output logic,
 ) {
 }
 ```
