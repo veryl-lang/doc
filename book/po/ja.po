@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-11-20T09:50:12+09:00\n"
+"POT-Creation-Date: 2024-11-25T11:32:28+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -39,23 +39,23 @@ msgstr "Hello, World!"
 msgid "Code Examples"
 msgstr "コード例"
 
-#: src/SUMMARY.md:9 src/SUMMARY.md:55 src/04_code_examples/01_module.md:1
+#: src/SUMMARY.md:9 src/SUMMARY.md:56 src/04_code_examples/01_module.md:1
 #: src/05_language_reference/07_module.md:1
 msgid "Module"
 msgstr "モジュール"
 
-#: src/SUMMARY.md:10 src/SUMMARY.md:52
+#: src/SUMMARY.md:10 src/SUMMARY.md:53
 #: src/04_code_examples/02_instantiation.md:1
 #: src/05_language_reference/06_declaration/10_instantiation.md:1
 msgid "Instantiation"
 msgstr "インスタンス"
 
-#: src/SUMMARY.md:11 src/SUMMARY.md:56 src/04_code_examples/03_interface.md:1
+#: src/SUMMARY.md:11 src/SUMMARY.md:57 src/04_code_examples/03_interface.md:1
 #: src/05_language_reference/08_interface.md:1
 msgid "Interface"
 msgstr "インターフェース"
 
-#: src/SUMMARY.md:12 src/SUMMARY.md:57 src/04_code_examples/04_package.md:1
+#: src/SUMMARY.md:12 src/SUMMARY.md:58 src/04_code_examples/04_package.md:1
 #: src/05_language_reference/09_package.md:1
 msgid "Package"
 msgstr "パッケージ"
@@ -119,7 +119,7 @@ msgstr "式"
 msgid "Operator Precedence"
 msgstr "演算子の優先順位"
 
-#: src/SUMMARY.md:26 src/SUMMARY.md:36
+#: src/SUMMARY.md:26 src/SUMMARY.md:37
 #: src/05_language_reference/04_expression/02_function_call.md:1
 #: src/05_language_reference/05_statement/02_function_call.md:1
 msgid "Function Call"
@@ -130,13 +130,13 @@ msgstr "関数呼び出し"
 msgid "Concatenation"
 msgstr "連結"
 
-#: src/SUMMARY.md:28 src/SUMMARY.md:37
+#: src/SUMMARY.md:28 src/SUMMARY.md:38
 #: src/05_language_reference/04_expression/04_if.md:1
 #: src/05_language_reference/05_statement/03_if.md:1
 msgid "If"
 msgstr "if"
 
-#: src/SUMMARY.md:29 src/SUMMARY.md:38
+#: src/SUMMARY.md:29 src/SUMMARY.md:39
 #: src/05_language_reference/04_expression/05_case_switch.md:1
 #: src/05_language_reference/05_statement/04_case_switch.md:1
 msgid "Case / Switch"
@@ -159,216 +159,220 @@ msgstr "msb / lsb"
 msgid "Inside / Outside"
 msgstr "inside / outside"
 
-#: src/SUMMARY.md:34 src/05_language_reference/05_statement.md:1
+#: src/SUMMARY.md:34 src/05_language_reference/04_expression/10_type_cast.md:1
+msgid "Type Cast"
+msgstr "型キャスト"
+
+#: src/SUMMARY.md:35 src/05_language_reference/05_statement.md:1
 msgid "Statement"
 msgstr "文"
 
-#: src/SUMMARY.md:35 src/05_language_reference/05_statement/01_assignment.md:1
+#: src/SUMMARY.md:36 src/05_language_reference/05_statement/01_assignment.md:1
 msgid "Assignment"
 msgstr "代入"
 
-#: src/SUMMARY.md:39 src/05_language_reference/05_statement/05_for.md:1
+#: src/SUMMARY.md:40 src/05_language_reference/05_statement/05_for.md:1
 msgid "For"
 msgstr "for"
 
-#: src/SUMMARY.md:40 src/05_language_reference/05_statement/06_return.md:1
+#: src/SUMMARY.md:41 src/05_language_reference/05_statement/06_return.md:1
 msgid "Return"
 msgstr "return"
 
-#: src/SUMMARY.md:41 src/05_language_reference/05_statement/07_let.md:1
+#: src/SUMMARY.md:42 src/05_language_reference/05_statement/07_let.md:1
 msgid "Let"
 msgstr "let"
 
-#: src/SUMMARY.md:42 src/05_language_reference/06_declaration.md:1
+#: src/SUMMARY.md:43 src/05_language_reference/06_declaration.md:1
 msgid "Declaration"
 msgstr "宣言"
 
-#: src/SUMMARY.md:43 src/05_language_reference/06_declaration/01_variable.md:1
+#: src/SUMMARY.md:44 src/05_language_reference/06_declaration/01_variable.md:1
 msgid "Variable"
 msgstr "変数"
 
-#: src/SUMMARY.md:44 src/05_language_reference/06_declaration/02_parameter.md:1
+#: src/SUMMARY.md:45 src/05_language_reference/06_declaration/02_parameter.md:1
 msgid "Parameter"
 msgstr "パラメータ"
 
-#: src/SUMMARY.md:45 src/05_language_reference/06_declaration/03_register.md:1
+#: src/SUMMARY.md:46 src/05_language_reference/06_declaration/03_register.md:1
 msgid "Register"
 msgstr "レジスタ"
 
-#: src/SUMMARY.md:46
+#: src/SUMMARY.md:47
 #: src/05_language_reference/06_declaration/04_combinational.md:1
 msgid "Combinational"
 msgstr "組み合わせ回路"
 
-#: src/SUMMARY.md:47 src/05_language_reference/06_declaration/05_assign.md:1
+#: src/SUMMARY.md:48 src/05_language_reference/06_declaration/05_assign.md:1
 msgid "Assign"
 msgstr "assign"
 
-#: src/SUMMARY.md:48 src/05_language_reference/06_declaration/06_function.md:1
+#: src/SUMMARY.md:49 src/05_language_reference/06_declaration/06_function.md:1
 msgid "Function"
 msgstr "関数"
 
-#: src/SUMMARY.md:49
+#: src/SUMMARY.md:50
 #: src/05_language_reference/06_declaration/07_initial_final.md:1
 msgid "Initial / Final"
 msgstr "initial / final"
 
-#: src/SUMMARY.md:50 src/05_language_reference/06_declaration/08_attribute.md:1
+#: src/SUMMARY.md:51 src/05_language_reference/06_declaration/08_attribute.md:1
 msgid "Attribute"
 msgstr "アトリビュート"
 
-#: src/SUMMARY.md:51 src/05_language_reference/06_declaration/09_generate.md:1
+#: src/SUMMARY.md:52 src/05_language_reference/06_declaration/09_generate.md:1
 msgid "Generate"
 msgstr "生成"
 
-#: src/SUMMARY.md:53
+#: src/SUMMARY.md:54
 #: src/05_language_reference/06_declaration/11_named_block.md:1
 msgid "Named Block"
 msgstr "名前付きブロック"
 
-#: src/SUMMARY.md:54
+#: src/SUMMARY.md:55
 #: src/05_language_reference/06_declaration/12_import_export.md:1
 msgid "Import / Export"
 msgstr "Import / Export"
 
-#: src/SUMMARY.md:58
+#: src/SUMMARY.md:59
 #: src/05_language_reference/10_systemverilog_interoperation.md:1
 msgid "SystemVerilog Interoperation"
 msgstr "SystemVerilogとの相互運用"
 
-#: src/SUMMARY.md:59 src/05_language_reference/11_visibility.md:1
+#: src/SUMMARY.md:60 src/05_language_reference/11_visibility.md:1
 msgid "Visibility"
 msgstr "可視性"
 
-#: src/SUMMARY.md:60
+#: src/SUMMARY.md:61
 #: src/05_language_reference/12_foreign_language_integration.md:1
 msgid "Foreign Language Integration"
 msgstr "他言語組み込み"
 
-#: src/SUMMARY.md:61 src/05_language_reference/13_integrated_test.md:1
+#: src/SUMMARY.md:62 src/05_language_reference/13_integrated_test.md:1
 msgid "Integrated Test"
 msgstr "組み込みテスト"
 
-#: src/SUMMARY.md:62 src/02_features.md:68
+#: src/SUMMARY.md:63 src/02_features.md:68
 #: src/05_language_reference/14_generics.md:1
 msgid "Generics"
 msgstr "ジェネリクス"
 
-#: src/SUMMARY.md:63
+#: src/SUMMARY.md:64
 #: src/05_language_reference/14_generics/01_default_parameter.md:1
 msgid "Default Parameter"
 msgstr "デフォルトパラメータ"
 
-#: src/SUMMARY.md:64 src/05_language_reference/14_generics/02_prototype.md:1
+#: src/SUMMARY.md:65 src/05_language_reference/14_generics/02_prototype.md:1
 msgid "Prototype"
 msgstr "プロトタイプ"
 
-#: src/SUMMARY.md:65 src/02_features.md:124
+#: src/SUMMARY.md:66 src/02_features.md:124
 #: src/05_language_reference/15_clock_domain_annotation.md:1
 msgid "Clock Domain Annotation"
 msgstr "クロックドメインアノテーション"
 
-#: src/SUMMARY.md:66
+#: src/SUMMARY.md:67
 #: src/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.md:1
 msgid "Unsafe CDC"
 msgstr "Unsafe CDC"
 
-#: src/SUMMARY.md:67 src/05_language_reference/16_standard_library.md:1
+#: src/SUMMARY.md:68 src/05_language_reference/16_standard_library.md:1
 msgid "Standard Library"
 msgstr "標準ライブラリ"
 
-#: src/SUMMARY.md:68 src/06_development_environment.md:1
+#: src/SUMMARY.md:69 src/06_development_environment.md:1
 msgid "Development Environment"
 msgstr "開発環境"
 
-#: src/SUMMARY.md:69
+#: src/SUMMARY.md:70
 #: src/06_development_environment/01_project_configuration.md:1
 msgid "Project Configuration"
 msgstr "プロジェクト設定"
 
-#: src/SUMMARY.md:70
+#: src/SUMMARY.md:71
 #: src/06_development_environment/01_project_configuration/01_build.md:1
 msgid "Build"
 msgstr "Build"
 
-#: src/SUMMARY.md:71
+#: src/SUMMARY.md:72
 #: src/06_development_environment/01_project_configuration/02_format.md:1
 msgid "Format"
 msgstr "Format"
 
-#: src/SUMMARY.md:72
+#: src/SUMMARY.md:73
 #: src/06_development_environment/01_project_configuration/03_lint.md:1
 msgid "Lint"
 msgstr "Lint"
 
-#: src/SUMMARY.md:73
+#: src/SUMMARY.md:74
 #: src/06_development_environment/01_project_configuration/04_test.md:1
 #: src/06_development_environment/11_github_action.md:47
 msgid "Test"
 msgstr "Test"
 
-#: src/SUMMARY.md:74
+#: src/SUMMARY.md:75
 #: src/06_development_environment/01_project_configuration/05_publish.md:1
 msgid "Publish"
 msgstr "Publish"
 
-#: src/SUMMARY.md:75 src/06_development_environment/02_dependencies.md:1
+#: src/SUMMARY.md:76 src/06_development_environment/02_dependencies.md:1
 msgid "Dependencies"
 msgstr "依存関係"
 
-#: src/SUMMARY.md:76 src/06_development_environment/03_publish_project.md:1
+#: src/SUMMARY.md:77 src/06_development_environment/03_publish_project.md:1
 msgid "Publish Project"
 msgstr "プロジェクトを公開する"
 
-#: src/SUMMARY.md:77 src/06_development_environment/04_directory_layout.md:1
+#: src/SUMMARY.md:78 src/06_development_environment/04_directory_layout.md:1
 msgid "Directory Layout"
 msgstr "ディレクトリ構成"
 
-#: src/SUMMARY.md:78 src/06_development_environment/05_formatter.md:1
+#: src/SUMMARY.md:79 src/06_development_environment/05_formatter.md:1
 msgid "Formatter"
 msgstr "フォーマッタ"
 
-#: src/SUMMARY.md:79 src/06_development_environment/06_linter.md:1
+#: src/SUMMARY.md:80 src/06_development_environment/06_linter.md:1
 msgid "Linter"
 msgstr "リンタ"
 
-#: src/SUMMARY.md:80 src/06_development_environment/07_simulator.md:1
+#: src/SUMMARY.md:81 src/06_development_environment/07_simulator.md:1
 msgid "Simulator"
 msgstr "シミュレータ"
 
-#: src/SUMMARY.md:81 src/06_development_environment/08_language_server.md:1
+#: src/SUMMARY.md:82 src/06_development_environment/08_language_server.md:1
 msgid "Language Server"
 msgstr "言語サーバ"
 
-#: src/SUMMARY.md:82 src/06_development_environment/09_compatibility.md:1
+#: src/SUMMARY.md:83 src/06_development_environment/09_compatibility.md:1
 msgid "Compatibility"
 msgstr "互換性"
 
-#: src/SUMMARY.md:83 src/06_development_environment/10_documentation.md:1
+#: src/SUMMARY.md:84 src/06_development_environment/10_documentation.md:1
 msgid "Documentation"
 msgstr "ドキュメンテーション"
 
-#: src/SUMMARY.md:84 src/06_development_environment/11_github_action.md:1
+#: src/SUMMARY.md:85 src/06_development_environment/11_github_action.md:1
 msgid "GitHub Action"
 msgstr "GitHub Action"
 
-#: src/SUMMARY.md:85 src/06_development_environment/12_source_map.md:1
+#: src/SUMMARY.md:86 src/06_development_environment/12_source_map.md:1
 msgid "Source Map"
 msgstr "ソースマップ"
 
-#: src/SUMMARY.md:86 src/06_development_environment/13_verylup.md:1
+#: src/SUMMARY.md:87 src/06_development_environment/13_verylup.md:1
 msgid "verylup"
 msgstr "verylup"
 
-#: src/SUMMARY.md:87 src/07_appendix.md:1
+#: src/SUMMARY.md:88 src/07_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:88 src/07_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:89 src/07_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:89 src/07_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:90 src/07_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -1178,13 +1182,12 @@ msgstr ""
 "```"
 
 #: src/03_getting_started/02_hello_world.md:32
-#, fuzzy
 msgid ""
 "The description of all configuration is [here]"
 "(../06_development_environment/01_project_configuration.md)."
 msgstr ""
 "全設定の説明は[こちら]"
-"(../05_development_environment/01_project_configuration.md)。"
+"(../06_development_environment/01_project_configuration.md)。"
 
 #: src/03_getting_started/02_hello_world.md:34
 msgid "Write Code"
@@ -1279,6 +1282,14 @@ msgstr ""
 "さらに、生成されたコードのファイルリスト `hello.f` も生成されます。これは "
 "SystemVerilog コンパイラで使用できます。[Verilator](https://www.veripool.org/"
 "verilator/) で使用するには以下のようにします。"
+
+#: src/03_getting_started/02_hello_world.md:102
+msgid "Clean up the Generated Code"
+msgstr "生成されたコードを片づける"
+
+#: src/03_getting_started/02_hello_world.md:104
+msgid "The generated code can be cleaned up by `veryl clean`."
+msgstr "生成されたコードは `veryl clean` コマンドで削除することができます。"
 
 #: src/04_code_examples.md:3
 msgid ""
@@ -2154,58 +2165,74 @@ msgstr ""
 "ます。`<X, Y, Z,,,>` のように多次元指定も可能です。"
 
 #: src/05_language_reference/03_data_type/01_builtin_type.md:31
+msgid "Type modifier"
+msgstr "型修飾子"
+
+#: src/05_language_reference/03_data_type/01_builtin_type.md:33
+msgid "The following type modifiers can be added to `logic` and `bit` type."
+msgstr "`logic` と `bit` 型には以下の型修飾子を付けることができます。"
+
+#: src/05_language_reference/03_data_type/01_builtin_type.md:35
+msgid "`signed`: the MSB is treated as sign-bit"
+msgstr "`signed`: MSBは符号ビットとして扱われる"
+
+#: src/05_language_reference/03_data_type/01_builtin_type.md:36
+msgid "`tri`: tri-state type"
+msgstr "`tri`: トライステート型"
+
+#: src/05_language_reference/03_data_type/01_builtin_type.md:47
 msgid "Integer type"
 msgstr "整数型"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:33
+#: src/05_language_reference/03_data_type/01_builtin_type.md:49
 msgid "There are some integer types:"
 msgstr "整数型にはいくつかの種類があります。"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:35
+#: src/05_language_reference/03_data_type/01_builtin_type.md:51
 msgid "`u32`: 32bit unsigned integer"
 msgstr "`u32`：32ビットの符号なし整数"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:36
+#: src/05_language_reference/03_data_type/01_builtin_type.md:52
 msgid "`u64`: 64bit unsigned integer"
 msgstr "`u64`：64ビットの符号なし整数"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:37
+#: src/05_language_reference/03_data_type/01_builtin_type.md:53
 msgid "`i32`: 32bit signed integer"
 msgstr "`i32`：32ビットの符号付き整数"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:38
+#: src/05_language_reference/03_data_type/01_builtin_type.md:54
 msgid "`i64`: 64bit signed integer"
 msgstr "`i64`：64ビットの符号付き整数"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:49
+#: src/05_language_reference/03_data_type/01_builtin_type.md:65
 msgid "Floating point type"
 msgstr "浮動小数点数型"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:51
+#: src/05_language_reference/03_data_type/01_builtin_type.md:67
 msgid "There are some floating point types:"
 msgstr "浮動小数点数型にもいくつかの種類があります。"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:53
+#: src/05_language_reference/03_data_type/01_builtin_type.md:69
 msgid "`f32`: 32bit floating point"
 msgstr "`f32`：32ビット浮動小数点数"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:54
+#: src/05_language_reference/03_data_type/01_builtin_type.md:70
 msgid "`f64`: 64bit floating point"
 msgstr "`f64`：64ビット浮動小数点数"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:56
+#: src/05_language_reference/03_data_type/01_builtin_type.md:72
 msgid "Both of them are represented as described by IEEE Std 754."
 msgstr "いずれも IEEE Std 754 準拠の表現です。"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:65
+#: src/05_language_reference/03_data_type/01_builtin_type.md:81
 msgid "String type"
 msgstr "文字列型"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:67
+#: src/05_language_reference/03_data_type/01_builtin_type.md:83
 msgid "`string` is string type."
 msgstr "`string` は文字列を表す型です。"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:69
+#: src/05_language_reference/03_data_type/01_builtin_type.md:85
 msgid ""
 "```veryl,playground\n"
 "module ModuleA {\n"
@@ -2219,11 +2246,11 @@ msgstr ""
 "}\n"
 "```"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:75
+#: src/05_language_reference/03_data_type/01_builtin_type.md:91
 msgid "Type type"
 msgstr "Type型"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:77
+#: src/05_language_reference/03_data_type/01_builtin_type.md:93
 msgid ""
 "`type` is a type which represents type kind. Variable of `type` can be "
 "defined as `param` or `const` only."
@@ -2632,6 +2659,12 @@ msgstr ""
 "条件は単一の式または[範囲](./07_range.md)を指定できます。条件を満たすとき "
 "`inside` は `1` を、そうでなければ `0` を返します。`outside` はその逆です。"
 
+#: src/05_language_reference/04_expression/10_type_cast.md:3
+msgid ""
+"`as` is type casting operator. Bit width speficied by based or baseless "
+"number or type name of user defined type can be used as the operand."
+msgstr "`as` は型キャスト演算子です。基数付きあるいは基数なしの数値で指定するビット幅やユーザ定義型の型名をオペランドにとることができます。"
+
 #: src/05_language_reference/05_statement.md:3
 msgid ""
 "In this chapter, we'll discuss about statement. Statement can be used in "
@@ -2721,6 +2754,42 @@ msgid ""
 msgstr ""
 "`case` と `switch` は文として使うこともできます。各アームの右辺が文になる点を"
 "除けば [Case / Switch 式](../04_expression/05_case_switch.md) と同じです。"
+
+#: src/05_language_reference/05_statement/04_case_switch.md:40
+msgid "`cond_type` attribute"
+msgstr "`cond_type` アトリビュート"
+
+#: src/05_language_reference/05_statement/04_case_switch.md:42
+msgid ""
+"To specify `unique`, `unique0` and `priority` in SystemVerilog, `cond_type` "
+"attribute can be used. The attribute can be annotated to `case` or `if` "
+"statement."
+msgstr ""
+"SystemVerilogにおける `unique` `unique0` `priority` を指定するために、`cond_type` アトリビュートを使うことができます。"
+"これらのアトリビュートは `case` あるいは `if` 文に付けることができます。"
+
+#: src/05_language_reference/05_statement/04_case_switch.md:45
+msgid "`unique`: There are no overlapping items. Error if no item matches."
+msgstr "`unique`: アイテムは重複しない。マッチするアイテムがなければエラー。"
+
+#: src/05_language_reference/05_statement/04_case_switch.md:46
+msgid "`unique0`: There are no overlapping items. No error if no item matches."
+msgstr "`unique0`: アイテムは重複しない。マッチするアイテムがなくてもエラーではない。"
+
+#: src/05_language_reference/05_statement/04_case_switch.md:47
+msgid "`priority`: The first match is used only. Error if no item matches."
+msgstr "`priority`: 最初にマッチしたアイテムが使われる。マッチするアイテムがなければエラー。"
+
+#: src/05_language_reference/05_statement/04_case_switch.md:64
+msgid ""
+"These attributes enable more aggressive optimization in synthesis, but if "
+"the expected condition is not complied, the result of synthesis will be "
+"broken. So these attributes are ignored by default, and if there is the "
+"following configuration, Veryl compiler emits them."
+msgstr ""
+"これらのアトリビュートは合成時により積極的な最適化を可能にしますが、"
+"期待される条件を満たさない場合に合成結果が不正になる可能性があります。"
+"そのためデフォルトではアトリビュートは無視され、以下の設定がある場合のみ出力されます。"
 
 #: src/05_language_reference/05_statement/05_for.md:3
 msgid ""
@@ -3163,6 +3232,26 @@ msgstr "`inout`：双方向ポート"
 #: src/05_language_reference/07_module.md:17
 msgid "`modport`: modport of interface"
 msgstr "`modport`：インターフェースのmodport"
+
+#: src/05_language_reference/07_module.md:18
+msgid "`interface`: generic interface"
+msgstr "`interface`: ジェネリックインターフェース"
+
+#: src/05_language_reference/07_module.md:40
+msgid "Generic interface"
+msgstr "ジェネリックインターフェース"
+
+#: src/05_language_reference/07_module.md:42
+msgid ""
+"Generic interface is a special port direction. If `interface` is specified "
+"as the port direction, the port can be connected to arbitrary interface. "
+"Modport can be added to the `interface` like `interface::ModPort` too. Then "
+"the port can be connected to only the interface which has `ModPort`."
+msgstr ""
+"ジェネリックインターフェースは特別なポート方向指定です。"
+"`interface` が指定されたとき、そのポートには任意のインターフェースを接続可能です。"
+"`interface::ModPort` のように modport を付けることもできます。"
+"この場合、`ModPort` を持つインターフェースだけが接続できます。"
 
 #: src/05_language_reference/08_interface.md:3
 msgid ""
@@ -4503,6 +4592,17 @@ msgid ""
 "If `exclude_std` is set to `true`, standard library will not be included."
 msgstr ""
 "`exclude_std` が `true` のとき、標準ライブラリはインクルードされません。"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:129
+msgid "The `emit_cond_type` field"
+msgstr "`emit_cond_type` フィールド"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:131
+msgid ""
+"If `emit_cond_type` is set to `true`, condition type like `unique`, "
+"`unique0` and `priority` is emitted."
+msgstr ""
+"`emit_cond_type` が `true` のとき、`unique` `unique0` `priority` といった指定が出力されます。"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:3
 msgid ""
@@ -7669,6 +7769,8 @@ msgid ""
 "           | ResetSyncHigh\n"
 "           | ResetSyncLow\n"
 "           | UserDefinedType\n"
+"           | Based\n"
+"           | BaseLess\n"
 "           ;\n"
 "\n"
 "// "
@@ -7907,7 +8009,8 @@ msgid ""
 "\n"
 "PortTypeConcrete: Direction [ ClockDomain ] ArrayType;\n"
 "\n"
-"PortTypeAbstract: [ ClockDomain ] Interface [ Array ];\n"
+"PortTypeAbstract: [ ClockDomain ] Interface [ ColonColon Identifier ] "
+"[ Array ];\n"
 "\n"
 "Direction: Input\n"
 "         | Output\n"
