@@ -68,6 +68,7 @@ https://doc.veryl-lang.org/book/05_language_reference/04_expression/06_bit_selec
 https://doc.veryl-lang.org/book/05_language_reference/04_expression/07_range.html
 https://doc.veryl-lang.org/book/05_language_reference/04_expression/08_msb_lsb.html
 https://doc.veryl-lang.org/book/05_language_reference/04_expression/09_inside_outside.html
+https://doc.veryl-lang.org/book/05_language_reference/04_expression/10_type_cast.html
 https://doc.veryl-lang.org/book/05_language_reference/05_statement/01_assignment.html
 https://doc.veryl-lang.org/book/05_language_reference/05_statement/02_function_call.html
 https://doc.veryl-lang.org/book/05_language_reference/05_statement/03_if.html
@@ -148,6 +149,7 @@ https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/06_bit_se
 https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/07_range.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/08_msb_lsb.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/09_inside_outside.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/10_type_cast.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/05_statement/01_assignment.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/05_statement/02_function_call.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/05_statement/03_if.html

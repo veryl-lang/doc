@@ -3,7 +3,7 @@
     <head prefix="og: http://ogp.me/ns#">
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>配列 - The Veryl Hardware Description Language</title>
+        <title>型キャスト - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
@@ -27,9 +27,9 @@
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
                     if (lang == "en") {
-                        canonical_href = `${base}/05_language_reference/03_data_type/03_array.md`;
+                        canonical_href = `${base}/05_language_reference/04_expression/10_type_cast.md`;
                     } else {
-                        canonical_href = `${base}/${lang}/05_language_reference/03_data_type/03_array.md`;
+                        canonical_href = `${base}/${lang}/05_language_reference/04_expression/10_type_cast.md`;
                     }
                     canonical_href = canonical_href.slice(0, -"md".length) + "html";
                     if (canonical_href.endsWith("/index.html")) {
@@ -230,7 +230,7 @@
                           let full_path_to_root = "../../../";
                           // The page path (mdbook only gives us
                           // access to the path to the Markdown file).
-                          let path = "05_language_reference/03_data_type/03_array.md".replace(/\.md$/, ".html");
+                          let path = "05_language_reference/04_expression/10_type_cast.md".replace(/\.md$/, ".html");
                           for (let lang of langList.querySelectorAll("a")) {
                               if (lang.id == "en") {
                                   lang.href = `${full_path_to_root}${path}`;
@@ -269,49 +269,20 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="配列"><a class="header" href="#配列">配列</a></h1>
-<p>任意のデータ型に対して <code>[]</code> と付与することで配列を定義することができます。配列の長さは <code>[]</code> 内の値で指定します。</p>
+                        <h1 id="型キャスト"><a class="header" href="#型キャスト">型キャスト</a></h1>
+<p><code>as</code> は型キャスト演算子です。基数付きあるいは基数なしの数値で指定するビット幅やユーザ定義型の型名をオペランドにとることができます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    struct StructA {
-        A: logic,
-    }
+    var a: EnumA   ;
+    var b: logic&lt;2&gt;;
+    let x: logic    = 0;
+
     enum EnumA: logic {
         A,
+        B,
     }
 
-    var a: logic       [20];
-    var b: logic  &lt;10&gt; [20];
-    var c: u32         [20];
-    var d: StructA     [20];
-    var e: EnumA       [20];
-
-    assign a[0] = 0;
-    assign b[0] = 0;
-    assign c[0] = 0;
-    assign d[0] = 0;
-    assign e[0] = 0;
-}
-</code></pre>
-<p><code>[X, Y, Z,,,]</code> のように多次元配列も定義できます。</p>
-<pre><code class="language-veryl playground">module ModuleA {
-    struct StructA {
-        A: logic,
-    }
-    enum EnumA: logic {
-        A,
-    }
-
-    var a: logic       [10, 20, 30];
-    var b: logic  &lt;10&gt; [10, 20, 30];
-    var c: u32         [10, 20, 30];
-    var d: StructA     [10, 20, 30];
-    var e: EnumA       [10, 20, 30];
-
-    assign a[0][0][0] = 0;
-    assign b[0][0][0] = 0;
-    assign c[0][0][0] = 0;
-    assign d[0][0][0] = 0;
-    assign e[0][0][0] = 0;
+    assign a = x as EnumA;
+    assign b = x as 2;
 }
 </code></pre>
 
@@ -319,11 +290,11 @@
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../05_language_reference/03_data_type/02_user_defined_type.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../05_language_reference/04_expression/09_inside_outside.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../05_language_reference/03_data_type/04_clock_reset.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../05_language_reference/05_statement.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -333,11 +304,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../05_language_reference/03_data_type/02_user_defined_type.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../05_language_reference/04_expression/09_inside_outside.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../05_language_reference/03_data_type/04_clock_reset.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../05_language_reference/05_statement.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -365,7 +336,7 @@
         <script src="../../highlight.js"></script>
         <script src="../../book.js"></script>
         <script type="module">
-            import init, {build, format} from "https://doc.veryl-lang.org/nightly/playground/pkg/veryl_wasm.js";
+            import init, {build, format} from "https://doc.veryl-lang.org/playground/pkg/veryl_wasm.js";
             init().then(() => {});
             window.build = build;
         </script>
