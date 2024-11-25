@@ -3,7 +3,7 @@
     <head prefix="og: http://ogp.me/ns#">
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Prototype - The Veryl Hardware Description Language</title>
+        <title>Type Cast - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
@@ -27,9 +27,9 @@
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
                     if (lang == "en") {
-                        canonical_href = `${base}/05_language_reference/14_generics/02_prototype.md`;
+                        canonical_href = `${base}/05_language_reference/04_expression/10_type_cast.md`;
                     } else {
-                        canonical_href = `${base}/${lang}/05_language_reference/14_generics/02_prototype.md`;
+                        canonical_href = `${base}/${lang}/05_language_reference/04_expression/10_type_cast.md`;
                     }
                     canonical_href = canonical_href.slice(0, -"md".length) + "html";
                     if (canonical_href.endsWith("/index.html")) {
@@ -230,7 +230,7 @@
                           let full_path_to_root = "../../";
                           // The page path (mdbook only gives us
                           // access to the path to the Markdown file).
-                          let path = "05_language_reference/14_generics/02_prototype.md".replace(/\.md$/, ".html");
+                          let path = "05_language_reference/04_expression/10_type_cast.md".replace(/\.md$/, ".html");
                           for (let lang of langList.querySelectorAll("a")) {
                               if (lang.id == "en") {
                                   lang.href = `${full_path_to_root}${path}`;
@@ -269,48 +269,21 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="prototype"><a class="header" href="#prototype">Prototype</a></h1>
-<p>Prototype is a special generic bound. It represents prototype which can be passed to the generic parameter.
-Currently module prototype is supported only.</p>
-<p>In the following example, <code>ProtoA</code> is a module prototype which has parameter <code>A</code> and port <code>i_dat</code> and <code>o_dat</code>.
-By binding like <code>T: ProtoA</code>, it is represented that the generic parameter <code>T</code> should have the parameters and ports.</p>
-<p>To use prototype, <code>for</code> implementation is required. <code>ModuleC</code> and <code>ModuleD</code> have <code>for ProroA</code> specifier which means the module satisfies the condision of <code>ProroA</code>.
-So the modules can be used as the generic parameter <code>T</code> of <code>ModuleB</code>.</p>
+                        <h1 id="type-cast"><a class="header" href="#type-cast">Type Cast</a></h1>
+<p><code>as</code> is type casting operator.
+Bit width speficied by based or baseless number or type name of user defined type can be used as the operand.</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    inst u0: ModuleB::&lt;ModuleC&gt;;
-    inst u1: ModuleB::&lt;ModuleD&gt;;
-}
+    var a: EnumA   ;
+    var b: logic&lt;2&gt;;
+    let x: logic    = 0;
 
-proto module ProtoA #(
-    param A: u32 = 1,
-) (
-    i_dat: input  logic,
-    o_dat: output logic,
-);
+    enum EnumA: logic {
+        A,
+        B,
+    }
 
-module ModuleB::&lt;T: ProtoA&gt; {
-    inst u: T (
-        i_dat: 0,
-        o_dat: _,
-    );
-}
-
-module ModuleC for ProtoA #(
-    param A: u32 = 1,
-) (
-    i_dat: input  logic,
-    o_dat: output logic,
-) {
-    assign o_dat = i_dat;
-}
-
-module ModuleD for ProtoA #(
-    param A: u32 = 1,
-) (
-    i_dat: input  logic,
-    o_dat: output logic,
-) {
-    assign o_dat = ~i_dat;
+    assign a = x as EnumA;
+    assign b = x as 2;
 }
 </code></pre>
 
@@ -318,11 +291,11 @@ module ModuleD for ProtoA #(
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../05_language_reference/14_generics/01_default_parameter.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../05_language_reference/04_expression/09_inside_outside.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../05_language_reference/15_clock_domain_annotation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../05_language_reference/05_statement.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -332,11 +305,11 @@ module ModuleD for ProtoA #(
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../05_language_reference/14_generics/01_default_parameter.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../05_language_reference/04_expression/09_inside_outside.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../05_language_reference/15_clock_domain_annotation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../05_language_reference/05_statement.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
