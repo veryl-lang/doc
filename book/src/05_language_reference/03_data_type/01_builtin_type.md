@@ -28,6 +28,22 @@ module ModuleA {
 }
 ```
 
+## Type modifier
+
+The following type modifiers can be added to `logic` and `bit` type.
+
+* `signed`: the MSB is treated as sign-bit
+* `tri`: tri-state type
+
+```veryl,playground
+module ModuleA {
+    let _a: signed logic<10> = 1;
+    let _b: tri logic   <10> = 1;
+    let _c: signed bit  <10> = 1;
+    let _d: tri bit     <10> = 1;
+}
+```
+
 ## Integer type
 
 There are some integer types:
