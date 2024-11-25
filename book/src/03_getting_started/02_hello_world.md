@@ -98,3 +98,15 @@ The following example is to use [Verilator](https://www.veripool.org/verilator/)
 ```
 $ verilator --cc -f hello.f
 ```
+
+## Clean up the Generated Code
+
+The generated code can be cleaned up by `veryl clean`.
+
+```
+$ veryl clean
+[INFO ]   Removing file ([path to hello]/src/hello.sv)
+[INFO ]   Removing file ([path to hello]/src/hello.sv.map)
+[INFO ]   Removing dir  ([path to hello]/dependencies)
+[INFO ]   Removing file ([path to hello]/hello.f)
+```

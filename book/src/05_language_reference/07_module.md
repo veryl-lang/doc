@@ -15,6 +15,7 @@ The available port directions are:
 * `output`: output port
 * `inout`: bi-directional port
 * `modport`: modport of interface
+* `interface`: generic interface
 
 ```veryl,playground
 module ModuleA #(
@@ -34,4 +35,18 @@ module ModuleA #(
         }
     }
 }
+```
+
+## Generic interface
+
+Generic interface is a special port direction.
+If `interface` is specified as the port direction, the port can be connected to arbitrary interface.
+Modport can be added to the `interface` like `interface::ModPort` too.
+Then the port can be connected to only the interface which has `ModPort`.
+
+```veryl,playground
+module ModuleA (
+    bus_if  : interface,
+    slave_if: interface::slave,
+) {}
 ```

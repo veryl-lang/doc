@@ -31,6 +31,7 @@
         - [Range](./05_language_reference/04_expression/07_range.md)
         - [Msb / Lsb](./05_language_reference/04_expression/08_msb_lsb.md)
         - [Inside / Outside](./05_language_reference/04_expression/09_inside_outside.md)
+        - [Type Cast](./05_language_reference/04_expression/10_type_cast.md)
     - [Statement](./05_language_reference/05_statement.md)
         - [Assignment](./05_language_reference/05_statement/01_assignment.md)
         - [Function Call](./05_language_reference/05_statement/02_function_call.md)

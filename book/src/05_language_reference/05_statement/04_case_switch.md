@@ -36,3 +36,36 @@ module ModuleA {
     }
 }
 ```
+
+## `cond_type` attribute
+
+To specify `unique`, `unique0` and `priority` in SystemVerilog, `cond_type` attribute can be used.
+The attribute can be annotated to `case` or `if` statement.
+
+* `unique`: There are no overlapping items. Error if no item matches.
+* `unique0`: There are no overlapping items. No error if no item matches.
+* `priority`: The first match is used only. Error if no item matches.
+
+```veryl,playground
+module ModuleA {
+    let a: logic<10> = 1;
+    var b: logic<10>;
+
+    always_comb {
+        #[cond_type(unique)]
+        case a {
+            0: b = 1;
+            1: b = 2;
+        }
+    }
+}
+```
+
+These attributes enable more aggressive optimization in synthesis,
+but if the expected condition is not complied, the result of synthesis will be broken.
+So these attributes are ignored by default, and if there is the following configuration, Veryl compiler emits them.
+
+```toml
+[build]
+emit_cond_type = true
+```

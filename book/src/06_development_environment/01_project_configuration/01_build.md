@@ -125,3 +125,12 @@ If `exclude_std` is set to `true`, standard library will not be included.
 [build]
 exclude_std = true
 ```
+
+## The `emit_cond_type` field
+
+If `emit_cond_type` is set to `true`, condition type like `unique`, `unique0` and `priority` is emitted.
+
+```toml
+[build]
+emit_cond_type = true
+```
