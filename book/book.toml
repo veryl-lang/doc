@@ -24,6 +24,7 @@ additional-css = [
 additional-js = [
   "mode-veryl.js",
   "editor.js",
+  "theme/language-picker.js",
 ]
 
 [output.html.fold]
