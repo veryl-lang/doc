@@ -26,18 +26,16 @@ In this chapter, we introduce the features of Veryl along with clear examples.
 Issues such as undefined, unused, or unassigned variables are notified in real-time while editing in the editor.
 In the following example, adding the `_` prefix to variables flagged as unused explicitly indicates their unused status, suppressing warnings.
 
-![diagnostics](./img/diagnostics.gif)
-
-If the video does not play[^1]
+<video src="./img/diagnostics.mp4" autoplay loop muted>
+</video>
 
 ## Auto formatting {#auto-formatting}
 
 In addition to the automatic formatting feature integrated with the editor,
 formatting through the command line and formatting checks in CI are also possible.
 
-![format](./img/format.gif)
-
-If the video does not play[^1]
+<video src="./img/format.mp4" autoplay loop muted>
+</video>
 
 ## Integrated test {#integrated-test}
 
@@ -635,5 +633,3 @@ module ModuleB {
 </td>
 </tr>
 </table>
-
-[^1]: Some browsers by default pause the playback of GIF animations. Please check your browser settings.
