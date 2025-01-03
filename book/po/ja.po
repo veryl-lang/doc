@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2024-11-25T11:32:28+09:00\n"
+"POT-Creation-Date: 2025-01-03T20:07:31+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -253,7 +253,7 @@ msgstr "他言語組み込み"
 msgid "Integrated Test"
 msgstr "組み込みテスト"
 
-#: src/SUMMARY.md:63 src/02_features.md:68
+#: src/SUMMARY.md:63 src/02_features.md:66
 #: src/05_language_reference/14_generics.md:1
 msgid "Generics"
 msgstr "ジェネリクス"
@@ -267,7 +267,7 @@ msgstr "デフォルトパラメータ"
 msgid "Prototype"
 msgstr "プロトタイプ"
 
-#: src/SUMMARY.md:66 src/02_features.md:124
+#: src/SUMMARY.md:66 src/02_features.md:122
 #: src/05_language_reference/15_clock_domain_annotation.md:1
 msgid "Clock Domain Annotation"
 msgstr "クロックドメインアノテーション"
@@ -567,19 +567,11 @@ msgstr ""
 "通知されます。次の例では、未使用変数として通知された変数に `_` プレフィックス"
 "を付加することで未使用であることを明示し、警告を抑制しています。"
 
-#: src/02_features.md:29
-msgid "![diagnostics](./img/diagnostics.gif)"
-msgstr "![diagnostics](./img/diagnostics.gif)"
-
-#: src/02_features.md:31 src/02_features.md:40
-msgid "If the video does not play[^1]"
-msgstr "ビデオが再生されない場合[^1]"
-
-#: src/02_features.md:33
+#: src/02_features.md:32
 msgid "Auto formatting"
 msgstr "自動フォーマット"
 
-#: src/02_features.md:35
+#: src/02_features.md:34
 msgid ""
 "In addition to the automatic formatting feature integrated with the editor, "
 "formatting through the command line and formatting checks in CI are also "
@@ -588,15 +580,11 @@ msgstr ""
 "エディタと連携した自動フォーマット機能のほか、コマンドラインでのフォーマット"
 "やCIでのフォーマットチェックも可能です。"
 
-#: src/02_features.md:38
-msgid "![format](./img/format.gif)"
-msgstr "![format](./img/format.gif)"
-
-#: src/02_features.md:42
+#: src/02_features.md:40
 msgid "Integrated test"
 msgstr "組み込みテスト"
 
-#: src/02_features.md:44
+#: src/02_features.md:42
 msgid ""
 "Test code written by SystemVerilog or [cocotb](https://www.cocotb.org) can "
 "be embeded in Veryl code, it can be executed through `veryl test` command."
@@ -604,7 +592,7 @@ msgstr ""
 "SystemVerilogまたは[cocotb](https://www.cocotb.org)で書かれたテストコードを"
 "Verylに埋め込み、`veryl test` コマンドで実行することができます。"
 
-#: src/02_features.md:47
+#: src/02_features.md:45
 msgid ""
 "```veryl\n"
 "#[test(test1)]\n"
@@ -618,11 +606,11 @@ msgid ""
 "```"
 msgstr ""
 
-#: src/02_features.md:58
+#: src/02_features.md:56
 msgid "Dependency management"
 msgstr "依存関係管理"
 
-#: src/02_features.md:60
+#: src/02_features.md:58
 msgid ""
 "Veryl includes a built-in dependency management feature, allowing for easy "
 "incorporation of libraries by simply adding the repository path and version "
@@ -632,7 +620,7 @@ msgstr ""
 "ライブラリのリポジトリパスとバージョンを追加するだけで、簡単にライブラリを組"
 "み込むことができます。"
 
-#: src/02_features.md:63 src/06_development_environment/02_dependencies.md:6
+#: src/02_features.md:61 src/06_development_environment/02_dependencies.md:6
 msgid ""
 "```toml\n"
 "[dependencies]\n"
@@ -644,7 +632,7 @@ msgstr ""
 "\"https://github.com/veryl-lang/sample\" = \"0.1.0\"\n"
 "```"
 
-#: src/02_features.md:70
+#: src/02_features.md:68
 msgid ""
 "Code generation through generics achieves more reusable code than "
 "traditional parameter override. Prarmeters in function like the follwoign "
@@ -656,7 +644,7 @@ msgstr ""
 "でなく、インスタンスのモジュール名や構造体定義の型名もパラメータ化することが"
 "できます。"
 
-#: src/02_features.md:126
+#: src/02_features.md:124
 msgid ""
 "If there are some clocks in a module, explicit clock domain annotation and "
 "`unsafe (cdc)` block at the clock domain boundaries are required. By the "
@@ -669,7 +657,7 @@ msgstr ""
 "イラは意図しないクロックドメインクロッシングをエラーとして検出し、明示的な "
 "`unsafe (cdc)` ブロックによりレビューが容易になります。"
 
-#: src/02_features.md:137
+#: src/02_features.md:135
 msgid ""
 "```verilog\n"
 "module ModuleA (\n"
@@ -701,11 +689,11 @@ msgstr ""
 "endmodule\n"
 "```"
 
-#: src/02_features.md:174
+#: src/02_features.md:172
 msgid "Trailing comma"
 msgstr "末尾カンマ"
 
-#: src/02_features.md:176
+#: src/02_features.md:174
 msgid ""
 "Trailing comma is a syntax where a comma is placed after the last element in "
 "a list. It facilitates the addition and removal of elements and reduces "
@@ -715,11 +703,11 @@ msgstr ""
 "り、要素の追加や削除が容易になり、バージョン管理システムにおける不必要な差異"
 "を減らすことができます。"
 
-#: src/02_features.md:212
+#: src/02_features.md:210
 msgid "Abstraction of clock and reset"
 msgstr "クロックとリセットの抽象化"
 
-#: src/02_features.md:214
+#: src/02_features.md:212
 msgid ""
 "There is no need to specify the polarity and synchronicity of the clock and "
 "reset in the syntax; these can be specified during build-time configuration. "
@@ -731,7 +719,7 @@ msgstr ""
 "性・非同期リセットとFPGA向けの正極性・同期リセットのそれぞれのコードを生成す"
 "ることができます。"
 
-#: src/02_features.md:219
+#: src/02_features.md:217
 msgid ""
 "Additionally, explicit `clock` and `reset` type enables to check whether "
 "clock and reset are correctly connected to registers. If there is a single "
@@ -741,11 +729,11 @@ msgstr ""
 "接続が正しく行われているかどうかを確認することができます。モジュール内にク"
 "ロックとリセットが1つだけの場合、レジスタへの接続を省略することもできます。"
 
-#: src/02_features.md:265 src/05_language_reference/02_lexical_structure.md:33
+#: src/02_features.md:263 src/05_language_reference/02_lexical_structure.md:33
 msgid "Documentation comment"
 msgstr "ドキュメンテーションコメント"
 
-#: src/02_features.md:267
+#: src/02_features.md:265
 msgid ""
 "Writing module descriptions as documentation comments allows for automatic "
 "documentation generation. You can use not only plain text but also the "
@@ -755,19 +743,19 @@ msgstr ""
 "を自動生成することができます。単なるテキストだけでなく、以下のフォーマットを"
 "使用することができます。"
 
-#: src/02_features.md:270
+#: src/02_features.md:268
 msgid "[Markdown](https://www.markdownguide.org)"
 msgstr "[Markdown](https://www.markdownguide.org)"
 
-#: src/02_features.md:271
+#: src/02_features.md:269
 msgid "Waveform using [WaveDrom](https://wavedrom.com)"
 msgstr "[WaveDrom](https://wavedrom.com)による波形記述"
 
-#: src/02_features.md:272
+#: src/02_features.md:270
 msgid "Diagram using [Mermaid](https://mermaid.js.org)"
 msgstr "[Mermaid](https://mermaid.js.org)によるダイアグラム記述"
 
-#: src/02_features.md:282
+#: src/02_features.md:280
 msgid ""
 "```verilog\n"
 "// Comment\n"
@@ -781,7 +769,7 @@ msgstr ""
 "endmodule\n"
 "```"
 
-#: src/02_features.md:291
+#: src/02_features.md:289
 msgid ""
 "````veryl\n"
 "/// Documentation comment written by Markdown\n"
@@ -809,11 +797,11 @@ msgstr ""
 "}\n"
 "````"
 
-#: src/02_features.md:308
+#: src/02_features.md:306
 msgid "Compound assignment operator in `always_ff`"
 msgstr "`always_ff` での複合代入演算子"
 
-#: src/02_features.md:310
+#: src/02_features.md:308
 msgid ""
 "There is no dedicated non-blocking assignment operator; within `always_ff`, "
 "non-blocking assignments are inferred, while within `always_comb`, blocking "
@@ -825,11 +813,11 @@ msgstr ""
 "`always_ff` 内でも `always_comb` 内と同様に様々な複合代入演算子を使用すること"
 "ができます。"
 
-#: src/02_features.md:345
+#: src/02_features.md:343
 msgid "Individual namespace of enum variant"
 msgstr "独立した名前空間を持つenumバリアント"
 
-#: src/02_features.md:347
+#: src/02_features.md:345
 msgid ""
 "Variants of an enum are defined within separate namespaces for each enum, "
 "thus preventing unintended name collisions."
@@ -837,11 +825,11 @@ msgstr ""
 "enumのバリアントはenum毎に独立した名前空間を持っており意図しない名前の衝突を"
 "防ぐことができます。"
 
-#: src/02_features.md:385
+#: src/02_features.md:383
 msgid "`repeat` of concatenation"
 msgstr "ビット連結における `repeat`"
 
-#: src/02_features.md:387
+#: src/02_features.md:385
 msgid ""
 "By adopting the explicit `repeat` syntax as a repetition description in bit "
 "concatenation, readability improves over complex combinations of `{}`."
@@ -849,11 +837,11 @@ msgstr ""
 "ビット連結における繰り返し記述として明示的な `repeat` 記法を採用し、 複雑な "
 "`{}` の組み合わせより可読性が向上しています。"
 
-#: src/02_features.md:415
+#: src/02_features.md:413
 msgid "`if` / `case` expression"
 msgstr "`if` / `case` 式"
 
-#: src/02_features.md:417
+#: src/02_features.md:415
 msgid ""
 "By adopting `if` and `case` expressions instead of the ternary operator, "
 "readability improves, especially when comparing a large number of items."
@@ -861,11 +849,11 @@ msgstr ""
 "三項演算子の代わりに if 式と case 式を採用することで、比較するアイテム数が多"
 "い場合の可読性が向上します。"
 
-#: src/02_features.md:453
+#: src/02_features.md:451
 msgid "Range-based `for` / `inside` / `outside`"
 msgstr "範囲 `for` / `inside` / `outside`"
 
-#: src/02_features.md:455
+#: src/02_features.md:453
 msgid ""
 "With notation representing closed intervals `..=` and half-open intervals `.."
 "`, it is possible to uniformly describe ranges using `for`, `inside`, and "
@@ -875,11 +863,11 @@ msgstr ""
 "一的に記述できるようにしました。また、`inside` の逆を意味する `outside` も導"
 "入しました。"
 
-#: src/02_features.md:487
+#: src/02_features.md:485
 msgid "`msb` notation"
 msgstr "`msb` 記法"
 
-#: src/02_features.md:489
+#: src/02_features.md:487
 msgid ""
 "The `msb` notation, indicating the most significant bit, eliminates the need "
 "to calculate the most significant bit from parameters, making intentions "
@@ -888,11 +876,11 @@ msgstr ""
 "最上位ビットを示す `msb` 記法により、パラメータから最上位ビットを計算する必要"
 "がなくなり、より意図を明確にすることができます。"
 
-#: src/02_features.md:518
+#: src/02_features.md:516
 msgid "`let` statement"
 msgstr "`let` 文"
 
-#: src/02_features.md:520
+#: src/02_features.md:518
 msgid ""
 "There is a dedicated `let` statement available for binding values "
 "simultaneously with variable declaration, which can be used in various "
@@ -901,20 +889,20 @@ msgstr ""
 "変数宣言と同時に値を束縛する専用の `let` 文が用意されており、SystemVerilogで"
 "はサポートされていなかった様々な場所で使用することができます。"
 
-#: src/02_features.md:553
+#: src/02_features.md:551
 msgid "Named block"
 msgstr "名前付きブロック"
 
-#: src/02_features.md:555
+#: src/02_features.md:553
 msgid "You can define named blocks to limit the scope of variables."
 msgstr ""
 "変数のスコープを限定するための名前付きブロックを定義することができます。"
 
-#: src/02_features.md:582
+#: src/02_features.md:580
 msgid "Visibility control"
 msgstr "可視性制御"
 
-#: src/02_features.md:584
+#: src/02_features.md:582
 msgid ""
 "Modules without the `pub` keyword cannot be referenced from outside the "
 "project and are not included in automatic documentation generation. This "
@@ -924,14 +912,6 @@ msgstr ""
 "`pub` キーワードの付かないモジュールはプロジェクト外から参照できず、ドキュメ"
 "ントの自動生成にも含まれません。これによりプロジェクト外に公開したいものと内"
 "部実装とを区別することができます。"
-
-#: src/02_features.md:619
-msgid ""
-"Some browsers by default pause the playback of GIF animations. Please check "
-"your browser settings."
-msgstr ""
-"いくつかのブラウザはデフォルトでGIF動画の再生を停止しています。ブラウザの設定"
-"を確認してください。"
 
 #: src/03_getting_started.md:3
 msgid ""
@@ -2663,7 +2643,9 @@ msgstr ""
 msgid ""
 "`as` is type casting operator. Bit width speficied by based or baseless "
 "number or type name of user defined type can be used as the operand."
-msgstr "`as` は型キャスト演算子です。基数付きあるいは基数なしの数値で指定するビット幅やユーザ定義型の型名をオペランドにとることができます。"
+msgstr ""
+"`as` は型キャスト演算子です。基数付きあるいは基数なしの数値で指定するビット幅"
+"やユーザ定義型の型名をオペランドにとることができます。"
 
 #: src/05_language_reference/05_statement.md:3
 msgid ""
@@ -2765,8 +2747,9 @@ msgid ""
 "attribute can be used. The attribute can be annotated to `case` or `if` "
 "statement."
 msgstr ""
-"SystemVerilogにおける `unique` `unique0` `priority` を指定するために、`cond_type` アトリビュートを使うことができます。"
-"これらのアトリビュートは `case` あるいは `if` 文に付けることができます。"
+"SystemVerilogにおける `unique` `unique0` `priority` を指定するために、"
+"`cond_type` アトリビュートを使うことができます。これらのアトリビュートは "
+"`case` あるいは `if` 文に付けることができます。"
 
 #: src/05_language_reference/05_statement/04_case_switch.md:45
 msgid "`unique`: There are no overlapping items. Error if no item matches."
@@ -2774,11 +2757,14 @@ msgstr "`unique`: アイテムは重複しない。マッチするアイテム�
 
 #: src/05_language_reference/05_statement/04_case_switch.md:46
 msgid "`unique0`: There are no overlapping items. No error if no item matches."
-msgstr "`unique0`: アイテムは重複しない。マッチするアイテムがなくてもエラーではない。"
+msgstr ""
+"`unique0`: アイテムは重複しない。マッチするアイテムがなくてもエラーではない。"
 
 #: src/05_language_reference/05_statement/04_case_switch.md:47
 msgid "`priority`: The first match is used only. Error if no item matches."
-msgstr "`priority`: 最初にマッチしたアイテムが使われる。マッチするアイテムがなければエラー。"
+msgstr ""
+"`priority`: 最初にマッチしたアイテムが使われる。マッチするアイテムがなければ"
+"エラー。"
 
 #: src/05_language_reference/05_statement/04_case_switch.md:64
 msgid ""
@@ -2787,9 +2773,9 @@ msgid ""
 "broken. So these attributes are ignored by default, and if there is the "
 "following configuration, Veryl compiler emits them."
 msgstr ""
-"これらのアトリビュートは合成時により積極的な最適化を可能にしますが、"
-"期待される条件を満たさない場合に合成結果が不正になる可能性があります。"
-"そのためデフォルトではアトリビュートは無視され、以下の設定がある場合のみ出力されます。"
+"これらのアトリビュートは合成時により積極的な最適化を可能にしますが、期待され"
+"る条件を満たさない場合に合成結果が不正になる可能性があります。そのためデフォ"
+"ルトではアトリビュートは無視され、以下の設定がある場合のみ出力されます。"
 
 #: src/05_language_reference/05_statement/05_for.md:3
 msgid ""
@@ -3158,13 +3144,13 @@ msgid ""
 "// file scope import\n"
 "import $sv::SvPackage::*;\n"
 "\n"
+"package PackageA {\n"
+"    const paramA: u32 = 1;\n"
+"}\n"
+"\n"
 "module ModuleA {\n"
 "    import PackageA::*;\n"
 "    import PackageA::paramA;\n"
-"}\n"
-"\n"
-"package PackageA {\n"
-"    const paramA: u32 = 1;\n"
 "}\n"
 "```"
 msgstr ""
@@ -3172,13 +3158,13 @@ msgstr ""
 "// ファイルスコープインポート\n"
 "import $sv::SvPackage::*;\n"
 "\n"
+"package PackageA {\n"
+"    const paramA: u32 = 1;\n"
+"}\n"
+"\n"
 "module ModuleA {\n"
 "    import PackageA::*;\n"
 "    import PackageA::paramA;\n"
-"}\n"
-"\n"
-"package PackageA {\n"
-"    const paramA: u32 = 1;\n"
 "}\n"
 "```"
 
@@ -3238,20 +3224,86 @@ msgid "`interface`: generic interface"
 msgstr "`interface`: ジェネリックインターフェース"
 
 #: src/05_language_reference/07_module.md:40
+msgid "Default value of port"
+msgstr "ポートのデフォルト値"
+
+#: src/05_language_reference/07_module.md:42
+msgid ""
+"Ports of module can have default value. Ports which have default value can "
+"be omitted at the instantiation, and the default values are assigned to the "
+"omitted ports. As default value, the following values are allowed:"
+msgstr ""
+"モジュールのポートはデフォルトを持つことができます。"
+"デフォルト値を持つポートはインスタンス時に省略することができ、省略されたポートにはデフォルト値が割り当てられます。"
+"デフォルト値としては以下の値を取ることができます。"
+
+#: src/05_language_reference/07_module.md:45
+msgid "Input port: literal, and `const` in package"
+msgstr "入力ポート: リテラル、パッケージ内の `const`"
+
+#: src/05_language_reference/07_module.md:46
+msgid "Output port: `_` (anonymous identifier)"
+msgstr "出力ポート: `_` (無名識別子)"
+
+#: src/05_language_reference/07_module.md:48
+msgid ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    a: input  logic    ,\n"
+"    b: input  logic = 1,\n"
+"    x: output logic    ,\n"
+"    y: output logic = _,\n"
+") {\n"
+"    assign x = a;\n"
+"    assign y = b;\n"
+"}\n"
+"\n"
+"module ModubeB {\n"
+"    inst instA: ModuleA (\n"
+"        a: 1,\n"
+"        // b is omitted\n"
+"        x: _,\n"
+"        // y is omitted\n"
+"    );\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    a: input  logic    ,\n"
+"    b: input  logic = 1,\n"
+"    x: output logic    ,\n"
+"    y: output logic = _,\n"
+") {\n"
+"    assign x = a;\n"
+"    assign y = b;\n"
+"}\n"
+"\n"
+"module ModubeB {\n"
+"    inst instA: ModuleA (\n"
+"        a: 1,\n"
+"        // b は省略\n"
+"        x: _,\n"
+"        // y は省略\n"
+"    );\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/07_module.md:70
 msgid "Generic interface"
 msgstr "ジェネリックインターフェース"
 
-#: src/05_language_reference/07_module.md:42
+#: src/05_language_reference/07_module.md:72
 msgid ""
 "Generic interface is a special port direction. If `interface` is specified "
 "as the port direction, the port can be connected to arbitrary interface. "
 "Modport can be added to the `interface` like `interface::ModPort` too. Then "
 "the port can be connected to only the interface which has `ModPort`."
 msgstr ""
-"ジェネリックインターフェースは特別なポート方向指定です。"
-"`interface` が指定されたとき、そのポートには任意のインターフェースを接続可能です。"
-"`interface::ModPort` のように modport を付けることもできます。"
-"この場合、`ModPort` を持つインターフェースだけが接続できます。"
+"ジェネリックインターフェースは特別なポート方向指定です。`interface` が指定さ"
+"れたとき、そのポートには任意のインターフェースを接続可能です。`interface::"
+"ModPort` のように modport を付けることもできます。この場合、`ModPort` を持つ"
+"インターフェースだけが接続できます。"
 
 #: src/05_language_reference/08_interface.md:3
 msgid ""
@@ -3626,6 +3678,11 @@ msgstr "ジェネリック構造体"
 #: src/05_language_reference/14_generics.md:82
 msgid ""
 "```veryl,playground\n"
+"package PackageA {\n"
+"    type TypeB = u32;\n"
+"    type TypeC = u64;\n"
+"}\n"
+"\n"
 "module ModuleA {\n"
 "    type TypeA = i32;\n"
 "\n"
@@ -3639,14 +3696,14 @@ msgid ""
 "    var _b: StructA::<PackageA::TypeB>;\n"
 "    var _c: StructA::<PackageA::TypeC>;\n"
 "}\n"
-"\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
 "package PackageA {\n"
 "    type TypeB = u32;\n"
 "    type TypeC = u64;\n"
 "}\n"
-"```"
-msgstr ""
-"```veryl,playground\n"
+"\n"
 "module ModuleA {\n"
 "    type TypeA = i32;\n"
 "\n"
@@ -3659,11 +3716,6 @@ msgstr ""
 "    var _a: StructA::<TypeA>          ;\n"
 "    var _b: StructA::<PackageA::TypeB>;\n"
 "    var _c: StructA::<PackageA::TypeC>;\n"
-"}\n"
-"\n"
-"package PackageA {\n"
-"    type TypeB = u32;\n"
-"    type TypeC = u64;\n"
 "}\n"
 "```"
 
@@ -4602,7 +4654,8 @@ msgid ""
 "If `emit_cond_type` is set to `true`, condition type like `unique`, "
 "`unique0` and `priority` is emitted."
 msgstr ""
-"`emit_cond_type` が `true` のとき、`unique` `unique0` `priority` といった指定が出力されます。"
+"`emit_cond_type` が `true` のとき、`unique` `unique0` `priority` といった指定"
+"が出力されます。"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:3
 msgid ""
@@ -7650,7 +7703,7 @@ msgid ""
 "Operator04 ) } Factor;\n"
 "\n"
 "Factor: Number\n"
-"      | ExpressionIdentifier [ FunctionCall ]\n"
+"      | IdentifierFactor\n"
 "      | LParen Expression RParen\n"
 "      | LBrace ConcatenationList RBrace\n"
 "      | QuoteLBrace ArrayLiteralList RBrace\n"
@@ -7664,6 +7717,8 @@ msgid ""
 "      | TypeExpression\n"
 "      | FactorType\n"
 "      ;\n"
+"\n"
+"IdentifierFactor: ExpressionIdentifier [ FunctionCall ];\n"
 "\n"
 "FunctionCall: LParen [ ArgumentList ] RParen;\n"
 "\n"
@@ -7869,9 +7924,9 @@ msgid ""
 "\n"
 "TypeDefDeclaration: Type Identifier Equ ArrayType Semicolon;\n"
 "\n"
-"AlwaysFfDeclaration: AlwaysFf [ AlwayfFfEventList ] StatementBlock;\n"
+"AlwaysFfDeclaration: AlwaysFf [ AlwaysFfEventList ] StatementBlock;\n"
 "\n"
-"AlwayfFfEventList: LParen AlwaysFfClock [ Comma AlwaysFfReset ] RParen;\n"
+"AlwaysFfEventList: LParen AlwaysFfClock [ Comma AlwaysFfReset ] RParen;\n"
 "\n"
 "AlwaysFfClock: HierarchicalIdentifier;\n"
 "\n"
@@ -8007,7 +8062,10 @@ msgid ""
 "PortDeclarationItem: Identifier Colon ( PortTypeConcrete | "
 "PortTypeAbstract );\n"
 "\n"
-"PortTypeConcrete: Direction [ ClockDomain ] ArrayType;\n"
+"PortTypeConcrete: Direction [ ClockDomain ] ArrayType [ Equ "
+"PortDefaultValue ];\n"
+"\n"
+"PortDefaultValue: Expression;\n"
 "\n"
 "PortTypeAbstract: [ ClockDomain ] Interface [ ColonColon Identifier ] "
 "[ Array ];\n"
@@ -8290,6 +8348,22 @@ msgstr "unknown_port"
 #: src/07_appendix/02_semantic_error.md:51
 msgid "unused_variable"
 msgstr "unused_variable"
+
+#~ msgid "![diagnostics](./img/diagnostics.gif)"
+#~ msgstr "![diagnostics](./img/diagnostics.gif)"
+
+#~ msgid "If the video does not play[^1]"
+#~ msgstr "ビデオが再生されない場合[^1]"
+
+#~ msgid "![format](./img/format.gif)"
+#~ msgstr "![format](./img/format.gif)"
+
+#~ msgid ""
+#~ "Some browsers by default pause the playback of GIF animations. Please "
+#~ "check your browser settings."
+#~ msgstr ""
+#~ "いくつかのブラウザはデフォルトでGIF動画の再生を停止しています。ブラウザの"
+#~ "設定を確認してください。"
 
 #~ msgid "`{}`"
 #~ msgstr "`{}`"
