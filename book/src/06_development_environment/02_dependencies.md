@@ -73,3 +73,15 @@ This is because
 
 The `version` field allows other version requirement representation like `=0.1.0`.
 Please see version requirement of Rust for detailed information: [Specifying Dependencies](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-cratesio).
+
+## Relative path dependency
+
+For local development, dependency to a local file path is useful in some cases.
+Relative path dependency can be specified like below:
+
+```toml
+[dependencies]
+"../../library/path" = "0.1.0"
+```
+
+If there are relative path dependencies in a project, the project can't be published through `veryl publish`.
