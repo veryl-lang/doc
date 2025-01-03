@@ -2791,6 +2791,12 @@ bump_commit_message = "Bump"
 <li><code>0.1.1</code> は互換性のある最新バージョン</li>
 </ul>
 <p><code>version</code> フィールドは <code>=0.1.0</code> のような指定も可能です。詳細は Rust のバージョン要求についてのドキュメントを参照してください。<a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-cratesio">Specifying Dependencies</a>.</p>
+<h2 id="相対パス依存関係"><a class="header" href="#相対パス依存関係">相対パス依存関係</a></h2>
+<p>手元の環境で開発しているとき、ローカルファイルパスへの依存関係が使えると便利なことがあります。相対パス依存関係は以下のように指定することができます。</p>
+<pre><code class="language-toml">[dependencies]
+"../../library/path" = "0.1.0"
+</code></pre>
+<p>プロジェクトに相対パス依存関係がある場合、そのプロジェクトは <code>veryl publish</code> で公開することはできません。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="プロジェクトを公開する"><a class="header" href="#プロジェクトを公開する">プロジェクトを公開する</a></h1>
 <p>プロジェクトを公開するには <code>veryl publish</code> コマンドを使います。公開とはバージョン番号とgitのリビジョンを紐づけることです。</p>
 <pre><code>$ veryl publish
