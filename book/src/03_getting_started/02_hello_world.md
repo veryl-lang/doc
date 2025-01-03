@@ -96,7 +96,7 @@ You can use it for SystemVerilog compiler.
 The following example is to use [Verilator](https://www.veripool.org/verilator/).
 
 ```
-$ verilator --cc -f hello.f
+$ verilator --binary -f hello.f
 ```
 
 ## Clean up the Generated Code

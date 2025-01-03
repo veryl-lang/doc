@@ -37,6 +37,36 @@ module ModuleA #(
 }
 ```
 
+## Default value of port
+
+Ports of module can have default value. Ports which have default value can be omitted at the instantiation, and the default values are assigned to the omitted ports.
+As default value, the following values are allowed:
+
+* Input port: literal, and `const` in package
+* Output port: `_` (anonymous identifier)
+
+```veryl,playground
+module ModuleA (
+    a: input  logic    ,
+    b: input  logic = 1,
+    x: output logic    ,
+    y: output logic = _,
+) {
+    assign x = a;
+    assign y = b;
+}
+
+module ModubeB {
+    inst instA: ModuleA (
+        a: 1,
+        // b is omitted
+        x: _,
+        // y is omitted
+    );
+}
+```
+
+
 ## Generic interface
 
 Generic interface is a special port direction.

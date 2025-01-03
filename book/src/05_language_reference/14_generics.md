@@ -67,19 +67,24 @@ module ModuleD for ProtoA {}
 ## Generic Package
 
 ```veryl,playground
+package PackageA::<T: const> {
+    const X: u32 = T;
+}
+
 module ModuleA {
     const A: u32 = PackageA::<1>::X;
     const B: u32 = PackageA::<2>::X;
-}
-
-package PackageA::<T: const> {
-    const X: u32 = T;
 }
 ```
 
 ## Generic Struct
 
 ```veryl,playground
+package PackageA {
+    type TypeB = u32;
+    type TypeC = u64;
+}
+
 module ModuleA {
     type TypeA = i32;
 
@@ -92,10 +97,5 @@ module ModuleA {
     var _a: StructA::<TypeA>          ;
     var _b: StructA::<PackageA::TypeB>;
     var _c: StructA::<PackageA::TypeC>;
-}
-
-package PackageA {
-    type TypeB = u32;
-    type TypeC = u64;
 }
 ```

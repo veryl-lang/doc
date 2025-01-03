@@ -8,13 +8,13 @@ Wildcard pattern like `package::*` can be used as an argument of `import` declar
 // file scope import
 import $sv::SvPackage::*;
 
+package PackageA {
+    const paramA: u32 = 1;
+}
+
 module ModuleA {
     import PackageA::*;
     import PackageA::paramA;
-}
-
-package PackageA {
-    const paramA: u32 = 1;
 }
 ```
 
