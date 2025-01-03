@@ -212,13 +212,13 @@
 <pre><code class="language-veryl playground">// ファイルスコープインポート
 import $sv::SvPackage::*;
 
+package PackageA {
+    const paramA: u32 = 1;
+}
+
 module ModuleA {
     import PackageA::*;
     import PackageA::paramA;
-}
-
-package PackageA {
-    const paramA: u32 = 1;
 }
 </code></pre>
 <p><code>export</code> 宣言は宣言したパッケージからシンボルをエクスポートします。全てのシンボルをエクスポートするには <code>export *</code> を使用します。</p>

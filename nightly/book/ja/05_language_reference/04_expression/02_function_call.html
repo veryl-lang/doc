@@ -209,16 +209,16 @@
                     <main>
                         <h1 id="関数呼び出し"><a class="header" href="#関数呼び出し">関数呼び出し</a></h1>
 <p>関数は <code>function_name(argument)</code> の形式で呼び出すことができます。<code>$clog2</code> のような SystemVerilog のシステム関数も使えます。</p>
-<pre><code class="language-veryl playground">module ModuleA {
-    let _a: logic = PackageA::FunctionA(1, 1);
-    let _b: logic = $clog2(1, 1);
-}
-
-package PackageA {
+<pre><code class="language-veryl playground">package PackageA {
     function FunctionA (
         a: input logic,
         b: input logic,
     ) {}
+}
+
+module ModuleA {
+    let _a: logic = PackageA::FunctionA(1, 1);
+    let _b: logic = $clog2(1, 1);
 }
 </code></pre>
 

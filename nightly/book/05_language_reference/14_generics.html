@@ -263,17 +263,22 @@ module ModuleC for ProtoA {}
 module ModuleD for ProtoA {}
 </code></pre>
 <h2 id="generic-package"><a class="header" href="#generic-package">Generic Package</a></h2>
-<pre><code class="language-veryl playground">module ModuleA {
+<pre><code class="language-veryl playground">package PackageA::&lt;T: const&gt; {
+    const X: u32 = T;
+}
+
+module ModuleA {
     const A: u32 = PackageA::&lt;1&gt;::X;
     const B: u32 = PackageA::&lt;2&gt;::X;
 }
-
-package PackageA::&lt;T: const&gt; {
-    const X: u32 = T;
-}
 </code></pre>
 <h2 id="generic-struct"><a class="header" href="#generic-struct">Generic Struct</a></h2>
-<pre><code class="language-veryl playground">module ModuleA {
+<pre><code class="language-veryl playground">package PackageA {
+    type TypeB = u32;
+    type TypeC = u64;
+}
+
+module ModuleA {
     type TypeA = i32;
 
     struct StructA::&lt;T: type&gt; {
@@ -285,11 +290,6 @@ package PackageA::&lt;T: const&gt; {
     var _a: StructA::&lt;TypeA&gt;          ;
     var _b: StructA::&lt;PackageA::TypeB&gt;;
     var _c: StructA::&lt;PackageA::TypeC&gt;;
-}
-
-package PackageA {
-    type TypeB = u32;
-    type TypeC = u64;
 }
 </code></pre>
 

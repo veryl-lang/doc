@@ -214,13 +214,13 @@ Wildcard pattern like <code>package::*</code> can be used as an argument of <cod
 <pre><code class="language-veryl playground">// file scope import
 import $sv::SvPackage::*;
 
+package PackageA {
+    const paramA: u32 = 1;
+}
+
 module ModuleA {
     import PackageA::*;
     import PackageA::paramA;
-}
-
-package PackageA {
-    const paramA: u32 = 1;
 }
 </code></pre>
 <p><code>export</code> declaration exports symbols from the package to other.

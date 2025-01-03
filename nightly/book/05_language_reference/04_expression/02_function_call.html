@@ -210,16 +210,16 @@
                         <h1 id="function-call"><a class="header" href="#function-call">Function Call</a></h1>
 <p>Function can be call by <code>function_name(argument)</code>.
 System function of SystemVerilog like <code>$clog2</code> can be used too.</p>
-<pre><code class="language-veryl playground">module ModuleA {
-    let _a: logic = PackageA::FunctionA(1, 1);
-    let _b: logic = $clog2(1, 1);
-}
-
-package PackageA {
+<pre><code class="language-veryl playground">package PackageA {
     function FunctionA (
         a: input logic,
         b: input logic,
     ) {}
+}
+
+module ModuleA {
+    let _a: logic = PackageA::FunctionA(1, 1);
+    let _b: logic = $clog2(1, 1);
 }
 </code></pre>
 

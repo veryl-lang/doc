@@ -272,7 +272,7 @@ $ tree
 endmodule
 </code></pre>
 <p>さらに、生成されたコードのファイルリスト <code>hello.f</code> も生成されます。これは SystemVerilog コンパイラで使用できます。<a href="https://www.veripool.org/verilator/">Verilator</a> で使用するには以下のようにします。</p>
-<pre><code>$ verilator --cc -f hello.f
+<pre><code>$ verilator --binary -f hello.f
 </code></pre>
 <h2 id="生成されたコードを片づける"><a class="header" href="#生成されたコードを片づける">生成されたコードを片づける</a></h2>
 <p>生成されたコードは <code>veryl clean</code> コマンドで削除することができます。</p>

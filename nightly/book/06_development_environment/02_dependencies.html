@@ -267,6 +267,13 @@ This is because</p>
 </ul>
 <p>The <code>version</code> field allows other version requirement representation like <code>=0.1.0</code>.
 Please see version requirement of Rust for detailed information: <a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-cratesio">Specifying Dependencies</a>.</p>
+<h2 id="relative-path-dependency"><a class="header" href="#relative-path-dependency">Relative path dependency</a></h2>
+<p>For local development, dependency to a local file path is useful in some cases.
+Relative path dependency can be specified like below:</p>
+<pre><code class="language-toml">[dependencies]
+"../../library/path" = "0.1.0"
+</code></pre>
+<p>If there are relative path dependencies in a project, the project can’t be published through <code>veryl publish</code>.</p>
 
                     </main>
 

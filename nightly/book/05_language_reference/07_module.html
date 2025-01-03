@@ -241,6 +241,32 @@ The available port directions are:</p>
     }
 }
 </code></pre>
+<h2 id="default-value-of-port"><a class="header" href="#default-value-of-port">Default value of port</a></h2>
+<p>Ports of module can have default value. Ports which have default value can be omitted at the instantiation, and the default values are assigned to the omitted ports.
+As default value, the following values are allowed:</p>
+<ul>
+<li>Input port: literal, and <code>const</code> in package</li>
+<li>Output port: <code>_</code> (anonymous identifier)</li>
+</ul>
+<pre><code class="language-veryl playground">module ModuleA (
+    a: input  logic    ,
+    b: input  logic = 1,
+    x: output logic    ,
+    y: output logic = _,
+) {
+    assign x = a;
+    assign y = b;
+}
+
+module ModubeB {
+    inst instA: ModuleA (
+        a: 1,
+        // b is omitted
+        x: _,
+        // y is omitted
+    );
+}
+</code></pre>
 <h2 id="generic-interface"><a class="header" href="#generic-interface">Generic interface</a></h2>
 <p>Generic interface is a special port direction.
 If <code>interface</code> is specified as the port direction, the port can be connected to arbitrary interface.
