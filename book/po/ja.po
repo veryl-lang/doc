@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-01-03T20:07:31+09:00\n"
+"POT-Creation-Date: 2025-01-03T20:22:17+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -3233,9 +3233,9 @@ msgid ""
 "be omitted at the instantiation, and the default values are assigned to the "
 "omitted ports. As default value, the following values are allowed:"
 msgstr ""
-"モジュールのポートはデフォルトを持つことができます。"
-"デフォルト値を持つポートはインスタンス時に省略することができ、省略されたポートにはデフォルト値が割り当てられます。"
-"デフォルト値としては以下の値を取ることができます。"
+"モジュールのポートはデフォルトを持つことができます。デフォルト値を持つポート"
+"はインスタンス時に省略することができ、省略されたポートにはデフォルト値が割り"
+"当てられます。デフォルト値としては以下の値を取ることができます。"
 
 #: src/05_language_reference/07_module.md:45
 msgid "Input port: literal, and `const` in package"
@@ -6121,6 +6121,37 @@ msgstr ""
 "ジョン要求についてのドキュメントを参照してください。[Specifying Dependencies]"
 "(https://doc.rust-lang.org/cargo/reference/specifying-dependencies."
 "html#specifying-dependencies-from-cratesio)."
+
+#: src/06_development_environment/02_dependencies.md:77
+msgid "Relative path dependency"
+msgstr "相対パス依存関係"
+
+#: src/06_development_environment/02_dependencies.md:79
+msgid ""
+"For local development, dependency to a local file path is useful in some "
+"cases. Relative path dependency can be specified like below:"
+msgstr ""
+"手元の環境で開発しているとき、ローカルファイルパスへの依存関係が使えると便利なことがあります。"
+"相対パス依存関係は以下のように指定することができます。"
+
+#: src/06_development_environment/02_dependencies.md:82
+msgid ""
+"```toml\n"
+"[dependencies]\n"
+"\"../../library/path\" = \"0.1.0\"\n"
+"```"
+msgstr ""
+"```toml\n"
+"[dependencies]\n"
+"\"../../library/path\" = \"0.1.0\"\n"
+"```"
+
+#: src/06_development_environment/02_dependencies.md:87
+msgid ""
+"If there are relative path dependencies in a project, the project can't be "
+"published through `veryl publish`."
+msgstr ""
+"プロジェクトに相対パス依存関係がある場合、そのプロジェクトは `veryl publish` で公開することはできません。"
 
 #: src/06_development_environment/03_publish_project.md:3
 msgid ""
