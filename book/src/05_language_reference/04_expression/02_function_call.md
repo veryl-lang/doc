@@ -13,6 +13,6 @@ package PackageA {
 
 module ModuleA {
     let _a: logic = PackageA::FunctionA(1, 1);
-    let _b: logic = $clog2(1, 1);
+    let _b: logic = $clog2(1);
 }
 ```
