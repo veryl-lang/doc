@@ -178,47 +178,6 @@
                     <h1 class="menu-title">The Veryl Hardware Description Language</h1>
 
                     <div class="right-buttons">
-                        <button id="language-toggle" class="icon-button" type="button"
-                                title="Change language" aria-label="Change language"
-                                aria-haspopup="true" aria-expanded="false"
-                                aria-controls="language-list">
-                            <i class="fa fa-globe"></i>
-                        </button>
-                        <ul id="language-list" class="theme-popup" aria-label="Languages" role="menu">
-                          <li role="none"><button role="menuitem" class="theme">
-                              <a id="en">English</a>
-                          </button></li>
-                          <li role="none"><button role="menuitem" class="theme">
-                              <a id="ja">日本語</a>
-                          </button></li>
-                        </ul>
-
-                        <script>
-                          let langToggle = document.getElementById("language-toggle");
-                          let langList = document.getElementById("language-list");
-                          langToggle.addEventListener("click", (event) => {
-                              langList.style.display = langList.style.display == "block" ? "none" : "block";
-                          });
-                          let selectedLang = document.getElementById("en");
-                          if (selectedLang) {
-                              selectedLang.parentNode.classList.add("theme-selected");
-                          }
-
-                          // The path to the root, taking the current
-                          // language into account.
-                          let full_path_to_root = "../";
-                          // The page path (mdbook only gives us
-                          // access to the path to the Markdown file).
-                          let path = "07_appendix/01_formal_syntax.md".replace(/\.md$/, ".html");
-                          for (let lang of langList.querySelectorAll("a")) {
-                              if (lang.id == "en") {
-                                  lang.href = `${full_path_to_root}${path}`;
-                              } else {
-                                  lang.href = `${full_path_to_root}${lang.id}/${path}`;
-                              }
-                          }
-                        </script>
-
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
@@ -687,7 +646,7 @@ Expression11: Expression12 [ As CastingType ];
 Expression12: { ( UnaryOperator | Operator09 | Operator05 | Operator03 | Operator04 ) } Factor;
 
 Factor: Number
-      | ExpressionIdentifier [ FunctionCall ]
+      | IdentifierFactor
       | LParen Expression RParen
       | LBrace ConcatenationList RBrace
       | QuoteLBrace ArrayLiteralList RBrace
@@ -701,6 +660,8 @@ Factor: Number
       | TypeExpression
       | FactorType
       ;
+
+IdentifierFactor: ExpressionIdentifier [ FunctionCall ];
 
 FunctionCall: LParen [ ArgumentList ] RParen;
 
@@ -878,9 +839,9 @@ ConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Equ Expression Sem
 
 TypeDefDeclaration: Type Identifier Equ ArrayType Semicolon;
 
-AlwaysFfDeclaration: AlwaysFf [ AlwayfFfEventList ] StatementBlock;
+AlwaysFfDeclaration: AlwaysFf [ AlwaysFfEventList ] StatementBlock;
 
-AlwayfFfEventList: LParen AlwaysFfClock [ Comma AlwaysFfReset ] RParen;
+AlwaysFfEventList: LParen AlwaysFfClock [ Comma AlwaysFfReset ] RParen;
 
 AlwaysFfClock: HierarchicalIdentifier;
 
@@ -990,7 +951,9 @@ PortDeclarationGroup: { Attribute } ( LBrace PortDeclarationList RBrace | PortDe
 
 PortDeclarationItem: Identifier Colon ( PortTypeConcrete | PortTypeAbstract );
 
-PortTypeConcrete: Direction [ ClockDomain ] ArrayType;
+PortTypeConcrete: Direction [ ClockDomain ] ArrayType [ Equ PortDefaultValue ];
+
+PortDefaultValue: Expression;
 
 PortTypeAbstract: [ ClockDomain ] Interface [ ColonColon Identifier ] [ Array ];
 
@@ -1193,6 +1156,7 @@ Veryl: Start { DescriptionGroup };
         <!-- Custom JS scripts -->
         <script src="../mode-veryl.js"></script>
         <script src="../editor.js"></script>
+        <script src="../theme/language-picker.js"></script>
 
 
     </div>

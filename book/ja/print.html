@@ -179,47 +179,6 @@
                     <h1 class="menu-title">The Veryl Hardware Description Language</h1>
 
                     <div class="right-buttons">
-                        <button id="language-toggle" class="icon-button" type="button"
-                                title="Change language" aria-label="Change language"
-                                aria-haspopup="true" aria-expanded="false"
-                                aria-controls="language-list">
-                            <i class="fa fa-globe"></i>
-                        </button>
-                        <ul id="language-list" class="theme-popup" aria-label="Languages" role="menu">
-                          <li role="none"><button role="menuitem" class="theme">
-                              <a id="en">English</a>
-                          </button></li>
-                          <li role="none"><button role="menuitem" class="theme">
-                              <a id="ja">日本語</a>
-                          </button></li>
-                        </ul>
-
-                        <script>
-                          let langToggle = document.getElementById("language-toggle");
-                          let langList = document.getElementById("language-list");
-                          langToggle.addEventListener("click", (event) => {
-                              langList.style.display = langList.style.display == "block" ? "none" : "block";
-                          });
-                          let selectedLang = document.getElementById("ja");
-                          if (selectedLang) {
-                              selectedLang.parentNode.classList.add("theme-selected");
-                          }
-
-                          // The path to the root, taking the current
-                          // language into account.
-                          let full_path_to_root = "../";
-                          // The page path (mdbook only gives us
-                          // access to the path to the Markdown file).
-                          let path = "print.md".replace(/\.md$/, ".html");
-                          for (let lang of langList.querySelectorAll("a")) {
-                              if (lang.id == "en") {
-                                  lang.href = `${full_path_to_root}${path}`;
-                              } else {
-                                  lang.href = `${full_path_to_root}${lang.id}/${path}`;
-                              }
-                          }
-                        </script>
-
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
@@ -283,12 +242,12 @@
 </ul>
 <h2 id="real-time-diagnostics"><a class="header" href="#real-time-diagnostics">リアルタイム診断</a></h2>
 <p>変数の未定義・未使用・未代入といった問題はエディタでの編集中にリアルタイムに通知されます。次の例では、未使用変数として通知された変数に <code>_</code> プレフィックスを付加することで未使用であることを明示し、警告を抑制しています。</p>
-<p><img src="./img/diagnostics.gif" alt="diagnostics" /></p>
-<p>ビデオが再生されない場合<sup class="footnote-reference"><a href="#1">1</a></sup></p>
+<video src="./img/diagnostics.mp4" autoplay loop muted>
+</video>
 <h2 id="auto-formatting"><a class="header" href="#auto-formatting">自動フォーマット</a></h2>
 <p>エディタと連携した自動フォーマット機能のほか、コマンドラインでのフォーマットやCIでのフォーマットチェックも可能です。</p>
-<p><img src="./img/format.gif" alt="format" /></p>
-<p>ビデオが再生されない場合<sup class="footnote-reference"><a href="#1">1</a></sup></p>
+<video src="./img/format.mp4" autoplay loop muted>
+</video>
 <h2 id="integrated-test"><a class="header" href="#integrated-test">組み込みテスト</a></h2>
 <p>SystemVerilogまたは<a href="https://www.cocotb.org">cocotb</a>で書かれたテストコードをVerylに埋め込み、<code>veryl test</code> コマンドで実行することができます。</p>
 <pre><code class="language-veryl">#[test(test1)]
@@ -713,9 +672,6 @@ module ModuleB {
 </td>
 </tr>
 </table>
-<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
-<p>いくつかのブラウザはデフォルトでGIF動画の再生を停止しています。ブラウザの設定を確認してください。</p>
-</div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="はじめに"><a class="header" href="#はじめに">はじめに</a></h1>
 <p>Veryl を使ってみましょう。この章では Veryl のインストール、サンプルプロジェクトの作成とビルドまでを行います。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="インストール"><a class="header" href="#インストール">インストール</a></h1>
@@ -826,7 +782,7 @@ $ tree
 endmodule
 </code></pre>
 <p>さらに、生成されたコードのファイルリスト <code>hello.f</code> も生成されます。これは SystemVerilog コンパイラで使用できます。<a href="https://www.veripool.org/verilator/">Verilator</a> で使用するには以下のようにします。</p>
-<pre><code>$ verilator --cc -f hello.f
+<pre><code>$ verilator --binary -f hello.f
 </code></pre>
 <h2 id="生成されたコードを片づける"><a class="header" href="#生成されたコードを片づける">生成されたコードを片づける</a></h2>
 <p>生成されたコードは <code>veryl clean</code> コマンドで削除することができます。</p>
@@ -1466,16 +1422,16 @@ a = 1 || 1;
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="関数呼び出し"><a class="header" href="#関数呼び出し">関数呼び出し</a></h1>
 <p>関数は <code>function_name(argument)</code> の形式で呼び出すことができます。<code>$clog2</code> のような SystemVerilog のシステム関数も使えます。</p>
-<pre><code class="language-veryl playground">module ModuleA {
-    let _a: logic = PackageA::FunctionA(1, 1);
-    let _b: logic = $clog2(1, 1);
-}
-
-package PackageA {
+<pre><code class="language-veryl playground">package PackageA {
     function FunctionA (
         a: input logic,
         b: input logic,
     ) {}
+}
+
+module ModuleA {
+    let _a: logic = PackageA::FunctionA(1, 1);
+    let _b: logic = $clog2(1, 1);
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="連結"><a class="header" href="#連結">連結</a></h1>
@@ -1989,13 +1945,13 @@ module ModuleB #(
 <pre><code class="language-veryl playground">// ファイルスコープインポート
 import $sv::SvPackage::*;
 
+package PackageA {
+    const paramA: u32 = 1;
+}
+
 module ModuleA {
     import PackageA::*;
     import PackageA::paramA;
-}
-
-package PackageA {
-    const paramA: u32 = 1;
 }
 </code></pre>
 <p><code>export</code> 宣言は宣言したパッケージからシンボルをエクスポートします。全てのシンボルをエクスポートするには <code>export *</code> を使用します。</p>
@@ -2040,6 +1996,31 @@ package PackageC {
             x = b;
         }
     }
+}
+</code></pre>
+<h2 id="ポートのデフォルト値"><a class="header" href="#ポートのデフォルト値">ポートのデフォルト値</a></h2>
+<p>モジュールのポートはデフォルトを持つことができます。デフォルト値を持つポートはインスタンス時に省略することができ、省略されたポートにはデフォルト値が割り当てられます。デフォルト値としては以下の値を取ることができます。</p>
+<ul>
+<li>入力ポート: リテラル、パッケージ内の <code>const</code></li>
+<li>出力ポート: <code>_</code> (無名識別子)</li>
+</ul>
+<pre><code class="language-veryl playground">module ModuleA (
+    a: input  logic    ,
+    b: input  logic = 1,
+    x: output logic    ,
+    y: output logic = _,
+) {
+    assign x = a;
+    assign y = b;
+}
+
+module ModubeB {
+    inst instA: ModuleA (
+        a: 1,
+        // b は省略
+        x: _,
+        // y は省略
+    );
 }
 </code></pre>
 <h2 id="ジェネリックインターフェース"><a class="header" href="#ジェネリックインターフェース">ジェネリックインターフェース</a></h2>
@@ -2205,17 +2186,22 @@ module ModuleC for ProtoA {}
 module ModuleD for ProtoA {}
 </code></pre>
 <h2 id="ジェネリックパッケージ"><a class="header" href="#ジェネリックパッケージ">ジェネリックパッケージ</a></h2>
-<pre><code class="language-veryl playground">module ModuleA {
+<pre><code class="language-veryl playground">package PackageA::&lt;T: const&gt; {
+    const X: u32 = T;
+}
+
+module ModuleA {
     const A: u32 = PackageA::&lt;1&gt;::X;
     const B: u32 = PackageA::&lt;2&gt;::X;
 }
-
-package PackageA::&lt;T: const&gt; {
-    const X: u32 = T;
-}
 </code></pre>
 <h2 id="ジェネリック構造体"><a class="header" href="#ジェネリック構造体">ジェネリック構造体</a></h2>
-<pre><code class="language-veryl playground">module ModuleA {
+<pre><code class="language-veryl playground">package PackageA {
+    type TypeB = u32;
+    type TypeC = u64;
+}
+
+module ModuleA {
     type TypeA = i32;
 
     struct StructA::&lt;T: type&gt; {
@@ -2227,11 +2213,6 @@ package PackageA::&lt;T: const&gt; {
     var _a: StructA::&lt;TypeA&gt;          ;
     var _b: StructA::&lt;PackageA::TypeB&gt;;
     var _c: StructA::&lt;PackageA::TypeC&gt;;
-}
-
-package PackageA {
-    type TypeB = u32;
-    type TypeC = u64;
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="デフォルトパラメータ"><a class="header" href="#デフォルトパラメータ">デフォルトパラメータ</a></h1>
@@ -2810,6 +2791,12 @@ bump_commit_message = "Bump"
 <li><code>0.1.1</code> は互換性のある最新バージョン</li>
 </ul>
 <p><code>version</code> フィールドは <code>=0.1.0</code> のような指定も可能です。詳細は Rust のバージョン要求についてのドキュメントを参照してください。<a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-cratesio">Specifying Dependencies</a>.</p>
+<h2 id="相対パス依存関係"><a class="header" href="#相対パス依存関係">相対パス依存関係</a></h2>
+<p>手元の環境で開発しているとき、ローカルファイルパスへの依存関係が使えると便利なことがあります。相対パス依存関係は以下のように指定することができます。</p>
+<pre><code class="language-toml">[dependencies]
+"../../library/path" = "0.1.0"
+</code></pre>
+<p>プロジェクトに相対パス依存関係がある場合、そのプロジェクトは <code>veryl publish</code> で公開することはできません。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="プロジェクトを公開する"><a class="header" href="#プロジェクトを公開する">プロジェクトを公開する</a></h1>
 <p>プロジェクトを公開するには <code>veryl publish</code> コマンドを使います。公開とはバージョン番号とgitのリビジョンを紐づけることです。</p>
 <pre><code>$ veryl publish
@@ -3579,7 +3566,7 @@ Expression11: Expression12 [ As CastingType ];
 Expression12: { ( UnaryOperator | Operator09 | Operator05 | Operator03 | Operator04 ) } Factor;
 
 Factor: Number
-      | ExpressionIdentifier [ FunctionCall ]
+      | IdentifierFactor
       | LParen Expression RParen
       | LBrace ConcatenationList RBrace
       | QuoteLBrace ArrayLiteralList RBrace
@@ -3593,6 +3580,8 @@ Factor: Number
       | TypeExpression
       | FactorType
       ;
+
+IdentifierFactor: ExpressionIdentifier [ FunctionCall ];
 
 FunctionCall: LParen [ ArgumentList ] RParen;
 
@@ -3770,9 +3759,9 @@ ConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Equ Expression Sem
 
 TypeDefDeclaration: Type Identifier Equ ArrayType Semicolon;
 
-AlwaysFfDeclaration: AlwaysFf [ AlwayfFfEventList ] StatementBlock;
+AlwaysFfDeclaration: AlwaysFf [ AlwaysFfEventList ] StatementBlock;
 
-AlwayfFfEventList: LParen AlwaysFfClock [ Comma AlwaysFfReset ] RParen;
+AlwaysFfEventList: LParen AlwaysFfClock [ Comma AlwaysFfReset ] RParen;
 
 AlwaysFfClock: HierarchicalIdentifier;
 
@@ -3882,7 +3871,9 @@ PortDeclarationGroup: { Attribute } ( LBrace PortDeclarationList RBrace | PortDe
 
 PortDeclarationItem: Identifier Colon ( PortTypeConcrete | PortTypeAbstract );
 
-PortTypeConcrete: Direction [ ClockDomain ] ArrayType;
+PortTypeConcrete: Direction [ ClockDomain ] ArrayType [ Equ PortDefaultValue ];
+
+PortDefaultValue: Expression;
 
 PortTypeAbstract: [ ClockDomain ] Interface [ ColonColon Identifier ] [ Array ];
 
@@ -4099,6 +4090,7 @@ Veryl: Start { DescriptionGroup };
         <!-- Custom JS scripts -->
         <script src="mode-veryl.js"></script>
         <script src="editor.js"></script>
+        <script src="theme/language-picker.js"></script>
 
         <script>
         window.addEventListener('load', function() {

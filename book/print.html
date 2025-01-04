@@ -179,47 +179,6 @@
                     <h1 class="menu-title">The Veryl Hardware Description Language</h1>
 
                     <div class="right-buttons">
-                        <button id="language-toggle" class="icon-button" type="button"
-                                title="Change language" aria-label="Change language"
-                                aria-haspopup="true" aria-expanded="false"
-                                aria-controls="language-list">
-                            <i class="fa fa-globe"></i>
-                        </button>
-                        <ul id="language-list" class="theme-popup" aria-label="Languages" role="menu">
-                          <li role="none"><button role="menuitem" class="theme">
-                              <a id="en">English</a>
-                          </button></li>
-                          <li role="none"><button role="menuitem" class="theme">
-                              <a id="ja">日本語</a>
-                          </button></li>
-                        </ul>
-
-                        <script>
-                          let langToggle = document.getElementById("language-toggle");
-                          let langList = document.getElementById("language-list");
-                          langToggle.addEventListener("click", (event) => {
-                              langList.style.display = langList.style.display == "block" ? "none" : "block";
-                          });
-                          let selectedLang = document.getElementById("en");
-                          if (selectedLang) {
-                              selectedLang.parentNode.classList.add("theme-selected");
-                          }
-
-                          // The path to the root, taking the current
-                          // language into account.
-                          let full_path_to_root = "";
-                          // The page path (mdbook only gives us
-                          // access to the path to the Markdown file).
-                          let path = "print.md".replace(/\.md$/, ".html");
-                          for (let lang of langList.querySelectorAll("a")) {
-                              if (lang.id == "en") {
-                                  lang.href = `${full_path_to_root}${path}`;
-                              } else {
-                                  lang.href = `${full_path_to_root}${lang.id}/${path}`;
-                              }
-                          }
-                        </script>
-
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
@@ -288,13 +247,13 @@ These tools accelerate the development process and significantly enhance product
 <h2 id="real-time-diagnostics"><a class="header" href="#real-time-diagnostics">Real-time diagnostics</a></h2>
 <p>Issues such as undefined, unused, or unassigned variables are notified in real-time while editing in the editor.
 In the following example, adding the <code>_</code> prefix to variables flagged as unused explicitly indicates their unused status, suppressing warnings.</p>
-<p><img src="./img/diagnostics.gif" alt="diagnostics" /></p>
-<p>If the video does not play<sup class="footnote-reference"><a href="#1">1</a></sup></p>
+<video src="./img/diagnostics.mp4" autoplay loop muted>
+</video>
 <h2 id="auto-formatting"><a class="header" href="#auto-formatting">Auto formatting</a></h2>
 <p>In addition to the automatic formatting feature integrated with the editor,
 formatting through the command line and formatting checks in CI are also possible.</p>
-<p><img src="./img/format.gif" alt="format" /></p>
-<p>If the video does not play<sup class="footnote-reference"><a href="#1">1</a></sup></p>
+<video src="./img/format.mp4" autoplay loop muted>
+</video>
 <h2 id="integrated-test"><a class="header" href="#integrated-test">Integrated test</a></h2>
 <p>Test code written by SystemVerilog or <a href="https://www.cocotb.org">cocotb</a> can be embeded in Veryl code,
 it can be executed through <code>veryl test</code> command.</p>
@@ -738,9 +697,6 @@ module ModuleB {
 </td>
 </tr>
 </table>
-<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
-<p>Some browsers by default pause the playback of GIF animations. Please check your browser settings.</p>
-</div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h1>
 <p>Let’s start to use Veryl. In this section, we will install Veryl, create an example project, and build it.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
@@ -864,7 +820,7 @@ endmodule
 <p>Additionally, <code>hello.f</code> which is the filelist of generated codes will be generated.
 You can use it for SystemVerilog compiler.
 The following example is to use <a href="https://www.veripool.org/verilator/">Verilator</a>.</p>
-<pre><code>$ verilator --cc -f hello.f
+<pre><code>$ verilator --binary -f hello.f
 </code></pre>
 <h2 id="clean-up-the-generated-code"><a class="header" href="#clean-up-the-generated-code">Clean up the Generated Code</a></h2>
 <p>The generated code can be cleaned up by <code>veryl clean</code>.</p>
@@ -1542,16 +1498,16 @@ It can be evaluated to a value.</p>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="function-call"><a class="header" href="#function-call">Function Call</a></h1>
 <p>Function can be call by <code>function_name(argument)</code>.
 System function of SystemVerilog like <code>$clog2</code> can be used too.</p>
-<pre><code class="language-veryl playground">module ModuleA {
-    let _a: logic = PackageA::FunctionA(1, 1);
-    let _b: logic = $clog2(1, 1);
-}
-
-package PackageA {
+<pre><code class="language-veryl playground">package PackageA {
     function FunctionA (
         a: input logic,
         b: input logic,
     ) {}
+}
+
+module ModuleA {
+    let _a: logic = PackageA::FunctionA(1, 1);
+    let _b: logic = $clog2(1, 1);
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="concatenation"><a class="header" href="#concatenation">Concatenation</a></h1>
@@ -2122,13 +2078,13 @@ Wildcard pattern like <code>package::*</code> can be used as an argument of <cod
 <pre><code class="language-veryl playground">// file scope import
 import $sv::SvPackage::*;
 
+package PackageA {
+    const paramA: u32 = 1;
+}
+
 module ModuleA {
     import PackageA::*;
     import PackageA::paramA;
-}
-
-package PackageA {
-    const paramA: u32 = 1;
 }
 </code></pre>
 <p><code>export</code> declaration exports symbols from the package to other.
@@ -2179,6 +2135,32 @@ The available port directions are:</p>
             x = b;
         }
     }
+}
+</code></pre>
+<h2 id="default-value-of-port"><a class="header" href="#default-value-of-port">Default value of port</a></h2>
+<p>Ports of module can have default value. Ports which have default value can be omitted at the instantiation, and the default values are assigned to the omitted ports.
+As default value, the following values are allowed:</p>
+<ul>
+<li>Input port: literal, and <code>const</code> in package</li>
+<li>Output port: <code>_</code> (anonymous identifier)</li>
+</ul>
+<pre><code class="language-veryl playground">module ModuleA (
+    a: input  logic    ,
+    b: input  logic = 1,
+    x: output logic    ,
+    y: output logic = _,
+) {
+    assign x = a;
+    assign y = b;
+}
+
+module ModubeB {
+    inst instA: ModuleA (
+        a: 1,
+        // b is omitted
+        x: _,
+        // y is omitted
+    );
 }
 </code></pre>
 <h2 id="generic-interface"><a class="header" href="#generic-interface">Generic interface</a></h2>
@@ -2371,17 +2353,22 @@ module ModuleC for ProtoA {}
 module ModuleD for ProtoA {}
 </code></pre>
 <h2 id="generic-package"><a class="header" href="#generic-package">Generic Package</a></h2>
-<pre><code class="language-veryl playground">module ModuleA {
+<pre><code class="language-veryl playground">package PackageA::&lt;T: const&gt; {
+    const X: u32 = T;
+}
+
+module ModuleA {
     const A: u32 = PackageA::&lt;1&gt;::X;
     const B: u32 = PackageA::&lt;2&gt;::X;
 }
-
-package PackageA::&lt;T: const&gt; {
-    const X: u32 = T;
-}
 </code></pre>
 <h2 id="generic-struct"><a class="header" href="#generic-struct">Generic Struct</a></h2>
-<pre><code class="language-veryl playground">module ModuleA {
+<pre><code class="language-veryl playground">package PackageA {
+    type TypeB = u32;
+    type TypeC = u64;
+}
+
+module ModuleA {
     type TypeA = i32;
 
     struct StructA::&lt;T: type&gt; {
@@ -2393,11 +2380,6 @@ package PackageA::&lt;T: const&gt; {
     var _a: StructA::&lt;TypeA&gt;          ;
     var _b: StructA::&lt;PackageA::TypeB&gt;;
     var _c: StructA::&lt;PackageA::TypeC&gt;;
-}
-
-package PackageA {
-    type TypeB = u32;
-    type TypeC = u64;
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="default-parameter"><a class="header" href="#default-parameter">Default Parameter</a></h1>
@@ -3020,6 +3002,13 @@ This is because</p>
 </ul>
 <p>The <code>version</code> field allows other version requirement representation like <code>=0.1.0</code>.
 Please see version requirement of Rust for detailed information: <a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-cratesio">Specifying Dependencies</a>.</p>
+<h2 id="relative-path-dependency"><a class="header" href="#relative-path-dependency">Relative path dependency</a></h2>
+<p>For local development, dependency to a local file path is useful in some cases.
+Relative path dependency can be specified like below:</p>
+<pre><code class="language-toml">[dependencies]
+"../../library/path" = "0.1.0"
+</code></pre>
+<p>If there are relative path dependencies in a project, the project can’t be published through <code>veryl publish</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="publish-project"><a class="header" href="#publish-project">Publish Project</a></h1>
 <p>To publish your project, <code>veryl publish</code> can be used.
 Publising means to associate a version with a git revision.</p>
@@ -3818,7 +3807,7 @@ Expression11: Expression12 [ As CastingType ];
 Expression12: { ( UnaryOperator | Operator09 | Operator05 | Operator03 | Operator04 ) } Factor;
 
 Factor: Number
-      | ExpressionIdentifier [ FunctionCall ]
+      | IdentifierFactor
       | LParen Expression RParen
       | LBrace ConcatenationList RBrace
       | QuoteLBrace ArrayLiteralList RBrace
@@ -3832,6 +3821,8 @@ Factor: Number
       | TypeExpression
       | FactorType
       ;
+
+IdentifierFactor: ExpressionIdentifier [ FunctionCall ];
 
 FunctionCall: LParen [ ArgumentList ] RParen;
 
@@ -4009,9 +4000,9 @@ ConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Equ Expression Sem
 
 TypeDefDeclaration: Type Identifier Equ ArrayType Semicolon;
 
-AlwaysFfDeclaration: AlwaysFf [ AlwayfFfEventList ] StatementBlock;
+AlwaysFfDeclaration: AlwaysFf [ AlwaysFfEventList ] StatementBlock;
 
-AlwayfFfEventList: LParen AlwaysFfClock [ Comma AlwaysFfReset ] RParen;
+AlwaysFfEventList: LParen AlwaysFfClock [ Comma AlwaysFfReset ] RParen;
 
 AlwaysFfClock: HierarchicalIdentifier;
 
@@ -4121,7 +4112,9 @@ PortDeclarationGroup: { Attribute } ( LBrace PortDeclarationList RBrace | PortDe
 
 PortDeclarationItem: Identifier Colon ( PortTypeConcrete | PortTypeAbstract );
 
-PortTypeConcrete: Direction [ ClockDomain ] ArrayType;
+PortTypeConcrete: Direction [ ClockDomain ] ArrayType [ Equ PortDefaultValue ];
+
+PortDefaultValue: Expression;
 
 PortTypeAbstract: [ ClockDomain ] Interface [ ColonColon Identifier ] [ Array ];
 
@@ -4338,6 +4331,7 @@ Veryl: Start { DescriptionGroup };
         <!-- Custom JS scripts -->
         <script src="mode-veryl.js"></script>
         <script src="editor.js"></script>
+        <script src="theme/language-picker.js"></script>
 
         <script>
         window.addEventListener('load', function() {

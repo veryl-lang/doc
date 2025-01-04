@@ -178,47 +178,6 @@
                     <h1 class="menu-title">The Veryl Hardware Description Language</h1>
 
                     <div class="right-buttons">
-                        <button id="language-toggle" class="icon-button" type="button"
-                                title="Change language" aria-label="Change language"
-                                aria-haspopup="true" aria-expanded="false"
-                                aria-controls="language-list">
-                            <i class="fa fa-globe"></i>
-                        </button>
-                        <ul id="language-list" class="theme-popup" aria-label="Languages" role="menu">
-                          <li role="none"><button role="menuitem" class="theme">
-                              <a id="en">English</a>
-                          </button></li>
-                          <li role="none"><button role="menuitem" class="theme">
-                              <a id="ja">日本語</a>
-                          </button></li>
-                        </ul>
-
-                        <script>
-                          let langToggle = document.getElementById("language-toggle");
-                          let langList = document.getElementById("language-list");
-                          langToggle.addEventListener("click", (event) => {
-                              langList.style.display = langList.style.display == "block" ? "none" : "block";
-                          });
-                          let selectedLang = document.getElementById("ja");
-                          if (selectedLang) {
-                              selectedLang.parentNode.classList.add("theme-selected");
-                          }
-
-                          // The path to the root, taking the current
-                          // language into account.
-                          let full_path_to_root = "../../";
-                          // The page path (mdbook only gives us
-                          // access to the path to the Markdown file).
-                          let path = "05_language_reference/07_module.md".replace(/\.md$/, ".html");
-                          for (let lang of langList.querySelectorAll("a")) {
-                              if (lang.id == "en") {
-                                  lang.href = `${full_path_to_root}${path}`;
-                              } else {
-                                  lang.href = `${full_path_to_root}${lang.id}/${path}`;
-                              }
-                          }
-                        </script>
-
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
@@ -275,6 +234,31 @@
             x = b;
         }
     }
+}
+</code></pre>
+<h2 id="ポートのデフォルト値"><a class="header" href="#ポートのデフォルト値">ポートのデフォルト値</a></h2>
+<p>モジュールのポートはデフォルトを持つことができます。デフォルト値を持つポートはインスタンス時に省略することができ、省略されたポートにはデフォルト値が割り当てられます。デフォルト値としては以下の値を取ることができます。</p>
+<ul>
+<li>入力ポート: リテラル、パッケージ内の <code>const</code></li>
+<li>出力ポート: <code>_</code> (無名識別子)</li>
+</ul>
+<pre><code class="language-veryl playground">module ModuleA (
+    a: input  logic    ,
+    b: input  logic = 1,
+    x: output logic    ,
+    y: output logic = _,
+) {
+    assign x = a;
+    assign y = b;
+}
+
+module ModubeB {
+    inst instA: ModuleA (
+        a: 1,
+        // b は省略
+        x: _,
+        // y は省略
+    );
 }
 </code></pre>
 <h2 id="ジェネリックインターフェース"><a class="header" href="#ジェネリックインターフェース">ジェネリックインターフェース</a></h2>
@@ -343,6 +327,7 @@
         <!-- Custom JS scripts -->
         <script src="../mode-veryl.js"></script>
         <script src="../editor.js"></script>
+        <script src="../theme/language-picker.js"></script>
 
 
     </div>

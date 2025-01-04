@@ -178,47 +178,6 @@
                     <h1 class="menu-title">The Veryl Hardware Description Language</h1>
 
                     <div class="right-buttons">
-                        <button id="language-toggle" class="icon-button" type="button"
-                                title="Change language" aria-label="Change language"
-                                aria-haspopup="true" aria-expanded="false"
-                                aria-controls="language-list">
-                            <i class="fa fa-globe"></i>
-                        </button>
-                        <ul id="language-list" class="theme-popup" aria-label="Languages" role="menu">
-                          <li role="none"><button role="menuitem" class="theme">
-                              <a id="en">English</a>
-                          </button></li>
-                          <li role="none"><button role="menuitem" class="theme">
-                              <a id="ja">日本語</a>
-                          </button></li>
-                        </ul>
-
-                        <script>
-                          let langToggle = document.getElementById("language-toggle");
-                          let langList = document.getElementById("language-list");
-                          langToggle.addEventListener("click", (event) => {
-                              langList.style.display = langList.style.display == "block" ? "none" : "block";
-                          });
-                          let selectedLang = document.getElementById("en");
-                          if (selectedLang) {
-                              selectedLang.parentNode.classList.add("theme-selected");
-                          }
-
-                          // The path to the root, taking the current
-                          // language into account.
-                          let full_path_to_root = "../";
-                          // The page path (mdbook only gives us
-                          // access to the path to the Markdown file).
-                          let path = "05_language_reference/07_module.md".replace(/\.md$/, ".html");
-                          for (let lang of langList.querySelectorAll("a")) {
-                              if (lang.id == "en") {
-                                  lang.href = `${full_path_to_root}${path}`;
-                              } else {
-                                  lang.href = `${full_path_to_root}${lang.id}/${path}`;
-                              }
-                          }
-                        </script>
-
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
@@ -280,6 +239,32 @@ The available port directions are:</p>
             x = b;
         }
     }
+}
+</code></pre>
+<h2 id="default-value-of-port"><a class="header" href="#default-value-of-port">Default value of port</a></h2>
+<p>Ports of module can have default value. Ports which have default value can be omitted at the instantiation, and the default values are assigned to the omitted ports.
+As default value, the following values are allowed:</p>
+<ul>
+<li>Input port: literal, and <code>const</code> in package</li>
+<li>Output port: <code>_</code> (anonymous identifier)</li>
+</ul>
+<pre><code class="language-veryl playground">module ModuleA (
+    a: input  logic    ,
+    b: input  logic = 1,
+    x: output logic    ,
+    y: output logic = _,
+) {
+    assign x = a;
+    assign y = b;
+}
+
+module ModubeB {
+    inst instA: ModuleA (
+        a: 1,
+        // b is omitted
+        x: _,
+        // y is omitted
+    );
 }
 </code></pre>
 <h2 id="generic-interface"><a class="header" href="#generic-interface">Generic interface</a></h2>
@@ -351,6 +336,7 @@ Then the port can be connected to only the interface which has <code>ModPort</co
         <!-- Custom JS scripts -->
         <script src="../mode-veryl.js"></script>
         <script src="../editor.js"></script>
+        <script src="../theme/language-picker.js"></script>
 
 
     </div>

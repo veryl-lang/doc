@@ -178,47 +178,6 @@
                     <h1 class="menu-title">The Veryl Hardware Description Language</h1>
 
                     <div class="right-buttons">
-                        <button id="language-toggle" class="icon-button" type="button"
-                                title="Change language" aria-label="Change language"
-                                aria-haspopup="true" aria-expanded="false"
-                                aria-controls="language-list">
-                            <i class="fa fa-globe"></i>
-                        </button>
-                        <ul id="language-list" class="theme-popup" aria-label="Languages" role="menu">
-                          <li role="none"><button role="menuitem" class="theme">
-                              <a id="en">English</a>
-                          </button></li>
-                          <li role="none"><button role="menuitem" class="theme">
-                              <a id="ja">日本語</a>
-                          </button></li>
-                        </ul>
-
-                        <script>
-                          let langToggle = document.getElementById("language-toggle");
-                          let langList = document.getElementById("language-list");
-                          langToggle.addEventListener("click", (event) => {
-                              langList.style.display = langList.style.display == "block" ? "none" : "block";
-                          });
-                          let selectedLang = document.getElementById("ja");
-                          if (selectedLang) {
-                              selectedLang.parentNode.classList.add("theme-selected");
-                          }
-
-                          // The path to the root, taking the current
-                          // language into account.
-                          let full_path_to_root = "../../../";
-                          // The page path (mdbook only gives us
-                          // access to the path to the Markdown file).
-                          let path = "05_language_reference/04_expression/02_function_call.md".replace(/\.md$/, ".html");
-                          for (let lang of langList.querySelectorAll("a")) {
-                              if (lang.id == "en") {
-                                  lang.href = `${full_path_to_root}${path}`;
-                              } else {
-                                  lang.href = `${full_path_to_root}${lang.id}/${path}`;
-                              }
-                          }
-                        </script>
-
                         <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
@@ -250,16 +209,16 @@
                     <main>
                         <h1 id="関数呼び出し"><a class="header" href="#関数呼び出し">関数呼び出し</a></h1>
 <p>関数は <code>function_name(argument)</code> の形式で呼び出すことができます。<code>$clog2</code> のような SystemVerilog のシステム関数も使えます。</p>
-<pre><code class="language-veryl playground">module ModuleA {
-    let _a: logic = PackageA::FunctionA(1, 1);
-    let _b: logic = $clog2(1, 1);
-}
-
-package PackageA {
+<pre><code class="language-veryl playground">package PackageA {
     function FunctionA (
         a: input logic,
         b: input logic,
     ) {}
+}
+
+module ModuleA {
+    let _a: logic = PackageA::FunctionA(1, 1);
+    let _b: logic = $clog2(1, 1);
 }
 </code></pre>
 
@@ -321,6 +280,7 @@ package PackageA {
         <!-- Custom JS scripts -->
         <script src="../../mode-veryl.js"></script>
         <script src="../../editor.js"></script>
+        <script src="../../theme/language-picker.js"></script>
 
 
     </div>
