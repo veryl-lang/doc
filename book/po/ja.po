@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-01-03T20:22:17+09:00\n"
+"POT-Creation-Date: 2025-01-31T15:37:44+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -2548,17 +2548,52 @@ msgid ""
 "Another conditional expression is `case`. `case` containts some arms like "
 "`value: expression`. If the expression after `case` keyword matches the left "
 "value of an arm, the right expression of the arm will be returned. As the "
-"value, range like `..=` can be used too. `default` is a special arm which "
-"will be returned when all other arms are failed. `default` is mandatory "
-"because if expression always have to be evaluated to value."
+"value, range like `..=` can be used too. In addition, x/z values in the "
+"value act as `wildcards`. A wildcard bit matches any value (0/1/x/z) in the "
+"corresponding bit of the expression. `default` is a special arm which will "
+"be returned when all other arms are failed. `default` is mandatory because "
+"if expression always have to be evaluated to value."
 msgstr ""
 "もう一つの条件式が `case` です。`case` は `値: 式` という形式の条件を複数持ち"
 "ます。もし `case` キーワードの後の式と条件の左側の値が一致すれば、その条件の"
-"右側の式が返されます。値としては `..=` のような範囲も指定できます。`default` "
-"はそれ以外の条件が全て失敗したときに返される特別な条件です。case 式は常になん"
+"右側の式が返されます。値としては `..=` のような範囲も指定できます。"
+"さらに x と z はワイルドカードとして扱われ、任意のビットにマッチします。"
+"`default` はそれ以外の条件が全て失敗したときに返される特別な条件です。case 式は常になん"
 "らかの値に評価される必要があるため `default` は必須です。"
 
-#: src/05_language_reference/04_expression/05_case_switch.md:25
+#: src/05_language_reference/04_expression/05_case_switch.md:12
+msgid ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    let a: logic<10> = 1;\n"
+"    var b: logic<10>;\n"
+"\n"
+"    assign b = case a {\n"
+"        0               : 1,\n"
+"        1               : 2,\n"
+"        3..=5           : 4,\n"
+"        10'b00_0000_011x: 5, // matches 6 or 7\n"
+"        default         : 6,\n"
+"    };\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    let a: logic<10> = 1;\n"
+"    var b: logic<10>;\n"
+"\n"
+"    assign b = case a {\n"
+"        0               : 1,\n"
+"        1               : 2,\n"
+"        3..=5           : 4,\n"
+"        10'b00_0000_011x: 5, // 6 か 7 にマッチ\n"
+"        default         : 6,\n"
+"    };\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/04_expression/05_case_switch.md:27
 msgid ""
 "`switch` is another form of `case`. `switch` containts some arms like "
 "`expression: expression`, and if the left expression is evaluated to 1, the "
@@ -3623,10 +3658,14 @@ msgid "`type` : means arbitrary type can be passed"
 msgstr "`type`: 任意の型を渡すことができる"
 
 #: src/05_language_reference/14_generics.md:22
+msgid "`inst: X` : instance of `X`"
+msgstr "`inst: X` : `X` のインスタンス"
+
+#: src/05_language_reference/14_generics.md:23
 msgid "named prototype"
 msgstr "名前付きプロトタイプ"
 
-#: src/05_language_reference/14_generics.md:24
+#: src/05_language_reference/14_generics.md:25
 msgid ""
 "Named prototype is a special generic bound. See [Prototype]"
 "(14_generics/02_prototype.md) for details."
@@ -3634,7 +3673,7 @@ msgstr ""
 "名前付きプロトタイプは特別なジェネリック境界です。詳細は [プロトタイプ]"
 "(14_generics/02_prototype.md) を参照してください。"
 
-#: src/05_language_reference/14_generics.md:26
+#: src/05_language_reference/14_generics.md:27
 msgid ""
 "At the usage of generics, actual parameters can be given through `::<>`. As "
 "the actual parameters, numeric literal and identifier concatenated by `::` "
@@ -3644,7 +3683,7 @@ msgstr ""
 "メータとしては数値リテラルと `::` で連結された識別子を使用することができま"
 "す。"
 
-#: src/05_language_reference/14_generics.md:29
+#: src/05_language_reference/14_generics.md:30
 msgid ""
 "Additionally, the actual parameters should be accessible at the position of "
 "the generics declaration. For example, module names can be used as actual "
@@ -3659,23 +3698,23 @@ msgstr ""
 "ません。これはローカルパラメータがジェネリクス定義位置からは参照できない場合"
 "に発生します。"
 
-#: src/05_language_reference/14_generics.md:34
+#: src/05_language_reference/14_generics.md:35
 msgid "Generic Function"
 msgstr "ジェネリック関数"
 
-#: src/05_language_reference/14_generics.md:49
+#: src/05_language_reference/14_generics.md:50
 msgid "Generic Module/Interface"
 msgstr "ジェネリックモジュール/インターフェース"
 
-#: src/05_language_reference/14_generics.md:67
+#: src/05_language_reference/14_generics.md:68
 msgid "Generic Package"
 msgstr "ジェネリックパッケージ"
 
-#: src/05_language_reference/14_generics.md:80
+#: src/05_language_reference/14_generics.md:81
 msgid "Generic Struct"
 msgstr "ジェネリック構造体"
 
-#: src/05_language_reference/14_generics.md:82
+#: src/05_language_reference/14_generics.md:83
 msgid ""
 "```veryl,playground\n"
 "package PackageA {\n"
@@ -6131,8 +6170,8 @@ msgid ""
 "For local development, dependency to a local file path is useful in some "
 "cases. Relative path dependency can be specified like below:"
 msgstr ""
-"手元の環境で開発しているとき、ローカルファイルパスへの依存関係が使えると便利なことがあります。"
-"相対パス依存関係は以下のように指定することができます。"
+"手元の環境で開発しているとき、ローカルファイルパスへの依存関係が使えると便利"
+"なことがあります。相対パス依存関係は以下のように指定することができます。"
 
 #: src/06_development_environment/02_dependencies.md:82
 msgid ""
@@ -6151,7 +6190,41 @@ msgid ""
 "If there are relative path dependencies in a project, the project can't be "
 "published through `veryl publish`."
 msgstr ""
-"プロジェクトに相対パス依存関係がある場合、そのプロジェクトは `veryl publish` で公開することはできません。"
+"プロジェクトに相対パス依存関係がある場合、そのプロジェクトは `veryl publish` "
+"で公開することはできません。"
+
+#: src/06_development_environment/02_dependencies.md:89
+msgid "Override by local path"
+msgstr "ローカルパスによる上書き"
+
+#: src/06_development_environment/02_dependencies.md:91
+msgid ""
+"Sometimes, using dependencies of locally modified version becomes necessary. "
+"In the case, overriding dependencies by local path can be used like below:"
+msgstr ""
+"場合によってはローカルで変更されたバージョンの依存関係を使う必要があることもあります。"
+"そのような場合、以下のようにローカルパスによって依存関係を上書きすることができます。"
+
+#: src/06_development_environment/02_dependencies.md:94
+msgid ""
+"```toml\n"
+"[dependencies]\n"
+"\"https://github.com/veryl-lang/sample\" = {version = \"0.1.0\", path = \"../"
+"sample\"}\n"
+"```"
+msgstr ""
+"```toml\n"
+"[dependencies]\n"
+"\"https://github.com/veryl-lang/sample\" = {version = \"0.1.0\", path = \"../"
+"sample\"}\n"
+"```"
+
+#: src/06_development_environment/02_dependencies.md:99
+msgid ""
+"This means that if there is `../sample`, it is used, and if not, it is "
+"pulled from the Git repository."
+msgstr ""
+"これは `../sample` が存在する場合はそれを使い、そうでない場合は Git から取得する、という意味です。"
 
 #: src/06_development_environment/03_publish_project.md:3
 msgid ""
@@ -8050,6 +8123,7 @@ msgid ""
 "\n"
 "GenericBound: Const\n"
 "            | Type\n"
+"            | Inst ScopedIdentifier\n"
 "            | ScopedIdentifier;\n"
 "\n"
 "WithGenericParameter: ColonColonLAngle WithGenericParameterList RAngle;\n"
