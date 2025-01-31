@@ -213,6 +213,7 @@
 If the expression after <code>case</code> keyword matches the left value of an arm,
 the right expression of the arm will be returned.
 As the value, range like <code>..=</code> can be used too.
+In addition, x/z values in the value act as <code>wildcards</code>. A wildcard bit matches any value (0/1/x/z) in the corresponding bit of the expression.
 <code>default</code> is a special arm which will be returned when all other arms are failed.
 <code>default</code> is mandatory because if expression always have to be evaluated to value.</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -220,10 +221,11 @@ As the value, range like <code>..=</code> can be used too.
     var b: logic&lt;10&gt;;
 
     assign b = case a {
-        0      : 1,
-        1      : 2,
-        3..=5  : 4,
-        default: 5,
+        0               : 1,
+        1               : 2,
+        3..=5           : 4,
+        10'b00_0000_011x: 5, // matches 6 or 7
+        default         : 6,
     };
 }
 </code></pre>

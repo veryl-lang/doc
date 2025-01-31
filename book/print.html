@@ -1507,7 +1507,7 @@ System function of SystemVerilog like <code>$clog2</code> can be used too.</p>
 
 module ModuleA {
     let _a: logic = PackageA::FunctionA(1, 1);
-    let _b: logic = $clog2(1, 1);
+    let _b: logic = $clog2(1);
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="concatenation"><a class="header" href="#concatenation">Concatenation</a></h1>
@@ -1544,6 +1544,7 @@ and <code>()</code> is not required surrounding it.
 If the expression after <code>case</code> keyword matches the left value of an arm,
 the right expression of the arm will be returned.
 As the value, range like <code>..=</code> can be used too.
+In addition, x/z values in the value act as <code>wildcards</code>. A wildcard bit matches any value (0/1/x/z) in the corresponding bit of the expression.
 <code>default</code> is a special arm which will be returned when all other arms are failed.
 <code>default</code> is mandatory because if expression always have to be evaluated to value.</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -1551,10 +1552,11 @@ As the value, range like <code>..=</code> can be used too.
     var b: logic&lt;10&gt;;
 
     assign b = case a {
-        0      : 1,
-        1      : 2,
-        3..=5  : 4,
-        default: 5,
+        0               : 1,
+        1               : 2,
+        3..=5           : 4,
+        10'b00_0000_011x: 5, // matches 6 or 7
+        default         : 6,
     };
 }
 </code></pre>
@@ -2316,6 +2318,7 @@ The available generic bounds are below:</p>
 <ul>
 <li><code>const</code>: means constant value can be passed</li>
 <li><code>type</code> : means arbitrary type can be passed</li>
+<li><code>inst: X</code> : instance of <code>X</code></li>
 <li>named prototype</li>
 </ul>
 <p>Named prototype is a special generic bound. See <a href="05_language_reference/14_generics/02_prototype.html">Prototype</a> for details.</p>
@@ -3009,6 +3012,13 @@ Relative path dependency can be specified like below:</p>
 "../../library/path" = "0.1.0"
 </code></pre>
 <p>If there are relative path dependencies in a project, the project can’t be published through <code>veryl publish</code>.</p>
+<h2 id="override-by-local-path"><a class="header" href="#override-by-local-path">Override by local path</a></h2>
+<p>Sometimes, using dependencies of locally modified version becomes necessary.
+In the case, overriding dependencies by local path can be used like below:</p>
+<pre><code class="language-toml">[dependencies]
+"https://github.com/veryl-lang/sample" = {version = "0.1.0", path = "../sample"}
+</code></pre>
+<p>This means that if there is <code>../sample</code>, it is used, and if not, it is pulled from the Git repository.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="publish-project"><a class="header" href="#publish-project">Publish Project</a></h1>
 <p>To publish your project, <code>veryl publish</code> can be used.
 Publising means to associate a version with a git revision.</p>
@@ -4080,6 +4090,7 @@ WithParameterItem: ( Param | Const ) Identifier Colon ( ArrayType | Type ) Equ E
 
 GenericBound: Const
             | Type
+            | Inst ScopedIdentifier
             | ScopedIdentifier;
 
 WithGenericParameter: ColonColonLAngle WithGenericParameterList RAngle;

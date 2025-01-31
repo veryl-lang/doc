@@ -264,6 +264,12 @@
 "../../library/path" = "0.1.0"
 </code></pre>
 <p>プロジェクトに相対パス依存関係がある場合、そのプロジェクトは <code>veryl publish</code> で公開することはできません。</p>
+<h2 id="ローカルパスによる上書き"><a class="header" href="#ローカルパスによる上書き">ローカルパスによる上書き</a></h2>
+<p>場合によってはローカルで変更されたバージョンの依存関係を使う必要があることもあります。そのような場合、以下のようにローカルパスによって依存関係を上書きすることができます。</p>
+<pre><code class="language-toml">[dependencies]
+"https://github.com/veryl-lang/sample" = {version = "0.1.0", path = "../sample"}
+</code></pre>
+<p>これは <code>../sample</code> が存在する場合はそれを使い、そうでない場合は Git から取得する、という意味です。</p>
 
                     </main>
 

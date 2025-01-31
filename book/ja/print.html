@@ -1431,7 +1431,7 @@ a = 1 || 1;
 
 module ModuleA {
     let _a: logic = PackageA::FunctionA(1, 1);
-    let _b: logic = $clog2(1, 1);
+    let _b: logic = $clog2(1);
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="連結"><a class="header" href="#連結">連結</a></h1>
@@ -1459,16 +1459,17 @@ module ModuleA {
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="case--switch"><a class="header" href="#case--switch">Case / Switch</a></h1>
-<p>もう一つの条件式が <code>case</code> です。<code>case</code> は <code>値: 式</code> という形式の条件を複数持ちます。もし <code>case</code> キーワードの後の式と条件の左側の値が一致すれば、その条件の右側の式が返されます。値としては <code>..=</code> のような範囲も指定できます。<code>default</code> はそれ以外の条件が全て失敗したときに返される特別な条件です。case 式は常になんらかの値に評価される必要があるため <code>default</code> は必須です。</p>
+<p>もう一つの条件式が <code>case</code> です。<code>case</code> は <code>値: 式</code> という形式の条件を複数持ちます。もし <code>case</code> キーワードの後の式と条件の左側の値が一致すれば、その条件の右側の式が返されます。値としては <code>..=</code> のような範囲も指定できます。さらに x と z はワイルドカードとして扱われ、任意のビットにマッチします。<code>default</code> はそれ以外の条件が全て失敗したときに返される特別な条件です。case 式は常になんらかの値に評価される必要があるため <code>default</code> は必須です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
 
     assign b = case a {
-        0      : 1,
-        1      : 2,
-        3..=5  : 4,
-        default: 5,
+        0               : 1,
+        1               : 2,
+        3..=5           : 4,
+        10'b00_0000_011x: 5, // 6 か 7 にマッチ
+        default         : 6,
     };
 }
 </code></pre>
@@ -2153,6 +2154,7 @@ embed (cocotb) py{{{
 <ul>
 <li><code>const</code>: 定数値を渡すことができる</li>
 <li><code>type</code>: 任意の型を渡すことができる</li>
+<li><code>inst: X</code> : <code>X</code> のインスタンス</li>
 <li>名前付きプロトタイプ</li>
 </ul>
 <p>名前付きプロトタイプは特別なジェネリック境界です。詳細は <a href="05_language_reference/14_generics/02_prototype.html">プロトタイプ</a> を参照してください。</p>
@@ -2797,6 +2799,12 @@ bump_commit_message = "Bump"
 "../../library/path" = "0.1.0"
 </code></pre>
 <p>プロジェクトに相対パス依存関係がある場合、そのプロジェクトは <code>veryl publish</code> で公開することはできません。</p>
+<h2 id="ローカルパスによる上書き"><a class="header" href="#ローカルパスによる上書き">ローカルパスによる上書き</a></h2>
+<p>場合によってはローカルで変更されたバージョンの依存関係を使う必要があることもあります。そのような場合、以下のようにローカルパスによって依存関係を上書きすることができます。</p>
+<pre><code class="language-toml">[dependencies]
+"https://github.com/veryl-lang/sample" = {version = "0.1.0", path = "../sample"}
+</code></pre>
+<p>これは <code>../sample</code> が存在する場合はそれを使い、そうでない場合は Git から取得する、という意味です。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="プロジェクトを公開する"><a class="header" href="#プロジェクトを公開する">プロジェクトを公開する</a></h1>
 <p>プロジェクトを公開するには <code>veryl publish</code> コマンドを使います。公開とはバージョン番号とgitのリビジョンを紐づけることです。</p>
 <pre><code>$ veryl publish
@@ -3839,6 +3847,7 @@ WithParameterItem: ( Param | Const ) Identifier Colon ( ArrayType | Type ) Equ E
 
 GenericBound: Const
             | Type
+            | Inst ScopedIdentifier
             | ScopedIdentifier;
 
 WithGenericParameter: ColonColonLAngle WithGenericParameterList RAngle;
