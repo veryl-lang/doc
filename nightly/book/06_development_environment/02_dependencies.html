@@ -274,6 +274,13 @@ Relative path dependency can be specified like below:</p>
 "../../library/path" = "0.1.0"
 </code></pre>
 <p>If there are relative path dependencies in a project, the project can’t be published through <code>veryl publish</code>.</p>
+<h2 id="override-by-local-path"><a class="header" href="#override-by-local-path">Override by local path</a></h2>
+<p>Sometimes, using dependencies of locally modified version becomes necessary.
+In the case, overriding dependencies by local path can be used like below:</p>
+<pre><code class="language-toml">[dependencies]
+"https://github.com/veryl-lang/sample" = {version = "0.1.0", path = "../sample"}
+</code></pre>
+<p>This means that if there is <code>../sample</code>, it is used, and if not, it is pulled from the Git repository.</p>
 
                     </main>
 

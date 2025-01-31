@@ -208,16 +208,17 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="case--switch"><a class="header" href="#case--switch">Case / Switch</a></h1>
-<p>もう一つの条件式が <code>case</code> です。<code>case</code> は <code>値: 式</code> という形式の条件を複数持ちます。もし <code>case</code> キーワードの後の式と条件の左側の値が一致すれば、その条件の右側の式が返されます。値としては <code>..=</code> のような範囲も指定できます。<code>default</code> はそれ以外の条件が全て失敗したときに返される特別な条件です。case 式は常になんらかの値に評価される必要があるため <code>default</code> は必須です。</p>
+<p>もう一つの条件式が <code>case</code> です。<code>case</code> は <code>値: 式</code> という形式の条件を複数持ちます。もし <code>case</code> キーワードの後の式と条件の左側の値が一致すれば、その条件の右側の式が返されます。値としては <code>..=</code> のような範囲も指定できます。さらに x と z はワイルドカードとして扱われ、任意のビットにマッチします。<code>default</code> はそれ以外の条件が全て失敗したときに返される特別な条件です。case 式は常になんらかの値に評価される必要があるため <code>default</code> は必須です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
 
     assign b = case a {
-        0      : 1,
-        1      : 2,
-        3..=5  : 4,
-        default: 5,
+        0               : 1,
+        1               : 2,
+        3..=5           : 4,
+        10'b00_0000_011x: 5, // 6 か 7 にマッチ
+        default         : 6,
     };
 }
 </code></pre>
