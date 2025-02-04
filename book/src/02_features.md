@@ -66,7 +66,7 @@ allowing for easy incorporation of libraries by simply adding the repository pat
 ## Generics {#generics}
 
 Code generation through generics achieves more reusable code than traditional parameter override.
-Prarmeters in function like the follwoign example, but also module names of instantiation, type names of struct definition, and so on can be parameterized.
+Parameters in function like the following example, but also module names of instantiation, type names of struct definition, and so on can be parameterized.
 
 <table>
 <tr>
