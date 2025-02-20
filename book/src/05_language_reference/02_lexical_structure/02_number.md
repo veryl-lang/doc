@@ -88,10 +88,10 @@ The bit width specification can be added to "set all bits".
 
 ```veryl,playground
 module ModuleA {
-    const a0: u64 = 1'0;
-    const a1: u64 = 2'1;
-    const a2: u64 = 3'x;
-    const a3: u64 = 4'z;
+    const a0: logic<32> = 1'0;
+    const a1: logic<32> = 2'1;
+    const a2: logic<32> = 3'x;
+    const a3: logic<32> = 4'z;
 }
 ```
 

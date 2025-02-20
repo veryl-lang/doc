@@ -22,7 +22,7 @@ module ModuleA #(
     var r_data2: logic<ParamA>;
 
     // value binding
-    let _w_data2: logic<ParamA> = i_data;
+    let _w_data2: logic<ParamA> = i_data[0];
 
     // always_ff statement with reset
     //   `always_ff` can take a mandatory clock and a optional reset
