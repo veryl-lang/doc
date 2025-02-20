@@ -24,12 +24,17 @@ wasm-bindgen-test = "0.3.42"
 
 [workspace]
 
+[profile.dev]
+# Workaround for reference type
+# https://github.com/rustwasm/wasm-bindgen/issues/4211
+strip = true
+
 [profile.release]
-# Workaround for long time compilation
-# https://github.com/rust-lang/rust/issues/106211
-codegen-units = 1
 # for wasm-pack
 opt-level = "z"
+# Workaround for reference type
+# https://github.com/rustwasm/wasm-bindgen/issues/4211
+strip = true
 
 [profile.dev.build-override]
 opt-level = 3
