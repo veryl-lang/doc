@@ -257,10 +257,10 @@ If it is omitted, the appropriate width will be filled in the translated code.</
 <h2 id="set-sized-bits"><a class="header" href="#set-sized-bits">Set sized bits</a></h2>
 <p>The bit width specification can be added to “set all bits”.</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    const a0: u64 = 1'0;
-    const a1: u64 = 2'1;
-    const a2: u64 = 3'x;
-    const a3: u64 = 4'z;
+    const a0: logic&lt;32&gt; = 1'0;
+    const a1: logic&lt;32&gt; = 2'1;
+    const a2: logic&lt;32&gt; = 3'x;
+    const a3: logic&lt;32&gt; = 4'z;
 }
 </code></pre>
 <h2 id="floating-point"><a class="header" href="#floating-point">Floating point</a></h2>

@@ -344,7 +344,7 @@ UnsafeTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)unsafe(?-u:\b)/ 
 VarTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)var(?-u:\b)/                                                                 : Token;
 DollarIdentifierTerm  : &lt;INITIAL, Generic       &gt;/\$[a-zA-Z_][0-9a-zA-Z_$]*/                                                           : Token;
 IdentifierTerm        : &lt;INITIAL, Generic       &gt;/(?:r#)?[a-zA-Z_][0-9a-zA-Z_$]*/                                                      : Token;
-AnyTerm               : &lt;                  Embed&gt;/[^{}]*/                                                                              : Token;
+AnyTerm               : &lt;                  Embed&gt;/[^{}]+/                                                                              : Token;
 
 // ----------------------------------------------------------------------------
 // Token
@@ -657,10 +657,12 @@ Factor: Number
       | InsideExpression
       | OutsideExpression
       | TypeExpression
-      | FactorType
+      | FactorTypeFactor
       ;
 
 IdentifierFactor: ExpressionIdentifier [ FunctionCall ];
+
+FactorTypeFactor: { TypeModifier } FactorType;
 
 FunctionCall: LParen [ ArgumentList ] RParen;
 

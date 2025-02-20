@@ -871,7 +871,7 @@ module ModuleA #(
     var r_data2: logic&lt;ParamA&gt;;
 
     // value binding
-    let _w_data2: logic&lt;ParamA&gt; = i_data;
+    let _w_data2: logic&lt;ParamA&gt; = i_data[0];
 
     // always_ff statement with reset
     //   `always_ff` can take a mandatory clock and a optional reset
@@ -1173,10 +1173,10 @@ If it is omitted, the appropriate width will be filled in the translated code.</
 <h2 id="set-sized-bits"><a class="header" href="#set-sized-bits">Set sized bits</a></h2>
 <p>The bit width specification can be added to “set all bits”.</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    const a0: u64 = 1'0;
-    const a1: u64 = 2'1;
-    const a2: u64 = 3'x;
-    const a3: u64 = 4'z;
+    const a0: logic&lt;32&gt; = 1'0;
+    const a1: logic&lt;32&gt; = 2'1;
+    const a2: logic&lt;32&gt; = 3'x;
+    const a3: logic&lt;32&gt; = 4'z;
 }
 </code></pre>
 <h2 id="floating-point"><a class="header" href="#floating-point">Floating point</a></h2>
@@ -3516,7 +3516,7 @@ UnsafeTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)unsafe(?-u:\b)/ 
 VarTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)var(?-u:\b)/                                                                 : Token;
 DollarIdentifierTerm  : &lt;INITIAL, Generic       &gt;/\$[a-zA-Z_][0-9a-zA-Z_$]*/                                                           : Token;
 IdentifierTerm        : &lt;INITIAL, Generic       &gt;/(?:r#)?[a-zA-Z_][0-9a-zA-Z_$]*/                                                      : Token;
-AnyTerm               : &lt;                  Embed&gt;/[^{}]*/                                                                              : Token;
+AnyTerm               : &lt;                  Embed&gt;/[^{}]+/                                                                              : Token;
 
 // ----------------------------------------------------------------------------
 // Token
@@ -3829,10 +3829,12 @@ Factor: Number
       | InsideExpression
       | OutsideExpression
       | TypeExpression
-      | FactorType
+      | FactorTypeFactor
       ;
 
 IdentifierFactor: ExpressionIdentifier [ FunctionCall ];
+
+FactorTypeFactor: { TypeModifier } FactorType;
 
 FunctionCall: LParen [ ArgumentList ] RParen;
 

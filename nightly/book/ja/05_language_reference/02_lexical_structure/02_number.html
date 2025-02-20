@@ -256,10 +256,10 @@
 <h2 id="指定ビットのセット"><a class="header" href="#指定ビットのセット">指定ビットのセット</a></h2>
 <p>“全ビットのセット” にビット幅指定を付与することもできます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    const a0: u64 = 1'0;
-    const a1: u64 = 2'1;
-    const a2: u64 = 3'x;
-    const a3: u64 = 4'z;
+    const a0: logic&lt;32&gt; = 1'0;
+    const a1: logic&lt;32&gt; = 2'1;
+    const a2: logic&lt;32&gt; = 3'x;
+    const a3: logic&lt;32&gt; = 4'z;
 }
 </code></pre>
 <h2 id="浮動小数点数"><a class="header" href="#浮動小数点数">浮動小数点数</a></h2>

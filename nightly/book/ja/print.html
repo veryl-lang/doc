@@ -830,7 +830,7 @@ module ModuleA #(
     var r_data2: logic&lt;ParamA&gt;;
 
     // 値の束縛
-    let _w_data2: logic&lt;ParamA&gt; = i_data;
+    let _w_data2: logic&lt;ParamA&gt; = i_data[0];
 
     // リセット付き always_ff 文
     //   `always_ff` はクロック（必須）とリセット（オプション）を持ちます
@@ -1118,10 +1118,10 @@ a = 1 || 1;
 <h2 id="指定ビットのセット"><a class="header" href="#指定ビットのセット">指定ビットのセット</a></h2>
 <p>“全ビットのセット” にビット幅指定を付与することもできます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    const a0: u64 = 1'0;
-    const a1: u64 = 2'1;
-    const a2: u64 = 3'x;
-    const a3: u64 = 4'z;
+    const a0: logic&lt;32&gt; = 1'0;
+    const a1: logic&lt;32&gt; = 2'1;
+    const a2: logic&lt;32&gt; = 3'x;
+    const a3: logic&lt;32&gt; = 4'z;
 }
 </code></pre>
 <h2 id="浮動小数点数"><a class="header" href="#浮動小数点数">浮動小数点数</a></h2>
@@ -3273,7 +3273,7 @@ UnsafeTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)unsafe(?-u:\b)/ 
 VarTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)var(?-u:\b)/                                                                 : Token;
 DollarIdentifierTerm  : &lt;INITIAL, Generic       &gt;/\$[a-zA-Z_][0-9a-zA-Z_$]*/                                                           : Token;
 IdentifierTerm        : &lt;INITIAL, Generic       &gt;/(?:r#)?[a-zA-Z_][0-9a-zA-Z_$]*/                                                      : Token;
-AnyTerm               : &lt;                  Embed&gt;/[^{}]*/                                                                              : Token;
+AnyTerm               : &lt;                  Embed&gt;/[^{}]+/                                                                              : Token;
 
 // ----------------------------------------------------------------------------
 // Token
@@ -3586,10 +3586,12 @@ Factor: Number
       | InsideExpression
       | OutsideExpression
       | TypeExpression
-      | FactorType
+      | FactorTypeFactor
       ;
 
 IdentifierFactor: ExpressionIdentifier [ FunctionCall ];
+
+FactorTypeFactor: { TypeModifier } FactorType;
 
 FunctionCall: LParen [ ArgumentList ] RParen;
 

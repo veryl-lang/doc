@@ -229,7 +229,7 @@ module ModuleA #(
     var r_data2: logic&lt;ParamA&gt;;
 
     // 値の束縛
-    let _w_data2: logic&lt;ParamA&gt; = i_data;
+    let _w_data2: logic&lt;ParamA&gt; = i_data[0];
 
     // リセット付き always_ff 文
     //   `always_ff` はクロック（必須）とリセット（オプション）を持ちます
