@@ -27,3 +27,40 @@ interface InterfaceA #(
     }
 }
 ```
+
+## Default members of modport
+
+Instead of specifing all members of modport, default members can be specified like below:
+
+* `..input`: all variables in the interface as `input`
+* `..output`: all variables in the interface as `output`
+* `..converse(modport_name)`: the same variables as `modport_name`, but all direction is converse
+
+Specifing default members can be used with normal explicit members.
+
+```veryl,playground
+interface InterfaceA {
+    var a: logic;
+    var b: logic;
+    var c: logic;
+
+    modport master {
+        a: output,
+        b: input ,
+        c: input ,
+    }
+
+    modport slave {
+        ..converse(master)
+    }
+
+    modport monitor {
+        ..input
+    }
+
+    modport driver {
+        b: input,
+        ..output
+    }
+}
+```

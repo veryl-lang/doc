@@ -47,3 +47,13 @@ module ModuleA (
     assign o_dat = i_dat;
 }
 ```
+
+Interface instances can have clock domain annotation.
+
+```veryl,playground
+module ModuleA {
+    inst intf: `a InterfaceA;
+}
+
+interface InterfaceA {}
+```

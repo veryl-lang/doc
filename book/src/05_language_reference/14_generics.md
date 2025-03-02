@@ -21,6 +21,7 @@ The available generic bounds are below:
 * `type` : means arbitrary type can be passed
 * `inst: X` : instance of `X`
 * named prototype
+* generic package
 
 Named prototype is a special generic bound. See [Prototype](14_generics/02_prototype.md) for details.
 

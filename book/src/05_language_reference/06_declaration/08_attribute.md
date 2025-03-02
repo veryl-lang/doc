@@ -51,3 +51,30 @@ module ModuleA {
     }
 }
 ```
+
+## `align` Attribute
+
+`align` attribute is used to control vertical alignment by formatter.
+If `number` is specified as an argument of `align` attribute, all numbers are aligned.
+`identifier` can be used too.
+
+```veryl,playground
+module ModuleA {
+    let a  : logic<32> = 1;
+    let aa : logic<32> = 1;
+    let aaa: logic<32> = 1;
+
+    let _b: logic = {
+        a[0] repeat 1, a[0] repeat 1,
+        aa[1] repeat 8, aa[1] repeat 8,
+        aaa[2] repeat 16, aaa[2] repeat 16,
+    };
+
+    #[align(number, identifier)]
+    let _c : logic = {
+        a  [0 ] repeat 1 , a  [0 ] repeat 1 ,
+        aa [1 ] repeat 8 , aa [1 ] repeat 8 ,
+        aaa[2 ] repeat 16, aaa[2 ] repeat 16,
+    };
+}
+```

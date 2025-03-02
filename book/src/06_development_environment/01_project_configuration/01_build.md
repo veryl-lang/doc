@@ -134,3 +134,21 @@ If `emit_cond_type` is set to `true`, condition type like `unique`, `unique0` an
 [build]
 emit_cond_type = true
 ```
+
+## The `instance_depth_limit` field
+
+`instance_depth_limit` is the maximum depth of instance hierarchy. The default value is 128.
+
+```toml
+[build]
+instance_depth_limit = 256
+```
+
+## The `instance_total_limit` field
+
+`instance_total_limit` is the maximum sub-instances in a module. The default value is 1048576.
+
+```toml
+[build]
+instance_total_limit = 256
+```
