@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-02-20T18:25:52+09:00\n"
+"POT-Creation-Date: 2025-03-02T23:12:30+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -2927,6 +2927,12 @@ msgstr "`always_comb` で代入される変数は組み合わせ回路を意味�
 msgid "`assign` declaration can assign expression to variable."
 msgstr "`assign` 宣言で変数に式を代入することができます。"
 
+#: src/05_language_reference/06_declaration/05_assign.md:13
+msgid ""
+"Concatenation can be used as the left hand side of `assign` declaration."
+msgstr ""
+"`assign` 宣言の左辺には連結も使用することができます。"
+
 #: src/05_language_reference/06_declaration/06_function.md:3
 msgid ""
 "Function can be declared by `function` keyword. Arguments are placed in `()` "
@@ -3053,6 +3059,20 @@ msgstr ""
 "にするかどうかを制御するために使用することができます。もし `DEFINE_A` が定義"
 "されていれば、`#[ifdef(DEFINE_A)]` のついたコードブロックは有効に、"
 "`#[ifndef(DEFINE_A)]` のついたコードブロックは無効になります。"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:55
+msgid "`align` Attribute"
+msgstr "`align` アトリビュート"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:57
+msgid ""
+"`align` attribute is used to control vertical alignment by formatter. If "
+"`number` is specified as an argument of `align` attribute, all numbers are "
+"aligned. `identifier` can be used too."
+msgstr ""
+"`align` アトリビュートはフォーマッタの垂直方向の整列を制御することができます。"
+"`number` が `align` の引数として指定されたとき、全ての数値は整列されます。"
+"`identifier` も使用可能です。"
 
 #: src/05_language_reference/06_declaration/09_generate.md:3
 msgid ""
@@ -3360,6 +3380,39 @@ msgstr ""
 "インターフェース定義では `modport` を宣言することができます。`modport` はモ"
 "ジュールのポート宣言で、ポートを束ねて接続するために使うことができます。"
 
+#: src/05_language_reference/08_interface.md:31
+msgid "Default members of modport"
+msgstr "modportのデフォルトメンバー"
+
+#: src/05_language_reference/08_interface.md:33
+msgid ""
+"Instead of specifing all members of modport, default members can be "
+"specified like below:"
+msgstr ""
+"modportの全てのメンバーを指定する代わりに、以下のようにデフォルトメンバーを指定することができます。"
+
+#: src/05_language_reference/08_interface.md:35
+msgid "`..input`: all variables in the interface as `input`"
+msgstr ""
+"`..input`: インターフェース内の全ての変数を `input` として追加"
+
+#: src/05_language_reference/08_interface.md:36
+msgid "`..output`: all variables in the interface as `output`"
+msgstr ""
+"`..output`: インターフェース内の全ての変数を `output` として追加"
+
+#: src/05_language_reference/08_interface.md:37
+msgid ""
+"`..converse(modport_name)`: the same variables as `modport_name`, but all "
+"direction is converse"
+msgstr ""
+"`..converse(modport_name)`: `modport_name` と同じ変数を、方向を逆にして追加"
+
+#: src/05_language_reference/08_interface.md:39
+msgid "Specifing default members can be used with normal explicit members."
+msgstr ""
+"デフォルトメンバーの指定は通常の明示的なメンバーと一緒に使うこともできます。"
+
 #: src/05_language_reference/09_package.md:3
 msgid ""
 "Package is one of top level components in source code. Package can organize "
@@ -3665,7 +3718,11 @@ msgstr "`inst: X` : `X` のインスタンス"
 msgid "named prototype"
 msgstr "名前付きプロトタイプ"
 
-#: src/05_language_reference/14_generics.md:25
+#: src/05_language_reference/14_generics.md:24
+msgid "generic package"
+msgstr "ジェネリックパッケージ"
+
+#: src/05_language_reference/14_generics.md:26
 msgid ""
 "Named prototype is a special generic bound. See [Prototype]"
 "(14_generics/02_prototype.md) for details."
@@ -3673,7 +3730,7 @@ msgstr ""
 "名前付きプロトタイプは特別なジェネリック境界です。詳細は [プロトタイプ]"
 "(14_generics/02_prototype.md) を参照してください。"
 
-#: src/05_language_reference/14_generics.md:27
+#: src/05_language_reference/14_generics.md:28
 msgid ""
 "At the usage of generics, actual parameters can be given through `::<>`. As "
 "the actual parameters, numeric literal and identifier concatenated by `::` "
@@ -3683,7 +3740,7 @@ msgstr ""
 "メータとしては数値リテラルと `::` で連結された識別子を使用することができま"
 "す。"
 
-#: src/05_language_reference/14_generics.md:30
+#: src/05_language_reference/14_generics.md:31
 msgid ""
 "Additionally, the actual parameters should be accessible at the position of "
 "the generics declaration. For example, module names can be used as actual "
@@ -3698,23 +3755,23 @@ msgstr ""
 "ません。これはローカルパラメータがジェネリクス定義位置からは参照できない場合"
 "に発生します。"
 
-#: src/05_language_reference/14_generics.md:35
+#: src/05_language_reference/14_generics.md:36
 msgid "Generic Function"
 msgstr "ジェネリック関数"
 
-#: src/05_language_reference/14_generics.md:50
+#: src/05_language_reference/14_generics.md:51
 msgid "Generic Module/Interface"
 msgstr "ジェネリックモジュール/インターフェース"
 
-#: src/05_language_reference/14_generics.md:68
+#: src/05_language_reference/14_generics.md:69
 msgid "Generic Package"
 msgstr "ジェネリックパッケージ"
 
-#: src/05_language_reference/14_generics.md:81
+#: src/05_language_reference/14_generics.md:82
 msgid "Generic Struct"
 msgstr "ジェネリック構造体"
 
-#: src/05_language_reference/14_generics.md:83
+#: src/05_language_reference/14_generics.md:84
 msgid ""
 "```veryl,playground\n"
 "package PackageA {\n"
@@ -3939,6 +3996,11 @@ msgstr ""
 "    assign o_dat = i_dat;\n"
 "}\n"
 "```"
+
+#: src/05_language_reference/15_clock_domain_annotation.md:51
+msgid "Interface instances can have clock domain annotation."
+msgstr ""
+"インターフェースインスタンスもクロックドメインアノテーションを指定可能です。"
 
 #: src/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.md:3
 msgid ""
@@ -4695,6 +4757,28 @@ msgid ""
 msgstr ""
 "`emit_cond_type` が `true` のとき、`unique` `unique0` `priority` といった指定"
 "が出力されます。"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:138
+msgid "The `instance_depth_limit` field"
+msgstr "`instance_depth_limit` フィールド"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:140
+msgid ""
+"`instance_depth_limit` is the maximum depth of instance hierarchy. The "
+"default value is 128."
+msgstr ""
+"`instance_depth_limit` はインスタンス階層の最大深さです。デフォルト値は 128 です。"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:147
+msgid "The `instance_total_limit` field"
+msgstr "`instance_total_limi` フィールド"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:149
+msgid ""
+"`instance_total_limit` is the maximum sub-instances in a module. The default "
+"value is 1048576."
+msgstr ""
+"`instance_total_limit` は1つのモジュール内のサブインスタンスの最大数です。デフォルト値は 1048576 です。"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:3
 msgid ""
@@ -7341,6 +7425,8 @@ msgid ""
 "ConstTerm             : <INITIAL, Generic       >/(?-u:\\b)const(?-u:"
 "\\b)/                                                               : "
 "Token;\n"
+"ConverseTerm          : <INITIAL, Generic       >/(?-u:\\b)converse(?-u:"
+"\\b)/                                                            : Token;\n"
 "DefaultTerm           : <INITIAL, Generic       >/(?-u:\\b)default(?-u:"
 "\\b)/                                                             : Token;\n"
 "ElseTerm              : <INITIAL, Generic       >/(?-u:\\b)else(?-u:"
@@ -7560,6 +7646,7 @@ msgid ""
 "ClockPosedgeToken  : ClockPosedgeTerm  : Token Comments;\n"
 "ClockNegedgeToken  : ClockNegedgeTerm  : Token Comments;\n"
 "ConstToken         : ConstTerm         : Token Comments;\n"
+"ConverseToken      : ConverseTerm      : Token Comments;\n"
 "DefaultToken       : DefaultTerm       : Token Comments;\n"
 "ElseToken          : ElseTerm          : Token Comments;\n"
 "EmbedToken         : EmbedTerm         : Token Comments;\n"
@@ -7692,6 +7779,7 @@ msgid ""
 "ClockPosedge  : ClockPosedgeToken  : VerylToken;\n"
 "ClockNegedge  : ClockNegedgeToken  : VerylToken;\n"
 "Const         : ConstToken         : VerylToken;\n"
+"Converse      : ConverseToken      : VerylToken;\n"
 "Defaul        : DefaultToken       : VerylToken; // avoid to conflict with "
 "Rust's Default trait\n"
 "Else          : ElseToken          : VerylToken;\n"
@@ -8042,15 +8130,28 @@ msgid ""
 "\n"
 "AlwaysCombDeclaration: AlwaysComb StatementBlock;\n"
 "\n"
-"AssignDeclaration: Assign HierarchicalIdentifier Equ Expression Semicolon;\n"
+"AssignDeclaration: Assign AssignDestination Equ Expression Semicolon;\n"
 "\n"
-"ModportDeclaration: Modport Identifier LBrace ModportList RBrace;\n"
+"AssignDestination: HierarchicalIdentifier\n"
+"                 | LBrace AssignConcatenationList RBrace;\n"
+"\n"
+"AssignConcatenationList: AssignConcatenationItem { Comma "
+"AssignConcatenationItem } [ Comma ];\n"
+"\n"
+"AssignConcatenationItem: HierarchicalIdentifier;\n"
+"\n"
+"ModportDeclaration: Modport Identifier LBrace [ ModportList ] [ DotDot "
+"ModportDefault ] RBrace;\n"
 "\n"
 "ModportList: ModportGroup { Comma ModportGroup } [ Comma ];\n"
 "\n"
 "ModportGroup: { Attribute } ( LBrace ModportList RBrace | ModportItem );\n"
 "\n"
 "ModportItem: Identifier Colon Direction;\n"
+"\n"
+"ModportDefault: Input\n"
+"              | Output\n"
+"              | Converse LParen Identifier RParen;\n"
 "\n"
 "EnumDeclaration: Enum Identifier [ Colon ScalarType ] LBrace EnumList "
 "RBrace;\n"
@@ -8083,8 +8184,8 @@ msgid ""
 "// "
 "----------------------------------------------------------------------------\n"
 "\n"
-"InstDeclaration: Inst Identifier Colon ScopedIdentifier [ Array ] "
-"[ InstParameter ] [ LParen [ InstPortList ] RParen ] Semicolon;\n"
+"InstDeclaration: Inst Identifier Colon [ ClockDomain ] ScopedIdentifier "
+"[ Array ] [ InstParameter ] [ LParen [ InstPortList ] RParen ] Semicolon;\n"
 "\n"
 "InstParameter: Hash LParen [ InstParameterList ] RParen;\n"
 "\n"
@@ -8286,8 +8387,7 @@ msgid ""
 "PackageGroup: { Attribute } ( LBrace { PackageGroup } RBrace | "
 "PackageItem );\n"
 "\n"
-"PackageItem: VarDeclaration\n"
-"           | ConstDeclaration\n"
+"PackageItem: ConstDeclaration\n"
 "           | TypeDefDeclaration\n"
 "           | EnumDeclaration\n"
 "           | StructUnionDeclaration\n"
