@@ -215,6 +215,14 @@
     assign a = 1;
 }
 </code></pre>
+<p><code>assign</code> 宣言の左辺には連結も使用することができます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    assign {a, b} = 1;
+}
+</code></pre>
 
                     </main>
 

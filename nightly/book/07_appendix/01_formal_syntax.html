@@ -287,6 +287,7 @@ ClockTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock(?-u:\b)/  
 ClockPosedgeTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock_posedge(?-u:\b)/                                                       : Token;
 ClockNegedgeTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock_negedge(?-u:\b)/                                                       : Token;
 ConstTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)const(?-u:\b)/                                                               : Token;
+ConverseTerm          : &lt;INITIAL, Generic       &gt;/(?-u:\b)converse(?-u:\b)/                                                            : Token;
 DefaultTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)default(?-u:\b)/                                                             : Token;
 ElseTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)else(?-u:\b)/                                                                : Token;
 EmbedTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)embed(?-u:\b)/                                                               : Token;
@@ -412,6 +413,7 @@ ClockToken         : ClockTerm         : Token Comments;
 ClockPosedgeToken  : ClockPosedgeTerm  : Token Comments;
 ClockNegedgeToken  : ClockNegedgeTerm  : Token Comments;
 ConstToken         : ConstTerm         : Token Comments;
+ConverseToken      : ConverseTerm      : Token Comments;
 DefaultToken       : DefaultTerm       : Token Comments;
 ElseToken          : ElseTerm          : Token Comments;
 EmbedToken         : EmbedTerm         : Token Comments;
@@ -542,6 +544,7 @@ Clock         : ClockToken         : VerylToken;
 ClockPosedge  : ClockPosedgeToken  : VerylToken;
 ClockNegedge  : ClockNegedgeToken  : VerylToken;
 Const         : ConstToken         : VerylToken;
+Converse      : ConverseToken      : VerylToken;
 Defaul        : DefaultToken       : VerylToken; // avoid to conflict with Rust's Default trait
 Else          : ElseToken          : VerylToken;
 Embed         : EmbedToken         : VerylToken;
@@ -851,15 +854,26 @@ AlwaysFfReset: HierarchicalIdentifier;
 
 AlwaysCombDeclaration: AlwaysComb StatementBlock;
 
-AssignDeclaration: Assign HierarchicalIdentifier Equ Expression Semicolon;
+AssignDeclaration: Assign AssignDestination Equ Expression Semicolon;
 
-ModportDeclaration: Modport Identifier LBrace ModportList RBrace;
+AssignDestination: HierarchicalIdentifier
+                 | LBrace AssignConcatenationList RBrace;
+
+AssignConcatenationList: AssignConcatenationItem { Comma AssignConcatenationItem } [ Comma ];
+
+AssignConcatenationItem: HierarchicalIdentifier;
+
+ModportDeclaration: Modport Identifier LBrace [ ModportList ] [ DotDot ModportDefault ] RBrace;
 
 ModportList: ModportGroup { Comma ModportGroup } [ Comma ];
 
 ModportGroup: { Attribute } ( LBrace ModportList RBrace | ModportItem );
 
 ModportItem: Identifier Colon Direction;
+
+ModportDefault: Input
+              | Output
+              | Converse LParen Identifier RParen;
 
 EnumDeclaration: Enum Identifier [ Colon ScalarType ] LBrace EnumList RBrace;
 
@@ -887,7 +901,7 @@ FinalDeclaration: Final StatementBlock;
 // InstDeclaration
 // ----------------------------------------------------------------------------
 
-InstDeclaration: Inst Identifier Colon ScopedIdentifier [ Array ] [ InstParameter ] [ LParen [ InstPortList ] RParen ] Semicolon;
+InstDeclaration: Inst Identifier Colon [ ClockDomain ] ScopedIdentifier [ Array ] [ InstParameter ] [ LParen [ InstPortList ] RParen ] Semicolon;
 
 InstParameter: Hash LParen [ InstParameterList ] RParen;
 
@@ -1044,8 +1058,7 @@ PackageDeclaration: [ Pub ] Package Identifier [ WithGenericParameter ] LBrace {
 
 PackageGroup: { Attribute } ( LBrace { PackageGroup } RBrace | PackageItem );
 
-PackageItem: VarDeclaration
-           | ConstDeclaration
+PackageItem: ConstDeclaration
            | TypeDefDeclaration
            | EnumDeclaration
            | StructUnionDeclaration

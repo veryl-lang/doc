@@ -215,6 +215,14 @@
     assign a = 1;
 }
 </code></pre>
+<p>Concatenation can be used as the left hand side of <code>assign</code> declaration.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    assign {a, b} = 1;
+}
+</code></pre>
 
                     </main>
 

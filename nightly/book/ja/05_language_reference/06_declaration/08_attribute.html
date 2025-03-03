@@ -245,6 +245,27 @@
     }
 }
 </code></pre>
+<h2 id="align-アトリビュート"><a class="header" href="#align-アトリビュート"><code>align</code> アトリビュート</a></h2>
+<p><code>align</code> アトリビュートはフォーマッタの垂直方向の整列を制御することができます。<code>number</code> が <code>align</code> の引数として指定されたとき、全ての数値は整列されます。<code>identifier</code> も使用可能です。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a  : logic&lt;32&gt; = 1;
+    let aa : logic&lt;32&gt; = 1;
+    let aaa: logic&lt;32&gt; = 1;
+
+    let _b: logic = {
+        a[0] repeat 1, a[0] repeat 1,
+        aa[1] repeat 8, aa[1] repeat 8,
+        aaa[2] repeat 16, aaa[2] repeat 16,
+    };
+
+    #[align(number, identifier)]
+    let _c : logic = {
+        a  [0 ] repeat 1 , a  [0 ] repeat 1 ,
+        aa [1 ] repeat 8 , aa [1 ] repeat 8 ,
+        aaa[2 ] repeat 16, aaa[2 ] repeat 16,
+    };
+}
+</code></pre>
 
                     </main>
 

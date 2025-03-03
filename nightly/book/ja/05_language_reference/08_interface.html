@@ -229,6 +229,39 @@
     }
 }
 </code></pre>
+<h2 id="modportのデフォルトメンバー"><a class="header" href="#modportのデフォルトメンバー">modportのデフォルトメンバー</a></h2>
+<p>modportの全てのメンバーを指定する代わりに、以下のようにデフォルトメンバーを指定することができます。</p>
+<ul>
+<li><code>..input</code>: インターフェース内の全ての変数を <code>input</code> として追加</li>
+<li><code>..output</code>: インターフェース内の全ての変数を <code>output</code> として追加</li>
+<li><code>..converse(modport_name)</code>: <code>modport_name</code> と同じ変数を、方向を逆にして追加</li>
+</ul>
+<p>デフォルトメンバーの指定は通常の明示的なメンバーと一緒に使うこともできます。</p>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var a: logic;
+    var b: logic;
+    var c: logic;
+
+    modport master {
+        a: output,
+        b: input ,
+        c: input ,
+    }
+
+    modport slave {
+        ..converse(master)
+    }
+
+    modport monitor {
+        ..input
+    }
+
+    modport driver {
+        b: input,
+        ..output
+    }
+}
+</code></pre>
 
                     </main>
 

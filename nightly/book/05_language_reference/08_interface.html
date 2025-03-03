@@ -231,6 +231,39 @@ Interface has overridable parameters, and interface definitions.</p>
     }
 }
 </code></pre>
+<h2 id="default-members-of-modport"><a class="header" href="#default-members-of-modport">Default members of modport</a></h2>
+<p>Instead of specifing all members of modport, default members can be specified like below:</p>
+<ul>
+<li><code>..input</code>: all variables in the interface as <code>input</code></li>
+<li><code>..output</code>: all variables in the interface as <code>output</code></li>
+<li><code>..converse(modport_name)</code>: the same variables as <code>modport_name</code>, but all direction is converse</li>
+</ul>
+<p>Specifing default members can be used with normal explicit members.</p>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var a: logic;
+    var b: logic;
+    var c: logic;
+
+    modport master {
+        a: output,
+        b: input ,
+        c: input ,
+    }
+
+    modport slave {
+        ..converse(master)
+    }
+
+    modport monitor {
+        ..input
+    }
+
+    modport driver {
+        b: input,
+        ..output
+    }
+}
+</code></pre>
 
                     </main>
 

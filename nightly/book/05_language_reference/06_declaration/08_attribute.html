@@ -247,6 +247,29 @@ If <code>DEFINE_A</code> is defined, the code block with <code>#[ifdef(DEFINE_A)
     }
 }
 </code></pre>
+<h2 id="align-attribute"><a class="header" href="#align-attribute"><code>align</code> Attribute</a></h2>
+<p><code>align</code> attribute is used to control vertical alignment by formatter.
+If <code>number</code> is specified as an argument of <code>align</code> attribute, all numbers are aligned.
+<code>identifier</code> can be used too.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a  : logic&lt;32&gt; = 1;
+    let aa : logic&lt;32&gt; = 1;
+    let aaa: logic&lt;32&gt; = 1;
+
+    let _b: logic = {
+        a[0] repeat 1, a[0] repeat 1,
+        aa[1] repeat 8, aa[1] repeat 8,
+        aaa[2] repeat 16, aaa[2] repeat 16,
+    };
+
+    #[align(number, identifier)]
+    let _c : logic = {
+        a  [0 ] repeat 1 , a  [0 ] repeat 1 ,
+        aa [1 ] repeat 8 , aa [1 ] repeat 8 ,
+        aaa[2 ] repeat 16, aaa[2 ] repeat 16,
+    };
+}
+</code></pre>
 
                     </main>
 

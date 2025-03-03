@@ -294,6 +294,16 @@ exclude_std = true
 <pre><code class="language-toml">[build]
 emit_cond_type = true
 </code></pre>
+<h2 id="instance_depth_limit-フィールド"><a class="header" href="#instance_depth_limit-フィールド"><code>instance_depth_limit</code> フィールド</a></h2>
+<p><code>instance_depth_limit</code> はインスタンス階層の最大深さです。デフォルト値は 128 です。</p>
+<pre><code class="language-toml">[build]
+instance_depth_limit = 256
+</code></pre>
+<h2 id="instance_total_limi-フィールド"><a class="header" href="#instance_total_limi-フィールド"><code>instance_total_limi</code> フィールド</a></h2>
+<p><code>instance_total_limit</code> は1つのモジュール内のサブインスタンスの最大数です。デフォルト値は 1048576 です。</p>
+<pre><code class="language-toml">[build]
+instance_total_limit = 256
+</code></pre>
 
                     </main>
 
