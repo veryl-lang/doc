@@ -89,10 +89,10 @@ pub fn build(source: &str) -> Result {
 
             let analyzer = Analyzer::new(&metadata);
             let mut errors = Vec::new();
-            errors.append(&mut analyzer.analyze_pass1("project", source, "", &parser.veryl));
+            errors.append(&mut analyzer.analyze_pass1("project", "", &parser.veryl));
             Analyzer::analyze_post_pass1();
-            errors.append(&mut analyzer.analyze_pass2("project", source, "", &parser.veryl));
-            errors.append(&mut analyzer.analyze_pass3("project", source, "", &parser.veryl));
+            errors.append(&mut analyzer.analyze_pass2("project", "", &parser.veryl));
+            errors.append(&mut analyzer.analyze_pass3("project", "", &parser.veryl));
 
             let err = !errors.is_empty();
 
