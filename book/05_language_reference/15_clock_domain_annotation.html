@@ -247,6 +247,13 @@ This can be used to specify that some clocks belong the same implicit clock doma
     assign o_dat = i_dat;
 }
 </code></pre>
+<p>Interface instances can have clock domain annotation.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    inst intf: `a InterfaceA;
+}
+
+interface InterfaceA {}
+</code></pre>
 
                     </main>
 

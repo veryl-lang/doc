@@ -245,6 +245,13 @@
     assign o_dat = i_dat;
 }
 </code></pre>
+<p>インターフェースインスタンスもクロックドメインアノテーションを指定可能です。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    inst intf: `a InterfaceA;
+}
+
+interface InterfaceA {}
+</code></pre>
 
                     </main>
 

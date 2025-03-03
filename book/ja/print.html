@@ -830,7 +830,7 @@ module ModuleA #(
     var r_data2: logic&lt;ParamA&gt;;
 
     // 値の束縛
-    let _w_data2: logic&lt;ParamA&gt; = i_data;
+    let _w_data2: logic&lt;ParamA&gt; = i_data[0];
 
     // リセット付き always_ff 文
     //   `always_ff` はクロック（必須）とリセット（オプション）を持ちます
@@ -1118,10 +1118,10 @@ a = 1 || 1;
 <h2 id="指定ビットのセット"><a class="header" href="#指定ビットのセット">指定ビットのセット</a></h2>
 <p>“全ビットのセット” にビット幅指定を付与することもできます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    const a0: u64 = 1'0;
-    const a1: u64 = 2'1;
-    const a2: u64 = 3'x;
-    const a3: u64 = 4'z;
+    const a0: logic&lt;32&gt; = 1'0;
+    const a1: logic&lt;32&gt; = 2'1;
+    const a2: logic&lt;32&gt; = 3'x;
+    const a3: logic&lt;32&gt; = 4'z;
 }
 </code></pre>
 <h2 id="浮動小数点数"><a class="header" href="#浮動小数点数">浮動小数点数</a></h2>
@@ -1449,13 +1449,7 @@ module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
 
-    assign b = if a == 0 {
-        1
-    } else if a &gt;: 1 {
-        2
-    } else {
-        3
-    };
+    assign b = if a == 0 { 1 } else if a &gt;: 1 { 2 } else { 3 };
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="case--switch"><a class="header" href="#case--switch">Case / Switch</a></h1>
@@ -1816,6 +1810,14 @@ emit_cond_type = true
     assign a = 1;
 }
 </code></pre>
+<p><code>assign</code> 宣言の左辺には連結も使用することができます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    assign {a, b} = 1;
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="関数"><a class="header" href="#関数">関数</a></h1>
 <p>関数は <code>function</code> キーワードで宣言できます。引数は <code>()</code> 内に書き、戻り値の型を <code>-&gt;</code> の後に書きます。</p>
 <p>関数が戻り値を持たない場合、<code>-&gt;</code> は省略できます。</p>
@@ -1888,6 +1890,27 @@ emit_cond_type = true
     {
         let _b: logic&lt;10&gt; = 1;
     }
+}
+</code></pre>
+<h2 id="align-アトリビュート"><a class="header" href="#align-アトリビュート"><code>align</code> アトリビュート</a></h2>
+<p><code>align</code> アトリビュートはフォーマッタの垂直方向の整列を制御することができます。<code>number</code> が <code>align</code> の引数として指定されたとき、全ての数値は整列されます。<code>identifier</code> も使用可能です。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a  : logic&lt;32&gt; = 1;
+    let aa : logic&lt;32&gt; = 1;
+    let aaa: logic&lt;32&gt; = 1;
+
+    let _b: logic = {
+        a[0] repeat 1, a[0] repeat 1,
+        aa[1] repeat 8, aa[1] repeat 8,
+        aaa[2] repeat 16, aaa[2] repeat 16,
+    };
+
+    #[align(number, identifier)]
+    let _c : logic = {
+        a  [0 ] repeat 1 , a  [0 ] repeat 1 ,
+        aa [1 ] repeat 8 , aa [1 ] repeat 8 ,
+        aaa[2 ] repeat 16, aaa[2 ] repeat 16,
+    };
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="生成"><a class="header" href="#生成">生成</a></h1>
@@ -2050,6 +2073,39 @@ module ModubeB {
     modport slave {
         b: input ,
         a: output,
+    }
+}
+</code></pre>
+<h2 id="modportのデフォルトメンバー"><a class="header" href="#modportのデフォルトメンバー">modportのデフォルトメンバー</a></h2>
+<p>modportの全てのメンバーを指定する代わりに、以下のようにデフォルトメンバーを指定することができます。</p>
+<ul>
+<li><code>..input</code>: インターフェース内の全ての変数を <code>input</code> として追加</li>
+<li><code>..output</code>: インターフェース内の全ての変数を <code>output</code> として追加</li>
+<li><code>..converse(modport_name)</code>: <code>modport_name</code> と同じ変数を、方向を逆にして追加</li>
+</ul>
+<p>デフォルトメンバーの指定は通常の明示的なメンバーと一緒に使うこともできます。</p>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var a: logic;
+    var b: logic;
+    var c: logic;
+
+    modport master {
+        a: output,
+        b: input ,
+        c: input ,
+    }
+
+    modport slave {
+        ..converse(master)
+    }
+
+    modport monitor {
+        ..input
+    }
+
+    modport driver {
+        b: input,
+        ..output
     }
 }
 </code></pre>
@@ -2328,6 +2384,13 @@ module ModuleD for ProtoA #(
     assign o_dat = i_dat;
 }
 </code></pre>
+<p>インターフェースインスタンスもクロックドメインアノテーションを指定可能です。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    inst intf: `a InterfaceA;
+}
+
+interface InterfaceA {}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="unsafe-cdc"><a class="header" href="#unsafe-cdc">Unsafe CDC</a></h1>
 <p>Veryl コンパイラはクロックドメインクロッシングをエラーとして検出します。そのためクロックドメインクロッシングを行う場所には明示的な <code>unsafe (cdc)</code> ブロックが必要です。ブロック内ではクロックドメインクロッシングのチェックが抑制されるため、設計者はそれが安全かどうか注意深く確認する必要があります。</p>
 <pre><code class="language-veryl playground">module ModuleA (
@@ -2533,6 +2596,16 @@ exclude_std = true
 <p><code>emit_cond_type</code> が <code>true</code> のとき、<code>unique</code> <code>unique0</code> <code>priority</code> といった指定が出力されます。</p>
 <pre><code class="language-toml">[build]
 emit_cond_type = true
+</code></pre>
+<h2 id="instance_depth_limit-フィールド"><a class="header" href="#instance_depth_limit-フィールド"><code>instance_depth_limit</code> フィールド</a></h2>
+<p><code>instance_depth_limit</code> はインスタンス階層の最大深さです。デフォルト値は 128 です。</p>
+<pre><code class="language-toml">[build]
+instance_depth_limit = 256
+</code></pre>
+<h2 id="instance_total_limi-フィールド"><a class="header" href="#instance_total_limi-フィールド"><code>instance_total_limi</code> フィールド</a></h2>
+<p><code>instance_total_limit</code> は1つのモジュール内のサブインスタンスの最大数です。デフォルト値は 1048576 です。</p>
+<pre><code class="language-toml">[build]
+instance_total_limit = 256
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="format"><a class="header" href="#format">Format</a></h1>
 <p><code>[format]</code> セクションはフォーマッタの設定です。</p>
@@ -3215,6 +3288,7 @@ ClockTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock(?-u:\b)/  
 ClockPosedgeTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock_posedge(?-u:\b)/                                                       : Token;
 ClockNegedgeTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock_negedge(?-u:\b)/                                                       : Token;
 ConstTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)const(?-u:\b)/                                                               : Token;
+ConverseTerm          : &lt;INITIAL, Generic       &gt;/(?-u:\b)converse(?-u:\b)/                                                            : Token;
 DefaultTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)default(?-u:\b)/                                                             : Token;
 ElseTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)else(?-u:\b)/                                                                : Token;
 EmbedTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)embed(?-u:\b)/                                                               : Token;
@@ -3273,7 +3347,7 @@ UnsafeTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)unsafe(?-u:\b)/ 
 VarTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)var(?-u:\b)/                                                                 : Token;
 DollarIdentifierTerm  : &lt;INITIAL, Generic       &gt;/\$[a-zA-Z_][0-9a-zA-Z_$]*/                                                           : Token;
 IdentifierTerm        : &lt;INITIAL, Generic       &gt;/(?:r#)?[a-zA-Z_][0-9a-zA-Z_$]*/                                                      : Token;
-AnyTerm               : &lt;                  Embed&gt;/[^{}]*/                                                                              : Token;
+AnyTerm               : &lt;                  Embed&gt;/[^{}]+/                                                                              : Token;
 
 // ----------------------------------------------------------------------------
 // Token
@@ -3340,6 +3414,7 @@ ClockToken         : ClockTerm         : Token Comments;
 ClockPosedgeToken  : ClockPosedgeTerm  : Token Comments;
 ClockNegedgeToken  : ClockNegedgeTerm  : Token Comments;
 ConstToken         : ConstTerm         : Token Comments;
+ConverseToken      : ConverseTerm      : Token Comments;
 DefaultToken       : DefaultTerm       : Token Comments;
 ElseToken          : ElseTerm          : Token Comments;
 EmbedToken         : EmbedTerm         : Token Comments;
@@ -3470,6 +3545,7 @@ Clock         : ClockToken         : VerylToken;
 ClockPosedge  : ClockPosedgeToken  : VerylToken;
 ClockNegedge  : ClockNegedgeToken  : VerylToken;
 Const         : ConstToken         : VerylToken;
+Converse      : ConverseToken      : VerylToken;
 Defaul        : DefaultToken       : VerylToken; // avoid to conflict with Rust's Default trait
 Else          : ElseToken          : VerylToken;
 Embed         : EmbedToken         : VerylToken;
@@ -3586,10 +3662,12 @@ Factor: Number
       | InsideExpression
       | OutsideExpression
       | TypeExpression
-      | FactorType
+      | FactorTypeFactor
       ;
 
 IdentifierFactor: ExpressionIdentifier [ FunctionCall ];
+
+FactorTypeFactor: { TypeModifier } FactorType;
 
 FunctionCall: LParen [ ArgumentList ] RParen;
 
@@ -3777,15 +3855,26 @@ AlwaysFfReset: HierarchicalIdentifier;
 
 AlwaysCombDeclaration: AlwaysComb StatementBlock;
 
-AssignDeclaration: Assign HierarchicalIdentifier Equ Expression Semicolon;
+AssignDeclaration: Assign AssignDestination Equ Expression Semicolon;
 
-ModportDeclaration: Modport Identifier LBrace ModportList RBrace;
+AssignDestination: HierarchicalIdentifier
+                 | LBrace AssignConcatenationList RBrace;
+
+AssignConcatenationList: AssignConcatenationItem { Comma AssignConcatenationItem } [ Comma ];
+
+AssignConcatenationItem: HierarchicalIdentifier;
+
+ModportDeclaration: Modport Identifier LBrace [ ModportList ] [ DotDot ModportDefault ] RBrace;
 
 ModportList: ModportGroup { Comma ModportGroup } [ Comma ];
 
 ModportGroup: { Attribute } ( LBrace ModportList RBrace | ModportItem );
 
 ModportItem: Identifier Colon Direction;
+
+ModportDefault: Input
+              | Output
+              | Converse LParen Identifier RParen;
 
 EnumDeclaration: Enum Identifier [ Colon ScalarType ] LBrace EnumList RBrace;
 
@@ -3813,7 +3902,7 @@ FinalDeclaration: Final StatementBlock;
 // InstDeclaration
 // ----------------------------------------------------------------------------
 
-InstDeclaration: Inst Identifier Colon ScopedIdentifier [ Array ] [ InstParameter ] [ LParen [ InstPortList ] RParen ] Semicolon;
+InstDeclaration: Inst Identifier Colon [ ClockDomain ] ScopedIdentifier [ Array ] [ InstParameter ] [ LParen [ InstPortList ] RParen ] Semicolon;
 
 InstParameter: Hash LParen [ InstParameterList ] RParen;
 
@@ -3970,8 +4059,7 @@ PackageDeclaration: [ Pub ] Package Identifier [ WithGenericParameter ] LBrace {
 
 PackageGroup: { Attribute } ( LBrace { PackageGroup } RBrace | PackageItem );
 
-PackageItem: VarDeclaration
-           | ConstDeclaration
+PackageItem: ConstDeclaration
            | TypeDefDeclaration
            | EnumDeclaration
            | StructUnionDeclaration

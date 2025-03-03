@@ -306,6 +306,16 @@ exclude_std = true
 <pre><code class="language-toml">[build]
 emit_cond_type = true
 </code></pre>
+<h2 id="the-instance_depth_limit-field"><a class="header" href="#the-instance_depth_limit-field">The <code>instance_depth_limit</code> field</a></h2>
+<p><code>instance_depth_limit</code> is the maximum depth of instance hierarchy. The default value is 128.</p>
+<pre><code class="language-toml">[build]
+instance_depth_limit = 256
+</code></pre>
+<h2 id="the-instance_total_limit-field"><a class="header" href="#the-instance_total_limit-field">The <code>instance_total_limit</code> field</a></h2>
+<p><code>instance_total_limit</code> is the maximum sub-instances in a module. The default value is 1048576.</p>
+<pre><code class="language-toml">[build]
+instance_total_limit = 256
+</code></pre>
 
                     </main>
 
