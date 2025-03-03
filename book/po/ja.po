@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-03-02T23:12:30+09:00\n"
+"POT-Creation-Date: 2025-03-03T14:02:29+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -2930,8 +2930,7 @@ msgstr "`assign` 宣言で変数に式を代入することができます。"
 #: src/05_language_reference/06_declaration/05_assign.md:13
 msgid ""
 "Concatenation can be used as the left hand side of `assign` declaration."
-msgstr ""
-"`assign` 宣言の左辺には連結も使用することができます。"
+msgstr "`assign` 宣言の左辺には連結も使用することができます。"
 
 #: src/05_language_reference/06_declaration/06_function.md:3
 msgid ""
@@ -3070,9 +3069,9 @@ msgid ""
 "`number` is specified as an argument of `align` attribute, all numbers are "
 "aligned. `identifier` can be used too."
 msgstr ""
-"`align` アトリビュートはフォーマッタの垂直方向の整列を制御することができます。"
-"`number` が `align` の引数として指定されたとき、全ての数値は整列されます。"
-"`identifier` も使用可能です。"
+"`align` アトリビュートはフォーマッタの垂直方向の整列を制御することができま"
+"す。`number` が `align` の引数として指定されたとき、全ての数値は整列されま"
+"す。`identifier` も使用可能です。"
 
 #: src/05_language_reference/06_declaration/09_generate.md:3
 msgid ""
@@ -3389,17 +3388,16 @@ msgid ""
 "Instead of specifing all members of modport, default members can be "
 "specified like below:"
 msgstr ""
-"modportの全てのメンバーを指定する代わりに、以下のようにデフォルトメンバーを指定することができます。"
+"modportの全てのメンバーを指定する代わりに、以下のようにデフォルトメンバーを指"
+"定することができます。"
 
 #: src/05_language_reference/08_interface.md:35
 msgid "`..input`: all variables in the interface as `input`"
-msgstr ""
-"`..input`: インターフェース内の全ての変数を `input` として追加"
+msgstr "`..input`: インターフェース内の全ての変数を `input` として追加"
 
 #: src/05_language_reference/08_interface.md:36
 msgid "`..output`: all variables in the interface as `output`"
-msgstr ""
-"`..output`: インターフェース内の全ての変数を `output` として追加"
+msgstr "`..output`: インターフェース内の全ての変数を `output` として追加"
 
 #: src/05_language_reference/08_interface.md:37
 msgid ""
@@ -3718,11 +3716,7 @@ msgstr "`inst: X` : `X` のインスタンス"
 msgid "named prototype"
 msgstr "名前付きプロトタイプ"
 
-#: src/05_language_reference/14_generics.md:24
-msgid "generic package"
-msgstr "ジェネリックパッケージ"
-
-#: src/05_language_reference/14_generics.md:26
+#: src/05_language_reference/14_generics.md:25
 msgid ""
 "Named prototype is a special generic bound. See [Prototype]"
 "(14_generics/02_prototype.md) for details."
@@ -3730,7 +3724,7 @@ msgstr ""
 "名前付きプロトタイプは特別なジェネリック境界です。詳細は [プロトタイプ]"
 "(14_generics/02_prototype.md) を参照してください。"
 
-#: src/05_language_reference/14_generics.md:28
+#: src/05_language_reference/14_generics.md:27
 msgid ""
 "At the usage of generics, actual parameters can be given through `::<>`. As "
 "the actual parameters, numeric literal and identifier concatenated by `::` "
@@ -3740,7 +3734,7 @@ msgstr ""
 "メータとしては数値リテラルと `::` で連結された識別子を使用することができま"
 "す。"
 
-#: src/05_language_reference/14_generics.md:31
+#: src/05_language_reference/14_generics.md:30
 msgid ""
 "Additionally, the actual parameters should be accessible at the position of "
 "the generics declaration. For example, module names can be used as actual "
@@ -3755,23 +3749,23 @@ msgstr ""
 "ません。これはローカルパラメータがジェネリクス定義位置からは参照できない場合"
 "に発生します。"
 
-#: src/05_language_reference/14_generics.md:36
+#: src/05_language_reference/14_generics.md:35
 msgid "Generic Function"
 msgstr "ジェネリック関数"
 
-#: src/05_language_reference/14_generics.md:51
+#: src/05_language_reference/14_generics.md:50
 msgid "Generic Module/Interface"
 msgstr "ジェネリックモジュール/インターフェース"
 
-#: src/05_language_reference/14_generics.md:69
+#: src/05_language_reference/14_generics.md:68
 msgid "Generic Package"
 msgstr "ジェネリックパッケージ"
 
-#: src/05_language_reference/14_generics.md:82
+#: src/05_language_reference/14_generics.md:81
 msgid "Generic Struct"
 msgstr "ジェネリック構造体"
 
-#: src/05_language_reference/14_generics.md:84
+#: src/05_language_reference/14_generics.md:83
 msgid ""
 "```veryl,playground\n"
 "package PackageA {\n"
@@ -4767,7 +4761,8 @@ msgid ""
 "`instance_depth_limit` is the maximum depth of instance hierarchy. The "
 "default value is 128."
 msgstr ""
-"`instance_depth_limit` はインスタンス階層の最大深さです。デフォルト値は 128 です。"
+"`instance_depth_limit` はインスタンス階層の最大深さです。デフォルト値は 128 "
+"です。"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:147
 msgid "The `instance_total_limit` field"
@@ -4778,7 +4773,8 @@ msgid ""
 "`instance_total_limit` is the maximum sub-instances in a module. The default "
 "value is 1048576."
 msgstr ""
-"`instance_total_limit` は1つのモジュール内のサブインスタンスの最大数です。デフォルト値は 1048576 です。"
+"`instance_total_limit` は1つのモジュール内のサブインスタンスの最大数です。デ"
+"フォルト値は 1048576 です。"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:3
 msgid ""
@@ -8557,6 +8553,9 @@ msgstr "unknown_port"
 #: src/07_appendix/02_semantic_error.md:51
 msgid "unused_variable"
 msgstr "unused_variable"
+
+#~ msgid "generic package"
+#~ msgstr "ジェネリックパッケージ"
 
 #~ msgid "![diagnostics](./img/diagnostics.gif)"
 #~ msgstr "![diagnostics](./img/diagnostics.gif)"
