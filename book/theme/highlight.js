@@ -1,6 +1,6 @@
 /*!
   Highlight.js v11.7.0 (git: bc1b06bb3a)
-  (c) 2006-2024 undefined and other contributors
+  (c) 2006-2025 undefined and other contributors
   License: BSD-3-Clause
  */
 var hljs=function(){"use strict";var e={exports:{}};function n(e){
@@ -303,7 +303,7 @@ e["after:highlightBlock"](Object.assign({block:n.el},n))})})(e),a.push(e)}
 anyNumberOfTimes:u};for(const n in R)"object"==typeof R[n]&&e.exports(R[n])
 ;return Object.assign(n,R),n})({}),te=Object.freeze({__proto__:null,
 grmr_veryl:e=>({name:"Veryl",aliases:["veryl"],case_insensitive:!1,keywords:{
-keyword:"module interface function modport package enum struct param local clock clock_posedge clock_negedge reset reset_async_high reset_async_low reset_sync_high reset_sync_low always_ff always_comb assign return as var inst import export logic bit tri signed u32 u64 i32 i64 f32 f64 input output inout ref if if_reset else for in case switch step repeat initial final inside outside default pub let break embed include unsafe type const proto",
+keyword:"module interface function modport package enum struct param local clock clock_posedge clock_negedge reset reset_async_high reset_async_low reset_sync_high reset_sync_low always_ff always_comb assign return as var inst import export logic bit tri signed u32 u64 i32 i64 f32 f64 input output inout ref if if_reset else for in case switch step repeat initial final inside outside default pub let break embed include unsafe type const proto converse",
 literal:""},
 contains:[e.QUOTE_STRING_MODE,e.C_BLOCK_COMMENT_MODE,e.C_LINE_COMMENT_MODE,{
 scope:"number",contains:[e.BACKSLASH_ESCAPE],variants:[{
