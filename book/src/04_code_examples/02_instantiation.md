@@ -28,7 +28,7 @@ module ModuleA #(
 
     // instance declaration with parameter override
     //   notation of parameter connection is the same as port
-    inst u_module_c: ModuleC #(ParamA, ParamB: 10,);
+    inst u_module_c: ModuleC #( ParamA, ParamB: 10 );
 }
 
 module ModuleB #(
