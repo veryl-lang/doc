@@ -62,6 +62,6 @@ The available types are below:
 If you want to use `directory`, you should specify the target path by `path` key.
 
 ```toml
-[build]
+[test]
 waveform_target = {type = "directory", path = "[dst dir]"}
 ```
