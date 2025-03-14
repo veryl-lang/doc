@@ -65,3 +65,11 @@ If you want to use `directory`, you should specify the target path by `path` key
 [test]
 waveform_target = {type = "directory", path = "[dst dir]"}
 ```
+
+## The `waveform_format` field
+
+The `waveform_format` field specifies in which format the waveform will be dumped.
+The available formats are:
+
+* `vcd` -- The default value and most readable format across all vendors. But also not very feature rich
+* `fst` -- This format has some more features, e.g. printing enum values instead of integers. `gtkwave` and `surfer` can read this format.
