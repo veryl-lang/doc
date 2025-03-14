@@ -5993,12 +5993,12 @@ msgstr "`waveform_target` フィールドは波形の生成先を指定します
 #: src/06_development_environment/01_project_configuration/04_test.md:64
 msgid ""
 "```toml\n"
-"[build]\n"
+"[test]\n"
 "waveform_target = {type = \"directory\", path = \"[dst dir]\"}\n"
 "```"
 msgstr ""
 "```toml\n"
-"[build]\n"
+"[test]\n"
 "waveform_target = {type = \"directory\", path = \"[dst dir]\"}\n"
 "```"
 
