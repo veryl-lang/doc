@@ -2988,9 +2988,16 @@ The available types are below:</p>
 <li><code>directory</code> – specified directory</li>
 </ul>
 <p>If you want to use <code>directory</code>, you should specify the target path by <code>path</code> key.</p>
-<pre><code class="language-toml">[build]
+<pre><code class="language-toml">[test]
 waveform_target = {type = "directory", path = "[dst dir]"}
 </code></pre>
+<h2 id="the-waveform_format-field"><a class="header" href="#the-waveform_format-field">The <code>waveform_format</code> field</a></h2>
+<p>The <code>waveform_format</code> field specifies in which format the waveform will be dumped.
+The available formats are:</p>
+<ul>
+<li><code>vcd</code> – The default value and most readable format across all vendors. But also not very feature rich</li>
+<li><code>fst</code> – This format has some more features, e.g. printing enum values instead of integers. <code>gtkwave</code> and <code>surfer</code> can read this format.</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="publish"><a class="header" href="#publish">Publish</a></h1>
 <p><code>[publish]</code> section specifies the configuration for publishing a project like below:</p>
 <pre><code class="language-toml">[publish]
@@ -3513,6 +3520,7 @@ AlwaysFfTerm          : &lt;INITIAL, Generic       &gt;/(?-u:\b)always_ff(?-u:\b
 AssignTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)assign(?-u:\b)/                                                              : Token;
 AsTerm                : &lt;INITIAL, Generic       &gt;/(?-u:\b)as(?-u:\b)/                                                                  : Token;
 BitTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)bit(?-u:\b)/                                                                 : Token;
+BoolTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)bool(?-u:\b)/                                                                : Token;
 CaseTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)case(?-u:\b)/                                                                : Token;
 ClockTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock(?-u:\b)/                                                               : Token;
 ClockPosedgeTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock_posedge(?-u:\b)/                                                       : Token;
@@ -3525,6 +3533,7 @@ EmbedTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)embed(?-u:\b)/  
 EnumTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)enum(?-u:\b)/                                                                : Token;
 F32Term               : &lt;INITIAL, Generic       &gt;/(?-u:\b)f32(?-u:\b)/                                                                 : Token;
 F64Term               : &lt;INITIAL, Generic       &gt;/(?-u:\b)f64(?-u:\b)/                                                                 : Token;
+FalseTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)false(?-u:\b)/                                                               : Token;
 FinalTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)final(?-u:\b)/                                                               : Token;
 ForTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)for(?-u:\b)/                                                                 : Token;
 FunctionTerm          : &lt;INITIAL, Generic       &gt;/(?-u:\b)function(?-u:\b)/                                                            : Token;
@@ -3568,6 +3577,7 @@ StringTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)string(?-u:\b)/ 
 StructTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)struct(?-u:\b)/                                                              : Token;
 SwitchTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)switch(?-u:\b)/                                                              : Token;
 TriTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)tri(?-u:\b)/                                                                 : Token;
+TrueTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)true(?-u:\b)/                                                                : Token;
 TypeTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)type(?-u:\b)/                                                                : Token;
 U32Term               : &lt;INITIAL, Generic       &gt;/(?-u:\b)u32(?-u:\b)/                                                                 : Token;
 U64Term               : &lt;INITIAL, Generic       &gt;/(?-u:\b)u64(?-u:\b)/                                                                 : Token;
@@ -3639,6 +3649,7 @@ AlwaysFfToken      : AlwaysFfTerm      : Token Comments;
 AsToken            : AsTerm            : Token Comments;
 AssignToken        : AssignTerm        : Token Comments;
 BitToken           : BitTerm           : Token Comments;
+BoolToken          : BoolTerm          : Token Comments;
 CaseToken          : CaseTerm          : Token Comments;
 ClockToken         : ClockTerm         : Token Comments;
 ClockPosedgeToken  : ClockPosedgeTerm  : Token Comments;
@@ -3651,6 +3662,7 @@ EmbedToken         : EmbedTerm         : Token Comments;
 EnumToken          : EnumTerm          : Token Comments;
 F32Token           : F32Term           : Token Comments;
 F64Token           : F64Term           : Token Comments;
+FalseToken         : FalseTerm         : Token Comments;
 FinalToken         : FinalTerm         : Token Comments;
 ForToken           : ForTerm           : Token Comments;
 FunctionToken      : FunctionTerm      : Token Comments;
@@ -3694,6 +3706,7 @@ StringToken        : StringTerm        : Token Comments;
 StructToken        : StructTerm        : Token Comments;
 SwitchToken        : SwitchTerm        : Token Comments;
 TriToken           : TriTerm           : Token Comments;
+TrueToken          : TrueTerm          : Token Comments;
 TypeToken          : TypeTerm          : Token Comments;
 U32Token           : U32Term           : Token Comments;
 U64Token           : U64Term           : Token Comments;
@@ -3769,6 +3782,7 @@ AlwaysFf      : AlwaysFfToken      : VerylToken;
 As            : AsToken            : VerylToken;
 Assign        : AssignToken        : VerylToken;
 Bit           : BitToken           : VerylToken;
+Bool          : BoolToken          : VerylToken;
 Break         : BreakToken         : VerylToken;
 Case          : CaseToken          : VerylToken;
 Clock         : ClockToken         : VerylToken;
@@ -3782,6 +3796,7 @@ Embed         : EmbedToken         : VerylToken;
 Enum          : EnumToken          : VerylToken;
 F32           : F32Token           : VerylToken;
 F64           : F64Token           : VerylToken;
+False         : FalseToken         : VerylToken;
 Final         : FinalToken         : VerylToken;
 For           : ForToken           : VerylToken;
 Function      : FunctionToken      : VerylToken;
@@ -3824,6 +3839,7 @@ Strin         : StringToken        : VerylToken; // avoid to conflict with Rust'
 Struct        : StructToken        : VerylToken;
 Switch        : SwitchToken        : VerylToken;
 Tri           : TriToken           : VerylToken;
+True          : TrueToken          : VerylToken;
 Type          : TypeToken          : VerylToken;
 U32           : U32Token           : VerylToken;
 U64           : U64Token           : VerylToken;
@@ -3879,6 +3895,7 @@ Expression11: Expression12 [ As CastingType ];
 Expression12: { ( UnaryOperator | Operator09 | Operator05 | Operator03 | Operator04 ) } Factor;
 
 Factor: Number
+      | BooleanLiteral
       | IdentifierFactor
       | LParen Expression RParen
       | LBrace ConcatenationList RBrace
@@ -3893,6 +3910,8 @@ Factor: Number
       | TypeExpression
       | FactorTypeFactor
       ;
+
+BooleanLiteral: True | False;
 
 IdentifierFactor: ExpressionIdentifier [ FunctionCall ];
 
@@ -3954,7 +3973,7 @@ RangeOperator: DotDot
 // ScalarType / ArrayType / CastingType
 // ----------------------------------------------------------------------------
 
-FixedType: U32 | U64 | I32 | I64 | F32 | F64 | Strin;
+FixedType: U32 | U64 | I32 | I64 | F32 | F64 | Bool | Strin;
 
 VariableType: Clock
             | ClockPosedge
@@ -3969,7 +3988,7 @@ VariableType: Clock
 
 UserDefinedType: ScopedIdentifier;
 
-TypeModifier: Tri | Signed;
+TypeModifier: Tri | Signed | Defaul;
 
 FactorType: ( VariableType [ Width ] | FixedType );
 
@@ -3983,6 +4002,7 @@ CastingType: U32
            | I64
            | F32
            | F64
+           | Bool
            | Clock
            | ClockPosedge
            | ClockNegedge

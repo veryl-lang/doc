@@ -257,9 +257,16 @@ The available types are below:</p>
 <li><code>directory</code> – specified directory</li>
 </ul>
 <p>If you want to use <code>directory</code>, you should specify the target path by <code>path</code> key.</p>
-<pre><code class="language-toml">[build]
+<pre><code class="language-toml">[test]
 waveform_target = {type = "directory", path = "[dst dir]"}
 </code></pre>
+<h2 id="the-waveform_format-field"><a class="header" href="#the-waveform_format-field">The <code>waveform_format</code> field</a></h2>
+<p>The <code>waveform_format</code> field specifies in which format the waveform will be dumped.
+The available formats are:</p>
+<ul>
+<li><code>vcd</code> – The default value and most readable format across all vendors. But also not very feature rich</li>
+<li><code>fst</code> – This format has some more features, e.g. printing enum values instead of integers. <code>gtkwave</code> and <code>surfer</code> can read this format.</li>
+</ul>
 
                     </main>
 
