@@ -55,6 +55,29 @@ verylup update --pkg veryl-x86_64-linux.zip
 verylup install 0.12.0 --pkg veryl-x86_64-linux.zip
 ```
 
+## Nightly channel
+
+To use the latest features easily, nightly channel is available.
+Nightly channel is built daily from the master branch.
+
+```
+verylup install nightly
+```
+
+By default, nightly channel is not enabled after installation.
+So the following ways can be used to enable it.
+
+```
+// Use +nightly
+veryl +nightly build
+
+// Set default to nightly
+verylup default nightly
+
+// Override by nightly for a specific project
+verylup override set nightly
+```
+
 ## For Veryl Developer
 
 For Veryl developer, a special toolchain target `local` is prepared.
