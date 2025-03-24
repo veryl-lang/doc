@@ -240,6 +240,22 @@ The procedure of offline installation is below:</p>
 <pre><code>verylup update --pkg veryl-x86_64-linux.zip
 verylup install 0.12.0 --pkg veryl-x86_64-linux.zip
 </code></pre>
+<h2 id="nightly-channel"><a class="header" href="#nightly-channel">Nightly channel</a></h2>
+<p>To use the latest features easily, nightly channel is available.
+Nightly channel is built daily from the master branch.</p>
+<pre><code>verylup install nightly
+</code></pre>
+<p>By default, nightly channel is not enabled after installation.
+So the following ways can be used to enable it.</p>
+<pre><code>// Use +nightly
+veryl +nightly build
+
+// Set default to nightly
+verylup default nightly
+
+// Override by nightly for a specific project
+verylup override set nightly
+</code></pre>
 <h2 id="for-veryl-developer"><a class="header" href="#for-veryl-developer">For Veryl Developer</a></h2>
 <p>For Veryl developer, a special toolchain target <code>local</code> is prepared.
 If <code>verylup install local</code> is executed in your local Veryl repository, the built toolchain is installed as <code>local</code> toolchain.

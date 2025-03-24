@@ -3182,6 +3182,20 @@ $ [command] | sourcemap-resolver   # on-the-fly annotation by pipe
 <pre><code>verylup update --pkg veryl-x86_64-linux.zip
 verylup install 0.12.0 --pkg veryl-x86_64-linux.zip
 </code></pre>
+<h2 id="ナイトリーチャンネル"><a class="header" href="#ナイトリーチャンネル">ナイトリーチャンネル</a></h2>
+<p>最新の機能を簡単に試すために、ナイトリーチャンネルが利用できます。ナイトリーチャンネルはマスターブランチから毎日ビルドされます。</p>
+<pre><code>verylup install nightly
+</code></pre>
+<p>デフォルトではナイトリーチャンネルはインストールしても有効になりません。以下の方法で有効にすることができます。</p>
+<pre><code>// +nightly を使う
+veryl +nightly build
+
+// デフォルトをナイトリーにする
+verylup default nightly
+
+// 特定のプロジェクトをナイトリーで上書きする
+verylup override set nightly
+</code></pre>
 <h2 id="veryl開発者向け"><a class="header" href="#veryl開発者向け">Veryl開発者向け</a></h2>
 <p>Veryl の開発者向けに、特別なツールチェーン <code>local</code> が用意されています。<code>verylup install local</code> をローカルのVerylリポジトリ上で実行すると、ビルドしたツールチェーンを <code>local</code> ツールチェーンとしてインストールします。<code>local</code> ツールチェーンが存在するときはデフォルトのツールチェーンになります。</p>
 <pre><code>// ローカルのVerylリポジトリでビルドしたツールチェーンをインストール
@@ -3662,7 +3676,7 @@ Factor: Number
 
 BooleanLiteral: True | False;
 
-IdentifierFactor: ExpressionIdentifier [ FunctionCall ];
+IdentifierFactor: ExpressionIdentifier [ FunctionCall | StructConstructor ];
 
 FactorTypeFactor: { TypeModifier } FactorType;
 
@@ -3671,6 +3685,12 @@ FunctionCall: LParen [ ArgumentList ] RParen;
 ArgumentList: ArgumentItem { Comma ArgumentItem } [ Comma ];
 
 ArgumentItem: Expression;
+
+StructConstructor: QuoteLBrace StructConstructorList [ DotDot Defaul LParen Expression RParen ] RBrace;
+
+StructConstructorList: StructConstructorItem { Comma StructConstructorItem } [ Comma ];
+
+StructConstructorItem: Identifier Colon Expression;
 
 ConcatenationList: ConcatenationItem { Comma ConcatenationItem } [ Comma ];
 
