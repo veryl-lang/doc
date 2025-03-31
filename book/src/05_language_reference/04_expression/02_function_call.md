@@ -16,3 +16,34 @@ module ModuleA {
     let _b: logic = $clog2(1);
 }
 ```
+
+## Named Argument
+
+If a function has many arguments, function call with named arguments is useful.
+Named arguments can't be used with positional arguments at the same time.
+
+```veryl,playground
+module ModuleA {
+    function FunctionA (
+        a: input logic,
+        b: input logic,
+        c: input logic,
+        d: input logic,
+    ) {}
+
+    let _a: logic = FunctionA(
+        a: 1,
+        b: 1,
+        c: 1,
+        d: 1,
+    );
+
+    // Mixing positional and named arguments is Error
+    //let _a: logic = FunctionA(
+    //    1,
+    //    2,
+    //    a: 1,
+    //    b: 1,
+    //);
+}
+```

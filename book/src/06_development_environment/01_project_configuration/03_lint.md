@@ -20,7 +20,6 @@ This section contains configurations of naming conventions.
 | case_function_inout          | case type[^casetype] | case style of `inout` argument                  |
 | case_function_input          | case type[^casetype] | case style of `input` argument                  |
 | case_function_output         | case type[^casetype] | case style of `output` argument                 |
-| case_function_ref            | case type[^casetype] | case style of `ref` argument                    |
 | case_instance                | case type[^casetype] | case style of instance                          |
 | case_interface               | case type[^casetype] | case style of `interface`                       |
 | case_modport                 | case type[^casetype] | case style of `modport`                         |
@@ -41,7 +40,6 @@ This section contains configurations of naming conventions.
 | prefix_function_inout        | string               | prefix of `inout` argument                      |
 | prefix_function_input        | string               | prefix of `input` argument                      |
 | prefix_function_output       | string               | prefix of `output` argument                     |
-| prefix_function_ref          | string               | prefix of `ref` argument                        |
 | prefix_instance              | string               | prefix of instance                              |
 | prefix_interface             | string               | prefix of `interface`                           |
 | prefix_modport               | string               | prefix of `modport`                             |
@@ -62,7 +60,6 @@ This section contains configurations of naming conventions.
 | suffix_function_inout        | string               | suffix of `inout` argument                      |
 | suffix_function_input        | string               | suffix of `input` argument                      |
 | suffix_function_output       | string               | suffix of `output` argument                     |
-| suffix_function_ref          | string               | suffix of `ref` argument                        |
 | suffix_instance              | string               | suffix of instance                              |
 | suffix_interface             | string               | suffix of `interface`                           |
 | suffix_modport               | string               | suffix of `modport`                             |
@@ -83,7 +80,6 @@ This section contains configurations of naming conventions.
 | re_forbidden_function_inout  | regex[^regex]        | regex forbidden of `inout` argument             |
 | re_forbidden_function_input  | regex[^regex]        | regex forbidden of `input` argument             |
 | re_forbidden_function_output | regex[^regex]        | regex forbidden of `output` argument            |
-| re_forbidden_function_ref    | regex[^regex]        | regex forbidden of `ref` argument               |
 | re_forbidden_instance        | regex[^regex]        | regex forbidden of instance                     |
 | re_forbidden_interface       | regex[^regex]        | regex forbidden of `interface`                  |
 | re_forbidden_modport         | regex[^regex]        | regex forbidden of `modport`                    |
@@ -104,7 +100,6 @@ This section contains configurations of naming conventions.
 | re_required_function_inout   | regex[^regex]        | regex required of `inout` argument              |
 | re_required_function_input   | regex[^regex]        | regex required of `input` argument              |
 | re_required_function_output  | regex[^regex]        | regex required of `output` argument             |
-| re_required_function_ref     | regex[^regex]        | regex required of `ref` argument                |
 | re_required_instance         | regex[^regex]        | regex required of instance                      |
 | re_required_interface        | regex[^regex]        | regex required of `interface`                   |
 | re_required_modport          | regex[^regex]        | regex required of `modport`                     |

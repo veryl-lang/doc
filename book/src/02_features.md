@@ -60,7 +60,7 @@ allowing for easy incorporation of libraries by simply adding the repository pat
 
 ```toml
 [dependencies]
-"https://github.com/veryl-lang/sample" = "0.1.0"
+veryl_sample = {git = "https://github.com/veryl-lang/veryl_sample", version = "0.1.0"}
 ```
 
 ## Generics {#generics}

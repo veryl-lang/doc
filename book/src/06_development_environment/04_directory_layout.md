@@ -111,9 +111,14 @@ The generated `prj.f` lists all generated files. So you can use it along with th
 
 ## About `.gitignore`
 
-Veryl doesn't provide the default `.gitignore`.
-This is because which files should be ignored is different by each projects.
+Veryl provides the following `.gitignore` as the default value.
+`.build` is used to record build information by Veryl compiler.
 
+```
+.build/
+```
+
+Other patterns can be added by each projects.
 The candidates of `.gitignore` is below:
 
 * `dependencies/`

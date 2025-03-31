@@ -58,3 +58,24 @@ module ModuleA (
     }
 }
 ```
+
+## Default Clock / Reset
+
+In some cases, there are some clocks, but only single clock is used in all `always_ff`.
+For such case, `default` type modifier can be used to specify the default clock and reset explicitly.
+
+
+```veryl,playground
+module ModuleA (
+    i_clk   : input clock,
+    i_clk_en: input logic,
+) {
+    let clk: `_ default clock = i_clk & i_clk_en;
+
+    var a: logic;
+
+    always_ff {
+        a = 0;
+    }
+}
+```

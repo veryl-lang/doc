@@ -100,3 +100,15 @@ module ModuleA {
     const c: type = u32;
 }
 ```
+
+## Boolean type
+
+`bool` is a type alias of `logic<1>` to express boolean.
+`true` and `false` literal which express `1'b1` and `1'b0` can be used.
+
+```veryl,playground
+module ModuleA {
+    const a: bool = true;
+    const b: bool = false;
+}
+```

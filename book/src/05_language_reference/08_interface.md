@@ -34,6 +34,7 @@ Instead of specifing all members of modport, default members can be specified li
 
 * `..input`: all variables in the interface as `input`
 * `..output`: all variables in the interface as `output`
+* `..same(modport_name)`: the same variables as `modport_name`
 * `..converse(modport_name)`: the same variables as `modport_name`, but all direction is converse
 
 Specifing default members can be used with normal explicit members.

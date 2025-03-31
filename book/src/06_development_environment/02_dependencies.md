@@ -1,29 +1,32 @@
 # Dependencies
 
 If you want to add other Veryl projects to dependencies of your project, you can add them to `[dependencies]` section in `Veryl.toml`.
-The left hand side of entry is path to the dependency, and the right hand side is version.
+The left hand side of entry is the project name of the dependency, and the right hand side is the source and version.
+`github` is a syntax sugger to refer a repository on GitHub. Instead of it, `git` with a full URL can be used.
 
 ```toml
 [dependencies]
-"https://github.com/veryl-lang/sample" = "0.1.0"
+veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+
+# This is as the same as above
+veryl_sample = {git = "https://github.com/veryl-lang/veryl_sample", version = "0.1.0"}
 ```
 
 By default, the namespace of the dependency is the same as the project name of the dependency.
-If you want to specify namespace, you can use `name` field.
+If you want to specify a namespace through the left hand side, you should specify the project name through `project` field.
 
 ```toml
 [dependencies]
-"https://github.com/veryl-lang/sample" = {version = "0.1.0", name = "veryl_sample_alt"}
+veryl_sample_alt = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.2.0"}
 ```
 
-If you want to use many versions of the same dependency path, you can specify each name.
+Inner projects in a repository can be used like below:
 
 ```toml
 [dependencies]
-"https://github.com/veryl-lang/sample" = [
-    {version = "0.1.0", name = "veryl_sample1"},
-    {version = "0.2.0", name = "veryl_sample2"},
-]
+inner_prj1 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+inner_prj2 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+inner_prj3 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
 ```
 
 ## Usage of dependency
@@ -81,7 +84,7 @@ Relative path dependency can be specified like below:
 
 ```toml
 [dependencies]
-"../../library/path" = "0.1.0"
+veryl_sample = {path = "../../veryl_sample"}
 ```
 
 If there are relative path dependencies in a project, the project can't be published through `veryl publish`.
@@ -93,7 +96,7 @@ In the case, overriding dependencies by local path can be used like below:
 
 ```toml
 [dependencies]
-"https://github.com/veryl-lang/sample" = {version = "0.1.0", path = "../sample"}
+veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = "../veryl_sample"}
 ```
 
-This means that if there is `../sample`, it is used, and if not, it is pulled from the Git repository.
+This means that if there is `../veryl_sample`, it is used, and if not, it is pulled from the Git repository.

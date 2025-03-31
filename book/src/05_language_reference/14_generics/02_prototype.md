@@ -1,7 +1,9 @@
 # Prototype
 
 Prototype is a special generic bound. It represents prototype which can be passed to the generic parameter.
-Currently module prototype is supported only.
+Currently module prototype and package prototype are supported.
+
+## Module Prototype
 
 In the following example, `ProtoA` is a module prototype which has parameter `A` and port `i_dat` and `o_dat`.
 By binding like `T: ProtoA`, it is represented that the generic parameter `T` should have the parameters and ports.
@@ -45,5 +47,26 @@ module ModuleD for ProtoA #(
     o_dat: output logic,
 ) {
     assign o_dat = ~i_dat;
+}
+```
+
+## Package Prototype
+
+In the following example, `ProtoA` is a package prototype which has type `data_a` and `data_b`.
+`PKG` restricted by `ProtoA` is guaranteed to have `data_a` and `data_b`, so they can be refered.
+
+```veryl,playground
+proto package ProtoA {
+    type data_a;
+    type data_b;
+}
+
+package PackageA::<A: const, B: const> for ProtoA {
+    type data_a = logic<A>;
+    type data_b = logic<B>;
+}
+
+module ModuleA::<PKG: ProtoA> {
+    let _a: PKG::data_a = 0;
 }
 ```

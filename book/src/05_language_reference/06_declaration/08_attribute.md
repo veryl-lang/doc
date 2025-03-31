@@ -78,3 +78,22 @@ module ModuleA {
     };
 }
 ```
+
+## `fmt` Attribute
+
+`fmt` attribute is used to control formatiing way.
+The following arguments are supported:
+
+* `compact`: compact formatting without newlines
+
+```veryl,playground
+module ModuleA {
+    #[fmt(compact)]
+    {
+        inst u1: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+        inst u2: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+        inst u3: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+        inst u4: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+    }
+}
+```

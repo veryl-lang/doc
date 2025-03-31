@@ -9,6 +9,7 @@ veryl new hello
 ```
 
 After the command, the following directory and file will be created.
+If `git` command is available, the directory is initialized as Git repository and the default `.gitignore` are added.
 
 ```
 $ veryl new hello
