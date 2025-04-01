@@ -216,11 +216,8 @@ simulator = "vcs"
 <h2 id="the-test-section"><a class="header" href="#the-test-section">The <code>[test]</code> section</a></h2>
 <p>This section contains configurations of test.</p>
 <div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Value</th><th>Description</th></tr></thead><tbody>
-<tr><td>simulator</td><td>simulator name<sup class="footnote-reference"><a href="#sim">1</a></sup></td><td>default simulator</td></tr>
+<tr><td>simulator</td><td>simulator name<sup class="footnote-reference" id="fr-sim-1"><a href="#footnote-sim">1</a></sup></td><td>default simulator</td></tr>
 </tbody></table>
-</div>
-<div class="footnote-definition" id="sim"><sup class="footnote-definition-label">1</sup>
-<p>The available values are</p>
 </div>
 <ul>
 <li><code>"verilator"</code></li>
@@ -257,10 +254,21 @@ The available types are below:</p>
 <li><code>directory</code> – specified directory</li>
 </ul>
 <p>If you want to use <code>directory</code>, you should specify the target path by <code>path</code> key.</p>
-<pre><code class="language-toml">[build]
+<pre><code class="language-toml">[test]
 waveform_target = {type = "directory", path = "[dst dir]"}
 </code></pre>
-
+<h2 id="the-waveform_format-field"><a class="header" href="#the-waveform_format-field">The <code>waveform_format</code> field</a></h2>
+<p>The <code>waveform_format</code> field specifies in which format the waveform will be dumped.
+The available formats are:</p>
+<ul>
+<li><code>vcd</code> – The default value and most readable format across all vendors. But also not very feature rich</li>
+<li><code>fst</code> – This format has some more features, e.g. printing enum values instead of integers. <code>gtkwave</code> and <code>surfer</code> can read this format.</li>
+</ul>
+<hr>
+<ol class="footnote-definition"><li id="footnote-sim">
+<p>The available values are <a href="#fr-sim-1">↩</a></p>
+</li>
+</ol>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

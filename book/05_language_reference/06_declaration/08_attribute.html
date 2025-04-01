@@ -270,6 +270,22 @@ If <code>number</code> is specified as an argument of <code>align</code> attribu
     };
 }
 </code></pre>
+<h2 id="fmt-attribute"><a class="header" href="#fmt-attribute"><code>fmt</code> Attribute</a></h2>
+<p><code>fmt</code> attribute is used to control formatiing way.
+The following arguments are supported:</p>
+<ul>
+<li><code>compact</code>: compact formatting without newlines</li>
+</ul>
+<pre><code class="language-veryl playground">module ModuleA {
+    #[fmt(compact)]
+    {
+        inst u1: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+        inst u2: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+        inst u3: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+        inst u4: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+    }
+}
+</code></pre>
 
                     </main>
 

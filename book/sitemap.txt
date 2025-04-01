@@ -28,6 +28,7 @@ https://doc.veryl-lang.org/book/05_language_reference/13_integrated_test.html
 https://doc.veryl-lang.org/book/05_language_reference/14_generics.html
 https://doc.veryl-lang.org/book/05_language_reference/15_clock_domain_annotation.html
 https://doc.veryl-lang.org/book/05_language_reference/16_standard_library.html
+https://doc.veryl-lang.org/book/05_language_reference/17_alias.html
 https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration.html
 https://doc.veryl-lang.org/book/06_development_environment/02_dependencies.html
 https://doc.veryl-lang.org/book/06_development_environment/03_publish_project.html
@@ -41,6 +42,7 @@ https://doc.veryl-lang.org/book/06_development_environment/10_documentation.html
 https://doc.veryl-lang.org/book/06_development_environment/11_github_action.html
 https://doc.veryl-lang.org/book/06_development_environment/12_source_map.html
 https://doc.veryl-lang.org/book/06_development_environment/13_verylup.html
+https://doc.veryl-lang.org/book/06_development_environment/14_migrate_to_new_version.html
 https://doc.veryl-lang.org/book/07_appendix/01_formal_syntax.html
 https://doc.veryl-lang.org/book/07_appendix/02_semantic_error.html
 https://doc.veryl-lang.org/book/ja/01_introduction.html
@@ -69,6 +71,7 @@ https://doc.veryl-lang.org/book/05_language_reference/04_expression/07_range.htm
 https://doc.veryl-lang.org/book/05_language_reference/04_expression/08_msb_lsb.html
 https://doc.veryl-lang.org/book/05_language_reference/04_expression/09_inside_outside.html
 https://doc.veryl-lang.org/book/05_language_reference/04_expression/10_type_cast.html
+https://doc.veryl-lang.org/book/05_language_reference/04_expression/11_struct_constructor.html
 https://doc.veryl-lang.org/book/05_language_reference/05_statement/01_assignment.html
 https://doc.veryl-lang.org/book/05_language_reference/05_statement/02_function_call.html
 https://doc.veryl-lang.org/book/05_language_reference/05_statement/03_if.html
@@ -88,6 +91,7 @@ https://doc.veryl-lang.org/book/05_language_reference/06_declaration/09_generate
 https://doc.veryl-lang.org/book/05_language_reference/06_declaration/10_instantiation.html
 https://doc.veryl-lang.org/book/05_language_reference/06_declaration/11_named_block.html
 https://doc.veryl-lang.org/book/05_language_reference/06_declaration/12_import_export.html
+https://doc.veryl-lang.org/book/05_language_reference/06_declaration/13_connect.html
 https://doc.veryl-lang.org/book/05_language_reference/14_generics/01_default_parameter.html
 https://doc.veryl-lang.org/book/05_language_reference/14_generics/02_prototype.html
 https://doc.veryl-lang.org/book/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.html
@@ -118,6 +122,7 @@ https://doc.veryl-lang.org/book/ja/05_language_reference/13_integrated_test.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/14_generics.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/15_clock_domain_annotation.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/16_standard_library.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/17_alias.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/02_dependencies.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/03_publish_project.html
@@ -131,6 +136,7 @@ https://doc.veryl-lang.org/book/ja/06_development_environment/10_documentation.h
 https://doc.veryl-lang.org/book/ja/06_development_environment/11_github_action.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/12_source_map.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/13_verylup.html
+https://doc.veryl-lang.org/book/ja/06_development_environment/14_migrate_to_new_version.html
 https://doc.veryl-lang.org/book/ja/07_appendix/01_formal_syntax.html
 https://doc.veryl-lang.org/book/ja/07_appendix/02_semantic_error.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/02_lexical_structure/01_operator.html
@@ -150,6 +156,7 @@ https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/07_range.
 https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/08_msb_lsb.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/09_inside_outside.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/10_type_cast.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/11_struct_constructor.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/05_statement/01_assignment.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/05_statement/02_function_call.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/05_statement/03_if.html
@@ -169,6 +176,7 @@ https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/09_gener
 https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/10_instantiation.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/11_named_block.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/12_import_export.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/13_connect.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/14_generics/01_default_parameter.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/14_generics/02_prototype.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.html

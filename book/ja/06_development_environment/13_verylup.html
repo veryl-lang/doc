@@ -237,6 +237,20 @@
 <pre><code>verylup update --pkg veryl-x86_64-linux.zip
 verylup install 0.12.0 --pkg veryl-x86_64-linux.zip
 </code></pre>
+<h2 id="ナイトリーチャンネル"><a class="header" href="#ナイトリーチャンネル">ナイトリーチャンネル</a></h2>
+<p>最新の機能を簡単に試すために、ナイトリーチャンネルが利用できます。ナイトリーチャンネルはマスターブランチから毎日ビルドされます。</p>
+<pre><code>verylup install nightly
+</code></pre>
+<p>デフォルトではナイトリーチャンネルはインストールしても有効になりません。以下の方法で有効にすることができます。</p>
+<pre><code>// +nightly を使う
+veryl +nightly build
+
+// デフォルトをナイトリーにする
+verylup default nightly
+
+// 特定のプロジェクトをナイトリーで上書きする
+verylup override set nightly
+</code></pre>
 <h2 id="veryl開発者向け"><a class="header" href="#veryl開発者向け">Veryl開発者向け</a></h2>
 <p>Veryl の開発者向けに、特別なツールチェーン <code>local</code> が用意されています。<code>verylup install local</code> をローカルのVerylリポジトリ上で実行すると、ビルドしたツールチェーンを <code>local</code> ツールチェーンとしてインストールします。<code>local</code> ツールチェーンが存在するときはデフォルトのツールチェーンになります。</p>
 <pre><code>// ローカルのVerylリポジトリでビルドしたツールチェーンをインストール
@@ -257,7 +271,7 @@ veryl +latest build
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../07_appendix.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../06_development_environment/14_migrate_to_new_version.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -271,7 +285,7 @@ veryl +latest build
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../07_appendix.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../06_development_environment/14_migrate_to_new_version.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

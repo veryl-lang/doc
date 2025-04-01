@@ -208,12 +208,12 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="if"><a class="header" href="#if">if</a></h1>
-<p><code>if</code> を用いた条件式を使えます。<code>if</code> キーワードの後に条件を示す節を置きますが、<code>()</code> で囲む必要はありません。if 式は常になんらかの値に評価される必要があるため <code>else</code> は必須です。</p>
+<p><code>if</code> を用いた条件式を使えます。<code>if</code> キーワードの後に条件を示す節を置きますが、<code>()</code> で囲む必要はありません。<code>?</code> のあとに条件が真である場合の式を、<code>:</code> のあとに条件が偽である場合の式を書きます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
 
-    assign b = if a == 0 { 1 } else if a &gt;: 1 { 2 } else { 3 };
+    assign b = if a == 0 ? 1 : if a &gt;: 1 ? 2 : 3;
 }
 </code></pre>
 

@@ -208,20 +208,22 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h1>
-<p>他の Veryl プロジェクトへの依存関係をプロジェクトに追加したい場合、<code>Veryl.toml</code> に <code>[dependencies]</code> セクションを追加します。エントリの左辺は依存関係へのパス、右辺はバージョンです。</p>
+<p>他の Veryl プロジェクトへの依存関係をプロジェクトに追加したい場合、<code>Veryl.toml</code> に <code>[dependencies]</code> セクションを追加します。エントリの左辺は依存関係のプロジェクト名、右辺はソースパスとバージョンです。<code>github</code> はGitHub上のリポジトリを参照する糖衣構文です。代わりに <code>git</code> を用いてURL全体を指定することもできます。</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = "0.1.0"
+veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+
+# これは上記と同じ
+veryl_sample = {git = "https://github.com/veryl-lang/veryl_sample", version = "0.1.0"}
 </code></pre>
-<p>デフォルトでは依存関係の名前空間はそのプロジェクト名と同じです。もし名前空間を指定したい場合は、 <code>name</code> フィールドを使います。</p>
+<p>デフォルトでは依存関係の名前空間はそのプロジェクト名と同じです。もし左辺の名前を変更した場合は、<code>project</code> フィールドでプロジェクト名を指定する必要があります。</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = {version = "0.1.0", name = "veryl_sample_alt"}
+veryl_sample_alt = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.2.0"}
 </code></pre>
-<p>同じ依存関係の複数のバージョンを使う場合は、以下のようにそれぞれの名前を指定できます。</p>
+<p>リポジトリの内部プロジェクトは以下のように指定できます。</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = [
-    {version = "0.1.0", name = "veryl_sample1"},
-    {version = "0.2.0", name = "veryl_sample2"},
-]
+inner_prj1 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+inner_prj2 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+inner_prj3 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
 </code></pre>
 <h2 id="依存関係の使用"><a class="header" href="#依存関係の使用">依存関係の使用</a></h2>
 <p><code>Veryl.toml</code> に依存関係を追加したあとは、その依存関係の <code>module</code>、<code>interface</code>、<code>package</code>を使うことができます。以下は <code>veryl_sample</code> の依存関係に含まれる <code>delay</code> モジュールを使った例です。</p>
@@ -261,15 +263,15 @@
 <h2 id="相対パス依存関係"><a class="header" href="#相対パス依存関係">相対パス依存関係</a></h2>
 <p>手元の環境で開発しているとき、ローカルファイルパスへの依存関係が使えると便利なことがあります。相対パス依存関係は以下のように指定することができます。</p>
 <pre><code class="language-toml">[dependencies]
-"../../library/path" = "0.1.0"
+veryl_sample = {path = "../../veryl_sample"}
 </code></pre>
 <p>プロジェクトに相対パス依存関係がある場合、そのプロジェクトは <code>veryl publish</code> で公開することはできません。</p>
 <h2 id="ローカルパスによる上書き"><a class="header" href="#ローカルパスによる上書き">ローカルパスによる上書き</a></h2>
 <p>場合によってはローカルで変更されたバージョンの依存関係を使う必要があることもあります。そのような場合、以下のようにローカルパスによって依存関係を上書きすることができます。</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = {version = "0.1.0", path = "../sample"}
+veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = "../veryl_sample"}
 </code></pre>
-<p>これは <code>../sample</code> が存在する場合はそれを使い、そうでない場合は Git から取得する、という意味です。</p>
+<p>これは <code>../veryl_sample</code> が存在する場合はそれを使い、そうでない場合は Git から取得する、という意味です。</p>
 
                     </main>
 

@@ -262,6 +262,21 @@
     }
 }
 </code></pre>
+<h2 id="デフォルトクロックとリセット"><a class="header" href="#デフォルトクロックとリセット">デフォルトクロックとリセット</a></h2>
+<p>クロックが複数あるものの、 <code>always_ff</code> では単一のクロックしか使われない場合があります。このような場合に <code>default</code> 型修飾子を使ってデフォルトのクロックとリセットを明示することができます。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk   : input clock,
+    i_clk_en: input logic,
+) {
+    let clk: `_ default clock = i_clk &amp; i_clk_en;
+
+    var a: logic;
+
+    always_ff {
+        a = 0;
+    }
+}
+</code></pre>
 
                     </main>
 

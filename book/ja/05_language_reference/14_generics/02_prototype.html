@@ -208,7 +208,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="プロトタイプ"><a class="header" href="#プロトタイプ">プロトタイプ</a></h1>
-<p>プロトタイプは特別なジェネリック境界で、ジェネリックパラメータに渡せるプロトタイプを示します。現在はモジュールプロトタイプのみがサポートされています。</p>
+<p>プロトタイプは特別なジェネリック境界で、ジェネリックパラメータに渡せるプロトタイプを示します。現在はモジュールプロトタイプとパッケージプロトタイプがサポートされています。</p>
+<h2 id="モジュールプロトタイプ"><a class="header" href="#モジュールプロトタイプ">モジュールプロトタイプ</a></h2>
 <p>以下の例では、<code>ProtoA</code> がパラメータ <code>A</code> とポート <code>i_dat</code> <code>o_dat</code> を持つモジュールプロトタイプです。<code>T: ProtoA</code> のように制約することで、ジェネリックパラメータ <code>T</code> がそれらのパラメータとポートを持つ必要があることが示されます。</p>
 <p>プロトタイプを使うには <code>for</code> による実装が必要です。<code>ModuleC</code> と <code>ModuleD</code> は <code>for ProtoA</code> 指定により、 <code>ProtoA</code> の条件を満たすことが示されています。これにより、それらのモジュールは <code>ModuleB</code> の ジェネリックパラメータ <code>T</code> として使用できるようになります。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -246,6 +247,22 @@ module ModuleD for ProtoA #(
     o_dat: output logic,
 ) {
     assign o_dat = ~i_dat;
+}
+</code></pre>
+<h2 id="パッケージプロトタイプ"><a class="header" href="#パッケージプロトタイプ">パッケージプロトタイプ</a></h2>
+<p>以下の例では、<code>ProtoA</code> が型 <code>data_a</code> と型 <code>data_b</code> を持つパッケージプロトタイプです。<code>PKG</code> は <code>ProtoA</code> で制約されているので、<code>data_a</code> と <code>data_b</code> を持つことが保証されており、それらを参照することができます。</p>
+<pre><code class="language-veryl playground">proto package ProtoA {
+    type data_a;
+    type data_b;
+}
+
+package PackageA::&lt;A: const, B: const&gt; for ProtoA {
+    type data_a = logic&lt;A&gt;;
+    type data_b = logic&lt;B&gt;;
+}
+
+module ModuleA::&lt;PKG: ProtoA&gt; {
+    let _a: PKG::data_a = 0;
 }
 </code></pre>
 

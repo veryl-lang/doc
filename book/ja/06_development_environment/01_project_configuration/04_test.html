@@ -216,11 +216,8 @@ simulator = "vcs"
 <h2 id="test-セクション"><a class="header" href="#test-セクション"><code>[test]</code> セクション</a></h2>
 <p>このセクションはテストの設定です。</p>
 <div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
-<tr><td>simulator</td><td>シミュレータ名<sup class="footnote-reference"><a href="#sim">1</a></sup></td><td>デフォルトのシミュレータ</td></tr>
+<tr><td>simulator</td><td>シミュレータ名<sup class="footnote-reference" id="fr-sim-1"><a href="#footnote-sim">1</a></sup></td><td>デフォルトのシミュレータ</td></tr>
 </tbody></table>
-</div>
-<div class="footnote-definition" id="sim"><sup class="footnote-definition-label">1</sup>
-<p>設定可能な値は以下です。</p>
 </div>
 <ul>
 <li><code>"verilator"</code></li>
@@ -256,10 +253,20 @@ simulator = "vcs"
 <li><code>directory</code> – 特定のディレクトリ</li>
 </ul>
 <p><code>directory</code> を指定する場合は、ターゲットパスを <code>path</code> キーで指定します。</p>
-<pre><code class="language-toml">[build]
+<pre><code class="language-toml">[test]
 waveform_target = {type = "directory", path = "[dst dir]"}
 </code></pre>
-
+<h2 id="waveform_format-フィールド"><a class="header" href="#waveform_format-フィールド"><code>waveform_format</code> フィールド</a></h2>
+<p><code>waveform_format</code> フィールドはダンプされる波形のフォーマットを指定します。指定できる値は以下の通りです。</p>
+<ul>
+<li><code>vcd</code> – デフォルト値であり、多くのベンダーでサポートされていますが機能は限定的です。</li>
+<li><code>fst</code> – 整数の代わりにenum値を表示するなどいくつかの機能をサポートしています。<code>gtkwave</code> と <code>surfer</code> で扱うことができます。</li>
+</ul>
+<hr>
+<ol class="footnote-definition"><li id="footnote-sim">
+<p>設定可能な値は以下です。 <a href="#fr-sim-1">↩</a></p>
+</li>
+</ol>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

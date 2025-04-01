@@ -264,6 +264,22 @@ There are 5 variants to specify reset polarity and synchronicity.</p>
     }
 }
 </code></pre>
+<h2 id="default-clock--reset"><a class="header" href="#default-clock--reset">Default Clock / Reset</a></h2>
+<p>In some cases, there are some clocks, but only single clock is used in all <code>always_ff</code>.
+For such case, <code>default</code> type modifier can be used to specify the default clock and reset explicitly.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk   : input clock,
+    i_clk_en: input logic,
+) {
+    let clk: `_ default clock = i_clk &amp; i_clk_en;
+
+    var a: logic;
+
+    always_ff {
+        a = 0;
+    }
+}
+</code></pre>
 
                     </main>
 

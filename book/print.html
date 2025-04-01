@@ -270,7 +270,7 @@ embed (inline) sv{{{
 <p>Veryl includes a built-in dependency management feature,
 allowing for easy incorporation of libraries by simply adding the repository path and version of the library on project settings like below.</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = "0.1.0"
+veryl_sample = {git = "https://github.com/veryl-lang/veryl_sample", version = "0.1.0"}
 </code></pre>
 <h2 id="generics"><a class="header" href="#generics">Generics</a></h2>
 <p>Code generation through generics achieves more reusable code than traditional parameter override.
@@ -754,7 +754,8 @@ verylup completion zsh verylup &gt; _verylup
 <p>At first, a new Veryl project can be created by:</p>
 <pre><code>veryl new hello
 </code></pre>
-<p>After the command, the following directory and file will be created.</p>
+<p>After the command, the following directory and file will be created.
+If <code>git</code> command is available, the directory is initialized as Git repository and the default <code>.gitignore</code> are added.</p>
 <pre><code>$ veryl new hello
 [INFO ]      Created "hello" project
 $ cd hello
@@ -930,7 +931,7 @@ module ModuleA #(
 
     // instance declaration with parameter override
     //   notation of parameter connection is the same as port
-    inst u_module_c: ModuleC #(ParamA, ParamB: 10,);
+    inst u_module_c: ModuleC #( ParamA, ParamB: 10 );
 }
 
 module ModuleB #(
@@ -1275,6 +1276,14 @@ Variable of <code>type</code> can be defined as <code>param</code> or <code>cons
     const c: type = u32;
 }
 </code></pre>
+<h2 id="boolean-type"><a class="header" href="#boolean-type">Boolean type</a></h2>
+<p><code>bool</code> is a type alias of <code>logic&lt;1&gt;</code> to express boolean.
+<code>true</code> and <code>false</code> literal which express <code>1'b1</code> and <code>1'b0</code> can be used.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    const a: bool = true;
+    const b: bool = false;
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="user-defined-type"><a class="header" href="#user-defined-type">User Defined Type</a></h1>
 <h2 id="struct"><a class="header" href="#struct">Struct</a></h2>
 <p><code>struct</code> is composite data type.
@@ -1472,6 +1481,22 @@ There are 5 variants to specify reset polarity and synchronicity.</p>
     }
 }
 </code></pre>
+<h2 id="default-clock--reset"><a class="header" href="#default-clock--reset">Default Clock / Reset</a></h2>
+<p>In some cases, there are some clocks, but only single clock is used in all <code>always_ff</code>.
+For such case, <code>default</code> type modifier can be used to specify the default clock and reset explicitly.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk   : input clock,
+    i_clk_en: input logic,
+) {
+    let clk: `_ default clock = i_clk &amp; i_clk_en;
+
+    var a: logic;
+
+    always_ff {
+        a = 0;
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="expression"><a class="header" href="#expression">Expression</a></h1>
 <p>In this chapter, we’ll discuss about expression.
 Expression is combination of variable, operator, function call, and so on.
@@ -1510,6 +1535,33 @@ module ModuleA {
     let _b: logic = $clog2(1);
 }
 </code></pre>
+<h2 id="named-argument"><a class="header" href="#named-argument">Named Argument</a></h2>
+<p>If a function has many arguments, function call with named arguments is useful.
+Named arguments can’t be used with positional arguments at the same time.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    function FunctionA (
+        a: input logic,
+        b: input logic,
+        c: input logic,
+        d: input logic,
+    ) {}
+
+    let _a: logic = FunctionA(
+        a: 1,
+        b: 1,
+        c: 1,
+        d: 1,
+    );
+
+    // Mixing positional and named arguments is Error
+    //let _a: logic = FunctionA(
+    //    1,
+    //    2,
+    //    a: 1,
+    //    b: 1,
+    //);
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="concatenation"><a class="header" href="#concatenation">Concatenation</a></h1>
 <p><code>{}</code> represents bit concatenation.
 In <code>{}</code>, <code>repeat</code> keyword can be used to repeat specified operand.</p>
@@ -1524,12 +1576,12 @@ In <code>{}</code>, <code>repeat</code> keyword can be used to repeat specified 
 <p>Conditional expression using <code>if</code> can be used.
 The section which represents condition is placed after <code>if</code> keyword,
 and <code>()</code> is not required surrounding it.
-<code>else</code> is mandatory because if expression always have to be evaluated to value.</p>
+An expression at true condition is placed after <code>?</code>, and an expression at false condition is placed after <code>:</code>.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
 
-    assign b = if a == 0 { 1 } else if a &gt;: 1 { 2 } else { 3 };
+    assign b = if a == 0 ? 1 : if a &gt;: 1 ? 2 : 3;
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="case--switch"><a class="header" href="#case--switch">Case / Switch</a></h1>
@@ -1656,6 +1708,27 @@ Bit width speficied by based or baseless number or type name of user defined typ
 
     assign a = x as EnumA;
     assign b = x as 2;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="struct-constructor"><a class="header" href="#struct-constructor">Struct Constructor</a></h1>
+<p>To initialize struct, Struct constructor can be used instead of assigning each members.
+This is especially useful to initialize <code>const</code> because it can’t be assigned by each members.</p>
+<p><code>..default</code> specifier can speficy the default value for unspecified members in the struct.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    struct Param {
+        a: bit&lt;10&gt;,
+        b: bit&lt;10&gt;,
+    }
+
+    const p: Param = Param'{
+        a: 10,
+        b: 10,
+    };
+
+    const q: Param = Param'{
+        a: 1,
+        ..default(0) // means `b: 0`
+    };
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="statement"><a class="header" href="#statement">Statement</a></h1>
@@ -2042,6 +2115,22 @@ If <code>number</code> is specified as an argument of <code>align</code> attribu
     };
 }
 </code></pre>
+<h2 id="fmt-attribute"><a class="header" href="#fmt-attribute"><code>fmt</code> Attribute</a></h2>
+<p><code>fmt</code> attribute is used to control formatiing way.
+The following arguments are supported:</p>
+<ul>
+<li><code>compact</code>: compact formatting without newlines</li>
+</ul>
+<pre><code class="language-veryl playground">module ModuleA {
+    #[fmt(compact)]
+    {
+        inst u1: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+        inst u2: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+        inst u3: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+        inst u4: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="generate"><a class="header" href="#generate">Generate</a></h1>
 <p>Declaration can be generated by <code>for</code> and <code>if</code>.
 Label which is shown by <code>:</code> is required to idenfity the generated declarations.</p>
@@ -2098,7 +2187,7 @@ The named block has an individual namespace.</p>
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="import--export"><a class="header" href="#import--export">Import / Export</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="import"><a class="header" href="#import">Import</a></h1>
 <p><code>import</code> declaration imports symbols from other packages.
 It can be placed at the top level or as a module/interface/package item.
 Wildcard pattern like <code>package::*</code> can be used as an argument of <code>import</code> declaration.</p>
@@ -2114,20 +2203,44 @@ module ModuleA {
     import PackageA::paramA;
 }
 </code></pre>
-<p><code>export</code> declaration exports symbols from the package to other.
-<code>export *</code> represents to export all symbols.</p>
-<pre><code class="language-veryl playground">package PackageA {
-    const paramA: u32 = 1;
+<div style="break-before: page; page-break-before: always;"></div><h1 id="connect"><a class="header" href="#connect">Connect</a></h1>
+<p>To assign from a interface to another interface, <code>connect</code> decleration can be used instead of each member assignment.
+<code>connect</code> decleration connects all members of the interface automatically.</p>
+<p>The direction of assignment is determined by modport, so <code>output</code> member is assigned to <code>input</code> member.
+If an argument of <code>connect</code> is an interface instance, additional modport specification is necessary because it can’t be determined direction.</p>
+<p>The connection operator <code>&lt;&gt;</code> can be used in <code>always_comb</code> too.</p>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var cmd  : logic;
+    var ready: logic;
+
+    modport master {
+        cmd  : output,
+        ready: input ,
+    }
+
+    modport slave {
+        ..converse(master)
+    }
 }
 
-package PackageB {
-    import PackageA::*;
-    export paramA;
-}
+module ModuleA (
+    mst_if0: modport InterfaceA::master,
+    slv_if0: modport InterfaceA::slave ,
+    mst_if1: modport InterfaceA::master,
+    slv_if1: modport InterfaceA::slave ,
+) {
+    inst bus_if0: InterfaceA;
+    inst bus_if1: InterfaceA;
 
-package PackageC {
-    import PackageA::*;
-    export *;
+    connect mst_if0 &lt;&gt; bus_if0.slave;
+    connect slv_if0 &lt;&gt; bus_if0.master;
+
+    always_comb {
+        mst_if1 &lt;&gt; bus_if1.slave;
+    }
+    always_comb {
+        slv_if1 &lt;&gt; bus_if1.master;
+    }
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="module-1"><a class="header" href="#module-1">Module</a></h1>
@@ -2229,6 +2342,7 @@ Interface has overridable parameters, and interface definitions.</p>
 <ul>
 <li><code>..input</code>: all variables in the interface as <code>input</code></li>
 <li><code>..output</code>: all variables in the interface as <code>output</code></li>
+<li><code>..same(modport_name)</code>: the same variables as <code>modport_name</code></li>
 <li><code>..converse(modport_name)</code>: the same variables as <code>modport_name</code>, but all direction is converse</li>
 </ul>
 <p>Specifing default members can be used with normal explicit members.</p>
@@ -2269,6 +2383,9 @@ Package can organize some declarations like parameter and function.</p>
 <p>If you want to access to items of SystemVerilog, <code>$sv</code> namespace can be used.
 For example, “ModuleA” in SystemVerilog source code can be accessed by <code>$sv::ModuleA</code>.
 Veryl don’t check the existence of the items.</p>
+<p>Veryl compiler emits the path name as is excluding <code>$sv::</code>.
+Therefore, symbols in other HDLs like Verilog/VHDL can be refered through <code>$sv::</code> too.
+It depeneds on implementation (e.g. simulator, synthesizer) whether each symbols can be resolved.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let _a: logic = $sv::PackageA::ParamA;
 
@@ -2479,7 +2596,8 @@ If not, it causes ambiguous which parameters are omitted.</p>
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="prototype"><a class="header" href="#prototype">Prototype</a></h1>
 <p>Prototype is a special generic bound. It represents prototype which can be passed to the generic parameter.
-Currently module prototype is supported only.</p>
+Currently module prototype and package prototype are supported.</p>
+<h2 id="module-prototype"><a class="header" href="#module-prototype">Module Prototype</a></h2>
 <p>In the following example, <code>ProtoA</code> is a module prototype which has parameter <code>A</code> and port <code>i_dat</code> and <code>o_dat</code>.
 By binding like <code>T: ProtoA</code>, it is represented that the generic parameter <code>T</code> should have the parameters and ports.</p>
 <p>To use prototype, <code>for</code> implementation is required. <code>ModuleC</code> and <code>ModuleD</code> have <code>for ProroA</code> specifier which means the module satisfies the condision of <code>ProroA</code>.
@@ -2519,6 +2637,23 @@ module ModuleD for ProtoA #(
     o_dat: output logic,
 ) {
     assign o_dat = ~i_dat;
+}
+</code></pre>
+<h2 id="package-prototype"><a class="header" href="#package-prototype">Package Prototype</a></h2>
+<p>In the following example, <code>ProtoA</code> is a package prototype which has type <code>data_a</code> and <code>data_b</code>.
+<code>PKG</code> restricted by <code>ProtoA</code> is guaranteed to have <code>data_a</code> and <code>data_b</code>, so they can be refered.</p>
+<pre><code class="language-veryl playground">proto package ProtoA {
+    type data_a;
+    type data_b;
+}
+
+package PackageA::&lt;A: const, B: const&gt; for ProtoA {
+    type data_a = logic&lt;A&gt;;
+    type data_b = logic&lt;B&gt;;
+}
+
+module ModuleA::&lt;PKG: ProtoA&gt; {
+    let _a: PKG::data_a = 0;
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="clock-domain-annotation"><a class="header" href="#clock-domain-annotation">Clock Domain Annotation</a></h1>
@@ -2627,6 +2762,13 @@ Standard library is under <code>$std</code> namespace, and it can be used withou
 }
 </code></pre>
 <p>The full list and document of standard library is <a href="https://std.veryl-lang.org">https://std.veryl-lang.org</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="alias"><a class="header" href="#alias">Alias</a></h1>
+<p>Module, interface and package with generic arguments becomes too long sometimes.
+<code>alias</code> can name a short name for such items.</p>
+<pre><code class="language-veryl playground">package PkgA::&lt;X: const, Y: const, Z: const&gt; {}
+
+alias package PkgA123 = PkgA::&lt;1, 2, 3&gt;;
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="development-environment"><a class="header" href="#development-environment">Development Environment</a></h1>
 <p>In this chapter, we’ll discuss about development environment including project configuration and development tools.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="project-configuration"><a class="header" href="#project-configuration">Project Configuration</a></h1>
@@ -2829,33 +2971,31 @@ case_enum = "snake"
 <h3 id="the-lintnaming-section"><a class="header" href="#the-lintnaming-section">The <code>[lint.naming]</code> section</a></h3>
 <p>This section contains configurations of naming conventions.</p>
 <div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Value</th><th>Description</th></tr></thead><tbody>
-<tr><td>case_enum</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>enum</code></td></tr>
-<tr><td>case_function</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>function</code></td></tr>
-<tr><td>case_function_inout</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>inout</code> argument</td></tr>
-<tr><td>case_function_input</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>input</code> argument</td></tr>
-<tr><td>case_function_output</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>output</code> argument</td></tr>
-<tr><td>case_function_ref</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>ref</code> argument</td></tr>
-<tr><td>case_instance</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of instance</td></tr>
-<tr><td>case_interface</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>interface</code></td></tr>
-<tr><td>case_modport</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>modport</code></td></tr>
-<tr><td>case_module</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>module</code></td></tr>
-<tr><td>case_package</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>package</code></td></tr>
-<tr><td>case_parameter</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>parameter</code></td></tr>
-<tr><td>case_port_inout</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>inout</code> port</td></tr>
-<tr><td>case_port_input</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>input</code> port</td></tr>
-<tr><td>case_port_modport</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>modport</code> port</td></tr>
-<tr><td>case_port_output</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>output</code> port</td></tr>
-<tr><td>case_reg</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of register type variable<sup class="footnote-reference"><a href="#reg">2</a></sup></td></tr>
-<tr><td>case_struct</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>struct</code></td></tr>
-<tr><td>case_union</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of <code>union</code></td></tr>
-<tr><td>case_var</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of variable</td></tr>
-<tr><td>case_wire</td><td>case type<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>case style of wire type variable<sup class="footnote-reference"><a href="#wire">3</a></sup></td></tr>
+<tr><td>case_enum</td><td>case type<sup class="footnote-reference" id="fr-casetype-1"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>enum</code></td></tr>
+<tr><td>case_function</td><td>case type<sup class="footnote-reference" id="fr-casetype-2"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>function</code></td></tr>
+<tr><td>case_function_inout</td><td>case type<sup class="footnote-reference" id="fr-casetype-3"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>inout</code> argument</td></tr>
+<tr><td>case_function_input</td><td>case type<sup class="footnote-reference" id="fr-casetype-4"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>input</code> argument</td></tr>
+<tr><td>case_function_output</td><td>case type<sup class="footnote-reference" id="fr-casetype-5"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>output</code> argument</td></tr>
+<tr><td>case_instance</td><td>case type<sup class="footnote-reference" id="fr-casetype-6"><a href="#footnote-casetype">1</a></sup></td><td>case style of instance</td></tr>
+<tr><td>case_interface</td><td>case type<sup class="footnote-reference" id="fr-casetype-7"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>interface</code></td></tr>
+<tr><td>case_modport</td><td>case type<sup class="footnote-reference" id="fr-casetype-8"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>modport</code></td></tr>
+<tr><td>case_module</td><td>case type<sup class="footnote-reference" id="fr-casetype-9"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>module</code></td></tr>
+<tr><td>case_package</td><td>case type<sup class="footnote-reference" id="fr-casetype-10"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>package</code></td></tr>
+<tr><td>case_parameter</td><td>case type<sup class="footnote-reference" id="fr-casetype-11"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>parameter</code></td></tr>
+<tr><td>case_port_inout</td><td>case type<sup class="footnote-reference" id="fr-casetype-12"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>inout</code> port</td></tr>
+<tr><td>case_port_input</td><td>case type<sup class="footnote-reference" id="fr-casetype-13"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>input</code> port</td></tr>
+<tr><td>case_port_modport</td><td>case type<sup class="footnote-reference" id="fr-casetype-14"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>modport</code> port</td></tr>
+<tr><td>case_port_output</td><td>case type<sup class="footnote-reference" id="fr-casetype-15"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>output</code> port</td></tr>
+<tr><td>case_reg</td><td>case type<sup class="footnote-reference" id="fr-casetype-16"><a href="#footnote-casetype">1</a></sup></td><td>case style of register type variable<sup class="footnote-reference" id="fr-reg-1"><a href="#footnote-reg">2</a></sup></td></tr>
+<tr><td>case_struct</td><td>case type<sup class="footnote-reference" id="fr-casetype-17"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>struct</code></td></tr>
+<tr><td>case_union</td><td>case type<sup class="footnote-reference" id="fr-casetype-18"><a href="#footnote-casetype">1</a></sup></td><td>case style of <code>union</code></td></tr>
+<tr><td>case_var</td><td>case type<sup class="footnote-reference" id="fr-casetype-19"><a href="#footnote-casetype">1</a></sup></td><td>case style of variable</td></tr>
+<tr><td>case_wire</td><td>case type<sup class="footnote-reference" id="fr-casetype-20"><a href="#footnote-casetype">1</a></sup></td><td>case style of wire type variable<sup class="footnote-reference" id="fr-wire-1"><a href="#footnote-wire">3</a></sup></td></tr>
 <tr><td>prefix_enum</td><td>string</td><td>prefix of <code>enum</code></td></tr>
 <tr><td>prefix_function</td><td>string</td><td>prefix of <code>function</code></td></tr>
 <tr><td>prefix_function_inout</td><td>string</td><td>prefix of <code>inout</code> argument</td></tr>
 <tr><td>prefix_function_input</td><td>string</td><td>prefix of <code>input</code> argument</td></tr>
 <tr><td>prefix_function_output</td><td>string</td><td>prefix of <code>output</code> argument</td></tr>
-<tr><td>prefix_function_ref</td><td>string</td><td>prefix of <code>ref</code> argument</td></tr>
 <tr><td>prefix_instance</td><td>string</td><td>prefix of instance</td></tr>
 <tr><td>prefix_interface</td><td>string</td><td>prefix of <code>interface</code></td></tr>
 <tr><td>prefix_modport</td><td>string</td><td>prefix of <code>modport</code></td></tr>
@@ -2866,17 +3006,16 @@ case_enum = "snake"
 <tr><td>prefix_port_input</td><td>string</td><td>prefix of <code>input</code> port</td></tr>
 <tr><td>prefix_port_modport</td><td>string</td><td>prefix of <code>modport</code> port</td></tr>
 <tr><td>prefix_port_output</td><td>string</td><td>prefix of <code>output</code> port</td></tr>
-<tr><td>prefix_reg</td><td>string</td><td>prefix of register type variable<sup class="footnote-reference"><a href="#reg">2</a></sup></td></tr>
+<tr><td>prefix_reg</td><td>string</td><td>prefix of register type variable<sup class="footnote-reference" id="fr-reg-2"><a href="#footnote-reg">2</a></sup></td></tr>
 <tr><td>prefix_struct</td><td>string</td><td>prefix of <code>struct</code></td></tr>
 <tr><td>prefix_union</td><td>string</td><td>prefix of <code>union</code></td></tr>
 <tr><td>prefix_var</td><td>string</td><td>prefix of variable</td></tr>
-<tr><td>prefix_wire</td><td>string</td><td>prefix of wire type variable<sup class="footnote-reference"><a href="#wire">3</a></sup></td></tr>
+<tr><td>prefix_wire</td><td>string</td><td>prefix of wire type variable<sup class="footnote-reference" id="fr-wire-2"><a href="#footnote-wire">3</a></sup></td></tr>
 <tr><td>suffix_enum</td><td>string</td><td>suffix of <code>enum</code></td></tr>
 <tr><td>suffix_function</td><td>string</td><td>suffix of <code>function</code></td></tr>
 <tr><td>suffix_function_inout</td><td>string</td><td>suffix of <code>inout</code> argument</td></tr>
 <tr><td>suffix_function_input</td><td>string</td><td>suffix of <code>input</code> argument</td></tr>
 <tr><td>suffix_function_output</td><td>string</td><td>suffix of <code>output</code> argument</td></tr>
-<tr><td>suffix_function_ref</td><td>string</td><td>suffix of <code>ref</code> argument</td></tr>
 <tr><td>suffix_instance</td><td>string</td><td>suffix of instance</td></tr>
 <tr><td>suffix_interface</td><td>string</td><td>suffix of <code>interface</code></td></tr>
 <tr><td>suffix_modport</td><td>string</td><td>suffix of <code>modport</code></td></tr>
@@ -2887,57 +3026,52 @@ case_enum = "snake"
 <tr><td>suffix_port_input</td><td>string</td><td>suffix of <code>input</code> port</td></tr>
 <tr><td>suffix_port_modport</td><td>string</td><td>suffix of <code>modport</code> port</td></tr>
 <tr><td>suffix_port_output</td><td>string</td><td>suffix of <code>output</code> port</td></tr>
-<tr><td>suffix_reg</td><td>string</td><td>suffix of register type variable<sup class="footnote-reference"><a href="#reg">2</a></sup></td></tr>
+<tr><td>suffix_reg</td><td>string</td><td>suffix of register type variable<sup class="footnote-reference" id="fr-reg-3"><a href="#footnote-reg">2</a></sup></td></tr>
 <tr><td>suffix_struct</td><td>string</td><td>suffix of <code>struct</code></td></tr>
 <tr><td>suffix_union</td><td>string</td><td>suffix of <code>union</code></td></tr>
 <tr><td>suffix_var</td><td>string</td><td>suffix of variable</td></tr>
-<tr><td>suffix_wire</td><td>string</td><td>suffix of wire type variable<sup class="footnote-reference"><a href="#wire">3</a></sup></td></tr>
-<tr><td>re_forbidden_enum</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>enum</code></td></tr>
-<tr><td>re_forbidden_function</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>function</code></td></tr>
-<tr><td>re_forbidden_function_inout</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>inout</code> argument</td></tr>
-<tr><td>re_forbidden_function_input</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>input</code> argument</td></tr>
-<tr><td>re_forbidden_function_output</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>output</code> argument</td></tr>
-<tr><td>re_forbidden_function_ref</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>ref</code> argument</td></tr>
-<tr><td>re_forbidden_instance</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of instance</td></tr>
-<tr><td>re_forbidden_interface</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>interface</code></td></tr>
-<tr><td>re_forbidden_modport</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>modport</code></td></tr>
-<tr><td>re_forbidden_module</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>module</code></td></tr>
-<tr><td>re_forbidden_package</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>package</code></td></tr>
-<tr><td>re_forbidden_parameter</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>parameter</code></td></tr>
-<tr><td>re_forbidden_port_inout</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>inout</code> port</td></tr>
-<tr><td>re_forbidden_port_input</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>input</code> port</td></tr>
-<tr><td>re_forbidden_port_modport</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>modport</code> port</td></tr>
-<tr><td>re_forbidden_port_output</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>output</code> port</td></tr>
-<tr><td>re_forbidden_reg</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of register type variable<sup class="footnote-reference"><a href="#reg">2</a></sup></td></tr>
-<tr><td>re_forbidden_struct</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>struct</code></td></tr>
-<tr><td>re_forbidden_union</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of <code>union</code></td></tr>
-<tr><td>re_forbidden_var</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of variable</td></tr>
-<tr><td>re_forbidden_wire</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex forbidden of wire type variable<sup class="footnote-reference"><a href="#wire">3</a></sup></td></tr>
-<tr><td>re_required_enum</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>enum</code></td></tr>
-<tr><td>re_required_function</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>function</code></td></tr>
-<tr><td>re_required_function_inout</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>inout</code> argument</td></tr>
-<tr><td>re_required_function_input</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>input</code> argument</td></tr>
-<tr><td>re_required_function_output</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>output</code> argument</td></tr>
-<tr><td>re_required_function_ref</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>ref</code> argument</td></tr>
-<tr><td>re_required_instance</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of instance</td></tr>
-<tr><td>re_required_interface</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>interface</code></td></tr>
-<tr><td>re_required_modport</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>modport</code></td></tr>
-<tr><td>re_required_module</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>module</code></td></tr>
-<tr><td>re_required_package</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>package</code></td></tr>
-<tr><td>re_required_parameter</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>parameter</code></td></tr>
-<tr><td>re_required_port_inout</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>inout</code> port</td></tr>
-<tr><td>re_required_port_input</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>input</code> port</td></tr>
-<tr><td>re_required_port_modport</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>modport</code> port</td></tr>
-<tr><td>re_required_port_output</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>output</code> port</td></tr>
-<tr><td>re_required_reg</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of register type variable<sup class="footnote-reference"><a href="#reg">2</a></sup></td></tr>
-<tr><td>re_required_struct</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>struct</code></td></tr>
-<tr><td>re_required_union</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of <code>union</code></td></tr>
-<tr><td>re_required_var</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of variable</td></tr>
-<tr><td>re_required_wire</td><td>regex<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>regex required of wire type variable<sup class="footnote-reference"><a href="#wire">3</a></sup></td></tr>
+<tr><td>suffix_wire</td><td>string</td><td>suffix of wire type variable<sup class="footnote-reference" id="fr-wire-3"><a href="#footnote-wire">3</a></sup></td></tr>
+<tr><td>re_forbidden_enum</td><td>regex<sup class="footnote-reference" id="fr-regex-1"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>enum</code></td></tr>
+<tr><td>re_forbidden_function</td><td>regex<sup class="footnote-reference" id="fr-regex-2"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>function</code></td></tr>
+<tr><td>re_forbidden_function_inout</td><td>regex<sup class="footnote-reference" id="fr-regex-3"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>inout</code> argument</td></tr>
+<tr><td>re_forbidden_function_input</td><td>regex<sup class="footnote-reference" id="fr-regex-4"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>input</code> argument</td></tr>
+<tr><td>re_forbidden_function_output</td><td>regex<sup class="footnote-reference" id="fr-regex-5"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>output</code> argument</td></tr>
+<tr><td>re_forbidden_instance</td><td>regex<sup class="footnote-reference" id="fr-regex-6"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of instance</td></tr>
+<tr><td>re_forbidden_interface</td><td>regex<sup class="footnote-reference" id="fr-regex-7"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>interface</code></td></tr>
+<tr><td>re_forbidden_modport</td><td>regex<sup class="footnote-reference" id="fr-regex-8"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>modport</code></td></tr>
+<tr><td>re_forbidden_module</td><td>regex<sup class="footnote-reference" id="fr-regex-9"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>module</code></td></tr>
+<tr><td>re_forbidden_package</td><td>regex<sup class="footnote-reference" id="fr-regex-10"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>package</code></td></tr>
+<tr><td>re_forbidden_parameter</td><td>regex<sup class="footnote-reference" id="fr-regex-11"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>parameter</code></td></tr>
+<tr><td>re_forbidden_port_inout</td><td>regex<sup class="footnote-reference" id="fr-regex-12"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>inout</code> port</td></tr>
+<tr><td>re_forbidden_port_input</td><td>regex<sup class="footnote-reference" id="fr-regex-13"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>input</code> port</td></tr>
+<tr><td>re_forbidden_port_modport</td><td>regex<sup class="footnote-reference" id="fr-regex-14"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>modport</code> port</td></tr>
+<tr><td>re_forbidden_port_output</td><td>regex<sup class="footnote-reference" id="fr-regex-15"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>output</code> port</td></tr>
+<tr><td>re_forbidden_reg</td><td>regex<sup class="footnote-reference" id="fr-regex-16"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of register type variable<sup class="footnote-reference" id="fr-reg-4"><a href="#footnote-reg">2</a></sup></td></tr>
+<tr><td>re_forbidden_struct</td><td>regex<sup class="footnote-reference" id="fr-regex-17"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>struct</code></td></tr>
+<tr><td>re_forbidden_union</td><td>regex<sup class="footnote-reference" id="fr-regex-18"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of <code>union</code></td></tr>
+<tr><td>re_forbidden_var</td><td>regex<sup class="footnote-reference" id="fr-regex-19"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of variable</td></tr>
+<tr><td>re_forbidden_wire</td><td>regex<sup class="footnote-reference" id="fr-regex-20"><a href="#footnote-regex">4</a></sup></td><td>regex forbidden of wire type variable<sup class="footnote-reference" id="fr-wire-4"><a href="#footnote-wire">3</a></sup></td></tr>
+<tr><td>re_required_enum</td><td>regex<sup class="footnote-reference" id="fr-regex-21"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>enum</code></td></tr>
+<tr><td>re_required_function</td><td>regex<sup class="footnote-reference" id="fr-regex-22"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>function</code></td></tr>
+<tr><td>re_required_function_inout</td><td>regex<sup class="footnote-reference" id="fr-regex-23"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>inout</code> argument</td></tr>
+<tr><td>re_required_function_input</td><td>regex<sup class="footnote-reference" id="fr-regex-24"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>input</code> argument</td></tr>
+<tr><td>re_required_function_output</td><td>regex<sup class="footnote-reference" id="fr-regex-25"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>output</code> argument</td></tr>
+<tr><td>re_required_instance</td><td>regex<sup class="footnote-reference" id="fr-regex-26"><a href="#footnote-regex">4</a></sup></td><td>regex required of instance</td></tr>
+<tr><td>re_required_interface</td><td>regex<sup class="footnote-reference" id="fr-regex-27"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>interface</code></td></tr>
+<tr><td>re_required_modport</td><td>regex<sup class="footnote-reference" id="fr-regex-28"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>modport</code></td></tr>
+<tr><td>re_required_module</td><td>regex<sup class="footnote-reference" id="fr-regex-29"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>module</code></td></tr>
+<tr><td>re_required_package</td><td>regex<sup class="footnote-reference" id="fr-regex-30"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>package</code></td></tr>
+<tr><td>re_required_parameter</td><td>regex<sup class="footnote-reference" id="fr-regex-31"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>parameter</code></td></tr>
+<tr><td>re_required_port_inout</td><td>regex<sup class="footnote-reference" id="fr-regex-32"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>inout</code> port</td></tr>
+<tr><td>re_required_port_input</td><td>regex<sup class="footnote-reference" id="fr-regex-33"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>input</code> port</td></tr>
+<tr><td>re_required_port_modport</td><td>regex<sup class="footnote-reference" id="fr-regex-34"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>modport</code> port</td></tr>
+<tr><td>re_required_port_output</td><td>regex<sup class="footnote-reference" id="fr-regex-35"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>output</code> port</td></tr>
+<tr><td>re_required_reg</td><td>regex<sup class="footnote-reference" id="fr-regex-36"><a href="#footnote-regex">4</a></sup></td><td>regex required of register type variable<sup class="footnote-reference" id="fr-reg-5"><a href="#footnote-reg">2</a></sup></td></tr>
+<tr><td>re_required_struct</td><td>regex<sup class="footnote-reference" id="fr-regex-37"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>struct</code></td></tr>
+<tr><td>re_required_union</td><td>regex<sup class="footnote-reference" id="fr-regex-38"><a href="#footnote-regex">4</a></sup></td><td>regex required of <code>union</code></td></tr>
+<tr><td>re_required_var</td><td>regex<sup class="footnote-reference" id="fr-regex-39"><a href="#footnote-regex">4</a></sup></td><td>regex required of variable</td></tr>
+<tr><td>re_required_wire</td><td>regex<sup class="footnote-reference" id="fr-regex-40"><a href="#footnote-regex">4</a></sup></td><td>regex required of wire type variable<sup class="footnote-reference" id="fr-wire-5"><a href="#footnote-wire">3</a></sup></td></tr>
 </tbody></table>
-</div>
-<div class="footnote-definition" id="casetype"><sup class="footnote-definition-label">1</sup>
-<p>The available values are</p>
 </div>
 <ul>
 <li><code>"snake"</code> – snake_case</li>
@@ -2945,16 +3079,20 @@ case_enum = "snake"
 <li><code>"lower_camel"</code> – lowerCamelCase</li>
 <li><code>"upper_camel"</code> – UpperCamelCase</li>
 </ul>
-<div class="footnote-definition" id="regex"><sup class="footnote-definition-label">4</sup>
-<p>Regular expression string like <code>".*"</code>. The available syntax is <a href="https://docs.rs/regex/latest/regex/#syntax">here</a>.</p>
-</div>
-<div class="footnote-definition" id="reg"><sup class="footnote-definition-label">2</sup>
-<p>Register type means that the variable is assigned in <code>always_ff</code>. It will be mapped to flip-flop in synthesis phase.</p>
-</div>
-<div class="footnote-definition" id="wire"><sup class="footnote-definition-label">3</sup>
-<p>Wire type means that the variable is assigned in <code>always_comb</code>. It will be mapped to wire in synthesis phase.</p>
-</div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="test"><a class="header" href="#test">Test</a></h1>
+<hr>
+<ol class="footnote-definition"><li id="footnote-casetype">
+<p>The available values are <a href="#fr-casetype-1">↩</a> <a href="#fr-casetype-2">↩2</a> <a href="#fr-casetype-3">↩3</a> <a href="#fr-casetype-4">↩4</a> <a href="#fr-casetype-5">↩5</a> <a href="#fr-casetype-6">↩6</a> <a href="#fr-casetype-7">↩7</a> <a href="#fr-casetype-8">↩8</a> <a href="#fr-casetype-9">↩9</a> <a href="#fr-casetype-10">↩10</a> <a href="#fr-casetype-11">↩11</a> <a href="#fr-casetype-12">↩12</a> <a href="#fr-casetype-13">↩13</a> <a href="#fr-casetype-14">↩14</a> <a href="#fr-casetype-15">↩15</a> <a href="#fr-casetype-16">↩16</a> <a href="#fr-casetype-17">↩17</a> <a href="#fr-casetype-18">↩18</a> <a href="#fr-casetype-19">↩19</a> <a href="#fr-casetype-20">↩20</a></p>
+</li>
+<li id="footnote-reg">
+<p>Register type means that the variable is assigned in <code>always_ff</code>. It will be mapped to flip-flop in synthesis phase. <a href="#fr-reg-1">↩</a> <a href="#fr-reg-2">↩2</a> <a href="#fr-reg-3">↩3</a> <a href="#fr-reg-4">↩4</a> <a href="#fr-reg-5">↩5</a></p>
+</li>
+<li id="footnote-wire">
+<p>Wire type means that the variable is assigned in <code>always_comb</code>. It will be mapped to wire in synthesis phase. <a href="#fr-wire-1">↩</a> <a href="#fr-wire-2">↩2</a> <a href="#fr-wire-3">↩3</a> <a href="#fr-wire-4">↩4</a> <a href="#fr-wire-5">↩5</a></p>
+</li>
+<li id="footnote-regex">
+<p>Regular expression string like <code>".*"</code>. The available syntax is <a href="https://docs.rs/regex/latest/regex/#syntax">here</a>. <a href="#fr-regex-1">↩</a> <a href="#fr-regex-2">↩2</a> <a href="#fr-regex-3">↩3</a> <a href="#fr-regex-4">↩4</a> <a href="#fr-regex-5">↩5</a> <a href="#fr-regex-6">↩6</a> <a href="#fr-regex-7">↩7</a> <a href="#fr-regex-8">↩8</a> <a href="#fr-regex-9">↩9</a> <a href="#fr-regex-10">↩10</a> <a href="#fr-regex-11">↩11</a> <a href="#fr-regex-12">↩12</a> <a href="#fr-regex-13">↩13</a> <a href="#fr-regex-14">↩14</a> <a href="#fr-regex-15">↩15</a> <a href="#fr-regex-16">↩16</a> <a href="#fr-regex-17">↩17</a> <a href="#fr-regex-18">↩18</a> <a href="#fr-regex-19">↩19</a> <a href="#fr-regex-20">↩20</a> <a href="#fr-regex-21">↩21</a> <a href="#fr-regex-22">↩22</a> <a href="#fr-regex-23">↩23</a> <a href="#fr-regex-24">↩24</a> <a href="#fr-regex-25">↩25</a> <a href="#fr-regex-26">↩26</a> <a href="#fr-regex-27">↩27</a> <a href="#fr-regex-28">↩28</a> <a href="#fr-regex-29">↩29</a> <a href="#fr-regex-30">↩30</a> <a href="#fr-regex-31">↩31</a> <a href="#fr-regex-32">↩32</a> <a href="#fr-regex-33">↩33</a> <a href="#fr-regex-34">↩34</a> <a href="#fr-regex-35">↩35</a> <a href="#fr-regex-36">↩36</a> <a href="#fr-regex-37">↩37</a> <a href="#fr-regex-38">↩38</a> <a href="#fr-regex-39">↩39</a> <a href="#fr-regex-40">↩40</a></p>
+</li>
+</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="test"><a class="header" href="#test">Test</a></h1>
 <p><code>[test]</code> section specifies the configuration for integrated unit test like below:</p>
 <pre><code class="language-toml">[test]
 simulator = "vcs"
@@ -2963,11 +3101,8 @@ simulator = "vcs"
 <h2 id="the-test-section"><a class="header" href="#the-test-section">The <code>[test]</code> section</a></h2>
 <p>This section contains configurations of test.</p>
 <div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Value</th><th>Description</th></tr></thead><tbody>
-<tr><td>simulator</td><td>simulator name<sup class="footnote-reference"><a href="#sim">1</a></sup></td><td>default simulator</td></tr>
+<tr><td>simulator</td><td>simulator name<sup class="footnote-reference" id="fr-sim-1"><a href="#footnote-sim">1</a></sup></td><td>default simulator</td></tr>
 </tbody></table>
-</div>
-<div class="footnote-definition" id="sim"><sup class="footnote-definition-label">1</sup>
-<p>The available values are</p>
 </div>
 <ul>
 <li><code>"verilator"</code></li>
@@ -3004,10 +3139,21 @@ The available types are below:</p>
 <li><code>directory</code> – specified directory</li>
 </ul>
 <p>If you want to use <code>directory</code>, you should specify the target path by <code>path</code> key.</p>
-<pre><code class="language-toml">[build]
+<pre><code class="language-toml">[test]
 waveform_target = {type = "directory", path = "[dst dir]"}
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="publish"><a class="header" href="#publish">Publish</a></h1>
+<h2 id="the-waveform_format-field"><a class="header" href="#the-waveform_format-field">The <code>waveform_format</code> field</a></h2>
+<p>The <code>waveform_format</code> field specifies in which format the waveform will be dumped.
+The available formats are:</p>
+<ul>
+<li><code>vcd</code> – The default value and most readable format across all vendors. But also not very feature rich</li>
+<li><code>fst</code> – This format has some more features, e.g. printing enum values instead of integers. <code>gtkwave</code> and <code>surfer</code> can read this format.</li>
+</ul>
+<hr>
+<ol class="footnote-definition"><li id="footnote-sim">
+<p>The available values are <a href="#fr-sim-1">↩</a></p>
+</li>
+</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="publish"><a class="header" href="#publish">Publish</a></h1>
 <p><code>[publish]</code> section specifies the configuration for publishing a project like below:</p>
 <pre><code class="language-toml">[publish]
 bump_commit = true
@@ -3022,21 +3168,24 @@ bump_commit_message = "Bump"
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h1>
 <p>If you want to add other Veryl projects to dependencies of your project, you can add them to <code>[dependencies]</code> section in <code>Veryl.toml</code>.
-The left hand side of entry is path to the dependency, and the right hand side is version.</p>
+The left hand side of entry is the project name of the dependency, and the right hand side is the source and version.
+<code>github</code> is a syntax sugger to refer a repository on GitHub. Instead of it, <code>git</code> with a full URL can be used.</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = "0.1.0"
+veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+
+# This is as the same as above
+veryl_sample = {git = "https://github.com/veryl-lang/veryl_sample", version = "0.1.0"}
 </code></pre>
 <p>By default, the namespace of the dependency is the same as the project name of the dependency.
-If you want to specify namespace, you can use <code>name</code> field.</p>
+If you want to specify a namespace through the left hand side, you should specify the project name through <code>project</code> field.</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = {version = "0.1.0", name = "veryl_sample_alt"}
+veryl_sample_alt = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.2.0"}
 </code></pre>
-<p>If you want to use many versions of the same dependency path, you can specify each name.</p>
+<p>Inner projects in a repository can be used like below:</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = [
-    {version = "0.1.0", name = "veryl_sample1"},
-    {version = "0.2.0", name = "veryl_sample2"},
-]
+inner_prj1 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+inner_prj2 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+inner_prj3 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
 </code></pre>
 <h2 id="usage-of-dependency"><a class="header" href="#usage-of-dependency">Usage of dependency</a></h2>
 <p>After adding dependencies to <code>Veryl.toml</code>, you can use <code>module</code>, <code>interface</code> and <code>package</code> in the dependencies.
@@ -3084,16 +3233,16 @@ Please see version requirement of Rust for detailed information: <a href="https:
 <p>For local development, dependency to a local file path is useful in some cases.
 Relative path dependency can be specified like below:</p>
 <pre><code class="language-toml">[dependencies]
-"../../library/path" = "0.1.0"
+veryl_sample = {path = "../../veryl_sample"}
 </code></pre>
 <p>If there are relative path dependencies in a project, the project can’t be published through <code>veryl publish</code>.</p>
 <h2 id="override-by-local-path"><a class="header" href="#override-by-local-path">Override by local path</a></h2>
 <p>Sometimes, using dependencies of locally modified version becomes necessary.
 In the case, overriding dependencies by local path can be used like below:</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = {version = "0.1.0", path = "../sample"}
+veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = "../veryl_sample"}
 </code></pre>
-<p>This means that if there is <code>../sample</code>, it is used, and if not, it is pulled from the Git repository.</p>
+<p>This means that if there is <code>../veryl_sample</code>, it is used, and if not, it is pulled from the Git repository.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="publish-project"><a class="header" href="#publish-project">Publish Project</a></h1>
 <p>To publish your project, <code>veryl publish</code> can be used.
 Publising means to associate a version with a git revision.</p>
@@ -3218,9 +3367,12 @@ target = {type = "directory", path = "target"}
 </code></pre>
 <p>The generated <code>prj.f</code> lists all generated files. So you can use it along with the existing SystemVerilog filelists.</p>
 <h2 id="about-gitignore"><a class="header" href="#about-gitignore">About <code>.gitignore</code></a></h2>
-<p>Veryl doesn’t provide the default <code>.gitignore</code>.
-This is because which files should be ignored is different by each projects.</p>
-<p>The candidates of <code>.gitignore</code> is below:</p>
+<p>Veryl provides the following <code>.gitignore</code> as the default value.
+<code>.build</code> is used to record build information by Veryl compiler.</p>
+<pre><code>.build/
+</code></pre>
+<p>Other patterns can be added by each projects.
+The candidates of <code>.gitignore</code> is below:</p>
 <ul>
 <li><code>dependencies/</code></li>
 <li><code>target/</code></li>
@@ -3439,6 +3591,22 @@ The procedure of offline installation is below:</p>
 <pre><code>verylup update --pkg veryl-x86_64-linux.zip
 verylup install 0.12.0 --pkg veryl-x86_64-linux.zip
 </code></pre>
+<h2 id="nightly-channel"><a class="header" href="#nightly-channel">Nightly channel</a></h2>
+<p>To use the latest features easily, nightly channel is available.
+Nightly channel is built daily from the master branch.</p>
+<pre><code>verylup install nightly
+</code></pre>
+<p>By default, nightly channel is not enabled after installation.
+So the following ways can be used to enable it.</p>
+<pre><code>// Use +nightly
+veryl +nightly build
+
+// Set default to nightly
+verylup default nightly
+
+// Override by nightly for a specific project
+verylup override set nightly
+</code></pre>
 <h2 id="for-veryl-developer"><a class="header" href="#for-veryl-developer">For Veryl Developer</a></h2>
 <p>For Veryl developer, a special toolchain target <code>local</code> is prepared.
 If <code>verylup install local</code> is executed in your local Veryl repository, the built toolchain is installed as <code>local</code> toolchain.
@@ -3451,6 +3619,18 @@ veryl build
 
 // Use the latest toolchain
 veryl +latest build
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="migrate-to-new-version"><a class="header" href="#migrate-to-new-version">Migrate to New Version</a></h1>
+<p>Sometimes, new version of Veryl introduces some breaking changes.
+<code>veryl migrate</code> migrates the existing project to new version automatically.
+By <code>--check</code> option, you can check how changes will be applied before the actual migration.</p>
+<pre><code class="language-console">$ veryl migrate --check
+$ veryl migrate
+</code></pre>
+<p><code>veryl migrate</code> migrates only single major (or minor until 1.0) version.
+Therefore, multi version migration can be done like below:</p>
+<pre><code class="language-console">$ veryl +0.15.0 migrate  # from v0.14.0 to v0.15.0
+$ veryl +0.16.0 migrate  # from v0.15.0 to v0.16.0
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="formal-syntax"><a class="header" href="#formal-syntax">Formal Syntax</a></h1>
@@ -3490,17 +3670,18 @@ MinusColonTerm        : &lt;INITIAL                &gt;'-:'                     
 MinusGTTerm           : &lt;INITIAL                &gt;'-&gt;'                                                                                  : Token;
 PlusColonTerm         : &lt;INITIAL                &gt;'+:'                                                                                  : Token;
 AssignmentOperatorTerm: &lt;INITIAL                &gt;"\+=|-=|\*=|/=|%=|&amp;=|\|=|\^=|&lt;&lt;=|&gt;&gt;=|&lt;&lt;&lt;=|&gt;&gt;&gt;="                                       : Token;
-Operator11Term        : &lt;INITIAL                &gt;"\*\*"                                                                                : Token;
-Operator10Term        : &lt;INITIAL                &gt;"/|%"                                                                                 : Token;
-Operator09Term        : &lt;INITIAL                &gt;"\+|-"                                                                                : Token;
-Operator08Term        : &lt;INITIAL                &gt;"&lt;&lt;&lt;|&gt;&gt;&gt;|&lt;&lt;|&gt;&gt;"                                                                       : Token;
-Operator07Term        : &lt;INITIAL                &gt;"&lt;=|&gt;=|&lt;:|&gt;:"                                                                         : Token;
-Operator06Term        : &lt;INITIAL                &gt;"===|==\?|!==|!=\?|==|!="                                                             : Token;
-Operator02Term        : &lt;INITIAL                &gt;"&amp;&amp;"                                                                                  : Token;
-Operator01Term        : &lt;INITIAL                &gt;"\|\|"                                                                                : Token;
-Operator05Term        : &lt;INITIAL                &gt;"&amp;"                                                                                   : Token;
-Operator04Term        : &lt;INITIAL                &gt;"\^~|\^|~\^"                                                                          : Token;
-Operator03Term        : &lt;INITIAL                &gt;"\|"                                                                                  : Token;
+DiamondOperatorTerm   : &lt;INITIAL                &gt;'&lt;&gt;'                                                                                  : Token;
+Operator12Term        : &lt;INITIAL                &gt;"\*\*"                                                                                : Token;
+Operator11Term        : &lt;INITIAL                &gt;"/|%"                                                                                 : Token;
+Operator10Term        : &lt;INITIAL                &gt;"\+|-"                                                                                : Token;
+Operator09Term        : &lt;INITIAL                &gt;"&lt;&lt;&lt;|&gt;&gt;&gt;|&lt;&lt;|&gt;&gt;"                                                                       : Token;
+Operator08Term        : &lt;INITIAL                &gt;"&lt;=|&gt;=|&lt;:|&gt;:"                                                                         : Token;
+Operator07Term        : &lt;INITIAL                &gt;"===|==\?|!==|!=\?|==|!="                                                             : Token;
+Operator03Term        : &lt;INITIAL                &gt;"&amp;&amp;"                                                                                  : Token;
+Operator02Term        : &lt;INITIAL                &gt;"\|\|"                                                                                : Token;
+Operator06Term        : &lt;INITIAL                &gt;"&amp;"                                                                                   : Token;
+Operator05Term        : &lt;INITIAL                &gt;"\^~|\^|~\^"                                                                          : Token;
+Operator04Term        : &lt;INITIAL                &gt;"\|"                                                                                  : Token;
 UnaryOperatorTerm     : &lt;INITIAL                &gt;"~&amp;|~\||!|~"                                                                          : Token;
 BackQuoteTerm         : &lt;INITIAL, Generic       &gt;"`"                                                                                   : Token;
 ColonColonLAngleTerm  : &lt;INITIAL, Generic       &gt;'::&lt;'                                                                                 : Token;
@@ -3513,6 +3694,7 @@ DotTerm               : &lt;INITIAL, Generic       &gt;'.'                      
 EquTerm               : &lt;INITIAL, Generic       &gt;'='                                                                                   : Token;
 HashTerm              : &lt;INITIAL, Generic       &gt;'#'                                                                                   : Token;
 LAngleTerm            : &lt;INITIAL, Generic       &gt;'&lt;'                                                                                   : Token;
+QuestionTerm          : &lt;INITIAL                &gt;'?'                                                                                   : Token;
 QuoteLBraceTerm       : &lt;INITIAL, Generic       &gt;"'\{"                                                                                 : Token;
 LBraceTerm            : &lt;INITIAL, Generic, Embed&gt;'{'                                                                                   : Token;
 LBracketTerm          : &lt;INITIAL, Generic       &gt;'['                                                                                   : Token;
@@ -3523,24 +3705,27 @@ RBracketTerm          : &lt;INITIAL, Generic       &gt;']'                      
 RParenTerm            : &lt;INITIAL, Generic       &gt;')'                                                                                   : Token;
 SemicolonTerm         : &lt;INITIAL, Generic       &gt;';'                                                                                   : Token;
 StarTerm              : &lt;INITIAL, Generic       &gt;'*'                                                                                   : Token;
+AliasTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)alias(?-u:\b)/                                                               : Token;
 AlwaysCombTerm        : &lt;INITIAL, Generic       &gt;/(?-u:\b)always_comb(?-u:\b)/                                                         : Token;
 AlwaysFfTerm          : &lt;INITIAL, Generic       &gt;/(?-u:\b)always_ff(?-u:\b)/                                                           : Token;
 AssignTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)assign(?-u:\b)/                                                              : Token;
 AsTerm                : &lt;INITIAL, Generic       &gt;/(?-u:\b)as(?-u:\b)/                                                                  : Token;
 BitTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)bit(?-u:\b)/                                                                 : Token;
+BoolTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)bool(?-u:\b)/                                                                : Token;
 CaseTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)case(?-u:\b)/                                                                : Token;
 ClockTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock(?-u:\b)/                                                               : Token;
 ClockPosedgeTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock_posedge(?-u:\b)/                                                       : Token;
 ClockNegedgeTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock_negedge(?-u:\b)/                                                       : Token;
+ConnectTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)connect(?-u:\b)/                                                             : Token;
 ConstTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)const(?-u:\b)/                                                               : Token;
 ConverseTerm          : &lt;INITIAL, Generic       &gt;/(?-u:\b)converse(?-u:\b)/                                                            : Token;
 DefaultTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)default(?-u:\b)/                                                             : Token;
 ElseTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)else(?-u:\b)/                                                                : Token;
 EmbedTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)embed(?-u:\b)/                                                               : Token;
 EnumTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)enum(?-u:\b)/                                                                : Token;
-ExportTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)export(?-u:\b)/                                                              : Token;
 F32Term               : &lt;INITIAL, Generic       &gt;/(?-u:\b)f32(?-u:\b)/                                                                 : Token;
 F64Term               : &lt;INITIAL, Generic       &gt;/(?-u:\b)f64(?-u:\b)/                                                                 : Token;
+FalseTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)false(?-u:\b)/                                                               : Token;
 FinalTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)final(?-u:\b)/                                                               : Token;
 ForTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)for(?-u:\b)/                                                                 : Token;
 FunctionTerm          : &lt;INITIAL, Generic       &gt;/(?-u:\b)function(?-u:\b)/                                                            : Token;
@@ -3569,7 +3754,6 @@ PackageTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)package(?-u:\b)/
 ParamTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)param(?-u:\b)/                                                               : Token;
 ProtoTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)proto(?-u:\b)/                                                               : Token;
 PubTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)pub(?-u:\b)/                                                                 : Token;
-RefTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)ref(?-u:\b)/                                                                 : Token;
 RepeatTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)repeat(?-u:\b)/                                                              : Token;
 ResetTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)reset(?-u:\b)/                                                               : Token;
 ResetAsyncHighTerm    : &lt;INITIAL, Generic       &gt;/(?-u:\b)reset_async_high(?-u:\b)/                                                    : Token;
@@ -3578,12 +3762,14 @@ ResetSyncHighTerm     : &lt;INITIAL, Generic       &gt;/(?-u:\b)reset_sync_high(
 ResetSyncLowTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)reset_sync_low(?-u:\b)/                                                      : Token;
 ReturnTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)return(?-u:\b)/                                                              : Token;
 BreakTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)break(?-u:\b)/                                                               : Token;
+SameTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)same(?-u:\b)/                                                                : Token;
 SignedTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)signed(?-u:\b)/                                                              : Token;
 StepTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)step(?-u:\b)/                                                                : Token;
 StringTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)string(?-u:\b)/                                                              : Token;
 StructTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)struct(?-u:\b)/                                                              : Token;
 SwitchTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)switch(?-u:\b)/                                                              : Token;
 TriTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)tri(?-u:\b)/                                                                 : Token;
+TrueTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)true(?-u:\b)/                                                                : Token;
 TypeTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)type(?-u:\b)/                                                                : Token;
 U32Term               : &lt;INITIAL, Generic       &gt;/(?-u:\b)u32(?-u:\b)/                                                                 : Token;
 U64Term               : &lt;INITIAL, Generic       &gt;/(?-u:\b)u64(?-u:\b)/                                                                 : Token;
@@ -3611,7 +3797,7 @@ BaseLessToken  : BaseLessTerm  : Token Comments;
 AllBitToken    : AllBitTerm    : Token Comments;
 
 AssignmentOperatorToken: AssignmentOperatorTerm: Token Comments;
-Operator01Token        : Operator01Term        : Token Comments;
+DiamondOperatorToken   : DiamondOperatorTerm   : Token Comments;
 Operator02Token        : Operator02Term        : Token Comments;
 Operator03Token        : Operator03Term        : Token Comments;
 Operator04Token        : Operator04Term        : Token Comments;
@@ -3622,6 +3808,7 @@ Operator08Token        : Operator08Term        : Token Comments;
 Operator09Token        : Operator09Term        : Token Comments;
 Operator10Token        : Operator10Term        : Token Comments;
 Operator11Token        : Operator11Term        : Token Comments;
+Operator12Token        : Operator12Term        : Token Comments;
 UnaryOperatorToken     : UnaryOperatorTerm     : Token Comments;
 
 BackQuoteToken       : BackQuoteTerm       : Token Comments;
@@ -3634,6 +3821,7 @@ DotDotEquToken       : DotDotEquTerm       : Token Comments;
 DotToken             : DotTerm             : Token Comments;
 EquToken             : EquTerm             : Token Comments;
 HashToken            : HashTerm            : Token Comments;
+QuestionToken        : QuestionTerm        : Token Comments;
 QuoteLBraceToken     : QuoteLBraceTerm     : Token Comments;
 LAngleToken          : LAngleTerm          : Token Comments;
 LBraceToken          : LBraceTerm          : Token Comments;
@@ -3649,24 +3837,27 @@ RParenToken          : RParenTerm          : Token Comments;
 SemicolonToken       : SemicolonTerm       : Token Comments;
 StarToken            : StarTerm            : Token Comments;
 
+AliasToken         : AliasTerm         : Token Comments;
 AlwaysCombToken    : AlwaysCombTerm    : Token Comments;
 AlwaysFfToken      : AlwaysFfTerm      : Token Comments;
 AsToken            : AsTerm            : Token Comments;
 AssignToken        : AssignTerm        : Token Comments;
 BitToken           : BitTerm           : Token Comments;
+BoolToken          : BoolTerm          : Token Comments;
 CaseToken          : CaseTerm          : Token Comments;
 ClockToken         : ClockTerm         : Token Comments;
 ClockPosedgeToken  : ClockPosedgeTerm  : Token Comments;
 ClockNegedgeToken  : ClockNegedgeTerm  : Token Comments;
+ConnectToken       : ConnectTerm       : Token Comments;
 ConstToken         : ConstTerm         : Token Comments;
 ConverseToken      : ConverseTerm      : Token Comments;
 DefaultToken       : DefaultTerm       : Token Comments;
 ElseToken          : ElseTerm          : Token Comments;
 EmbedToken         : EmbedTerm         : Token Comments;
 EnumToken          : EnumTerm          : Token Comments;
-ExportToken        : ExportTerm        : Token Comments;
 F32Token           : F32Term           : Token Comments;
 F64Token           : F64Term           : Token Comments;
+FalseToken         : FalseTerm         : Token Comments;
 FinalToken         : FinalTerm         : Token Comments;
 ForToken           : ForTerm           : Token Comments;
 FunctionToken      : FunctionTerm      : Token Comments;
@@ -3695,7 +3886,6 @@ PackageToken       : PackageTerm       : Token Comments;
 ParamToken         : ParamTerm         : Token Comments;
 ProtoToken         : ProtoTerm         : Token Comments;
 PubToken           : PubTerm           : Token Comments;
-RefToken           : RefTerm           : Token Comments;
 RepeatToken        : RepeatTerm        : Token Comments;
 ResetToken         : ResetTerm         : Token Comments;
 ResetAsyncHighToken: ResetAsyncHighTerm: Token Comments;
@@ -3704,12 +3894,14 @@ ResetSyncHighToken : ResetSyncHighTerm : Token Comments;
 ResetSyncLowToken  : ResetSyncLowTerm  : Token Comments;
 ReturnToken        : ReturnTerm        : Token Comments;
 BreakToken         : BreakTerm         : Token Comments;
+SameToken          : SameTerm          : Token Comments;
 SignedToken        : SignedTerm        : Token Comments;
 StepToken          : StepTerm          : Token Comments;
 StringToken        : StringTerm        : Token Comments;
 StructToken        : StructTerm        : Token Comments;
 SwitchToken        : SwitchTerm        : Token Comments;
 TriToken           : TriTerm           : Token Comments;
+TrueToken          : TrueTerm          : Token Comments;
 TypeToken          : TypeTerm          : Token Comments;
 U32Token           : U32Term           : Token Comments;
 U64Token           : U64Term           : Token Comments;
@@ -3739,7 +3931,7 @@ AllBit    : AllBitToken    : VerylToken;
 
 // Operator
 AssignmentOperator: AssignmentOperatorToken: VerylToken;
-Operator01        : Operator01Token        : VerylToken;
+DiamondOperator   : DiamondOperatorToken   : VerylToken;
 Operator02        : Operator02Token        : VerylToken;
 Operator03        : Operator03Token        : VerylToken;
 Operator04        : Operator04Token        : VerylToken;
@@ -3750,6 +3942,7 @@ Operator08        : Operator08Token        : VerylToken;
 Operator09        : Operator09Token        : VerylToken;
 Operator10        : Operator10Token        : VerylToken;
 Operator11        : Operator11Token        : VerylToken;
+Operator12        : Operator12Token        : VerylToken;
 UnaryOperator     : UnaryOperatorToken     : VerylToken;
 
 // Symbol
@@ -3763,6 +3956,7 @@ DotDotEqu       : DotDotEquToken       : VerylToken;
 Dot             : DotToken             : VerylToken;
 Equ             : EquToken             : VerylToken;
 Hash            : HashToken            : VerylToken;
+Question        : QuestionToken        : VerylToken;
 QuoteLBrace     : QuoteLBraceToken     : VerylToken;
 LAngle          : LAngleToken          : VerylToken;
 LBrace          : LBraceToken          : VerylToken;
@@ -3779,25 +3973,28 @@ Semicolon       : SemicolonToken       : VerylToken;
 Star            : StarToken            : VerylToken;
 
 // Keyword
+Alias         : AliasToken         : VerylToken;
 AlwaysComb    : AlwaysCombToken    : VerylToken;
 AlwaysFf      : AlwaysFfToken      : VerylToken;
 As            : AsToken            : VerylToken;
 Assign        : AssignToken        : VerylToken;
 Bit           : BitToken           : VerylToken;
+Bool          : BoolToken          : VerylToken;
 Break         : BreakToken         : VerylToken;
 Case          : CaseToken          : VerylToken;
 Clock         : ClockToken         : VerylToken;
 ClockPosedge  : ClockPosedgeToken  : VerylToken;
 ClockNegedge  : ClockNegedgeToken  : VerylToken;
+Connect       : ConnectToken       : VerylToken;
 Const         : ConstToken         : VerylToken;
 Converse      : ConverseToken      : VerylToken;
 Defaul        : DefaultToken       : VerylToken; // avoid to conflict with Rust's Default trait
 Else          : ElseToken          : VerylToken;
 Embed         : EmbedToken         : VerylToken;
 Enum          : EnumToken          : VerylToken;
-Export        : ExportToken        : VerylToken;
 F32           : F32Token           : VerylToken;
 F64           : F64Token           : VerylToken;
+False         : FalseToken         : VerylToken;
 Final         : FinalToken         : VerylToken;
 For           : ForToken           : VerylToken;
 Function      : FunctionToken      : VerylToken;
@@ -3826,7 +4023,6 @@ Package       : PackageToken       : VerylToken;
 Param         : ParamToken         : VerylToken;
 Proto         : ProtoToken         : VerylToken;
 Pub           : PubToken           : VerylToken;
-Ref           : RefToken           : VerylToken;
 Repeat        : RepeatToken        : VerylToken;
 Reset         : ResetToken         : VerylToken;
 ResetAsyncHigh: ResetAsyncHighToken: VerylToken;
@@ -3834,12 +4030,14 @@ ResetAsyncLow : ResetAsyncLowToken : VerylToken;
 ResetSyncHigh : ResetSyncHighToken : VerylToken;
 ResetSyncLow  : ResetSyncLowToken  : VerylToken;
 Return        : ReturnToken        : VerylToken;
+Same          : SameToken          : VerylToken;
 Signed        : SignedToken        : VerylToken;
 Step          : StepToken          : VerylToken;
 Strin         : StringToken        : VerylToken; // avoid to conflict with Rust's String struct
 Struct        : StructToken        : VerylToken;
 Switch        : SwitchToken        : VerylToken;
 Tri           : TriToken           : VerylToken;
+True          : TrueToken          : VerylToken;
 Type          : TypeToken          : VerylToken;
 U32           : U32Token           : VerylToken;
 U64           : U64Token           : VerylToken;
@@ -3880,7 +4078,8 @@ ExpressionIdentifier  : ScopedIdentifier [ Width ] { Select } { Dot Identifier {
 // Expression
 // ----------------------------------------------------------------------------
 
-Expression  : Expression01 { Operator01 Expression01 };
+Expression  : IfExpression;
+IfExpression: { If Expression Question Expression Colon } Expression01;
 Expression01: Expression02 { Operator02 Expression02 };
 Expression02: Expression03 { Operator03 Expression03 };
 Expression03: Expression04 { Operator04 Expression04 };
@@ -3889,17 +4088,18 @@ Expression05: Expression06 { Operator06 Expression06 };
 Expression06: Expression07 { Operator07 Expression07 };
 Expression07: Expression08 { Operator08 Expression08 };
 Expression08: Expression09 { Operator09 Expression09 };
-Expression09: Expression10 { ( Operator10 | Star ) Expression10 };
-Expression10: Expression11 { Operator11 Expression11 };
-Expression11: Expression12 [ As CastingType ];
-Expression12: { ( UnaryOperator | Operator09 | Operator05 | Operator03 | Operator04 ) } Factor;
+Expression09: Expression10 { Operator10 Expression10 };
+Expression10: Expression11 { ( Operator11 | Star ) Expression11 };
+Expression11: Expression12 { Operator12 Expression12 };
+Expression12: Expression13 [ As CastingType ];
+Expression13: { ( UnaryOperator | Operator10 | Operator06 | Operator04 | Operator05 ) } Factor;
 
 Factor: Number
+      | BooleanLiteral
       | IdentifierFactor
       | LParen Expression RParen
       | LBrace ConcatenationList RBrace
       | QuoteLBrace ArrayLiteralList RBrace
-      | IfExpression
       | CaseExpression
       | SwitchExpression
       | StringLiteral
@@ -3910,7 +4110,9 @@ Factor: Number
       | FactorTypeFactor
       ;
 
-IdentifierFactor: ExpressionIdentifier [ FunctionCall ];
+BooleanLiteral: True | False;
+
+IdentifierFactor: ExpressionIdentifier [ FunctionCall | StructConstructor ];
 
 FactorTypeFactor: { TypeModifier } FactorType;
 
@@ -3918,7 +4120,15 @@ FunctionCall: LParen [ ArgumentList ] RParen;
 
 ArgumentList: ArgumentItem { Comma ArgumentItem } [ Comma ];
 
-ArgumentItem: Expression;
+ArgumentItem: ArgumentExpression [ Colon Expression ];
+
+ArgumentExpression: Expression;
+
+StructConstructor: QuoteLBrace StructConstructorList [ DotDot Defaul LParen Expression RParen ] RBrace;
+
+StructConstructorList: StructConstructorItem { Comma StructConstructorItem } [ Comma ];
+
+StructConstructorItem: Identifier Colon Expression;
 
 ConcatenationList: ConcatenationItem { Comma ConcatenationItem } [ Comma ];
 
@@ -3927,8 +4137,6 @@ ConcatenationItem: Expression [ Repeat Expression ];
 ArrayLiteralList: ArrayLiteralItem { Comma ArrayLiteralItem } [ Comma ];
 
 ArrayLiteralItem: ( Expression [ Repeat Expression ] | Defaul Colon Expression );
-
-IfExpression: If Expression LBrace Expression RBrace { Else If Expression LBrace Expression RBrace } Else LBrace Expression RBrace;
 
 CaseExpression: Case Expression LBrace CaseCondition Colon Expression Comma { CaseCondition Colon Expression Comma } Defaul Colon Expression [ Comma ] RBrace;
 
@@ -3970,7 +4178,7 @@ RangeOperator: DotDot
 // ScalarType / ArrayType / CastingType
 // ----------------------------------------------------------------------------
 
-FixedType: U32 | U64 | I32 | I64 | F32 | F64 | Strin;
+FixedType: U32 | U64 | I32 | I64 | F32 | F64 | Bool | Strin;
 
 VariableType: Clock
             | ClockPosedge
@@ -3985,7 +4193,7 @@ VariableType: Clock
 
 UserDefinedType: ScopedIdentifier;
 
-TypeModifier: Tri | Signed;
+TypeModifier: Tri | Signed | Defaul;
 
 FactorType: ( VariableType [ Width ] | FixedType );
 
@@ -3999,6 +4207,7 @@ CastingType: U32
            | I64
            | F32
            | F64
+           | Bool
            | Clock
            | ClockPosedge
            | ClockNegedge
@@ -4042,7 +4251,7 @@ LetStatement: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Semi
 
 IdentifierStatement: ExpressionIdentifier ( FunctionCall | Assignment ) Semicolon;
 
-Assignment: ( Equ | AssignmentOperator ) Expression;
+Assignment: ( Equ | AssignmentOperator | DiamondOperator ) Expression;
 
 IfStatement: If Expression StatementBlock { Else If Expression StatementBlock } [ Else StatementBlock ];
 
@@ -4109,6 +4318,8 @@ AssignConcatenationList: AssignConcatenationItem { Comma AssignConcatenationItem
 
 AssignConcatenationItem: HierarchicalIdentifier;
 
+ConnectDeclaration: Connect HierarchicalIdentifier DiamondOperator Expression Semicolon;
+
 ModportDeclaration: Modport Identifier LBrace [ ModportList ] [ DotDot ModportDefault ] RBrace;
 
 ModportList: ModportGroup { Comma ModportGroup } [ Comma ];
@@ -4119,6 +4330,7 @@ ModportItem: Identifier Colon Direction;
 
 ModportDefault: Input
               | Output
+              | Same LParen Identifier RParen
               | Converse LParen Identifier RParen;
 
 EnumDeclaration: Enum Identifier [ Colon ScalarType ] LBrace EnumList RBrace;
@@ -4223,7 +4435,6 @@ PortTypeAbstract: [ ClockDomain ] Interface [ ColonColon Identifier ] [ Array ];
 Direction: Input
          | Output
          | Inout
-         | Ref
          | Modport
          | Import
          ;
@@ -4235,12 +4446,10 @@ Direction: Input
 FunctionDeclaration: Function Identifier [ WithGenericParameter ] [ PortDeclaration ] [ MinusGT ScalarType ] StatementBlock;
 
 // ----------------------------------------------------------------------------
-// Import / Export
+// Import
 // ----------------------------------------------------------------------------
 
 ImportDeclaration: Import ScopedIdentifier [ ColonColon Star ] Semicolon;
-
-ExportDeclaration: Export ( Star | ScopedIdentifier [ ColonColon Star ] ) Semicolon;
 
 // ----------------------------------------------------------------------------
 // Unsafe
@@ -4283,6 +4492,7 @@ GenerateItem: LetDeclaration
             | AlwaysFfDeclaration
             | AlwaysCombDeclaration
             | AssignDeclaration
+            | ConnectDeclaration
             | FunctionDeclaration
             | GenerateIfDeclaration
             | GenerateForDeclaration
@@ -4291,6 +4501,7 @@ GenerateItem: LetDeclaration
             | EnumDeclaration
             | StructUnionDeclaration
             | ImportDeclaration
+            | AliasDeclaration
             | InitialDeclaration
             | FinalDeclaration
             | UnsafeBlock
@@ -4300,7 +4511,7 @@ GenerateItem: LetDeclaration
 // Package
 // ----------------------------------------------------------------------------
 
-PackageDeclaration: Package Identifier [ WithGenericParameter ] LBrace { PackageGroup } RBrace;
+PackageDeclaration: Package Identifier [ WithGenericParameter ] [ For ScopedIdentifier ] LBrace { PackageGroup } RBrace;
 
 PackageGroup: { Attribute } ( LBrace { PackageGroup } RBrace | PackageItem );
 
@@ -4310,14 +4521,36 @@ PackageItem: ConstDeclaration
            | StructUnionDeclaration
            | FunctionDeclaration
            | ImportDeclaration
-           | ExportDeclaration
+           | AliasDeclaration
            ;
+
+// ----------------------------------------------------------------------------
+// Alias
+// ----------------------------------------------------------------------------
+
+AliasDeclaration: Alias ( Module | Interface | Package ) Identifier Equ ScopedIdentifier Semicolon;
 
 // ----------------------------------------------------------------------------
 // Proto
 // ----------------------------------------------------------------------------
 
 ProtoModuleDeclaration: Proto Module Identifier [ WithParameter ] [ PortDeclaration ] Semicolon;
+
+ProtoPackageDeclaration: Proto Package Identifier LBrace { ProtoPacakgeItem } RBrace;
+
+ProtoPacakgeItem: ProtoConstDeclaration
+                | ProtoTypeDefDeclaration
+                | EnumDeclaration
+                | StructUnionDeclaration
+                | ProtoFunctionDeclaration
+                | ImportDeclaration
+                ;
+
+ProtoConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Semicolon;
+
+ProtoTypeDefDeclaration: Type Identifier Semicolon;
+
+ProtoFunctionDeclaration: Function Identifier [ WithGenericParameter ] [ PortDeclaration ] [ MinusGT ScalarType ] Semicolon;
 
 // ----------------------------------------------------------------------------
 // Embed
@@ -4353,8 +4586,10 @@ DescriptionItem: [ Pub ] PublicDescriptionItem
 PublicDescriptionItem: ModuleDeclaration
                      | InterfaceDeclaration
                      | PackageDeclaration
+                     | AliasDeclaration
                      | ProtoModuleDeclaration
-                     ; 
+                     | ProtoPackageDeclaration
+                     ;
 
 // ----------------------------------------------------------------------------
 // SourceCode

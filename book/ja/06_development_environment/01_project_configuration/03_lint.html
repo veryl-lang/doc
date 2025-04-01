@@ -216,33 +216,31 @@ case_enum = "snake"
 <h3 id="lintnaming-セクション"><a class="header" href="#lintnaming-セクション"><code>[lint.naming]</code> セクション</a></h3>
 <p>このセクションは命名規則の設定です。</p>
 <div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
-<tr><td>case_enum</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>enum</code> のケーススタイル</td></tr>
-<tr><td>case_function</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>function</code> のケーススタイル</td></tr>
-<tr><td>case_function_inout</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>inout</code> 引数のケーススタイル</td></tr>
-<tr><td>case_function_input</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>input</code> 引数のケーススタイル</td></tr>
-<tr><td>case_function_output</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>output</code> 引数のケーススタイル</td></tr>
-<tr><td>case_function_ref</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>ref</code> 引数のケーススタイル</td></tr>
-<tr><td>case_instance</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>インスタンスのケーススタイル</td></tr>
-<tr><td>case_interface</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>interface</code> のケーススタイル</td></tr>
-<tr><td>case_modport</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>modport</code> のケーススタイル</td></tr>
-<tr><td>case_module</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>module</code> のケーススタイル</td></tr>
-<tr><td>case_package</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>package</code> のケーススタイル</td></tr>
-<tr><td>case_parameter</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>parameter</code> のケーススタイル</td></tr>
-<tr><td>case_port_inout</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>inout</code> ポートのケーススタイル</td></tr>
-<tr><td>case_port_input</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>input</code> ポートのケーススタイル</td></tr>
-<tr><td>case_port_modport</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>modport</code> ポートのケーススタイル</td></tr>
-<tr><td>case_port_output</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>output</code> ポートのケーススタイル</td></tr>
-<tr><td>case_reg</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>レジスタ変数<sup class="footnote-reference"><a href="#reg">2</a></sup>のケーススタイル</td></tr>
-<tr><td>case_struct</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>struct</code> のケーススタイル</td></tr>
-<tr><td>case_union</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>union</code> のケーススタイル</td></tr>
-<tr><td>case_var</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>変数のケーススタイル</td></tr>
-<tr><td>case_wire</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>ワイヤ変数<sup class="footnote-reference"><a href="#wire">3</a></sup>のケーススタイル</td></tr>
+<tr><td>case_enum</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-1"><a href="#footnote-casetype">1</a></sup></td><td><code>enum</code> のケーススタイル</td></tr>
+<tr><td>case_function</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-2"><a href="#footnote-casetype">1</a></sup></td><td><code>function</code> のケーススタイル</td></tr>
+<tr><td>case_function_inout</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-3"><a href="#footnote-casetype">1</a></sup></td><td><code>inout</code> 引数のケーススタイル</td></tr>
+<tr><td>case_function_input</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-4"><a href="#footnote-casetype">1</a></sup></td><td><code>input</code> 引数のケーススタイル</td></tr>
+<tr><td>case_function_output</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-5"><a href="#footnote-casetype">1</a></sup></td><td><code>output</code> 引数のケーススタイル</td></tr>
+<tr><td>case_instance</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-6"><a href="#footnote-casetype">1</a></sup></td><td>インスタンスのケーススタイル</td></tr>
+<tr><td>case_interface</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-7"><a href="#footnote-casetype">1</a></sup></td><td><code>interface</code> のケーススタイル</td></tr>
+<tr><td>case_modport</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-8"><a href="#footnote-casetype">1</a></sup></td><td><code>modport</code> のケーススタイル</td></tr>
+<tr><td>case_module</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-9"><a href="#footnote-casetype">1</a></sup></td><td><code>module</code> のケーススタイル</td></tr>
+<tr><td>case_package</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-10"><a href="#footnote-casetype">1</a></sup></td><td><code>package</code> のケーススタイル</td></tr>
+<tr><td>case_parameter</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-11"><a href="#footnote-casetype">1</a></sup></td><td><code>parameter</code> のケーススタイル</td></tr>
+<tr><td>case_port_inout</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-12"><a href="#footnote-casetype">1</a></sup></td><td><code>inout</code> ポートのケーススタイル</td></tr>
+<tr><td>case_port_input</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-13"><a href="#footnote-casetype">1</a></sup></td><td><code>input</code> ポートのケーススタイル</td></tr>
+<tr><td>case_port_modport</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-14"><a href="#footnote-casetype">1</a></sup></td><td><code>modport</code> ポートのケーススタイル</td></tr>
+<tr><td>case_port_output</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-15"><a href="#footnote-casetype">1</a></sup></td><td><code>output</code> ポートのケーススタイル</td></tr>
+<tr><td>case_reg</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-16"><a href="#footnote-casetype">1</a></sup></td><td>レジスタ変数<sup class="footnote-reference" id="fr-reg-1"><a href="#footnote-reg">2</a></sup>のケーススタイル</td></tr>
+<tr><td>case_struct</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-17"><a href="#footnote-casetype">1</a></sup></td><td><code>struct</code> のケーススタイル</td></tr>
+<tr><td>case_union</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-18"><a href="#footnote-casetype">1</a></sup></td><td><code>union</code> のケーススタイル</td></tr>
+<tr><td>case_var</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-19"><a href="#footnote-casetype">1</a></sup></td><td>変数のケーススタイル</td></tr>
+<tr><td>case_wire</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-20"><a href="#footnote-casetype">1</a></sup></td><td>ワイヤ変数<sup class="footnote-reference" id="fr-wire-1"><a href="#footnote-wire">3</a></sup>のケーススタイル</td></tr>
 <tr><td>prefix_enum</td><td>文字列</td><td><code>enum</code> のプレフィックス</td></tr>
 <tr><td>prefix_function</td><td>文字列</td><td><code>function</code> のプレフィックス</td></tr>
 <tr><td>prefix_function_inout</td><td>文字列</td><td><code>inout</code> 引数のプレフィックス</td></tr>
 <tr><td>prefix_function_input</td><td>文字列</td><td><code>input</code> 引数のプレフィックス</td></tr>
 <tr><td>prefix_function_output</td><td>文字列</td><td><code>output</code> 引数のプレフィックス</td></tr>
-<tr><td>prefix_function_ref</td><td>文字列</td><td><code>ref</code> 引数のプレフィックス</td></tr>
 <tr><td>prefix_instance</td><td>文字列</td><td>インスタンスのプレフィックス</td></tr>
 <tr><td>prefix_interface</td><td>文字列</td><td><code>interface</code> のプレフィックス</td></tr>
 <tr><td>prefix_modport</td><td>文字列</td><td><code>modport</code> のプレフィックス</td></tr>
@@ -253,17 +251,16 @@ case_enum = "snake"
 <tr><td>prefix_port_input</td><td>文字列</td><td><code>input</code> ポートのプレフィックス</td></tr>
 <tr><td>prefix_port_modport</td><td>文字列</td><td><code>modport</code> ポートのプレフィックス</td></tr>
 <tr><td>prefix_port_output</td><td>文字列</td><td><code>output</code> ポートのプレフィックス</td></tr>
-<tr><td>prefix_reg</td><td>文字列</td><td>レジスタ変数<sup class="footnote-reference"><a href="#reg">2</a></sup>のプレフィックス</td></tr>
+<tr><td>prefix_reg</td><td>文字列</td><td>レジスタ変数<sup class="footnote-reference" id="fr-reg-2"><a href="#footnote-reg">2</a></sup>のプレフィックス</td></tr>
 <tr><td>prefix_struct</td><td>文字列</td><td><code>struct</code> のプレフィックス</td></tr>
 <tr><td>prefix_union</td><td>文字列</td><td><code>union</code> のプレフィックス</td></tr>
 <tr><td>prefix_var</td><td>文字列</td><td>変数のプレフィックス</td></tr>
-<tr><td>prefix_wire</td><td>文字列</td><td>ワイヤ変数<sup class="footnote-reference"><a href="#wire">3</a></sup>のプレフィックス</td></tr>
+<tr><td>prefix_wire</td><td>文字列</td><td>ワイヤ変数<sup class="footnote-reference" id="fr-wire-2"><a href="#footnote-wire">3</a></sup>のプレフィックス</td></tr>
 <tr><td>suffix_enum</td><td>文字列</td><td><code>enum</code> のサフィックス</td></tr>
 <tr><td>suffix_function</td><td>文字列</td><td><code>function</code> のサフィックス</td></tr>
 <tr><td>suffix_function_inout</td><td>文字列</td><td><code>inout</code> 引数のサフィックス</td></tr>
 <tr><td>suffix_function_input</td><td>文字列</td><td><code>input</code> 引数のサフィックス</td></tr>
 <tr><td>suffix_function_output</td><td>文字列</td><td><code>output</code> 引数のサフィックス</td></tr>
-<tr><td>suffix_function_ref</td><td>文字列</td><td><code>ref</code> 引数のサフィックス</td></tr>
 <tr><td>suffix_instance</td><td>文字列</td><td>インスタンスのサフィックス</td></tr>
 <tr><td>suffix_interface</td><td>文字列</td><td><code>interface</code> のサフィックス</td></tr>
 <tr><td>suffix_modport</td><td>文字列</td><td><code>modport</code> のサフィックス</td></tr>
@@ -274,57 +271,52 @@ case_enum = "snake"
 <tr><td>suffix_port_input</td><td>文字列</td><td><code>input</code> ポートのサフィックス</td></tr>
 <tr><td>suffix_port_modport</td><td>文字列</td><td><code>modport</code> ポートのサフィックス</td></tr>
 <tr><td>suffix_port_output</td><td>文字列</td><td><code>output</code> ポートのサフィックス</td></tr>
-<tr><td>suffix_reg</td><td>文字列</td><td>レジスタ変数<sup class="footnote-reference"><a href="#reg">2</a></sup>のサフィックス</td></tr>
+<tr><td>suffix_reg</td><td>文字列</td><td>レジスタ変数<sup class="footnote-reference" id="fr-reg-3"><a href="#footnote-reg">2</a></sup>のサフィックス</td></tr>
 <tr><td>suffix_struct</td><td>文字列</td><td><code>struct</code> のサフィックス</td></tr>
 <tr><td>suffix_union</td><td>文字列</td><td><code>union</code> のサフィックス</td></tr>
 <tr><td>suffix_var</td><td>文字列</td><td>変数のサフィックス</td></tr>
-<tr><td>suffix_wire</td><td>文字列</td><td>ワイヤ変数<sup class="footnote-reference"><a href="#wire">3</a></sup>のサフィックス</td></tr>
-<tr><td>re_forbidden_enum</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>enum</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_function</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>function</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_function_inout</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>inout</code> 引数の禁止正規表現</td></tr>
-<tr><td>re_forbidden_function_input</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>input</code> 引数の禁止正規表現</td></tr>
-<tr><td>re_forbidden_function_output</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>output</code> 引数の禁止正規表現</td></tr>
-<tr><td>re_forbidden_function_ref</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>ref</code> 引数の禁止正規表現</td></tr>
-<tr><td>re_forbidden_instance</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>インスタンスの禁止正規表現</td></tr>
-<tr><td>re_forbidden_interface</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>interface</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_modport</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>modport</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_module</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>module</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_package</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>package</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_parameter</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>parameter</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_port_inout</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>inout</code> ポートの禁止正規表現</td></tr>
-<tr><td>re_forbidden_port_input</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>input</code> ポートの禁止正規表現</td></tr>
-<tr><td>re_forbidden_port_modport</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>modport</code> ポートの禁止正規表現</td></tr>
-<tr><td>re_forbidden_port_output</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>output</code> ポートの禁止正規表現</td></tr>
-<tr><td>re_forbidden_reg</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>レジスタ変数<sup class="footnote-reference"><a href="#reg">2</a></sup>の禁止正規表現</td></tr>
-<tr><td>re_forbidden_struct</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>struct</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_union</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>union</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_var</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>変数の禁止正規表現</td></tr>
-<tr><td>re_forbidden_wire</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>ワイヤ変数<sup class="footnote-reference"><a href="#wire">3</a></sup>の禁止正規表現</td></tr>
-<tr><td>re_required_enum</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>enum</code> の必須正規表現</td></tr>
-<tr><td>re_required_function</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>function</code> の必須正規表現</td></tr>
-<tr><td>re_required_function_inout</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>inout</code> 引数の必須正規表現</td></tr>
-<tr><td>re_required_function_input</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>input</code> 引数の必須正規表現</td></tr>
-<tr><td>re_required_function_output</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>output</code> 引数の必須正規表現</td></tr>
-<tr><td>re_required_function_ref</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>ref</code> 引数の必須正規表現</td></tr>
-<tr><td>re_required_instance</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>インスタンスの必須正規表現</td></tr>
-<tr><td>re_required_interface</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>interface</code> の必須正規表現</td></tr>
-<tr><td>re_required_modport</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>modport</code> の必須正規表現</td></tr>
-<tr><td>re_required_module</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>module</code> の必須正規表現</td></tr>
-<tr><td>re_required_package</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>package</code> の必須正規表現</td></tr>
-<tr><td>re_required_parameter</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>parameter</code> の必須正規表現</td></tr>
-<tr><td>re_required_port_inout</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>inout</code> ポートの必須正規表現</td></tr>
-<tr><td>re_required_port_input</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>input</code> ポートの必須正規表現</td></tr>
-<tr><td>re_required_port_modport</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>modport</code> ポートの必須正規表現</td></tr>
-<tr><td>re_required_port_output</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>output</code> ポートの必須正規表現</td></tr>
-<tr><td>re_required_reg</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>レジスタ変数<sup class="footnote-reference"><a href="#reg">2</a></sup>の必須正規表現</td></tr>
-<tr><td>re_required_struct</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>struct</code> の必須正規表現</td></tr>
-<tr><td>re_required_union</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>union</code> の必須正規表現</td></tr>
-<tr><td>re_required_var</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>変数の必須正規表現</td></tr>
-<tr><td>re_required_wire</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>ワイヤ変数<sup class="footnote-reference"><a href="#wire">3</a></sup>の必須正規表現</td></tr>
+<tr><td>suffix_wire</td><td>文字列</td><td>ワイヤ変数<sup class="footnote-reference" id="fr-wire-3"><a href="#footnote-wire">3</a></sup>のサフィックス</td></tr>
+<tr><td>re_forbidden_enum</td><td>正規表現<sup class="footnote-reference" id="fr-regex-1"><a href="#footnote-regex">4</a></sup></td><td><code>enum</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_function</td><td>正規表現<sup class="footnote-reference" id="fr-regex-2"><a href="#footnote-regex">4</a></sup></td><td><code>function</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_function_inout</td><td>正規表現<sup class="footnote-reference" id="fr-regex-3"><a href="#footnote-regex">4</a></sup></td><td><code>inout</code> 引数の禁止正規表現</td></tr>
+<tr><td>re_forbidden_function_input</td><td>正規表現<sup class="footnote-reference" id="fr-regex-4"><a href="#footnote-regex">4</a></sup></td><td><code>input</code> 引数の禁止正規表現</td></tr>
+<tr><td>re_forbidden_function_output</td><td>正規表現<sup class="footnote-reference" id="fr-regex-5"><a href="#footnote-regex">4</a></sup></td><td><code>output</code> 引数の禁止正規表現</td></tr>
+<tr><td>re_forbidden_instance</td><td>正規表現<sup class="footnote-reference" id="fr-regex-6"><a href="#footnote-regex">4</a></sup></td><td>インスタンスの禁止正規表現</td></tr>
+<tr><td>re_forbidden_interface</td><td>正規表現<sup class="footnote-reference" id="fr-regex-7"><a href="#footnote-regex">4</a></sup></td><td><code>interface</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_modport</td><td>正規表現<sup class="footnote-reference" id="fr-regex-8"><a href="#footnote-regex">4</a></sup></td><td><code>modport</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_module</td><td>正規表現<sup class="footnote-reference" id="fr-regex-9"><a href="#footnote-regex">4</a></sup></td><td><code>module</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_package</td><td>正規表現<sup class="footnote-reference" id="fr-regex-10"><a href="#footnote-regex">4</a></sup></td><td><code>package</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_parameter</td><td>正規表現<sup class="footnote-reference" id="fr-regex-11"><a href="#footnote-regex">4</a></sup></td><td><code>parameter</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_port_inout</td><td>正規表現<sup class="footnote-reference" id="fr-regex-12"><a href="#footnote-regex">4</a></sup></td><td><code>inout</code> ポートの禁止正規表現</td></tr>
+<tr><td>re_forbidden_port_input</td><td>正規表現<sup class="footnote-reference" id="fr-regex-13"><a href="#footnote-regex">4</a></sup></td><td><code>input</code> ポートの禁止正規表現</td></tr>
+<tr><td>re_forbidden_port_modport</td><td>正規表現<sup class="footnote-reference" id="fr-regex-14"><a href="#footnote-regex">4</a></sup></td><td><code>modport</code> ポートの禁止正規表現</td></tr>
+<tr><td>re_forbidden_port_output</td><td>正規表現<sup class="footnote-reference" id="fr-regex-15"><a href="#footnote-regex">4</a></sup></td><td><code>output</code> ポートの禁止正規表現</td></tr>
+<tr><td>re_forbidden_reg</td><td>正規表現<sup class="footnote-reference" id="fr-regex-16"><a href="#footnote-regex">4</a></sup></td><td>レジスタ変数<sup class="footnote-reference" id="fr-reg-4"><a href="#footnote-reg">2</a></sup>の禁止正規表現</td></tr>
+<tr><td>re_forbidden_struct</td><td>正規表現<sup class="footnote-reference" id="fr-regex-17"><a href="#footnote-regex">4</a></sup></td><td><code>struct</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_union</td><td>正規表現<sup class="footnote-reference" id="fr-regex-18"><a href="#footnote-regex">4</a></sup></td><td><code>union</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_var</td><td>正規表現<sup class="footnote-reference" id="fr-regex-19"><a href="#footnote-regex">4</a></sup></td><td>変数の禁止正規表現</td></tr>
+<tr><td>re_forbidden_wire</td><td>正規表現<sup class="footnote-reference" id="fr-regex-20"><a href="#footnote-regex">4</a></sup></td><td>ワイヤ変数<sup class="footnote-reference" id="fr-wire-4"><a href="#footnote-wire">3</a></sup>の禁止正規表現</td></tr>
+<tr><td>re_required_enum</td><td>正規表現<sup class="footnote-reference" id="fr-regex-21"><a href="#footnote-regex">4</a></sup></td><td><code>enum</code> の必須正規表現</td></tr>
+<tr><td>re_required_function</td><td>正規表現<sup class="footnote-reference" id="fr-regex-22"><a href="#footnote-regex">4</a></sup></td><td><code>function</code> の必須正規表現</td></tr>
+<tr><td>re_required_function_inout</td><td>正規表現<sup class="footnote-reference" id="fr-regex-23"><a href="#footnote-regex">4</a></sup></td><td><code>inout</code> 引数の必須正規表現</td></tr>
+<tr><td>re_required_function_input</td><td>正規表現<sup class="footnote-reference" id="fr-regex-24"><a href="#footnote-regex">4</a></sup></td><td><code>input</code> 引数の必須正規表現</td></tr>
+<tr><td>re_required_function_output</td><td>正規表現<sup class="footnote-reference" id="fr-regex-25"><a href="#footnote-regex">4</a></sup></td><td><code>output</code> 引数の必須正規表現</td></tr>
+<tr><td>re_required_instance</td><td>正規表現<sup class="footnote-reference" id="fr-regex-26"><a href="#footnote-regex">4</a></sup></td><td>インスタンスの必須正規表現</td></tr>
+<tr><td>re_required_interface</td><td>正規表現<sup class="footnote-reference" id="fr-regex-27"><a href="#footnote-regex">4</a></sup></td><td><code>interface</code> の必須正規表現</td></tr>
+<tr><td>re_required_modport</td><td>正規表現<sup class="footnote-reference" id="fr-regex-28"><a href="#footnote-regex">4</a></sup></td><td><code>modport</code> の必須正規表現</td></tr>
+<tr><td>re_required_module</td><td>正規表現<sup class="footnote-reference" id="fr-regex-29"><a href="#footnote-regex">4</a></sup></td><td><code>module</code> の必須正規表現</td></tr>
+<tr><td>re_required_package</td><td>正規表現<sup class="footnote-reference" id="fr-regex-30"><a href="#footnote-regex">4</a></sup></td><td><code>package</code> の必須正規表現</td></tr>
+<tr><td>re_required_parameter</td><td>正規表現<sup class="footnote-reference" id="fr-regex-31"><a href="#footnote-regex">4</a></sup></td><td><code>parameter</code> の必須正規表現</td></tr>
+<tr><td>re_required_port_inout</td><td>正規表現<sup class="footnote-reference" id="fr-regex-32"><a href="#footnote-regex">4</a></sup></td><td><code>inout</code> ポートの必須正規表現</td></tr>
+<tr><td>re_required_port_input</td><td>正規表現<sup class="footnote-reference" id="fr-regex-33"><a href="#footnote-regex">4</a></sup></td><td><code>input</code> ポートの必須正規表現</td></tr>
+<tr><td>re_required_port_modport</td><td>正規表現<sup class="footnote-reference" id="fr-regex-34"><a href="#footnote-regex">4</a></sup></td><td><code>modport</code> ポートの必須正規表現</td></tr>
+<tr><td>re_required_port_output</td><td>正規表現<sup class="footnote-reference" id="fr-regex-35"><a href="#footnote-regex">4</a></sup></td><td><code>output</code> ポートの必須正規表現</td></tr>
+<tr><td>re_required_reg</td><td>正規表現<sup class="footnote-reference" id="fr-regex-36"><a href="#footnote-regex">4</a></sup></td><td>レジスタ変数<sup class="footnote-reference" id="fr-reg-5"><a href="#footnote-reg">2</a></sup>の必須正規表現</td></tr>
+<tr><td>re_required_struct</td><td>正規表現<sup class="footnote-reference" id="fr-regex-37"><a href="#footnote-regex">4</a></sup></td><td><code>struct</code> の必須正規表現</td></tr>
+<tr><td>re_required_union</td><td>正規表現<sup class="footnote-reference" id="fr-regex-38"><a href="#footnote-regex">4</a></sup></td><td><code>union</code> の必須正規表現</td></tr>
+<tr><td>re_required_var</td><td>正規表現<sup class="footnote-reference" id="fr-regex-39"><a href="#footnote-regex">4</a></sup></td><td>変数の必須正規表現</td></tr>
+<tr><td>re_required_wire</td><td>正規表現<sup class="footnote-reference" id="fr-regex-40"><a href="#footnote-regex">4</a></sup></td><td>ワイヤ変数<sup class="footnote-reference" id="fr-wire-5"><a href="#footnote-wire">3</a></sup>の必須正規表現</td></tr>
 </tbody></table>
-</div>
-<div class="footnote-definition" id="casetype"><sup class="footnote-definition-label">1</sup>
-<p>設定可能な値は以下です。</p>
 </div>
 <ul>
 <li><code>"snake"</code> – snake_case</li>
@@ -332,16 +324,20 @@ case_enum = "snake"
 <li><code>"lower_camel"</code> – lowerCamelCase</li>
 <li><code>"upper_camel"</code> – UpperCamelCase</li>
 </ul>
-<div class="footnote-definition" id="regex"><sup class="footnote-definition-label">4</sup>
-<p><code>".*"</code>のような正規表現です。使用可能な構文は<a href="https://docs.rs/regex/latest/regex/#syntax">こちら</a>.</p>
-</div>
-<div class="footnote-definition" id="reg"><sup class="footnote-definition-label">2</sup>
-<p>レジスタ変数とは <code>always_ff</code> で代入される変数です。合成フェーズでフリップフロップにマップされます。</p>
-</div>
-<div class="footnote-definition" id="wire"><sup class="footnote-definition-label">3</sup>
-<p>ワイヤ変数とは <code>always_comb</code> で代入される変数です。合成フェーズでワイヤにマップされます。</p>
-</div>
-
+<hr>
+<ol class="footnote-definition"><li id="footnote-casetype">
+<p>設定可能な値は以下です。 <a href="#fr-casetype-1">↩</a> <a href="#fr-casetype-2">↩2</a> <a href="#fr-casetype-3">↩3</a> <a href="#fr-casetype-4">↩4</a> <a href="#fr-casetype-5">↩5</a> <a href="#fr-casetype-6">↩6</a> <a href="#fr-casetype-7">↩7</a> <a href="#fr-casetype-8">↩8</a> <a href="#fr-casetype-9">↩9</a> <a href="#fr-casetype-10">↩10</a> <a href="#fr-casetype-11">↩11</a> <a href="#fr-casetype-12">↩12</a> <a href="#fr-casetype-13">↩13</a> <a href="#fr-casetype-14">↩14</a> <a href="#fr-casetype-15">↩15</a> <a href="#fr-casetype-16">↩16</a> <a href="#fr-casetype-17">↩17</a> <a href="#fr-casetype-18">↩18</a> <a href="#fr-casetype-19">↩19</a> <a href="#fr-casetype-20">↩20</a></p>
+</li>
+<li id="footnote-reg">
+<p>レジスタ変数とは <code>always_ff</code> で代入される変数です。合成フェーズでフリップフロップにマップされます。 <a href="#fr-reg-1">↩</a> <a href="#fr-reg-2">↩2</a> <a href="#fr-reg-3">↩3</a> <a href="#fr-reg-4">↩4</a> <a href="#fr-reg-5">↩5</a></p>
+</li>
+<li id="footnote-wire">
+<p>ワイヤ変数とは <code>always_comb</code> で代入される変数です。合成フェーズでワイヤにマップされます。 <a href="#fr-wire-1">↩</a> <a href="#fr-wire-2">↩2</a> <a href="#fr-wire-3">↩3</a> <a href="#fr-wire-4">↩4</a> <a href="#fr-wire-5">↩5</a></p>
+</li>
+<li id="footnote-regex">
+<p><code>".*"</code>のような正規表現です。使用可能な構文は<a href="https://docs.rs/regex/latest/regex/#syntax">こちら</a>. <a href="#fr-regex-1">↩</a> <a href="#fr-regex-2">↩2</a> <a href="#fr-regex-3">↩3</a> <a href="#fr-regex-4">↩4</a> <a href="#fr-regex-5">↩5</a> <a href="#fr-regex-6">↩6</a> <a href="#fr-regex-7">↩7</a> <a href="#fr-regex-8">↩8</a> <a href="#fr-regex-9">↩9</a> <a href="#fr-regex-10">↩10</a> <a href="#fr-regex-11">↩11</a> <a href="#fr-regex-12">↩12</a> <a href="#fr-regex-13">↩13</a> <a href="#fr-regex-14">↩14</a> <a href="#fr-regex-15">↩15</a> <a href="#fr-regex-16">↩16</a> <a href="#fr-regex-17">↩17</a> <a href="#fr-regex-18">↩18</a> <a href="#fr-regex-19">↩19</a> <a href="#fr-regex-20">↩20</a> <a href="#fr-regex-21">↩21</a> <a href="#fr-regex-22">↩22</a> <a href="#fr-regex-23">↩23</a> <a href="#fr-regex-24">↩24</a> <a href="#fr-regex-25">↩25</a> <a href="#fr-regex-26">↩26</a> <a href="#fr-regex-27">↩27</a> <a href="#fr-regex-28">↩28</a> <a href="#fr-regex-29">↩29</a> <a href="#fr-regex-30">↩30</a> <a href="#fr-regex-31">↩31</a> <a href="#fr-regex-32">↩32</a> <a href="#fr-regex-33">↩33</a> <a href="#fr-regex-34">↩34</a> <a href="#fr-regex-35">↩35</a> <a href="#fr-regex-36">↩36</a> <a href="#fr-regex-37">↩37</a> <a href="#fr-regex-38">↩38</a> <a href="#fr-regex-39">↩39</a> <a href="#fr-regex-40">↩40</a></p>
+</li>
+</ol>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
