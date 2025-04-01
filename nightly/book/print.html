@@ -2383,6 +2383,9 @@ Package can organize some declarations like parameter and function.</p>
 <p>If you want to access to items of SystemVerilog, <code>$sv</code> namespace can be used.
 For example, “ModuleA” in SystemVerilog source code can be accessed by <code>$sv::ModuleA</code>.
 Veryl don’t check the existence of the items.</p>
+<p>Veryl compiler emits the path name as is excluding <code>$sv::</code>.
+Therefore, symbols in other HDLs like Verilog/VHDL can be refered through <code>$sv::</code> too.
+It depeneds on implementation (e.g. simulator, synthesizer) whether each symbols can be resolved.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let _a: logic = $sv::PackageA::ParamA;
 

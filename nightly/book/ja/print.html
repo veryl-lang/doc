@@ -2225,6 +2225,7 @@ module ModubeB {
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="systemverilogとの相互運用"><a class="header" href="#systemverilogとの相互運用">SystemVerilogとの相互運用</a></h1>
 <p>SystemVerilogの要素にアクセスする場合は <code>$sv</code> 名前空間を使えます。例えば、SystemVerilogソースコードの “ModuleA” は <code>$sv::ModuleA</code> です。Veryl はこれらの要素が実際に存在するかどうかは確認しません。</p>
+<p>Verylコンパイラは <code>$sv::</code> を除いたパス名をそのまま出力します。そのため Verilog や VHDL のような他のHDLのシンボルも参照できます。それぞれのシンボルが解決できるかどうかは実装（シミュレータや合成ツール）に依存します。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let _a: logic = $sv::PackageA::ParamA;
 
