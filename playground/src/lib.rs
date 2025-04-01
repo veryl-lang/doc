@@ -2,13 +2,13 @@ use miette::{GraphicalReportHandler, GraphicalTheme, Report, ThemeCharacters, Th
 use semver::Version;
 use std::collections::HashMap;
 use std::path::PathBuf;
-use veryl_analyzer::{namespace_table, symbol_table, Analyzer};
+use veryl_analyzer::{Analyzer, namespace_table, symbol_table};
 use veryl_emitter::Emitter;
 use veryl_formatter::Formatter;
 use veryl_metadata::{
-    Build, Doc, Format, Lint, Lockfile, Metadata, Project, Pubfile, Publish, Test,
+    Build, BuildInfo, Doc, Format, Lint, Lockfile, Metadata, Project, Pubfile, Publish, Test,
 };
-use veryl_parser::{resource_table, Parser};
+use veryl_parser::{Parser, resource_table};
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
@@ -69,6 +69,7 @@ fn metadata() -> Metadata {
         pubfile: Pubfile::default(),
         lockfile_path: "".into(),
         lockfile: Lockfile::default(),
+        build_info: BuildInfo::default(),
     }
 }
 
