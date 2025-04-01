@@ -211,12 +211,12 @@
 <p>Conditional expression using <code>if</code> can be used.
 The section which represents condition is placed after <code>if</code> keyword,
 and <code>()</code> is not required surrounding it.
-<code>else</code> is mandatory because if expression always have to be evaluated to value.</p>
+An expression at true condition is placed after <code>?</code>, and an expression at false condition is placed after <code>:</code>.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
 
-    assign b = if a == 0 { 1 } else if a &gt;: 1 { 2 } else { 3 };
+    assign b = if a == 0 ? 1 : if a &gt;: 1 ? 2 : 3;
 }
 </code></pre>
 

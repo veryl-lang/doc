@@ -221,6 +221,32 @@ module ModuleA {
     let _b: logic = $clog2(1);
 }
 </code></pre>
+<h2 id="名前付き引数"><a class="header" href="#名前付き引数">名前付き引数</a></h2>
+<p>多くの引数を持つ関数では、名前付き引数による関数呼び出しが便利です。名前付き引数と位置引数を混在させることはできません。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    function FunctionA (
+        a: input logic,
+        b: input logic,
+        c: input logic,
+        d: input logic,
+    ) {}
+
+    let _a: logic = FunctionA(
+        a: 1,
+        b: 1,
+        c: 1,
+        d: 1,
+    );
+
+    // 位置引数と名前付き引数の混在はエラー
+    //let _a: logic = FunctionA(
+    //    1,
+    //    2,
+    //    a: 1,
+    //    b: 1,
+    //);
+}
+</code></pre>
 
                     </main>
 

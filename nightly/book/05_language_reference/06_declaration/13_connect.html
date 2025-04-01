@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="ja" class="light sidebar-visible" dir="ltr">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head prefix="og: http://ogp.me/ns#">
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>if - The Veryl Hardware Description Language</title>
+        <title>Connect - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
@@ -27,9 +27,9 @@
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
                     if (lang == "en") {
-                        canonical_href = `${base}/05_language_reference/04_expression/04_if.md`;
+                        canonical_href = `${base}/05_language_reference/06_declaration/13_connect.md`;
                     } else {
-                        canonical_href = `${base}/${lang}/05_language_reference/04_expression/04_if.md`;
+                        canonical_href = `${base}/${lang}/05_language_reference/06_declaration/13_connect.md`;
                     }
                     canonical_href = canonical_href.slice(0, -"md".length) + "html";
                     if (canonical_href.endsWith("/index.html")) {
@@ -38,7 +38,7 @@
                     return canonical_href;
                 }
         
-                const canonical_href = gen_canonical_href("ja");
+                const canonical_href = gen_canonical_href("en");
 
                 let link = document.createElement("link");
                 link.rel = "canonical";
@@ -207,13 +207,44 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="if"><a class="header" href="#if">if</a></h1>
-<p><code>if</code> を用いた条件式を使えます。<code>if</code> キーワードの後に条件を示す節を置きますが、<code>()</code> で囲む必要はありません。<code>?</code> のあとに条件が真である場合の式を、<code>:</code> のあとに条件が偽である場合の式を書きます。</p>
-<pre><code class="language-veryl playground">module ModuleA {
-    let a: logic&lt;10&gt; = 1;
-    var b: logic&lt;10&gt;;
+                        <h1 id="connect"><a class="header" href="#connect">Connect</a></h1>
+<p>To assign from a interface to another interface, <code>connect</code> decleration can be used instead of each member assignment.
+<code>connect</code> decleration connects all members of the interface automatically.</p>
+<p>The direction of assignment is determined by modport, so <code>output</code> member is assigned to <code>input</code> member.
+If an argument of <code>connect</code> is an interface instance, additional modport specification is necessary because it can’t be determined direction.</p>
+<p>The connection operator <code>&lt;&gt;</code> can be used in <code>always_comb</code> too.</p>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var cmd  : logic;
+    var ready: logic;
 
-    assign b = if a == 0 ? 1 : if a &gt;: 1 ? 2 : 3;
+    modport master {
+        cmd  : output,
+        ready: input ,
+    }
+
+    modport slave {
+        ..converse(master)
+    }
+}
+
+module ModuleA (
+    mst_if0: modport InterfaceA::master,
+    slv_if0: modport InterfaceA::slave ,
+    mst_if1: modport InterfaceA::master,
+    slv_if1: modport InterfaceA::slave ,
+) {
+    inst bus_if0: InterfaceA;
+    inst bus_if1: InterfaceA;
+
+    connect mst_if0 &lt;&gt; bus_if0.slave;
+    connect slv_if0 &lt;&gt; bus_if0.master;
+
+    always_comb {
+        mst_if1 &lt;&gt; bus_if1.slave;
+    }
+    always_comb {
+        slv_if1 &lt;&gt; bus_if1.master;
+    }
 }
 </code></pre>
 
@@ -221,11 +252,11 @@
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../05_language_reference/04_expression/03_concatenation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../05_language_reference/06_declaration/12_import_export.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../05_language_reference/04_expression/05_case_switch.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../05_language_reference/07_module.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -235,11 +266,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../05_language_reference/04_expression/03_concatenation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../05_language_reference/06_declaration/12_import_export.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../05_language_reference/04_expression/05_case_switch.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../05_language_reference/07_module.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

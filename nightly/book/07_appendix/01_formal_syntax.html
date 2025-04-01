@@ -244,17 +244,18 @@ MinusColonTerm        : &lt;INITIAL                &gt;'-:'                     
 MinusGTTerm           : &lt;INITIAL                &gt;'-&gt;'                                                                                  : Token;
 PlusColonTerm         : &lt;INITIAL                &gt;'+:'                                                                                  : Token;
 AssignmentOperatorTerm: &lt;INITIAL                &gt;"\+=|-=|\*=|/=|%=|&amp;=|\|=|\^=|&lt;&lt;=|&gt;&gt;=|&lt;&lt;&lt;=|&gt;&gt;&gt;="                                       : Token;
-Operator11Term        : &lt;INITIAL                &gt;"\*\*"                                                                                : Token;
-Operator10Term        : &lt;INITIAL                &gt;"/|%"                                                                                 : Token;
-Operator09Term        : &lt;INITIAL                &gt;"\+|-"                                                                                : Token;
-Operator08Term        : &lt;INITIAL                &gt;"&lt;&lt;&lt;|&gt;&gt;&gt;|&lt;&lt;|&gt;&gt;"                                                                       : Token;
-Operator07Term        : &lt;INITIAL                &gt;"&lt;=|&gt;=|&lt;:|&gt;:"                                                                         : Token;
-Operator06Term        : &lt;INITIAL                &gt;"===|==\?|!==|!=\?|==|!="                                                             : Token;
-Operator02Term        : &lt;INITIAL                &gt;"&amp;&amp;"                                                                                  : Token;
-Operator01Term        : &lt;INITIAL                &gt;"\|\|"                                                                                : Token;
-Operator05Term        : &lt;INITIAL                &gt;"&amp;"                                                                                   : Token;
-Operator04Term        : &lt;INITIAL                &gt;"\^~|\^|~\^"                                                                          : Token;
-Operator03Term        : &lt;INITIAL                &gt;"\|"                                                                                  : Token;
+DiamondOperatorTerm   : &lt;INITIAL                &gt;'&lt;&gt;'                                                                                  : Token;
+Operator12Term        : &lt;INITIAL                &gt;"\*\*"                                                                                : Token;
+Operator11Term        : &lt;INITIAL                &gt;"/|%"                                                                                 : Token;
+Operator10Term        : &lt;INITIAL                &gt;"\+|-"                                                                                : Token;
+Operator09Term        : &lt;INITIAL                &gt;"&lt;&lt;&lt;|&gt;&gt;&gt;|&lt;&lt;|&gt;&gt;"                                                                       : Token;
+Operator08Term        : &lt;INITIAL                &gt;"&lt;=|&gt;=|&lt;:|&gt;:"                                                                         : Token;
+Operator07Term        : &lt;INITIAL                &gt;"===|==\?|!==|!=\?|==|!="                                                             : Token;
+Operator03Term        : &lt;INITIAL                &gt;"&amp;&amp;"                                                                                  : Token;
+Operator02Term        : &lt;INITIAL                &gt;"\|\|"                                                                                : Token;
+Operator06Term        : &lt;INITIAL                &gt;"&amp;"                                                                                   : Token;
+Operator05Term        : &lt;INITIAL                &gt;"\^~|\^|~\^"                                                                          : Token;
+Operator04Term        : &lt;INITIAL                &gt;"\|"                                                                                  : Token;
 UnaryOperatorTerm     : &lt;INITIAL                &gt;"~&amp;|~\||!|~"                                                                          : Token;
 BackQuoteTerm         : &lt;INITIAL, Generic       &gt;"`"                                                                                   : Token;
 ColonColonLAngleTerm  : &lt;INITIAL, Generic       &gt;'::&lt;'                                                                                 : Token;
@@ -267,6 +268,7 @@ DotTerm               : &lt;INITIAL, Generic       &gt;'.'                      
 EquTerm               : &lt;INITIAL, Generic       &gt;'='                                                                                   : Token;
 HashTerm              : &lt;INITIAL, Generic       &gt;'#'                                                                                   : Token;
 LAngleTerm            : &lt;INITIAL, Generic       &gt;'&lt;'                                                                                   : Token;
+QuestionTerm          : &lt;INITIAL                &gt;'?'                                                                                   : Token;
 QuoteLBraceTerm       : &lt;INITIAL, Generic       &gt;"'\{"                                                                                 : Token;
 LBraceTerm            : &lt;INITIAL, Generic, Embed&gt;'{'                                                                                   : Token;
 LBracketTerm          : &lt;INITIAL, Generic       &gt;'['                                                                                   : Token;
@@ -288,6 +290,7 @@ CaseTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)case(?-u:\b)/   
 ClockTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock(?-u:\b)/                                                               : Token;
 ClockPosedgeTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock_posedge(?-u:\b)/                                                       : Token;
 ClockNegedgeTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock_negedge(?-u:\b)/                                                       : Token;
+ConnectTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)connect(?-u:\b)/                                                             : Token;
 ConstTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)const(?-u:\b)/                                                               : Token;
 ConverseTerm          : &lt;INITIAL, Generic       &gt;/(?-u:\b)converse(?-u:\b)/                                                            : Token;
 DefaultTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)default(?-u:\b)/                                                             : Token;
@@ -368,7 +371,7 @@ BaseLessToken  : BaseLessTerm  : Token Comments;
 AllBitToken    : AllBitTerm    : Token Comments;
 
 AssignmentOperatorToken: AssignmentOperatorTerm: Token Comments;
-Operator01Token        : Operator01Term        : Token Comments;
+DiamondOperatorToken   : DiamondOperatorTerm   : Token Comments;
 Operator02Token        : Operator02Term        : Token Comments;
 Operator03Token        : Operator03Term        : Token Comments;
 Operator04Token        : Operator04Term        : Token Comments;
@@ -379,6 +382,7 @@ Operator08Token        : Operator08Term        : Token Comments;
 Operator09Token        : Operator09Term        : Token Comments;
 Operator10Token        : Operator10Term        : Token Comments;
 Operator11Token        : Operator11Term        : Token Comments;
+Operator12Token        : Operator12Term        : Token Comments;
 UnaryOperatorToken     : UnaryOperatorTerm     : Token Comments;
 
 BackQuoteToken       : BackQuoteTerm       : Token Comments;
@@ -391,6 +395,7 @@ DotDotEquToken       : DotDotEquTerm       : Token Comments;
 DotToken             : DotTerm             : Token Comments;
 EquToken             : EquTerm             : Token Comments;
 HashToken            : HashTerm            : Token Comments;
+QuestionToken        : QuestionTerm        : Token Comments;
 QuoteLBraceToken     : QuoteLBraceTerm     : Token Comments;
 LAngleToken          : LAngleTerm          : Token Comments;
 LBraceToken          : LBraceTerm          : Token Comments;
@@ -417,6 +422,7 @@ CaseToken          : CaseTerm          : Token Comments;
 ClockToken         : ClockTerm         : Token Comments;
 ClockPosedgeToken  : ClockPosedgeTerm  : Token Comments;
 ClockNegedgeToken  : ClockNegedgeTerm  : Token Comments;
+ConnectToken       : ConnectTerm       : Token Comments;
 ConstToken         : ConstTerm         : Token Comments;
 ConverseToken      : ConverseTerm      : Token Comments;
 DefaultToken       : DefaultTerm       : Token Comments;
@@ -499,7 +505,7 @@ AllBit    : AllBitToken    : VerylToken;
 
 // Operator
 AssignmentOperator: AssignmentOperatorToken: VerylToken;
-Operator01        : Operator01Token        : VerylToken;
+DiamondOperator   : DiamondOperatorToken   : VerylToken;
 Operator02        : Operator02Token        : VerylToken;
 Operator03        : Operator03Token        : VerylToken;
 Operator04        : Operator04Token        : VerylToken;
@@ -510,6 +516,7 @@ Operator08        : Operator08Token        : VerylToken;
 Operator09        : Operator09Token        : VerylToken;
 Operator10        : Operator10Token        : VerylToken;
 Operator11        : Operator11Token        : VerylToken;
+Operator12        : Operator12Token        : VerylToken;
 UnaryOperator     : UnaryOperatorToken     : VerylToken;
 
 // Symbol
@@ -523,6 +530,7 @@ DotDotEqu       : DotDotEquToken       : VerylToken;
 Dot             : DotToken             : VerylToken;
 Equ             : EquToken             : VerylToken;
 Hash            : HashToken            : VerylToken;
+Question        : QuestionToken        : VerylToken;
 QuoteLBrace     : QuoteLBraceToken     : VerylToken;
 LAngle          : LAngleToken          : VerylToken;
 LBrace          : LBraceToken          : VerylToken;
@@ -551,6 +559,7 @@ Case          : CaseToken          : VerylToken;
 Clock         : ClockToken         : VerylToken;
 ClockPosedge  : ClockPosedgeToken  : VerylToken;
 ClockNegedge  : ClockNegedgeToken  : VerylToken;
+Connect       : ConnectToken       : VerylToken;
 Const         : ConstToken         : VerylToken;
 Converse      : ConverseToken      : VerylToken;
 Defaul        : DefaultToken       : VerylToken; // avoid to conflict with Rust's Default trait
@@ -643,7 +652,8 @@ ExpressionIdentifier  : ScopedIdentifier [ Width ] { Select } { Dot Identifier {
 // Expression
 // ----------------------------------------------------------------------------
 
-Expression  : Expression01 { Operator01 Expression01 };
+Expression  : IfExpression;
+IfExpression: { If Expression Question Expression Colon } Expression01;
 Expression01: Expression02 { Operator02 Expression02 };
 Expression02: Expression03 { Operator03 Expression03 };
 Expression03: Expression04 { Operator04 Expression04 };
@@ -652,10 +662,11 @@ Expression05: Expression06 { Operator06 Expression06 };
 Expression06: Expression07 { Operator07 Expression07 };
 Expression07: Expression08 { Operator08 Expression08 };
 Expression08: Expression09 { Operator09 Expression09 };
-Expression09: Expression10 { ( Operator10 | Star ) Expression10 };
-Expression10: Expression11 { Operator11 Expression11 };
-Expression11: Expression12 [ As CastingType ];
-Expression12: { ( UnaryOperator | Operator09 | Operator05 | Operator03 | Operator04 ) } Factor;
+Expression09: Expression10 { Operator10 Expression10 };
+Expression10: Expression11 { ( Operator11 | Star ) Expression11 };
+Expression11: Expression12 { Operator12 Expression12 };
+Expression12: Expression13 [ As CastingType ];
+Expression13: { ( UnaryOperator | Operator10 | Operator06 | Operator04 | Operator05 ) } Factor;
 
 Factor: Number
       | BooleanLiteral
@@ -663,7 +674,6 @@ Factor: Number
       | LParen Expression RParen
       | LBrace ConcatenationList RBrace
       | QuoteLBrace ArrayLiteralList RBrace
-      | IfExpression
       | CaseExpression
       | SwitchExpression
       | StringLiteral
@@ -684,7 +694,9 @@ FunctionCall: LParen [ ArgumentList ] RParen;
 
 ArgumentList: ArgumentItem { Comma ArgumentItem } [ Comma ];
 
-ArgumentItem: Expression;
+ArgumentItem: ArgumentExpression [ Colon Expression ];
+
+ArgumentExpression: Expression;
 
 StructConstructor: QuoteLBrace StructConstructorList [ DotDot Defaul LParen Expression RParen ] RBrace;
 
@@ -699,8 +711,6 @@ ConcatenationItem: Expression [ Repeat Expression ];
 ArrayLiteralList: ArrayLiteralItem { Comma ArrayLiteralItem } [ Comma ];
 
 ArrayLiteralItem: ( Expression [ Repeat Expression ] | Defaul Colon Expression );
-
-IfExpression: If Expression LBrace Expression RBrace { Else If Expression LBrace Expression RBrace } Else LBrace Expression RBrace;
 
 CaseExpression: Case Expression LBrace CaseCondition Colon Expression Comma { CaseCondition Colon Expression Comma } Defaul Colon Expression [ Comma ] RBrace;
 
@@ -815,7 +825,7 @@ LetStatement: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Semi
 
 IdentifierStatement: ExpressionIdentifier ( FunctionCall | Assignment ) Semicolon;
 
-Assignment: ( Equ | AssignmentOperator ) Expression;
+Assignment: ( Equ | AssignmentOperator | DiamondOperator ) Expression;
 
 IfStatement: If Expression StatementBlock { Else If Expression StatementBlock } [ Else StatementBlock ];
 
@@ -881,6 +891,8 @@ AssignDestination: HierarchicalIdentifier
 AssignConcatenationList: AssignConcatenationItem { Comma AssignConcatenationItem } [ Comma ];
 
 AssignConcatenationItem: HierarchicalIdentifier;
+
+ConnectDeclaration: Connect HierarchicalIdentifier DiamondOperator Expression Semicolon;
 
 ModportDeclaration: Modport Identifier LBrace [ ModportList ] [ DotDot ModportDefault ] RBrace;
 
@@ -1054,6 +1066,7 @@ GenerateItem: LetDeclaration
             | AlwaysFfDeclaration
             | AlwaysCombDeclaration
             | AssignDeclaration
+            | ConnectDeclaration
             | FunctionDeclaration
             | GenerateIfDeclaration
             | GenerateForDeclaration

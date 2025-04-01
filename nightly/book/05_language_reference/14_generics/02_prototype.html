@@ -209,7 +209,8 @@
                     <main>
                         <h1 id="prototype"><a class="header" href="#prototype">Prototype</a></h1>
 <p>Prototype is a special generic bound. It represents prototype which can be passed to the generic parameter.
-Currently module prototype is supported only.</p>
+Currently module prototype and package prototype are supported.</p>
+<h2 id="module-prototype"><a class="header" href="#module-prototype">Module Prototype</a></h2>
 <p>In the following example, <code>ProtoA</code> is a module prototype which has parameter <code>A</code> and port <code>i_dat</code> and <code>o_dat</code>.
 By binding like <code>T: ProtoA</code>, it is represented that the generic parameter <code>T</code> should have the parameters and ports.</p>
 <p>To use prototype, <code>for</code> implementation is required. <code>ModuleC</code> and <code>ModuleD</code> have <code>for ProroA</code> specifier which means the module satisfies the condision of <code>ProroA</code>.
@@ -249,6 +250,23 @@ module ModuleD for ProtoA #(
     o_dat: output logic,
 ) {
     assign o_dat = ~i_dat;
+}
+</code></pre>
+<h2 id="package-prototype"><a class="header" href="#package-prototype">Package Prototype</a></h2>
+<p>In the following example, <code>ProtoA</code> is a package prototype which has type <code>data_a</code> and <code>data_b</code>.
+<code>PKG</code> restricted by <code>ProtoA</code> is guaranteed to have <code>data_a</code> and <code>data_b</code>, so they can be refered.</p>
+<pre><code class="language-veryl playground">proto package ProtoA {
+    type data_a;
+    type data_b;
+}
+
+package PackageA::&lt;A: const, B: const&gt; for ProtoA {
+    type data_a = logic&lt;A&gt;;
+    type data_b = logic&lt;B&gt;;
+}
+
+module ModuleA::&lt;PKG: ProtoA&gt; {
+    let _a: PKG::data_a = 0;
 }
 </code></pre>
 

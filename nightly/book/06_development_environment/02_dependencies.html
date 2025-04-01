@@ -209,21 +209,24 @@
                     <main>
                         <h1 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h1>
 <p>If you want to add other Veryl projects to dependencies of your project, you can add them to <code>[dependencies]</code> section in <code>Veryl.toml</code>.
-The left hand side of entry is path to the dependency, and the right hand side is version.</p>
+The left hand side of entry is the project name of the dependency, and the right hand side is the source and version.
+<code>github</code> is a syntax sugger to refer a repository on GitHub. Instead of it, <code>git</code> with a full URL can be used.</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = "0.1.0"
+veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+
+# This is as the same as above
+veryl_sample = {git = "https://github.com/veryl-lang/veryl_sample", version = "0.1.0"}
 </code></pre>
 <p>By default, the namespace of the dependency is the same as the project name of the dependency.
-If you want to specify namespace, you can use <code>name</code> field.</p>
+If you want to specify a namespace through the left hand side, you should specify the project name through <code>project</code> field.</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = {version = "0.1.0", name = "veryl_sample_alt"}
+veryl_sample_alt = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.2.0"}
 </code></pre>
-<p>If you want to use many versions of the same dependency path, you can specify each name.</p>
+<p>Inner projects in a repository can be used like below:</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = [
-    {version = "0.1.0", name = "veryl_sample1"},
-    {version = "0.2.0", name = "veryl_sample2"},
-]
+inner_prj1 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+inner_prj2 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+inner_prj3 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
 </code></pre>
 <h2 id="usage-of-dependency"><a class="header" href="#usage-of-dependency">Usage of dependency</a></h2>
 <p>After adding dependencies to <code>Veryl.toml</code>, you can use <code>module</code>, <code>interface</code> and <code>package</code> in the dependencies.
@@ -271,16 +274,16 @@ Please see version requirement of Rust for detailed information: <a href="https:
 <p>For local development, dependency to a local file path is useful in some cases.
 Relative path dependency can be specified like below:</p>
 <pre><code class="language-toml">[dependencies]
-"../../library/path" = "0.1.0"
+veryl_sample = {path = "../../veryl_sample"}
 </code></pre>
 <p>If there are relative path dependencies in a project, the project can’t be published through <code>veryl publish</code>.</p>
 <h2 id="override-by-local-path"><a class="header" href="#override-by-local-path">Override by local path</a></h2>
 <p>Sometimes, using dependencies of locally modified version becomes necessary.
 In the case, overriding dependencies by local path can be used like below:</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = {version = "0.1.0", path = "../sample"}
+veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = "../veryl_sample"}
 </code></pre>
-<p>This means that if there is <code>../sample</code>, it is used, and if not, it is pulled from the Git repository.</p>
+<p>This means that if there is <code>../veryl_sample</code>, it is used, and if not, it is pulled from the Git repository.</p>
 
                     </main>
 

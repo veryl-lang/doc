@@ -251,7 +251,7 @@ embed (inline) sv{{{
 <h2 id="dependency-management"><a class="header" href="#dependency-management">依存関係管理</a></h2>
 <p>Verylには依存関係の管理機能が組み込まれており、プロジェクト設定に以下のようにライブラリのリポジトリパスとバージョンを追加するだけで、簡単にライブラリを組み込むことができます。</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = "0.1.0"
+veryl_sample = {git = "https://github.com/veryl-lang/veryl_sample", version = "0.1.0"}
 </code></pre>
 <h2 id="generics"><a class="header" href="#generics">ジェネリクス</a></h2>
 <p>ジェネリクスによるコード生成は従来のパラメータオーバーライドよりさらに再利用性の高いコードを記述することができます。以下の例のような関数のパラメータだけでなく、インスタンスのモジュール名や構造体定義の型名もパラメータ化することができます。</p>

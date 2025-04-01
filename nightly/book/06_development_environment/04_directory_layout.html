@@ -294,9 +294,12 @@ target = {type = "directory", path = "target"}
 </code></pre>
 <p>The generated <code>prj.f</code> lists all generated files. So you can use it along with the existing SystemVerilog filelists.</p>
 <h2 id="about-gitignore"><a class="header" href="#about-gitignore">About <code>.gitignore</code></a></h2>
-<p>Veryl doesn’t provide the default <code>.gitignore</code>.
-This is because which files should be ignored is different by each projects.</p>
-<p>The candidates of <code>.gitignore</code> is below:</p>
+<p>Veryl provides the following <code>.gitignore</code> as the default value.
+<code>.build</code> is used to record build information by Veryl compiler.</p>
+<pre><code>.build/
+</code></pre>
+<p>Other patterns can be added by each projects.
+The candidates of <code>.gitignore</code> is below:</p>
 <ul>
 <li><code>dependencies/</code></li>
 <li><code>target/</code></li>

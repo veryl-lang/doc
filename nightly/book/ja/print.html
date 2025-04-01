@@ -262,7 +262,7 @@ embed (inline) sv{{{
 <h2 id="dependency-management"><a class="header" href="#dependency-management">依存関係管理</a></h2>
 <p>Verylには依存関係の管理機能が組み込まれており、プロジェクト設定に以下のようにライブラリのリポジトリパスとバージョンを追加するだけで、簡単にライブラリを組み込むことができます。</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = "0.1.0"
+veryl_sample = {git = "https://github.com/veryl-lang/veryl_sample", version = "0.1.0"}
 </code></pre>
 <h2 id="generics"><a class="header" href="#generics">ジェネリクス</a></h2>
 <p>ジェネリクスによるコード生成は従来のパラメータオーバーライドよりさらに再利用性の高いコードを記述することができます。以下の例のような関数のパラメータだけでなく、インスタンスのモジュール名や構造体定義の型名もパラメータ化することができます。</p>
@@ -722,7 +722,7 @@ verylup completion zsh verylup &gt; _verylup
 <p>まず始めに、新しい Veryl プロジェクトを作りましょう。</p>
 <pre><code>veryl new hello
 </code></pre>
-<p>コマンドを実行すると、以下のようなディレクトリとファイルが作成されます。</p>
+<p>コマンドを実行すると、以下のディレクトリとファイルが作成されます。もし <code>git</code> コマンドが利用できれば、ディレクトリは Git リポジトリとして初期化され、デフォルトの <code>.gitignore</code> ファイルも追加されます。</p>
 <pre><code>$ veryl new hello
 [INFO ]      Created "hello" project
 $ cd hello
@@ -1214,6 +1214,13 @@ a = 1 || 1;
     const c: type = u32;
 }
 </code></pre>
+<h2 id="ブーリアン型"><a class="header" href="#ブーリアン型">ブーリアン型</a></h2>
+<p><code>bool</code> は ブーリアンを表す <code>logic&lt;1&gt;</code> の型エイリアスです。<code>1'b1</code> と <code>1'b0</code> を表す <code>true</code> と <code>false</code> も使用できます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    const a: bool = true;
+    const b: bool = false;
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ユーザ定義型"><a class="header" href="#ユーザ定義型">ユーザ定義型</a></h1>
 <h2 id="構造体"><a class="header" href="#構造体">構造体</a></h2>
 <p><code>struct</code> は複合データ型です。いくつかのフィールドを持つことができ、<code>.</code> 演算子を通してアクセスできます。</p>
@@ -1399,6 +1406,21 @@ a = 1 || 1;
     }
 }
 </code></pre>
+<h2 id="デフォルトクロックとリセット"><a class="header" href="#デフォルトクロックとリセット">デフォルトクロックとリセット</a></h2>
+<p>クロックが複数あるものの、 <code>always_ff</code> では単一のクロックしか使われない場合があります。このような場合に <code>default</code> 型修飾子を使ってデフォルトのクロックとリセットを明示することができます。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk   : input clock,
+    i_clk_en: input logic,
+) {
+    let clk: `_ default clock = i_clk &amp; i_clk_en;
+
+    var a: logic;
+
+    always_ff {
+        a = 0;
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="式"><a class="header" href="#式">式</a></h1>
 <p>この章では式について説明します。式は変数や演算子、関数呼び出しなどを組み合わせたもので、評価して値を得ることができます。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="演算子の優先順位"><a class="header" href="#演算子の優先順位">演算子の優先順位</a></h1>
@@ -1434,6 +1456,32 @@ module ModuleA {
     let _b: logic = $clog2(1);
 }
 </code></pre>
+<h2 id="名前付き引数"><a class="header" href="#名前付き引数">名前付き引数</a></h2>
+<p>多くの引数を持つ関数では、名前付き引数による関数呼び出しが便利です。名前付き引数と位置引数を混在させることはできません。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    function FunctionA (
+        a: input logic,
+        b: input logic,
+        c: input logic,
+        d: input logic,
+    ) {}
+
+    let _a: logic = FunctionA(
+        a: 1,
+        b: 1,
+        c: 1,
+        d: 1,
+    );
+
+    // 位置引数と名前付き引数の混在はエラー
+    //let _a: logic = FunctionA(
+    //    1,
+    //    2,
+    //    a: 1,
+    //    b: 1,
+    //);
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="連結"><a class="header" href="#連結">連結</a></h1>
 <p><code>{}</code> はビット連結を表します。<code>{}</code> の中では <code>repeat</code> キーワードを使うことで指定されたオペランドを繰り返すこともできます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -1444,12 +1492,12 @@ module ModuleA {
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="if"><a class="header" href="#if">if</a></h1>
-<p><code>if</code> を用いた条件式を使えます。<code>if</code> キーワードの後に条件を示す節を置きますが、<code>()</code> で囲む必要はありません。if 式は常になんらかの値に評価される必要があるため <code>else</code> は必須です。</p>
+<p><code>if</code> を用いた条件式を使えます。<code>if</code> キーワードの後に条件を示す節を置きますが、<code>()</code> で囲む必要はありません。<code>?</code> のあとに条件が真である場合の式を、<code>:</code> のあとに条件が偽である場合の式を書きます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
 
-    assign b = if a == 0 { 1 } else if a &gt;: 1 { 2 } else { 3 };
+    assign b = if a == 0 ? 1 : if a &gt;: 1 ? 2 : 3;
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="case--switch"><a class="header" href="#case--switch">Case / Switch</a></h1>
@@ -1558,6 +1606,26 @@ module ModuleA {
 
     assign a = x as EnumA;
     assign b = x as 2;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="構造体コンストラクタ"><a class="header" href="#構造体コンストラクタ">構造体コンストラクタ</a></h1>
+<p>構造体を初期化するために各メンバーにそれぞれ代入する代わりに構造体コンストラクタを使用することができます。特に <code>const</code> は各メンバーに代入することができないためコンストラクタによる初期化が必要です。</p>
+<p><code>..default</code> 指定子は未指定のメンバーのためのデフォルト値を指定することができます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    struct Param {
+        a: bit&lt;10&gt;,
+        b: bit&lt;10&gt;,
+    }
+
+    const p: Param = Param'{
+        a: 10,
+        b: 10,
+    };
+
+    const q: Param = Param'{
+        a: 1,
+        ..default(0) // すなわち `b: 0`
+    };
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="文"><a class="header" href="#文">文</a></h1>
@@ -1913,6 +1981,21 @@ emit_cond_type = true
     };
 }
 </code></pre>
+<h2 id="fmt-アトリビュート"><a class="header" href="#fmt-アトリビュート"><code>fmt</code> アトリビュート</a></h2>
+<p><code>fmt</code> アトリビュートはフォーマットの方法を制御することができます。以下の引数がサポートされています。</p>
+<ul>
+<li><code>compact</code>: 改行なしのコンパクトなフォーマット</li>
+</ul>
+<pre><code class="language-veryl playground">module ModuleA {
+    #[fmt(compact)]
+    {
+        inst u1: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+        inst u2: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+        inst u3: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+        inst u4: $sv::Module #( A: 1, B: 2 ) ( x: 1, y: _ );
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="生成"><a class="header" href="#生成">生成</a></h1>
 <p>宣言や <code>for</code> や <code>if</code> を使って生成することができます。<code>:</code> で示すラベルは生成された複数の宣言を識別するのに必要です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -1976,6 +2059,44 @@ package PackageA {
 module ModuleA {
     import PackageA::*;
     import PackageA::paramA;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="connect"><a class="header" href="#connect">Connect</a></h1>
+<p>あるインターフェースをほかのインターフェースに接続するために各メンバーを代入する代わりに <code>connect</code> 宣言を使用することができます。<code>connect</code> 宣言はインターフェースの全てのメンバーを自動的に接続します。</p>
+<p>代入の方向はmodportによって決まります。つまり <code>output</code> メンバーが <code>input</code> メンバーに代入されます。<code>connect</code> の引数がインターフェースインスタンスの場合、方向を決定するためにmodportの指定が必要です。</p>
+<p>接続演算子 <code>&lt;&gt;</code> は <code>always_comb</code> 中でも使用することができます。</p>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var cmd  : logic;
+    var ready: logic;
+
+    modport master {
+        cmd  : output,
+        ready: input ,
+    }
+
+    modport slave {
+        ..converse(master)
+    }
+}
+
+module ModuleA (
+    mst_if0: modport InterfaceA::master,
+    slv_if0: modport InterfaceA::slave ,
+    mst_if1: modport InterfaceA::master,
+    slv_if1: modport InterfaceA::slave ,
+) {
+    inst bus_if0: InterfaceA;
+    inst bus_if1: InterfaceA;
+
+    connect mst_if0 &lt;&gt; bus_if0.slave;
+    connect slv_if0 &lt;&gt; bus_if0.master;
+
+    always_comb {
+        mst_if1 &lt;&gt; bus_if1.slave;
+    }
+    always_comb {
+        slv_if1 &lt;&gt; bus_if1.master;
+    }
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="モジュール-1"><a class="header" href="#モジュール-1">モジュール</a></h1>
@@ -2066,6 +2187,7 @@ module ModubeB {
 <ul>
 <li><code>..input</code>: インターフェース内の全ての変数を <code>input</code> として追加</li>
 <li><code>..output</code>: インターフェース内の全ての変数を <code>output</code> として追加</li>
+<li><code>..same(modport_name)</code>: <code>modport_name</code> と同じ変数を同じ方向で追加</li>
 <li><code>..converse(modport_name)</code>: <code>modport_name</code> と同じ変数を、方向を逆にして追加</li>
 </ul>
 <p>デフォルトメンバーの指定は通常の明示的なメンバーと一緒に使うこともできます。</p>
@@ -2291,7 +2413,8 @@ module ModuleA {
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="プロトタイプ"><a class="header" href="#プロトタイプ">プロトタイプ</a></h1>
-<p>プロトタイプは特別なジェネリック境界で、ジェネリックパラメータに渡せるプロトタイプを示します。現在はモジュールプロトタイプのみがサポートされています。</p>
+<p>プロトタイプは特別なジェネリック境界で、ジェネリックパラメータに渡せるプロトタイプを示します。現在はモジュールプロトタイプとパッケージプロトタイプがサポートされています。</p>
+<h2 id="モジュールプロトタイプ"><a class="header" href="#モジュールプロトタイプ">モジュールプロトタイプ</a></h2>
 <p>以下の例では、<code>ProtoA</code> がパラメータ <code>A</code> とポート <code>i_dat</code> <code>o_dat</code> を持つモジュールプロトタイプです。<code>T: ProtoA</code> のように制約することで、ジェネリックパラメータ <code>T</code> がそれらのパラメータとポートを持つ必要があることが示されます。</p>
 <p>プロトタイプを使うには <code>for</code> による実装が必要です。<code>ModuleC</code> と <code>ModuleD</code> は <code>for ProtoA</code> 指定により、 <code>ProtoA</code> の条件を満たすことが示されています。これにより、それらのモジュールは <code>ModuleB</code> の ジェネリックパラメータ <code>T</code> として使用できるようになります。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -2329,6 +2452,22 @@ module ModuleD for ProtoA #(
     o_dat: output logic,
 ) {
     assign o_dat = ~i_dat;
+}
+</code></pre>
+<h2 id="パッケージプロトタイプ"><a class="header" href="#パッケージプロトタイプ">パッケージプロトタイプ</a></h2>
+<p>以下の例では、<code>ProtoA</code> が型 <code>data_a</code> と型 <code>data_b</code> を持つパッケージプロトタイプです。<code>PKG</code> は <code>ProtoA</code> で制約されているので、<code>data_a</code> と <code>data_b</code> を持つことが保証されており、それらを参照することができます。</p>
+<pre><code class="language-veryl playground">proto package ProtoA {
+    type data_a;
+    type data_b;
+}
+
+package PackageA::&lt;A: const, B: const&gt; for ProtoA {
+    type data_a = logic&lt;A&gt;;
+    type data_b = logic&lt;B&gt;;
+}
+
+module ModuleA::&lt;PKG: ProtoA&gt; {
+    let _a: PKG::data_a = 0;
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="クロックドメインアノテーション"><a class="header" href="#クロックドメインアノテーション">クロックドメインアノテーション</a></h1>
@@ -2431,6 +2570,12 @@ interface InterfaceA {}
 }
 </code></pre>
 <p>標準ライブラリの完全なリストとドキュメントは <a href="https://std.veryl-lang.org">https://std.veryl-lang.org</a> にあります。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="エイリアス"><a class="header" href="#エイリアス">エイリアス</a></h1>
+<p>ジェネリック引数を持つモジュール、インターフェース、パッケージの名前は非常に長くなる場合があります。<code>alias</code> はそのような要素に短い名前をつけることができます。</p>
+<pre><code class="language-veryl playground">package PkgA::&lt;X: const, Y: const, Z: const&gt; {}
+
+alias package PkgA123 = PkgA::&lt;1, 2, 3&gt;;
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="開発環境"><a class="header" href="#開発環境">開発環境</a></h1>
 <p>この章ではプロジェクト設定や開発ツールなど開発環境について説明します。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="プロジェクト設定"><a class="header" href="#プロジェクト設定">プロジェクト設定</a></h1>
@@ -2610,33 +2755,31 @@ case_enum = "snake"
 <h3 id="lintnaming-セクション"><a class="header" href="#lintnaming-セクション"><code>[lint.naming]</code> セクション</a></h3>
 <p>このセクションは命名規則の設定です。</p>
 <div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
-<tr><td>case_enum</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>enum</code> のケーススタイル</td></tr>
-<tr><td>case_function</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>function</code> のケーススタイル</td></tr>
-<tr><td>case_function_inout</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>inout</code> 引数のケーススタイル</td></tr>
-<tr><td>case_function_input</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>input</code> 引数のケーススタイル</td></tr>
-<tr><td>case_function_output</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>output</code> 引数のケーススタイル</td></tr>
-<tr><td>case_function_ref</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>ref</code> 引数のケーススタイル</td></tr>
-<tr><td>case_instance</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>インスタンスのケーススタイル</td></tr>
-<tr><td>case_interface</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>interface</code> のケーススタイル</td></tr>
-<tr><td>case_modport</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>modport</code> のケーススタイル</td></tr>
-<tr><td>case_module</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>module</code> のケーススタイル</td></tr>
-<tr><td>case_package</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>package</code> のケーススタイル</td></tr>
-<tr><td>case_parameter</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>parameter</code> のケーススタイル</td></tr>
-<tr><td>case_port_inout</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>inout</code> ポートのケーススタイル</td></tr>
-<tr><td>case_port_input</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>input</code> ポートのケーススタイル</td></tr>
-<tr><td>case_port_modport</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>modport</code> ポートのケーススタイル</td></tr>
-<tr><td>case_port_output</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>output</code> ポートのケーススタイル</td></tr>
-<tr><td>case_reg</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>レジスタ変数<sup class="footnote-reference"><a href="#reg">2</a></sup>のケーススタイル</td></tr>
-<tr><td>case_struct</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>struct</code> のケーススタイル</td></tr>
-<tr><td>case_union</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td><code>union</code> のケーススタイル</td></tr>
-<tr><td>case_var</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>変数のケーススタイル</td></tr>
-<tr><td>case_wire</td><td>ケースタイプ<sup class="footnote-reference"><a href="#casetype">1</a></sup></td><td>ワイヤ変数<sup class="footnote-reference"><a href="#wire">3</a></sup>のケーススタイル</td></tr>
+<tr><td>case_enum</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-1"><a href="#footnote-casetype">1</a></sup></td><td><code>enum</code> のケーススタイル</td></tr>
+<tr><td>case_function</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-2"><a href="#footnote-casetype">1</a></sup></td><td><code>function</code> のケーススタイル</td></tr>
+<tr><td>case_function_inout</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-3"><a href="#footnote-casetype">1</a></sup></td><td><code>inout</code> 引数のケーススタイル</td></tr>
+<tr><td>case_function_input</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-4"><a href="#footnote-casetype">1</a></sup></td><td><code>input</code> 引数のケーススタイル</td></tr>
+<tr><td>case_function_output</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-5"><a href="#footnote-casetype">1</a></sup></td><td><code>output</code> 引数のケーススタイル</td></tr>
+<tr><td>case_instance</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-6"><a href="#footnote-casetype">1</a></sup></td><td>インスタンスのケーススタイル</td></tr>
+<tr><td>case_interface</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-7"><a href="#footnote-casetype">1</a></sup></td><td><code>interface</code> のケーススタイル</td></tr>
+<tr><td>case_modport</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-8"><a href="#footnote-casetype">1</a></sup></td><td><code>modport</code> のケーススタイル</td></tr>
+<tr><td>case_module</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-9"><a href="#footnote-casetype">1</a></sup></td><td><code>module</code> のケーススタイル</td></tr>
+<tr><td>case_package</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-10"><a href="#footnote-casetype">1</a></sup></td><td><code>package</code> のケーススタイル</td></tr>
+<tr><td>case_parameter</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-11"><a href="#footnote-casetype">1</a></sup></td><td><code>parameter</code> のケーススタイル</td></tr>
+<tr><td>case_port_inout</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-12"><a href="#footnote-casetype">1</a></sup></td><td><code>inout</code> ポートのケーススタイル</td></tr>
+<tr><td>case_port_input</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-13"><a href="#footnote-casetype">1</a></sup></td><td><code>input</code> ポートのケーススタイル</td></tr>
+<tr><td>case_port_modport</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-14"><a href="#footnote-casetype">1</a></sup></td><td><code>modport</code> ポートのケーススタイル</td></tr>
+<tr><td>case_port_output</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-15"><a href="#footnote-casetype">1</a></sup></td><td><code>output</code> ポートのケーススタイル</td></tr>
+<tr><td>case_reg</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-16"><a href="#footnote-casetype">1</a></sup></td><td>レジスタ変数<sup class="footnote-reference" id="fr-reg-1"><a href="#footnote-reg">2</a></sup>のケーススタイル</td></tr>
+<tr><td>case_struct</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-17"><a href="#footnote-casetype">1</a></sup></td><td><code>struct</code> のケーススタイル</td></tr>
+<tr><td>case_union</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-18"><a href="#footnote-casetype">1</a></sup></td><td><code>union</code> のケーススタイル</td></tr>
+<tr><td>case_var</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-19"><a href="#footnote-casetype">1</a></sup></td><td>変数のケーススタイル</td></tr>
+<tr><td>case_wire</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-20"><a href="#footnote-casetype">1</a></sup></td><td>ワイヤ変数<sup class="footnote-reference" id="fr-wire-1"><a href="#footnote-wire">3</a></sup>のケーススタイル</td></tr>
 <tr><td>prefix_enum</td><td>文字列</td><td><code>enum</code> のプレフィックス</td></tr>
 <tr><td>prefix_function</td><td>文字列</td><td><code>function</code> のプレフィックス</td></tr>
 <tr><td>prefix_function_inout</td><td>文字列</td><td><code>inout</code> 引数のプレフィックス</td></tr>
 <tr><td>prefix_function_input</td><td>文字列</td><td><code>input</code> 引数のプレフィックス</td></tr>
 <tr><td>prefix_function_output</td><td>文字列</td><td><code>output</code> 引数のプレフィックス</td></tr>
-<tr><td>prefix_function_ref</td><td>文字列</td><td><code>ref</code> 引数のプレフィックス</td></tr>
 <tr><td>prefix_instance</td><td>文字列</td><td>インスタンスのプレフィックス</td></tr>
 <tr><td>prefix_interface</td><td>文字列</td><td><code>interface</code> のプレフィックス</td></tr>
 <tr><td>prefix_modport</td><td>文字列</td><td><code>modport</code> のプレフィックス</td></tr>
@@ -2647,17 +2790,16 @@ case_enum = "snake"
 <tr><td>prefix_port_input</td><td>文字列</td><td><code>input</code> ポートのプレフィックス</td></tr>
 <tr><td>prefix_port_modport</td><td>文字列</td><td><code>modport</code> ポートのプレフィックス</td></tr>
 <tr><td>prefix_port_output</td><td>文字列</td><td><code>output</code> ポートのプレフィックス</td></tr>
-<tr><td>prefix_reg</td><td>文字列</td><td>レジスタ変数<sup class="footnote-reference"><a href="#reg">2</a></sup>のプレフィックス</td></tr>
+<tr><td>prefix_reg</td><td>文字列</td><td>レジスタ変数<sup class="footnote-reference" id="fr-reg-2"><a href="#footnote-reg">2</a></sup>のプレフィックス</td></tr>
 <tr><td>prefix_struct</td><td>文字列</td><td><code>struct</code> のプレフィックス</td></tr>
 <tr><td>prefix_union</td><td>文字列</td><td><code>union</code> のプレフィックス</td></tr>
 <tr><td>prefix_var</td><td>文字列</td><td>変数のプレフィックス</td></tr>
-<tr><td>prefix_wire</td><td>文字列</td><td>ワイヤ変数<sup class="footnote-reference"><a href="#wire">3</a></sup>のプレフィックス</td></tr>
+<tr><td>prefix_wire</td><td>文字列</td><td>ワイヤ変数<sup class="footnote-reference" id="fr-wire-2"><a href="#footnote-wire">3</a></sup>のプレフィックス</td></tr>
 <tr><td>suffix_enum</td><td>文字列</td><td><code>enum</code> のサフィックス</td></tr>
 <tr><td>suffix_function</td><td>文字列</td><td><code>function</code> のサフィックス</td></tr>
 <tr><td>suffix_function_inout</td><td>文字列</td><td><code>inout</code> 引数のサフィックス</td></tr>
 <tr><td>suffix_function_input</td><td>文字列</td><td><code>input</code> 引数のサフィックス</td></tr>
 <tr><td>suffix_function_output</td><td>文字列</td><td><code>output</code> 引数のサフィックス</td></tr>
-<tr><td>suffix_function_ref</td><td>文字列</td><td><code>ref</code> 引数のサフィックス</td></tr>
 <tr><td>suffix_instance</td><td>文字列</td><td>インスタンスのサフィックス</td></tr>
 <tr><td>suffix_interface</td><td>文字列</td><td><code>interface</code> のサフィックス</td></tr>
 <tr><td>suffix_modport</td><td>文字列</td><td><code>modport</code> のサフィックス</td></tr>
@@ -2668,57 +2810,52 @@ case_enum = "snake"
 <tr><td>suffix_port_input</td><td>文字列</td><td><code>input</code> ポートのサフィックス</td></tr>
 <tr><td>suffix_port_modport</td><td>文字列</td><td><code>modport</code> ポートのサフィックス</td></tr>
 <tr><td>suffix_port_output</td><td>文字列</td><td><code>output</code> ポートのサフィックス</td></tr>
-<tr><td>suffix_reg</td><td>文字列</td><td>レジスタ変数<sup class="footnote-reference"><a href="#reg">2</a></sup>のサフィックス</td></tr>
+<tr><td>suffix_reg</td><td>文字列</td><td>レジスタ変数<sup class="footnote-reference" id="fr-reg-3"><a href="#footnote-reg">2</a></sup>のサフィックス</td></tr>
 <tr><td>suffix_struct</td><td>文字列</td><td><code>struct</code> のサフィックス</td></tr>
 <tr><td>suffix_union</td><td>文字列</td><td><code>union</code> のサフィックス</td></tr>
 <tr><td>suffix_var</td><td>文字列</td><td>変数のサフィックス</td></tr>
-<tr><td>suffix_wire</td><td>文字列</td><td>ワイヤ変数<sup class="footnote-reference"><a href="#wire">3</a></sup>のサフィックス</td></tr>
-<tr><td>re_forbidden_enum</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>enum</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_function</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>function</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_function_inout</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>inout</code> 引数の禁止正規表現</td></tr>
-<tr><td>re_forbidden_function_input</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>input</code> 引数の禁止正規表現</td></tr>
-<tr><td>re_forbidden_function_output</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>output</code> 引数の禁止正規表現</td></tr>
-<tr><td>re_forbidden_function_ref</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>ref</code> 引数の禁止正規表現</td></tr>
-<tr><td>re_forbidden_instance</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>インスタンスの禁止正規表現</td></tr>
-<tr><td>re_forbidden_interface</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>interface</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_modport</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>modport</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_module</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>module</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_package</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>package</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_parameter</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>parameter</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_port_inout</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>inout</code> ポートの禁止正規表現</td></tr>
-<tr><td>re_forbidden_port_input</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>input</code> ポートの禁止正規表現</td></tr>
-<tr><td>re_forbidden_port_modport</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>modport</code> ポートの禁止正規表現</td></tr>
-<tr><td>re_forbidden_port_output</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>output</code> ポートの禁止正規表現</td></tr>
-<tr><td>re_forbidden_reg</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>レジスタ変数<sup class="footnote-reference"><a href="#reg">2</a></sup>の禁止正規表現</td></tr>
-<tr><td>re_forbidden_struct</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>struct</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_union</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>union</code> の禁止正規表現</td></tr>
-<tr><td>re_forbidden_var</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>変数の禁止正規表現</td></tr>
-<tr><td>re_forbidden_wire</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>ワイヤ変数<sup class="footnote-reference"><a href="#wire">3</a></sup>の禁止正規表現</td></tr>
-<tr><td>re_required_enum</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>enum</code> の必須正規表現</td></tr>
-<tr><td>re_required_function</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>function</code> の必須正規表現</td></tr>
-<tr><td>re_required_function_inout</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>inout</code> 引数の必須正規表現</td></tr>
-<tr><td>re_required_function_input</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>input</code> 引数の必須正規表現</td></tr>
-<tr><td>re_required_function_output</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>output</code> 引数の必須正規表現</td></tr>
-<tr><td>re_required_function_ref</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>ref</code> 引数の必須正規表現</td></tr>
-<tr><td>re_required_instance</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>インスタンスの必須正規表現</td></tr>
-<tr><td>re_required_interface</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>interface</code> の必須正規表現</td></tr>
-<tr><td>re_required_modport</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>modport</code> の必須正規表現</td></tr>
-<tr><td>re_required_module</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>module</code> の必須正規表現</td></tr>
-<tr><td>re_required_package</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>package</code> の必須正規表現</td></tr>
-<tr><td>re_required_parameter</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>parameter</code> の必須正規表現</td></tr>
-<tr><td>re_required_port_inout</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>inout</code> ポートの必須正規表現</td></tr>
-<tr><td>re_required_port_input</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>input</code> ポートの必須正規表現</td></tr>
-<tr><td>re_required_port_modport</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>modport</code> ポートの必須正規表現</td></tr>
-<tr><td>re_required_port_output</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>output</code> ポートの必須正規表現</td></tr>
-<tr><td>re_required_reg</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>レジスタ変数<sup class="footnote-reference"><a href="#reg">2</a></sup>の必須正規表現</td></tr>
-<tr><td>re_required_struct</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>struct</code> の必須正規表現</td></tr>
-<tr><td>re_required_union</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td><code>union</code> の必須正規表現</td></tr>
-<tr><td>re_required_var</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>変数の必須正規表現</td></tr>
-<tr><td>re_required_wire</td><td>正規表現<sup class="footnote-reference"><a href="#regex">4</a></sup></td><td>ワイヤ変数<sup class="footnote-reference"><a href="#wire">3</a></sup>の必須正規表現</td></tr>
+<tr><td>suffix_wire</td><td>文字列</td><td>ワイヤ変数<sup class="footnote-reference" id="fr-wire-3"><a href="#footnote-wire">3</a></sup>のサフィックス</td></tr>
+<tr><td>re_forbidden_enum</td><td>正規表現<sup class="footnote-reference" id="fr-regex-1"><a href="#footnote-regex">4</a></sup></td><td><code>enum</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_function</td><td>正規表現<sup class="footnote-reference" id="fr-regex-2"><a href="#footnote-regex">4</a></sup></td><td><code>function</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_function_inout</td><td>正規表現<sup class="footnote-reference" id="fr-regex-3"><a href="#footnote-regex">4</a></sup></td><td><code>inout</code> 引数の禁止正規表現</td></tr>
+<tr><td>re_forbidden_function_input</td><td>正規表現<sup class="footnote-reference" id="fr-regex-4"><a href="#footnote-regex">4</a></sup></td><td><code>input</code> 引数の禁止正規表現</td></tr>
+<tr><td>re_forbidden_function_output</td><td>正規表現<sup class="footnote-reference" id="fr-regex-5"><a href="#footnote-regex">4</a></sup></td><td><code>output</code> 引数の禁止正規表現</td></tr>
+<tr><td>re_forbidden_instance</td><td>正規表現<sup class="footnote-reference" id="fr-regex-6"><a href="#footnote-regex">4</a></sup></td><td>インスタンスの禁止正規表現</td></tr>
+<tr><td>re_forbidden_interface</td><td>正規表現<sup class="footnote-reference" id="fr-regex-7"><a href="#footnote-regex">4</a></sup></td><td><code>interface</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_modport</td><td>正規表現<sup class="footnote-reference" id="fr-regex-8"><a href="#footnote-regex">4</a></sup></td><td><code>modport</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_module</td><td>正規表現<sup class="footnote-reference" id="fr-regex-9"><a href="#footnote-regex">4</a></sup></td><td><code>module</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_package</td><td>正規表現<sup class="footnote-reference" id="fr-regex-10"><a href="#footnote-regex">4</a></sup></td><td><code>package</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_parameter</td><td>正規表現<sup class="footnote-reference" id="fr-regex-11"><a href="#footnote-regex">4</a></sup></td><td><code>parameter</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_port_inout</td><td>正規表現<sup class="footnote-reference" id="fr-regex-12"><a href="#footnote-regex">4</a></sup></td><td><code>inout</code> ポートの禁止正規表現</td></tr>
+<tr><td>re_forbidden_port_input</td><td>正規表現<sup class="footnote-reference" id="fr-regex-13"><a href="#footnote-regex">4</a></sup></td><td><code>input</code> ポートの禁止正規表現</td></tr>
+<tr><td>re_forbidden_port_modport</td><td>正規表現<sup class="footnote-reference" id="fr-regex-14"><a href="#footnote-regex">4</a></sup></td><td><code>modport</code> ポートの禁止正規表現</td></tr>
+<tr><td>re_forbidden_port_output</td><td>正規表現<sup class="footnote-reference" id="fr-regex-15"><a href="#footnote-regex">4</a></sup></td><td><code>output</code> ポートの禁止正規表現</td></tr>
+<tr><td>re_forbidden_reg</td><td>正規表現<sup class="footnote-reference" id="fr-regex-16"><a href="#footnote-regex">4</a></sup></td><td>レジスタ変数<sup class="footnote-reference" id="fr-reg-4"><a href="#footnote-reg">2</a></sup>の禁止正規表現</td></tr>
+<tr><td>re_forbidden_struct</td><td>正規表現<sup class="footnote-reference" id="fr-regex-17"><a href="#footnote-regex">4</a></sup></td><td><code>struct</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_union</td><td>正規表現<sup class="footnote-reference" id="fr-regex-18"><a href="#footnote-regex">4</a></sup></td><td><code>union</code> の禁止正規表現</td></tr>
+<tr><td>re_forbidden_var</td><td>正規表現<sup class="footnote-reference" id="fr-regex-19"><a href="#footnote-regex">4</a></sup></td><td>変数の禁止正規表現</td></tr>
+<tr><td>re_forbidden_wire</td><td>正規表現<sup class="footnote-reference" id="fr-regex-20"><a href="#footnote-regex">4</a></sup></td><td>ワイヤ変数<sup class="footnote-reference" id="fr-wire-4"><a href="#footnote-wire">3</a></sup>の禁止正規表現</td></tr>
+<tr><td>re_required_enum</td><td>正規表現<sup class="footnote-reference" id="fr-regex-21"><a href="#footnote-regex">4</a></sup></td><td><code>enum</code> の必須正規表現</td></tr>
+<tr><td>re_required_function</td><td>正規表現<sup class="footnote-reference" id="fr-regex-22"><a href="#footnote-regex">4</a></sup></td><td><code>function</code> の必須正規表現</td></tr>
+<tr><td>re_required_function_inout</td><td>正規表現<sup class="footnote-reference" id="fr-regex-23"><a href="#footnote-regex">4</a></sup></td><td><code>inout</code> 引数の必須正規表現</td></tr>
+<tr><td>re_required_function_input</td><td>正規表現<sup class="footnote-reference" id="fr-regex-24"><a href="#footnote-regex">4</a></sup></td><td><code>input</code> 引数の必須正規表現</td></tr>
+<tr><td>re_required_function_output</td><td>正規表現<sup class="footnote-reference" id="fr-regex-25"><a href="#footnote-regex">4</a></sup></td><td><code>output</code> 引数の必須正規表現</td></tr>
+<tr><td>re_required_instance</td><td>正規表現<sup class="footnote-reference" id="fr-regex-26"><a href="#footnote-regex">4</a></sup></td><td>インスタンスの必須正規表現</td></tr>
+<tr><td>re_required_interface</td><td>正規表現<sup class="footnote-reference" id="fr-regex-27"><a href="#footnote-regex">4</a></sup></td><td><code>interface</code> の必須正規表現</td></tr>
+<tr><td>re_required_modport</td><td>正規表現<sup class="footnote-reference" id="fr-regex-28"><a href="#footnote-regex">4</a></sup></td><td><code>modport</code> の必須正規表現</td></tr>
+<tr><td>re_required_module</td><td>正規表現<sup class="footnote-reference" id="fr-regex-29"><a href="#footnote-regex">4</a></sup></td><td><code>module</code> の必須正規表現</td></tr>
+<tr><td>re_required_package</td><td>正規表現<sup class="footnote-reference" id="fr-regex-30"><a href="#footnote-regex">4</a></sup></td><td><code>package</code> の必須正規表現</td></tr>
+<tr><td>re_required_parameter</td><td>正規表現<sup class="footnote-reference" id="fr-regex-31"><a href="#footnote-regex">4</a></sup></td><td><code>parameter</code> の必須正規表現</td></tr>
+<tr><td>re_required_port_inout</td><td>正規表現<sup class="footnote-reference" id="fr-regex-32"><a href="#footnote-regex">4</a></sup></td><td><code>inout</code> ポートの必須正規表現</td></tr>
+<tr><td>re_required_port_input</td><td>正規表現<sup class="footnote-reference" id="fr-regex-33"><a href="#footnote-regex">4</a></sup></td><td><code>input</code> ポートの必須正規表現</td></tr>
+<tr><td>re_required_port_modport</td><td>正規表現<sup class="footnote-reference" id="fr-regex-34"><a href="#footnote-regex">4</a></sup></td><td><code>modport</code> ポートの必須正規表現</td></tr>
+<tr><td>re_required_port_output</td><td>正規表現<sup class="footnote-reference" id="fr-regex-35"><a href="#footnote-regex">4</a></sup></td><td><code>output</code> ポートの必須正規表現</td></tr>
+<tr><td>re_required_reg</td><td>正規表現<sup class="footnote-reference" id="fr-regex-36"><a href="#footnote-regex">4</a></sup></td><td>レジスタ変数<sup class="footnote-reference" id="fr-reg-5"><a href="#footnote-reg">2</a></sup>の必須正規表現</td></tr>
+<tr><td>re_required_struct</td><td>正規表現<sup class="footnote-reference" id="fr-regex-37"><a href="#footnote-regex">4</a></sup></td><td><code>struct</code> の必須正規表現</td></tr>
+<tr><td>re_required_union</td><td>正規表現<sup class="footnote-reference" id="fr-regex-38"><a href="#footnote-regex">4</a></sup></td><td><code>union</code> の必須正規表現</td></tr>
+<tr><td>re_required_var</td><td>正規表現<sup class="footnote-reference" id="fr-regex-39"><a href="#footnote-regex">4</a></sup></td><td>変数の必須正規表現</td></tr>
+<tr><td>re_required_wire</td><td>正規表現<sup class="footnote-reference" id="fr-regex-40"><a href="#footnote-regex">4</a></sup></td><td>ワイヤ変数<sup class="footnote-reference" id="fr-wire-5"><a href="#footnote-wire">3</a></sup>の必須正規表現</td></tr>
 </tbody></table>
-</div>
-<div class="footnote-definition" id="casetype"><sup class="footnote-definition-label">1</sup>
-<p>設定可能な値は以下です。</p>
 </div>
 <ul>
 <li><code>"snake"</code> – snake_case</li>
@@ -2726,16 +2863,20 @@ case_enum = "snake"
 <li><code>"lower_camel"</code> – lowerCamelCase</li>
 <li><code>"upper_camel"</code> – UpperCamelCase</li>
 </ul>
-<div class="footnote-definition" id="regex"><sup class="footnote-definition-label">4</sup>
-<p><code>".*"</code>のような正規表現です。使用可能な構文は<a href="https://docs.rs/regex/latest/regex/#syntax">こちら</a>.</p>
-</div>
-<div class="footnote-definition" id="reg"><sup class="footnote-definition-label">2</sup>
-<p>レジスタ変数とは <code>always_ff</code> で代入される変数です。合成フェーズでフリップフロップにマップされます。</p>
-</div>
-<div class="footnote-definition" id="wire"><sup class="footnote-definition-label">3</sup>
-<p>ワイヤ変数とは <code>always_comb</code> で代入される変数です。合成フェーズでワイヤにマップされます。</p>
-</div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="test"><a class="header" href="#test">Test</a></h1>
+<hr>
+<ol class="footnote-definition"><li id="footnote-casetype">
+<p>設定可能な値は以下です。 <a href="#fr-casetype-1">↩</a> <a href="#fr-casetype-2">↩2</a> <a href="#fr-casetype-3">↩3</a> <a href="#fr-casetype-4">↩4</a> <a href="#fr-casetype-5">↩5</a> <a href="#fr-casetype-6">↩6</a> <a href="#fr-casetype-7">↩7</a> <a href="#fr-casetype-8">↩8</a> <a href="#fr-casetype-9">↩9</a> <a href="#fr-casetype-10">↩10</a> <a href="#fr-casetype-11">↩11</a> <a href="#fr-casetype-12">↩12</a> <a href="#fr-casetype-13">↩13</a> <a href="#fr-casetype-14">↩14</a> <a href="#fr-casetype-15">↩15</a> <a href="#fr-casetype-16">↩16</a> <a href="#fr-casetype-17">↩17</a> <a href="#fr-casetype-18">↩18</a> <a href="#fr-casetype-19">↩19</a> <a href="#fr-casetype-20">↩20</a></p>
+</li>
+<li id="footnote-reg">
+<p>レジスタ変数とは <code>always_ff</code> で代入される変数です。合成フェーズでフリップフロップにマップされます。 <a href="#fr-reg-1">↩</a> <a href="#fr-reg-2">↩2</a> <a href="#fr-reg-3">↩3</a> <a href="#fr-reg-4">↩4</a> <a href="#fr-reg-5">↩5</a></p>
+</li>
+<li id="footnote-wire">
+<p>ワイヤ変数とは <code>always_comb</code> で代入される変数です。合成フェーズでワイヤにマップされます。 <a href="#fr-wire-1">↩</a> <a href="#fr-wire-2">↩2</a> <a href="#fr-wire-3">↩3</a> <a href="#fr-wire-4">↩4</a> <a href="#fr-wire-5">↩5</a></p>
+</li>
+<li id="footnote-regex">
+<p><code>".*"</code>のような正規表現です。使用可能な構文は<a href="https://docs.rs/regex/latest/regex/#syntax">こちら</a>. <a href="#fr-regex-1">↩</a> <a href="#fr-regex-2">↩2</a> <a href="#fr-regex-3">↩3</a> <a href="#fr-regex-4">↩4</a> <a href="#fr-regex-5">↩5</a> <a href="#fr-regex-6">↩6</a> <a href="#fr-regex-7">↩7</a> <a href="#fr-regex-8">↩8</a> <a href="#fr-regex-9">↩9</a> <a href="#fr-regex-10">↩10</a> <a href="#fr-regex-11">↩11</a> <a href="#fr-regex-12">↩12</a> <a href="#fr-regex-13">↩13</a> <a href="#fr-regex-14">↩14</a> <a href="#fr-regex-15">↩15</a> <a href="#fr-regex-16">↩16</a> <a href="#fr-regex-17">↩17</a> <a href="#fr-regex-18">↩18</a> <a href="#fr-regex-19">↩19</a> <a href="#fr-regex-20">↩20</a> <a href="#fr-regex-21">↩21</a> <a href="#fr-regex-22">↩22</a> <a href="#fr-regex-23">↩23</a> <a href="#fr-regex-24">↩24</a> <a href="#fr-regex-25">↩25</a> <a href="#fr-regex-26">↩26</a> <a href="#fr-regex-27">↩27</a> <a href="#fr-regex-28">↩28</a> <a href="#fr-regex-29">↩29</a> <a href="#fr-regex-30">↩30</a> <a href="#fr-regex-31">↩31</a> <a href="#fr-regex-32">↩32</a> <a href="#fr-regex-33">↩33</a> <a href="#fr-regex-34">↩34</a> <a href="#fr-regex-35">↩35</a> <a href="#fr-regex-36">↩36</a> <a href="#fr-regex-37">↩37</a> <a href="#fr-regex-38">↩38</a> <a href="#fr-regex-39">↩39</a> <a href="#fr-regex-40">↩40</a></p>
+</li>
+</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="test"><a class="header" href="#test">Test</a></h1>
 <p><code>[test]</code> セクションは以下のように組み込みユニットテストの設定を指定します。</p>
 <pre><code class="language-toml">[test]
 simulator = "vcs"
@@ -2744,11 +2885,8 @@ simulator = "vcs"
 <h2 id="test-セクション"><a class="header" href="#test-セクション"><code>[test]</code> セクション</a></h2>
 <p>このセクションはテストの設定です。</p>
 <div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
-<tr><td>simulator</td><td>シミュレータ名<sup class="footnote-reference"><a href="#sim">1</a></sup></td><td>デフォルトのシミュレータ</td></tr>
+<tr><td>simulator</td><td>シミュレータ名<sup class="footnote-reference" id="fr-sim-1"><a href="#footnote-sim">1</a></sup></td><td>デフォルトのシミュレータ</td></tr>
 </tbody></table>
-</div>
-<div class="footnote-definition" id="sim"><sup class="footnote-definition-label">1</sup>
-<p>設定可能な値は以下です。</p>
 </div>
 <ul>
 <li><code>"verilator"</code></li>
@@ -2784,10 +2922,20 @@ simulator = "vcs"
 <li><code>directory</code> – 特定のディレクトリ</li>
 </ul>
 <p><code>directory</code> を指定する場合は、ターゲットパスを <code>path</code> キーで指定します。</p>
-<pre><code class="language-toml">[build]
+<pre><code class="language-toml">[test]
 waveform_target = {type = "directory", path = "[dst dir]"}
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="publish"><a class="header" href="#publish">Publish</a></h1>
+<h2 id="waveform_format-フィールド"><a class="header" href="#waveform_format-フィールド"><code>waveform_format</code> フィールド</a></h2>
+<p><code>waveform_format</code> フィールドはダンプされる波形のフォーマットを指定します。指定できる値は以下の通りです。</p>
+<ul>
+<li><code>vcd</code> – デフォルト値であり、多くのベンダーでサポートされていますが機能は限定的です。</li>
+<li><code>fst</code> – 整数の代わりにenum値を表示するなどいくつかの機能をサポートしています。<code>gtkwave</code> と <code>surfer</code> で扱うことができます。</li>
+</ul>
+<hr>
+<ol class="footnote-definition"><li id="footnote-sim">
+<p>設定可能な値は以下です。 <a href="#fr-sim-1">↩</a></p>
+</li>
+</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="publish"><a class="header" href="#publish">Publish</a></h1>
 <p><code>[publish]</code> セクションは以下のようにプロジェクト公開の設定を指定します。</p>
 <pre><code class="language-toml">[publish]
 bump_commit = true
@@ -2801,20 +2949,22 @@ bump_commit_message = "Bump"
 <tr><td>publish_commit_mesasge</td><td>文字列</td><td>“chore: Publish”</td><td>公開後のコミットメッセージ</td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h1>
-<p>他の Veryl プロジェクトへの依存関係をプロジェクトに追加したい場合、<code>Veryl.toml</code> に <code>[dependencies]</code> セクションを追加します。エントリの左辺は依存関係へのパス、右辺はバージョンです。</p>
+<p>他の Veryl プロジェクトへの依存関係をプロジェクトに追加したい場合、<code>Veryl.toml</code> に <code>[dependencies]</code> セクションを追加します。エントリの左辺は依存関係のプロジェクト名、右辺はソースパスとバージョンです。<code>github</code> はGitHub上のリポジトリを参照する糖衣構文です。代わりに <code>git</code> を用いてURL全体を指定することもできます。</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = "0.1.0"
+veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+
+# これは上記と同じ
+veryl_sample = {git = "https://github.com/veryl-lang/veryl_sample", version = "0.1.0"}
 </code></pre>
-<p>デフォルトでは依存関係の名前空間はそのプロジェクト名と同じです。もし名前空間を指定したい場合は、 <code>name</code> フィールドを使います。</p>
+<p>デフォルトでは依存関係の名前空間はそのプロジェクト名と同じです。もし左辺の名前を変更した場合は、<code>project</code> フィールドでプロジェクト名を指定する必要があります。</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = {version = "0.1.0", name = "veryl_sample_alt"}
+veryl_sample_alt = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.2.0"}
 </code></pre>
-<p>同じ依存関係の複数のバージョンを使う場合は、以下のようにそれぞれの名前を指定できます。</p>
+<p>リポジトリの内部プロジェクトは以下のように指定できます。</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = [
-    {version = "0.1.0", name = "veryl_sample1"},
-    {version = "0.2.0", name = "veryl_sample2"},
-]
+inner_prj1 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+inner_prj2 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
+inner_prj3 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
 </code></pre>
 <h2 id="依存関係の使用"><a class="header" href="#依存関係の使用">依存関係の使用</a></h2>
 <p><code>Veryl.toml</code> に依存関係を追加したあとは、その依存関係の <code>module</code>、<code>interface</code>、<code>package</code>を使うことができます。以下は <code>veryl_sample</code> の依存関係に含まれる <code>delay</code> モジュールを使った例です。</p>
@@ -2854,15 +3004,15 @@ bump_commit_message = "Bump"
 <h2 id="相対パス依存関係"><a class="header" href="#相対パス依存関係">相対パス依存関係</a></h2>
 <p>手元の環境で開発しているとき、ローカルファイルパスへの依存関係が使えると便利なことがあります。相対パス依存関係は以下のように指定することができます。</p>
 <pre><code class="language-toml">[dependencies]
-"../../library/path" = "0.1.0"
+veryl_sample = {path = "../../veryl_sample"}
 </code></pre>
 <p>プロジェクトに相対パス依存関係がある場合、そのプロジェクトは <code>veryl publish</code> で公開することはできません。</p>
 <h2 id="ローカルパスによる上書き"><a class="header" href="#ローカルパスによる上書き">ローカルパスによる上書き</a></h2>
 <p>場合によってはローカルで変更されたバージョンの依存関係を使う必要があることもあります。そのような場合、以下のようにローカルパスによって依存関係を上書きすることができます。</p>
 <pre><code class="language-toml">[dependencies]
-"https://github.com/veryl-lang/sample" = {version = "0.1.0", path = "../sample"}
+veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = "../veryl_sample"}
 </code></pre>
-<p>これは <code>../sample</code> が存在する場合はそれを使い、そうでない場合は Git から取得する、という意味です。</p>
+<p>これは <code>../veryl_sample</code> が存在する場合はそれを使い、そうでない場合は Git から取得する、という意味です。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="プロジェクトを公開する"><a class="header" href="#プロジェクトを公開する">プロジェクトを公開する</a></h1>
 <p>プロジェクトを公開するには <code>veryl publish</code> コマンドを使います。公開とはバージョン番号とgitのリビジョンを紐づけることです。</p>
 <pre><code>$ veryl publish
@@ -2981,8 +3131,10 @@ target = {type = "directory", path = "target"}
 </code></pre>
 <p>生成された <code>prj.f</code> は生成されたソースコードを全てリストアップしているので、既存の SystemVerilog ファイルリストと一緒に使うことができます。</p>
 <h2 id="gitignore-について"><a class="header" href="#gitignore-について"><code>.gitignore</code> について</a></h2>
-<p>Veryl はデフォルトの <code>.gitignore</code> を提供しません。これはプロジェクト毎にどのファイルを無視する必要があるかが変わるためです。</p>
-<p><code>.gitignore</code> の候補としては以下が考えられます。</p>
+<p>Verylは以下の <code>.gitignore</code> をデフォルト値として提供します。<code>.build</code> ディレクトリはVerylコンパイラがビルド情報を記録するために使用します。</p>
+<pre><code>.build/
+</code></pre>
+<p>それ以外のパターンはプロジェクトに合わせて追加できます。<code>.gitignore</code> の候補としては以下が考えられます。</p>
 <ul>
 <li><code>dependencies/</code></li>
 <li><code>target/</code></li>
@@ -3207,6 +3359,15 @@ veryl build
 // 最新のツールチェーンを使う
 veryl +latest build
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="新バージョンへの移行"><a class="header" href="#新バージョンへの移行">新バージョンへの移行</a></h1>
+<p>Verylの新しいバージョンが破壊的な変更を伴うことがあります。<code>veryl migrate</code> は既存のプロジェクトを新バージョンに自動的に移行します。<code>--check</code> オプションによりどのような変更が適用されるか事前に確認することもできます。</p>
+<pre><code class="language-console">$ veryl migrate --check
+$ veryl migrate
+</code></pre>
+<p><code>veryl migrate</code> は単一のメジャーバージョン（1.0まではマイナーバージョン）しか移行しません。複数のバージョンを移行するには以下のようにしてください。</p>
+<pre><code class="language-console">$ veryl +0.15.0 migrate  # from v0.14.0 to v0.15.0
+$ veryl +0.16.0 migrate  # from v0.15.0 to v0.16.0
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="補遺"><a class="header" href="#補遺">補遺</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="構文"><a class="header" href="#構文">構文</a></h1>
 <p>Veryl のパーサはパーサジェネレータ <a href="https://github.com/jsinger67/parol">parol</a>を使っています。以下の parol の構文定義が正式な構文です。</p>
@@ -3244,17 +3405,18 @@ MinusColonTerm        : &lt;INITIAL                &gt;'-:'                     
 MinusGTTerm           : &lt;INITIAL                &gt;'-&gt;'                                                                                  : Token;
 PlusColonTerm         : &lt;INITIAL                &gt;'+:'                                                                                  : Token;
 AssignmentOperatorTerm: &lt;INITIAL                &gt;"\+=|-=|\*=|/=|%=|&amp;=|\|=|\^=|&lt;&lt;=|&gt;&gt;=|&lt;&lt;&lt;=|&gt;&gt;&gt;="                                       : Token;
-Operator11Term        : &lt;INITIAL                &gt;"\*\*"                                                                                : Token;
-Operator10Term        : &lt;INITIAL                &gt;"/|%"                                                                                 : Token;
-Operator09Term        : &lt;INITIAL                &gt;"\+|-"                                                                                : Token;
-Operator08Term        : &lt;INITIAL                &gt;"&lt;&lt;&lt;|&gt;&gt;&gt;|&lt;&lt;|&gt;&gt;"                                                                       : Token;
-Operator07Term        : &lt;INITIAL                &gt;"&lt;=|&gt;=|&lt;:|&gt;:"                                                                         : Token;
-Operator06Term        : &lt;INITIAL                &gt;"===|==\?|!==|!=\?|==|!="                                                             : Token;
-Operator02Term        : &lt;INITIAL                &gt;"&amp;&amp;"                                                                                  : Token;
-Operator01Term        : &lt;INITIAL                &gt;"\|\|"                                                                                : Token;
-Operator05Term        : &lt;INITIAL                &gt;"&amp;"                                                                                   : Token;
-Operator04Term        : &lt;INITIAL                &gt;"\^~|\^|~\^"                                                                          : Token;
-Operator03Term        : &lt;INITIAL                &gt;"\|"                                                                                  : Token;
+DiamondOperatorTerm   : &lt;INITIAL                &gt;'&lt;&gt;'                                                                                  : Token;
+Operator12Term        : &lt;INITIAL                &gt;"\*\*"                                                                                : Token;
+Operator11Term        : &lt;INITIAL                &gt;"/|%"                                                                                 : Token;
+Operator10Term        : &lt;INITIAL                &gt;"\+|-"                                                                                : Token;
+Operator09Term        : &lt;INITIAL                &gt;"&lt;&lt;&lt;|&gt;&gt;&gt;|&lt;&lt;|&gt;&gt;"                                                                       : Token;
+Operator08Term        : &lt;INITIAL                &gt;"&lt;=|&gt;=|&lt;:|&gt;:"                                                                         : Token;
+Operator07Term        : &lt;INITIAL                &gt;"===|==\?|!==|!=\?|==|!="                                                             : Token;
+Operator03Term        : &lt;INITIAL                &gt;"&amp;&amp;"                                                                                  : Token;
+Operator02Term        : &lt;INITIAL                &gt;"\|\|"                                                                                : Token;
+Operator06Term        : &lt;INITIAL                &gt;"&amp;"                                                                                   : Token;
+Operator05Term        : &lt;INITIAL                &gt;"\^~|\^|~\^"                                                                          : Token;
+Operator04Term        : &lt;INITIAL                &gt;"\|"                                                                                  : Token;
 UnaryOperatorTerm     : &lt;INITIAL                &gt;"~&amp;|~\||!|~"                                                                          : Token;
 BackQuoteTerm         : &lt;INITIAL, Generic       &gt;"`"                                                                                   : Token;
 ColonColonLAngleTerm  : &lt;INITIAL, Generic       &gt;'::&lt;'                                                                                 : Token;
@@ -3267,6 +3429,7 @@ DotTerm               : &lt;INITIAL, Generic       &gt;'.'                      
 EquTerm               : &lt;INITIAL, Generic       &gt;'='                                                                                   : Token;
 HashTerm              : &lt;INITIAL, Generic       &gt;'#'                                                                                   : Token;
 LAngleTerm            : &lt;INITIAL, Generic       &gt;'&lt;'                                                                                   : Token;
+QuestionTerm          : &lt;INITIAL                &gt;'?'                                                                                   : Token;
 QuoteLBraceTerm       : &lt;INITIAL, Generic       &gt;"'\{"                                                                                 : Token;
 LBraceTerm            : &lt;INITIAL, Generic, Embed&gt;'{'                                                                                   : Token;
 LBracketTerm          : &lt;INITIAL, Generic       &gt;'['                                                                                   : Token;
@@ -3288,6 +3451,7 @@ CaseTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)case(?-u:\b)/   
 ClockTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock(?-u:\b)/                                                               : Token;
 ClockPosedgeTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock_posedge(?-u:\b)/                                                       : Token;
 ClockNegedgeTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock_negedge(?-u:\b)/                                                       : Token;
+ConnectTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)connect(?-u:\b)/                                                             : Token;
 ConstTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)const(?-u:\b)/                                                               : Token;
 ConverseTerm          : &lt;INITIAL, Generic       &gt;/(?-u:\b)converse(?-u:\b)/                                                            : Token;
 DefaultTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)default(?-u:\b)/                                                             : Token;
@@ -3368,7 +3532,7 @@ BaseLessToken  : BaseLessTerm  : Token Comments;
 AllBitToken    : AllBitTerm    : Token Comments;
 
 AssignmentOperatorToken: AssignmentOperatorTerm: Token Comments;
-Operator01Token        : Operator01Term        : Token Comments;
+DiamondOperatorToken   : DiamondOperatorTerm   : Token Comments;
 Operator02Token        : Operator02Term        : Token Comments;
 Operator03Token        : Operator03Term        : Token Comments;
 Operator04Token        : Operator04Term        : Token Comments;
@@ -3379,6 +3543,7 @@ Operator08Token        : Operator08Term        : Token Comments;
 Operator09Token        : Operator09Term        : Token Comments;
 Operator10Token        : Operator10Term        : Token Comments;
 Operator11Token        : Operator11Term        : Token Comments;
+Operator12Token        : Operator12Term        : Token Comments;
 UnaryOperatorToken     : UnaryOperatorTerm     : Token Comments;
 
 BackQuoteToken       : BackQuoteTerm       : Token Comments;
@@ -3391,6 +3556,7 @@ DotDotEquToken       : DotDotEquTerm       : Token Comments;
 DotToken             : DotTerm             : Token Comments;
 EquToken             : EquTerm             : Token Comments;
 HashToken            : HashTerm            : Token Comments;
+QuestionToken        : QuestionTerm        : Token Comments;
 QuoteLBraceToken     : QuoteLBraceTerm     : Token Comments;
 LAngleToken          : LAngleTerm          : Token Comments;
 LBraceToken          : LBraceTerm          : Token Comments;
@@ -3417,6 +3583,7 @@ CaseToken          : CaseTerm          : Token Comments;
 ClockToken         : ClockTerm         : Token Comments;
 ClockPosedgeToken  : ClockPosedgeTerm  : Token Comments;
 ClockNegedgeToken  : ClockNegedgeTerm  : Token Comments;
+ConnectToken       : ConnectTerm       : Token Comments;
 ConstToken         : ConstTerm         : Token Comments;
 ConverseToken      : ConverseTerm      : Token Comments;
 DefaultToken       : DefaultTerm       : Token Comments;
@@ -3499,7 +3666,7 @@ AllBit    : AllBitToken    : VerylToken;
 
 // Operator
 AssignmentOperator: AssignmentOperatorToken: VerylToken;
-Operator01        : Operator01Token        : VerylToken;
+DiamondOperator   : DiamondOperatorToken   : VerylToken;
 Operator02        : Operator02Token        : VerylToken;
 Operator03        : Operator03Token        : VerylToken;
 Operator04        : Operator04Token        : VerylToken;
@@ -3510,6 +3677,7 @@ Operator08        : Operator08Token        : VerylToken;
 Operator09        : Operator09Token        : VerylToken;
 Operator10        : Operator10Token        : VerylToken;
 Operator11        : Operator11Token        : VerylToken;
+Operator12        : Operator12Token        : VerylToken;
 UnaryOperator     : UnaryOperatorToken     : VerylToken;
 
 // Symbol
@@ -3523,6 +3691,7 @@ DotDotEqu       : DotDotEquToken       : VerylToken;
 Dot             : DotToken             : VerylToken;
 Equ             : EquToken             : VerylToken;
 Hash            : HashToken            : VerylToken;
+Question        : QuestionToken        : VerylToken;
 QuoteLBrace     : QuoteLBraceToken     : VerylToken;
 LAngle          : LAngleToken          : VerylToken;
 LBrace          : LBraceToken          : VerylToken;
@@ -3551,6 +3720,7 @@ Case          : CaseToken          : VerylToken;
 Clock         : ClockToken         : VerylToken;
 ClockPosedge  : ClockPosedgeToken  : VerylToken;
 ClockNegedge  : ClockNegedgeToken  : VerylToken;
+Connect       : ConnectToken       : VerylToken;
 Const         : ConstToken         : VerylToken;
 Converse      : ConverseToken      : VerylToken;
 Defaul        : DefaultToken       : VerylToken; // avoid to conflict with Rust's Default trait
@@ -3643,7 +3813,8 @@ ExpressionIdentifier  : ScopedIdentifier [ Width ] { Select } { Dot Identifier {
 // Expression
 // ----------------------------------------------------------------------------
 
-Expression  : Expression01 { Operator01 Expression01 };
+Expression  : IfExpression;
+IfExpression: { If Expression Question Expression Colon } Expression01;
 Expression01: Expression02 { Operator02 Expression02 };
 Expression02: Expression03 { Operator03 Expression03 };
 Expression03: Expression04 { Operator04 Expression04 };
@@ -3652,10 +3823,11 @@ Expression05: Expression06 { Operator06 Expression06 };
 Expression06: Expression07 { Operator07 Expression07 };
 Expression07: Expression08 { Operator08 Expression08 };
 Expression08: Expression09 { Operator09 Expression09 };
-Expression09: Expression10 { ( Operator10 | Star ) Expression10 };
-Expression10: Expression11 { Operator11 Expression11 };
-Expression11: Expression12 [ As CastingType ];
-Expression12: { ( UnaryOperator | Operator09 | Operator05 | Operator03 | Operator04 ) } Factor;
+Expression09: Expression10 { Operator10 Expression10 };
+Expression10: Expression11 { ( Operator11 | Star ) Expression11 };
+Expression11: Expression12 { Operator12 Expression12 };
+Expression12: Expression13 [ As CastingType ];
+Expression13: { ( UnaryOperator | Operator10 | Operator06 | Operator04 | Operator05 ) } Factor;
 
 Factor: Number
       | BooleanLiteral
@@ -3663,7 +3835,6 @@ Factor: Number
       | LParen Expression RParen
       | LBrace ConcatenationList RBrace
       | QuoteLBrace ArrayLiteralList RBrace
-      | IfExpression
       | CaseExpression
       | SwitchExpression
       | StringLiteral
@@ -3684,7 +3855,9 @@ FunctionCall: LParen [ ArgumentList ] RParen;
 
 ArgumentList: ArgumentItem { Comma ArgumentItem } [ Comma ];
 
-ArgumentItem: Expression;
+ArgumentItem: ArgumentExpression [ Colon Expression ];
+
+ArgumentExpression: Expression;
 
 StructConstructor: QuoteLBrace StructConstructorList [ DotDot Defaul LParen Expression RParen ] RBrace;
 
@@ -3699,8 +3872,6 @@ ConcatenationItem: Expression [ Repeat Expression ];
 ArrayLiteralList: ArrayLiteralItem { Comma ArrayLiteralItem } [ Comma ];
 
 ArrayLiteralItem: ( Expression [ Repeat Expression ] | Defaul Colon Expression );
-
-IfExpression: If Expression LBrace Expression RBrace { Else If Expression LBrace Expression RBrace } Else LBrace Expression RBrace;
 
 CaseExpression: Case Expression LBrace CaseCondition Colon Expression Comma { CaseCondition Colon Expression Comma } Defaul Colon Expression [ Comma ] RBrace;
 
@@ -3815,7 +3986,7 @@ LetStatement: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Semi
 
 IdentifierStatement: ExpressionIdentifier ( FunctionCall | Assignment ) Semicolon;
 
-Assignment: ( Equ | AssignmentOperator ) Expression;
+Assignment: ( Equ | AssignmentOperator | DiamondOperator ) Expression;
 
 IfStatement: If Expression StatementBlock { Else If Expression StatementBlock } [ Else StatementBlock ];
 
@@ -3881,6 +4052,8 @@ AssignDestination: HierarchicalIdentifier
 AssignConcatenationList: AssignConcatenationItem { Comma AssignConcatenationItem } [ Comma ];
 
 AssignConcatenationItem: HierarchicalIdentifier;
+
+ConnectDeclaration: Connect HierarchicalIdentifier DiamondOperator Expression Semicolon;
 
 ModportDeclaration: Modport Identifier LBrace [ ModportList ] [ DotDot ModportDefault ] RBrace;
 
@@ -4054,6 +4227,7 @@ GenerateItem: LetDeclaration
             | AlwaysFfDeclaration
             | AlwaysCombDeclaration
             | AssignDeclaration
+            | ConnectDeclaration
             | FunctionDeclaration
             | GenerateIfDeclaration
             | GenerateForDeclaration

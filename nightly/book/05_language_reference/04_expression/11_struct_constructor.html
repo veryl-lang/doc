@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="ja" class="light sidebar-visible" dir="ltr">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head prefix="og: http://ogp.me/ns#">
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>if - The Veryl Hardware Description Language</title>
+        <title>Struct Constructor - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
@@ -27,9 +27,9 @@
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
                     if (lang == "en") {
-                        canonical_href = `${base}/05_language_reference/04_expression/04_if.md`;
+                        canonical_href = `${base}/05_language_reference/04_expression/11_struct_constructor.md`;
                     } else {
-                        canonical_href = `${base}/${lang}/05_language_reference/04_expression/04_if.md`;
+                        canonical_href = `${base}/${lang}/05_language_reference/04_expression/11_struct_constructor.md`;
                     }
                     canonical_href = canonical_href.slice(0, -"md".length) + "html";
                     if (canonical_href.endsWith("/index.html")) {
@@ -38,7 +38,7 @@
                     return canonical_href;
                 }
         
-                const canonical_href = gen_canonical_href("ja");
+                const canonical_href = gen_canonical_href("en");
 
                 let link = document.createElement("link");
                 link.rel = "canonical";
@@ -207,13 +207,25 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="if"><a class="header" href="#if">if</a></h1>
-<p><code>if</code> を用いた条件式を使えます。<code>if</code> キーワードの後に条件を示す節を置きますが、<code>()</code> で囲む必要はありません。<code>?</code> のあとに条件が真である場合の式を、<code>:</code> のあとに条件が偽である場合の式を書きます。</p>
+                        <h1 id="struct-constructor"><a class="header" href="#struct-constructor">Struct Constructor</a></h1>
+<p>To initialize struct, Struct constructor can be used instead of assigning each members.
+This is especially useful to initialize <code>const</code> because it can’t be assigned by each members.</p>
+<p><code>..default</code> specifier can speficy the default value for unspecified members in the struct.</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    let a: logic&lt;10&gt; = 1;
-    var b: logic&lt;10&gt;;
+    struct Param {
+        a: bit&lt;10&gt;,
+        b: bit&lt;10&gt;,
+    }
 
-    assign b = if a == 0 ? 1 : if a &gt;: 1 ? 2 : 3;
+    const p: Param = Param'{
+        a: 10,
+        b: 10,
+    };
+
+    const q: Param = Param'{
+        a: 1,
+        ..default(0) // means `b: 0`
+    };
 }
 </code></pre>
 
@@ -221,11 +233,11 @@
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../05_language_reference/04_expression/03_concatenation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../05_language_reference/04_expression/10_type_cast.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../05_language_reference/04_expression/05_case_switch.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../05_language_reference/05_statement.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -235,11 +247,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../05_language_reference/04_expression/03_concatenation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../05_language_reference/04_expression/10_type_cast.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../05_language_reference/04_expression/05_case_switch.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../05_language_reference/05_statement.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
