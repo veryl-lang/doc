@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-03-31T19:06:38+09:00\n"
+"POT-Creation-Date: 2025-04-01T11:51:35+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -1139,9 +1139,9 @@ msgid ""
 "`git` command is available, the directory is initialized as Git repository "
 "and the default `.gitignore` are added."
 msgstr ""
-"コマンドを実行すると、以下のディレクトリとファイルが作成されます。"
-"もし `git` コマンドが利用できれば、ディレクトリは Git リポジトリとして初期化され、"
-"デフォルトの `.gitignore` ファイルも追加されます。"
+"コマンドを実行すると、以下のディレクトリとファイルが作成されます。もし `git` "
+"コマンドが利用できれば、ディレクトリは Git リポジトリとして初期化され、デフォ"
+"ルトの `.gitignore` ファイルも追加されます。"
 
 #: src/03_getting_started/02_hello_world.md:14
 msgid ""
@@ -2271,8 +2271,8 @@ msgid ""
 "`bool` is a type alias of `logic<1>` to express boolean. `true` and `false` "
 "literal which express `1'b1` and `1'b0` can be used."
 msgstr ""
-"`bool` は ブーリアンを表す `logic<1>` の型エイリアスです。"
-"`1'b1` と `1'b0` を表す `true` と `false` も使用できます。"
+"`bool` は ブーリアンを表す `logic<1>` の型エイリアスです。`1'b1` と `1'b0` を"
+"表す `true` と `false` も使用できます。"
 
 #: src/05_language_reference/03_data_type/02_user_defined_type.md:3
 msgid "Struct"
@@ -2444,8 +2444,9 @@ msgid ""
 "`always_ff`. For such case, `default` type modifier can be used to specify "
 "the default clock and reset explicitly."
 msgstr ""
-"クロックが複数あるものの、 `always_ff` では単一のクロックしか使われない場合があります。"
-"このような場合に `default` 型修飾子を使ってデフォルトのクロックとリセットを明示することができます。"
+"クロックが複数あるものの、 `always_ff` では単一のクロックしか使われない場合が"
+"あります。このような場合に `default` 型修飾子を使ってデフォルトのクロックとリ"
+"セットを明示することができます。"
 
 #: src/05_language_reference/04_expression.md:3
 msgid ""
@@ -2583,8 +2584,8 @@ msgid ""
 "useful. Named arguments can't be used with positional arguments at the same "
 "time."
 msgstr ""
-"多くの引数を持つ関数では、名前付き引数による関数呼び出しが便利です。"
-"名前付き引数と位置引数を混在させることはできません。"
+"多くの引数を持つ関数では、名前付き引数による関数呼び出しが便利です。名前付き"
+"引数と位置引数を混在させることはできません。"
 
 #: src/05_language_reference/04_expression/02_function_call.md:25
 msgid ""
@@ -2656,8 +2657,8 @@ msgid ""
 "at false condition is placed after `:`."
 msgstr ""
 "`if` を用いた条件式を使えます。`if` キーワードの後に条件を示す節を置きます"
-"が、`()` で囲む必要はありません。`?` のあとに条件が真である場合の式を、"
-"`:` のあとに条件が偽である場合の式を書きます。"
+"が、`()` で囲む必要はありません。`?` のあとに条件が真である場合の式を、`:` の"
+"あとに条件が偽である場合の式を書きます。"
 
 #: src/05_language_reference/04_expression/05_case_switch.md:3
 msgid ""
@@ -2804,15 +2805,17 @@ msgid ""
 "each members. This is especially useful to initialize `const` because it "
 "can't be assigned by each members."
 msgstr ""
-"構造体を初期化するために各メンバーにそれぞれ代入する代わりに構造体コンストラクタを使用することができます。"
-"特に `const` は各メンバーに代入することができないためコンストラクタによる初期化が必要です。"
+"構造体を初期化するために各メンバーにそれぞれ代入する代わりに構造体コンストラ"
+"クタを使用することができます。特に `const` は各メンバーに代入することができな"
+"いためコンストラクタによる初期化が必要です。"
 
 #: src/05_language_reference/04_expression/11_struct_constructor.md:6
 msgid ""
 "`..default` specifier can speficy the default value for unspecified members "
 "in the struct."
 msgstr ""
-"`..default` 指定子は未指定のメンバーのためのデフォルト値を指定することができます。"
+"`..default` 指定子は未指定のメンバーのためのデフォルト値を指定することができ"
+"ます。"
 
 #: src/05_language_reference/04_expression/11_struct_constructor.md:8
 msgid ""
@@ -3254,13 +3257,12 @@ msgid ""
 "`fmt` attribute is used to control formatiing way. The following arguments "
 "are supported:"
 msgstr ""
-"`fmt` アトリビュートはフォーマットの方法を制御することができます。"
-"以下の引数がサポートされています。"
+"`fmt` アトリビュートはフォーマットの方法を制御することができます。以下の引数"
+"がサポートされています。"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:87
 msgid "`compact`: compact formatting without newlines"
-msgstr ""
-"`compact`: 改行なしのコンパクトなフォーマット"
+msgstr "`compact`: 改行なしのコンパクトなフォーマット"
 
 #: src/05_language_reference/06_declaration/09_generate.md:3
 msgid ""
@@ -3421,9 +3423,9 @@ msgid ""
 "be used instead of each member assignment. `connect` decleration connects "
 "all members of the interface automatically."
 msgstr ""
-"あるインターフェースをほかのインターフェースに接続するために"
-"各メンバーを代入する代わりに `connect` 宣言を使用することができます。"
-"`connect` 宣言はインターフェースの全てのメンバーを自動的に接続します。"
+"あるインターフェースをほかのインターフェースに接続するために各メンバーを代入"
+"する代わりに `connect` 宣言を使用することができます。`connect` 宣言はインター"
+"フェースの全てのメンバーを自動的に接続します。"
 
 #: src/05_language_reference/06_declaration/13_connect.md:6
 msgid ""
@@ -3432,13 +3434,13 @@ msgid ""
 "instance, additional modport specification is necessary because it can't be "
 "determined direction."
 msgstr ""
-"代入の方向はmodportによって決まります。つまり `output` メンバーが `input` メンバーに代入されます。"
-"`connect` の引数がインターフェースインスタンスの場合、方向を決定するためにmodportの指定が必要です。"
+"代入の方向はmodportによって決まります。つまり `output` メンバーが `input` メ"
+"ンバーに代入されます。`connect` の引数がインターフェースインスタンスの場合、"
+"方向を決定するためにmodportの指定が必要です。"
 
 #: src/05_language_reference/06_declaration/13_connect.md:9
 msgid "The connection operator `<>` can be used in `always_comb` too."
-msgstr ""
-"接続演算子 `<>` は `always_comb` 中でも使用することができます。"
+msgstr "接続演算子 `<>` は `always_comb` 中でも使用することができます。"
 
 #: src/05_language_reference/07_module.md:3
 msgid ""
@@ -3611,8 +3613,7 @@ msgstr "`..output`: インターフェース内の全ての変数を `output` �
 
 #: src/05_language_reference/08_interface.md:37
 msgid "`..same(modport_name)`: the same variables as `modport_name`"
-msgstr ""
-"`..same(modport_name)`: `modport_name` と同じ変数を同じ方向で追加"
+msgstr "`..same(modport_name)`: `modport_name` と同じ変数を同じ方向で追加"
 
 #: src/05_language_reference/08_interface.md:38
 msgid ""
@@ -3652,7 +3653,18 @@ msgstr ""
 "SystemVerilogソースコードの \"ModuleA\" は `$sv::ModuleA` です。Veryl はこれ"
 "らの要素が実際に存在するかどうかは確認しません。"
 
-#: src/05_language_reference/10_systemverilog_interoperation.md:16
+#: src/05_language_reference/10_systemverilog_interoperation.md:7
+msgid ""
+"Veryl compiler emits the path name as is excluding `$sv::`. Therefore, "
+"symbols in other HDLs like Verilog/VHDL can be refered through `$sv::` too. "
+"It depeneds on implementation (e.g. simulator, synthesizer) whether each "
+"symbols can be resolved."
+msgstr ""
+"Verylコンパイラは `$sv::` を除いたパス名をそのまま出力します。"
+"そのため Verilog や VHDL のような他のHDLのシンボルも参照できます。"
+"それぞれのシンボルが解決できるかどうかは実装（シミュレータや合成ツール）に依存します。"
+
+#: src/05_language_reference/10_systemverilog_interoperation.md:20
 msgid ""
 "To access some identifiers which are used as Veryl's keywords, raw "
 "identifier can be used."
@@ -3660,7 +3672,7 @@ msgstr ""
 "Veryl のキーワードとして使われている識別子にアクセスするには生識別子を使いま"
 "す。"
 
-#: src/05_language_reference/10_systemverilog_interoperation.md:19
+#: src/05_language_reference/10_systemverilog_interoperation.md:23
 msgid ""
 "```veryl,playground\n"
 "module ModuleA (\n"
@@ -4091,7 +4103,8 @@ msgid ""
 "prototype are supported."
 msgstr ""
 "プロトタイプは特別なジェネリック境界で、ジェネリックパラメータに渡せるプロト"
-"タイプを示します。現在はモジュールプロトタイプとパッケージプロトタイプがサポートされています。"
+"タイプを示します。現在はモジュールプロトタイプとパッケージプロトタイプがサ"
+"ポートされています。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:6
 msgid "Module Prototype"
@@ -4130,9 +4143,9 @@ msgid ""
 "`data_a` and `data_b`. `PKG` restricted by `ProtoA` is guaranteed to have "
 "`data_a` and `data_b`, so they can be refered."
 msgstr ""
-"以下の例では、`ProtoA` が型 `data_a` と型 `data_b` を持つパッケージプロトタイプ"
-"です。`PKG` は `ProtoA` で制約されているので、`data_a` と `data_b` を持つことが保証されており、"
-"それらを参照することができます。"
+"以下の例では、`ProtoA` が型 `data_a` と型 `data_b` を持つパッケージプロトタイ"
+"プです。`PKG` は `ProtoA` で制約されているので、`data_a` と `data_b` を持つこ"
+"とが保証されており、それらを参照することができます。"
 
 #: src/05_language_reference/15_clock_domain_annotation.md:3
 msgid ""
@@ -4353,8 +4366,9 @@ msgid ""
 "Module, interface and package with generic arguments becomes too long "
 "sometimes. `alias` can name a short name for such items."
 msgstr ""
-"ジェネリック引数を持つモジュール、インターフェース、パッケージの名前は非常に長くなる場合があります。"
-"`alias` はそのような要素に短い名前をつけることができます。"
+"ジェネリック引数を持つモジュール、インターフェース、パッケージの名前は非常に"
+"長くなる場合があります。`alias` はそのような要素に短い名前をつけることができ"
+"ます。"
 
 #: src/06_development_environment.md:3
 msgid ""
@@ -6211,22 +6225,25 @@ msgstr "`waveform_format` フィールド"
 msgid ""
 "The `waveform_format` field specifies in which format the waveform will be "
 "dumped. The available formats are:"
-msgstr "`waveform_format` フィールドはダンプされる波形のフォーマットを指定します。"
-"指定できる値は以下の通りです。"
+msgstr ""
+"`waveform_format` フィールドはダンプされる波形のフォーマットを指定します。指"
+"定できる値は以下の通りです。"
 
 #: src/06_development_environment/01_project_configuration/04_test.md:74
 msgid ""
 "`vcd` -- The default value and most readable format across all vendors. But "
 "also not very feature rich"
 msgstr ""
-"`vcd` -- デフォルト値であり、多くのベンダーでサポートされていますが機能は限定的です。"
+"`vcd` -- デフォルト値であり、多くのベンダーでサポートされていますが機能は限定"
+"的です。"
 
 #: src/06_development_environment/01_project_configuration/04_test.md:75
 msgid ""
 "`fst` -- This format has some more features, e.g. printing enum values "
 "instead of integers. `gtkwave` and `surfer` can read this format."
 msgstr ""
-"`fst` -- 整数の代わりにenum値を表示するなどいくつかの機能をサポートしています。`gtkwave` と `surfer` で扱うことができます。"
+"`fst` -- 整数の代わりにenum値を表示するなどいくつかの機能をサポートしていま"
+"す。`gtkwave` と `surfer` で扱うことができます。"
 
 #: src/06_development_environment/01_project_configuration/05_publish.md:3
 msgid ""
@@ -6316,9 +6333,10 @@ msgid ""
 "GitHub. Instead of it, `git` with a full URL can be used."
 msgstr ""
 "他の Veryl プロジェクトへの依存関係をプロジェクトに追加したい場合、`Veryl."
-"toml` に `[dependencies]` セクションを追加します。エントリの左辺は依存関係のプロジェクト名、"
-"右辺はソースパスとバージョンです。"
-"`github` はGitHub上のリポジトリを参照する糖衣構文です。代わりに `git` を用いてURL全体を指定することもできます。"
+"toml` に `[dependencies]` セクションを追加します。エントリの左辺は依存関係の"
+"プロジェクト名、右辺はソースパスとバージョンです。`github` はGitHub上のリポジ"
+"トリを参照する糖衣構文です。代わりに `git` を用いてURL全体を指定することもで"
+"きます。"
 
 #: src/06_development_environment/02_dependencies.md:7
 msgid ""
@@ -6346,8 +6364,9 @@ msgid ""
 "of the dependency. If you want to specify a namespace through the left hand "
 "side, you should specify the project name through `project` field."
 msgstr ""
-"デフォルトでは依存関係の名前空間はそのプロジェクト名と同じです。"
-"もし左辺の名前を変更した場合は、`project` フィールドでプロジェクト名を指定する必要があります。"
+"デフォルトでは依存関係の名前空間はそのプロジェクト名と同じです。もし左辺の名"
+"前を変更した場合は、`project` フィールドでプロジェクト名を指定する必要があり"
+"ます。"
 
 #: src/06_development_environment/02_dependencies.md:18
 msgid ""
@@ -6365,8 +6384,7 @@ msgstr ""
 
 #: src/06_development_environment/02_dependencies.md:23
 msgid "Inner projects in a repository can be used like below:"
-msgstr ""
-"リポジトリの内部プロジェクトは以下のように指定できます。"
+msgstr "リポジトリの内部プロジェクトは以下のように指定できます。"
 
 #: src/06_development_environment/02_dependencies.md:25
 msgid ""
@@ -6544,8 +6562,8 @@ msgid ""
 "This means that if there is `../veryl_sample`, it is used, and if not, it is "
 "pulled from the Git repository."
 msgstr ""
-"これは `../veryl_sample` が存在する場合はそれを使い、そうでない場合は Git から取得"
-"する、という意味です。"
+"これは `../veryl_sample` が存在する場合はそれを使い、そうでない場合は Git か"
+"ら取得する、という意味です。"
 
 #: src/06_development_environment/03_publish_project.md:3
 msgid ""
@@ -6737,16 +6755,16 @@ msgid ""
 "Veryl provides the following `.gitignore` as the default value. `.build` is "
 "used to record build information by Veryl compiler."
 msgstr ""
-"Verylは以下の `.gitignore` をデフォルト値として提供します。"
-"`.build` ディレクトリはVerylコンパイラがビルド情報を記録するために使用します。"
+"Verylは以下の `.gitignore` をデフォルト値として提供します。`.build` ディレク"
+"トリはVerylコンパイラがビルド情報を記録するために使用します。"
 
 #: src/06_development_environment/04_directory_layout.md:121
 msgid ""
 "Other patterns can be added by each projects. The candidates of `.gitignore` "
 "is below:"
 msgstr ""
-"それ以外のパターンはプロジェクトに合わせて追加できます。"
-"`.gitignore` の候補としては以下が考えられます。"
+"それ以外のパターンはプロジェクトに合わせて追加できます。`.gitignore` の候補と"
+"しては以下が考えられます。"
 
 #: src/06_development_environment/04_directory_layout.md:124
 msgid "`dependencies/`"
@@ -7527,17 +7545,17 @@ msgid ""
 "check` option, you can check how changes will be applied before the actual "
 "migration."
 msgstr ""
-"Verylの新しいバージョンが破壊的な変更を伴うことがあります。"
-"`veryl migrate` は既存のプロジェクトを新バージョンに自動的に移行します。"
-"`--check` オプションによりどのような変更が適用されるか事前に確認することもできます。"
+"Verylの新しいバージョンが破壊的な変更を伴うことがあります。`veryl migrate` は"
+"既存のプロジェクトを新バージョンに自動的に移行します。`--check` オプションに"
+"よりどのような変更が適用されるか事前に確認することもできます。"
 
 #: src/06_development_environment/14_migrate_to_new_version.md:12
 msgid ""
 "`veryl migrate` migrates only single major (or minor until 1.0) version. "
 "Therefore, multi version migration can be done like below:"
 msgstr ""
-"`veryl migrate` は単一のメジャーバージョン（1.0まではマイナーバージョン）しか移行しません。"
-"複数のバージョンを移行するには以下のようにしてください。"
+"`veryl migrate` は単一のメジャーバージョン（1.0まではマイナーバージョン）しか"
+"移行しません。複数のバージョンを移行するには以下のようにしてください。"
 
 #: src/07_appendix/01_formal_syntax.md:3
 msgid ""
