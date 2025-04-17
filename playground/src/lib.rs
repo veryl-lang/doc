@@ -6,7 +6,7 @@ use veryl_analyzer::{Analyzer, namespace_table, symbol_table};
 use veryl_emitter::Emitter;
 use veryl_formatter::Formatter;
 use veryl_metadata::{
-    Build, BuildInfo, Doc, Format, Lint, Lockfile, Metadata, Project, Pubfile, Publish, Test,
+    Build, BuildInfo, Doc, EnvVar, Format, Lint, Lockfile, Metadata, Project, Pubfile, Publish, Test,
 };
 use veryl_parser::{Parser, resource_table};
 use wasm_bindgen::prelude::*;
@@ -70,6 +70,7 @@ fn metadata() -> Metadata {
         lockfile_path: "".into(),
         lockfile: Lockfile::default(),
         build_info: BuildInfo::default(),
+        env_var: EnvVar::default(),
     }
 }
 
@@ -93,7 +94,8 @@ pub fn build(source: &str) -> Result {
             errors.append(&mut analyzer.analyze_pass1("project", "", &parser.veryl));
             Analyzer::analyze_post_pass1();
             errors.append(&mut analyzer.analyze_pass2("project", "", &parser.veryl));
-            errors.append(&mut analyzer.analyze_pass3("project", "", &parser.veryl));
+            let info = Analyzer::analyze_post_pass2();
+            errors.append(&mut analyzer.analyze_pass3("project", "", &parser.veryl, &info));
 
             let err = !errors.is_empty();
 
