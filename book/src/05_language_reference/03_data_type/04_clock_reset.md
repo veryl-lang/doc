@@ -1,13 +1,13 @@
 # Clock / Reset
 
-`clock` is a special types to represent clock wiring. 
+`clock` is a special types to represent clock wiring.
 There are 3 variants to specify clock polarity.
 
 * `clock`: clock type of which polarity is specified by the build option
 * `clock_posedge`: clock type of which polarity is positive
 * `clock_negedge`: clock type of which polarity is negative
 
-`reset` is a special types to represent reset wiring. 
+`reset` is a special types to represent reset wiring.
 There are 5 variants to specify reset polarity and synchronicity.
 
 * `reset`: reset type of which polarity and synchronicity are specified by the build option
@@ -20,14 +20,14 @@ If there is no special requirement, `clock` and `reset` are recommended for code
 
 ```veryl,playground
 module ModuleA (
-    i_clk    : input `_ clock           ,
-    i_clk_p  : input `_ clock_posedge   ,
-    i_clk_n  : input `_ clock_negedge   ,
-    i_rst    : input `_ reset           ,
-    i_rst_a  : input `_ reset_async_high,
-    i_rst_a_n: input `_ reset_async_low ,
-    i_rst_s  : input `_ reset_sync_high ,
-    i_rst_s_n: input `_ reset_sync_low  ,
+    i_clk    : input '_ clock           ,
+    i_clk_p  : input '_ clock_posedge   ,
+    i_clk_n  : input '_ clock_negedge   ,
+    i_rst    : input '_ reset           ,
+    i_rst_a  : input '_ reset_async_high,
+    i_rst_a_n: input '_ reset_async_low ,
+    i_rst_s  : input '_ reset_sync_high ,
+    i_rst_s_n: input '_ reset_sync_low  ,
 ) {
     var a: logic;
     var b: logic;
@@ -70,7 +70,7 @@ module ModuleA (
     i_clk   : input clock,
     i_clk_en: input logic,
 ) {
-    let clk: `_ default clock = i_clk & i_clk_en;
+    let clk: '_ default clock = i_clk & i_clk_en;
 
     var a: logic;
 

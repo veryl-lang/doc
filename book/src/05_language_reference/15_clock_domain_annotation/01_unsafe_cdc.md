@@ -6,10 +6,10 @@ In the block, clock domain crossing error is suppressed, so designer should chec
 
 ```veryl,playground
 module ModuleA (
-    i_clk_a: input  `a clock,
-    i_dat_a: input  `a logic,
-    i_clk_b: input  `b clock,
-    o_dat_b: output `b logic,
+    i_clk_a: input  'a clock,
+    i_dat_a: input  'a logic,
+    i_clk_b: input  'b clock,
+    o_dat_b: output 'b logic,
 ) {
     // Error "Clock domain crossing is detected"
     //assign o_dat_b = i_dat_a;
@@ -25,10 +25,10 @@ Typically, synchronizer cells are inserted to the boundaries between clock domai
 
 ```veryl,playground
 module ModuleA (
-    i_clk_a: input  `a clock,
-    i_dat_a: input  `a logic,
-    i_clk_b: input  `b clock,
-    o_dat_b: output `b logic,
+    i_clk_a: input  'a clock,
+    i_dat_a: input  'a logic,
+    i_clk_b: input  'b clock,
+    o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
         inst u_sync: $sv::SynchronizerCell (
