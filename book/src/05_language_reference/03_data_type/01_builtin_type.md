@@ -48,17 +48,25 @@ module ModuleA {
 
 There are some integer types:
 
+* `u8` : 8bit unsigned integer
+* `u16`: 16bit unsigned integer
 * `u32`: 32bit unsigned integer
 * `u64`: 64bit unsigned integer
+* `i8` : 8bit signed integer
+* `i16`: 16bit signed integer
 * `i32`: 32bit signed integer
 * `i64`: 64bit signed integer
 
 ```veryl,playground
 module ModuleA {
-    let _a: u32 = 1;
-    let _b: u64 = 1;
-    let _c: i32 = 1;
-    let _d: i64 = 1;
+    let _a: u8  = 1;
+    let _b: u16 = 1;
+    let _c: u32 = 1;
+    let _d: u64 = 1;
+    let _e: i8  = 1;
+    let _f: i16 = 1;
+    let _g: i32 = 1;
+    let _h: i64 = 1;
 }
 ```
 
