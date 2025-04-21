@@ -4042,7 +4042,7 @@ msgid ""
 "parameter. If the parameter specifications at call site is omitted, the "
 "default value is used."
 msgstr ""
-"ジェネリックパラメータはその後に `=` を加えることででフォルト値を指定すること"
+"ジェネリックパラメータはその後に `=` を加えることでデフォルト値を指定すること"
 "ができます。呼び出し側でパラメータ指定が省略された場合にデフォルト値が使われ"
 "ます。"
 
