@@ -33,21 +33,48 @@ Available lint names are below:
 * `missing_reset_statement`
 * `missing_port`
 
-## `ifdef`/`ifndef` Attribute
+## `ifdef`/`ifndef`/`elsif`/`else` Attribute
 
-`ifdef` and `ifndef` attribute is used to control whether the annotated code block is enabled by defined value.
-If `DEFINE_A` is defined, the code block with `#[ifdef(DEFINE_A)]` is enabled, and the code block with `#[ifndef(DEFINE_A)]` is disabled.
+`ifdef` and `ifndef` attributes are used to control whether the annotated code block is enabled by defined value.
+In addition, the code block with `elsif` or `else` attributes is optional and a code block with `ifdef` or `ifndef` attributes can be followed with that code block.
+
+The following example shows a usage of these attributes and which code blocks will be enabled according to defined values.
+
+* For the sequence of `ifdef`/`elsif`/`else` attributes
+    * If `DEFINE_A` is defined, the code block with `#[ifdef(DEFINE_A)]` (code block a) is enbaled, and code blocks with `#[ifndef(DEFINE_B)]` and `#[else]` (code block b/c) are disabled.
+    * If `DEFINE_A` is not defined and `DEFINE_B` is defiend, the code block with `#[ifndef(DEFINE_B)]` (code block b) is enabled, and code blocks with `#[ifdef(DEFINE_A)]` and `#[else]` (code block a/c) are disabled.
+    * If `DEFINE_A` and `DEFINE_B` are not defined the code block with `#[else]` is enabled, and code blocks with `#[ifdef(DEFINE_A)]` and `#[elsif(DEFINE_B)]` (code block a/b) are disabled.
+* For the sequence of `ifndef`/`else` attributes
+    * If `DEFINE_D` is not defined, the code block with `#[ifndef(DEFINE_D)]` (code block d) is enabled, and the code block with `#[else]` (code block e) is disabled.
+    * If `DEFINE_D` is defined, the code block with `#[else]` (code block e) is enabled, and the code block with `#[ifndef(DEFINE_D)]` (code block d) is disabled.
 
 ```veryl,playground
 module ModuleA {
     #[ifdef(DEFINE_A)]
     {
+        // code block a
         let _a: logic<10> = 1;
     }
-
-    #[ifndef(DEFINE_A)]
+    #[elsif(DEFINE_B)]
     {
-        let _b: logic<10> = 1;
+        // code block b
+        let _a: logic<10> = 2;
+    }
+    #[else]
+    {
+        // code block c
+        let _a: logic<10> = 3;
+    }
+
+    #[ifndef(DEFINE_D)]
+    {
+        // code block d
+        let _b: logic<10> = 4;
+    }
+    #[else]
+    {
+        // code block e
+        let _b: logic<10> = 5;
     }
 }
 ```
