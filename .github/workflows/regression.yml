@@ -1,0 +1,29 @@
+name: Regression
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  book:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # We need the full history below.
+          fetch-depth: 0
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Setup mdBook
+        uses: peaceiris/actions-mdbook@v1
+        with:
+          mdbook-version: 'latest'
+      - name: Build mdbook plugin
+        run: cargo install --git https://github.com/veryl-lang/veryl mdbook-veryl
+      - name: Build mdbook
+        run: mdbook build
+        working-directory: book
