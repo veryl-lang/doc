@@ -61,7 +61,7 @@ proto package ProtoA {
     type data_b;
 }
 
-package PackageA::<A: const, B: const> for ProtoA {
+package PackageA::<A: u32, B: u32> for ProtoA {
     type data_a = logic<A>;
     type data_b = logic<B>;
 }

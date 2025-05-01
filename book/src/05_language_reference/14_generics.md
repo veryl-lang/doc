@@ -36,7 +36,7 @@ This is caused by that the local parameters is not accessible from the potision 
 
 ```veryl,playground
 module ModuleA {
-    function FuncA::<T: const> (
+    function FuncA::<T: u32> (
         a: input logic<T>,
     ) -> logic<T> {
         return a + 1;
@@ -68,7 +68,7 @@ module ModuleD for ProtoA {}
 ## Generic Package
 
 ```veryl,playground
-package PackageA::<T: const> {
+package PackageA::<T: u32> {
     const X: u32 = T;
 }
 

@@ -5,7 +5,7 @@ If the parameter specifications at call site is omitted, the default value is us
 
 ```veryl,playground
 module ModuleA {
-    function FuncA::<T: const = 10> (
+    function FuncA::<T: u32 = 10> (
         a: input logic<T>,
     ) -> logic<T> {
         return a + 1;
@@ -21,14 +21,14 @@ If not, it causes ambiguous which parameters are omitted.
 
 ```veryl,playground
 module ModuleA {
-    function FuncA::<T: const, U: const = 1> (
+    function FuncA::<T: u32, U: u32 = 1> (
         a: input logic<T>,
     ) -> logic<T> {
         return a + U;
     }
 
     // Error
-    //function FuncA::<T: const = 1, U: const> (
+    //function FuncA::<T: u32 = 1, U: u32> (
     //    a: input logic<T>,
     //) -> logic<T> {
     //    return a + U;

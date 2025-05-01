@@ -102,7 +102,7 @@ end
 
 ```veryl
 # module ModuleA {
-function FuncA::<T: const> (
+function FuncA::<T: u32> (
     a: input logic<T>,
 ) -> logic<T> {
     return a + 1;
