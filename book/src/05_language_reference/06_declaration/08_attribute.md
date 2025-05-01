@@ -111,7 +111,7 @@ module ModuleA (
     slave_if : modport InterfaceA::<8>::slave  [4],
     master_if: modport InterfaceA::<8>::master [4],
 ) {
-    for i in 0..4: g {
+    for i in 0..4 :g {
         connect slave_if[i] <> master_if[i];
     }
 }
