@@ -18,6 +18,10 @@
 
 ## invalid_system_function
 
+## invalid_type_declaration
+
+This error is reported when `struct`, `enum` and `union` data types are defined within interface declarations.
+
 ## mismatch_arity
 
 ## mismatch_attribute_args
