@@ -303,7 +303,7 @@ end
 </code></pre>
 </td>
 <td>
-<pre><code class="language-veryl">function FuncA::&lt;T: const&gt; (
+<pre><code class="language-veryl">function FuncA::&lt;T: u32&gt; (
     a: input logic&lt;T&gt;,
 ) -&gt; logic&lt;T&gt; {
     return a + 1;
@@ -2513,7 +2513,7 @@ On the other hand, local parameters can’t be used as actual parameters in many
 This is caused by that the local parameters is not accessible from the potision of the generics declaration.</p>
 <h2 id="generic-function"><a class="header" href="#generic-function">Generic Function</a></h2>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const&gt; (
+    function FuncA::&lt;T: u32&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + 1;
@@ -2539,7 +2539,7 @@ module ModuleC for ProtoA {}
 module ModuleD for ProtoA {}
 </code></pre>
 <h2 id="generic-package"><a class="header" href="#generic-package">Generic Package</a></h2>
-<pre><code class="language-veryl playground">package PackageA::&lt;T: const&gt; {
+<pre><code class="language-veryl playground">package PackageA::&lt;T: u32&gt; {
     const X: u32 = T;
 }
 
@@ -2572,7 +2572,7 @@ module ModuleA {
 <p>Generic parameter can take a default value through <code>=</code> after the generic parameter.
 If the parameter specifications at call site is omitted, the default value is used.</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const = 10&gt; (
+    function FuncA::&lt;T: u32 = 10&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + 1;
@@ -2585,14 +2585,14 @@ If the parameter specifications at call site is omitted, the default value is us
 <p>Default parameters should be placed at the last of generic parameter list.
 If not, it causes ambiguous which parameters are omitted.</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const, U: const = 1&gt; (
+    function FuncA::&lt;T: u32, U: u32 = 1&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + U;
     }
 
     // Error
-    //function FuncA::&lt;T: const = 1, U: const&gt; (
+    //function FuncA::&lt;T: u32 = 1, U: u32&gt; (
     //    a: input logic&lt;T&gt;,
     //) -&gt; logic&lt;T&gt; {
     //    return a + U;
@@ -2655,7 +2655,7 @@ module ModuleD for ProtoA #(
     type data_b;
 }
 
-package PackageA::&lt;A: const, B: const&gt; for ProtoA {
+package PackageA::&lt;A: u32, B: u32&gt; for ProtoA {
     type data_a = logic&lt;A&gt;;
     type data_b = logic&lt;B&gt;;
 }
@@ -2773,7 +2773,7 @@ Standard library is under <code>$std</code> namespace, and it can be used withou
 <div style="break-before: page; page-break-before: always;"></div><h1 id="alias"><a class="header" href="#alias">Alias</a></h1>
 <p>Module, interface and package with generic arguments becomes too long sometimes.
 <code>alias</code> can name a short name for such items.</p>
-<pre><code class="language-veryl playground">package PkgA::&lt;X: const, Y: const, Z: const&gt; {}
+<pre><code class="language-veryl playground">package PkgA::&lt;X: u32, Y: u32, Z: u32&gt; {}
 
 alias package PkgA123 = PkgA::&lt;1, 2, 3&gt;;
 </code></pre>
@@ -4421,16 +4421,17 @@ WithParameterItem: ( Param | Const ) Identifier Colon ( ArrayType | Type ) Equ E
 // WithGenericParameter
 // ----------------------------------------------------------------------------
 
-GenericBound: Const
-            | Type
+GenericBound: Type
             | Inst ScopedIdentifier
-            | ScopedIdentifier;
+            | GenericProtoBound;
 
 WithGenericParameter: ColonColonLAngle WithGenericParameterList RAngle;
 
 WithGenericParameterList: WithGenericParameterItem { Comma WithGenericParameterItem } [ Comma ];
 
 WithGenericParameterItem: Identifier Colon GenericBound [ Equ WithGenericArgumentItem ];
+
+GenericProtoBound: ScopedIdentifier | FixedType;
 
 // ----------------------------------------------------------------------------
 // WithGenericArgument
@@ -4441,7 +4442,9 @@ WithGenericArgument: ColonColonLAngle %push(Generic) [ WithGenericArgumentList ]
 WithGenericArgumentList: WithGenericArgumentItem { Comma WithGenericArgumentItem } [ Comma ];
 
 WithGenericArgumentItem: ScopedIdentifier
+                       | FixedType
                        | Number
+                       | BooleanLiteral
                        ;
 
 // ----------------------------------------------------------------------------

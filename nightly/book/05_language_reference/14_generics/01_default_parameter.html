@@ -211,7 +211,7 @@
 <p>Generic parameter can take a default value through <code>=</code> after the generic parameter.
 If the parameter specifications at call site is omitted, the default value is used.</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const = 10&gt; (
+    function FuncA::&lt;T: u32 = 10&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + 1;
@@ -224,14 +224,14 @@ If the parameter specifications at call site is omitted, the default value is us
 <p>Default parameters should be placed at the last of generic parameter list.
 If not, it causes ambiguous which parameters are omitted.</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const, U: const = 1&gt; (
+    function FuncA::&lt;T: u32, U: u32 = 1&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + U;
     }
 
     // Error
-    //function FuncA::&lt;T: const = 1, U: const&gt; (
+    //function FuncA::&lt;T: u32 = 1, U: u32&gt; (
     //    a: input logic&lt;T&gt;,
     //) -&gt; logic&lt;T&gt; {
     //    return a + U;

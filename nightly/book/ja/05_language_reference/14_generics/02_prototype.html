@@ -256,7 +256,7 @@ module ModuleD for ProtoA #(
     type data_b;
 }
 
-package PackageA::&lt;A: const, B: const&gt; for ProtoA {
+package PackageA::&lt;A: u32, B: u32&gt; for ProtoA {
     type data_a = logic&lt;A&gt;;
     type data_b = logic&lt;B&gt;;
 }

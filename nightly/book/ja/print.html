@@ -294,7 +294,7 @@ end
 </code></pre>
 </td>
 <td>
-<pre><code class="language-veryl">function FuncA::&lt;T: const&gt; (
+<pre><code class="language-veryl">function FuncA::&lt;T: u32&gt; (
     a: input logic&lt;T&gt;,
 ) -&gt; logic&lt;T&gt; {
     return a + 1;
@@ -1176,16 +1176,24 @@ a = 1 || 1;
 <h2 id="整数型"><a class="header" href="#整数型">整数型</a></h2>
 <p>整数型にはいくつかの種類があります。</p>
 <ul>
+<li><code>u8</code>：8ビットの符号なし整数</li>
+<li><code>u16</code>：16ビットの符号なし整数</li>
 <li><code>u32</code>：32ビットの符号なし整数</li>
 <li><code>u64</code>：64ビットの符号なし整数</li>
+<li><code>i8</code>：8ビットの符号付き整数</li>
+<li><code>i16</code>：16ビットの符号付き整数</li>
 <li><code>i32</code>：32ビットの符号付き整数</li>
 <li><code>i64</code>：64ビットの符号付き整数</li>
 </ul>
 <pre><code class="language-veryl playground">module ModuleA {
-    let _a: u32 = 1;
-    let _b: u64 = 1;
-    let _c: i32 = 1;
-    let _d: i64 = 1;
+    let _a: u8  = 1;
+    let _b: u16 = 1;
+    let _c: u32 = 1;
+    let _d: u64 = 1;
+    let _e: i8  = 1;
+    let _f: i16 = 1;
+    let _g: i32 = 1;
+    let _h: i64 = 1;
 }
 </code></pre>
 <h2 id="浮動小数点数型"><a class="header" href="#浮動小数点数型">浮動小数点数型</a></h2>
@@ -2326,7 +2334,7 @@ embed (cocotb) py{{{
 <p>さらに、実パラメータはジェネリクス定義位置から参照できなければなりません。例えば、モジュール名はプロジェクト全体から参照できるので、実パラメータとして使用できます。一方、ローカルパラメータは多くの場合、実パラメータとして使用できません。これはローカルパラメータがジェネリクス定義位置からは参照できない場合に発生します。</p>
 <h2 id="ジェネリック関数"><a class="header" href="#ジェネリック関数">ジェネリック関数</a></h2>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const&gt; (
+    function FuncA::&lt;T: u32&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + 1;
@@ -2352,7 +2360,7 @@ module ModuleC for ProtoA {}
 module ModuleD for ProtoA {}
 </code></pre>
 <h2 id="ジェネリックパッケージ"><a class="header" href="#ジェネリックパッケージ">ジェネリックパッケージ</a></h2>
-<pre><code class="language-veryl playground">package PackageA::&lt;T: const&gt; {
+<pre><code class="language-veryl playground">package PackageA::&lt;T: u32&gt; {
     const X: u32 = T;
 }
 
@@ -2384,7 +2392,7 @@ module ModuleA {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="デフォルトパラメータ"><a class="header" href="#デフォルトパラメータ">デフォルトパラメータ</a></h1>
 <p>ジェネリックパラメータはその後に <code>=</code> を加えることでデフォルト値を指定することができます。呼び出し側でパラメータ指定が省略された場合にデフォルト値が使われます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const = 10&gt; (
+    function FuncA::&lt;T: u32 = 10&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + 1;
@@ -2396,14 +2404,14 @@ module ModuleA {
 </code></pre>
 <p>デフォルトパラメータはジェネリックパラメータリストの最後に置く必要があります。そうでなければ、どのパラメータが省略されたかが曖昧になるためです。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const, U: const = 1&gt; (
+    function FuncA::&lt;T: u32, U: u32 = 1&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + U;
     }
 
     // エラー
-    //function FuncA::&lt;T: const = 1, U: const&gt; (
+    //function FuncA::&lt;T: u32 = 1, U: u32&gt; (
     //    a: input logic&lt;T&gt;,
     //) -&gt; logic&lt;T&gt; {
     //    return a + U;
@@ -2462,7 +2470,7 @@ module ModuleD for ProtoA #(
     type data_b;
 }
 
-package PackageA::&lt;A: const, B: const&gt; for ProtoA {
+package PackageA::&lt;A: u32, B: u32&gt; for ProtoA {
     type data_a = logic&lt;A&gt;;
     type data_b = logic&lt;B&gt;;
 }
@@ -2573,7 +2581,7 @@ interface InterfaceA {}
 <p>標準ライブラリの完全なリストとドキュメントは <a href="https://std.veryl-lang.org">https://std.veryl-lang.org</a> にあります。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="エイリアス"><a class="header" href="#エイリアス">エイリアス</a></h1>
 <p>ジェネリック引数を持つモジュール、インターフェース、パッケージの名前は非常に長くなる場合があります。<code>alias</code> はそのような要素に短い名前をつけることができます。</p>
-<pre><code class="language-veryl playground">package PkgA::&lt;X: const, Y: const, Z: const&gt; {}
+<pre><code class="language-veryl playground">package PkgA::&lt;X: u32, Y: u32, Z: u32&gt; {}
 
 alias package PkgA123 = PkgA::&lt;1, 2, 3&gt;;
 </code></pre>
@@ -4149,16 +4157,17 @@ WithParameterItem: ( Param | Const ) Identifier Colon ( ArrayType | Type ) Equ E
 // WithGenericParameter
 // ----------------------------------------------------------------------------
 
-GenericBound: Const
-            | Type
+GenericBound: Type
             | Inst ScopedIdentifier
-            | ScopedIdentifier;
+            | GenericProtoBound;
 
 WithGenericParameter: ColonColonLAngle WithGenericParameterList RAngle;
 
 WithGenericParameterList: WithGenericParameterItem { Comma WithGenericParameterItem } [ Comma ];
 
 WithGenericParameterItem: Identifier Colon GenericBound [ Equ WithGenericArgumentItem ];
+
+GenericProtoBound: ScopedIdentifier | FixedType;
 
 // ----------------------------------------------------------------------------
 // WithGenericArgument
@@ -4169,7 +4178,9 @@ WithGenericArgument: ColonColonLAngle %push(Generic) [ WithGenericArgumentList ]
 WithGenericArgumentList: WithGenericArgumentItem { Comma WithGenericArgumentItem } [ Comma ];
 
 WithGenericArgumentItem: ScopedIdentifier
+                       | FixedType
                        | Number
+                       | BooleanLiteral
                        ;
 
 // ----------------------------------------------------------------------------

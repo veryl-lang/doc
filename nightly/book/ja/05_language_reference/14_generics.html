@@ -230,7 +230,7 @@
 <p>さらに、実パラメータはジェネリクス定義位置から参照できなければなりません。例えば、モジュール名はプロジェクト全体から参照できるので、実パラメータとして使用できます。一方、ローカルパラメータは多くの場合、実パラメータとして使用できません。これはローカルパラメータがジェネリクス定義位置からは参照できない場合に発生します。</p>
 <h2 id="ジェネリック関数"><a class="header" href="#ジェネリック関数">ジェネリック関数</a></h2>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const&gt; (
+    function FuncA::&lt;T: u32&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + 1;
@@ -256,7 +256,7 @@ module ModuleC for ProtoA {}
 module ModuleD for ProtoA {}
 </code></pre>
 <h2 id="ジェネリックパッケージ"><a class="header" href="#ジェネリックパッケージ">ジェネリックパッケージ</a></h2>
-<pre><code class="language-veryl playground">package PackageA::&lt;T: const&gt; {
+<pre><code class="language-veryl playground">package PackageA::&lt;T: u32&gt; {
     const X: u32 = T;
 }
 
