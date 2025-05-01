@@ -280,6 +280,51 @@ In addition, the code block with <code>elsif</code> or <code>else</code> attribu
     }
 }
 </code></pre>
+<h2 id="expand-attribute"><a class="header" href="#expand-attribute"><code>expand</code> Attribute</a></h2>
+<p>If <code>expand</code> attribute is set, structured ports such as <code>modport</code> are expanded into each Verilog ports.
+Synthesis tools may require that ports of the top module includes no such ports. This attribute is helpful for such case.
+The following argument is supported.</p>
+<ul>
+<li><code>modport</code>: Expand ports of which direction is <code>modport</code></li>
+</ul>
+<pre><code class="language-veryl playground">interface InterfaceA::&lt;W: u32&gt; {
+    var ready: logic   ;
+    var valid: logic   ;
+    var data : logic&lt;W&gt;;
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+    }
+
+    modport slave {
+        ready: output,
+        valid: input ,
+        data : input ,
+    }
+}
+
+#[expand(modport)]
+module ModuleA (
+    slave_if : modport InterfaceA::&lt;8&gt;::slave  [4],
+    master_if: modport InterfaceA::&lt;8&gt;::master [4],
+) {
+    for i in 0..4 :g {
+        connect slave_if[i] &lt;&gt; master_if[i];
+    }
+}
+
+module ModuleB {
+    inst a_if: InterfaceA::&lt;8&gt; [4];
+    inst b_if: InterfaceA::&lt;8&gt; [4];
+
+    inst u: ModuleA (
+        slave_if : a_if,
+        master_if: b_if,
+    );
+}
+</code></pre>
 <h2 id="align-attribute"><a class="header" href="#align-attribute"><code>align</code> Attribute</a></h2>
 <p><code>align</code> attribute is used to control vertical alignment by formatter.
 If <code>number</code> is specified as an argument of <code>align</code> attribute, all numbers are aligned.

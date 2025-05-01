@@ -1310,6 +1310,8 @@ It can contain some fields, and these fields can be access through <code>.</code
     assign a.member_c = 2;
 }
 </code></pre>
+<p>!!! Note
+You can define <code>struct</code> data types within module and package declarations but not interface declaration.</p>
 <h2 id="enum"><a class="header" href="#enum">Enum</a></h2>
 <p><code>enum</code> is enumerable type.
 It has some named variant, and the value of <code>enum</code> can be set to the one of them.
@@ -1338,6 +1340,8 @@ Otherwise, it is assigned automatically.</p>
     }
 }
 </code></pre>
+<p>!!! Note
+You can define <code>enum</code> data types within module and package declarations but not interface declarations.</p>
 <h3 id="enum-encoding"><a class="header" href="#enum-encoding">Enum Encoding</a></h3>
 <p>By default, the value of each variant is assigned sequentially if it is omitted.
 If you want to specify value encoding, <code>#[enum_encoding]</code> attribute can be used.
@@ -1378,6 +1382,8 @@ Each  union variant should have the same packed width as each other union varian
     assign a.variant_a = 8'haa;
 }
 </code></pre>
+<p>!!! Note
+You can define <code>union</code> data types within module and package declarations but not interface declarations.</p>
 <h2 id="typedef"><a class="header" href="#typedef">Typedef</a></h2>
 <p>The <code>type</code> keyword can be used to define a type alias to scalar or array types.</p>
 <pre><code class="language-veryl playground">module A {
@@ -2131,6 +2137,51 @@ In addition, the code block with <code>elsif</code> or <code>else</code> attribu
         // code block e
         let _b: logic&lt;10&gt; = 5;
     }
+}
+</code></pre>
+<h2 id="expand-attribute"><a class="header" href="#expand-attribute"><code>expand</code> Attribute</a></h2>
+<p>If <code>expand</code> attribute is set, structured ports such as <code>modport</code> are expanded into each Verilog ports.
+Synthesis tools may require that ports of the top module includes no such ports. This attribute is helpful for such case.
+The following argument is supported.</p>
+<ul>
+<li><code>modport</code>: Expand ports of which direction is <code>modport</code></li>
+</ul>
+<pre><code class="language-veryl playground">interface InterfaceA::&lt;W: u32&gt; {
+    var ready: logic   ;
+    var valid: logic   ;
+    var data : logic&lt;W&gt;;
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+    }
+
+    modport slave {
+        ready: output,
+        valid: input ,
+        data : input ,
+    }
+}
+
+#[expand(modport)]
+module ModuleA (
+    slave_if : modport InterfaceA::&lt;8&gt;::slave  [4],
+    master_if: modport InterfaceA::&lt;8&gt;::master [4],
+) {
+    for i in 0..4 :g {
+        connect slave_if[i] &lt;&gt; master_if[i];
+    }
+}
+
+module ModuleB {
+    inst a_if: InterfaceA::&lt;8&gt; [4];
+    inst b_if: InterfaceA::&lt;8&gt; [4];
+
+    inst u: ModuleA (
+        slave_if : a_if,
+        master_if: b_if,
+    );
 }
 </code></pre>
 <h2 id="align-attribute"><a class="header" href="#align-attribute"><code>align</code> Attribute</a></h2>
@@ -4688,6 +4739,8 @@ Veryl: Start { DescriptionGroup };
 <h2 id="invalid_number_character"><a class="header" href="#invalid_number_character">invalid_number_character</a></h2>
 <h2 id="invalid_statement"><a class="header" href="#invalid_statement">invalid_statement</a></h2>
 <h2 id="invalid_system_function"><a class="header" href="#invalid_system_function">invalid_system_function</a></h2>
+<h2 id="invalid_type_declaration"><a class="header" href="#invalid_type_declaration">invalid_type_declaration</a></h2>
+<p>This error is reported when <code>struct</code>, <code>enum</code> and <code>union</code> data types are defined within interface declarations.</p>
 <h2 id="mismatch_arity"><a class="header" href="#mismatch_arity">mismatch_arity</a></h2>
 <h2 id="mismatch_attribute_args"><a class="header" href="#mismatch_attribute_args">mismatch_attribute_args</a></h2>
 <h2 id="mismatch_type"><a class="header" href="#mismatch_type">mismatch_type</a></h2>
