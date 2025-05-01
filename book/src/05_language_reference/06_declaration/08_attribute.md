@@ -79,6 +79,54 @@ module ModuleA {
 }
 ```
 
+## `expand` Attribute
+
+If `expand` attribute is set, structured ports such as `modport` are expanded into each Verilog ports.
+Synthesis tools may require that ports of the top module includes no such ports. This attribute is helpful for such case.
+The following argument is supported.
+
+* `modport`: Expand ports of which direction is `modport`
+
+```veryl,playground
+interface InterfaceA::<W: u32> {
+    var ready: logic   ;
+    var valid: logic   ;
+    var data : logic<W>;
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+    }
+
+    modport slave {
+        ready: output,
+        valid: input ,
+        data : input ,
+    }
+}
+
+#[expand(modport)]
+module ModuleA (
+    slave_if : modport InterfaceA::<8>::slave  [4],
+    master_if: modport InterfaceA::<8>::master [4],
+) {
+    for i in 0..4: g {
+        connect slave_if[i] <> master_if[i];
+    }
+}
+
+module ModuleB {
+    inst a_if: InterfaceA::<8> [4];
+    inst b_if: InterfaceA::<8> [4];
+
+    inst u: ModuleA (
+        slave_if : a_if,
+        master_if: b_if,
+    );
+}
+```
+
 ## `align` Attribute
 
 `align` attribute is used to control vertical alignment by formatter.
