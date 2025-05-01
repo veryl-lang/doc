@@ -21,8 +21,9 @@ module ModuleA {
 }
 ```
 
-!!! Note
-    You can define `struct` data types within module and package declarations but not interface declaration.
+<div class="warning">
+You can define `struct` data types within module and package declarations but not interface declaration.
+</div>
 
 ## Enum
 
@@ -59,8 +60,9 @@ module A {
 }
 ```
 
-!!! Note
-    You can define `enum` data types within module and package declarations but not interface declarations.
+<div class="warning">
+You can define `enum` data types within module and package declarations but not interface declarations.
+</div>
 
 ### Enum Encoding
 
@@ -109,8 +111,9 @@ module A {
 }
 ```
 
-!!! Note
-    You can define `union` data types within module and package declarations but not interface declarations.
+<div class="warning">
+You can define `union` data types within module and package declarations but not interface declarations.
+</div>
 
 ## Typedef
 
