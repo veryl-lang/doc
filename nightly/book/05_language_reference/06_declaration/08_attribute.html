@@ -232,18 +232,51 @@ It will be transpiled to SystemVerilog attribute <code>(*  *)</code>.</p>
 <li><code>missing_reset_statement</code></li>
 <li><code>missing_port</code></li>
 </ul>
-<h2 id="ifdefifndef-attribute"><a class="header" href="#ifdefifndef-attribute"><code>ifdef</code>/<code>ifndef</code> Attribute</a></h2>
-<p><code>ifdef</code> and <code>ifndef</code> attribute is used to control whether the annotated code block is enabled by defined value.
-If <code>DEFINE_A</code> is defined, the code block with <code>#[ifdef(DEFINE_A)]</code> is enabled, and the code block with <code>#[ifndef(DEFINE_A)]</code> is disabled.</p>
+<h2 id="ifdefifndefelsifelse-attribute"><a class="header" href="#ifdefifndefelsifelse-attribute"><code>ifdef</code>/<code>ifndef</code>/<code>elsif</code>/<code>else</code> Attribute</a></h2>
+<p><code>ifdef</code> and <code>ifndef</code> attributes are used to control whether the annotated code block is enabled by defined value.
+In addition, the code block with <code>elsif</code> or <code>else</code> attributes is optional and a code block with <code>ifdef</code> or <code>ifndef</code> attributes can be followed with that code block.</p>
+<p>The following example shows a usage of these attributes and which code blocks will be enabled according to defined values.</p>
+<ul>
+<li>For the sequence of <code>ifdef</code>/<code>elsif</code>/<code>else</code> attributes
+<ul>
+<li>If <code>DEFINE_A</code> is defined, the code block with <code>#[ifdef(DEFINE_A)]</code> (code block a) is enbaled, and code blocks with <code>#[ifndef(DEFINE_B)]</code> and <code>#[else]</code> (code block b/c) are disabled.</li>
+<li>If <code>DEFINE_A</code> is not defined and <code>DEFINE_B</code> is defiend, the code block with <code>#[ifndef(DEFINE_B)]</code> (code block b) is enabled, and code blocks with <code>#[ifdef(DEFINE_A)]</code> and <code>#[else]</code> (code block a/c) are disabled.</li>
+<li>If <code>DEFINE_A</code> and <code>DEFINE_B</code> are not defined the code block with <code>#[else]</code> is enabled, and code blocks with <code>#[ifdef(DEFINE_A)]</code> and <code>#[elsif(DEFINE_B)]</code> (code block a/b) are disabled.</li>
+</ul>
+</li>
+<li>For the sequence of <code>ifndef</code>/<code>else</code> attributes
+<ul>
+<li>If <code>DEFINE_D</code> is not defined, the code block with <code>#[ifndef(DEFINE_D)]</code> (code block d) is enabled, and the code block with <code>#[else]</code> (code block e) is disabled.</li>
+<li>If <code>DEFINE_D</code> is defined, the code block with <code>#[else]</code> (code block e) is enabled, and the code block with <code>#[ifndef(DEFINE_D)]</code> (code block d) is disabled.</li>
+</ul>
+</li>
+</ul>
 <pre><code class="language-veryl playground">module ModuleA {
     #[ifdef(DEFINE_A)]
     {
+        // code block a
         let _a: logic&lt;10&gt; = 1;
     }
-
-    #[ifndef(DEFINE_A)]
+    #[elsif(DEFINE_B)]
     {
-        let _b: logic&lt;10&gt; = 1;
+        // code block b
+        let _a: logic&lt;10&gt; = 2;
+    }
+    #[else]
+    {
+        // code block c
+        let _a: logic&lt;10&gt; = 3;
+    }
+
+    #[ifndef(DEFINE_D)]
+    {
+        // code block d
+        let _b: logic&lt;10&gt; = 4;
+    }
+    #[else]
+    {
+        // code block e
+        let _b: logic&lt;10&gt; = 5;
     }
 }
 </code></pre>
