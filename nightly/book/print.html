@@ -2055,6 +2055,40 @@ Arguments are placed in <code>()</code> and return type is placed after <code>-&
     }
 }
 </code></pre>
+<p>Interface modports can be used as type of arguments.
+The given interface modports will be expanded into each Verilog ports when emitting SystemVerilog RTL.</p>
+<pre><code class="language-veryl playground">interface InterfaceA::&lt;W: u32&gt; {
+    var ready: logic   ;
+    var valid: logic   ;
+    var data : logic&lt;W&gt;;
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+    }
+
+    modport slave {
+        ..converse(master)
+    }
+}
+
+module ModuleA {
+    inst a_if: InterfaceA::&lt;8&gt;;
+    inst b_if: InterfaceA::&lt;8&gt;;
+
+    function FunctionA (
+        a_if: modport InterfaceA::&lt;8&gt;::slave ,
+        b_if: modport InterfaceA::&lt;8&gt;::master,
+    ) {
+        a_if &lt;&gt; b_if;
+    }
+
+    always_comb {
+        FunctionA(a_if, b_if);
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="initial--final"><a class="header" href="#initial--final">Initial / Final</a></h1>
 <p>Statements in <code>initial</code> are executed at the beginning of simulation,
 <code>final</code> is the end.
