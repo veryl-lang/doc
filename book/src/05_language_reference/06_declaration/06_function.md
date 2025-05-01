@@ -27,3 +27,40 @@ module ModuleA {
     }
 }
 ```
+
+Interface modports can be used as type of arguments.
+The given interface modports will be expanded into each Verilog ports when emitting SystemVerilog RTL.
+
+```veryl,playground
+interface InterfaceA::<W: u32> {
+    var ready: logic   ;
+    var valid: logic   ;
+    var data : logic<W>;
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+    }
+
+    modport slave {
+        ..converse(master)
+    }
+}
+
+module ModuleA {
+    inst a_if: InterfaceA::<8>;
+    inst b_if: InterfaceA::<8>;
+
+    function FunctionA (
+        a_if: modport InterfaceA::<8>::slave ,
+        b_if: modport InterfaceA::<8>::master,
+    ) {
+        a_if <> b_if;
+    }
+
+    always_comb {
+        FunctionA(a_if, b_if);
+    }
+}
+```
