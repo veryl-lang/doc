@@ -17,9 +17,10 @@ $ veryl new hello
 $ cd hello
 $ tree
 .
-`-- Veryl.toml
+├── src
+└── Veryl.toml
 
-0 directories, 1 file
+1 directory, 1 file
 ```
 
 `Veryl.toml` is the project configuration.
@@ -28,6 +29,9 @@ $ tree
 [project]
 name = "hello"
 version = "0.1.0"
+[build]
+source = "src"
+target = {type = "directory", path = "target"}
 ```
 
 The description of all configuration is [here](../06_development_environment/01_project_configuration.md).
@@ -51,9 +55,9 @@ module ModuleA {
 ```
 $ tree
 .
-|-- src
-|   `-- hello.veryl
-`-- Veryl.toml
+├── src
+│   └── hello.veryl
+└── Veryl.toml
 
 1 directory, 2 files
 ```
@@ -71,14 +75,17 @@ $ veryl build
 [INFO ]       Output filelist ([path to hello]/hello.f)
 $ tree
 .
-|-- dependencies
-|-- hello.f
-|-- src
-|   |-- hello.sv
-|   `-- hello.veryl
-`-- Veryl.toml
+├── dependencies
+├── hello.f
+├── src
+│   └── hello.veryl
+├── target
+│   ├── hello.sv
+│   └── hello.sv.map
+├── Veryl.lock
+└── Veryl.toml
 
-2 directories, 4 files
+3 directories, 6 files
 ```
 
 By default, SystemVerilog code will be generated at the same directory as Veryl code.
@@ -90,6 +97,7 @@ module hello_ModuleA;
         $display("Hello, world!");
     end
 endmodule
+//# sourceMappingURL=hello.sv.map
 ```
 
 Additionally, `hello.f` which is the filelist of generated codes will be generated.
