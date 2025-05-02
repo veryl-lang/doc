@@ -761,14 +761,18 @@ If <code>git</code> command is available, the directory is initialized as Git re
 $ cd hello
 $ tree
 .
-`-- Veryl.toml
+├── src
+└── Veryl.toml
 
-0 directories, 1 file
+1 directory, 1 file
 </code></pre>
 <p><code>Veryl.toml</code> is the project configuration.</p>
 <pre><code class="language-toml">[project]
 name = "hello"
 version = "0.1.0"
+[build]
+source = "src"
+target = {type = "directory", path = "target"}
 </code></pre>
 <p>The description of all configuration is <a href="03_getting_started/../06_development_environment/01_project_configuration.html">here</a>.</p>
 <h2 id="write-code"><a class="header" href="#write-code">Write Code</a></h2>
@@ -784,9 +788,9 @@ The extension of Veryl’s source codes is <code>.veryl</code>.</p>
 </code></pre>
 <pre><code>$ tree
 .
-|-- src
-|   `-- hello.veryl
-`-- Veryl.toml
+├── src
+│   └── hello.veryl
+└── Veryl.toml
 
 1 directory, 2 files
 </code></pre>
@@ -801,14 +805,17 @@ If you click the button, the transpiled SystemVerilog code will appear. Please t
 [INFO ]       Output filelist ([path to hello]/hello.f)
 $ tree
 .
-|-- dependencies
-|-- hello.f
-|-- src
-|   |-- hello.sv
-|   `-- hello.veryl
-`-- Veryl.toml
+├── dependencies
+├── hello.f
+├── src
+│   └── hello.veryl
+├── target
+│   ├── hello.sv
+│   └── hello.sv.map
+├── Veryl.lock
+└── Veryl.toml
 
-2 directories, 4 files
+3 directories, 6 files
 </code></pre>
 <p>By default, SystemVerilog code will be generated at the same directory as Veryl code.
 The generated code is <code>src/hello.sv</code>.</p>
@@ -817,6 +824,7 @@ The generated code is <code>src/hello.sv</code>.</p>
         $display("Hello, world!");
     end
 endmodule
+//# sourceMappingURL=hello.sv.map
 </code></pre>
 <p>Additionally, <code>hello.f</code> which is the filelist of generated codes will be generated.
 You can use it for SystemVerilog compiler.
