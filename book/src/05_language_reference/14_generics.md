@@ -13,14 +13,13 @@ The following items support generics:
 Each generic definition has generic parameters (often an uppercase letter is used like `T`) which can be placed as identifier or expression in the definition.
 Generic parameters are declarated after item's identifier with `::<>`.
 
-Each generic parameter should have generic bound after colon like `T: const`.
+Each generic parameter should have generic bound after colon like `T: TypeName`.
 Generic bound represents what value can be passed to the generic parameter.
 The available generic bounds are below:
 
-* `const`: means constant value can be passed
 * `type` : means arbitrary type can be passed
 * `inst: X` : instance of `X`
-* named prototype
+* named prototype, user defined data type or fixed data type
 
 Named prototype is a special generic bound. See [Prototype](14_generics/02_prototype.md) for details.
 
