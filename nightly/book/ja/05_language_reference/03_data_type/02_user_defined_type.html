@@ -224,6 +224,9 @@
     assign a.member_c = 2;
 }
 </code></pre>
+<div class="warning">
+You can define `struct` data types within module and package declarations but not interface declaration.
+</div>
 <h2 id="列挙型"><a class="header" href="#列挙型">列挙型</a></h2>
 <p><code>enum</code> は列挙型です。名前の付いたバリアントを複数持ち、<code>enum</code> 型の変数にはそのバリアントのうち1つだけをセットできます。バリアント名は <code>[enum name]::[variant name]</code> の形式で指定可能です。それぞれのバリアントは対応する整数値を持ち、<code>=</code> で指定することができます。指定されなかった場合は自動的に割り当てられます。</p>
 <pre><code class="language-veryl playground">module A {
@@ -247,6 +250,9 @@
     }
 }
 </code></pre>
+<div class="warning">
+You can define `enum` data types within module and package declarations but not interface declarations.
+</div>
 <h3 id="列挙型エンコーディング"><a class="header" href="#列挙型エンコーディング">列挙型エンコーディング</a></h3>
 <p>デフォルトでは各バリアントの値が省略されたときは0から順に割り当てられます。この割り当てのエンコードを指定したい場合は、<code>#[enum_encoding]</code> アトリビュートを指定できます。使用できるエンコードは以下の通りです。</p>
 <ul>
@@ -284,6 +290,9 @@
     assign a.variant_a = 8'haa;
 }
 </code></pre>
+<div class="warning">
+You can define `union` data types within module and package declarations but not interface declarations.
+</div>
 <h2 id="型定義"><a class="header" href="#型定義">型定義</a></h2>
 <p><code>type</code> キーワードを使って、スカラー型や配列型への型エイリアスを定義することができます。</p>
 <pre><code class="language-veryl playground">module A {

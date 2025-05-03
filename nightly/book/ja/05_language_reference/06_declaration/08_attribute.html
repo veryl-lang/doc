@@ -231,18 +231,94 @@
 <li>missing_reset_statement</li>
 <li>missing_port</li>
 </ul>
-<h2 id="ifdefifndef-アトリビュート"><a class="header" href="#ifdefifndef-アトリビュート"><code>ifdef</code>/<code>ifndef</code> アトリビュート</a></h2>
-<p><code>ifdef</code> と <code>ifndef</code> アトリビュートは定義された値によってコードブロックを有効にするかどうかを制御するために使用することができます。もし <code>DEFINE_A</code> が定義されていれば、<code>#[ifdef(DEFINE_A)]</code> のついたコードブロックは有効に、<code>#[ifndef(DEFINE_A)]</code> のついたコードブロックは無効になります。</p>
+<h2 id="ifdefifndefelsifelse-アトリビュート"><a class="header" href="#ifdefifndefelsifelse-アトリビュート"><code>ifdef</code>/<code>ifndef</code>/<code>elsif</code>/<code>else</code> アトリビュート</a></h2>
+<p><code>ifdef</code> と <code>ifndef</code> アトリビュートは定義された値によってコードブロックを有効にするかどうかを制御するために使用することができます。さらに、<code>ifdef</code> と <code>ifndef</code> のついたコードブロックに続けてオプションとして <code>elsif</code> と <code>else</code> アトリビュートの付いたブロックを書くこともできます。</p>
+<p>以下の例はこれらのアトリビュートの使用方法と、各コードブロックが定義された値によって有効になる様子を示しています。</p>
+<ul>
+<li><code>ifdef</code>/<code>elsif</code>/<code>else</code> の順に宣言されたアトリビュート
+<ul>
+<li>もし <code>DEFINE_A</code> が定義されていれば、<code>#[ifdef(DEFINE_A)]</code> のついたコードブロック（コードブロックa）が有効になり、<code>#[ifndef(DEFINE_B)]</code> と <code>#[else]</code> のついたコードブロック（コードブロックbとc）は無効になります。</li>
+<li><code>DEFINE_A</code> が定義されておらず、 <code>DEFINE_B</code> が定義されていれば、<code>#[elfif(DEFINE_B)]</code> のついたコードブロック（コードブロックb）が有効になり、<code>#[ifndef(DEFINE_A)]</code> と <code>#[else]</code> のついたコードブロック（コードブロックaとc）は無効になります。</li>
+<li><code>DEFINE_A</code> と <code>DEFINE_B</code> が定義されていなければ、<code>#[else]</code> のついたコードブロックが有効になり、<code>#[ifndef(DEFINE_A)]</code> と <code>#[elsif(DEFINE_B)]</code> のついたコードブロック（コードブロックaとb）は無効になります。</li>
+</ul>
+</li>
+<li><code>ifndef</code>/<code>else</code> の順に宣言されたアトリビュート
+<ul>
+<li>もし <code>DEFINE_D</code> が定義されていなければ、<code>#[ifndef(DEFINE_D)]</code> のついたコードブロック（コードブロックd）が有効になり、<code>#[else]</code> のついたコードブロック（コードブロックe）は無効になります。</li>
+<li><code>DEFINE_D</code> が定義されていれば、<code>#[else]</code> のついたコードブロック（コードブロックe）が有効になり、<code>#[ifndef(DEFINE_D)]</code> のついたコードブロック（コードブロックd）は無効になります。</li>
+</ul>
+</li>
+</ul>
 <pre><code class="language-veryl playground">module ModuleA {
     #[ifdef(DEFINE_A)]
     {
+        // コードブロック a
         let _a: logic&lt;10&gt; = 1;
     }
-
-    #[ifndef(DEFINE_A)]
+    #[elsif(DEFINE_B)]
     {
-        let _b: logic&lt;10&gt; = 1;
+        // コードブロック b
+        let _a: logic&lt;10&gt; = 2;
     }
+    #[else]
+    {
+        // コードブロック c
+        let _a: logic&lt;10&gt; = 3;
+    }
+
+    #[ifndef(DEFINE_D)]
+    {
+        // コードブロック d
+        let _b: logic&lt;10&gt; = 4;
+    }
+    #[else]
+    {
+        // コードブロック e
+        let _b: logic&lt;10&gt; = 5;
+    }
+}
+</code></pre>
+<h2 id="expand-アトリビュート"><a class="header" href="#expand-アトリビュート"><code>expand</code> アトリビュート</a></h2>
+<p><code>expand</code> アトリビュートが設定されているとき、<code>modport</code> のような構造化されたポートはVerilog のポートに展開されます。合成ツールによってはトップモジュールがそのようなポートを含んではならない場合があり、そのような場合にこのアトリビュートを使うことができます。使用可能な引数は以下の通りです。</p>
+<ul>
+<li><code>modport</code>: ポート方向が <code>modport</code> のポートを展開する</li>
+</ul>
+<pre><code class="language-veryl playground">interface InterfaceA::&lt;W: u32&gt; {
+    var ready: logic   ;
+    var valid: logic   ;
+    var data : logic&lt;W&gt;;
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+    }
+
+    modport slave {
+        ready: output,
+        valid: input ,
+        data : input ,
+    }
+}
+
+#[expand(modport)]
+module ModuleA (
+    slave_if : modport InterfaceA::&lt;8&gt;::slave  [4],
+    master_if: modport InterfaceA::&lt;8&gt;::master [4],
+) {
+    for i in 0..4 :g {
+        connect slave_if[i] &lt;&gt; master_if[i];
+    }
+}
+
+module ModuleB {
+    inst a_if: InterfaceA::&lt;8&gt; [4];
+    inst b_if: InterfaceA::&lt;8&gt; [4];
+
+    inst u: ModuleA (
+        slave_if : a_if,
+        master_if: b_if,
+    );
 }
 </code></pre>
 <h2 id="align-アトリビュート"><a class="header" href="#align-アトリビュート"><code>align</code> アトリビュート</a></h2>

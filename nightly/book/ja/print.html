@@ -728,14 +728,18 @@ verylup completion zsh verylup &gt; _verylup
 $ cd hello
 $ tree
 .
-`-- Veryl.toml
+├── src
+└── Veryl.toml
 
-0 directories, 1 file
+1 directory, 1 file
 </code></pre>
 <p><code>Veryl.toml</code> はプロジェクトの設定ファイルです。</p>
 <pre><code class="language-toml">[project]
 name = "hello"
 version = "0.1.0"
+[build]
+source = "src"
+target = {type = "directory", path = "target"}
 </code></pre>
 <p>全設定の説明は<a href="03_getting_started/../06_development_environment/01_project_configuration.html">こちら</a>。</p>
 <h2 id="コードを書く"><a class="header" href="#コードを書く">コードを書く</a></h2>
@@ -749,9 +753,9 @@ version = "0.1.0"
 </code></pre>
 <pre><code>$ tree
 .
-|-- src
-|   `-- hello.veryl
-`-- Veryl.toml
+├── src
+│   └── hello.veryl
+└── Veryl.toml
 
 1 directory, 2 files
 </code></pre>
@@ -765,14 +769,17 @@ version = "0.1.0"
 [INFO ]       Output filelist ([path to hello]/hello.f)
 $ tree
 .
-|-- dependencies
-|-- hello.f
-|-- src
-|   |-- hello.sv
-|   `-- hello.veryl
-`-- Veryl.toml
+├── dependencies
+├── hello.f
+├── src
+│   └── hello.veryl
+├── target
+│   ├── hello.sv
+│   └── hello.sv.map
+├── Veryl.lock
+└── Veryl.toml
 
-2 directories, 4 files
+3 directories, 6 files
 </code></pre>
 <p>デフォルトでは SystemVerilog のコードは Veryl のコードと同じディレクトリに生成されます。つまり <code>src/hello.sv</code> です。</p>
 <pre><code class="language-verilog">module hello_ModuleA;
@@ -780,6 +787,7 @@ $ tree
         $display("Hello, world!");
     end
 endmodule
+//# sourceMappingURL=hello.sv.map
 </code></pre>
 <p>さらに、生成されたコードのファイルリスト <code>hello.f</code> も生成されます。これは SystemVerilog コンパイラで使用できます。<a href="https://www.veripool.org/verilator/">Verilator</a> で使用するには以下のようにします。</p>
 <pre><code>$ verilator --binary -f hello.f
@@ -1246,6 +1254,9 @@ a = 1 || 1;
     assign a.member_c = 2;
 }
 </code></pre>
+<div class="warning">
+You can define `struct` data types within module and package declarations but not interface declaration.
+</div>
 <h2 id="列挙型"><a class="header" href="#列挙型">列挙型</a></h2>
 <p><code>enum</code> は列挙型です。名前の付いたバリアントを複数持ち、<code>enum</code> 型の変数にはそのバリアントのうち1つだけをセットできます。バリアント名は <code>[enum name]::[variant name]</code> の形式で指定可能です。それぞれのバリアントは対応する整数値を持ち、<code>=</code> で指定することができます。指定されなかった場合は自動的に割り当てられます。</p>
 <pre><code class="language-veryl playground">module A {
@@ -1269,6 +1280,9 @@ a = 1 || 1;
     }
 }
 </code></pre>
+<div class="warning">
+You can define `enum` data types within module and package declarations but not interface declarations.
+</div>
 <h3 id="列挙型エンコーディング"><a class="header" href="#列挙型エンコーディング">列挙型エンコーディング</a></h3>
 <p>デフォルトでは各バリアントの値が省略されたときは0から順に割り当てられます。この割り当てのエンコードを指定したい場合は、<code>#[enum_encoding]</code> アトリビュートを指定できます。使用できるエンコードは以下の通りです。</p>
 <ul>
@@ -1306,6 +1320,9 @@ a = 1 || 1;
     assign a.variant_a = 8'haa;
 }
 </code></pre>
+<div class="warning">
+You can define `union` data types within module and package declarations but not interface declarations.
+</div>
 <h2 id="型定義"><a class="header" href="#型定義">型定義</a></h2>
 <p><code>type</code> キーワードを使って、スカラー型や配列型への型エイリアスを定義することができます。</p>
 <pre><code class="language-veryl playground">module A {
@@ -1918,6 +1935,39 @@ emit_cond_type = true
     }
 }
 </code></pre>
+<p>インターフェースのmodportは引数の型としても使用できます。与えられたmodportはSystemVerilog生成時にVerilogポートに展開されます。</p>
+<pre><code class="language-veryl playground">interface InterfaceA::&lt;W: u32&gt; {
+    var ready: logic   ;
+    var valid: logic   ;
+    var data : logic&lt;W&gt;;
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+    }
+
+    modport slave {
+        ..converse(master)
+    }
+}
+
+module ModuleA {
+    inst a_if: InterfaceA::&lt;8&gt;;
+    inst b_if: InterfaceA::&lt;8&gt;;
+
+    function FunctionA (
+        a_if: modport InterfaceA::&lt;8&gt;::slave ,
+        b_if: modport InterfaceA::&lt;8&gt;::master,
+    ) {
+        a_if &lt;&gt; b_if;
+    }
+
+    always_comb {
+        FunctionA(a_if, b_if);
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="initial--final"><a class="header" href="#initial--final">initial / final</a></h1>
 <p><code>initial</code> ブロック内の文はシミュレーション開始時に実行され、<code>final</code> は終了時です。どちらも論理合成では無視され、デバッグやアサーションに使うことができます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -1954,18 +2004,94 @@ emit_cond_type = true
 <li>missing_reset_statement</li>
 <li>missing_port</li>
 </ul>
-<h2 id="ifdefifndef-アトリビュート"><a class="header" href="#ifdefifndef-アトリビュート"><code>ifdef</code>/<code>ifndef</code> アトリビュート</a></h2>
-<p><code>ifdef</code> と <code>ifndef</code> アトリビュートは定義された値によってコードブロックを有効にするかどうかを制御するために使用することができます。もし <code>DEFINE_A</code> が定義されていれば、<code>#[ifdef(DEFINE_A)]</code> のついたコードブロックは有効に、<code>#[ifndef(DEFINE_A)]</code> のついたコードブロックは無効になります。</p>
+<h2 id="ifdefifndefelsifelse-アトリビュート"><a class="header" href="#ifdefifndefelsifelse-アトリビュート"><code>ifdef</code>/<code>ifndef</code>/<code>elsif</code>/<code>else</code> アトリビュート</a></h2>
+<p><code>ifdef</code> と <code>ifndef</code> アトリビュートは定義された値によってコードブロックを有効にするかどうかを制御するために使用することができます。さらに、<code>ifdef</code> と <code>ifndef</code> のついたコードブロックに続けてオプションとして <code>elsif</code> と <code>else</code> アトリビュートの付いたブロックを書くこともできます。</p>
+<p>以下の例はこれらのアトリビュートの使用方法と、各コードブロックが定義された値によって有効になる様子を示しています。</p>
+<ul>
+<li><code>ifdef</code>/<code>elsif</code>/<code>else</code> の順に宣言されたアトリビュート
+<ul>
+<li>もし <code>DEFINE_A</code> が定義されていれば、<code>#[ifdef(DEFINE_A)]</code> のついたコードブロック（コードブロックa）が有効になり、<code>#[ifndef(DEFINE_B)]</code> と <code>#[else]</code> のついたコードブロック（コードブロックbとc）は無効になります。</li>
+<li><code>DEFINE_A</code> が定義されておらず、 <code>DEFINE_B</code> が定義されていれば、<code>#[elfif(DEFINE_B)]</code> のついたコードブロック（コードブロックb）が有効になり、<code>#[ifndef(DEFINE_A)]</code> と <code>#[else]</code> のついたコードブロック（コードブロックaとc）は無効になります。</li>
+<li><code>DEFINE_A</code> と <code>DEFINE_B</code> が定義されていなければ、<code>#[else]</code> のついたコードブロックが有効になり、<code>#[ifndef(DEFINE_A)]</code> と <code>#[elsif(DEFINE_B)]</code> のついたコードブロック（コードブロックaとb）は無効になります。</li>
+</ul>
+</li>
+<li><code>ifndef</code>/<code>else</code> の順に宣言されたアトリビュート
+<ul>
+<li>もし <code>DEFINE_D</code> が定義されていなければ、<code>#[ifndef(DEFINE_D)]</code> のついたコードブロック（コードブロックd）が有効になり、<code>#[else]</code> のついたコードブロック（コードブロックe）は無効になります。</li>
+<li><code>DEFINE_D</code> が定義されていれば、<code>#[else]</code> のついたコードブロック（コードブロックe）が有効になり、<code>#[ifndef(DEFINE_D)]</code> のついたコードブロック（コードブロックd）は無効になります。</li>
+</ul>
+</li>
+</ul>
 <pre><code class="language-veryl playground">module ModuleA {
     #[ifdef(DEFINE_A)]
     {
+        // コードブロック a
         let _a: logic&lt;10&gt; = 1;
     }
-
-    #[ifndef(DEFINE_A)]
+    #[elsif(DEFINE_B)]
     {
-        let _b: logic&lt;10&gt; = 1;
+        // コードブロック b
+        let _a: logic&lt;10&gt; = 2;
     }
+    #[else]
+    {
+        // コードブロック c
+        let _a: logic&lt;10&gt; = 3;
+    }
+
+    #[ifndef(DEFINE_D)]
+    {
+        // コードブロック d
+        let _b: logic&lt;10&gt; = 4;
+    }
+    #[else]
+    {
+        // コードブロック e
+        let _b: logic&lt;10&gt; = 5;
+    }
+}
+</code></pre>
+<h2 id="expand-アトリビュート"><a class="header" href="#expand-アトリビュート"><code>expand</code> アトリビュート</a></h2>
+<p><code>expand</code> アトリビュートが設定されているとき、<code>modport</code> のような構造化されたポートはVerilog のポートに展開されます。合成ツールによってはトップモジュールがそのようなポートを含んではならない場合があり、そのような場合にこのアトリビュートを使うことができます。使用可能な引数は以下の通りです。</p>
+<ul>
+<li><code>modport</code>: ポート方向が <code>modport</code> のポートを展開する</li>
+</ul>
+<pre><code class="language-veryl playground">interface InterfaceA::&lt;W: u32&gt; {
+    var ready: logic   ;
+    var valid: logic   ;
+    var data : logic&lt;W&gt;;
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+    }
+
+    modport slave {
+        ready: output,
+        valid: input ,
+        data : input ,
+    }
+}
+
+#[expand(modport)]
+module ModuleA (
+    slave_if : modport InterfaceA::&lt;8&gt;::slave  [4],
+    master_if: modport InterfaceA::&lt;8&gt;::master [4],
+) {
+    for i in 0..4 :g {
+        connect slave_if[i] &lt;&gt; master_if[i];
+    }
+}
+
+module ModuleB {
+    inst a_if: InterfaceA::&lt;8&gt; [4];
+    inst b_if: InterfaceA::&lt;8&gt; [4];
+
+    inst u: ModuleA (
+        slave_if : a_if,
+        master_if: b_if,
+    );
 }
 </code></pre>
 <h2 id="align-アトリビュート"><a class="header" href="#align-アトリビュート"><code>align</code> アトリビュート</a></h2>
@@ -2190,6 +2316,27 @@ module ModubeB {
     }
 }
 </code></pre>
+<p>さらに、<code>import</code> キーワードを付けて指定された関数は modport を通して呼び出すことができます。</p>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var a: logic;
+    var b: logic;
+
+    function a_and_b -&gt; logic&lt;2&gt; {
+        return {a, b};
+    }
+
+    modport mp {
+        a      : input ,
+        b      : input ,
+        a_and_b: import,
+    }
+}
+module ModuleA (
+    ab_if: modport InterfaceA::mp,
+) {
+    let _ab: logic&lt;2&gt; = ab_if.a_and_b();
+}
+</code></pre>
 <h2 id="modportのデフォルトメンバー"><a class="header" href="#modportのデフォルトメンバー">modportのデフォルトメンバー</a></h2>
 <p>modportの全てのメンバーを指定する代わりに、以下のようにデフォルトメンバーを指定することができます。</p>
 <ul>
@@ -2322,12 +2469,11 @@ embed (cocotb) py{{{
 <li>ユニオン</li>
 </ul>
 <p>それぞれのジェネリック定義はジェネリックパラメータ（<code>T</code> のような大文字1文字がよく使われます）を持ち、定義内で識別子や式として配置できます。ジェネリックパラメータはアイテムの識別子の後に <code>::&lt;&gt;</code> を用いて宣言します。</p>
-<p>各ジェネリックパラメータにはコロンの後に <code>T: const</code> のようなジェネリック境界が必要です。ジェネリック境界はどのような値をそのパラメータに渡すことができるかを示します。使用可能なジェネリック境界は以下の通りです。</p>
+<p>各ジェネリックパラメータにはコロンの後に <code>T: TypeName</code> のようなジェネリック境界が必要です。ジェネリック境界はどのような値をそのパラメータに渡すことができるかを示します。使用可能なジェネリック境界は以下の通りです。</p>
 <ul>
-<li><code>const</code>: 定数値を渡すことができる</li>
 <li><code>type</code>: 任意の型を渡すことができる</li>
 <li><code>inst: X</code> : <code>X</code> のインスタンス</li>
-<li>名前付きプロトタイプ</li>
+<li>名前付きプロトタイプ、ユーザ定義型、組み込みのデータ型</li>
 </ul>
 <p>名前付きプロトタイプは特別なジェネリック境界です。詳細は <a href="05_language_reference/14_generics/02_prototype.html">プロトタイプ</a> を参照してください。</p>
 <p>ジェネリクスを使用するためには <code>::&lt;&gt;</code> を用いて実パラメータを与えます。実パラメータとしては数値リテラルと <code>::</code> で連結された識別子を使用することができます。</p>
@@ -2422,7 +2568,7 @@ module ModuleA {
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="プロトタイプ"><a class="header" href="#プロトタイプ">プロトタイプ</a></h1>
-<p>プロトタイプは特別なジェネリック境界で、ジェネリックパラメータに渡せるプロトタイプを示します。現在はモジュールプロトタイプとパッケージプロトタイプがサポートされています。</p>
+<p>プロトタイプは特別なジェネリック境界で、ジェネリックパラメータに渡せるプロトタイプを示します。現在はモジュールプロトタイプ、インターフェースプロトタイプ、パッケージプロトタイプがサポートされています。</p>
 <h2 id="モジュールプロトタイプ"><a class="header" href="#モジュールプロトタイプ">モジュールプロトタイプ</a></h2>
 <p>以下の例では、<code>ProtoA</code> がパラメータ <code>A</code> とポート <code>i_dat</code> <code>o_dat</code> を持つモジュールプロトタイプです。<code>T: ProtoA</code> のように制約することで、ジェネリックパラメータ <code>T</code> がそれらのパラメータとポートを持つ必要があることが示されます。</p>
 <p>プロトタイプを使うには <code>for</code> による実装が必要です。<code>ModuleC</code> と <code>ModuleD</code> は <code>for ProtoA</code> 指定により、 <code>ProtoA</code> の条件を満たすことが示されています。これにより、それらのモジュールは <code>ModuleB</code> の ジェネリックパラメータ <code>T</code> として使用できるようになります。</p>
@@ -2463,6 +2609,58 @@ module ModuleD for ProtoA #(
     assign o_dat = ~i_dat;
 }
 </code></pre>
+<h2 id="インターフェースプロトタイプ"><a class="header" href="#インターフェースプロトタイプ">インターフェースプロトタイプ</a></h2>
+<p>以下の例では、<code>ProtoA</code> が定数 <code>A</code> と変数 <code>raedy</code>/<code>valid</code>/<code>data</code>、関数 <code>ack</code>、modport <code>master</code>を持つインターフェースプロトタイプです。<code>BUS_IF</code> は <code>ProtoA</code> で制約されているので、それらのメンバーを持つことが保証されており、参照することができます。</p>
+<pre><code class="language-veryl playground">proto interface ProtoA {
+    const WIDTH: u32;
+
+    var ready: logic       ;
+    var valid: logic       ;
+    var data : logic&lt;WIDTH&gt;;
+
+    function ack() -&gt; logic ;
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+        ack  : import,
+    }
+}
+
+interface InterfaceA::&lt;W: u32&gt; for ProtoA {
+    const WIDTH: u32 = W;
+
+    var ready: logic       ;
+    var valid: logic       ;
+    var data : logic&lt;WIDTH&gt;;
+
+    function ack () -&gt; logic {
+        return ready &amp;&amp; valid;
+    }
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+        ack  : import,
+    }
+}
+
+module ModuleA::&lt;BUS_IF: ProtoA&gt; (
+    bus_if: modport BUS_IF::master,
+) {
+    connect bus_if &lt;&gt; 0;
+}
+
+module ModuleB {
+    inst bus_if: InterfaceA::&lt;8&gt;;
+
+    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; (
+        bus_if: bus_if,
+    );
+}
+</code></pre>
 <h2 id="パッケージプロトタイプ"><a class="header" href="#パッケージプロトタイプ">パッケージプロトタイプ</a></h2>
 <p>以下の例では、<code>ProtoA</code> が型 <code>data_a</code> と型 <code>data_b</code> を持つパッケージプロトタイプです。<code>PKG</code> は <code>ProtoA</code> で制約されているので、<code>data_a</code> と <code>data_b</code> を持つことが保証されており、それらを参照することができます。</p>
 <pre><code class="language-veryl playground">proto package ProtoA {
@@ -2477,6 +2675,113 @@ package PackageA::&lt;A: u32, B: u32&gt; for ProtoA {
 
 module ModuleA::&lt;PKG: ProtoA&gt; {
     let _a: PKG::data_a = 0;
+}
+</code></pre>
+<h2 id="プロトタイプの要素"><a class="header" href="#プロトタイプの要素">プロトタイプの要素</a></h2>
+<p>以下の要素はモジュール、インターフェース、パッケージのプロトタイプ内で宣言することができます。</p>
+<p>テーブルにどのプロトタイプがどの要素を持てるかをまとめます。</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">プロトタイプ</th><th style="text-align: left">パラメータ</th><th style="text-align: left">ポート</th><th style="text-align: left">定数</th><th style="text-align: left">変数</th><th style="text-align: left">型定義</th><th style="text-align: left">構造体/列挙型/ユニオン</th><th style="text-align: left">関数</th><th style="text-align: left">エイリアス</th><th style="text-align: left">modport</th></tr></thead><tbody>
+<tr><td style="text-align: left">モジュール</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left">インターフェース</td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td></tr>
+<tr><td style="text-align: left">パッケージ</td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left"></td></tr>
+</tbody></table>
+</div>
+<h3 id="パラメータ-1"><a class="header" href="#パラメータ-1">パラメータ</a></h3>
+<p>パラメータプロトタイプは識別子とデータ型、デフォルト値を指定します。</p>
+<pre><code class="language-veryl">proto module ModuleA #(
+    param A: u32 = 0,
+    param B: u32 = 1,
+);
+</code></pre>
+<h3 id="ポート"><a class="header" href="#ポート">ポート</a></h3>
+<p>ポートプロトタイプは識別子と方向、データ型を指定します。</p>
+<pre><code class="language-veryl">proto module ModuleA (
+    i_d: input  logic,
+    o_d: output logic,
+);
+</code></pre>
+<h3 id="定数"><a class="header" href="#定数">定数</a></h3>
+<p>定数プロトタイプは識別子とデータ型を指定します。ジェネリックなパラメータのプレースホルダとして使用できます。</p>
+<pre><code class="language-veryl">proto package ProtoPkg {
+    const WIDTH: u32;
+}
+package PkgA::&lt;W: u32&gt; for ProtoPkg {
+    const WIDTH: u32 = W;
+}
+</code></pre>
+<h3 id="変数-1"><a class="header" href="#変数-1">変数</a></h3>
+<p>変数プロトタイプは識別子とデータ型を指定します。これらは <code>var</code> 及び <code>let</code> 宣言で使用することができます。</p>
+<pre><code class="language-veryl">proto interface ProtoA {
+    var a: logic;
+    var b: logic;
+}
+interface InterfaceA for ProtoA {
+    var a: logic;
+    let b: lgoic = 0;
+}
+</code></pre>
+<h3 id="型定義-1"><a class="header" href="#型定義-1">型定義</a></h3>
+<p>Typedefプロトタイプは型エイリアスの識別子を指定します。ジェネリックなパラメータのプレースホルダとして使用できます。</p>
+<pre><code class="language-veryl">proto package ProtoPkg {
+    type data_t;
+}
+package PkgA::&lt;W: u32&gt; for ProtoPkg {
+    type data_t = logic&lt;W&gt;;
+}
+</code></pre>
+<h3 id="構造体列挙型ユニオン"><a class="header" href="#構造体列挙型ユニオン">構造体/列挙型/ユニオン</a></h3>
+<p>構造体、列挙型、ユニオンプロトタイプは型の識別子と各メンバーの識別子、データ型を指定します。</p>
+<pre><code class="language-veryl">proto package ProtoPkg {
+    struct Foo {
+        a: logic,
+        b: logic,
+    }
+
+    enum Bar {
+        C,
+        D,
+    }
+
+    union Baz {
+        e: logic,
+        f: logic,
+    }
+}
+</code></pre>
+<h3 id="関数-1"><a class="header" href="#関数-1">関数</a></h3>
+<p>関数プロトタイプは識別子と戻り値のデータ型、引数の方向とデータ型を指定します。</p>
+<pre><code class="language-veryl">proto package ProtoPkg {
+    function foo (a: input logic, b: input logic) -&gt; logic;
+}
+</code></pre>
+<h3 id="モジュールインターフェースパッケージ-エイリアス"><a class="header" href="#モジュールインターフェースパッケージ-エイリアス">モジュール/インターフェース/パッケージ エイリアス</a></h3>
+<p>モジュール、インターフェース、パッケージのエイリアス プロトタイプは識別子とモジュール、インターフェース、パッケージのプロトタイプを指定します。そのエイリアスの実際の型は与えられたプロトタイプに制約されます。</p>
+<pre><code class="language-veryl">proto module ProtoRamWrapper;
+
+proto package ProtoPkg {
+    alias module ram: ProtoRamWrapper;
+}
+
+package Pkg::&lt;RAM: ProtoRamWrapper&gt; for ProtoPkg {
+    alias module ram = RAM;
+}
+
+module RamWrapper for ProtoRamWrapper {}
+
+module top {
+  inst u_ram: Pkg::&lt;RamWrapper&gt;::ram;
+}
+</code></pre>
+<h3 id="modport"><a class="header" href="#modport">modport</a></h3>
+<p>modport プロトタイプはmodport の識別子と各メンバーの識別子と方向を指定します。</p>
+<pre><code class="language-veryl">proto interface ProtoA {
+    var a: logic;
+    var b: logic;
+
+    modport mp {
+        a: input ,
+        b: output,
+    }
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="クロックドメインアノテーション"><a class="header" href="#クロックドメインアノテーション">クロックドメインアノテーション</a></h1>
@@ -4391,6 +4696,8 @@ Veryl: Start { DescriptionGroup };
 <h2 id="invalid_number_character"><a class="header" href="#invalid_number_character">invalid_number_character</a></h2>
 <h2 id="invalid_statement"><a class="header" href="#invalid_statement">invalid_statement</a></h2>
 <h2 id="invalid_system_function"><a class="header" href="#invalid_system_function">invalid_system_function</a></h2>
+<h2 id="invalid_type_declaration"><a class="header" href="#invalid_type_declaration">invalid_type_declaration</a></h2>
+<p>このエラーは <code>struct</code>、<code>enum</code>、<code>union</code>のデータ型がインターフェース宣言内で定義されたことを示します。</p>
 <h2 id="mismatch_arity"><a class="header" href="#mismatch_arity">mismatch_arity</a></h2>
 <h2 id="mismatch_attribute_args"><a class="header" href="#mismatch_attribute_args">mismatch_attribute_args</a></h2>
 <h2 id="mismatch_type"><a class="header" href="#mismatch_type">mismatch_type</a></h2>
