@@ -42,7 +42,7 @@ The following example shows a usage of these attributes and which code blocks wi
 
 * For the sequence of `ifdef`/`elsif`/`else` attributes
     * If `DEFINE_A` is defined, the code block with `#[ifdef(DEFINE_A)]` (code block a) is enbaled, and code blocks with `#[ifndef(DEFINE_B)]` and `#[else]` (code block b/c) are disabled.
-    * If `DEFINE_A` is not defined and `DEFINE_B` is defiend, the code block with `#[ifndef(DEFINE_B)]` (code block b) is enabled, and code blocks with `#[ifdef(DEFINE_A)]` and `#[else]` (code block a/c) are disabled.
+    * If `DEFINE_A` is not defined and `DEFINE_B` is defiend, the code block with `#[elsif(DEFINE_B)]` (code block b) is enabled, and code blocks with `#[ifdef(DEFINE_A)]` and `#[else]` (code block a/c) are disabled.
     * If `DEFINE_A` and `DEFINE_B` are not defined the code block with `#[else]` is enabled, and code blocks with `#[ifdef(DEFINE_A)]` and `#[elsif(DEFINE_B)]` (code block a/b) are disabled.
 * For the sequence of `ifndef`/`else` attributes
     * If `DEFINE_D` is not defined, the code block with `#[ifndef(DEFINE_D)]` (code block d) is enabled, and the code block with `#[else]` (code block e) is disabled.

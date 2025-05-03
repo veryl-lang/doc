@@ -238,7 +238,7 @@ proto package ProtoPkg {
 
 ### Alias Module/Interface/Package
 
-Module alias prototype, interface prototype and package protoype specify identifier name and prototype of a module/interface/pacakge alias. Type of an actual alias is restricted by the given prototype.
+Module alias prototype, interface alias prototype and package alias protoype specify identifier name and prototype of a module/interface/pacakge alias. Type of an actual alias is restricted by the given prototype.
 
 ```veryl
 proto module ProtoRamWrapper;
