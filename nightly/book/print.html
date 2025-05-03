@@ -2144,7 +2144,7 @@ In addition, the code block with <code>elsif</code> or <code>else</code> attribu
 <li>For the sequence of <code>ifdef</code>/<code>elsif</code>/<code>else</code> attributes
 <ul>
 <li>If <code>DEFINE_A</code> is defined, the code block with <code>#[ifdef(DEFINE_A)]</code> (code block a) is enbaled, and code blocks with <code>#[ifndef(DEFINE_B)]</code> and <code>#[else]</code> (code block b/c) are disabled.</li>
-<li>If <code>DEFINE_A</code> is not defined and <code>DEFINE_B</code> is defiend, the code block with <code>#[ifndef(DEFINE_B)]</code> (code block b) is enabled, and code blocks with <code>#[ifdef(DEFINE_A)]</code> and <code>#[else]</code> (code block a/c) are disabled.</li>
+<li>If <code>DEFINE_A</code> is not defined and <code>DEFINE_B</code> is defiend, the code block with <code>#[elsif(DEFINE_B)]</code> (code block b) is enabled, and code blocks with <code>#[ifdef(DEFINE_A)]</code> and <code>#[else]</code> (code block a/c) are disabled.</li>
 <li>If <code>DEFINE_A</code> and <code>DEFINE_B</code> are not defined the code block with <code>#[else]</code> is enabled, and code blocks with <code>#[ifdef(DEFINE_A)]</code> and <code>#[elsif(DEFINE_B)]</code> (code block a/b) are disabled.</li>
 </ul>
 </li>
@@ -2944,7 +2944,7 @@ package PkgA::&lt;W: u32&gt; for ProtoPkg {
 }
 </code></pre>
 <h3 id="alias-moduleinterfacepackage"><a class="header" href="#alias-moduleinterfacepackage">Alias Module/Interface/Package</a></h3>
-<p>Module alias prototype, interface prototype and package protoype specify identifier name and prototype of a module/interface/pacakge alias. Type of an actual alias is restricted by the given prototype.</p>
+<p>Module alias prototype, interface alias prototype and package alias protoype specify identifier name and prototype of a module/interface/pacakge alias. Type of an actual alias is restricted by the given prototype.</p>
 <pre><code class="language-veryl">proto module ProtoRamWrapper;
 
 proto package ProtoPkg {
