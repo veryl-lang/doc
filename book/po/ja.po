@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-05-02T14:48:38+09:00\n"
+"POT-Creation-Date: 2025-05-03T16:57:31+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -3164,8 +3164,8 @@ msgid ""
 "modports will be expanded into each Verilog ports when emitting "
 "SystemVerilog RTL."
 msgstr ""
-"インターフェースのmodportは引数の型としても使用できます。"
-"与えられたmodportはSystemVerilog生成時にVerilogポートに展開されます。"
+"インターフェースのmodportは引数の型としても使用できます。与えられたmodportは"
+"SystemVerilog生成時にVerilogポートに展開されます。"
 
 #: src/05_language_reference/06_declaration/07_initial_final.md:3
 msgid ""
@@ -3278,21 +3278,21 @@ msgid ""
 "`ifndef` attributes can be followed with that code block."
 msgstr ""
 "`ifdef` と `ifndef` アトリビュートは定義された値によってコードブロックを有効"
-"にするかどうかを制御するために使用することができます。"
-"さらに、`ifdef` と `ifndef` のついたコードブロックに続けて"
-"オプションとして `elsif` と `else` アトリビュートの付いたブロックを書くこともできます。"
+"にするかどうかを制御するために使用することができます。さらに、`ifdef` と "
+"`ifndef` のついたコードブロックに続けてオプションとして `elsif` と `else` ア"
+"トリビュートの付いたブロックを書くこともできます。"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:41
 msgid ""
 "The following example shows a usage of these attributes and which code "
 "blocks will be enabled according to defined values."
 msgstr ""
-"以下の例はこれらのアトリビュートの使用方法と、各コードブロックが定義された値によって有効になる様子を示しています。"
+"以下の例はこれらのアトリビュートの使用方法と、各コードブロックが定義された値"
+"によって有効になる様子を示しています。"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:43
 msgid "For the sequence of `ifdef`/`elsif`/`else` attributes"
-msgstr ""
-"`ifdef`/`elsif`/`else` の順に宣言されたアトリビュート"
+msgstr "`ifdef`/`elsif`/`else` の順に宣言されたアトリビュート"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:44
 msgid ""
@@ -3300,17 +3300,20 @@ msgid ""
 "block a) is enbaled, and code blocks with `#[ifndef(DEFINE_B)]` and "
 "`#[else]` (code block b/c) are disabled."
 msgstr ""
-"もし `DEFINE_A` が定義されていれば、`#[ifdef(DEFINE_A)]` のついたコードブロック（コードブロックa）"
-"が有効になり、`#[ifndef(DEFINE_B)]` と `#[else]` のついたコードブロック（コードブロックbとc）は無効になります。"
+"もし `DEFINE_A` が定義されていれば、`#[ifdef(DEFINE_A)]` のついたコードブロッ"
+"ク（コードブロックa）が有効になり、`#[ifndef(DEFINE_B)]` と `#[else]` のつい"
+"たコードブロック（コードブロックbとc）は無効になります。"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:45
 msgid ""
 "If `DEFINE_A` is not defined and `DEFINE_B` is defiend, the code block with "
-"`#[ifndef(DEFINE_B)]` (code block b) is enabled, and code blocks with "
+"`#[elsif(DEFINE_B)]` (code block b) is enabled, and code blocks with "
 "`#[ifdef(DEFINE_A)]` and `#[else]` (code block a/c) are disabled."
 msgstr ""
-"`DEFINE_A` が定義されておらず、 `DEFINE_B` が定義されていれば、`#[elfif(DEFINE_B)]` のついたコードブロック（コードブロックb）"
-"が有効になり、`#[ifndef(DEFINE_A)]` と `#[else]` のついたコードブロック（コードブロックaとc）は無効になります。"
+"`DEFINE_A` が定義されておらず、 `DEFINE_B` が定義されていれば、"
+"`#[elfif(DEFINE_B)]` のついたコードブロック（コードブロックb）が有効になり、"
+"`#[ifndef(DEFINE_A)]` と `#[else]` のついたコードブロック（コードブロックaと"
+"c）は無効になります。"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:46
 msgid ""
@@ -3318,13 +3321,13 @@ msgid ""
 "is enabled, and code blocks with `#[ifdef(DEFINE_A)]` and "
 "`#[elsif(DEFINE_B)]` (code block a/b) are disabled."
 msgstr ""
-"`DEFINE_A` と `DEFINE_B` が定義されていなければ、`#[else]` のついたコードブロック"
-"が有効になり、`#[ifndef(DEFINE_A)]` と `#[elsif(DEFINE_B)]` のついたコードブロック（コードブロックaとb）は無効になります。"
+"`DEFINE_A` と `DEFINE_B` が定義されていなければ、`#[else]` のついたコードブ"
+"ロックが有効になり、`#[ifndef(DEFINE_A)]` と `#[elsif(DEFINE_B)]` のついた"
+"コードブロック（コードブロックaとb）は無効になります。"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:47
 msgid "For the sequence of `ifndef`/`else` attributes"
-msgstr ""
-"`ifndef`/`else` の順に宣言されたアトリビュート"
+msgstr "`ifndef`/`else` の順に宣言されたアトリビュート"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:48
 msgid ""
@@ -3332,8 +3335,9 @@ msgid ""
 "(code block d) is enabled, and the code block with `#[else]` (code block e) "
 "is disabled."
 msgstr ""
-"もし `DEFINE_D` が定義されていなければ、`#[ifndef(DEFINE_D)]` のついたコードブロック（コードブロックd）"
-"が有効になり、`#[else]` のついたコードブロック（コードブロックe）は無効になります。"
+"もし `DEFINE_D` が定義されていなければ、`#[ifndef(DEFINE_D)]` のついたコード"
+"ブロック（コードブロックd）が有効になり、`#[else]` のついたコードブロック"
+"（コードブロックe）は無効になります。"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:49
 msgid ""
@@ -3341,8 +3345,9 @@ msgid ""
 "enabled, and the code block with `#[ifndef(DEFINE_D)]` (code block d) is "
 "disabled."
 msgstr ""
-"`DEFINE_D` が定義されていれば、`#[else]` のついたコードブロック（コードブロックe）"
-"が有効になり、`#[ifndef(DEFINE_D)]` のついたコードブロック（コードブロックd）は無効になります。"
+"`DEFINE_D` が定義されていれば、`#[else]` のついたコードブロック（コードブロッ"
+"クe）が有効になり、`#[ifndef(DEFINE_D)]` のついたコードブロック（コードブロッ"
+"クd）は無効になります。"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:51
 msgid ""
@@ -3419,14 +3424,14 @@ msgid ""
 "the top module includes no such ports. This attribute is helpful for such "
 "case. The following argument is supported."
 msgstr ""
-"`expand` アトリビュートが設定されているとき、`modport` のような構造化されたポートは"
-"Verilog のポートに展開されます。合成ツールによってはトップモジュールがそのようなポートを含んではならない場合があり、"
-"そのような場合にこのアトリビュートを使うことができます。使用可能な引数は以下の通りです。"
+"`expand` アトリビュートが設定されているとき、`modport` のような構造化された"
+"ポートはVerilog のポートに展開されます。合成ツールによってはトップモジュール"
+"がそのようなポートを含んではならない場合があり、そのような場合にこのアトリ"
+"ビュートを使うことができます。使用可能な引数は以下の通りです。"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:88
 msgid "`modport`: Expand ports of which direction is `modport`"
-msgstr ""
-"`modport`: ポート方向が `modport` のポートを展開する"
+msgstr "`modport`: ポート方向が `modport` のポートを展開する"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:130
 msgid "`align` Attribute"
@@ -3790,7 +3795,8 @@ msgid ""
 "In addition, functions specified with `import` keyword can be used via the "
 "modport."
 msgstr ""
-"さらに、`import` キーワードを付けて指定された関数は modport を通して呼び出すことができます。"
+"さらに、`import` キーワードを付けて指定された関数は modport を通して呼び出す"
+"ことができます。"
 
 #: src/05_language_reference/08_interface.md:55
 msgid "Default members of modport"
@@ -4124,9 +4130,9 @@ msgid ""
 "TypeName`. Generic bound represents what value can be passed to the generic "
 "parameter. The available generic bounds are below:"
 msgstr ""
-"各ジェネリックパラメータにはコロンの後に `T: TypeName` のようなジェネリック境界"
-"が必要です。ジェネリック境界はどのような値をそのパラメータに渡すことができる"
-"かを示します。使用可能なジェネリック境界は以下の通りです。"
+"各ジェネリックパラメータにはコロンの後に `T: TypeName` のようなジェネリック境"
+"界が必要です。ジェネリック境界はどのような値をそのパラメータに渡すことができ"
+"るかを示します。使用可能なジェネリック境界は以下の通りです。"
 
 #: src/05_language_reference/14_generics.md:20
 msgid "`type` : means arbitrary type can be passed"
@@ -4138,8 +4144,7 @@ msgstr "`inst: X` : `X` のインスタンス"
 
 #: src/05_language_reference/14_generics.md:22
 msgid "named prototype, user defined data type or fixed data type"
-msgstr ""
-"名前付きプロトタイプ、ユーザ定義型、組み込みのデータ型"
+msgstr "名前付きプロトタイプ、ユーザ定義型、組み込みのデータ型"
 
 #: src/05_language_reference/14_generics.md:24
 msgid ""
@@ -4301,8 +4306,8 @@ msgid ""
 "prototype and package prototype are supported."
 msgstr ""
 "プロトタイプは特別なジェネリック境界で、ジェネリックパラメータに渡せるプロト"
-"タイプを示します。現在はモジュールプロトタイプ、インターフェースプロトタイプ、"
-"パッケージプロトタイプがサポートされています。"
+"タイプを示します。現在はモジュールプロトタイプ、インターフェースプロトタイ"
+"プ、パッケージプロトタイプがサポートされています。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:6
 msgid "Module Prototype"
@@ -4342,9 +4347,10 @@ msgid ""
 "`master`. `BUS_IF` is restricted by `ProtoA` is guaranteed to have the above "
 "members, so they can be referred."
 msgstr ""
-"以下の例では、`ProtoA` が定数 `A` と変数 `raedy`/`valid`/`data`、関数 `ack`、modport `master`"
-"を持つインターフェースプロトタイプです。`BUS_IF` は `ProtoA` で制約されているので、"
-"それらのメンバーを持つことが保証されており、参照することができます。"
+"以下の例では、`ProtoA` が定数 `A` と変数 `raedy`/`valid`/`data`、関数 `ack`、"
+"modport `master`を持つインターフェースプロトタイプです。`BUS_IF` は `ProtoA` "
+"で制約されているので、それらのメンバーを持つことが保証されており、参照するこ"
+"とができます。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:110
 msgid "Package Prototype"
@@ -4369,13 +4375,13 @@ msgid ""
 "Following protoype items can be declaraed within module, interface and "
 "package protoype declarations."
 msgstr ""
-"以下の要素はモジュール、インターフェース、パッケージのプロトタイプ内で宣言することができます。"
+"以下の要素はモジュール、インターフェース、パッケージのプロトタイプ内で宣言す"
+"ることができます。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:135
 msgid ""
 "The following table shows which prototypes can have which prototype items."
-msgstr ""
-"テーブルにどのプロトタイプがどの要素を持てるかをまとめます。"
+msgstr "テーブルにどのプロトタイプがどの要素を持てるかをまとめます。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:137
 #: src/05_language_reference/14_generics/02_prototype.md:154
@@ -4407,49 +4413,52 @@ msgstr "v"
 msgid ""
 "Parameter prototype specifies identifier name, data type and default value "
 "of a parameter."
-msgstr ""
-"パラメータプロトタイプは識別子とデータ型、デフォルト値を指定します。"
+msgstr "パラメータプロトタイプは識別子とデータ型、デフォルト値を指定します。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:156
 msgid ""
 "Port prototype specifies identifier name, direction and data type of a port."
-msgstr ""
-"ポートプロトタイプは識別子と方向、データ型を指定します。"
+msgstr "ポートプロトタイプは識別子と方向、データ型を指定します。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:167
 msgid ""
 "Const prototype specify identifier name and data type of a constant. It can "
 "be used as a placeholder of a generic parameter."
 msgstr ""
-"定数プロトタイプは識別子とデータ型を指定します。ジェネリックなパラメータのプレースホルダとして使用できます。"
+"定数プロトタイプは識別子とデータ型を指定します。ジェネリックなパラメータのプ"
+"レースホルダとして使用できます。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:180
 msgid ""
 "Variable prototype specifies identifier name and data type of a variable. It "
 "can be used for both of `var` and `let` declarations."
 msgstr ""
-"変数プロトタイプは識別子とデータ型を指定します。これらは `var` 及び `let` 宣言で使用することができます。"
+"変数プロトタイプは識別子とデータ型を指定します。これらは `var` 及び `let` 宣"
+"言で使用することができます。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:195
 msgid ""
 "Typedef prototype specifies identifier name of a type alias. It can be used "
 "as a placeholder for a generic parameter."
 msgstr ""
-"Typedefプロトタイプは型エイリアスの識別子を指定します。ジェネリックなパラメータのプレースホルダとして使用できます。"
+"Typedefプロトタイプは型エイリアスの識別子を指定します。ジェネリックなパラメー"
+"タのプレースホルダとして使用できます。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:208
 msgid ""
 "Struct, Enum and Union prototypes specify identifier name of a struct/enum/"
 "union and identifier name and data type of each members."
 msgstr ""
-"構造体、列挙型、ユニオンプロトタイプは型の識別子と各メンバーの識別子、データ型を指定します。"
+"構造体、列挙型、ユニオンプロトタイプは型の識別子と各メンバーの識別子、データ"
+"型を指定します。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:231
 msgid ""
 "Function prototype specifies identifier name and return data type of a "
 "function, and direction and data type of each arguments."
 msgstr ""
-"関数プロトタイプは識別子と戻り値のデータ型、引数の方向とデータ型を指定します。"
+"関数プロトタイプは識別子と戻り値のデータ型、引数の方向とデータ型を指定しま"
+"す。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:239
 msgid "Alias Module/Interface/Package"
@@ -4457,20 +4466,21 @@ msgstr "モジュール/インターフェース/パッケージ エイリアス
 
 #: src/05_language_reference/14_generics/02_prototype.md:241
 msgid ""
-"Module alias prototype, interface prototype and package protoype specify "
-"identifier name and prototype of a module/interface/pacakge alias. Type of "
-"an actual alias is restricted by the given prototype."
+"Module alias prototype, interface alias prototype and package alias protoype "
+"specify identifier name and prototype of a module/interface/pacakge alias. "
+"Type of an actual alias is restricted by the given prototype."
 msgstr ""
-"モジュール、インターフェース、パッケージのエイリアス プロトタイプは識別子と"
-"モジュール、インターフェース、パッケージのプロトタイプを指定します。"
-"そのエイリアスの実際の型は与えられたプロトタイプに制約されます。"
+"モジュール、インターフェース、パッケージのエイリアス プロトタイプは識別子とモ"
+"ジュール、インターフェース、パッケージのプロトタイプを指定します。そのエイリ"
+"アスの実際の型は与えられたプロトタイプに制約されます。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:263
 msgid ""
 "Modport prototype specifis identifier name of a modport, and identifier name "
 "and direction of each membres."
 msgstr ""
-"modport プロトタイプはmodport の識別子と各メンバーの識別子と方向を指定します。"
+"modport プロトタイプはmodport の識別子と各メンバーの識別子と方向を指定しま"
+"す。"
 
 #: src/05_language_reference/15_clock_domain_annotation.md:3
 msgid ""
@@ -9365,7 +9375,8 @@ msgid ""
 "This error is reported when `struct`, `enum` and `union` data types are "
 "defined within interface declarations."
 msgstr ""
-"このエラーは `struct`、`enum`、`union`のデータ型がインターフェース宣言内で定義されたことを示します。"
+"このエラーは `struct`、`enum`、`union`のデータ型がインターフェース宣言内で定"
+"義されたことを示します。"
 
 #: src/07_appendix/02_semantic_error.md:25
 msgid "mismatch_arity"
