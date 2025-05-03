@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-05-01T10:24:34+09:00\n"
+"POT-Creation-Date: 2025-05-02T14:48:38+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -41,6 +41,7 @@ msgstr "コード例"
 
 #: src/SUMMARY.md:9 src/SUMMARY.md:58 src/04_code_examples/01_module.md:1
 #: src/05_language_reference/07_module.md:1
+#: src/05_language_reference/14_generics/02_prototype.md:139
 msgid "Module"
 msgstr "モジュール"
 
@@ -52,11 +53,13 @@ msgstr "インスタンス"
 
 #: src/SUMMARY.md:11 src/SUMMARY.md:59 src/04_code_examples/03_interface.md:1
 #: src/05_language_reference/08_interface.md:1
+#: src/05_language_reference/14_generics/02_prototype.md:140
 msgid "Interface"
 msgstr "インターフェース"
 
 #: src/SUMMARY.md:12 src/SUMMARY.md:60 src/04_code_examples/04_package.md:1
 #: src/05_language_reference/09_package.md:1
+#: src/05_language_reference/14_generics/02_prototype.md:141
 msgid "Package"
 msgstr "パッケージ"
 
@@ -193,10 +196,14 @@ msgid "Declaration"
 msgstr "宣言"
 
 #: src/SUMMARY.md:45 src/05_language_reference/06_declaration/01_variable.md:1
+#: src/05_language_reference/14_generics/02_prototype.md:137
+#: src/05_language_reference/14_generics/02_prototype.md:178
 msgid "Variable"
 msgstr "変数"
 
 #: src/SUMMARY.md:46 src/05_language_reference/06_declaration/02_parameter.md:1
+#: src/05_language_reference/14_generics/02_prototype.md:137
+#: src/05_language_reference/14_generics/02_prototype.md:143
 msgid "Parameter"
 msgstr "パラメータ"
 
@@ -214,6 +221,8 @@ msgid "Assign"
 msgstr "assign"
 
 #: src/SUMMARY.md:50 src/05_language_reference/06_declaration/06_function.md:1
+#: src/05_language_reference/14_generics/02_prototype.md:137
+#: src/05_language_reference/14_generics/02_prototype.md:229
 msgid "Function"
 msgstr "関数"
 
@@ -272,6 +281,7 @@ msgid "Default Parameter"
 msgstr "デフォルトパラメータ"
 
 #: src/SUMMARY.md:67 src/05_language_reference/14_generics/02_prototype.md:1
+#: src/05_language_reference/14_generics/02_prototype.md:137
 msgid "Prototype"
 msgstr "プロトタイプ"
 
@@ -289,7 +299,8 @@ msgstr "Unsafe CDC"
 msgid "Standard Library"
 msgstr "標準ライブラリ"
 
-#: src/SUMMARY.md:71 src/05_language_reference/17_alias.md:1
+#: src/SUMMARY.md:71 src/05_language_reference/14_generics/02_prototype.md:137
+#: src/05_language_reference/17_alias.md:1
 msgid "Alias"
 msgstr "エイリアス"
 
@@ -1151,9 +1162,10 @@ msgid ""
 "$ cd hello\n"
 "$ tree\n"
 ".\n"
-"`-- Veryl.toml\n"
+"├── src\n"
+"└── Veryl.toml\n"
 "\n"
-"0 directories, 1 file\n"
+"1 directory, 1 file\n"
 "```"
 msgstr ""
 "```\n"
@@ -1162,30 +1174,37 @@ msgstr ""
 "$ cd hello\n"
 "$ tree\n"
 ".\n"
-"`-- Veryl.toml\n"
+"├── src\n"
+"└── Veryl.toml\n"
 "\n"
-"0 directories, 1 file\n"
+"1 directory, 1 file\n"
 "```"
 
-#: src/03_getting_started/02_hello_world.md:25
+#: src/03_getting_started/02_hello_world.md:26
 msgid "`Veryl.toml` is the project configuration."
 msgstr "`Veryl.toml` はプロジェクトの設定ファイルです。"
 
-#: src/03_getting_started/02_hello_world.md:27
+#: src/03_getting_started/02_hello_world.md:28
 msgid ""
 "```toml\n"
 "[project]\n"
 "name = \"hello\"\n"
 "version = \"0.1.0\"\n"
+"[build]\n"
+"source = \"src\"\n"
+"target = {type = \"directory\", path = \"target\"}\n"
 "```"
 msgstr ""
 "```toml\n"
 "[project]\n"
 "name = \"hello\"\n"
 "version = \"0.1.0\"\n"
+"[build]\n"
+"source = \"src\"\n"
+"target = {type = \"directory\", path = \"target\"}\n"
 "```"
 
-#: src/03_getting_started/02_hello_world.md:33
+#: src/03_getting_started/02_hello_world.md:37
 msgid ""
 "The description of all configuration is [here]"
 "(../06_development_environment/01_project_configuration.md)."
@@ -1193,11 +1212,11 @@ msgstr ""
 "全設定の説明は[こちら]"
 "(../06_development_environment/01_project_configuration.md)。"
 
-#: src/03_getting_started/02_hello_world.md:35
+#: src/03_getting_started/02_hello_world.md:39
 msgid "Write Code"
 msgstr "コードを書く"
 
-#: src/03_getting_started/02_hello_world.md:37
+#: src/03_getting_started/02_hello_world.md:41
 msgid ""
 "You can add source codes at an arbitrary position in the project directory. "
 "This is because Veryl project can be independent or integrated to other "
@@ -1208,11 +1227,11 @@ msgstr ""
 "SystemVerilog プロジェクトに組み込まれている場合もあるからです。Veryl のソー"
 "スコードの拡張子は `.veryl` です。"
 
-#: src/03_getting_started/02_hello_world.md:41
+#: src/03_getting_started/02_hello_world.md:45
 msgid "For example, put the following code to `src/hello.veryl`."
 msgstr "例えば以下のコードを `src/hello.veryl` に書いてみましょう。"
 
-#: src/03_getting_started/02_hello_world.md:43
+#: src/03_getting_started/02_hello_world.md:47
 #: src/05_language_reference/05_statement/02_function_call.md:6
 msgid ""
 "```veryl,playground\n"
@@ -1231,7 +1250,7 @@ msgstr ""
 "}\n"
 "```"
 
-#: src/03_getting_started/02_hello_world.md:61
+#: src/03_getting_started/02_hello_world.md:65
 msgid ""
 "Note: Some source codes in the book have play button \"▶\" which will be "
 "appeared when mouse cursor is hovered at the code. If you click the button, "
@@ -1243,15 +1262,15 @@ msgstr ""
 "SystemVerilog のコードが現れます。`module ModuleA` のコードのボタンを押してみ"
 "ましょう。"
 
-#: src/03_getting_started/02_hello_world.md:64
+#: src/03_getting_started/02_hello_world.md:68
 msgid "Build Code"
 msgstr "ビルドする"
 
-#: src/03_getting_started/02_hello_world.md:66
+#: src/03_getting_started/02_hello_world.md:70
 msgid "You can generate a SystemVerilog code by `veryl build`."
 msgstr "`veryl build` コマンドで SystemVerilog のソースコードを生成できます。"
 
-#: src/03_getting_started/02_hello_world.md:84
+#: src/03_getting_started/02_hello_world.md:91
 msgid ""
 "By default, SystemVerilog code will be generated at the same directory as "
 "Veryl code. The generated code is `src/hello.sv`."
@@ -1259,7 +1278,7 @@ msgstr ""
 "デフォルトでは SystemVerilog のコードは Veryl のコードと同じディレクトリに生"
 "成されます。つまり `src/hello.sv` です。"
 
-#: src/03_getting_started/02_hello_world.md:87
+#: src/03_getting_started/02_hello_world.md:94
 msgid ""
 "```verilog\n"
 "module hello_ModuleA;\n"
@@ -1267,6 +1286,7 @@ msgid ""
 "        $display(\"Hello, world!\");\n"
 "    end\n"
 "endmodule\n"
+"//# sourceMappingURL=hello.sv.map\n"
 "```"
 msgstr ""
 "```verilog\n"
@@ -1275,9 +1295,10 @@ msgstr ""
 "        $display(\"Hello, world!\");\n"
 "    end\n"
 "endmodule\n"
+"//# sourceMappingURL=hello.sv.map\n"
 "```"
 
-#: src/03_getting_started/02_hello_world.md:95
+#: src/03_getting_started/02_hello_world.md:103
 msgid ""
 "Additionally, `hello.f` which is the filelist of generated codes will be "
 "generated. You can use it for SystemVerilog compiler. The following example "
@@ -1287,11 +1308,11 @@ msgstr ""
 "SystemVerilog コンパイラで使用できます。[Verilator](https://www.veripool.org/"
 "verilator/) で使用するには以下のようにします。"
 
-#: src/03_getting_started/02_hello_world.md:103
+#: src/03_getting_started/02_hello_world.md:111
 msgid "Clean up the Generated Code"
 msgstr "生成されたコードを片づける"
 
-#: src/03_getting_started/02_hello_world.md:105
+#: src/03_getting_started/02_hello_world.md:113
 msgid "The generated code can be cleaned up by `veryl clean`."
 msgstr "生成されたコードは `veryl clean` コマンドで削除することができます。"
 
@@ -2302,11 +2323,11 @@ msgstr ""
 "`struct` は複合データ型です。いくつかのフィールドを持つことができ、`.` 演算子"
 "を通してアクセスできます。"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:24
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:28
 msgid "Enum"
 msgstr "列挙型"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:26
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:30
 msgid ""
 "`enum` is enumerable type. It has some named variant, and the value of "
 "`enum` can be set to the one of them. The variant name can be specified by "
@@ -2320,7 +2341,7 @@ msgstr ""
 "持ち、`=` で指定することができます。指定されなかった場合は自動的に割り当てら"
 "れます。"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:47
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:51
 msgid ""
 "If the type of `enum` is omitted, it will be infered from the variants "
 "automatically."
@@ -2328,11 +2349,11 @@ msgstr ""
 "`enum` の型が省略されている場合、適切なサイズの型がバリアントから自動的に推定"
 "されます。"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:59
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:67
 msgid "Enum Encoding"
 msgstr "列挙型エンコーディング"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:61
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:69
 msgid ""
 "By default, the value of each variant is assigned sequentially if it is "
 "omitted. If you want to specify value encoding, `#[enum_encoding]` attribute "
@@ -2342,23 +2363,23 @@ msgstr ""
 "の割り当てのエンコードを指定したい場合は、`#[enum_encoding]` アトリビュートを"
 "指定できます。使用できるエンコードは以下の通りです。"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:65
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:73
 msgid "`sequential`"
 msgstr "`sequential`"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:66
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:74
 msgid "`onehot`"
 msgstr "`onehot`"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:67
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:75
 msgid "`gray`"
 msgstr "`gray`"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:88
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:96
 msgid "Union"
 msgstr "ユニオン"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:90
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:98
 msgid ""
 "A Veryl `union` is a packed, untagged sum type and is transpiled to "
 "SystemVerilog's `packed union`. Each  union variant should have the same "
@@ -2368,11 +2389,13 @@ msgstr ""
 "にトランスパイルされます。ユニオンのそれぞれのバリアントの幅は同じでなければ"
 "なりません。"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:106
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:118
+#: src/05_language_reference/14_generics/02_prototype.md:137
+#: src/05_language_reference/14_generics/02_prototype.md:193
 msgid "Typedef"
 msgstr "型定義"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:108
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:120
 msgid ""
 "The `type` keyword can be used to define a type alias to scalar or array "
 "types."
@@ -3135,6 +3158,15 @@ msgstr ""
 msgid "If function doesn't have a return value, `->` can be omitted."
 msgstr "関数が戻り値を持たない場合、`->` は省略できます。"
 
+#: src/05_language_reference/06_declaration/06_function.md:31
+msgid ""
+"Interface modports can be used as type of arguments. The given interface "
+"modports will be expanded into each Verilog ports when emitting "
+"SystemVerilog RTL."
+msgstr ""
+"インターフェースのmodportは引数の型としても使用できます。"
+"与えられたmodportはSystemVerilog生成時にVerilogポートに展開されます。"
+
 #: src/05_language_reference/06_declaration/07_initial_final.md:3
 msgid ""
 "Statements in `initial` are executed at the beginning of simulation, `final` "
@@ -3235,26 +3267,172 @@ msgid "`missing_port`"
 msgstr "missing_port"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:36
-msgid "`ifdef`/`ifndef` Attribute"
-msgstr "`ifdef`/`ifndef` アトリビュート"
+msgid "`ifdef`/`ifndef`/`elsif`/`else` Attribute"
+msgstr "`ifdef`/`ifndef`/`elsif`/`else` アトリビュート"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:38
 msgid ""
-"`ifdef` and `ifndef` attribute is used to control whether the annotated code "
-"block is enabled by defined value. If `DEFINE_A` is defined, the code block "
-"with `#[ifdef(DEFINE_A)]` is enabled, and the code block with "
-"`#[ifndef(DEFINE_A)]` is disabled."
+"`ifdef` and `ifndef` attributes are used to control whether the annotated "
+"code block is enabled by defined value. In addition, the code block with "
+"`elsif` or `else` attributes is optional and a code block with `ifdef` or "
+"`ifndef` attributes can be followed with that code block."
 msgstr ""
 "`ifdef` と `ifndef` アトリビュートは定義された値によってコードブロックを有効"
-"にするかどうかを制御するために使用することができます。もし `DEFINE_A` が定義"
-"されていれば、`#[ifdef(DEFINE_A)]` のついたコードブロックは有効に、"
-"`#[ifndef(DEFINE_A)]` のついたコードブロックは無効になります。"
+"にするかどうかを制御するために使用することができます。"
+"さらに、`ifdef` と `ifndef` のついたコードブロックに続けて"
+"オプションとして `elsif` と `else` アトリビュートの付いたブロックを書くこともできます。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:55
+#: src/05_language_reference/06_declaration/08_attribute.md:41
+msgid ""
+"The following example shows a usage of these attributes and which code "
+"blocks will be enabled according to defined values."
+msgstr ""
+"以下の例はこれらのアトリビュートの使用方法と、各コードブロックが定義された値によって有効になる様子を示しています。"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:43
+msgid "For the sequence of `ifdef`/`elsif`/`else` attributes"
+msgstr ""
+"`ifdef`/`elsif`/`else` の順に宣言されたアトリビュート"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:44
+msgid ""
+"If `DEFINE_A` is defined, the code block with `#[ifdef(DEFINE_A)]` (code "
+"block a) is enbaled, and code blocks with `#[ifndef(DEFINE_B)]` and "
+"`#[else]` (code block b/c) are disabled."
+msgstr ""
+"もし `DEFINE_A` が定義されていれば、`#[ifdef(DEFINE_A)]` のついたコードブロック（コードブロックa）"
+"が有効になり、`#[ifndef(DEFINE_B)]` と `#[else]` のついたコードブロック（コードブロックbとc）は無効になります。"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:45
+msgid ""
+"If `DEFINE_A` is not defined and `DEFINE_B` is defiend, the code block with "
+"`#[ifndef(DEFINE_B)]` (code block b) is enabled, and code blocks with "
+"`#[ifdef(DEFINE_A)]` and `#[else]` (code block a/c) are disabled."
+msgstr ""
+"`DEFINE_A` が定義されておらず、 `DEFINE_B` が定義されていれば、`#[elfif(DEFINE_B)]` のついたコードブロック（コードブロックb）"
+"が有効になり、`#[ifndef(DEFINE_A)]` と `#[else]` のついたコードブロック（コードブロックaとc）は無効になります。"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:46
+msgid ""
+"If `DEFINE_A` and `DEFINE_B` are not defined the code block with `#[else]` "
+"is enabled, and code blocks with `#[ifdef(DEFINE_A)]` and "
+"`#[elsif(DEFINE_B)]` (code block a/b) are disabled."
+msgstr ""
+"`DEFINE_A` と `DEFINE_B` が定義されていなければ、`#[else]` のついたコードブロック"
+"が有効になり、`#[ifndef(DEFINE_A)]` と `#[elsif(DEFINE_B)]` のついたコードブロック（コードブロックaとb）は無効になります。"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:47
+msgid "For the sequence of `ifndef`/`else` attributes"
+msgstr ""
+"`ifndef`/`else` の順に宣言されたアトリビュート"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:48
+msgid ""
+"If `DEFINE_D` is not defined, the code block with `#[ifndef(DEFINE_D)]` "
+"(code block d) is enabled, and the code block with `#[else]` (code block e) "
+"is disabled."
+msgstr ""
+"もし `DEFINE_D` が定義されていなければ、`#[ifndef(DEFINE_D)]` のついたコードブロック（コードブロックd）"
+"が有効になり、`#[else]` のついたコードブロック（コードブロックe）は無効になります。"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:49
+msgid ""
+"If `DEFINE_D` is defined, the code block with `#[else]` (code block e) is "
+"enabled, and the code block with `#[ifndef(DEFINE_D)]` (code block d) is "
+"disabled."
+msgstr ""
+"`DEFINE_D` が定義されていれば、`#[else]` のついたコードブロック（コードブロックe）"
+"が有効になり、`#[ifndef(DEFINE_D)]` のついたコードブロック（コードブロックd）は無効になります。"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:51
+msgid ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    #[ifdef(DEFINE_A)]\n"
+"    {\n"
+"        // code block a\n"
+"        let _a: logic<10> = 1;\n"
+"    }\n"
+"    #[elsif(DEFINE_B)]\n"
+"    {\n"
+"        // code block b\n"
+"        let _a: logic<10> = 2;\n"
+"    }\n"
+"    #[else]\n"
+"    {\n"
+"        // code block c\n"
+"        let _a: logic<10> = 3;\n"
+"    }\n"
+"\n"
+"    #[ifndef(DEFINE_D)]\n"
+"    {\n"
+"        // code block d\n"
+"        let _b: logic<10> = 4;\n"
+"    }\n"
+"    #[else]\n"
+"    {\n"
+"        // code block e\n"
+"        let _b: logic<10> = 5;\n"
+"    }\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    #[ifdef(DEFINE_A)]\n"
+"    {\n"
+"        // コードブロック a\n"
+"        let _a: logic<10> = 1;\n"
+"    }\n"
+"    #[elsif(DEFINE_B)]\n"
+"    {\n"
+"        // コードブロック b\n"
+"        let _a: logic<10> = 2;\n"
+"    }\n"
+"    #[else]\n"
+"    {\n"
+"        // コードブロック c\n"
+"        let _a: logic<10> = 3;\n"
+"    }\n"
+"\n"
+"    #[ifndef(DEFINE_D)]\n"
+"    {\n"
+"        // コードブロック d\n"
+"        let _b: logic<10> = 4;\n"
+"    }\n"
+"    #[else]\n"
+"    {\n"
+"        // コードブロック e\n"
+"        let _b: logic<10> = 5;\n"
+"    }\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:82
+msgid "`expand` Attribute"
+msgstr "`expand` アトリビュート"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:84
+msgid ""
+"If `expand` attribute is set, structured ports such as `modport` are "
+"expanded into each Verilog ports. Synthesis tools may require that ports of "
+"the top module includes no such ports. This attribute is helpful for such "
+"case. The following argument is supported."
+msgstr ""
+"`expand` アトリビュートが設定されているとき、`modport` のような構造化されたポートは"
+"Verilog のポートに展開されます。合成ツールによってはトップモジュールがそのようなポートを含んではならない場合があり、"
+"そのような場合にこのアトリビュートを使うことができます。使用可能な引数は以下の通りです。"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:88
+msgid "`modport`: Expand ports of which direction is `modport`"
+msgstr ""
+"`modport`: ポート方向が `modport` のポートを展開する"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:130
 msgid "`align` Attribute"
 msgstr "`align` アトリビュート"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:57
+#: src/05_language_reference/06_declaration/08_attribute.md:132
 msgid ""
 "`align` attribute is used to control vertical alignment by formatter. If "
 "`number` is specified as an argument of `align` attribute, all numbers are "
@@ -3264,11 +3442,11 @@ msgstr ""
 "す。`number` が `align` の引数として指定されたとき、全ての数値は整列されま"
 "す。`identifier` も使用可能です。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:82
+#: src/05_language_reference/06_declaration/08_attribute.md:157
 msgid "`fmt` Attribute"
 msgstr "`fmt` アトリビュート"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:84
+#: src/05_language_reference/06_declaration/08_attribute.md:159
 msgid ""
 "`fmt` attribute is used to control formatiing way. The following arguments "
 "are supported:"
@@ -3276,7 +3454,7 @@ msgstr ""
 "`fmt` アトリビュートはフォーマットの方法を制御することができます。以下の引数"
 "がサポートされています。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:87
+#: src/05_language_reference/06_declaration/08_attribute.md:162
 msgid "`compact`: compact formatting without newlines"
 msgstr "`compact`: 改行なしのコンパクトなフォーマット"
 
@@ -3608,10 +3786,17 @@ msgstr ""
 "ジュールのポート宣言で、ポートを束ねて接続するために使うことができます。"
 
 #: src/05_language_reference/08_interface.md:31
+msgid ""
+"In addition, functions specified with `import` keyword can be used via the "
+"modport."
+msgstr ""
+"さらに、`import` キーワードを付けて指定された関数は modport を通して呼び出すことができます。"
+
+#: src/05_language_reference/08_interface.md:55
 msgid "Default members of modport"
 msgstr "modportのデフォルトメンバー"
 
-#: src/05_language_reference/08_interface.md:33
+#: src/05_language_reference/08_interface.md:57
 msgid ""
 "Instead of specifing all members of modport, default members can be "
 "specified like below:"
@@ -3619,26 +3804,26 @@ msgstr ""
 "modportの全てのメンバーを指定する代わりに、以下のようにデフォルトメンバーを指"
 "定することができます。"
 
-#: src/05_language_reference/08_interface.md:35
+#: src/05_language_reference/08_interface.md:59
 msgid "`..input`: all variables in the interface as `input`"
 msgstr "`..input`: インターフェース内の全ての変数を `input` として追加"
 
-#: src/05_language_reference/08_interface.md:36
+#: src/05_language_reference/08_interface.md:60
 msgid "`..output`: all variables in the interface as `output`"
 msgstr "`..output`: インターフェース内の全ての変数を `output` として追加"
 
-#: src/05_language_reference/08_interface.md:37
+#: src/05_language_reference/08_interface.md:61
 msgid "`..same(modport_name)`: the same variables as `modport_name`"
 msgstr "`..same(modport_name)`: `modport_name` と同じ変数を同じ方向で追加"
 
-#: src/05_language_reference/08_interface.md:38
+#: src/05_language_reference/08_interface.md:62
 msgid ""
 "`..converse(modport_name)`: the same variables as `modport_name`, but all "
 "direction is converse"
 msgstr ""
 "`..converse(modport_name)`: `modport_name` と同じ変数を、方向を逆にして追加"
 
-#: src/05_language_reference/08_interface.md:40
+#: src/05_language_reference/08_interface.md:64
 msgid "Specifing default members can be used with normal explicit members."
 msgstr ""
 "デフォルトメンバーの指定は通常の明示的なメンバーと一緒に使うこともできます。"
@@ -3936,30 +4121,27 @@ msgstr ""
 #: src/05_language_reference/14_generics.md:16
 msgid ""
 "Each generic parameter should have generic bound after colon like `T: "
-"const`. Generic bound represents what value can be passed to the generic "
+"TypeName`. Generic bound represents what value can be passed to the generic "
 "parameter. The available generic bounds are below:"
 msgstr ""
-"各ジェネリックパラメータにはコロンの後に `T: const` のようなジェネリック境界"
+"各ジェネリックパラメータにはコロンの後に `T: TypeName` のようなジェネリック境界"
 "が必要です。ジェネリック境界はどのような値をそのパラメータに渡すことができる"
 "かを示します。使用可能なジェネリック境界は以下の通りです。"
 
 #: src/05_language_reference/14_generics.md:20
-msgid "`const`: means constant value can be passed"
-msgstr "`const`: 定数値を渡すことができる"
-
-#: src/05_language_reference/14_generics.md:21
 msgid "`type` : means arbitrary type can be passed"
 msgstr "`type`: 任意の型を渡すことができる"
 
-#: src/05_language_reference/14_generics.md:22
+#: src/05_language_reference/14_generics.md:21
 msgid "`inst: X` : instance of `X`"
 msgstr "`inst: X` : `X` のインスタンス"
 
-#: src/05_language_reference/14_generics.md:23
-msgid "named prototype"
-msgstr "名前付きプロトタイプ"
+#: src/05_language_reference/14_generics.md:22
+msgid "named prototype, user defined data type or fixed data type"
+msgstr ""
+"名前付きプロトタイプ、ユーザ定義型、組み込みのデータ型"
 
-#: src/05_language_reference/14_generics.md:25
+#: src/05_language_reference/14_generics.md:24
 msgid ""
 "Named prototype is a special generic bound. See [Prototype]"
 "(14_generics/02_prototype.md) for details."
@@ -3967,7 +4149,7 @@ msgstr ""
 "名前付きプロトタイプは特別なジェネリック境界です。詳細は [プロトタイプ]"
 "(14_generics/02_prototype.md) を参照してください。"
 
-#: src/05_language_reference/14_generics.md:27
+#: src/05_language_reference/14_generics.md:26
 msgid ""
 "At the usage of generics, actual parameters can be given through `::<>`. As "
 "the actual parameters, numeric literal and identifier concatenated by `::` "
@@ -3977,7 +4159,7 @@ msgstr ""
 "メータとしては数値リテラルと `::` で連結された識別子を使用することができま"
 "す。"
 
-#: src/05_language_reference/14_generics.md:30
+#: src/05_language_reference/14_generics.md:29
 msgid ""
 "Additionally, the actual parameters should be accessible at the position of "
 "the generics declaration. For example, module names can be used as actual "
@@ -3992,23 +4174,23 @@ msgstr ""
 "ません。これはローカルパラメータがジェネリクス定義位置からは参照できない場合"
 "に発生します。"
 
-#: src/05_language_reference/14_generics.md:35
+#: src/05_language_reference/14_generics.md:34
 msgid "Generic Function"
 msgstr "ジェネリック関数"
 
-#: src/05_language_reference/14_generics.md:50
+#: src/05_language_reference/14_generics.md:49
 msgid "Generic Module/Interface"
 msgstr "ジェネリックモジュール/インターフェース"
 
-#: src/05_language_reference/14_generics.md:68
+#: src/05_language_reference/14_generics.md:67
 msgid "Generic Package"
 msgstr "ジェネリックパッケージ"
 
-#: src/05_language_reference/14_generics.md:81
+#: src/05_language_reference/14_generics.md:80
 msgid "Generic Struct"
 msgstr "ジェネリック構造体"
 
-#: src/05_language_reference/14_generics.md:83
+#: src/05_language_reference/14_generics.md:82
 msgid ""
 "```veryl,playground\n"
 "package PackageA {\n"
@@ -4115,12 +4297,12 @@ msgstr ""
 #: src/05_language_reference/14_generics/02_prototype.md:3
 msgid ""
 "Prototype is a special generic bound. It represents prototype which can be "
-"passed to the generic parameter. Currently module prototype and package "
-"prototype are supported."
+"passed to the generic parameter. Currently module prototype, interface "
+"prototype and package prototype are supported."
 msgstr ""
 "プロトタイプは特別なジェネリック境界で、ジェネリックパラメータに渡せるプロト"
-"タイプを示します。現在はモジュールプロトタイプとパッケージプロトタイプがサ"
-"ポートされています。"
+"タイプを示します。現在はモジュールプロトタイプ、インターフェースプロトタイプ、"
+"パッケージプロトタイプがサポートされています。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:6
 msgid "Module Prototype"
@@ -4150,10 +4332,25 @@ msgstr ""
 "できるようになります。"
 
 #: src/05_language_reference/14_generics/02_prototype.md:53
+msgid "Interface Protype"
+msgstr "インターフェースプロトタイプ"
+
+#: src/05_language_reference/14_generics/02_prototype.md:55
+msgid ""
+"In the following exmaple, `ProtoA` is a interface prototype which has "
+"constant `A`, `raedy`/`valid`/`data` variables, function `ack` and mopdort "
+"`master`. `BUS_IF` is restricted by `ProtoA` is guaranteed to have the above "
+"members, so they can be referred."
+msgstr ""
+"以下の例では、`ProtoA` が定数 `A` と変数 `raedy`/`valid`/`data`、関数 `ack`、modport `master`"
+"を持つインターフェースプロトタイプです。`BUS_IF` は `ProtoA` で制約されているので、"
+"それらのメンバーを持つことが保証されており、参照することができます。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:110
 msgid "Package Prototype"
 msgstr "パッケージプロトタイプ"
 
-#: src/05_language_reference/14_generics/02_prototype.md:55
+#: src/05_language_reference/14_generics/02_prototype.md:112
 msgid ""
 "In the following example, `ProtoA` is a package prototype which has type "
 "`data_a` and `data_b`. `PKG` restricted by `ProtoA` is guaranteed to have "
@@ -4162,6 +4359,118 @@ msgstr ""
 "以下の例では、`ProtoA` が型 `data_a` と型 `data_b` を持つパッケージプロトタイ"
 "プです。`PKG` は `ProtoA` で制約されているので、`data_a` と `data_b` を持つこ"
 "とが保証されており、それらを参照することができます。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:131
+msgid "Prototype Items"
+msgstr "プロトタイプの要素"
+
+#: src/05_language_reference/14_generics/02_prototype.md:133
+msgid ""
+"Following protoype items can be declaraed within module, interface and "
+"package protoype declarations."
+msgstr ""
+"以下の要素はモジュール、インターフェース、パッケージのプロトタイプ内で宣言することができます。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:135
+msgid ""
+"The following table shows which prototypes can have which prototype items."
+msgstr ""
+"テーブルにどのプロトタイプがどの要素を持てるかをまとめます。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:137
+#: src/05_language_reference/14_generics/02_prototype.md:154
+msgid "Port"
+msgstr "ポート"
+
+#: src/05_language_reference/14_generics/02_prototype.md:137
+#: src/05_language_reference/14_generics/02_prototype.md:165
+msgid "Const"
+msgstr "定数"
+
+#: src/05_language_reference/14_generics/02_prototype.md:137
+#: src/05_language_reference/14_generics/02_prototype.md:206
+msgid "Struct/Enum/Union"
+msgstr "構造体/列挙型/ユニオン"
+
+#: src/05_language_reference/14_generics/02_prototype.md:137
+#: src/05_language_reference/14_generics/02_prototype.md:261
+msgid "Modport"
+msgstr "modport"
+
+#: src/05_language_reference/14_generics/02_prototype.md:139
+#: src/05_language_reference/14_generics/02_prototype.md:140
+#: src/05_language_reference/14_generics/02_prototype.md:141
+msgid "v"
+msgstr "v"
+
+#: src/05_language_reference/14_generics/02_prototype.md:145
+msgid ""
+"Parameter prototype specifies identifier name, data type and default value "
+"of a parameter."
+msgstr ""
+"パラメータプロトタイプは識別子とデータ型、デフォルト値を指定します。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:156
+msgid ""
+"Port prototype specifies identifier name, direction and data type of a port."
+msgstr ""
+"ポートプロトタイプは識別子と方向、データ型を指定します。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:167
+msgid ""
+"Const prototype specify identifier name and data type of a constant. It can "
+"be used as a placeholder of a generic parameter."
+msgstr ""
+"定数プロトタイプは識別子とデータ型を指定します。ジェネリックなパラメータのプレースホルダとして使用できます。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:180
+msgid ""
+"Variable prototype specifies identifier name and data type of a variable. It "
+"can be used for both of `var` and `let` declarations."
+msgstr ""
+"変数プロトタイプは識別子とデータ型を指定します。これらは `var` 及び `let` 宣言で使用することができます。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:195
+msgid ""
+"Typedef prototype specifies identifier name of a type alias. It can be used "
+"as a placeholder for a generic parameter."
+msgstr ""
+"Typedefプロトタイプは型エイリアスの識別子を指定します。ジェネリックなパラメータのプレースホルダとして使用できます。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:208
+msgid ""
+"Struct, Enum and Union prototypes specify identifier name of a struct/enum/"
+"union and identifier name and data type of each members."
+msgstr ""
+"構造体、列挙型、ユニオンプロトタイプは型の識別子と各メンバーの識別子、データ型を指定します。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:231
+msgid ""
+"Function prototype specifies identifier name and return data type of a "
+"function, and direction and data type of each arguments."
+msgstr ""
+"関数プロトタイプは識別子と戻り値のデータ型、引数の方向とデータ型を指定します。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:239
+msgid "Alias Module/Interface/Package"
+msgstr "モジュール/インターフェース/パッケージ エイリアス"
+
+#: src/05_language_reference/14_generics/02_prototype.md:241
+msgid ""
+"Module alias prototype, interface prototype and package protoype specify "
+"identifier name and prototype of a module/interface/pacakge alias. Type of "
+"an actual alias is restricted by the given prototype."
+msgstr ""
+"モジュール、インターフェース、パッケージのエイリアス プロトタイプは識別子と"
+"モジュール、インターフェース、パッケージのプロトタイプを指定します。"
+"そのエイリアスの実際の型は与えられたプロトタイプに制約されます。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:263
+msgid ""
+"Modport prototype specifis identifier name of a modport, and identifier name "
+"and direction of each membres."
+msgstr ""
+"modport プロトタイプはmodport の識別子と各メンバーの識別子と方向を指定します。"
 
 #: src/05_language_reference/15_clock_domain_annotation.md:3
 msgid ""
@@ -9048,68 +9357,98 @@ msgid "invalid_system_function"
 msgstr "invalid_system_function"
 
 #: src/07_appendix/02_semantic_error.md:21
+msgid "invalid_type_declaration"
+msgstr "invalid_type_declaration"
+
+#: src/07_appendix/02_semantic_error.md:23
+msgid ""
+"This error is reported when `struct`, `enum` and `union` data types are "
+"defined within interface declarations."
+msgstr ""
+"このエラーは `struct`、`enum`、`union`のデータ型がインターフェース宣言内で定義されたことを示します。"
+
+#: src/07_appendix/02_semantic_error.md:25
 msgid "mismatch_arity"
 msgstr "mismatch_arity"
 
-#: src/07_appendix/02_semantic_error.md:23
+#: src/07_appendix/02_semantic_error.md:27
 msgid "mismatch_attribute_args"
 msgstr "mismatch_attribute_args"
 
-#: src/07_appendix/02_semantic_error.md:25
+#: src/07_appendix/02_semantic_error.md:29
 msgid "mismatch_type"
 msgstr "mismatch_type"
 
-#: src/07_appendix/02_semantic_error.md:27
+#: src/07_appendix/02_semantic_error.md:31
 msgid "missing_if_reset"
 msgstr "missing_if_reset"
 
-#: src/07_appendix/02_semantic_error.md:29
+#: src/07_appendix/02_semantic_error.md:33
 msgid "missing_port"
 msgstr "missing_port"
 
-#: src/07_appendix/02_semantic_error.md:31
+#: src/07_appendix/02_semantic_error.md:35
 msgid "missing_reset_signal"
 msgstr "missing_reset_signal"
 
-#: src/07_appendix/02_semantic_error.md:33
+#: src/07_appendix/02_semantic_error.md:37
 msgid "missing_reset_statement"
 msgstr "missing_reset_statement"
 
-#: src/07_appendix/02_semantic_error.md:35
+#: src/07_appendix/02_semantic_error.md:39
 msgid "too_large_enum_variant"
 msgstr "too_large_enum_variant"
 
-#: src/07_appendix/02_semantic_error.md:37
+#: src/07_appendix/02_semantic_error.md:41
 msgid "too_large_number"
 msgstr "too_large_number"
 
-#: src/07_appendix/02_semantic_error.md:39
+#: src/07_appendix/02_semantic_error.md:43
 msgid "too_much_enum_variant"
 msgstr "too_much_enum_variant"
 
-#: src/07_appendix/02_semantic_error.md:41
+#: src/07_appendix/02_semantic_error.md:45
 msgid "undefined_identifier"
 msgstr "undefined_identifier"
 
-#: src/07_appendix/02_semantic_error.md:43
+#: src/07_appendix/02_semantic_error.md:47
 msgid "unknown_attribute"
 msgstr "unknown_attribute"
 
-#: src/07_appendix/02_semantic_error.md:45
+#: src/07_appendix/02_semantic_error.md:49
 msgid "unknown_member"
 msgstr "unknown_member"
 
-#: src/07_appendix/02_semantic_error.md:47
+#: src/07_appendix/02_semantic_error.md:51
 msgid "unknown_msb"
 msgstr "unknown_msb"
 
-#: src/07_appendix/02_semantic_error.md:49
+#: src/07_appendix/02_semantic_error.md:53
 msgid "unknown_port"
 msgstr "unknown_port"
 
-#: src/07_appendix/02_semantic_error.md:51
+#: src/07_appendix/02_semantic_error.md:55
 msgid "unused_variable"
 msgstr "unused_variable"
+
+#~ msgid ""
+#~ "```toml\n"
+#~ "[project]\n"
+#~ "name = \"hello\"\n"
+#~ "version = \"0.1.0\"\n"
+#~ "```"
+#~ msgstr ""
+#~ "```toml\n"
+#~ "[project]\n"
+#~ "name = \"hello\"\n"
+#~ "version = \"0.1.0\"\n"
+#~ "```"
+
+#~ msgid "`const`: means constant value can be passed"
+#~ msgstr "`const`: 定数値を渡すことができる"
+
+#~ msgid "named prototype"
+#~ msgstr "名前付きプロトタイプ"
 
 #~ msgid "After the command, the following directory and file will be created."
 #~ msgstr ""
