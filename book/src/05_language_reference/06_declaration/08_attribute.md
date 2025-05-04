@@ -79,6 +79,8 @@ module ModuleA {
 }
 ```
 
+To avoid complex adjustment around trailing comma in generated code, the last item with `ifdef` in comma-separated list is forbidden.
+
 ## `expand` Attribute
 
 If `expand` attribute is set, structured ports such as `modport` are expanded into each Verilog ports.
