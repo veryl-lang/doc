@@ -2184,6 +2184,7 @@ In addition, the code block with <code>elsif</code> or <code>else</code> attribu
     }
 }
 </code></pre>
+<p>To avoid complex adjustment around trailing comma in generated code, the last item with <code>ifdef</code> in comma-separated list is forbidden.</p>
 <h2 id="expand-attribute"><a class="header" href="#expand-attribute"><code>expand</code> Attribute</a></h2>
 <p>If <code>expand</code> attribute is set, structured ports such as <code>modport</code> are expanded into each Verilog ports.
 Synthesis tools may require that ports of the top module includes no such ports. This attribute is helpful for such case.
