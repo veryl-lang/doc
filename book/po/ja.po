@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-05-03T16:57:31+09:00\n"
+"POT-Creation-Date: 2025-05-04T20:08:03+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -3414,10 +3414,18 @@ msgstr ""
 "```"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:82
+msgid ""
+"To avoid complex adjustment around trailing comma in generated code, the "
+"last item with `ifdef` in comma-separated list is forbidden."
+msgstr ""
+"生成されたコードにおける末尾カンマ周りの複雑な調整を回避するため、"
+"カンマ区切りリストの最後のアイテムに`ifdef`をつけることは禁止されています。"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:84
 msgid "`expand` Attribute"
 msgstr "`expand` アトリビュート"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:84
+#: src/05_language_reference/06_declaration/08_attribute.md:86
 msgid ""
 "If `expand` attribute is set, structured ports such as `modport` are "
 "expanded into each Verilog ports. Synthesis tools may require that ports of "
@@ -3429,15 +3437,15 @@ msgstr ""
 "がそのようなポートを含んではならない場合があり、そのような場合にこのアトリ"
 "ビュートを使うことができます。使用可能な引数は以下の通りです。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:88
+#: src/05_language_reference/06_declaration/08_attribute.md:90
 msgid "`modport`: Expand ports of which direction is `modport`"
 msgstr "`modport`: ポート方向が `modport` のポートを展開する"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:130
+#: src/05_language_reference/06_declaration/08_attribute.md:132
 msgid "`align` Attribute"
 msgstr "`align` アトリビュート"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:132
+#: src/05_language_reference/06_declaration/08_attribute.md:134
 msgid ""
 "`align` attribute is used to control vertical alignment by formatter. If "
 "`number` is specified as an argument of `align` attribute, all numbers are "
@@ -3447,11 +3455,11 @@ msgstr ""
 "す。`number` が `align` の引数として指定されたとき、全ての数値は整列されま"
 "す。`identifier` も使用可能です。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:157
+#: src/05_language_reference/06_declaration/08_attribute.md:159
 msgid "`fmt` Attribute"
 msgstr "`fmt` アトリビュート"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:159
+#: src/05_language_reference/06_declaration/08_attribute.md:161
 msgid ""
 "`fmt` attribute is used to control formatiing way. The following arguments "
 "are supported:"
@@ -3459,7 +3467,7 @@ msgstr ""
 "`fmt` アトリビュートはフォーマットの方法を制御することができます。以下の引数"
 "がサポートされています。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:162
+#: src/05_language_reference/06_declaration/08_attribute.md:164
 msgid "`compact`: compact formatting without newlines"
 msgstr "`compact`: 改行なしのコンパクトなフォーマット"
 
