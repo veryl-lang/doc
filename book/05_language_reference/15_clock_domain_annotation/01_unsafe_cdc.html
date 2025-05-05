@@ -212,10 +212,10 @@
 So explicit <code>unsafe (cdc)</code> block is required for clock domain crossing.
 In the block, clock domain crossing error is suppressed, so designer should check whether it is safe carefully.</p>
 <pre><code class="language-veryl playground">module ModuleA (
-    i_clk_a: input  `a clock,
-    i_dat_a: input  `a logic,
-    i_clk_b: input  `b clock,
-    o_dat_b: output `b logic,
+    i_clk_a: input  'a clock,
+    i_dat_a: input  'a logic,
+    i_clk_b: input  'b clock,
+    o_dat_b: output 'b logic,
 ) {
     // Error "Clock domain crossing is detected"
     //assign o_dat_b = i_dat_a;
@@ -228,10 +228,10 @@ In the block, clock domain crossing error is suppressed, so designer should chec
 <p>Typically, synchronizer cells are inserted to the boundaries between clock domains.
 <code>unsafe (cdc)</code> block is required for this usage too.</p>
 <pre><code class="language-veryl playground">module ModuleA (
-    i_clk_a: input  `a clock,
-    i_dat_a: input  `a logic,
-    i_clk_b: input  `b clock,
-    o_dat_b: output `b logic,
+    i_clk_a: input  'a clock,
+    i_dat_a: input  'a logic,
+    i_clk_b: input  'b clock,
+    o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
         inst u_sync: $sv::SynchronizerCell (

@@ -209,7 +209,7 @@
                     <main>
                         <h1 id="エイリアス"><a class="header" href="#エイリアス">エイリアス</a></h1>
 <p>ジェネリック引数を持つモジュール、インターフェース、パッケージの名前は非常に長くなる場合があります。<code>alias</code> はそのような要素に短い名前をつけることができます。</p>
-<pre><code class="language-veryl playground">package PkgA::&lt;X: const, Y: const, Z: const&gt; {}
+<pre><code class="language-veryl playground">package PkgA::&lt;X: u32, Y: u32, Z: u32&gt; {}
 
 alias package PkgA123 = PkgA::&lt;1, 2, 3&gt;;
 </code></pre>

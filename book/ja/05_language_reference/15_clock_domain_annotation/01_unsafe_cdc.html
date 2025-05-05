@@ -210,10 +210,10 @@
                         <h1 id="unsafe-cdc"><a class="header" href="#unsafe-cdc">Unsafe CDC</a></h1>
 <p>Veryl コンパイラはクロックドメインクロッシングをエラーとして検出します。そのためクロックドメインクロッシングを行う場所には明示的な <code>unsafe (cdc)</code> ブロックが必要です。ブロック内ではクロックドメインクロッシングのチェックが抑制されるため、設計者はそれが安全かどうか注意深く確認する必要があります。</p>
 <pre><code class="language-veryl playground">module ModuleA (
-    i_clk_a: input  `a clock,
-    i_dat_a: input  `a logic,
-    i_clk_b: input  `b clock,
-    o_dat_b: output `b logic,
+    i_clk_a: input  'a clock,
+    i_dat_a: input  'a logic,
+    i_clk_b: input  'b clock,
+    o_dat_b: output 'b logic,
 ) {
     // エラー "Clock domain crossing is detected"
     //assign o_dat_b = i_dat_a;
@@ -225,10 +225,10 @@
 </code></pre>
 <p>クロックドメイン境界には通常シンクロナイザセルが挿入されます。この場合も <code>unsafe (cdc)</code> ブロックが必要です。</p>
 <pre><code class="language-veryl playground">module ModuleA (
-    i_clk_a: input  `a clock,
-    i_dat_a: input  `a logic,
-    i_clk_b: input  `b clock,
-    o_dat_b: output `b logic,
+    i_clk_a: input  'a clock,
+    i_dat_a: input  'a logic,
+    i_clk_b: input  'b clock,
+    o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
         inst u_sync: $sv::SynchronizerCell (

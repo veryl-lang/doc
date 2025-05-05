@@ -218,14 +218,18 @@
 $ cd hello
 $ tree
 .
-`-- Veryl.toml
+├── src
+└── Veryl.toml
 
-0 directories, 1 file
+1 directory, 1 file
 </code></pre>
 <p><code>Veryl.toml</code> はプロジェクトの設定ファイルです。</p>
 <pre><code class="language-toml">[project]
 name = "hello"
 version = "0.1.0"
+[build]
+source = "src"
+target = {type = "directory", path = "target"}
 </code></pre>
 <p>全設定の説明は<a href="../06_development_environment/01_project_configuration.html">こちら</a>。</p>
 <h2 id="コードを書く"><a class="header" href="#コードを書く">コードを書く</a></h2>
@@ -239,9 +243,9 @@ version = "0.1.0"
 </code></pre>
 <pre><code>$ tree
 .
-|-- src
-|   `-- hello.veryl
-`-- Veryl.toml
+├── src
+│   └── hello.veryl
+└── Veryl.toml
 
 1 directory, 2 files
 </code></pre>
@@ -255,14 +259,17 @@ version = "0.1.0"
 [INFO ]       Output filelist ([path to hello]/hello.f)
 $ tree
 .
-|-- dependencies
-|-- hello.f
-|-- src
-|   |-- hello.sv
-|   `-- hello.veryl
-`-- Veryl.toml
+├── dependencies
+├── hello.f
+├── src
+│   └── hello.veryl
+├── target
+│   ├── hello.sv
+│   └── hello.sv.map
+├── Veryl.lock
+└── Veryl.toml
 
-2 directories, 4 files
+3 directories, 6 files
 </code></pre>
 <p>デフォルトでは SystemVerilog のコードは Veryl のコードと同じディレクトリに生成されます。つまり <code>src/hello.sv</code> です。</p>
 <pre><code class="language-verilog">module hello_ModuleA;
@@ -270,6 +277,7 @@ $ tree
         $display("Hello, world!");
     end
 endmodule
+//# sourceMappingURL=hello.sv.map
 </code></pre>
 <p>さらに、生成されたコードのファイルリスト <code>hello.f</code> も生成されます。これは SystemVerilog コンパイラで使用できます。<a href="https://www.veripool.org/verilator/">Verilator</a> で使用するには以下のようにします。</p>
 <pre><code>$ verilator --binary -f hello.f

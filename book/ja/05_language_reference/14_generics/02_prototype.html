@@ -208,7 +208,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="プロトタイプ"><a class="header" href="#プロトタイプ">プロトタイプ</a></h1>
-<p>プロトタイプは特別なジェネリック境界で、ジェネリックパラメータに渡せるプロトタイプを示します。現在はモジュールプロトタイプとパッケージプロトタイプがサポートされています。</p>
+<p>プロトタイプは特別なジェネリック境界で、ジェネリックパラメータに渡せるプロトタイプを示します。現在はモジュールプロトタイプ、インターフェースプロトタイプ、パッケージプロトタイプがサポートされています。</p>
 <h2 id="モジュールプロトタイプ"><a class="header" href="#モジュールプロトタイプ">モジュールプロトタイプ</a></h2>
 <p>以下の例では、<code>ProtoA</code> がパラメータ <code>A</code> とポート <code>i_dat</code> <code>o_dat</code> を持つモジュールプロトタイプです。<code>T: ProtoA</code> のように制約することで、ジェネリックパラメータ <code>T</code> がそれらのパラメータとポートを持つ必要があることが示されます。</p>
 <p>プロトタイプを使うには <code>for</code> による実装が必要です。<code>ModuleC</code> と <code>ModuleD</code> は <code>for ProtoA</code> 指定により、 <code>ProtoA</code> の条件を満たすことが示されています。これにより、それらのモジュールは <code>ModuleB</code> の ジェネリックパラメータ <code>T</code> として使用できるようになります。</p>
@@ -249,6 +249,58 @@ module ModuleD for ProtoA #(
     assign o_dat = ~i_dat;
 }
 </code></pre>
+<h2 id="インターフェースプロトタイプ"><a class="header" href="#インターフェースプロトタイプ">インターフェースプロトタイプ</a></h2>
+<p>以下の例では、<code>ProtoA</code> が定数 <code>A</code> と変数 <code>raedy</code>/<code>valid</code>/<code>data</code>、関数 <code>ack</code>、modport <code>master</code>を持つインターフェースプロトタイプです。<code>BUS_IF</code> は <code>ProtoA</code> で制約されているので、それらのメンバーを持つことが保証されており、参照することができます。</p>
+<pre><code class="language-veryl playground">proto interface ProtoA {
+    const WIDTH: u32;
+
+    var ready: logic       ;
+    var valid: logic       ;
+    var data : logic&lt;WIDTH&gt;;
+
+    function ack() -&gt; logic ;
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+        ack  : import,
+    }
+}
+
+interface InterfaceA::&lt;W: u32&gt; for ProtoA {
+    const WIDTH: u32 = W;
+
+    var ready: logic       ;
+    var valid: logic       ;
+    var data : logic&lt;WIDTH&gt;;
+
+    function ack () -&gt; logic {
+        return ready &amp;&amp; valid;
+    }
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+        ack  : import,
+    }
+}
+
+module ModuleA::&lt;BUS_IF: ProtoA&gt; (
+    bus_if: modport BUS_IF::master,
+) {
+    connect bus_if &lt;&gt; 0;
+}
+
+module ModuleB {
+    inst bus_if: InterfaceA::&lt;8&gt;;
+
+    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; (
+        bus_if: bus_if,
+    );
+}
+</code></pre>
 <h2 id="パッケージプロトタイプ"><a class="header" href="#パッケージプロトタイプ">パッケージプロトタイプ</a></h2>
 <p>以下の例では、<code>ProtoA</code> が型 <code>data_a</code> と型 <code>data_b</code> を持つパッケージプロトタイプです。<code>PKG</code> は <code>ProtoA</code> で制約されているので、<code>data_a</code> と <code>data_b</code> を持つことが保証されており、それらを参照することができます。</p>
 <pre><code class="language-veryl playground">proto package ProtoA {
@@ -256,13 +308,120 @@ module ModuleD for ProtoA #(
     type data_b;
 }
 
-package PackageA::&lt;A: const, B: const&gt; for ProtoA {
+package PackageA::&lt;A: u32, B: u32&gt; for ProtoA {
     type data_a = logic&lt;A&gt;;
     type data_b = logic&lt;B&gt;;
 }
 
 module ModuleA::&lt;PKG: ProtoA&gt; {
     let _a: PKG::data_a = 0;
+}
+</code></pre>
+<h2 id="プロトタイプの要素"><a class="header" href="#プロトタイプの要素">プロトタイプの要素</a></h2>
+<p>以下の要素はモジュール、インターフェース、パッケージのプロトタイプ内で宣言することができます。</p>
+<p>テーブルにどのプロトタイプがどの要素を持てるかをまとめます。</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">プロトタイプ</th><th style="text-align: left">パラメータ</th><th style="text-align: left">ポート</th><th style="text-align: left">定数</th><th style="text-align: left">変数</th><th style="text-align: left">型定義</th><th style="text-align: left">構造体/列挙型/ユニオン</th><th style="text-align: left">関数</th><th style="text-align: left">エイリアス</th><th style="text-align: left">modport</th></tr></thead><tbody>
+<tr><td style="text-align: left">モジュール</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left">インターフェース</td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td></tr>
+<tr><td style="text-align: left">パッケージ</td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left"></td></tr>
+</tbody></table>
+</div>
+<h3 id="パラメータ"><a class="header" href="#パラメータ">パラメータ</a></h3>
+<p>パラメータプロトタイプは識別子とデータ型、デフォルト値を指定します。</p>
+<pre><code class="language-veryl">proto module ModuleA #(
+    param A: u32 = 0,
+    param B: u32 = 1,
+);
+</code></pre>
+<h3 id="ポート"><a class="header" href="#ポート">ポート</a></h3>
+<p>ポートプロトタイプは識別子と方向、データ型を指定します。</p>
+<pre><code class="language-veryl">proto module ModuleA (
+    i_d: input  logic,
+    o_d: output logic,
+);
+</code></pre>
+<h3 id="定数"><a class="header" href="#定数">定数</a></h3>
+<p>定数プロトタイプは識別子とデータ型を指定します。ジェネリックなパラメータのプレースホルダとして使用できます。</p>
+<pre><code class="language-veryl">proto package ProtoPkg {
+    const WIDTH: u32;
+}
+package PkgA::&lt;W: u32&gt; for ProtoPkg {
+    const WIDTH: u32 = W;
+}
+</code></pre>
+<h3 id="変数"><a class="header" href="#変数">変数</a></h3>
+<p>変数プロトタイプは識別子とデータ型を指定します。これらは <code>var</code> 及び <code>let</code> 宣言で使用することができます。</p>
+<pre><code class="language-veryl">proto interface ProtoA {
+    var a: logic;
+    var b: logic;
+}
+interface InterfaceA for ProtoA {
+    var a: logic;
+    let b: lgoic = 0;
+}
+</code></pre>
+<h3 id="型定義"><a class="header" href="#型定義">型定義</a></h3>
+<p>Typedefプロトタイプは型エイリアスの識別子を指定します。ジェネリックなパラメータのプレースホルダとして使用できます。</p>
+<pre><code class="language-veryl">proto package ProtoPkg {
+    type data_t;
+}
+package PkgA::&lt;W: u32&gt; for ProtoPkg {
+    type data_t = logic&lt;W&gt;;
+}
+</code></pre>
+<h3 id="構造体列挙型ユニオン"><a class="header" href="#構造体列挙型ユニオン">構造体/列挙型/ユニオン</a></h3>
+<p>構造体、列挙型、ユニオンプロトタイプは型の識別子と各メンバーの識別子、データ型を指定します。</p>
+<pre><code class="language-veryl">proto package ProtoPkg {
+    struct Foo {
+        a: logic,
+        b: logic,
+    }
+
+    enum Bar {
+        C,
+        D,
+    }
+
+    union Baz {
+        e: logic,
+        f: logic,
+    }
+}
+</code></pre>
+<h3 id="関数"><a class="header" href="#関数">関数</a></h3>
+<p>関数プロトタイプは識別子と戻り値のデータ型、引数の方向とデータ型を指定します。</p>
+<pre><code class="language-veryl">proto package ProtoPkg {
+    function foo (a: input logic, b: input logic) -&gt; logic;
+}
+</code></pre>
+<h3 id="モジュールインターフェースパッケージ-エイリアス"><a class="header" href="#モジュールインターフェースパッケージ-エイリアス">モジュール/インターフェース/パッケージ エイリアス</a></h3>
+<p>モジュール、インターフェース、パッケージのエイリアス プロトタイプは識別子とモジュール、インターフェース、パッケージのプロトタイプを指定します。そのエイリアスの実際の型は与えられたプロトタイプに制約されます。</p>
+<pre><code class="language-veryl">proto module ProtoRamWrapper;
+
+proto package ProtoPkg {
+    alias module ram: ProtoRamWrapper;
+}
+
+package Pkg::&lt;RAM: ProtoRamWrapper&gt; for ProtoPkg {
+    alias module ram = RAM;
+}
+
+module RamWrapper for ProtoRamWrapper {}
+
+module top {
+  inst u_ram: Pkg::&lt;RamWrapper&gt;::ram;
+}
+</code></pre>
+<h3 id="modport"><a class="header" href="#modport">modport</a></h3>
+<p>modport プロトタイプはmodport の識別子と各メンバーの識別子と方向を指定します。</p>
+<pre><code class="language-veryl">proto interface ProtoA {
+    var a: logic;
+    var b: logic;
+
+    modport mp {
+        a: input ,
+        b: output,
+    }
 }
 </code></pre>
 

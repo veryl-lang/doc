@@ -303,7 +303,7 @@ end
 </code></pre>
 </td>
 <td>
-<pre><code class="language-veryl">function FuncA::&lt;T: const&gt; (
+<pre><code class="language-veryl">function FuncA::&lt;T: u32&gt; (
     a: input logic&lt;T&gt;,
 ) -&gt; logic&lt;T&gt; {
     return a + 1;
@@ -345,12 +345,12 @@ endmodule
 </td>
 <td>
 <pre><code class="language-veryl">module ModuleA (
-    i_clk_a: input  `a clock,
-    i_dat_a: input  `a logic,
-    i_dat_a: output `a logic,
-    i_clk_b: input  `b clock,
-    i_dat_b: input  `b logic,
-    i_dat_b: output `b logic,
+    i_clk_a: input  'a clock,
+    i_dat_a: input  'a logic,
+    i_dat_a: output 'a logic,
+    i_clk_b: input  'b clock,
+    i_dat_b: input  'b logic,
+    i_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
         assign o_dat_b = i_dat_a;
@@ -457,7 +457,7 @@ endmodule
 ///
 /// * list
 /// * list
-/// 
+///
 /// ```wavedrom
 /// { signal: [{ name: "Alfa", wave: "01.zx=ud.23.456789" }] }
 /// ```
@@ -560,7 +560,7 @@ readability improves, especially when comparing a large number of items.</p>
 <pre><code class="language-verilog">logic a;
 assign a = X == 0 ? Y0 :
            X == 1 ? Y1 :
-           X == 2 ? Y2 : 
+           X == 2 ? Y2 :
                     Y3;
 </code></pre>
 </td>
@@ -761,14 +761,18 @@ If <code>git</code> command is available, the directory is initialized as Git re
 $ cd hello
 $ tree
 .
-`-- Veryl.toml
+├── src
+└── Veryl.toml
 
-0 directories, 1 file
+1 directory, 1 file
 </code></pre>
 <p><code>Veryl.toml</code> is the project configuration.</p>
 <pre><code class="language-toml">[project]
 name = "hello"
 version = "0.1.0"
+[build]
+source = "src"
+target = {type = "directory", path = "target"}
 </code></pre>
 <p>The description of all configuration is <a href="03_getting_started/../06_development_environment/01_project_configuration.html">here</a>.</p>
 <h2 id="write-code"><a class="header" href="#write-code">Write Code</a></h2>
@@ -784,9 +788,9 @@ The extension of Veryl’s source codes is <code>.veryl</code>.</p>
 </code></pre>
 <pre><code>$ tree
 .
-|-- src
-|   `-- hello.veryl
-`-- Veryl.toml
+├── src
+│   └── hello.veryl
+└── Veryl.toml
 
 1 directory, 2 files
 </code></pre>
@@ -801,14 +805,17 @@ If you click the button, the transpiled SystemVerilog code will appear. Please t
 [INFO ]       Output filelist ([path to hello]/hello.f)
 $ tree
 .
-|-- dependencies
-|-- hello.f
-|-- src
-|   |-- hello.sv
-|   `-- hello.veryl
-`-- Veryl.toml
+├── dependencies
+├── hello.f
+├── src
+│   └── hello.veryl
+├── target
+│   ├── hello.sv
+│   └── hello.sv.map
+├── Veryl.lock
+└── Veryl.toml
 
-2 directories, 4 files
+3 directories, 6 files
 </code></pre>
 <p>By default, SystemVerilog code will be generated at the same directory as Veryl code.
 The generated code is <code>src/hello.sv</code>.</p>
@@ -817,6 +824,7 @@ The generated code is <code>src/hello.sv</code>.</p>
         $display("Hello, world!");
     end
 endmodule
+//# sourceMappingURL=hello.sv.map
 </code></pre>
 <p>Additionally, <code>hello.f</code> which is the filelist of generated codes will be generated.
 You can use it for SystemVerilog compiler.
@@ -1237,16 +1245,24 @@ Multi-dimentional can be specified by <code>&lt;X, Y, Z,,,&gt;</code>.</p>
 <h2 id="integer-type"><a class="header" href="#integer-type">Integer type</a></h2>
 <p>There are some integer types:</p>
 <ul>
+<li><code>u8</code> : 8bit unsigned integer</li>
+<li><code>u16</code>: 16bit unsigned integer</li>
 <li><code>u32</code>: 32bit unsigned integer</li>
 <li><code>u64</code>: 64bit unsigned integer</li>
+<li><code>i8</code> : 8bit signed integer</li>
+<li><code>i16</code>: 16bit signed integer</li>
 <li><code>i32</code>: 32bit signed integer</li>
 <li><code>i64</code>: 64bit signed integer</li>
 </ul>
 <pre><code class="language-veryl playground">module ModuleA {
-    let _a: u32 = 1;
-    let _b: u64 = 1;
-    let _c: i32 = 1;
-    let _d: i64 = 1;
+    let _a: u8  = 1;
+    let _b: u16 = 1;
+    let _c: u32 = 1;
+    let _d: u64 = 1;
+    let _e: i8  = 1;
+    let _f: i16 = 1;
+    let _g: i32 = 1;
+    let _h: i64 = 1;
 }
 </code></pre>
 <h2 id="floating-point-type"><a class="header" href="#floating-point-type">Floating point type</a></h2>
@@ -1302,6 +1318,9 @@ It can contain some fields, and these fields can be access through <code>.</code
     assign a.member_c = 2;
 }
 </code></pre>
+<div class="warning">
+You can define `struct` data types within module and package declarations but not interface declaration.
+</div>
 <h2 id="enum"><a class="header" href="#enum">Enum</a></h2>
 <p><code>enum</code> is enumerable type.
 It has some named variant, and the value of <code>enum</code> can be set to the one of them.
@@ -1330,6 +1349,9 @@ Otherwise, it is assigned automatically.</p>
     }
 }
 </code></pre>
+<div class="warning">
+You can define `enum` data types within module and package declarations but not interface declarations.
+</div>
 <h3 id="enum-encoding"><a class="header" href="#enum-encoding">Enum Encoding</a></h3>
 <p>By default, the value of each variant is assigned sequentially if it is omitted.
 If you want to specify value encoding, <code>#[enum_encoding]</code> attribute can be used.
@@ -1370,6 +1392,9 @@ Each  union variant should have the same packed width as each other union varian
     assign a.variant_a = 8'haa;
 }
 </code></pre>
+<div class="warning">
+You can define `union` data types within module and package declarations but not interface declarations.
+</div>
 <h2 id="typedef"><a class="header" href="#typedef">Typedef</a></h2>
 <p>The <code>type</code> keyword can be used to define a type alias to scalar or array types.</p>
 <pre><code class="language-veryl playground">module A {
@@ -1443,14 +1468,14 @@ There are 5 variants to specify reset polarity and synchronicity.</p>
 </ul>
 <p>If there is no special requirement, <code>clock</code> and <code>reset</code> are recommended for code reusability.</p>
 <pre><code class="language-veryl playground">module ModuleA (
-    i_clk    : input `_ clock           ,
-    i_clk_p  : input `_ clock_posedge   ,
-    i_clk_n  : input `_ clock_negedge   ,
-    i_rst    : input `_ reset           ,
-    i_rst_a  : input `_ reset_async_high,
-    i_rst_a_n: input `_ reset_async_low ,
-    i_rst_s  : input `_ reset_sync_high ,
-    i_rst_s_n: input `_ reset_sync_low  ,
+    i_clk    : input '_ clock           ,
+    i_clk_p  : input '_ clock_posedge   ,
+    i_clk_n  : input '_ clock_negedge   ,
+    i_rst    : input '_ reset           ,
+    i_rst_a  : input '_ reset_async_high,
+    i_rst_a_n: input '_ reset_async_low ,
+    i_rst_s  : input '_ reset_sync_high ,
+    i_rst_s_n: input '_ reset_sync_low  ,
 ) {
     var a: logic;
     var b: logic;
@@ -1488,7 +1513,7 @@ For such case, <code>default</code> type modifier can be used to specify the def
     i_clk   : input clock,
     i_clk_en: input logic,
 ) {
-    let clk: `_ default clock = i_clk &amp; i_clk_en;
+    let clk: '_ default clock = i_clk &amp; i_clk_en;
 
     var a: logic;
 
@@ -2038,6 +2063,40 @@ Arguments are placed in <code>()</code> and return type is placed after <code>-&
     }
 }
 </code></pre>
+<p>Interface modports can be used as type of arguments.
+The given interface modports will be expanded into each Verilog ports when emitting SystemVerilog RTL.</p>
+<pre><code class="language-veryl playground">interface InterfaceA::&lt;W: u32&gt; {
+    var ready: logic   ;
+    var valid: logic   ;
+    var data : logic&lt;W&gt;;
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+    }
+
+    modport slave {
+        ..converse(master)
+    }
+}
+
+module ModuleA {
+    inst a_if: InterfaceA::&lt;8&gt;;
+    inst b_if: InterfaceA::&lt;8&gt;;
+
+    function FunctionA (
+        a_if: modport InterfaceA::&lt;8&gt;::slave ,
+        b_if: modport InterfaceA::&lt;8&gt;::master,
+    ) {
+        a_if &lt;&gt; b_if;
+    }
+
+    always_comb {
+        FunctionA(a_if, b_if);
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="initial--final"><a class="header" href="#initial--final">Initial / Final</a></h1>
 <p>Statements in <code>initial</code> are executed at the beginning of simulation,
 <code>final</code> is the end.
@@ -2077,19 +2136,98 @@ It will be transpiled to SystemVerilog attribute <code>(*  *)</code>.</p>
 <li><code>missing_reset_statement</code></li>
 <li><code>missing_port</code></li>
 </ul>
-<h2 id="ifdefifndef-attribute"><a class="header" href="#ifdefifndef-attribute"><code>ifdef</code>/<code>ifndef</code> Attribute</a></h2>
-<p><code>ifdef</code> and <code>ifndef</code> attribute is used to control whether the annotated code block is enabled by defined value.
-If <code>DEFINE_A</code> is defined, the code block with <code>#[ifdef(DEFINE_A)]</code> is enabled, and the code block with <code>#[ifndef(DEFINE_A)]</code> is disabled.</p>
+<h2 id="ifdefifndefelsifelse-attribute"><a class="header" href="#ifdefifndefelsifelse-attribute"><code>ifdef</code>/<code>ifndef</code>/<code>elsif</code>/<code>else</code> Attribute</a></h2>
+<p><code>ifdef</code> and <code>ifndef</code> attributes are used to control whether the annotated code block is enabled by defined value.
+In addition, the code block with <code>elsif</code> or <code>else</code> attributes is optional and a code block with <code>ifdef</code> or <code>ifndef</code> attributes can be followed with that code block.</p>
+<p>The following example shows a usage of these attributes and which code blocks will be enabled according to defined values.</p>
+<ul>
+<li>For the sequence of <code>ifdef</code>/<code>elsif</code>/<code>else</code> attributes
+<ul>
+<li>If <code>DEFINE_A</code> is defined, the code block with <code>#[ifdef(DEFINE_A)]</code> (code block a) is enbaled, and code blocks with <code>#[ifndef(DEFINE_B)]</code> and <code>#[else]</code> (code block b/c) are disabled.</li>
+<li>If <code>DEFINE_A</code> is not defined and <code>DEFINE_B</code> is defiend, the code block with <code>#[elsif(DEFINE_B)]</code> (code block b) is enabled, and code blocks with <code>#[ifdef(DEFINE_A)]</code> and <code>#[else]</code> (code block a/c) are disabled.</li>
+<li>If <code>DEFINE_A</code> and <code>DEFINE_B</code> are not defined the code block with <code>#[else]</code> is enabled, and code blocks with <code>#[ifdef(DEFINE_A)]</code> and <code>#[elsif(DEFINE_B)]</code> (code block a/b) are disabled.</li>
+</ul>
+</li>
+<li>For the sequence of <code>ifndef</code>/<code>else</code> attributes
+<ul>
+<li>If <code>DEFINE_D</code> is not defined, the code block with <code>#[ifndef(DEFINE_D)]</code> (code block d) is enabled, and the code block with <code>#[else]</code> (code block e) is disabled.</li>
+<li>If <code>DEFINE_D</code> is defined, the code block with <code>#[else]</code> (code block e) is enabled, and the code block with <code>#[ifndef(DEFINE_D)]</code> (code block d) is disabled.</li>
+</ul>
+</li>
+</ul>
 <pre><code class="language-veryl playground">module ModuleA {
     #[ifdef(DEFINE_A)]
     {
+        // code block a
         let _a: logic&lt;10&gt; = 1;
     }
-
-    #[ifndef(DEFINE_A)]
+    #[elsif(DEFINE_B)]
     {
-        let _b: logic&lt;10&gt; = 1;
+        // code block b
+        let _a: logic&lt;10&gt; = 2;
     }
+    #[else]
+    {
+        // code block c
+        let _a: logic&lt;10&gt; = 3;
+    }
+
+    #[ifndef(DEFINE_D)]
+    {
+        // code block d
+        let _b: logic&lt;10&gt; = 4;
+    }
+    #[else]
+    {
+        // code block e
+        let _b: logic&lt;10&gt; = 5;
+    }
+}
+</code></pre>
+<p>To avoid complex adjustment around trailing comma in generated code, the last item with <code>ifdef</code> in comma-separated list is forbidden.</p>
+<h2 id="expand-attribute"><a class="header" href="#expand-attribute"><code>expand</code> Attribute</a></h2>
+<p>If <code>expand</code> attribute is set, structured ports such as <code>modport</code> are expanded into each Verilog ports.
+Synthesis tools may require that ports of the top module includes no such ports. This attribute is helpful for such case.
+The following argument is supported.</p>
+<ul>
+<li><code>modport</code>: Expand ports of which direction is <code>modport</code></li>
+</ul>
+<pre><code class="language-veryl playground">interface InterfaceA::&lt;W: u32&gt; {
+    var ready: logic   ;
+    var valid: logic   ;
+    var data : logic&lt;W&gt;;
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+    }
+
+    modport slave {
+        ready: output,
+        valid: input ,
+        data : input ,
+    }
+}
+
+#[expand(modport)]
+module ModuleA (
+    slave_if : modport InterfaceA::&lt;8&gt;::slave  [4],
+    master_if: modport InterfaceA::&lt;8&gt;::master [4],
+) {
+    for i in 0..4 :g {
+        connect slave_if[i] &lt;&gt; master_if[i];
+    }
+}
+
+module ModuleB {
+    inst a_if: InterfaceA::&lt;8&gt; [4];
+    inst b_if: InterfaceA::&lt;8&gt; [4];
+
+    inst u: ModuleA (
+        slave_if : a_if,
+        master_if: b_if,
+    );
 }
 </code></pre>
 <h2 id="align-attribute"><a class="header" href="#align-attribute"><code>align</code> Attribute</a></h2>
@@ -2337,6 +2475,27 @@ Interface has overridable parameters, and interface definitions.</p>
     }
 }
 </code></pre>
+<p>In addition, functions specified with <code>import</code> keyword can be used via the modport.</p>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var a: logic;
+    var b: logic;
+
+    function a_and_b -&gt; logic&lt;2&gt; {
+        return {a, b};
+    }
+
+    modport mp {
+        a      : input ,
+        b      : input ,
+        a_and_b: import,
+    }
+}
+module ModuleA (
+    ab_if: modport InterfaceA::mp,
+) {
+    let _ab: logic&lt;2&gt; = ab_if.a_and_b();
+}
+</code></pre>
 <h2 id="default-members-of-modport"><a class="header" href="#default-members-of-modport">Default members of modport</a></h2>
 <p>Instead of specifing all members of modport, default members can be specified like below:</p>
 <ul>
@@ -2487,14 +2646,13 @@ The following items support generics:</p>
 </ul>
 <p>Each generic definition has generic parameters (often an uppercase letter is used like <code>T</code>) which can be placed as identifier or expression in the definition.
 Generic parameters are declarated after item’s identifier with <code>::&lt;&gt;</code>.</p>
-<p>Each generic parameter should have generic bound after colon like <code>T: const</code>.
+<p>Each generic parameter should have generic bound after colon like <code>T: TypeName</code>.
 Generic bound represents what value can be passed to the generic parameter.
 The available generic bounds are below:</p>
 <ul>
-<li><code>const</code>: means constant value can be passed</li>
 <li><code>type</code> : means arbitrary type can be passed</li>
 <li><code>inst: X</code> : instance of <code>X</code></li>
-<li>named prototype</li>
+<li>named prototype, user defined data type or fixed data type</li>
 </ul>
 <p>Named prototype is a special generic bound. See <a href="05_language_reference/14_generics/02_prototype.html">Prototype</a> for details.</p>
 <p>At the usage of generics, actual parameters can be given through <code>::&lt;&gt;</code>.
@@ -2505,7 +2663,7 @@ On the other hand, local parameters can’t be used as actual parameters in many
 This is caused by that the local parameters is not accessible from the potision of the generics declaration.</p>
 <h2 id="generic-function"><a class="header" href="#generic-function">Generic Function</a></h2>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const&gt; (
+    function FuncA::&lt;T: u32&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + 1;
@@ -2531,7 +2689,7 @@ module ModuleC for ProtoA {}
 module ModuleD for ProtoA {}
 </code></pre>
 <h2 id="generic-package"><a class="header" href="#generic-package">Generic Package</a></h2>
-<pre><code class="language-veryl playground">package PackageA::&lt;T: const&gt; {
+<pre><code class="language-veryl playground">package PackageA::&lt;T: u32&gt; {
     const X: u32 = T;
 }
 
@@ -2564,7 +2722,7 @@ module ModuleA {
 <p>Generic parameter can take a default value through <code>=</code> after the generic parameter.
 If the parameter specifications at call site is omitted, the default value is used.</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const = 10&gt; (
+    function FuncA::&lt;T: u32 = 10&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + 1;
@@ -2577,14 +2735,14 @@ If the parameter specifications at call site is omitted, the default value is us
 <p>Default parameters should be placed at the last of generic parameter list.
 If not, it causes ambiguous which parameters are omitted.</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const, U: const = 1&gt; (
+    function FuncA::&lt;T: u32, U: u32 = 1&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + U;
     }
 
     // Error
-    //function FuncA::&lt;T: const = 1, U: const&gt; (
+    //function FuncA::&lt;T: u32 = 1, U: u32&gt; (
     //    a: input logic&lt;T&gt;,
     //) -&gt; logic&lt;T&gt; {
     //    return a + U;
@@ -2596,7 +2754,7 @@ If not, it causes ambiguous which parameters are omitted.</p>
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="prototype"><a class="header" href="#prototype">Prototype</a></h1>
 <p>Prototype is a special generic bound. It represents prototype which can be passed to the generic parameter.
-Currently module prototype and package prototype are supported.</p>
+Currently module prototype, interface prototype and package prototype are supported.</p>
 <h2 id="module-prototype"><a class="header" href="#module-prototype">Module Prototype</a></h2>
 <p>In the following example, <code>ProtoA</code> is a module prototype which has parameter <code>A</code> and port <code>i_dat</code> and <code>o_dat</code>.
 By binding like <code>T: ProtoA</code>, it is represented that the generic parameter <code>T</code> should have the parameters and ports.</p>
@@ -2639,6 +2797,59 @@ module ModuleD for ProtoA #(
     assign o_dat = ~i_dat;
 }
 </code></pre>
+<h2 id="interface-protype"><a class="header" href="#interface-protype">Interface Protype</a></h2>
+<p>In the following exmaple, <code>ProtoA</code> is a interface prototype which has constant <code>A</code>, <code>raedy</code>/<code>valid</code>/<code>data</code> variables, function <code>ack</code> and mopdort <code>master</code>.
+<code>BUS_IF</code> is restricted by <code>ProtoA</code> is guaranteed to have the above members, so they can be referred.</p>
+<pre><code class="language-veryl playground">proto interface ProtoA {
+    const WIDTH: u32;
+
+    var ready: logic       ;
+    var valid: logic       ;
+    var data : logic&lt;WIDTH&gt;;
+
+    function ack() -&gt; logic ;
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+        ack  : import,
+    }
+}
+
+interface InterfaceA::&lt;W: u32&gt; for ProtoA {
+    const WIDTH: u32 = W;
+
+    var ready: logic       ;
+    var valid: logic       ;
+    var data : logic&lt;WIDTH&gt;;
+
+    function ack () -&gt; logic {
+        return ready &amp;&amp; valid;
+    }
+
+    modport master {
+        ready: input ,
+        valid: output,
+        data : output,
+        ack  : import,
+    }
+}
+
+module ModuleA::&lt;BUS_IF: ProtoA&gt; (
+    bus_if: modport BUS_IF::master,
+) {
+    connect bus_if &lt;&gt; 0;
+}
+
+module ModuleB {
+    inst bus_if: InterfaceA::&lt;8&gt;;
+
+    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; (
+        bus_if: bus_if,
+    );
+}
+</code></pre>
 <h2 id="package-prototype"><a class="header" href="#package-prototype">Package Prototype</a></h2>
 <p>In the following example, <code>ProtoA</code> is a package prototype which has type <code>data_a</code> and <code>data_b</code>.
 <code>PKG</code> restricted by <code>ProtoA</code> is guaranteed to have <code>data_a</code> and <code>data_b</code>, so they can be refered.</p>
@@ -2647,7 +2858,7 @@ module ModuleD for ProtoA #(
     type data_b;
 }
 
-package PackageA::&lt;A: const, B: const&gt; for ProtoA {
+package PackageA::&lt;A: u32, B: u32&gt; for ProtoA {
     type data_a = logic&lt;A&gt;;
     type data_b = logic&lt;B&gt;;
 }
@@ -2656,19 +2867,126 @@ module ModuleA::&lt;PKG: ProtoA&gt; {
     let _a: PKG::data_a = 0;
 }
 </code></pre>
+<h2 id="prototype-items"><a class="header" href="#prototype-items">Prototype Items</a></h2>
+<p>Following protoype items can be declaraed within module, interface and package protoype declarations.</p>
+<p>The following table shows which prototypes can have which prototype items.</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Prototype</th><th style="text-align: left">Parameter</th><th style="text-align: left">Port</th><th style="text-align: left">Const</th><th style="text-align: left">Variable</th><th style="text-align: left">Typedef</th><th style="text-align: left">Struct/Enum/Union</th><th style="text-align: left">Function</th><th style="text-align: left">Alias</th><th style="text-align: left">Modport</th></tr></thead><tbody>
+<tr><td style="text-align: left">Module</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left">Interface</td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td></tr>
+<tr><td style="text-align: left">Package</td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left"></td></tr>
+</tbody></table>
+</div>
+<h3 id="parameter-1"><a class="header" href="#parameter-1">Parameter</a></h3>
+<p>Parameter prototype specifies identifier name, data type and default value of a parameter.</p>
+<pre><code class="language-veryl">proto module ModuleA #(
+    param A: u32 = 0,
+    param B: u32 = 1,
+);
+</code></pre>
+<h3 id="port"><a class="header" href="#port">Port</a></h3>
+<p>Port prototype specifies identifier name, direction and data type of a port.</p>
+<pre><code class="language-veryl">proto module ModuleA (
+    i_d: input  logic,
+    o_d: output logic,
+);
+</code></pre>
+<h3 id="const"><a class="header" href="#const">Const</a></h3>
+<p>Const prototype specify identifier name and data type of a constant. It can be used as a placeholder of a generic parameter.</p>
+<pre><code class="language-veryl">proto package ProtoPkg {
+    const WIDTH: u32;
+}
+package PkgA::&lt;W: u32&gt; for ProtoPkg {
+    const WIDTH: u32 = W;
+}
+</code></pre>
+<h3 id="variable-1"><a class="header" href="#variable-1">Variable</a></h3>
+<p>Variable prototype specifies identifier name and data type of a variable. It can be used for both of <code>var</code> and <code>let</code> declarations.</p>
+<pre><code class="language-veryl">proto interface ProtoA {
+    var a: logic;
+    var b: logic;
+}
+interface InterfaceA for ProtoA {
+    var a: logic;
+    let b: lgoic = 0;
+}
+</code></pre>
+<h3 id="typedef-1"><a class="header" href="#typedef-1">Typedef</a></h3>
+<p>Typedef prototype specifies identifier name of a type alias. It can be used as a placeholder for a generic parameter.</p>
+<pre><code class="language-veryl">proto package ProtoPkg {
+    type data_t;
+}
+package PkgA::&lt;W: u32&gt; for ProtoPkg {
+    type data_t = logic&lt;W&gt;;
+}
+</code></pre>
+<h3 id="structenumunion"><a class="header" href="#structenumunion">Struct/Enum/Union</a></h3>
+<p>Struct, Enum and Union prototypes specify identifier name of a struct/enum/union and identifier name and data type of each members.</p>
+<pre><code class="language-veryl">proto package ProtoPkg {
+    struct Foo {
+        a: logic,
+        b: logic,
+    }
+
+    enum Bar {
+        C,
+        D,
+    }
+
+    union Baz {
+        e: logic,
+        f: logic,
+    }
+}
+</code></pre>
+<h3 id="function-1"><a class="header" href="#function-1">Function</a></h3>
+<p>Function prototype specifies identifier name and return data type of a function, and direction and data type of each arguments.</p>
+<pre><code class="language-veryl">proto package ProtoPkg {
+    function foo (a: input logic, b: input logic) -&gt; logic;
+}
+</code></pre>
+<h3 id="alias-moduleinterfacepackage"><a class="header" href="#alias-moduleinterfacepackage">Alias Module/Interface/Package</a></h3>
+<p>Module alias prototype, interface alias prototype and package alias protoype specify identifier name and prototype of a module/interface/pacakge alias. Type of an actual alias is restricted by the given prototype.</p>
+<pre><code class="language-veryl">proto module ProtoRamWrapper;
+
+proto package ProtoPkg {
+    alias module ram: ProtoRamWrapper;
+}
+
+package Pkg::&lt;RAM: ProtoRamWrapper&gt; for ProtoPkg {
+    alias module ram = RAM;
+}
+
+module RamWrapper for ProtoRamWrapper {}
+
+module top {
+  inst u_ram: Pkg::&lt;RamWrapper&gt;::ram;
+}
+</code></pre>
+<h3 id="modport"><a class="header" href="#modport">Modport</a></h3>
+<p>Modport prototype specifis identifier name of a modport, and identifier name and direction of each membres.</p>
+<pre><code class="language-veryl">proto interface ProtoA {
+    var a: logic;
+    var b: logic;
+
+    modport mp {
+        a: input ,
+        b: output,
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="clock-domain-annotation"><a class="header" href="#clock-domain-annotation">Clock Domain Annotation</a></h1>
-<p>If there are some clocks in a module, explicit clock domain annotation like <code>`a</code> is required.
+<p>If there are some clocks in a module, explicit clock domain annotation like <code>'a</code> is required.
 The annotation shows which clock domain each signals belong.</p>
 <pre><code class="language-veryl playground">module ModuleA (
-    // belong clock domain `a
-    i_clk_a: input  `a clock,
-    i_dat_a: input  `a logic,
-    o_dat_a: output `a logic,
+    // belong clock domain 'a
+    i_clk_a: input  'a clock,
+    i_dat_a: input  'a logic,
+    o_dat_a: output 'a logic,
 
-    // belong clock domain `b
-    i_clk_b: input  `b clock,
-    i_dat_b: input  `b logic,
-    o_dat_b: output `b logic,
+    // belong clock domain 'b
+    i_clk_b: input  'b clock,
+    i_dat_b: input  'b logic,
+    o_dat_b: output 'b logic,
 ) {
     // assignment in the same clock domain is safe
     assign o_dat_a = i_dat_a;
@@ -2684,12 +3002,12 @@ The annotation shows which clock domain each signals belong.</p>
     assign o_dat = i_dat;
 }
 </code></pre>
-<p><code>`_</code> is a special clock domain which means implicit clock domain.
+<p><code>'_</code> is a special clock domain which means implicit clock domain.
 This can be used to specify that some clocks belong the same implicit clock domain.</p>
 <pre><code class="language-veryl playground">module ModuleA (
     // all signals belong implicit clock domain
-    i_clk   : input  `_ clock,
-    i_clk_x2: input  `_ clock,
+    i_clk   : input  '_ clock,
+    i_clk_x2: input  '_ clock,
     i_dat   : input     logic,
     o_dat   : output    logic,
 ) {
@@ -2698,7 +3016,7 @@ This can be used to specify that some clocks belong the same implicit clock doma
 </code></pre>
 <p>Interface instances can have clock domain annotation.</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    inst intf: `a InterfaceA;
+    inst intf: 'a InterfaceA;
 }
 
 interface InterfaceA {}
@@ -2708,10 +3026,10 @@ interface InterfaceA {}
 So explicit <code>unsafe (cdc)</code> block is required for clock domain crossing.
 In the block, clock domain crossing error is suppressed, so designer should check whether it is safe carefully.</p>
 <pre><code class="language-veryl playground">module ModuleA (
-    i_clk_a: input  `a clock,
-    i_dat_a: input  `a logic,
-    i_clk_b: input  `b clock,
-    o_dat_b: output `b logic,
+    i_clk_a: input  'a clock,
+    i_dat_a: input  'a logic,
+    i_clk_b: input  'b clock,
+    o_dat_b: output 'b logic,
 ) {
     // Error "Clock domain crossing is detected"
     //assign o_dat_b = i_dat_a;
@@ -2724,10 +3042,10 @@ In the block, clock domain crossing error is suppressed, so designer should chec
 <p>Typically, synchronizer cells are inserted to the boundaries between clock domains.
 <code>unsafe (cdc)</code> block is required for this usage too.</p>
 <pre><code class="language-veryl playground">module ModuleA (
-    i_clk_a: input  `a clock,
-    i_dat_a: input  `a logic,
-    i_clk_b: input  `b clock,
-    o_dat_b: output `b logic,
+    i_clk_a: input  'a clock,
+    i_dat_a: input  'a logic,
+    i_clk_b: input  'b clock,
+    o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
         inst u_sync: $sv::SynchronizerCell (
@@ -2765,7 +3083,7 @@ Standard library is under <code>$std</code> namespace, and it can be used withou
 <div style="break-before: page; page-break-before: always;"></div><h1 id="alias"><a class="header" href="#alias">Alias</a></h1>
 <p>Module, interface and package with generic arguments becomes too long sometimes.
 <code>alias</code> can name a short name for such items.</p>
-<pre><code class="language-veryl playground">package PkgA::&lt;X: const, Y: const, Z: const&gt; {}
+<pre><code class="language-veryl playground">package PkgA::&lt;X: u32, Y: u32, Z: u32&gt; {}
 
 alias package PkgA123 = PkgA::&lt;1, 2, 3&gt;;
 </code></pre>
@@ -3651,6 +3969,12 @@ The following syntex definition of parol is formal syntax.</p>
 %scanner Generic {
 }
 
+%scanner Attr {
+}
+
+%scanner ClockDomain {
+}
+
 %%
 
 // ----------------------------------------------------------------------------
@@ -3659,126 +3983,130 @@ The following syntex definition of parol is formal syntax.</p>
 
 // Longest match should be first
 
-CommentsTerm          : &lt;INITIAL, Generic       &gt;"(?:(?:(?://.*(?:\r\n|\r|\n|$))|(?:(?ms)/\u{2a}.*?\u{2a}/))\s*)+"                     : Token;
-StringLiteralTerm     : &lt;INITIAL, Generic       &gt;"\u{0022}(?:\\[\u{0022}\\/bfnrt]|u[0-9a-fA-F]{4}|[^\u{0022}\\\u0000-\u001F])*\u{0022}": Token;
-ExponentTerm          : &lt;INITIAL, Generic       &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*[eE][+-]?[0-9]+(?:_[0-9]+)*/                   : Token;
-FixedPointTerm        : &lt;INITIAL, Generic       &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*/                                              : Token;
-BasedTerm             : &lt;INITIAL, Generic       &gt;/(?:[0-9]+(?:_[0-9]+)*)?'s?[bodh][0-9a-fA-FxzXZ]+(?:_[0-9a-fA-FxzXZ]+)*/              : Token;
-AllBitTerm            : &lt;INITIAL, Generic       &gt;/(?:[0-9]+(?:_[0-9]+)*)?'[01xzXZ]/                                                    : Token;
-BaseLessTerm          : &lt;INITIAL, Generic       &gt;/[0-9]+(?:_[0-9]+)*/                                                                  : Token;
-MinusColonTerm        : &lt;INITIAL                &gt;'-:'                                                                                  : Token;
-MinusGTTerm           : &lt;INITIAL                &gt;'-&gt;'                                                                                  : Token;
-PlusColonTerm         : &lt;INITIAL                &gt;'+:'                                                                                  : Token;
-AssignmentOperatorTerm: &lt;INITIAL                &gt;"\+=|-=|\*=|/=|%=|&amp;=|\|=|\^=|&lt;&lt;=|&gt;&gt;=|&lt;&lt;&lt;=|&gt;&gt;&gt;="                                       : Token;
-DiamondOperatorTerm   : &lt;INITIAL                &gt;'&lt;&gt;'                                                                                  : Token;
-Operator12Term        : &lt;INITIAL                &gt;"\*\*"                                                                                : Token;
-Operator11Term        : &lt;INITIAL                &gt;"/|%"                                                                                 : Token;
-Operator10Term        : &lt;INITIAL                &gt;"\+|-"                                                                                : Token;
-Operator09Term        : &lt;INITIAL                &gt;"&lt;&lt;&lt;|&gt;&gt;&gt;|&lt;&lt;|&gt;&gt;"                                                                       : Token;
-Operator08Term        : &lt;INITIAL                &gt;"&lt;=|&gt;=|&lt;:|&gt;:"                                                                         : Token;
-Operator07Term        : &lt;INITIAL                &gt;"===|==\?|!==|!=\?|==|!="                                                             : Token;
-Operator03Term        : &lt;INITIAL                &gt;"&amp;&amp;"                                                                                  : Token;
-Operator02Term        : &lt;INITIAL                &gt;"\|\|"                                                                                : Token;
-Operator06Term        : &lt;INITIAL                &gt;"&amp;"                                                                                   : Token;
-Operator05Term        : &lt;INITIAL                &gt;"\^~|\^|~\^"                                                                          : Token;
-Operator04Term        : &lt;INITIAL                &gt;"\|"                                                                                  : Token;
-UnaryOperatorTerm     : &lt;INITIAL                &gt;"~&amp;|~\||!|~"                                                                          : Token;
-BackQuoteTerm         : &lt;INITIAL, Generic       &gt;"`"                                                                                   : Token;
-ColonColonLAngleTerm  : &lt;INITIAL, Generic       &gt;'::&lt;'                                                                                 : Token;
-ColonColonTerm        : &lt;INITIAL, Generic       &gt;'::'                                                                                  : Token;
-ColonTerm             : &lt;INITIAL, Generic       &gt;':'                                                                                   : Token;
-CommaTerm             : &lt;INITIAL, Generic       &gt;','                                                                                   : Token;
-DotDotEquTerm         : &lt;INITIAL, Generic       &gt;'..='                                                                                 : Token;
-DotDotTerm            : &lt;INITIAL, Generic       &gt;'..'                                                                                  : Token;
-DotTerm               : &lt;INITIAL, Generic       &gt;'.'                                                                                   : Token;
-EquTerm               : &lt;INITIAL, Generic       &gt;'='                                                                                   : Token;
-HashTerm              : &lt;INITIAL, Generic       &gt;'#'                                                                                   : Token;
-LAngleTerm            : &lt;INITIAL, Generic       &gt;'&lt;'                                                                                   : Token;
-QuestionTerm          : &lt;INITIAL                &gt;'?'                                                                                   : Token;
-QuoteLBraceTerm       : &lt;INITIAL, Generic       &gt;"'\{"                                                                                 : Token;
-LBraceTerm            : &lt;INITIAL, Generic, Embed&gt;'{'                                                                                   : Token;
-LBracketTerm          : &lt;INITIAL, Generic       &gt;'['                                                                                   : Token;
-LParenTerm            : &lt;INITIAL, Generic       &gt;'('                                                                                   : Token;
-RAngleTerm            : &lt;INITIAL, Generic       &gt;'&gt;'                                                                                   : Token;
-RBraceTerm            : &lt;INITIAL, Generic, Embed&gt;'}'                                                                                   : Token;
-RBracketTerm          : &lt;INITIAL, Generic       &gt;']'                                                                                   : Token;
-RParenTerm            : &lt;INITIAL, Generic       &gt;')'                                                                                   : Token;
-SemicolonTerm         : &lt;INITIAL, Generic       &gt;';'                                                                                   : Token;
-StarTerm              : &lt;INITIAL, Generic       &gt;'*'                                                                                   : Token;
-AliasTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)alias(?-u:\b)/                                                               : Token;
-AlwaysCombTerm        : &lt;INITIAL, Generic       &gt;/(?-u:\b)always_comb(?-u:\b)/                                                         : Token;
-AlwaysFfTerm          : &lt;INITIAL, Generic       &gt;/(?-u:\b)always_ff(?-u:\b)/                                                           : Token;
-AssignTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)assign(?-u:\b)/                                                              : Token;
-AsTerm                : &lt;INITIAL, Generic       &gt;/(?-u:\b)as(?-u:\b)/                                                                  : Token;
-BitTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)bit(?-u:\b)/                                                                 : Token;
-BoolTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)bool(?-u:\b)/                                                                : Token;
-CaseTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)case(?-u:\b)/                                                                : Token;
-ClockTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock(?-u:\b)/                                                               : Token;
-ClockPosedgeTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock_posedge(?-u:\b)/                                                       : Token;
-ClockNegedgeTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)clock_negedge(?-u:\b)/                                                       : Token;
-ConnectTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)connect(?-u:\b)/                                                             : Token;
-ConstTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)const(?-u:\b)/                                                               : Token;
-ConverseTerm          : &lt;INITIAL, Generic       &gt;/(?-u:\b)converse(?-u:\b)/                                                            : Token;
-DefaultTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)default(?-u:\b)/                                                             : Token;
-ElseTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)else(?-u:\b)/                                                                : Token;
-EmbedTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)embed(?-u:\b)/                                                               : Token;
-EnumTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)enum(?-u:\b)/                                                                : Token;
-F32Term               : &lt;INITIAL, Generic       &gt;/(?-u:\b)f32(?-u:\b)/                                                                 : Token;
-F64Term               : &lt;INITIAL, Generic       &gt;/(?-u:\b)f64(?-u:\b)/                                                                 : Token;
-FalseTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)false(?-u:\b)/                                                               : Token;
-FinalTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)final(?-u:\b)/                                                               : Token;
-ForTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)for(?-u:\b)/                                                                 : Token;
-FunctionTerm          : &lt;INITIAL, Generic       &gt;/(?-u:\b)function(?-u:\b)/                                                            : Token;
-I32Term               : &lt;INITIAL, Generic       &gt;/(?-u:\b)i32(?-u:\b)/                                                                 : Token;
-I64Term               : &lt;INITIAL, Generic       &gt;/(?-u:\b)i64(?-u:\b)/                                                                 : Token;
-IfResetTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)if_reset(?-u:\b)/                                                            : Token;
-IfTerm                : &lt;INITIAL, Generic       &gt;/(?-u:\b)if(?-u:\b)/                                                                  : Token;
-ImportTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)import(?-u:\b)/                                                              : Token;
-IncludeTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)include(?-u:\b)/                                                             : Token;
-InitialTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)initial(?-u:\b)/                                                             : Token;
-InoutTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)inout(?-u:\b)/                                                               : Token;
-InputTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)input(?-u:\b)/                                                               : Token;
-InsideTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)inside(?-u:\b)/                                                              : Token;
-InstTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)inst(?-u:\b)/                                                                : Token;
-InterfaceTerm         : &lt;INITIAL, Generic       &gt;/(?-u:\b)interface(?-u:\b)/                                                           : Token;
-InTerm                : &lt;INITIAL, Generic       &gt;/(?-u:\b)in(?-u:\b)/                                                                  : Token;
-LetTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)let(?-u:\b)/                                                                 : Token;
-LogicTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)logic(?-u:\b)/                                                               : Token;
-LsbTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)lsb(?-u:\b)/                                                                 : Token;
-ModportTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)modport(?-u:\b)/                                                             : Token;
-ModuleTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)module(?-u:\b)/                                                              : Token;
-MsbTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)msb(?-u:\b)/                                                                 : Token;
-OutputTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)output(?-u:\b)/                                                              : Token;
-OutsideTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)outside(?-u:\b)/                                                             : Token;
-PackageTerm           : &lt;INITIAL, Generic       &gt;/(?-u:\b)package(?-u:\b)/                                                             : Token;
-ParamTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)param(?-u:\b)/                                                               : Token;
-ProtoTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)proto(?-u:\b)/                                                               : Token;
-PubTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)pub(?-u:\b)/                                                                 : Token;
-RepeatTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)repeat(?-u:\b)/                                                              : Token;
-ResetTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)reset(?-u:\b)/                                                               : Token;
-ResetAsyncHighTerm    : &lt;INITIAL, Generic       &gt;/(?-u:\b)reset_async_high(?-u:\b)/                                                    : Token;
-ResetAsyncLowTerm     : &lt;INITIAL, Generic       &gt;/(?-u:\b)reset_async_low(?-u:\b)/                                                     : Token;
-ResetSyncHighTerm     : &lt;INITIAL, Generic       &gt;/(?-u:\b)reset_sync_high(?-u:\b)/                                                     : Token;
-ResetSyncLowTerm      : &lt;INITIAL, Generic       &gt;/(?-u:\b)reset_sync_low(?-u:\b)/                                                      : Token;
-ReturnTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)return(?-u:\b)/                                                              : Token;
-BreakTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)break(?-u:\b)/                                                               : Token;
-SameTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)same(?-u:\b)/                                                                : Token;
-SignedTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)signed(?-u:\b)/                                                              : Token;
-StepTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)step(?-u:\b)/                                                                : Token;
-StringTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)string(?-u:\b)/                                                              : Token;
-StructTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)struct(?-u:\b)/                                                              : Token;
-SwitchTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)switch(?-u:\b)/                                                              : Token;
-TriTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)tri(?-u:\b)/                                                                 : Token;
-TrueTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)true(?-u:\b)/                                                                : Token;
-TypeTerm              : &lt;INITIAL, Generic       &gt;/(?-u:\b)type(?-u:\b)/                                                                : Token;
-U32Term               : &lt;INITIAL, Generic       &gt;/(?-u:\b)u32(?-u:\b)/                                                                 : Token;
-U64Term               : &lt;INITIAL, Generic       &gt;/(?-u:\b)u64(?-u:\b)/                                                                 : Token;
-UnionTerm             : &lt;INITIAL, Generic       &gt;/(?-u:\b)union(?-u:\b)/                                                               : Token;
-UnsafeTerm            : &lt;INITIAL, Generic       &gt;/(?-u:\b)unsafe(?-u:\b)/                                                              : Token;
-VarTerm               : &lt;INITIAL, Generic       &gt;/(?-u:\b)var(?-u:\b)/                                                                 : Token;
-DollarIdentifierTerm  : &lt;INITIAL, Generic       &gt;/\$[a-zA-Z_][0-9a-zA-Z_$]*/                                                           : Token;
-IdentifierTerm        : &lt;INITIAL, Generic       &gt;/(?:r#)?[a-zA-Z_][0-9a-zA-Z_$]*/                                                      : Token;
-AnyTerm               : &lt;                  Embed&gt;/[^{}]+/                                                                              : Token;
+CommentsTerm          : &lt;INITIAL, Generic,        Attr, ClockDomain&gt;"(?:(?:(?://.*(?:\r\n|\r|\n|$))|(?:(?ms)/\u{2a}.*?\u{2a}/))\s*)+"                     : Token;
+StringLiteralTerm     : &lt;INITIAL, Generic,        Attr             &gt;"\u{0022}(?:\\[\u{0022}\\/bfnrt]|u[0-9a-fA-F]{4}|[^\u{0022}\\\u0000-\u001F])*\u{0022}": Token;
+ExponentTerm          : &lt;INITIAL, Generic                          &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*[eE][+-]?[0-9]+(?:_[0-9]+)*/                   : Token;
+FixedPointTerm        : &lt;INITIAL, Generic                          &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*/                                              : Token;
+BasedTerm             : &lt;INITIAL, Generic                          &gt;/(?:[0-9]+(?:_[0-9]+)*)?'s?[bodh][0-9a-fA-FxzXZ]+(?:_[0-9a-fA-FxzXZ]+)*/              : Token;
+AllBitTerm            : &lt;INITIAL, Generic                          &gt;/(?:[0-9]+(?:_[0-9]+)*)?'[01xzXZ]/                                                    : Token;
+BaseLessTerm          : &lt;INITIAL, Generic                          &gt;/[0-9]+(?:_[0-9]+)*/                                                                  : Token;
+MinusColonTerm        : &lt;INITIAL                                   &gt;'-:'                                                                                  : Token;
+MinusGTTerm           : &lt;INITIAL                                   &gt;'-&gt;'                                                                                  : Token;
+PlusColonTerm         : &lt;INITIAL                                   &gt;'+:'                                                                                  : Token;
+AssignmentOperatorTerm: &lt;INITIAL                                   &gt;"\+=|-=|\*=|/=|%=|&amp;=|\|=|\^=|&lt;&lt;=|&gt;&gt;=|&lt;&lt;&lt;=|&gt;&gt;&gt;="                                       : Token;
+DiamondOperatorTerm   : &lt;INITIAL                                   &gt;'&lt;&gt;'                                                                                  : Token;
+Operator12Term        : &lt;INITIAL                                   &gt;"\*\*"                                                                                : Token;
+Operator11Term        : &lt;INITIAL                                   &gt;"/|%"                                                                                 : Token;
+Operator10Term        : &lt;INITIAL                                   &gt;"\+|-"                                                                                : Token;
+Operator09Term        : &lt;INITIAL                                   &gt;"&lt;&lt;&lt;|&gt;&gt;&gt;|&lt;&lt;|&gt;&gt;"                                                                       : Token;
+Operator08Term        : &lt;INITIAL                                   &gt;"&lt;=|&gt;=|&lt;:|&gt;:"                                                                         : Token;
+Operator07Term        : &lt;INITIAL                                   &gt;"===|==\?|!==|!=\?|==|!="                                                             : Token;
+Operator03Term        : &lt;INITIAL                                   &gt;"&amp;&amp;"                                                                                  : Token;
+Operator02Term        : &lt;INITIAL                                   &gt;"\|\|"                                                                                : Token;
+Operator06Term        : &lt;INITIAL                                   &gt;"&amp;"                                                                                   : Token;
+Operator05Term        : &lt;INITIAL                                   &gt;"\^~|\^|~\^"                                                                          : Token;
+Operator04Term        : &lt;INITIAL                                   &gt;"\|"                                                                                  : Token;
+UnaryOperatorTerm     : &lt;INITIAL                                   &gt;"~&amp;|~\||!|~"                                                                          : Token;
+ColonColonLAngleTerm  : &lt;INITIAL, Generic                          &gt;'::&lt;'                                                                                 : Token;
+ColonColonTerm        : &lt;INITIAL, Generic                          &gt;'::'                                                                                  : Token;
+ColonTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;':'                                                                                   : Token;
+CommaTerm             : &lt;INITIAL, Generic,        Attr             &gt;','                                                                                   : Token;
+DotDotEquTerm         : &lt;INITIAL, Generic                          &gt;'..='                                                                                 : Token;
+DotDotTerm            : &lt;INITIAL, Generic                          &gt;'..'                                                                                  : Token;
+DotTerm               : &lt;INITIAL, Generic                          &gt;'.'                                                                                   : Token;
+EquTerm               : &lt;INITIAL, Generic                          &gt;'='                                                                                   : Token;
+HashTerm              : &lt;INITIAL, Generic,        Attr             &gt;'#'                                                                                   : Token;
+LAngleTerm            : &lt;INITIAL, Generic                          &gt;'&lt;'                                                                                   : Token;
+QuestionTerm          : &lt;INITIAL                                   &gt;'?'                                                                                   : Token;
+QuoteTerm             : &lt;                               ClockDomain&gt;"'"                                                                                   : Token;
+QuoteLBraceTerm       : &lt;INITIAL, Generic                          &gt;"'\{"                                                                                 : Token;
+LBraceTerm            : &lt;INITIAL, Generic, Embed, Attr             &gt;'{'                                                                                   : Token;
+LBracketTerm          : &lt;INITIAL, Generic,        Attr             &gt;'['                                                                                   : Token;
+LParenTerm            : &lt;INITIAL, Generic,        Attr             &gt;'('                                                                                   : Token;
+RAngleTerm            : &lt;INITIAL, Generic                          &gt;'&gt;'                                                                                   : Token;
+RBraceTerm            : &lt;INITIAL, Generic, Embed, Attr             &gt;'}'                                                                                   : Token;
+RBracketTerm          : &lt;INITIAL, Generic,        Attr             &gt;']'                                                                                   : Token;
+RParenTerm            : &lt;INITIAL, Generic,        Attr             &gt;')'                                                                                   : Token;
+SemicolonTerm         : &lt;INITIAL, Generic                          &gt;';'                                                                                   : Token;
+StarTerm              : &lt;INITIAL, Generic                          &gt;'*'                                                                                   : Token;
+AliasTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)alias(?-u:\b)/                                                               : Token;
+AlwaysCombTerm        : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)always_comb(?-u:\b)/                                                         : Token;
+AlwaysFfTerm          : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)always_ff(?-u:\b)/                                                           : Token;
+AssignTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)assign(?-u:\b)/                                                              : Token;
+AsTerm                : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)as(?-u:\b)/                                                                  : Token;
+BitTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)bit(?-u:\b)/                                                                 : Token;
+BoolTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)bool(?-u:\b)/                                                                : Token;
+CaseTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)case(?-u:\b)/                                                                : Token;
+ClockTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)clock(?-u:\b)/                                                               : Token;
+ClockPosedgeTerm      : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)clock_posedge(?-u:\b)/                                                       : Token;
+ClockNegedgeTerm      : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)clock_negedge(?-u:\b)/                                                       : Token;
+ConnectTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)connect(?-u:\b)/                                                             : Token;
+ConstTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)const(?-u:\b)/                                                               : Token;
+ConverseTerm          : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)converse(?-u:\b)/                                                            : Token;
+DefaultTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)default(?-u:\b)/                                                             : Token;
+ElseTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)else(?-u:\b)/                                                                : Token;
+EmbedTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)embed(?-u:\b)/                                                               : Token;
+EnumTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)enum(?-u:\b)/                                                                : Token;
+F32Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)f32(?-u:\b)/                                                                 : Token;
+F64Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)f64(?-u:\b)/                                                                 : Token;
+FalseTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)false(?-u:\b)/                                                               : Token;
+FinalTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)final(?-u:\b)/                                                               : Token;
+ForTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)for(?-u:\b)/                                                                 : Token;
+FunctionTerm          : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)function(?-u:\b)/                                                            : Token;
+I8Term                : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)i8(?-u:\b)/                                                                  : Token;
+I16Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)i16(?-u:\b)/                                                                 : Token;
+I32Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)i32(?-u:\b)/                                                                 : Token;
+I64Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)i64(?-u:\b)/                                                                 : Token;
+IfResetTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)if_reset(?-u:\b)/                                                            : Token;
+IfTerm                : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)if(?-u:\b)/                                                                  : Token;
+ImportTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)import(?-u:\b)/                                                              : Token;
+IncludeTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)include(?-u:\b)/                                                             : Token;
+InitialTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)initial(?-u:\b)/                                                             : Token;
+InoutTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)inout(?-u:\b)/                                                               : Token;
+InputTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)input(?-u:\b)/                                                               : Token;
+InsideTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)inside(?-u:\b)/                                                              : Token;
+InstTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)inst(?-u:\b)/                                                                : Token;
+InterfaceTerm         : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)interface(?-u:\b)/                                                           : Token;
+InTerm                : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)in(?-u:\b)/                                                                  : Token;
+LetTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)let(?-u:\b)/                                                                 : Token;
+LogicTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)logic(?-u:\b)/                                                               : Token;
+LsbTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)lsb(?-u:\b)/                                                                 : Token;
+ModportTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)modport(?-u:\b)/                                                             : Token;
+ModuleTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)module(?-u:\b)/                                                              : Token;
+MsbTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)msb(?-u:\b)/                                                                 : Token;
+OutputTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)output(?-u:\b)/                                                              : Token;
+OutsideTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)outside(?-u:\b)/                                                             : Token;
+PackageTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)package(?-u:\b)/                                                             : Token;
+ParamTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)param(?-u:\b)/                                                               : Token;
+ProtoTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)proto(?-u:\b)/                                                               : Token;
+PubTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)pub(?-u:\b)/                                                                 : Token;
+RepeatTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)repeat(?-u:\b)/                                                              : Token;
+ResetTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)reset(?-u:\b)/                                                               : Token;
+ResetAsyncHighTerm    : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)reset_async_high(?-u:\b)/                                                    : Token;
+ResetAsyncLowTerm     : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)reset_async_low(?-u:\b)/                                                     : Token;
+ResetSyncHighTerm     : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)reset_sync_high(?-u:\b)/                                                     : Token;
+ResetSyncLowTerm      : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)reset_sync_low(?-u:\b)/                                                      : Token;
+ReturnTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)return(?-u:\b)/                                                              : Token;
+BreakTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)break(?-u:\b)/                                                               : Token;
+SameTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)same(?-u:\b)/                                                                : Token;
+SignedTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)signed(?-u:\b)/                                                              : Token;
+StepTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)step(?-u:\b)/                                                                : Token;
+StringTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)string(?-u:\b)/                                                              : Token;
+StructTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)struct(?-u:\b)/                                                              : Token;
+SwitchTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)switch(?-u:\b)/                                                              : Token;
+TriTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)tri(?-u:\b)/                                                                 : Token;
+TrueTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)true(?-u:\b)/                                                                : Token;
+TypeTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)type(?-u:\b)/                                                                : Token;
+U8Term                : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)u8(?-u:\b)/                                                                  : Token;
+U16Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)u16(?-u:\b)/                                                                 : Token;
+U32Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)u32(?-u:\b)/                                                                 : Token;
+U64Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)u64(?-u:\b)/                                                                 : Token;
+UnionTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)union(?-u:\b)/                                                               : Token;
+UnsafeTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)unsafe(?-u:\b)/                                                              : Token;
+VarTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)var(?-u:\b)/                                                                 : Token;
+DollarIdentifierTerm  : &lt;INITIAL, Generic,              ClockDomain&gt;/\$[a-zA-Z_][0-9a-zA-Z_$]*/                                                           : Token;
+IdentifierTerm        : &lt;INITIAL, Generic,        Attr, ClockDomain&gt;/(?:r#)?[a-zA-Z_][0-9a-zA-Z_$]*/                                                      : Token;
+AnyTerm               : &lt;                  Embed                   &gt;/[^{}]+/                                                                              : Token;
 
 // ----------------------------------------------------------------------------
 // Token
@@ -3811,7 +4139,6 @@ Operator11Token        : Operator11Term        : Token Comments;
 Operator12Token        : Operator12Term        : Token Comments;
 UnaryOperatorToken     : UnaryOperatorTerm     : Token Comments;
 
-BackQuoteToken       : BackQuoteTerm       : Token Comments;
 ColonToken           : ColonTerm           : Token Comments;
 ColonColonLAngleToken: ColonColonLAngleTerm: Token Comments;
 ColonColonToken      : ColonColonTerm      : Token Comments;
@@ -3822,6 +4149,7 @@ DotToken             : DotTerm             : Token Comments;
 EquToken             : EquTerm             : Token Comments;
 HashToken            : HashTerm            : Token Comments;
 QuestionToken        : QuestionTerm        : Token Comments;
+QuoteToken           : QuoteTerm           : Token Comments;
 QuoteLBraceToken     : QuoteLBraceTerm     : Token Comments;
 LAngleToken          : LAngleTerm          : Token Comments;
 LBraceToken          : LBraceTerm          : Token Comments;
@@ -3861,6 +4189,8 @@ FalseToken         : FalseTerm         : Token Comments;
 FinalToken         : FinalTerm         : Token Comments;
 ForToken           : ForTerm           : Token Comments;
 FunctionToken      : FunctionTerm      : Token Comments;
+I8Token            : I8Term            : Token Comments;
+I16Token           : I16Term           : Token Comments;
 I32Token           : I32Term           : Token Comments;
 I64Token           : I64Term           : Token Comments;
 IfResetToken       : IfResetTerm       : Token Comments;
@@ -3903,6 +4233,8 @@ SwitchToken        : SwitchTerm        : Token Comments;
 TriToken           : TriTerm           : Token Comments;
 TrueToken          : TrueTerm          : Token Comments;
 TypeToken          : TypeTerm          : Token Comments;
+U8Token            : U8Term            : Token Comments;
+U16Token           : U16Term           : Token Comments;
 U32Token           : U32Term           : Token Comments;
 U64Token           : U64Term           : Token Comments;
 UnionToken         : UnionTerm         : Token Comments;
@@ -3946,7 +4278,6 @@ Operator12        : Operator12Token        : VerylToken;
 UnaryOperator     : UnaryOperatorToken     : VerylToken;
 
 // Symbol
-BackQuote       : BackQuoteToken       : VerylToken;
 Colon           : ColonToken           : VerylToken;
 ColonColonLAngle: ColonColonLAngleToken: VerylToken;
 ColonColon      : ColonColonToken      : VerylToken;
@@ -3957,6 +4288,7 @@ Dot             : DotToken             : VerylToken;
 Equ             : EquToken             : VerylToken;
 Hash            : HashToken            : VerylToken;
 Question        : QuestionToken        : VerylToken;
+Quote           : QuoteToken           : VerylToken;
 QuoteLBrace     : QuoteLBraceToken     : VerylToken;
 LAngle          : LAngleToken          : VerylToken;
 LBrace          : LBraceToken          : VerylToken;
@@ -3998,6 +4330,8 @@ False         : FalseToken         : VerylToken;
 Final         : FinalToken         : VerylToken;
 For           : ForToken           : VerylToken;
 Function      : FunctionToken      : VerylToken;
+I8            : I8Token            : VerylToken;
+I16           : I16Token           : VerylToken;
 I32           : I32Token           : VerylToken;
 I64           : I64Token           : VerylToken;
 If            : IfToken            : VerylToken;
@@ -4039,6 +4373,8 @@ Switch        : SwitchToken        : VerylToken;
 Tri           : TriToken           : VerylToken;
 True          : TrueToken          : VerylToken;
 Type          : TypeToken          : VerylToken;
+U8            : U8Token            : VerylToken;
+U16           : U16Token           : VerylToken;
 U32           : U32Token           : VerylToken;
 U64           : U64Token           : VerylToken;
 Union         : UnionToken         : VerylToken;
@@ -4178,7 +4514,7 @@ RangeOperator: DotDot
 // ScalarType / ArrayType / CastingType
 // ----------------------------------------------------------------------------
 
-FixedType: U32 | U64 | I32 | I64 | F32 | F64 | Bool | Strin;
+FixedType: U8 | U16 | U32 | U64 | I8 | I16| I32 | I64 | F32 | F64 | Bool | Strin;
 
 VariableType: Clock
             | ClockPosedge
@@ -4201,8 +4537,12 @@ ScalarType: { TypeModifier } ( UserDefinedType [ Width ] | FactorType );
 
 ArrayType: ScalarType [ Array ];
 
-CastingType: U32
+CastingType: U8
+           | U16
+           | U32
            | U64
+           | I8
+           | I16
            | I32
            | I64
            | F32
@@ -4225,7 +4565,7 @@ CastingType: U32
 // ClockDomain
 // ----------------------------------------------------------------------------
 
-ClockDomain: BackQuote Identifier;
+ClockDomain: Quote Identifier;
 
 // ----------------------------------------------------------------------------
 // Statement
@@ -4247,7 +4587,7 @@ Statement: IdentifierStatement
          | SwitchStatement
          ;
 
-LetStatement: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Semicolon;
+LetStatement: Let Identifier %push(ClockDomain) Colon [ ClockDomain ] %pop() ArrayType Equ Expression Semicolon;
 
 IdentifierStatement: ExpressionIdentifier ( FunctionCall | Assignment ) Semicolon;
 
@@ -4279,7 +4619,7 @@ SwitchCondition: Expression { Comma Expression } ;
 // Attribute
 // ----------------------------------------------------------------------------
 
-Attribute: Hash LBracket Identifier [ LParen AttributeList RParen ] RBracket;
+Attribute: Hash %push(Attr) LBracket Identifier [ LParen AttributeList RParen ] RBracket %pop();
 
 AttributeList: AttributeItem { Comma AttributeItem } [ Comma ];
 
@@ -4291,9 +4631,9 @@ AttributeItem: Identifier
 // Declaration
 // ----------------------------------------------------------------------------
 
-LetDeclaration: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Semicolon;
+LetDeclaration: Let Identifier %push(ClockDomain) Colon [ ClockDomain ] %pop() ArrayType Equ Expression Semicolon;
 
-VarDeclaration: Var Identifier Colon [ ClockDomain ] ArrayType Semicolon;
+VarDeclaration: Var Identifier %push(ClockDomain) Colon [ ClockDomain ] %pop() ArrayType Semicolon;
 
 ConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Equ Expression Semicolon;
 
@@ -4359,7 +4699,7 @@ FinalDeclaration: Final StatementBlock;
 // InstDeclaration
 // ----------------------------------------------------------------------------
 
-InstDeclaration: Inst Identifier Colon [ ClockDomain ] ScopedIdentifier [ Array ] [ InstParameter ] [ LParen [ InstPortList ] RParen ] Semicolon;
+InstDeclaration: Inst Identifier %push(ClockDomain) Colon [ ClockDomain ] %pop() ScopedIdentifier [ Array ] [ InstParameter ] [ LParen [ InstPortList ] RParen ] Semicolon;
 
 InstParameter: Hash LParen [ InstParameterList ] RParen;
 
@@ -4391,16 +4731,17 @@ WithParameterItem: ( Param | Const ) Identifier Colon ( ArrayType | Type ) Equ E
 // WithGenericParameter
 // ----------------------------------------------------------------------------
 
-GenericBound: Const
-            | Type
+GenericBound: Type
             | Inst ScopedIdentifier
-            | ScopedIdentifier;
+            | GenericProtoBound;
 
 WithGenericParameter: ColonColonLAngle WithGenericParameterList RAngle;
 
 WithGenericParameterList: WithGenericParameterItem { Comma WithGenericParameterItem } [ Comma ];
 
 WithGenericParameterItem: Identifier Colon GenericBound [ Equ WithGenericArgumentItem ];
+
+GenericProtoBound: ScopedIdentifier | FixedType;
 
 // ----------------------------------------------------------------------------
 // WithGenericArgument
@@ -4411,7 +4752,9 @@ WithGenericArgument: ColonColonLAngle %push(Generic) [ WithGenericArgumentList ]
 WithGenericArgumentList: WithGenericArgumentItem { Comma WithGenericArgumentItem } [ Comma ];
 
 WithGenericArgumentItem: ScopedIdentifier
+                       | FixedType
                        | Number
+                       | BooleanLiteral
                        ;
 
 // ----------------------------------------------------------------------------
@@ -4424,13 +4767,13 @@ PortDeclarationList: PortDeclarationGroup { Comma PortDeclarationGroup } [ Comma
 
 PortDeclarationGroup: { Attribute } ( LBrace PortDeclarationList RBrace | PortDeclarationItem );
 
-PortDeclarationItem: Identifier Colon ( PortTypeConcrete | PortTypeAbstract );
+PortDeclarationItem: Identifier %push(ClockDomain) Colon ( PortTypeConcrete | PortTypeAbstract );
 
-PortTypeConcrete: Direction [ ClockDomain ] ArrayType [ Equ PortDefaultValue ];
+PortTypeConcrete: Direction [ ClockDomain ] %pop() ArrayType [ Equ PortDefaultValue ];
 
 PortDefaultValue: Expression;
 
-PortTypeAbstract: [ ClockDomain ] Interface [ ColonColon Identifier ] [ Array ];
+PortTypeAbstract: [ ClockDomain ] %pop() Interface [ ColonColon Identifier ] [ Array ];
 
 Direction: Input
          | Output
@@ -4467,7 +4810,7 @@ ModuleGroup: { Attribute } ( LBrace { ModuleGroup } RBrace | ModuleItem );
 
 ModuleItem: GenerateItem;
 
-InterfaceDeclaration: Interface Identifier [ WithGenericParameter ] [ WithParameter ] LBrace { InterfaceGroup } RBrace;
+InterfaceDeclaration: Interface Identifier [ WithGenericParameter ] [ For ScopedIdentifier ] [ WithParameter ] LBrace { InterfaceGroup } RBrace;
 
 InterfaceGroup: { Attribute } ( LBrace { InterfaceGroup } RBrace | InterfaceItem );
 
@@ -4534,15 +4877,29 @@ AliasDeclaration: Alias ( Module | Interface | Package ) Identifier Equ ScopedId
 // Proto
 // ----------------------------------------------------------------------------
 
-ProtoModuleDeclaration: Proto Module Identifier [ WithParameter ] [ PortDeclaration ] Semicolon;
+ProtoDeclaration: Proto ( ProtoModuleDeclaration | ProtoInterfaceDeclaration | ProtoPackageDeclaration );
 
-ProtoPackageDeclaration: Proto Package Identifier LBrace { ProtoPacakgeItem } RBrace;
+ProtoModuleDeclaration: Module Identifier [ WithParameter ] [ PortDeclaration ] Semicolon;
+
+ProtoInterfaceDeclaration: Interface Identifier [ WithParameter ] LBrace { ProtoInterfaceItem } RBrace;
+
+ProtoInterfaceItem: VarDeclaration
+                  | ProtoConstDeclaration
+                  | ProtoFunctionDeclaration
+                  | ProtoTypeDefDeclaration
+                  | ProtoAliasDeclaration
+                  | ModportDeclaration
+                  | ImportDeclaration
+                  ;
+
+ProtoPackageDeclaration: Package Identifier LBrace { ProtoPacakgeItem } RBrace;
 
 ProtoPacakgeItem: ProtoConstDeclaration
                 | ProtoTypeDefDeclaration
                 | EnumDeclaration
                 | StructUnionDeclaration
                 | ProtoFunctionDeclaration
+                | ProtoAliasDeclaration
                 | ImportDeclaration
                 ;
 
@@ -4551,6 +4908,8 @@ ProtoConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Semicolon;
 ProtoTypeDefDeclaration: Type Identifier Semicolon;
 
 ProtoFunctionDeclaration: Function Identifier [ WithGenericParameter ] [ PortDeclaration ] [ MinusGT ScalarType ] Semicolon;
+
+ProtoAliasDeclaration: Alias ( Module | Interface | Package ) Identifier Colon ScopedIdentifier Semicolon;
 
 // ----------------------------------------------------------------------------
 // Embed
@@ -4587,8 +4946,7 @@ PublicDescriptionItem: ModuleDeclaration
                      | InterfaceDeclaration
                      | PackageDeclaration
                      | AliasDeclaration
-                     | ProtoModuleDeclaration
-                     | ProtoPackageDeclaration
+                     | ProtoDeclaration
                      ;
 
 // ----------------------------------------------------------------------------
@@ -4607,6 +4965,8 @@ Veryl: Start { DescriptionGroup };
 <h2 id="invalid_number_character"><a class="header" href="#invalid_number_character">invalid_number_character</a></h2>
 <h2 id="invalid_statement"><a class="header" href="#invalid_statement">invalid_statement</a></h2>
 <h2 id="invalid_system_function"><a class="header" href="#invalid_system_function">invalid_system_function</a></h2>
+<h2 id="invalid_type_declaration"><a class="header" href="#invalid_type_declaration">invalid_type_declaration</a></h2>
+<p>This error is reported when <code>struct</code>, <code>enum</code> and <code>union</code> data types are defined within interface declarations.</p>
 <h2 id="mismatch_arity"><a class="header" href="#mismatch_arity">mismatch_arity</a></h2>
 <h2 id="mismatch_attribute_args"><a class="header" href="#mismatch_attribute_args">mismatch_attribute_args</a></h2>
 <h2 id="mismatch_type"><a class="header" href="#mismatch_type">mismatch_type</a></h2>

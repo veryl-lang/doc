@@ -208,9 +208,9 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="デフォルトパラメータ"><a class="header" href="#デフォルトパラメータ">デフォルトパラメータ</a></h1>
-<p>ジェネリックパラメータはその後に <code>=</code> を加えることででフォルト値を指定することができます。呼び出し側でパラメータ指定が省略された場合にデフォルト値が使われます。</p>
+<p>ジェネリックパラメータはその後に <code>=</code> を加えることでデフォルト値を指定することができます。呼び出し側でパラメータ指定が省略された場合にデフォルト値が使われます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const = 10&gt; (
+    function FuncA::&lt;T: u32 = 10&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + 1;
@@ -222,14 +222,14 @@
 </code></pre>
 <p>デフォルトパラメータはジェネリックパラメータリストの最後に置く必要があります。そうでなければ、どのパラメータが省略されたかが曖昧になるためです。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const, U: const = 1&gt; (
+    function FuncA::&lt;T: u32, U: u32 = 1&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + U;
     }
 
     // エラー
-    //function FuncA::&lt;T: const = 1, U: const&gt; (
+    //function FuncA::&lt;T: u32 = 1, U: u32&gt; (
     //    a: input logic&lt;T&gt;,
     //) -&gt; logic&lt;T&gt; {
     //    return a + U;

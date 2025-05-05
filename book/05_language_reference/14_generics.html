@@ -220,14 +220,13 @@ The following items support generics:</p>
 </ul>
 <p>Each generic definition has generic parameters (often an uppercase letter is used like <code>T</code>) which can be placed as identifier or expression in the definition.
 Generic parameters are declarated after item’s identifier with <code>::&lt;&gt;</code>.</p>
-<p>Each generic parameter should have generic bound after colon like <code>T: const</code>.
+<p>Each generic parameter should have generic bound after colon like <code>T: TypeName</code>.
 Generic bound represents what value can be passed to the generic parameter.
 The available generic bounds are below:</p>
 <ul>
-<li><code>const</code>: means constant value can be passed</li>
 <li><code>type</code> : means arbitrary type can be passed</li>
 <li><code>inst: X</code> : instance of <code>X</code></li>
-<li>named prototype</li>
+<li>named prototype, user defined data type or fixed data type</li>
 </ul>
 <p>Named prototype is a special generic bound. See <a href="14_generics/02_prototype.html">Prototype</a> for details.</p>
 <p>At the usage of generics, actual parameters can be given through <code>::&lt;&gt;</code>.
@@ -238,7 +237,7 @@ On the other hand, local parameters can’t be used as actual parameters in many
 This is caused by that the local parameters is not accessible from the potision of the generics declaration.</p>
 <h2 id="generic-function"><a class="header" href="#generic-function">Generic Function</a></h2>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const&gt; (
+    function FuncA::&lt;T: u32&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + 1;
@@ -264,7 +263,7 @@ module ModuleC for ProtoA {}
 module ModuleD for ProtoA {}
 </code></pre>
 <h2 id="generic-package"><a class="header" href="#generic-package">Generic Package</a></h2>
-<pre><code class="language-veryl playground">package PackageA::&lt;T: const&gt; {
+<pre><code class="language-veryl playground">package PackageA::&lt;T: u32&gt; {
     const X: u32 = T;
 }
 

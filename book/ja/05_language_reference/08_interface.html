@@ -229,6 +229,27 @@
     }
 }
 </code></pre>
+<p>さらに、<code>import</code> キーワードを付けて指定された関数は modport を通して呼び出すことができます。</p>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var a: logic;
+    var b: logic;
+
+    function a_and_b -&gt; logic&lt;2&gt; {
+        return {a, b};
+    }
+
+    modport mp {
+        a      : input ,
+        b      : input ,
+        a_and_b: import,
+    }
+}
+module ModuleA (
+    ab_if: modport InterfaceA::mp,
+) {
+    let _ab: logic&lt;2&gt; = ab_if.a_and_b();
+}
+</code></pre>
 <h2 id="modportのデフォルトメンバー"><a class="header" href="#modportのデフォルトメンバー">modportのデフォルトメンバー</a></h2>
 <p>modportの全てのメンバーを指定する代わりに、以下のようにデフォルトメンバーを指定することができます。</p>
 <ul>

@@ -240,16 +240,24 @@
 <h2 id="整数型"><a class="header" href="#整数型">整数型</a></h2>
 <p>整数型にはいくつかの種類があります。</p>
 <ul>
+<li><code>u8</code>：8ビットの符号なし整数</li>
+<li><code>u16</code>：16ビットの符号なし整数</li>
 <li><code>u32</code>：32ビットの符号なし整数</li>
 <li><code>u64</code>：64ビットの符号なし整数</li>
+<li><code>i8</code>：8ビットの符号付き整数</li>
+<li><code>i16</code>：16ビットの符号付き整数</li>
 <li><code>i32</code>：32ビットの符号付き整数</li>
 <li><code>i64</code>：64ビットの符号付き整数</li>
 </ul>
 <pre><code class="language-veryl playground">module ModuleA {
-    let _a: u32 = 1;
-    let _b: u64 = 1;
-    let _c: i32 = 1;
-    let _d: i64 = 1;
+    let _a: u8  = 1;
+    let _b: u16 = 1;
+    let _c: u32 = 1;
+    let _d: u64 = 1;
+    let _e: i8  = 1;
+    let _f: i16 = 1;
+    let _g: i32 = 1;
+    let _h: i64 = 1;
 }
 </code></pre>
 <h2 id="浮動小数点数型"><a class="header" href="#浮動小数点数型">浮動小数点数型</a></h2>

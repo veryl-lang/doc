@@ -218,19 +218,18 @@
 <li>ユニオン</li>
 </ul>
 <p>それぞれのジェネリック定義はジェネリックパラメータ（<code>T</code> のような大文字1文字がよく使われます）を持ち、定義内で識別子や式として配置できます。ジェネリックパラメータはアイテムの識別子の後に <code>::&lt;&gt;</code> を用いて宣言します。</p>
-<p>各ジェネリックパラメータにはコロンの後に <code>T: const</code> のようなジェネリック境界が必要です。ジェネリック境界はどのような値をそのパラメータに渡すことができるかを示します。使用可能なジェネリック境界は以下の通りです。</p>
+<p>各ジェネリックパラメータにはコロンの後に <code>T: TypeName</code> のようなジェネリック境界が必要です。ジェネリック境界はどのような値をそのパラメータに渡すことができるかを示します。使用可能なジェネリック境界は以下の通りです。</p>
 <ul>
-<li><code>const</code>: 定数値を渡すことができる</li>
 <li><code>type</code>: 任意の型を渡すことができる</li>
 <li><code>inst: X</code> : <code>X</code> のインスタンス</li>
-<li>名前付きプロトタイプ</li>
+<li>名前付きプロトタイプ、ユーザ定義型、組み込みのデータ型</li>
 </ul>
 <p>名前付きプロトタイプは特別なジェネリック境界です。詳細は <a href="14_generics/02_prototype.html">プロトタイプ</a> を参照してください。</p>
 <p>ジェネリクスを使用するためには <code>::&lt;&gt;</code> を用いて実パラメータを与えます。実パラメータとしては数値リテラルと <code>::</code> で連結された識別子を使用することができます。</p>
 <p>さらに、実パラメータはジェネリクス定義位置から参照できなければなりません。例えば、モジュール名はプロジェクト全体から参照できるので、実パラメータとして使用できます。一方、ローカルパラメータは多くの場合、実パラメータとして使用できません。これはローカルパラメータがジェネリクス定義位置からは参照できない場合に発生します。</p>
 <h2 id="ジェネリック関数"><a class="header" href="#ジェネリック関数">ジェネリック関数</a></h2>
 <pre><code class="language-veryl playground">module ModuleA {
-    function FuncA::&lt;T: const&gt; (
+    function FuncA::&lt;T: u32&gt; (
         a: input logic&lt;T&gt;,
     ) -&gt; logic&lt;T&gt; {
         return a + 1;
@@ -256,7 +255,7 @@ module ModuleC for ProtoA {}
 module ModuleD for ProtoA {}
 </code></pre>
 <h2 id="ジェネリックパッケージ"><a class="header" href="#ジェネリックパッケージ">ジェネリックパッケージ</a></h2>
-<pre><code class="language-veryl playground">package PackageA::&lt;T: const&gt; {
+<pre><code class="language-veryl playground">package PackageA::&lt;T: u32&gt; {
     const X: u32 = T;
 }
 

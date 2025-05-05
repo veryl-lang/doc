@@ -224,14 +224,14 @@
 </ul>
 <p>特別な要件がなければ、コードの再利用を高めるため <code>clock</code> と <code>reset</code> の使用を推奨します。</p>
 <pre><code class="language-veryl playground">module ModuleA (
-    i_clk    : input `_ clock           ,
-    i_clk_p  : input `_ clock_posedge   ,
-    i_clk_n  : input `_ clock_negedge   ,
-    i_rst    : input `_ reset           ,
-    i_rst_a  : input `_ reset_async_high,
-    i_rst_a_n: input `_ reset_async_low ,
-    i_rst_s  : input `_ reset_sync_high ,
-    i_rst_s_n: input `_ reset_sync_low  ,
+    i_clk    : input '_ clock           ,
+    i_clk_p  : input '_ clock_posedge   ,
+    i_clk_n  : input '_ clock_negedge   ,
+    i_rst    : input '_ reset           ,
+    i_rst_a  : input '_ reset_async_high,
+    i_rst_a_n: input '_ reset_async_low ,
+    i_rst_s  : input '_ reset_sync_high ,
+    i_rst_s_n: input '_ reset_sync_low  ,
 ) {
     var a: logic;
     var b: logic;
@@ -268,7 +268,7 @@
     i_clk   : input clock,
     i_clk_en: input logic,
 ) {
-    let clk: `_ default clock = i_clk &amp; i_clk_en;
+    let clk: '_ default clock = i_clk &amp; i_clk_en;
 
     var a: logic;
 

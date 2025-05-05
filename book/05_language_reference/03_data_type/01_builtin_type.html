@@ -244,16 +244,24 @@ Multi-dimentional can be specified by <code>&lt;X, Y, Z,,,&gt;</code>.</p>
 <h2 id="integer-type"><a class="header" href="#integer-type">Integer type</a></h2>
 <p>There are some integer types:</p>
 <ul>
+<li><code>u8</code> : 8bit unsigned integer</li>
+<li><code>u16</code>: 16bit unsigned integer</li>
 <li><code>u32</code>: 32bit unsigned integer</li>
 <li><code>u64</code>: 64bit unsigned integer</li>
+<li><code>i8</code> : 8bit signed integer</li>
+<li><code>i16</code>: 16bit signed integer</li>
 <li><code>i32</code>: 32bit signed integer</li>
 <li><code>i64</code>: 64bit signed integer</li>
 </ul>
 <pre><code class="language-veryl playground">module ModuleA {
-    let _a: u32 = 1;
-    let _b: u64 = 1;
-    let _c: i32 = 1;
-    let _d: i64 = 1;
+    let _a: u8  = 1;
+    let _b: u16 = 1;
+    let _c: u32 = 1;
+    let _d: u64 = 1;
+    let _e: i8  = 1;
+    let _f: i16 = 1;
+    let _g: i32 = 1;
+    let _h: i64 = 1;
 }
 </code></pre>
 <h2 id="floating-point-type"><a class="header" href="#floating-point-type">Floating point type</a></h2>

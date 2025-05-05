@@ -208,17 +208,17 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="クロックドメインアノテーション"><a class="header" href="#クロックドメインアノテーション">クロックドメインアノテーション</a></h1>
-<p>モジュール内に複数のクロックがある場合、<code>`a</code> のような明示的なクロックドメインアノテーションが必要です。アノテーションはそれぞれの信号がどのクロックドメインに所属するかを示します。</p>
+<p>モジュール内に複数のクロックがある場合、<code>'a</code> のような明示的なクロックドメインアノテーションが必要です。アノテーションはそれぞれの信号がどのクロックドメインに所属するかを示します。</p>
 <pre><code class="language-veryl playground">module ModuleA (
-    // クロックドメイン `a に所属
-    i_clk_a: input  `a clock,
-    i_dat_a: input  `a logic,
-    o_dat_a: output `a logic,
+    // クロックドメイン 'a に所属
+    i_clk_a: input  'a clock,
+    i_dat_a: input  'a logic,
+    o_dat_a: output 'a logic,
 
-    // クロックドメイン `b に所属
-    i_clk_b: input  `b clock,
-    i_dat_b: input  `b logic,
-    o_dat_b: output `b logic,
+    // クロックドメイン 'b に所属
+    i_clk_b: input  'b clock,
+    i_dat_b: input  'b logic,
+    o_dat_b: output 'b logic,
 ) {
     // 同じクロックドメイン内の代入は安全
     assign o_dat_a = i_dat_a;
@@ -234,11 +234,11 @@
     assign o_dat = i_dat;
 }
 </code></pre>
-<p><code>`_</code> は暗黙のクロックドメインを表す特別なクロックドメインです。これは複数のクロックが同じ暗黙のクロックドメインに所属することを示すために使用できます。</p>
+<p><code>'_</code> は暗黙のクロックドメインを表す特別なクロックドメインです。これは複数のクロックが同じ暗黙のクロックドメインに所属することを示すために使用できます。</p>
 <pre><code class="language-veryl playground">module ModuleA (
     // 全ての信号は暗黙のクロックドメインに所属
-    i_clk   : input  `_ clock,
-    i_clk_x2: input  `_ clock,
+    i_clk   : input  '_ clock,
+    i_clk_x2: input  '_ clock,
     i_dat   : input     logic,
     o_dat   : output    logic,
 ) {
@@ -247,7 +247,7 @@
 </code></pre>
 <p>インターフェースインスタンスもクロックドメインアノテーションを指定可能です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    inst intf: `a InterfaceA;
+    inst intf: 'a InterfaceA;
 }
 
 interface InterfaceA {}

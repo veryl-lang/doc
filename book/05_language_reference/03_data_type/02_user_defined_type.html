@@ -225,6 +225,9 @@ It can contain some fields, and these fields can be access through <code>.</code
     assign a.member_c = 2;
 }
 </code></pre>
+<div class="warning">
+You can define `struct` data types within module and package declarations but not interface declaration.
+</div>
 <h2 id="enum"><a class="header" href="#enum">Enum</a></h2>
 <p><code>enum</code> is enumerable type.
 It has some named variant, and the value of <code>enum</code> can be set to the one of them.
@@ -253,6 +256,9 @@ Otherwise, it is assigned automatically.</p>
     }
 }
 </code></pre>
+<div class="warning">
+You can define `enum` data types within module and package declarations but not interface declarations.
+</div>
 <h3 id="enum-encoding"><a class="header" href="#enum-encoding">Enum Encoding</a></h3>
 <p>By default, the value of each variant is assigned sequentially if it is omitted.
 If you want to specify value encoding, <code>#[enum_encoding]</code> attribute can be used.
@@ -293,6 +299,9 @@ Each  union variant should have the same packed width as each other union varian
     assign a.variant_a = 8'haa;
 }
 </code></pre>
+<div class="warning">
+You can define `union` data types within module and package declarations but not interface declarations.
+</div>
 <h2 id="typedef"><a class="header" href="#typedef">Typedef</a></h2>
 <p>The <code>type</code> keyword can be used to define a type alias to scalar or array types.</p>
 <pre><code class="language-veryl playground">module A {

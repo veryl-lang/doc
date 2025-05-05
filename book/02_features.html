@@ -288,7 +288,7 @@ end
 </code></pre>
 </td>
 <td>
-<pre><code class="language-veryl">function FuncA::&lt;T: const&gt; (
+<pre><code class="language-veryl">function FuncA::&lt;T: u32&gt; (
     a: input logic&lt;T&gt;,
 ) -&gt; logic&lt;T&gt; {
     return a + 1;
@@ -330,12 +330,12 @@ endmodule
 </td>
 <td>
 <pre><code class="language-veryl">module ModuleA (
-    i_clk_a: input  `a clock,
-    i_dat_a: input  `a logic,
-    i_dat_a: output `a logic,
-    i_clk_b: input  `b clock,
-    i_dat_b: input  `b logic,
-    i_dat_b: output `b logic,
+    i_clk_a: input  'a clock,
+    i_dat_a: input  'a logic,
+    i_dat_a: output 'a logic,
+    i_clk_b: input  'b clock,
+    i_dat_b: input  'b logic,
+    i_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
         assign o_dat_b = i_dat_a;
@@ -442,7 +442,7 @@ endmodule
 ///
 /// * list
 /// * list
-/// 
+///
 /// ```wavedrom
 /// { signal: [{ name: "Alfa", wave: "01.zx=ud.23.456789" }] }
 /// ```
@@ -545,7 +545,7 @@ readability improves, especially when comparing a large number of items.</p>
 <pre><code class="language-verilog">logic a;
 assign a = X == 0 ? Y0 :
            X == 1 ? Y1 :
-           X == 2 ? Y2 : 
+           X == 2 ? Y2 :
                     Y3;
 </code></pre>
 </td>
