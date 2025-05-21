@@ -14,10 +14,10 @@ module ModuleA {
             0: b = 1;
             1: b = 2;
             2: {
-                   b = 3;
-                   b = 3;
-                   b = 3;
-               }
+                b = 3;
+                b = 3;
+                b = 3;
+            }
             default: b = 4;
         }
     }
@@ -27,10 +27,10 @@ module ModuleA {
             a == 0: c = 1;
             a == 1: c = 2;
             a == 2: {
-                        c = 3;
-                        c = 3;
-                        c = 3;
-                    }
+                c = 3;
+                c = 3;
+                c = 3;
+            }
             default: c = 4;
         }
     }
