@@ -78,7 +78,7 @@ strip_comments = true
 
 ## The `*_prefix` and `*_suffix` field
 
-`*_prefix` and `*_suffix` represent additional prefix and suffix for the generated code. 
+`*_prefix` and `*_suffix` represent additional prefix and suffix for the generated code.
 The available configurations are below:
 
 * `clock_posedge_prefix`: Prefix for `clock` type at `clock_type = posedge`
@@ -116,6 +116,20 @@ This is `false` by default.
 [build]
 expand_inside_operation = true
 ```
+
+## The `shorten_mangled_name` field
+
+If `shorten_mangled_name` is set true, part showing the given generic arguments within the output component name is hashed and shortened.
+This is `false` by default.
+
+```toml
+shorten_mangled_name = true
+```
+
+Example:
+
+* Un-shortened name: `prj___PkgA__0__1__2__3`
+* Shortened name: `prj___PkgA__3894375d1deadabb`
 
 ## The `exclude_std` field
 
