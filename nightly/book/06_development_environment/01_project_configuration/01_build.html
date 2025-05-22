@@ -296,6 +296,16 @@ This is <code>false</code> by default.</p>
 <pre><code class="language-toml">[build]
 expand_inside_operation = true
 </code></pre>
+<h2 id="the-shorten_mangled_name-field"><a class="header" href="#the-shorten_mangled_name-field">The <code>shorten_mangled_name</code> field</a></h2>
+<p>If <code>shorten_mangled_name</code> is set true, part showing the given generic arguments within the output component name is hashed and shortened.
+This is <code>false</code> by default.</p>
+<pre><code class="language-toml">shorten_mangled_name = true
+</code></pre>
+<p>Example:</p>
+<ul>
+<li>Un-shortened name: <code>prj___PkgA__0__1__2__3</code></li>
+<li>Shortened name: <code>prj___PkgA__3894375d1deadabb</code></li>
+</ul>
 <h2 id="the-exclude_std-field"><a class="header" href="#the-exclude_std-field">The <code>exclude_std</code> field</a></h2>
 <p>If <code>exclude_std</code> is set to <code>true</code>, standard library will not be included.</p>
 <pre><code class="language-toml">[build]
