@@ -131,6 +131,45 @@ Example:
 * Un-shortened name: `prj___PkgA__0__1__2__3`
 * Shortened name: `prj___PkgA__3894375d1deadabb`
 
+## The `flatten_array_interface` field
+
+If `flatten_array_interface` is set true, multi-demensional array instance/modport is flattened into a single demensional array.
+Some EDA tools do not support multi-demensional array instance/modport and this field is for such EDA tools.
+
+```toml
+flatten_array_interface = true
+```
+
+Example:
+
+Veryl code
+
+```veryl
+module ModuleA (
+    a_if: modport InterfaceA::mp [2, 3],
+) {
+    for i in 0..2 :g {
+        for j in 0..3 :g {
+            assign a_if[i][j].a = 0;
+        }
+    }
+}
+```
+
+Generated SystemVerilog code with `flatten_array_interface` = true
+
+```systemverilog
+module veryl_testcase_ModuleA (
+    veryl_testcase_InterfaceA.mp a_if [0:(2)*(3)-1]
+);
+    for (genvar i = 0; i < 2; i++) begin :g
+        for (genvar j = 0; j < 3; j++) begin :g
+            always_comb a_if[(i)*(3)+(j)].a = 0;
+        end
+    end
+endmodule
+```
+
 ## The `exclude_std` field
 
 If `exclude_std` is set to `true`, standard library will not be included.
