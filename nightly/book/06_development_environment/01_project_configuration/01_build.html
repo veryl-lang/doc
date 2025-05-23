@@ -306,6 +306,34 @@ This is <code>false</code> by default.</p>
 <li>Un-shortened name: <code>prj___PkgA__0__1__2__3</code></li>
 <li>Shortened name: <code>prj___PkgA__3894375d1deadabb</code></li>
 </ul>
+<h2 id="the-flatten_array_interface-field"><a class="header" href="#the-flatten_array_interface-field">The <code>flatten_array_interface</code> field</a></h2>
+<p>If <code>flatten_array_interface</code> is set true, multi-demensional array instance/modport is flattened into a single demensional array.
+Some EDA tools do not support multi-demensional array instance/modport and this field is for such EDA tools.</p>
+<pre><code class="language-toml">flatten_array_interface = true
+</code></pre>
+<p>Example:</p>
+<p>Veryl code</p>
+<pre><code class="language-veryl">module ModuleA (
+    a_if: modport InterfaceA::mp [2, 3],
+) {
+    for i in 0..2 :g {
+        for j in 0..3 :g {
+            assign a_if[i][j].a = 0;
+        }
+    }
+}
+</code></pre>
+<p>Generated SystemVerilog code with <code>flatten_array_interface</code> = true</p>
+<pre><code class="language-systemverilog">module veryl_testcase_ModuleA (
+    veryl_testcase_InterfaceA.mp a_if [0:(2)*(3)-1]
+);
+    for (genvar i = 0; i &lt; 2; i++) begin :g
+        for (genvar j = 0; j &lt; 3; j++) begin :g
+            always_comb a_if[(i)*(3)+(j)].a = 0;
+        end
+    end
+endmodule
+</code></pre>
 <h2 id="the-exclude_std-field"><a class="header" href="#the-exclude_std-field">The <code>exclude_std</code> field</a></h2>
 <p>If <code>exclude_std</code> is set to <code>true</code>, standard library will not be included.</p>
 <pre><code class="language-toml">[build]
