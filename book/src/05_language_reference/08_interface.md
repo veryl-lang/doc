@@ -89,3 +89,35 @@ interface InterfaceA {
     }
 }
 ```
+
+## Connect interface instances/modport ports
+
+An interface instance and a modport port can be connected with a module port of which type is compatible with it or is the `generic` interface with the same manner of SystemVerilog.
+
+```veryl,playground
+interface InterfaceA {
+    var a: logic;
+
+    modport mp {
+        a: output,
+    }
+}
+module ModuleA (
+    foo_if: modport InterfaceA::mp,
+    bar_if: modport InterfaceA::mp,
+) {
+    always_comb {
+        foo_if.a = '0;
+        bar_if.a = '0;
+    }
+}
+module ModuleB (
+    foo_if: modport InterfaceA::mp,
+) {
+    inst bar_if: InterfaceA;
+    inst u: ModuleA (
+        foo_if: foo_if,
+        bar_if: bar_if,
+    );
+}
+```
