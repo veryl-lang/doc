@@ -214,7 +214,7 @@ By this file, a file path, line and column of SystemVerilog can be translated in
 Source map generation can be configured through <a href="./01_project_configuration/01_build.html#sourcemap-target"><code>sourcemap_target</code> field</a> in <code>Veryl.toml</code>.</p>
 <p>The format of source map follows <a href="https://sourcemaps.info/spec.html">Source Map Revision 3</a>.
 The convention of linking generated code to source map is almost the same as JavaScript, but relative path is used only:</p>
-<pre><code class="language-systemverilog">//# sourceMappingURL=&lt;relative path&gt;
+<pre><code class="language-verilog">//# sourceMappingURL=&lt;relative path&gt;
 </code></pre>
 <p>So, if there is the above comment at the end of a SystemVerilog file, it shows source map can be used.</p>
 <h2 id="sourcemap-resolver"><a class="header" href="#sourcemap-resolver">sourcemap-resolver</a></h2>

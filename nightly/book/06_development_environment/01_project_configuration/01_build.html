@@ -299,7 +299,8 @@ expand_inside_operation = true
 <h2 id="the-shorten_mangled_name-field"><a class="header" href="#the-shorten_mangled_name-field">The <code>shorten_mangled_name</code> field</a></h2>
 <p>If <code>shorten_mangled_name</code> is set true, part showing the given generic arguments within the output component name is hashed and shortened.
 This is <code>false</code> by default.</p>
-<pre><code class="language-toml">shorten_mangled_name = true
+<pre><code class="language-toml">[build]
+shorten_mangled_name = true
 </code></pre>
 <p>Example:</p>
 <ul>
@@ -308,8 +309,10 @@ This is <code>false</code> by default.</p>
 </ul>
 <h2 id="the-flatten_array_interface-field"><a class="header" href="#the-flatten_array_interface-field">The <code>flatten_array_interface</code> field</a></h2>
 <p>If <code>flatten_array_interface</code> is set true, multi-demensional array instance/modport is flattened into a single demensional array.
-Some EDA tools do not support multi-demensional array instance/modport and this field is for such EDA tools.</p>
-<pre><code class="language-toml">flatten_array_interface = true
+Some EDA tools do not support multi-demensional array instance/modport and this field is for such EDA tools.
+This is <code>false</code> by default.</p>
+<pre><code class="language-toml">[build]
+flatten_array_interface = true
 </code></pre>
 <p>Example:</p>
 <p>Veryl code</p>
@@ -324,7 +327,7 @@ Some EDA tools do not support multi-demensional array instance/modport and this 
 }
 </code></pre>
 <p>Generated SystemVerilog code with <code>flatten_array_interface</code> = true</p>
-<pre><code class="language-systemverilog">module veryl_testcase_ModuleA (
+<pre><code class="language-verilog">module veryl_testcase_ModuleA (
     veryl_testcase_InterfaceA.mp a_if [0:(2)*(3)-1]
 );
     for (genvar i = 0; i &lt; 2; i++) begin :g
