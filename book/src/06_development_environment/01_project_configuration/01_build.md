@@ -117,20 +117,21 @@ This is `false` by default.
 expand_inside_operation = true
 ```
 
-## The `shorten_mangled_name` field
+## The `hashed_mangled_name` field
 
-If `shorten_mangled_name` is set true, part showing the given generic arguments within the output component name is hashed and shortened.
+If `hashed_mangled_name` is set `true`, part showing the given generic arguments within the output component name is hashed.
+This option prevent mangled name to become too long if there are many generic arguments.
 This is `false` by default.
 
 ```toml
 [build]
-shorten_mangled_name = true
+hashed_mangled_name = true
 ```
 
 Example:
 
-* Un-shortened name: `prj___PkgA__0__1__2__3`
-* Shortened name: `prj___PkgA__3894375d1deadabb`
+* Un-hashed name: `prj___PkgA__0__1__2__3`
+* Hashed name: `prj___PkgA__3894375d1deadabb`
 
 ## The `flatten_array_interface` field
 
