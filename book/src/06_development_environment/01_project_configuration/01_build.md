@@ -123,6 +123,7 @@ If `shorten_mangled_name` is set true, part showing the given generic arguments 
 This is `false` by default.
 
 ```toml
+[build]
 shorten_mangled_name = true
 ```
 
@@ -135,8 +136,10 @@ Example:
 
 If `flatten_array_interface` is set true, multi-demensional array instance/modport is flattened into a single demensional array.
 Some EDA tools do not support multi-demensional array instance/modport and this field is for such EDA tools.
+This is `false` by default.
 
 ```toml
+[build]
 flatten_array_interface = true
 ```
 
@@ -158,7 +161,7 @@ module ModuleA (
 
 Generated SystemVerilog code with `flatten_array_interface` = true
 
-```systemverilog
+```verilog
 module veryl_testcase_ModuleA (
     veryl_testcase_InterfaceA.mp a_if [0:(2)*(3)-1]
 );

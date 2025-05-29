@@ -9,7 +9,7 @@ Source map generation can be configured through [`sourcemap_target` field](./01_
 The format of source map follows [Source Map Revision 3](https://sourcemaps.info/spec.html).
 The convention of linking generated code to source map is almost the same as JavaScript, but relative path is used only:
 
-```systemverilog
+```verilog
 //# sourceMappingURL=<relative path>
 ```
 
