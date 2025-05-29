@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-05-29T09:31:23+09:00\n"
+"POT-Creation-Date: 2025-05-29T11:20:20+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -3852,8 +3852,9 @@ msgid ""
 "of which type is compatible with it or is the `generic` interface with the "
 "same manner of SystemVerilog."
 msgstr ""
-"インターフェースインスタンスとmodportポートは、SystemVerilogと同様に、"
-"互換性のあるモジュールポートあるいは `generic` インターフェースに接続することができます。"
+"インターフェースインスタンスとmodportポートは、SystemVerilogと同様に、互換性"
+"のあるモジュールポートあるいは `generic` インターフェースに接続することができ"
+"ます。"
 
 #: src/05_language_reference/09_package.md:3
 msgid ""
@@ -5340,69 +5341,72 @@ msgstr ""
 "子をサポートしていないためです。この値はデフォルトで `false` です。"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:120
-msgid "The `shorten_mangled_name` field"
-msgstr "`shorten_mangled_name` フィールド"
+msgid "The `hashed_mangled_name` field"
+msgstr "`hashed_mangled_name` フィールド"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:122
 msgid ""
-"If `shorten_mangled_name` is set true, part showing the given generic "
-"arguments within the output component name is hashed and shortened. This is "
+"If `hashed_mangled_name` is set `true`, part showing the given generic "
+"arguments within the output component name is hashed. This option prevent "
+"mangled name to become too long if there are many generic arguments. This is "
 "`false` by default."
 msgstr ""
-"`shorten_mangled_name` が `true` のとき、出力されるコンポーネント名のうち"
-"ジェネリック引数を示す部分がハッシュ化され短縮されます。"
-"この値はデフォルトで `false` です。"
+"`hashed_mangled_name` が `true` のとき、出力されるコンポーネント名のうちジェ"
+"ネリック引数を示す部分がハッシュ化されます。この設定はジェネリック引数が多いときに"
+"マングリングされた名前が長くなりすぎるのを防ぎます。この値はデフォルトで "
+"`false` です。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:129
-#: src/06_development_environment/01_project_configuration/01_build.md:143
+#: src/06_development_environment/01_project_configuration/01_build.md:131
+#: src/06_development_environment/01_project_configuration/01_build.md:147
 msgid "Example:"
 msgstr "例:"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:131
-msgid "Un-shortened name: `prj___PkgA__0__1__2__3`"
-msgstr "短縮されていない名前: `prj___PkgA__0__1__2__3`"
-
-#: src/06_development_environment/01_project_configuration/01_build.md:132
-msgid "Shortened name: `prj___PkgA__3894375d1deadabb`"
-msgstr "短縮された名前: `prj___PkgA__3894375d1deadabb`"
+#: src/06_development_environment/01_project_configuration/01_build.md:133
+msgid "Un-hashed name: `prj___PkgA__0__1__2__3`"
+msgstr "ハッシュ化されていない名前: `prj___PkgA__0__1__2__3`"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:134
+msgid "Hashed name: `prj___PkgA__3894375d1deadabb`"
+msgstr "ハッシュ化された名前: `prj___PkgA__3894375d1deadabb`"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:136
 msgid "The `flatten_array_interface` field"
 msgstr "`flatten_array_interface` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:136
+#: src/06_development_environment/01_project_configuration/01_build.md:138
 msgid ""
 "If `flatten_array_interface` is set true, multi-demensional array instance/"
 "modport is flattened into a single demensional array. Some EDA tools do not "
 "support multi-demensional array instance/modport and this field is for such "
-"EDA tools."
+"EDA tools. This is `false` by default."
 msgstr ""
-"`flatten_array_interface` が `true` のとき、多次元の配列インスタンスやmodportは"
-"1次元に展開されます。この設定は多次元配列をサポートしていないEDAツールをサポートするためのものです。"
+"`flatten_array_interface` が `true` のとき、多次元の配列インスタンスやmodport"
+"は1次元に展開されます。この設定は多次元配列をサポートしていないEDAツールをサ"
+"ポートするためのものです。この値はデフォルトで `false` です。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:145
+#: src/06_development_environment/01_project_configuration/01_build.md:149
 msgid "Veryl code"
 msgstr "Veryl コード"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:159
+#: src/06_development_environment/01_project_configuration/01_build.md:163
 msgid "Generated SystemVerilog code with `flatten_array_interface` = true"
 msgstr "`flatten_array_interface = true` で生成された SystemVerilog コード"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:173
+#: src/06_development_environment/01_project_configuration/01_build.md:177
 msgid "The `exclude_std` field"
 msgstr "`exclude_std` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:175
+#: src/06_development_environment/01_project_configuration/01_build.md:179
 msgid ""
 "If `exclude_std` is set to `true`, standard library will not be included."
 msgstr ""
 "`exclude_std` が `true` のとき、標準ライブラリはインクルードされません。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:182
+#: src/06_development_environment/01_project_configuration/01_build.md:186
 msgid "The `emit_cond_type` field"
 msgstr "`emit_cond_type` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:184
+#: src/06_development_environment/01_project_configuration/01_build.md:188
 msgid ""
 "If `emit_cond_type` is set to `true`, condition type like `unique`, "
 "`unique0` and `priority` is emitted."
@@ -5410,11 +5414,11 @@ msgstr ""
 "`emit_cond_type` が `true` のとき、`unique` `unique0` `priority` といった指定"
 "が出力されます。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:191
+#: src/06_development_environment/01_project_configuration/01_build.md:195
 msgid "The `instance_depth_limit` field"
 msgstr "`instance_depth_limit` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:193
+#: src/06_development_environment/01_project_configuration/01_build.md:197
 msgid ""
 "`instance_depth_limit` is the maximum depth of instance hierarchy. The "
 "default value is 128."
@@ -5422,11 +5426,11 @@ msgstr ""
 "`instance_depth_limit` はインスタンス階層の最大深さです。デフォルト値は 128 "
 "です。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:200
+#: src/06_development_environment/01_project_configuration/01_build.md:204
 msgid "The `instance_total_limit` field"
 msgstr "`instance_total_limi` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:202
+#: src/06_development_environment/01_project_configuration/01_build.md:206
 msgid ""
 "`instance_total_limit` is the maximum sub-instances in a module. The default "
 "value is 1048576."
@@ -7729,11 +7733,11 @@ msgstr ""
 
 #: src/06_development_environment/12_source_map.md:12
 msgid ""
-"```systemverilog\n"
+"```verilog\n"
 "//# sourceMappingURL=<relative path>\n"
 "```"
 msgstr ""
-"```systemverilog\n"
+"```verilog\n"
 "//# sourceMappingURL=<relative path>\n"
 "```"
 
