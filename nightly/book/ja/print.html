@@ -2372,6 +2372,34 @@ module ModuleA (
     }
 }
 </code></pre>
+<h2 id="インターフェースインスタンスとmodportポートの接続"><a class="header" href="#インターフェースインスタンスとmodportポートの接続">インターフェースインスタンスとmodportポートの接続</a></h2>
+<p>インターフェースインスタンスとmodportポートは、SystemVerilogと同様に、互換性のあるモジュールポートあるいは <code>generic</code> インターフェースに接続することができます。</p>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var a: logic;
+
+    modport mp {
+        a: output,
+    }
+}
+module ModuleA (
+    foo_if: modport InterfaceA::mp,
+    bar_if: modport InterfaceA::mp,
+) {
+    always_comb {
+        foo_if.a = '0;
+        bar_if.a = '0;
+    }
+}
+module ModuleB (
+    foo_if: modport InterfaceA::mp,
+) {
+    inst bar_if: InterfaceA;
+    inst u: ModuleA (
+        foo_if: foo_if,
+        bar_if: bar_if,
+    );
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="パッケージ-1"><a class="header" href="#パッケージ-1">パッケージ</a></h1>
 <p>パッケージはソースコードの最上位コンポーネントの1つです。パッケージはパラメータや関数などいくつかの宣言をまとめることができます。</p>
 <p>パッケージ内の要素にアクセスするには、<code>::</code> 記号を使って <code>PackageA::ParamA</code> のようにします。</p>
@@ -3031,6 +3059,42 @@ sourcemap_target = {type = "directory", path = "[dst dir]"}
 <p><code>expand_inside_operation</code> が <code>true</code> のとき、<code>inside</code> 演算子を使った演算は<code>==?</code> 演算子を使った論理に展開されます。これはいくつかのEDAツールが<code>inside</code> 演算子をサポートしていないためです。この値はデフォルトで <code>false</code> です。</p>
 <pre><code class="language-toml">[build]
 expand_inside_operation = true
+</code></pre>
+<h2 id="shorten_mangled_name-フィールド"><a class="header" href="#shorten_mangled_name-フィールド"><code>shorten_mangled_name</code> フィールド</a></h2>
+<p><code>shorten_mangled_name</code> が <code>true</code> のとき、出力されるコンポーネント名のうちジェネリック引数を示す部分がハッシュ化され短縮されます。この値はデフォルトで <code>false</code> です。</p>
+<pre><code class="language-toml">shorten_mangled_name = true
+</code></pre>
+<p>例:</p>
+<ul>
+<li>短縮されていない名前: <code>prj___PkgA__0__1__2__3</code></li>
+<li>短縮された名前: <code>prj___PkgA__3894375d1deadabb</code></li>
+</ul>
+<h2 id="flatten_array_interface-フィールド"><a class="header" href="#flatten_array_interface-フィールド"><code>flatten_array_interface</code> フィールド</a></h2>
+<p><code>flatten_array_interface</code> が <code>true</code> のとき、多次元の配列インスタンスやmodportは1次元に展開されます。この設定は多次元配列をサポートしていないEDAツールをサポートするためのものです。</p>
+<pre><code class="language-toml">flatten_array_interface = true
+</code></pre>
+<p>例:</p>
+<p>Veryl コード</p>
+<pre><code class="language-veryl">module ModuleA (
+    a_if: modport InterfaceA::mp [2, 3],
+) {
+    for i in 0..2 :g {
+        for j in 0..3 :g {
+            assign a_if[i][j].a = 0;
+        }
+    }
+}
+</code></pre>
+<p><code>flatten_array_interface = true</code> で生成された SystemVerilog コード</p>
+<pre><code class="language-systemverilog">module veryl_testcase_ModuleA (
+    veryl_testcase_InterfaceA.mp a_if [0:(2)*(3)-1]
+);
+    for (genvar i = 0; i &lt; 2; i++) begin :g
+        for (genvar j = 0; j &lt; 3; j++) begin :g
+            always_comb a_if[(i)*(3)+(j)].a = 0;
+        end
+    end
+endmodule
 </code></pre>
 <h2 id="exclude_std-フィールド"><a class="header" href="#exclude_std-フィールド"><code>exclude_std</code> フィールド</a></h2>
 <p><code>exclude_std</code> が <code>true</code> のとき、標準ライブラリはインクルードされません。</p>
