@@ -284,6 +284,34 @@ module ModuleA (
     }
 }
 </code></pre>
+<h2 id="インターフェースインスタンスとmodportポートの接続"><a class="header" href="#インターフェースインスタンスとmodportポートの接続">インターフェースインスタンスとmodportポートの接続</a></h2>
+<p>インターフェースインスタンスとmodportポートは、SystemVerilogと同様に、互換性のあるモジュールポートあるいは <code>generic</code> インターフェースに接続することができます。</p>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var a: logic;
+
+    modport mp {
+        a: output,
+    }
+}
+module ModuleA (
+    foo_if: modport InterfaceA::mp,
+    bar_if: modport InterfaceA::mp,
+) {
+    always_comb {
+        foo_if.a = '0;
+        bar_if.a = '0;
+    }
+}
+module ModuleB (
+    foo_if: modport InterfaceA::mp,
+) {
+    inst bar_if: InterfaceA;
+    inst u: ModuleA (
+        foo_if: foo_if,
+        bar_if: bar_if,
+    );
+}
+</code></pre>
 
                     </main>
 

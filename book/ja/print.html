@@ -1728,10 +1728,10 @@ module ModuleA {
             0: b = 1;
             1: b = 2;
             2: {
-                   b = 3;
-                   b = 3;
-                   b = 3;
-               }
+                b = 3;
+                b = 3;
+                b = 3;
+            }
             default: b = 4;
         }
     }
@@ -1741,10 +1741,10 @@ module ModuleA {
             a == 0: c = 1;
             a == 1: c = 2;
             a == 2: {
-                        c = 3;
-                        c = 3;
-                        c = 3;
-                    }
+                c = 3;
+                c = 3;
+                c = 3;
+            }
             default: c = 4;
         }
     }
@@ -2370,6 +2370,34 @@ module ModuleA (
         b: input,
         ..output
     }
+}
+</code></pre>
+<h2 id="インターフェースインスタンスとmodportポートの接続"><a class="header" href="#インターフェースインスタンスとmodportポートの接続">インターフェースインスタンスとmodportポートの接続</a></h2>
+<p>インターフェースインスタンスとmodportポートは、SystemVerilogと同様に、互換性のあるモジュールポートあるいは <code>generic</code> インターフェースに接続することができます。</p>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var a: logic;
+
+    modport mp {
+        a: output,
+    }
+}
+module ModuleA (
+    foo_if: modport InterfaceA::mp,
+    bar_if: modport InterfaceA::mp,
+) {
+    always_comb {
+        foo_if.a = '0;
+        bar_if.a = '0;
+    }
+}
+module ModuleB (
+    foo_if: modport InterfaceA::mp,
+) {
+    inst bar_if: InterfaceA;
+    inst u: ModuleA (
+        foo_if: foo_if,
+        bar_if: bar_if,
+    );
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="パッケージ-1"><a class="header" href="#パッケージ-1">パッケージ</a></h1>
@@ -3032,6 +3060,44 @@ sourcemap_target = {type = "directory", path = "[dst dir]"}
 <pre><code class="language-toml">[build]
 expand_inside_operation = true
 </code></pre>
+<h2 id="hashed_mangled_name-フィールド"><a class="header" href="#hashed_mangled_name-フィールド"><code>hashed_mangled_name</code> フィールド</a></h2>
+<p><code>hashed_mangled_name</code> が <code>true</code> のとき、出力されるコンポーネント名のうちジェネリック引数を示す部分がハッシュ化されます。この設定はジェネリック引数が多いときにマングリングされた名前が長くなりすぎるのを防ぎます。この値はデフォルトで <code>false</code> です。</p>
+<pre><code class="language-toml">[build]
+hashed_mangled_name = true
+</code></pre>
+<p>例:</p>
+<ul>
+<li>ハッシュ化されていない名前: <code>prj___PkgA__0__1__2__3</code></li>
+<li>ハッシュ化された名前: <code>prj___PkgA__3894375d1deadabb</code></li>
+</ul>
+<h2 id="flatten_array_interface-フィールド"><a class="header" href="#flatten_array_interface-フィールド"><code>flatten_array_interface</code> フィールド</a></h2>
+<p><code>flatten_array_interface</code> が <code>true</code> のとき、多次元の配列インスタンスやmodportは1次元に展開されます。この設定は多次元配列をサポートしていないEDAツールをサポートするためのものです。この値はデフォルトで <code>false</code> です。</p>
+<pre><code class="language-toml">[build]
+flatten_array_interface = true
+</code></pre>
+<p>例:</p>
+<p>Veryl コード</p>
+<pre><code class="language-veryl">module ModuleA (
+    a_if: modport InterfaceA::mp [2, 3],
+) {
+    for i in 0..2 :g {
+        for j in 0..3 :g {
+            assign a_if[i][j].a = 0;
+        }
+    }
+}
+</code></pre>
+<p><code>flatten_array_interface = true</code> で生成された SystemVerilog コード</p>
+<pre><code class="language-verilog">module veryl_testcase_ModuleA (
+    veryl_testcase_InterfaceA.mp a_if [0:(2)*(3)-1]
+);
+    for (genvar i = 0; i &lt; 2; i++) begin :g
+        for (genvar j = 0; j &lt; 3; j++) begin :g
+            always_comb a_if[(i)*(3)+(j)].a = 0;
+        end
+    end
+endmodule
+</code></pre>
 <h2 id="exclude_std-フィールド"><a class="header" href="#exclude_std-フィールド"><code>exclude_std</code> フィールド</a></h2>
 <p><code>exclude_std</code> が <code>true</code> のとき、標準ライブラリはインクルードされません。</p>
 <pre><code class="language-toml">[build]
@@ -3607,7 +3673,7 @@ jobs:
 <p>ソースマップはSystemVerilogからVerylへ位置情報を追跡するために使用されるファイルです。このファイルによって、SystemVerilogのファイルパス・行・列をVeryl上の位置に変換することができます。</p>
 <p>デフォルトではVerylは生成されたSystemVerilogと同じディレクトリに拡張子 <code>.sv.map</code> のソースマップを生成します。ソースマップの生成は <code>Veryl.toml</code> の <a href="06_development_environment/./01_project_configuration/01_build.html#sourcemap-target"><code>sourcemap_target</code> フィールド</a>で制御することができます。</p>
 <p>ソースマップの形式は <a href="https://sourcemaps.info/spec.html">Source Map Revision 3</a> に従います。生成されたコードとマップのリンク方法はJavaScriptのものとほとんど同じですが、相対パスのみが使われます。</p>
-<pre><code class="language-systemverilog">//# sourceMappingURL=&lt;relative path&gt;
+<pre><code class="language-verilog">//# sourceMappingURL=&lt;relative path&gt;
 </code></pre>
 <p>従って、上記のコメントがSystemVerilogファイルの末尾にあればソースマップが利用可能です。</p>
 <h2 id="sourcemap-resolver"><a class="header" href="#sourcemap-resolver">sourcemap-resolver</a></h2>
@@ -4483,7 +4549,7 @@ WithGenericArgument: ColonColonLAngle %push(Generic) [ WithGenericArgumentList ]
 
 WithGenericArgumentList: WithGenericArgumentItem { Comma WithGenericArgumentItem } [ Comma ];
 
-WithGenericArgumentItem: ScopedIdentifier
+WithGenericArgumentItem: ExpressionIdentifier
                        | FixedType
                        | Number
                        | BooleanLiteral

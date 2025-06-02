@@ -1837,10 +1837,10 @@ The meaning of them are the same as <a href="05_language_reference/05_statement/
             0: b = 1;
             1: b = 2;
             2: {
-                   b = 3;
-                   b = 3;
-                   b = 3;
-               }
+                b = 3;
+                b = 3;
+                b = 3;
+            }
             default: b = 4;
         }
     }
@@ -1850,10 +1850,10 @@ The meaning of them are the same as <a href="05_language_reference/05_statement/
             a == 0: c = 1;
             a == 1: c = 2;
             a == 2: {
-                        c = 3;
-                        c = 3;
-                        c = 3;
-                    }
+                c = 3;
+                c = 3;
+                c = 3;
+            }
             default: c = 4;
         }
     }
@@ -2528,6 +2528,34 @@ module ModuleA (
         b: input,
         ..output
     }
+}
+</code></pre>
+<h2 id="connect-interface-instancesmodport-ports"><a class="header" href="#connect-interface-instancesmodport-ports">Connect interface instances/modport ports</a></h2>
+<p>An interface instance and a modport port can be connected with a module port of which type is compatible with it or is the <code>generic</code> interface with the same manner of SystemVerilog.</p>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var a: logic;
+
+    modport mp {
+        a: output,
+    }
+}
+module ModuleA (
+    foo_if: modport InterfaceA::mp,
+    bar_if: modport InterfaceA::mp,
+) {
+    always_comb {
+        foo_if.a = '0;
+        bar_if.a = '0;
+    }
+}
+module ModuleB (
+    foo_if: modport InterfaceA::mp,
+) {
+    inst bar_if: InterfaceA;
+    inst u: ModuleA (
+        foo_if: foo_if,
+        bar_if: bar_if,
+    );
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="package-1"><a class="header" href="#package-1">Package</a></h1>
@@ -3251,6 +3279,48 @@ This is <code>false</code> by default.</p>
 <pre><code class="language-toml">[build]
 expand_inside_operation = true
 </code></pre>
+<h2 id="the-hashed_mangled_name-field"><a class="header" href="#the-hashed_mangled_name-field">The <code>hashed_mangled_name</code> field</a></h2>
+<p>If <code>hashed_mangled_name</code> is set <code>true</code>, part showing the given generic arguments within the output component name is hashed.
+This option prevent mangled name to become too long if there are many generic arguments.
+This is <code>false</code> by default.</p>
+<pre><code class="language-toml">[build]
+hashed_mangled_name = true
+</code></pre>
+<p>Example:</p>
+<ul>
+<li>Un-hashed name: <code>prj___PkgA__0__1__2__3</code></li>
+<li>Hashed name: <code>prj___PkgA__3894375d1deadabb</code></li>
+</ul>
+<h2 id="the-flatten_array_interface-field"><a class="header" href="#the-flatten_array_interface-field">The <code>flatten_array_interface</code> field</a></h2>
+<p>If <code>flatten_array_interface</code> is set true, multi-demensional array instance/modport is flattened into a single demensional array.
+Some EDA tools do not support multi-demensional array instance/modport and this field is for such EDA tools.
+This is <code>false</code> by default.</p>
+<pre><code class="language-toml">[build]
+flatten_array_interface = true
+</code></pre>
+<p>Example:</p>
+<p>Veryl code</p>
+<pre><code class="language-veryl">module ModuleA (
+    a_if: modport InterfaceA::mp [2, 3],
+) {
+    for i in 0..2 :g {
+        for j in 0..3 :g {
+            assign a_if[i][j].a = 0;
+        }
+    }
+}
+</code></pre>
+<p>Generated SystemVerilog code with <code>flatten_array_interface</code> = true</p>
+<pre><code class="language-verilog">module veryl_testcase_ModuleA (
+    veryl_testcase_InterfaceA.mp a_if [0:(2)*(3)-1]
+);
+    for (genvar i = 0; i &lt; 2; i++) begin :g
+        for (genvar j = 0; j &lt; 3; j++) begin :g
+            always_comb a_if[(i)*(3)+(j)].a = 0;
+        end
+    end
+endmodule
+</code></pre>
 <h2 id="the-exclude_std-field"><a class="header" href="#the-exclude_std-field">The <code>exclude_std</code> field</a></h2>
 <p>If <code>exclude_std</code> is set to <code>true</code>, standard library will not be included.</p>
 <pre><code class="language-toml">[build]
@@ -3863,7 +3933,7 @@ By this file, a file path, line and column of SystemVerilog can be translated in
 Source map generation can be configured through <a href="06_development_environment/./01_project_configuration/01_build.html#sourcemap-target"><code>sourcemap_target</code> field</a> in <code>Veryl.toml</code>.</p>
 <p>The format of source map follows <a href="https://sourcemaps.info/spec.html">Source Map Revision 3</a>.
 The convention of linking generated code to source map is almost the same as JavaScript, but relative path is used only:</p>
-<pre><code class="language-systemverilog">//# sourceMappingURL=&lt;relative path&gt;
+<pre><code class="language-verilog">//# sourceMappingURL=&lt;relative path&gt;
 </code></pre>
 <p>So, if there is the above comment at the end of a SystemVerilog file, it shows source map can be used.</p>
 <h2 id="sourcemap-resolver"><a class="header" href="#sourcemap-resolver">sourcemap-resolver</a></h2>
@@ -4751,7 +4821,7 @@ WithGenericArgument: ColonColonLAngle %push(Generic) [ WithGenericArgumentList ]
 
 WithGenericArgumentList: WithGenericArgumentItem { Comma WithGenericArgumentItem } [ Comma ];
 
-WithGenericArgumentItem: ScopedIdentifier
+WithGenericArgumentItem: ExpressionIdentifier
                        | FixedType
                        | Number
                        | BooleanLiteral

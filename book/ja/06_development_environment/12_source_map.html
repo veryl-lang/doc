@@ -211,7 +211,7 @@
 <p>ソースマップはSystemVerilogからVerylへ位置情報を追跡するために使用されるファイルです。このファイルによって、SystemVerilogのファイルパス・行・列をVeryl上の位置に変換することができます。</p>
 <p>デフォルトではVerylは生成されたSystemVerilogと同じディレクトリに拡張子 <code>.sv.map</code> のソースマップを生成します。ソースマップの生成は <code>Veryl.toml</code> の <a href="./01_project_configuration/01_build.html#sourcemap-target"><code>sourcemap_target</code> フィールド</a>で制御することができます。</p>
 <p>ソースマップの形式は <a href="https://sourcemaps.info/spec.html">Source Map Revision 3</a> に従います。生成されたコードとマップのリンク方法はJavaScriptのものとほとんど同じですが、相対パスのみが使われます。</p>
-<pre><code class="language-systemverilog">//# sourceMappingURL=&lt;relative path&gt;
+<pre><code class="language-verilog">//# sourceMappingURL=&lt;relative path&gt;
 </code></pre>
 <p>従って、上記のコメントがSystemVerilogファイルの末尾にあればソースマップが利用可能です。</p>
 <h2 id="sourcemap-resolver"><a class="header" href="#sourcemap-resolver">sourcemap-resolver</a></h2>
