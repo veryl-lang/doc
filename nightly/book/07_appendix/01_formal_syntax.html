@@ -1,0 +1,1278 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head prefix="og: http://ogp.me/ns#">
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Formal Syntax - The Veryl Hardware Description Language</title>
+
+
+        <!-- Custom HTML head -->
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NXW2P6CCF3"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+        
+            gtag('config', 'G-NXW2P6CCF3');
+        </script>
+        
+        <script>
+            (function () {
+                // See these pages for details:
+                // https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
+                // https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics
+        
+                function gen_canonical_href(lang) {
+                    let base = "https://doc.veryl-lang.org/book";
+                    let canonical_href;
+                    if (lang == "en") {
+                        canonical_href = `${base}/07_appendix/01_formal_syntax.md`;
+                    } else {
+                        canonical_href = `${base}/${lang}/07_appendix/01_formal_syntax.md`;
+                    }
+                    canonical_href = canonical_href.slice(0, -"md".length) + "html";
+                    if (canonical_href.endsWith("/index.html")) {
+                        canonical_href = canonical_href.slice(0, -"index.html".length);
+                    }
+                    return canonical_href;
+                }
+        
+                const canonical_href = gen_canonical_href("en");
+
+                let link = document.createElement("link");
+                link.rel = "canonical";
+                link.href = canonical_href;
+                document.head.appendChild(link);
+        
+                const langs = ["en", "ja"];
+                for (const lang of langs) {
+                    const canonical_href = gen_canonical_href(lang);
+        
+                    let link = document.createElement("link");
+                    link.rel = "alternate";
+                    link.hreflang = lang;
+                    link.href = canonical_href;
+                    document.head.appendChild(link);
+                }
+            })()
+        </script>
+        
+        <meta property="og:url" content="https://github.com/veryl-lang/veryl" />
+        <meta property="og:title" content="Veryl: A Modern Hardware Description Language" />
+        <meta property="og:description" content="Veryl is a hardware description language which is designed as a SystemVerilog alternative." />
+        <meta property="og:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/css/language-picker.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Veryl Hardware Description Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="formal-syntax"><a class="header" href="#formal-syntax">Formal Syntax</a></h1>
+<p>Veryl’s parser is based on parser generator <a href="https://github.com/jsinger67/parol">parol</a>.
+The following syntex definition of parol is formal syntax.</p>
+<pre><code>
+%start Veryl
+%title "Veryl grammar"
+%comment "Empty grammar generated by `parol`"
+%user_type VerylToken = crate::veryl_token::VerylToken
+%user_type Token = crate::veryl_token::Token
+
+%scanner Embed {
+    %auto_newline_off
+    %auto_ws_off
+}
+
+%scanner Generic {
+}
+
+%scanner Attr {
+}
+
+%scanner ClockDomain {
+}
+
+%%
+
+// ----------------------------------------------------------------------------
+// Terminal
+// ----------------------------------------------------------------------------
+
+// Longest match should be first
+
+CommentsTerm          : &lt;INITIAL, Generic,        Attr, ClockDomain&gt;"(?:(?:(?://.*(?:\r\n|\r|\n|$))|(?:(?ms)/\u{2a}.*?\u{2a}/))\s*)+"                     : Token;
+StringLiteralTerm     : &lt;INITIAL, Generic,        Attr             &gt;"\u{0022}(?:\\[\u{0022}\\/bfnrt]|u[0-9a-fA-F]{4}|[^\u{0022}\\\u0000-\u001F])*\u{0022}": Token;
+ExponentTerm          : &lt;INITIAL, Generic                          &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*[eE][+-]?[0-9]+(?:_[0-9]+)*/                   : Token;
+FixedPointTerm        : &lt;INITIAL, Generic                          &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*/                                              : Token;
+BasedTerm             : &lt;INITIAL, Generic                          &gt;/(?:[0-9]+(?:_[0-9]+)*)?'s?[bodh][0-9a-fA-FxzXZ]+(?:_[0-9a-fA-FxzXZ]+)*/              : Token;
+AllBitTerm            : &lt;INITIAL, Generic                          &gt;/(?:[0-9]+(?:_[0-9]+)*)?'[01xzXZ]/                                                    : Token;
+BaseLessTerm          : &lt;INITIAL, Generic                          &gt;/[0-9]+(?:_[0-9]+)*/                                                                  : Token;
+MinusColonTerm        : &lt;INITIAL                                   &gt;'-:'                                                                                  : Token;
+MinusGTTerm           : &lt;INITIAL                                   &gt;'-&gt;'                                                                                  : Token;
+PlusColonTerm         : &lt;INITIAL                                   &gt;'+:'                                                                                  : Token;
+AssignmentOperatorTerm: &lt;INITIAL                                   &gt;"\+=|-=|\*=|/=|%=|&amp;=|\|=|\^=|&lt;&lt;=|&gt;&gt;=|&lt;&lt;&lt;=|&gt;&gt;&gt;="                                       : Token;
+DiamondOperatorTerm   : &lt;INITIAL                                   &gt;'&lt;&gt;'                                                                                  : Token;
+Operator12Term        : &lt;INITIAL                                   &gt;"\*\*"                                                                                : Token;
+Operator11Term        : &lt;INITIAL                                   &gt;"/|%"                                                                                 : Token;
+Operator10Term        : &lt;INITIAL                                   &gt;"\+|-"                                                                                : Token;
+Operator09Term        : &lt;INITIAL                                   &gt;"&lt;&lt;&lt;|&gt;&gt;&gt;|&lt;&lt;|&gt;&gt;"                                                                       : Token;
+Operator08Term        : &lt;INITIAL                                   &gt;"&lt;=|&gt;=|&lt;:|&gt;:"                                                                         : Token;
+Operator07Term        : &lt;INITIAL                                   &gt;"===|==\?|!==|!=\?|==|!="                                                             : Token;
+Operator03Term        : &lt;INITIAL                                   &gt;"&amp;&amp;"                                                                                  : Token;
+Operator02Term        : &lt;INITIAL                                   &gt;"\|\|"                                                                                : Token;
+Operator06Term        : &lt;INITIAL                                   &gt;"&amp;"                                                                                   : Token;
+Operator05Term        : &lt;INITIAL                                   &gt;"\^~|\^|~\^"                                                                          : Token;
+Operator04Term        : &lt;INITIAL                                   &gt;"\|"                                                                                  : Token;
+UnaryOperatorTerm     : &lt;INITIAL                                   &gt;"~&amp;|~\||!|~"                                                                          : Token;
+ColonColonLAngleTerm  : &lt;INITIAL, Generic                          &gt;'::&lt;'                                                                                 : Token;
+ColonColonTerm        : &lt;INITIAL, Generic                          &gt;'::'                                                                                  : Token;
+ColonTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;':'                                                                                   : Token;
+CommaTerm             : &lt;INITIAL, Generic,        Attr             &gt;','                                                                                   : Token;
+DotDotEquTerm         : &lt;INITIAL, Generic                          &gt;'..='                                                                                 : Token;
+DotDotTerm            : &lt;INITIAL, Generic                          &gt;'..'                                                                                  : Token;
+DotTerm               : &lt;INITIAL, Generic                          &gt;'.'                                                                                   : Token;
+EquTerm               : &lt;INITIAL, Generic                          &gt;'='                                                                                   : Token;
+HashTerm              : &lt;INITIAL, Generic,        Attr             &gt;'#'                                                                                   : Token;
+LAngleTerm            : &lt;INITIAL, Generic                          &gt;'&lt;'                                                                                   : Token;
+QuestionTerm          : &lt;INITIAL                                   &gt;'?'                                                                                   : Token;
+QuoteTerm             : &lt;                               ClockDomain&gt;"'"                                                                                   : Token;
+QuoteLBraceTerm       : &lt;INITIAL, Generic                          &gt;"'\{"                                                                                 : Token;
+LBraceTerm            : &lt;INITIAL, Generic, Embed, Attr             &gt;'{'                                                                                   : Token;
+LBracketTerm          : &lt;INITIAL, Generic,        Attr             &gt;'['                                                                                   : Token;
+LParenTerm            : &lt;INITIAL, Generic,        Attr             &gt;'('                                                                                   : Token;
+RAngleTerm            : &lt;INITIAL, Generic                          &gt;'&gt;'                                                                                   : Token;
+RBraceTerm            : &lt;INITIAL, Generic, Embed, Attr             &gt;'}'                                                                                   : Token;
+RBracketTerm          : &lt;INITIAL, Generic,        Attr             &gt;']'                                                                                   : Token;
+RParenTerm            : &lt;INITIAL, Generic,        Attr             &gt;')'                                                                                   : Token;
+SemicolonTerm         : &lt;INITIAL, Generic                          &gt;';'                                                                                   : Token;
+StarTerm              : &lt;INITIAL, Generic                          &gt;'*'                                                                                   : Token;
+AliasTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)alias(?-u:\b)/                                                               : Token;
+AlwaysCombTerm        : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)always_comb(?-u:\b)/                                                         : Token;
+AlwaysFfTerm          : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)always_ff(?-u:\b)/                                                           : Token;
+AssignTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)assign(?-u:\b)/                                                              : Token;
+AsTerm                : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)as(?-u:\b)/                                                                  : Token;
+BitTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)bit(?-u:\b)/                                                                 : Token;
+BoolTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)bool(?-u:\b)/                                                                : Token;
+CaseTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)case(?-u:\b)/                                                                : Token;
+ClockTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)clock(?-u:\b)/                                                               : Token;
+ClockPosedgeTerm      : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)clock_posedge(?-u:\b)/                                                       : Token;
+ClockNegedgeTerm      : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)clock_negedge(?-u:\b)/                                                       : Token;
+ConnectTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)connect(?-u:\b)/                                                             : Token;
+ConstTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)const(?-u:\b)/                                                               : Token;
+ConverseTerm          : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)converse(?-u:\b)/                                                            : Token;
+DefaultTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)default(?-u:\b)/                                                             : Token;
+ElseTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)else(?-u:\b)/                                                                : Token;
+EmbedTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)embed(?-u:\b)/                                                               : Token;
+EnumTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)enum(?-u:\b)/                                                                : Token;
+F32Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)f32(?-u:\b)/                                                                 : Token;
+F64Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)f64(?-u:\b)/                                                                 : Token;
+FalseTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)false(?-u:\b)/                                                               : Token;
+FinalTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)final(?-u:\b)/                                                               : Token;
+ForTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)for(?-u:\b)/                                                                 : Token;
+FunctionTerm          : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)function(?-u:\b)/                                                            : Token;
+I8Term                : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)i8(?-u:\b)/                                                                  : Token;
+I16Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)i16(?-u:\b)/                                                                 : Token;
+I32Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)i32(?-u:\b)/                                                                 : Token;
+I64Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)i64(?-u:\b)/                                                                 : Token;
+IfResetTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)if_reset(?-u:\b)/                                                            : Token;
+IfTerm                : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)if(?-u:\b)/                                                                  : Token;
+ImportTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)import(?-u:\b)/                                                              : Token;
+IncludeTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)include(?-u:\b)/                                                             : Token;
+InitialTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)initial(?-u:\b)/                                                             : Token;
+InoutTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)inout(?-u:\b)/                                                               : Token;
+InputTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)input(?-u:\b)/                                                               : Token;
+InsideTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)inside(?-u:\b)/                                                              : Token;
+InstTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)inst(?-u:\b)/                                                                : Token;
+InterfaceTerm         : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)interface(?-u:\b)/                                                           : Token;
+InTerm                : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)in(?-u:\b)/                                                                  : Token;
+LetTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)let(?-u:\b)/                                                                 : Token;
+LogicTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)logic(?-u:\b)/                                                               : Token;
+LsbTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)lsb(?-u:\b)/                                                                 : Token;
+ModportTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)modport(?-u:\b)/                                                             : Token;
+ModuleTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)module(?-u:\b)/                                                              : Token;
+MsbTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)msb(?-u:\b)/                                                                 : Token;
+OutputTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)output(?-u:\b)/                                                              : Token;
+OutsideTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)outside(?-u:\b)/                                                             : Token;
+PackageTerm           : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)package(?-u:\b)/                                                             : Token;
+ParamTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)param(?-u:\b)/                                                               : Token;
+ProtoTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)proto(?-u:\b)/                                                               : Token;
+PubTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)pub(?-u:\b)/                                                                 : Token;
+RepeatTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)repeat(?-u:\b)/                                                              : Token;
+ResetTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)reset(?-u:\b)/                                                               : Token;
+ResetAsyncHighTerm    : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)reset_async_high(?-u:\b)/                                                    : Token;
+ResetAsyncLowTerm     : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)reset_async_low(?-u:\b)/                                                     : Token;
+ResetSyncHighTerm     : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)reset_sync_high(?-u:\b)/                                                     : Token;
+ResetSyncLowTerm      : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)reset_sync_low(?-u:\b)/                                                      : Token;
+ReturnTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)return(?-u:\b)/                                                              : Token;
+BreakTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)break(?-u:\b)/                                                               : Token;
+SameTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)same(?-u:\b)/                                                                : Token;
+SignedTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)signed(?-u:\b)/                                                              : Token;
+StepTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)step(?-u:\b)/                                                                : Token;
+StringTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)string(?-u:\b)/                                                              : Token;
+StructTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)struct(?-u:\b)/                                                              : Token;
+SwitchTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)switch(?-u:\b)/                                                              : Token;
+TriTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)tri(?-u:\b)/                                                                 : Token;
+TrueTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)true(?-u:\b)/                                                                : Token;
+TypeTerm              : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)type(?-u:\b)/                                                                : Token;
+U8Term                : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)u8(?-u:\b)/                                                                  : Token;
+U16Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)u16(?-u:\b)/                                                                 : Token;
+U32Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)u32(?-u:\b)/                                                                 : Token;
+U64Term               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)u64(?-u:\b)/                                                                 : Token;
+UnionTerm             : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)union(?-u:\b)/                                                               : Token;
+UnsafeTerm            : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)unsafe(?-u:\b)/                                                              : Token;
+VarTerm               : &lt;INITIAL, Generic,              ClockDomain&gt;/(?-u:\b)var(?-u:\b)/                                                                 : Token;
+DollarIdentifierTerm  : &lt;INITIAL, Generic,              ClockDomain&gt;/\$[a-zA-Z_][0-9a-zA-Z_$]*/                                                           : Token;
+IdentifierTerm        : &lt;INITIAL, Generic,        Attr, ClockDomain&gt;/(?:r#)?[a-zA-Z_][0-9a-zA-Z_$]*/                                                      : Token;
+AnyTerm               : &lt;                  Embed                   &gt;/[^{}]+/                                                                              : Token;
+
+// ----------------------------------------------------------------------------
+// Token
+// ----------------------------------------------------------------------------
+
+Comments: [ CommentsTerm ];
+
+StartToken: Comments;
+
+StringLiteralToken: StringLiteralTerm: Token Comments;
+
+ExponentToken  : ExponentTerm  : Token Comments;
+FixedPointToken: FixedPointTerm: Token Comments;
+BasedToken     : BasedTerm     : Token Comments;
+BaseLessToken  : BaseLessTerm  : Token Comments;
+AllBitToken    : AllBitTerm    : Token Comments;
+
+AssignmentOperatorToken: AssignmentOperatorTerm: Token Comments;
+DiamondOperatorToken   : DiamondOperatorTerm   : Token Comments;
+Operator02Token        : Operator02Term        : Token Comments;
+Operator03Token        : Operator03Term        : Token Comments;
+Operator04Token        : Operator04Term        : Token Comments;
+Operator05Token        : Operator05Term        : Token Comments;
+Operator06Token        : Operator06Term        : Token Comments;
+Operator07Token        : Operator07Term        : Token Comments;
+Operator08Token        : Operator08Term        : Token Comments;
+Operator09Token        : Operator09Term        : Token Comments;
+Operator10Token        : Operator10Term        : Token Comments;
+Operator11Token        : Operator11Term        : Token Comments;
+Operator12Token        : Operator12Term        : Token Comments;
+UnaryOperatorToken     : UnaryOperatorTerm     : Token Comments;
+
+ColonToken           : ColonTerm           : Token Comments;
+ColonColonLAngleToken: ColonColonLAngleTerm: Token Comments;
+ColonColonToken      : ColonColonTerm      : Token Comments;
+CommaToken           : CommaTerm           : Token Comments;
+DotDotToken          : DotDotTerm          : Token Comments;
+DotDotEquToken       : DotDotEquTerm       : Token Comments;
+DotToken             : DotTerm             : Token Comments;
+EquToken             : EquTerm             : Token Comments;
+HashToken            : HashTerm            : Token Comments;
+QuestionToken        : QuestionTerm        : Token Comments;
+QuoteToken           : QuoteTerm           : Token Comments;
+QuoteLBraceToken     : QuoteLBraceTerm     : Token Comments;
+LAngleToken          : LAngleTerm          : Token Comments;
+LBraceToken          : LBraceTerm          : Token Comments;
+LBracketToken        : LBracketTerm        : Token Comments;
+LParenToken          : LParenTerm          : Token Comments;
+MinusColonToken      : MinusColonTerm      : Token Comments;
+MinusGTToken         : MinusGTTerm         : Token Comments;
+PlusColonToken       : PlusColonTerm       : Token Comments;
+RAngleToken          : RAngleTerm          : Token Comments;
+RBraceToken          : RBraceTerm          : Token Comments;
+RBracketToken        : RBracketTerm        : Token Comments;
+RParenToken          : RParenTerm          : Token Comments;
+SemicolonToken       : SemicolonTerm       : Token Comments;
+StarToken            : StarTerm            : Token Comments;
+
+AliasToken         : AliasTerm         : Token Comments;
+AlwaysCombToken    : AlwaysCombTerm    : Token Comments;
+AlwaysFfToken      : AlwaysFfTerm      : Token Comments;
+AsToken            : AsTerm            : Token Comments;
+AssignToken        : AssignTerm        : Token Comments;
+BitToken           : BitTerm           : Token Comments;
+BoolToken          : BoolTerm          : Token Comments;
+CaseToken          : CaseTerm          : Token Comments;
+ClockToken         : ClockTerm         : Token Comments;
+ClockPosedgeToken  : ClockPosedgeTerm  : Token Comments;
+ClockNegedgeToken  : ClockNegedgeTerm  : Token Comments;
+ConnectToken       : ConnectTerm       : Token Comments;
+ConstToken         : ConstTerm         : Token Comments;
+ConverseToken      : ConverseTerm      : Token Comments;
+DefaultToken       : DefaultTerm       : Token Comments;
+ElseToken          : ElseTerm          : Token Comments;
+EmbedToken         : EmbedTerm         : Token Comments;
+EnumToken          : EnumTerm          : Token Comments;
+F32Token           : F32Term           : Token Comments;
+F64Token           : F64Term           : Token Comments;
+FalseToken         : FalseTerm         : Token Comments;
+FinalToken         : FinalTerm         : Token Comments;
+ForToken           : ForTerm           : Token Comments;
+FunctionToken      : FunctionTerm      : Token Comments;
+I8Token            : I8Term            : Token Comments;
+I16Token           : I16Term           : Token Comments;
+I32Token           : I32Term           : Token Comments;
+I64Token           : I64Term           : Token Comments;
+IfResetToken       : IfResetTerm       : Token Comments;
+IfToken            : IfTerm            : Token Comments;
+ImportToken        : ImportTerm        : Token Comments;
+IncludeToken       : IncludeTerm       : Token Comments;
+InitialToken       : InitialTerm       : Token Comments;
+InoutToken         : InoutTerm         : Token Comments;
+InputToken         : InputTerm         : Token Comments;
+InsideToken        : InsideTerm        : Token Comments;
+InstToken          : InstTerm          : Token Comments;
+InterfaceToken     : InterfaceTerm     : Token Comments;
+InToken            : InTerm            : Token Comments;
+LetToken           : LetTerm           : Token Comments;
+LogicToken         : LogicTerm         : Token Comments;
+LsbToken           : LsbTerm           : Token Comments;
+ModportToken       : ModportTerm       : Token Comments;
+ModuleToken        : ModuleTerm        : Token Comments;
+MsbToken           : MsbTerm           : Token Comments;
+OutputToken        : OutputTerm        : Token Comments;
+OutsideToken       : OutsideTerm       : Token Comments;
+PackageToken       : PackageTerm       : Token Comments;
+ParamToken         : ParamTerm         : Token Comments;
+ProtoToken         : ProtoTerm         : Token Comments;
+PubToken           : PubTerm           : Token Comments;
+RepeatToken        : RepeatTerm        : Token Comments;
+ResetToken         : ResetTerm         : Token Comments;
+ResetAsyncHighToken: ResetAsyncHighTerm: Token Comments;
+ResetAsyncLowToken : ResetAsyncLowTerm : Token Comments;
+ResetSyncHighToken : ResetSyncHighTerm : Token Comments;
+ResetSyncLowToken  : ResetSyncLowTerm  : Token Comments;
+ReturnToken        : ReturnTerm        : Token Comments;
+BreakToken         : BreakTerm         : Token Comments;
+SameToken          : SameTerm          : Token Comments;
+SignedToken        : SignedTerm        : Token Comments;
+StepToken          : StepTerm          : Token Comments;
+StringToken        : StringTerm        : Token Comments;
+StructToken        : StructTerm        : Token Comments;
+SwitchToken        : SwitchTerm        : Token Comments;
+TriToken           : TriTerm           : Token Comments;
+TrueToken          : TrueTerm          : Token Comments;
+TypeToken          : TypeTerm          : Token Comments;
+U8Token            : U8Term            : Token Comments;
+U16Token           : U16Term           : Token Comments;
+U32Token           : U32Term           : Token Comments;
+U64Token           : U64Term           : Token Comments;
+UnionToken         : UnionTerm         : Token Comments;
+UnsafeToken        : UnsafeTerm        : Token Comments;
+VarToken           : VarTerm           : Token Comments;
+
+DollarIdentifierToken: DollarIdentifierTerm: Token Comments;
+IdentifierToken      : IdentifierTerm      : Token Comments;
+
+// ----------------------------------------------------------------------------
+// VerylToken
+// ----------------------------------------------------------------------------
+
+// Start
+Start: StartToken: VerylToken;
+
+// StringLiteral
+StringLiteral: StringLiteralToken: VerylToken;
+
+// Number
+Exponent  : ExponentToken  : VerylToken;
+FixedPoint: FixedPointToken: VerylToken;
+Based     : BasedToken     : VerylToken;
+BaseLess  : BaseLessToken  : VerylToken;
+AllBit    : AllBitToken    : VerylToken;
+
+// Operator
+AssignmentOperator: AssignmentOperatorToken: VerylToken;
+DiamondOperator   : DiamondOperatorToken   : VerylToken;
+Operator02        : Operator02Token        : VerylToken;
+Operator03        : Operator03Token        : VerylToken;
+Operator04        : Operator04Token        : VerylToken;
+Operator05        : Operator05Token        : VerylToken;
+Operator06        : Operator06Token        : VerylToken;
+Operator07        : Operator07Token        : VerylToken;
+Operator08        : Operator08Token        : VerylToken;
+Operator09        : Operator09Token        : VerylToken;
+Operator10        : Operator10Token        : VerylToken;
+Operator11        : Operator11Token        : VerylToken;
+Operator12        : Operator12Token        : VerylToken;
+UnaryOperator     : UnaryOperatorToken     : VerylToken;
+
+// Symbol
+Colon           : ColonToken           : VerylToken;
+ColonColonLAngle: ColonColonLAngleToken: VerylToken;
+ColonColon      : ColonColonToken      : VerylToken;
+Comma           : CommaToken           : VerylToken;
+DotDot          : DotDotToken          : VerylToken;
+DotDotEqu       : DotDotEquToken       : VerylToken;
+Dot             : DotToken             : VerylToken;
+Equ             : EquToken             : VerylToken;
+Hash            : HashToken            : VerylToken;
+Question        : QuestionToken        : VerylToken;
+Quote           : QuoteToken           : VerylToken;
+QuoteLBrace     : QuoteLBraceToken     : VerylToken;
+LAngle          : LAngleToken          : VerylToken;
+LBrace          : LBraceToken          : VerylToken;
+LBracket        : LBracketToken        : VerylToken;
+LParen          : LParenToken          : VerylToken;
+MinusColon      : MinusColonToken      : VerylToken;
+MinusGT         : MinusGTToken         : VerylToken;
+PlusColon       : PlusColonToken       : VerylToken;
+RAngle          : RAngleToken          : VerylToken;
+RBrace          : RBraceToken          : VerylToken;
+RBracket        : RBracketToken        : VerylToken;
+RParen          : RParenToken          : VerylToken;
+Semicolon       : SemicolonToken       : VerylToken;
+Star            : StarToken            : VerylToken;
+
+// Keyword
+Alias         : AliasToken         : VerylToken;
+AlwaysComb    : AlwaysCombToken    : VerylToken;
+AlwaysFf      : AlwaysFfToken      : VerylToken;
+As            : AsToken            : VerylToken;
+Assign        : AssignToken        : VerylToken;
+Bit           : BitToken           : VerylToken;
+Bool          : BoolToken          : VerylToken;
+Break         : BreakToken         : VerylToken;
+Case          : CaseToken          : VerylToken;
+Clock         : ClockToken         : VerylToken;
+ClockPosedge  : ClockPosedgeToken  : VerylToken;
+ClockNegedge  : ClockNegedgeToken  : VerylToken;
+Connect       : ConnectToken       : VerylToken;
+Const         : ConstToken         : VerylToken;
+Converse      : ConverseToken      : VerylToken;
+Defaul        : DefaultToken       : VerylToken; // avoid to conflict with Rust's Default trait
+Else          : ElseToken          : VerylToken;
+Embed         : EmbedToken         : VerylToken;
+Enum          : EnumToken          : VerylToken;
+F32           : F32Token           : VerylToken;
+F64           : F64Token           : VerylToken;
+False         : FalseToken         : VerylToken;
+Final         : FinalToken         : VerylToken;
+For           : ForToken           : VerylToken;
+Function      : FunctionToken      : VerylToken;
+I8            : I8Token            : VerylToken;
+I16           : I16Token           : VerylToken;
+I32           : I32Token           : VerylToken;
+I64           : I64Token           : VerylToken;
+If            : IfToken            : VerylToken;
+IfReset       : IfResetToken       : VerylToken;
+Import        : ImportToken        : VerylToken;
+In            : InToken            : VerylToken;
+Include       : IncludeToken       : VerylToken;
+Initial       : InitialToken       : VerylToken;
+Inout         : InoutToken         : VerylToken;
+Input         : InputToken         : VerylToken;
+Inside        : InsideToken        : VerylToken;
+Inst          : InstToken          : VerylToken;
+Interface     : InterfaceToken     : VerylToken;
+Let           : LetToken           : VerylToken;
+Logic         : LogicToken         : VerylToken;
+Lsb           : LsbToken           : VerylToken;
+Modport       : ModportToken       : VerylToken;
+Module        : ModuleToken        : VerylToken;
+Msb           : MsbToken           : VerylToken;
+Output        : OutputToken        : VerylToken;
+Outside       : OutsideToken       : VerylToken;
+Package       : PackageToken       : VerylToken;
+Param         : ParamToken         : VerylToken;
+Proto         : ProtoToken         : VerylToken;
+Pub           : PubToken           : VerylToken;
+Repeat        : RepeatToken        : VerylToken;
+Reset         : ResetToken         : VerylToken;
+ResetAsyncHigh: ResetAsyncHighToken: VerylToken;
+ResetAsyncLow : ResetAsyncLowToken : VerylToken;
+ResetSyncHigh : ResetSyncHighToken : VerylToken;
+ResetSyncLow  : ResetSyncLowToken  : VerylToken;
+Return        : ReturnToken        : VerylToken;
+Same          : SameToken          : VerylToken;
+Signed        : SignedToken        : VerylToken;
+Step          : StepToken          : VerylToken;
+Strin         : StringToken        : VerylToken; // avoid to conflict with Rust's String struct
+Struct        : StructToken        : VerylToken;
+Switch        : SwitchToken        : VerylToken;
+Tri           : TriToken           : VerylToken;
+True          : TrueToken          : VerylToken;
+Type          : TypeToken          : VerylToken;
+U8            : U8Token            : VerylToken;
+U16           : U16Token           : VerylToken;
+U32           : U32Token           : VerylToken;
+U64           : U64Token           : VerylToken;
+Union         : UnionToken         : VerylToken;
+Unsafe        : UnsafeToken        : VerylToken;
+Var           : VarToken           : VerylToken;
+
+// Identifier
+DollarIdentifier: DollarIdentifierToken: VerylToken;
+Identifier      : IdentifierToken      : VerylToken;
+
+// ----------------------------------------------------------------------------
+// Number
+// ----------------------------------------------------------------------------
+
+Number: IntegralNumber
+      | RealNumber
+      ;
+
+IntegralNumber: Based
+              | BaseLess
+              | AllBit
+              ;
+
+RealNumber: FixedPoint
+          | Exponent
+          ;
+
+// ----------------------------------------------------------------------------
+// Complex Identifier
+// ----------------------------------------------------------------------------
+
+HierarchicalIdentifier: Identifier { Select } { Dot Identifier { Select } };
+ScopedIdentifier      : ( DollarIdentifier | Identifier [ WithGenericArgument ] ) { ColonColon Identifier [ WithGenericArgument ] };
+ExpressionIdentifier  : ScopedIdentifier [ Width ] { Select } { Dot Identifier { Select } };
+
+// ----------------------------------------------------------------------------
+// Expression
+// ----------------------------------------------------------------------------
+
+Expression  : IfExpression;
+IfExpression: { If Expression Question Expression Colon } Expression01;
+Expression01: Expression02 { Operator02 Expression02 };
+Expression02: Expression03 { Operator03 Expression03 };
+Expression03: Expression04 { Operator04 Expression04 };
+Expression04: Expression05 { Operator05 Expression05 };
+Expression05: Expression06 { Operator06 Expression06 };
+Expression06: Expression07 { Operator07 Expression07 };
+Expression07: Expression08 { Operator08 Expression08 };
+Expression08: Expression09 { Operator09 Expression09 };
+Expression09: Expression10 { Operator10 Expression10 };
+Expression10: Expression11 { ( Operator11 | Star ) Expression11 };
+Expression11: Expression12 { Operator12 Expression12 };
+Expression12: Expression13 [ As CastingType ];
+Expression13: { ( UnaryOperator | Operator10 | Operator06 | Operator04 | Operator05 ) } Factor;
+
+Factor: Number
+      | BooleanLiteral
+      | IdentifierFactor
+      | LParen Expression RParen
+      | LBrace ConcatenationList RBrace
+      | QuoteLBrace ArrayLiteralList RBrace
+      | CaseExpression
+      | SwitchExpression
+      | StringLiteral
+      | ( Msb | Lsb )
+      | InsideExpression
+      | OutsideExpression
+      | TypeExpression
+      | FactorTypeFactor
+      ;
+
+BooleanLiteral: True | False;
+
+IdentifierFactor: ExpressionIdentifier [ FunctionCall | StructConstructor ];
+
+FactorTypeFactor: { TypeModifier } FactorType;
+
+FunctionCall: LParen [ ArgumentList ] RParen;
+
+ArgumentList: ArgumentItem { Comma ArgumentItem } [ Comma ];
+
+ArgumentItem: ArgumentExpression [ Colon Expression ];
+
+ArgumentExpression: Expression;
+
+StructConstructor: QuoteLBrace StructConstructorList [ DotDot Defaul LParen Expression RParen ] RBrace;
+
+StructConstructorList: StructConstructorItem { Comma StructConstructorItem } [ Comma ];
+
+StructConstructorItem: Identifier Colon Expression;
+
+ConcatenationList: ConcatenationItem { Comma ConcatenationItem } [ Comma ];
+
+ConcatenationItem: Expression [ Repeat Expression ];
+
+ArrayLiteralList: ArrayLiteralItem { Comma ArrayLiteralItem } [ Comma ];
+
+ArrayLiteralItem: ( Expression [ Repeat Expression ] | Defaul Colon Expression );
+
+CaseExpression: Case Expression LBrace CaseCondition Colon Expression Comma { CaseCondition Colon Expression Comma } Defaul Colon Expression [ Comma ] RBrace;
+
+SwitchExpression: Switch LBrace SwitchCondition Colon Expression Comma { SwitchCondition Colon Expression Comma } Defaul Colon Expression [ Comma ] RBrace;
+
+TypeExpression: Type LParen Expression RParen;
+
+InsideExpression: Inside Expression LBrace RangeList RBrace;
+
+OutsideExpression: Outside Expression LBrace RangeList RBrace;
+
+RangeList: RangeItem { Comma RangeItem } [ Comma ];
+
+RangeItem: Range;
+
+// ----------------------------------------------------------------------------
+// Select / Width / Array / Range
+// ----------------------------------------------------------------------------
+
+Select: LBracket Expression [ SelectOperator Expression ] RBracket;
+
+SelectOperator: Colon
+              | PlusColon
+              | MinusColon
+              | Step
+              ;
+
+Width: LAngle Expression { Comma Expression } RAngle;
+
+Array: LBracket Expression { Comma Expression } RBracket;
+
+Range: Expression [ RangeOperator Expression ];
+
+RangeOperator: DotDot
+             | DotDotEqu
+             ;
+
+// ----------------------------------------------------------------------------
+// ScalarType / ArrayType / CastingType
+// ----------------------------------------------------------------------------
+
+FixedType: U8 | U16 | U32 | U64 | I8 | I16| I32 | I64 | F32 | F64 | Bool | Strin;
+
+VariableType: Clock
+            | ClockPosedge
+            | ClockNegedge
+            | Reset
+            | ResetAsyncHigh
+            | ResetAsyncLow
+            | ResetSyncHigh
+            | ResetSyncLow
+            | Logic
+            | Bit;
+
+UserDefinedType: ScopedIdentifier;
+
+TypeModifier: Tri | Signed | Defaul;
+
+FactorType: ( VariableType [ Width ] | FixedType );
+
+ScalarType: { TypeModifier } ( UserDefinedType [ Width ] | FactorType );
+
+ArrayType: ScalarType [ Array ];
+
+CastingType: U8
+           | U16
+           | U32
+           | U64
+           | I8
+           | I16
+           | I32
+           | I64
+           | F32
+           | F64
+           | Bool
+           | Clock
+           | ClockPosedge
+           | ClockNegedge
+           | Reset
+           | ResetAsyncHigh
+           | ResetAsyncLow
+           | ResetSyncHigh
+           | ResetSyncLow
+           | UserDefinedType
+           | Based
+           | BaseLess
+           ;
+
+// ----------------------------------------------------------------------------
+// ClockDomain
+// ----------------------------------------------------------------------------
+
+ClockDomain: Quote Identifier;
+
+// ----------------------------------------------------------------------------
+// Statement
+// ----------------------------------------------------------------------------
+
+StatementBlock: LBrace { StatementBlockGroup } RBrace;
+
+StatementBlockGroup: { Attribute } ( LBrace { StatementBlockGroup } RBrace | StatementBlockItem );
+
+StatementBlockItem: VarDeclaration | LetStatement | Statement;
+
+Statement: IdentifierStatement
+         | IfStatement
+         | IfResetStatement
+         | ReturnStatement
+         | BreakStatement
+         | ForStatement
+         | CaseStatement
+         | SwitchStatement
+         ;
+
+LetStatement: Let Identifier %push(ClockDomain) Colon [ ClockDomain ] %pop() ArrayType Equ Expression Semicolon;
+
+IdentifierStatement: ExpressionIdentifier ( FunctionCall | Assignment ) Semicolon;
+
+Assignment: ( Equ | AssignmentOperator | DiamondOperator ) Expression;
+
+IfStatement: If Expression StatementBlock { Else If Expression StatementBlock } [ Else StatementBlock ];
+
+IfResetStatement: IfReset StatementBlock { Else If Expression StatementBlock } [ Else StatementBlock ];
+
+ReturnStatement: Return Expression Semicolon;
+
+BreakStatement: Break Semicolon;
+
+ForStatement: For Identifier Colon ScalarType In Range [ Step AssignmentOperator Expression ] StatementBlock;
+
+CaseStatement: Case Expression LBrace { CaseItem } RBrace;
+
+CaseItem: ( CaseCondition | Defaul ) Colon ( Statement | StatementBlock );
+
+CaseCondition: RangeItem { Comma RangeItem } ;
+
+SwitchStatement: Switch LBrace { SwitchItem } RBrace;
+
+SwitchItem: ( SwitchCondition | Defaul ) Colon ( Statement | StatementBlock );
+
+SwitchCondition: Expression { Comma Expression } ;
+
+// ----------------------------------------------------------------------------
+// Attribute
+// ----------------------------------------------------------------------------
+
+Attribute: Hash %push(Attr) LBracket Identifier [ LParen AttributeList RParen ] RBracket %pop();
+
+AttributeList: AttributeItem { Comma AttributeItem } [ Comma ];
+
+AttributeItem: Identifier
+             | StringLiteral
+             ;
+
+// ----------------------------------------------------------------------------
+// Declaration
+// ----------------------------------------------------------------------------
+
+LetDeclaration: Let Identifier %push(ClockDomain) Colon [ ClockDomain ] %pop() ArrayType Equ Expression Semicolon;
+
+VarDeclaration: Var Identifier %push(ClockDomain) Colon [ ClockDomain ] %pop() ArrayType Semicolon;
+
+ConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Equ Expression Semicolon;
+
+TypeDefDeclaration: Type Identifier Equ ArrayType Semicolon;
+
+AlwaysFfDeclaration: AlwaysFf [ AlwaysFfEventList ] StatementBlock;
+
+AlwaysFfEventList: LParen AlwaysFfClock [ Comma AlwaysFfReset ] RParen;
+
+AlwaysFfClock: HierarchicalIdentifier;
+
+AlwaysFfReset: HierarchicalIdentifier;
+
+AlwaysCombDeclaration: AlwaysComb StatementBlock;
+
+AssignDeclaration: Assign AssignDestination Equ Expression Semicolon;
+
+AssignDestination: HierarchicalIdentifier
+                 | LBrace AssignConcatenationList RBrace;
+
+AssignConcatenationList: AssignConcatenationItem { Comma AssignConcatenationItem } [ Comma ];
+
+AssignConcatenationItem: HierarchicalIdentifier;
+
+ConnectDeclaration: Connect HierarchicalIdentifier DiamondOperator Expression Semicolon;
+
+ModportDeclaration: Modport Identifier LBrace [ ModportList ] [ DotDot ModportDefault ] RBrace;
+
+ModportList: ModportGroup { Comma ModportGroup } [ Comma ];
+
+ModportGroup: { Attribute } ( LBrace ModportList RBrace | ModportItem );
+
+ModportItem: Identifier Colon Direction;
+
+ModportDefault: Input
+              | Output
+              | Same LParen Identifier RParen
+              | Converse LParen Identifier RParen;
+
+EnumDeclaration: Enum Identifier [ Colon ScalarType ] LBrace EnumList RBrace;
+
+EnumList: EnumGroup { Comma EnumGroup } [ Comma ];
+
+EnumGroup: { Attribute } ( LBrace EnumList RBrace | EnumItem );
+
+EnumItem: Identifier [ Equ Expression ];
+
+StructUnion: Struct | Union;
+
+StructUnionDeclaration: StructUnion Identifier [ WithGenericParameter ] LBrace StructUnionList RBrace;
+
+StructUnionList: StructUnionGroup { Comma StructUnionGroup } [ Comma ];
+
+StructUnionGroup: { Attribute } ( LBrace StructUnionList RBrace | StructUnionItem );
+
+StructUnionItem: Identifier Colon ScalarType;
+
+InitialDeclaration: Initial StatementBlock;
+
+FinalDeclaration: Final StatementBlock;
+
+// ----------------------------------------------------------------------------
+// InstDeclaration
+// ----------------------------------------------------------------------------
+
+InstDeclaration: Inst Identifier %push(ClockDomain) Colon [ ClockDomain ] %pop() ScopedIdentifier [ Array ] [ InstParameter ] [ LParen [ InstPortList ] RParen ] Semicolon;
+
+InstParameter: Hash LParen [ InstParameterList ] RParen;
+
+InstParameterList: InstParameterGroup { Comma InstParameterGroup } [ Comma ];
+
+InstParameterGroup: { Attribute } ( LBrace InstParameterList RBrace | InstParameterItem );
+
+InstParameterItem: Identifier [ Colon Expression ];
+
+InstPortList: InstPortGroup { Comma InstPortGroup } [ Comma ];
+
+InstPortGroup: { Attribute } ( LBrace InstPortList RBrace | InstPortItem );
+
+InstPortItem: Identifier [ Colon Expression ];
+
+// ----------------------------------------------------------------------------
+// WithParameter
+// ----------------------------------------------------------------------------
+
+WithParameter: Hash LParen [ WithParameterList ] RParen;
+
+WithParameterList: WithParameterGroup { Comma WithParameterGroup } [ Comma ];
+
+WithParameterGroup: { Attribute } ( LBrace WithParameterList RBrace | WithParameterItem );
+
+WithParameterItem: ( Param | Const ) Identifier Colon ( ArrayType | Type ) Equ Expression;
+
+// ----------------------------------------------------------------------------
+// WithGenericParameter
+// ----------------------------------------------------------------------------
+
+GenericBound: Type
+            | Inst ScopedIdentifier
+            | GenericProtoBound;
+
+WithGenericParameter: ColonColonLAngle WithGenericParameterList RAngle;
+
+WithGenericParameterList: WithGenericParameterItem { Comma WithGenericParameterItem } [ Comma ];
+
+WithGenericParameterItem: Identifier Colon GenericBound [ Equ WithGenericArgumentItem ];
+
+GenericProtoBound: ScopedIdentifier | FixedType;
+
+// ----------------------------------------------------------------------------
+// WithGenericArgument
+// ----------------------------------------------------------------------------
+
+WithGenericArgument: ColonColonLAngle %push(Generic) [ WithGenericArgumentList ] RAngle %pop();
+
+WithGenericArgumentList: WithGenericArgumentItem { Comma WithGenericArgumentItem } [ Comma ];
+
+WithGenericArgumentItem: ExpressionIdentifier
+                       | FixedType
+                       | Number
+                       | BooleanLiteral
+                       ;
+
+// ----------------------------------------------------------------------------
+// PortDeclaration
+// ----------------------------------------------------------------------------
+
+PortDeclaration: LParen [ PortDeclarationList ] RParen;
+
+PortDeclarationList: PortDeclarationGroup { Comma PortDeclarationGroup } [ Comma ];
+
+PortDeclarationGroup: { Attribute } ( LBrace PortDeclarationList RBrace | PortDeclarationItem );
+
+PortDeclarationItem: Identifier %push(ClockDomain) Colon ( PortTypeConcrete | PortTypeAbstract );
+
+PortTypeConcrete: Direction [ ClockDomain ] %pop() ArrayType [ Equ PortDefaultValue ];
+
+PortDefaultValue: Expression;
+
+PortTypeAbstract: [ ClockDomain ] %pop() Interface [ ColonColon Identifier ] [ Array ];
+
+Direction: Input
+         | Output
+         | Inout
+         | Modport
+         | Import
+         ;
+
+// ----------------------------------------------------------------------------
+// Function
+// ----------------------------------------------------------------------------
+
+FunctionDeclaration: Function Identifier [ WithGenericParameter ] [ PortDeclaration ] [ MinusGT ScalarType ] StatementBlock;
+
+// ----------------------------------------------------------------------------
+// Import
+// ----------------------------------------------------------------------------
+
+ImportDeclaration: Import ScopedIdentifier [ ColonColon Star ] Semicolon;
+
+// ----------------------------------------------------------------------------
+// Unsafe
+// ----------------------------------------------------------------------------
+
+UnsafeBlock: Unsafe LParen Identifier RParen LBrace { GenerateGroup } RBrace;
+
+// ----------------------------------------------------------------------------
+// Module/Interface
+// ----------------------------------------------------------------------------
+
+ModuleDeclaration: Module Identifier [ WithGenericParameter ] [ For ScopedIdentifier ] [ WithParameter ] [ PortDeclaration ] LBrace { ModuleGroup } RBrace;
+
+ModuleGroup: { Attribute } ( LBrace { ModuleGroup } RBrace | ModuleItem );
+
+ModuleItem: GenerateItem;
+
+InterfaceDeclaration: Interface Identifier [ WithGenericParameter ] [ For ScopedIdentifier ] [ WithParameter ] LBrace { InterfaceGroup } RBrace;
+
+InterfaceGroup: { Attribute } ( LBrace { InterfaceGroup } RBrace | InterfaceItem );
+
+InterfaceItem: GenerateItem | ModportDeclaration;
+
+GenerateIfDeclaration: If Expression GenerateNamedBlock { Else If Expression GenerateOptionalNamedBlock } [ Else GenerateOptionalNamedBlock ];
+
+GenerateForDeclaration: For Identifier In Range [ Step AssignmentOperator Expression ] GenerateNamedBlock;
+
+GenerateBlockDeclaration: GenerateNamedBlock;
+
+GenerateNamedBlock: Colon Identifier LBrace { GenerateGroup } RBrace;
+
+GenerateOptionalNamedBlock: [ Colon Identifier ] LBrace { GenerateGroup } RBrace;
+
+GenerateGroup: { Attribute } ( LBrace { GenerateGroup } RBrace | GenerateItem );
+
+GenerateItem: LetDeclaration
+            | VarDeclaration
+            | InstDeclaration
+            | ConstDeclaration
+            | AlwaysFfDeclaration
+            | AlwaysCombDeclaration
+            | AssignDeclaration
+            | ConnectDeclaration
+            | FunctionDeclaration
+            | GenerateIfDeclaration
+            | GenerateForDeclaration
+            | GenerateBlockDeclaration
+            | TypeDefDeclaration
+            | EnumDeclaration
+            | StructUnionDeclaration
+            | ImportDeclaration
+            | AliasDeclaration
+            | InitialDeclaration
+            | FinalDeclaration
+            | UnsafeBlock
+            ;
+
+// ----------------------------------------------------------------------------
+// Package
+// ----------------------------------------------------------------------------
+
+PackageDeclaration: Package Identifier [ WithGenericParameter ] [ For ScopedIdentifier ] LBrace { PackageGroup } RBrace;
+
+PackageGroup: { Attribute } ( LBrace { PackageGroup } RBrace | PackageItem );
+
+PackageItem: ConstDeclaration
+           | TypeDefDeclaration
+           | EnumDeclaration
+           | StructUnionDeclaration
+           | FunctionDeclaration
+           | ImportDeclaration
+           | AliasDeclaration
+           ;
+
+// ----------------------------------------------------------------------------
+// Alias
+// ----------------------------------------------------------------------------
+
+AliasDeclaration: Alias ( Module | Interface | Package ) Identifier Equ ScopedIdentifier Semicolon;
+
+// ----------------------------------------------------------------------------
+// Proto
+// ----------------------------------------------------------------------------
+
+ProtoDeclaration: Proto ( ProtoModuleDeclaration | ProtoInterfaceDeclaration | ProtoPackageDeclaration );
+
+ProtoModuleDeclaration: Module Identifier [ WithParameter ] [ PortDeclaration ] Semicolon;
+
+ProtoInterfaceDeclaration: Interface Identifier [ WithParameter ] LBrace { ProtoInterfaceItem } RBrace;
+
+ProtoInterfaceItem: VarDeclaration
+                  | ProtoConstDeclaration
+                  | ProtoFunctionDeclaration
+                  | ProtoTypeDefDeclaration
+                  | ProtoAliasDeclaration
+                  | ModportDeclaration
+                  | ImportDeclaration
+                  ;
+
+ProtoPackageDeclaration: Package Identifier LBrace { ProtoPacakgeItem } RBrace;
+
+ProtoPacakgeItem: ProtoConstDeclaration
+                | ProtoTypeDefDeclaration
+                | EnumDeclaration
+                | StructUnionDeclaration
+                | ProtoFunctionDeclaration
+                | ProtoAliasDeclaration
+                | ImportDeclaration
+                ;
+
+ProtoConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Semicolon;
+
+ProtoTypeDefDeclaration: Type Identifier Semicolon;
+
+ProtoFunctionDeclaration: Function Identifier [ WithGenericParameter ] [ PortDeclaration ] [ MinusGT ScalarType ] Semicolon;
+
+ProtoAliasDeclaration: Alias ( Module | Interface | Package ) Identifier Colon ScopedIdentifier Semicolon;
+
+// ----------------------------------------------------------------------------
+// Embed
+// ----------------------------------------------------------------------------
+
+EmbedDeclaration: Embed LParen Identifier RParen Identifier EmbedContent;
+
+EmbedContent: EmbedContentToken: VerylToken;
+
+EmbedContentToken: LBraceTerm %push(Embed) LBraceTerm LBraceTerm { EmbedItem } RBraceTerm RBraceTerm RBraceTerm %pop() Comments;
+
+EmbedItem: LBraceTerm { EmbedItem } RBraceTerm
+         | AnyTerm;
+
+// ----------------------------------------------------------------------------
+// Include
+// ----------------------------------------------------------------------------
+
+IncludeDeclaration: Include LParen Identifier Comma StringLiteral RParen Semicolon;
+
+// ----------------------------------------------------------------------------
+// Description
+// ----------------------------------------------------------------------------
+
+DescriptionGroup: { Attribute } ( LBrace { DescriptionGroup } RBrace | DescriptionItem );
+
+DescriptionItem: [ Pub ] PublicDescriptionItem
+               | ImportDeclaration
+               | EmbedDeclaration
+               | IncludeDeclaration
+               ;
+
+PublicDescriptionItem: ModuleDeclaration
+                     | InterfaceDeclaration
+                     | PackageDeclaration
+                     | AliasDeclaration
+                     | ProtoDeclaration
+                     ;
+
+// ----------------------------------------------------------------------------
+// SourceCode
+// ----------------------------------------------------------------------------
+
+Veryl: Start { DescriptionGroup };
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../07_appendix.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../07_appendix/02_semantic_error.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../07_appendix.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../07_appendix/02_semantic_error.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+        <script type="module">
+            import init, {build, format} from "https://doc.veryl-lang.org/nightly/playground/pkg/veryl_wasm.js";
+            init().then(() => {});
+            window.build = build;
+        </script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mode-veryl.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../theme/language-picker.js"></script>
+
+
+    </div>
+    </body>
+</html>
