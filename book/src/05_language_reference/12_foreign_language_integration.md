@@ -22,6 +22,28 @@ embed (inline) sv{{{
 }}}
 ```
 
+`embed` declaration with `inline` way and `sv` lang can also be put within the body of module declaration, interface declaration and package declaration.
+This usage is for integration with SystemVerilog testbench.
+
+```veryl,playground
+#[allow(unused_variable)]
+interface bus_monitor_if {
+    var clk    : clock   ;
+    var ready  : logic   ;
+    var valid  : logic   ;
+    var payload: logic<8>;
+
+    embed (inline) sv{{{
+        clocking monitor_cb @(posedge clk);
+            input ready;
+            input valid;
+            input payload;
+        endclocking
+    }}}
+
+}
+```
+
 ## `include` declaration
 
 `include` declaration can include a file of foreign languages.
