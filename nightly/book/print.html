@@ -3235,6 +3235,13 @@ The available types are below:</p>
 <li><code>relative</code> – plane text filelist including relative file paths</li>
 <li><code>flgen</code> – <a href="https://github.com/pezy-computing/flgen">flgen</a> filelist</li>
 </ul>
+<h2 id="the-sources-field"><a class="header" href="#the-sources-field">The <code>sources</code> field</a></h2>
+<p>By default, the Veryl compiler collects and translate all <code>*.veryl</code> files which are visible from the project root.
+You can specify directries where the Veryl compiler collect files by using the <code>sources</code> field.</p>
+<pre><code class="language-toml">[build]
+sources = ["rtl/foo_module", "rtl/bar_module"]
+</code></pre>
+<p>For the above exmaple, the Veryl compiler collect <code>*.veryl</code> files from <code>rtl/foo_module</code> and <code>rtl/bar_module</code>.</p>
 <h2 id="the-target-field"><a class="header" href="#the-target-field">The <code>target</code> field</a></h2>
 <p>The <code>target</code> field specifies where the generated codes will be placed at.
 The available types are below:</p>
