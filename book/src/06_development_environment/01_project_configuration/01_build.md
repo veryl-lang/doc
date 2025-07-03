@@ -29,6 +29,18 @@ The available types are below:
 * `relative` -- plane text filelist including relative file paths
 * `flgen` -- [flgen](https://github.com/pezy-computing/flgen) filelist
 
+## The `sources` field
+
+By default, the Veryl compiler collects and translate all `*.veryl` files which are visible from the project root.
+You can specify directries where the Veryl compiler collect files by using the `sources` field.
+
+```toml
+[build]
+sources = ["rtl/foo_module", "rtl/bar_module"]
+```
+
+For the above exmaple, the Veryl compiler collect `*.veryl` files from `rtl/foo_module` and `rtl/bar_module`.
+
 ## The `target` field
 
 The `target` field specifies where the generated codes will be placed at.
