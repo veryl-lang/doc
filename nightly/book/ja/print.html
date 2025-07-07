@@ -3751,6 +3751,19 @@ $ [command] | sourcemap-resolver   # on-the-fly annotation by pipe
 <pre><code>verylup update --pkg veryl-x86_64-linux.zip
 verylup install 0.12.0 --pkg veryl-x86_64-linux.zip
 </code></pre>
+<h2 id="プロキシ"><a class="header" href="#プロキシ">プロキシ</a></h2>
+<p>Verylupはプロキシ設定として以下の環境変数を参照します。</p>
+<ul>
+<li><code>HTTPS_PROXY</code></li>
+<li><code>https_proxy</code></li>
+<li><code>ALL_PROXY</code></li>
+<li><code>all_proxy</code></li>
+</ul>
+<p>プロキシのプロトコルとしては <code>http</code> と <code>socks5</code> がサポートされています。</p>
+<h3 id="プロキシ設定"><a class="header" href="#プロキシ設定">プロキシ設定</a></h3>
+<p>環境変数の代わりにverylupだけのプロキシ設定を指定することができます。</p>
+<pre><code>verylup config set proxy socks5://127.0.0.1:1086
+</code></pre>
 <h2 id="ナイトリーチャンネル"><a class="header" href="#ナイトリーチャンネル">ナイトリーチャンネル</a></h2>
 <p>最新の機能を簡単に試すために、ナイトリーチャンネルが利用できます。ナイトリーチャンネルはマスターブランチから毎日ビルドされます。</p>
 <pre><code>verylup install nightly
