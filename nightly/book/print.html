@@ -2341,6 +2341,21 @@ module ModuleA {
     import PackageA::paramA;
 }
 </code></pre>
+<p>Symbols imported via an import declaration can be referenced anywhere within the namespace where the import declaration is placed.</p>
+<pre><code class="language-veryl playground">package PackageA {
+    const WIDTH: u32 = 8;
+}
+
+module ModuleA (
+    i_d: input  logic&lt;WIDTH&gt;, // valid reference
+    o_d: output logic&lt;WIDTH&gt;, // valid reference
+) {
+    import PackageA::WIDTH;
+
+    let d  : logic&lt;WIDTH&gt; = i_d; // valid reference
+    assign o_d = d;
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="connect"><a class="header" href="#connect">Connect</a></h1>
 <p>To assign from a interface to another interface, <code>connect</code> decleration can be used instead of each member assignment.
 <code>connect</code> decleration connects all members of the interface automatically.</p>
