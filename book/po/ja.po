@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-05-29T11:20:20+09:00\n"
+"POT-Creation-Date: 2025-07-07T09:51:11+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -3624,6 +3624,48 @@ msgstr ""
 "}\n"
 "```"
 
+#: src/05_language_reference/06_declaration/12_import_export.md:21
+msgid ""
+"Symbols imported via an import declaration can be referenced anywhere within "
+"the namespace where the import declaration is placed."
+msgstr ""
+"インポート宣言によるシンボルのインポートは、そのインポート宣言が置かれた名前空間内の"
+"任意の場所から参照できます。"
+
+#: src/05_language_reference/06_declaration/12_import_export.md:23
+msgid ""
+"```veryl,playground\n"
+"package PackageA {\n"
+"    const WIDTH: u32 = 8;\n"
+"}\n"
+"\n"
+"module ModuleA (\n"
+"    i_d: input  logic<WIDTH>, // valid reference\n"
+"    o_d: output logic<WIDTH>, // valid reference\n"
+") {\n"
+"    import PackageA::WIDTH;\n"
+"\n"
+"    let d  : logic<WIDTH> = i_d; // valid reference\n"
+"    assign o_d = d;\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"package PackageA {\n"
+"    const WIDTH: u32 = 8;\n"
+"}\n"
+"\n"
+"module ModuleA (\n"
+"    i_d: input  logic<WIDTH>, // 有効な参照\n"
+"    o_d: output logic<WIDTH>, // 有効な参照\n"
+") {\n"
+"    import PackageA::WIDTH;\n"
+"\n"
+"    let d  : logic<WIDTH> = i_d; // 有効な参照\n"
+"    assign o_d = d;\n"
+"}\n"
+"```"
+
 #: src/05_language_reference/06_declaration/13_connect.md:3
 msgid ""
 "To assign from a interface to another interface, `connect` decleration can "
@@ -3986,10 +4028,20 @@ msgid "`py`: Python"
 msgstr "`py`: Python"
 
 #: src/05_language_reference/12_foreign_language_integration.md:25
+msgid ""
+"`embed` declaration with `inline` way and `sv` lang can also be put within "
+"the body of module declaration, interface declaration and package "
+"declaration. This usage is for integration with SystemVerilog testbench."
+msgstr ""
+"`inline` かつ `sv` 指定された `embed` 宣言はモジュール宣言、インターフェース宣言"
+"及びパッケージ宣言の中に配置することができます。"
+"これはSystemVerilogテストベンチとの統合に使用できます。"
+
+#: src/05_language_reference/12_foreign_language_integration.md:47
 msgid "`include` declaration"
 msgstr "`include` 宣言"
 
-#: src/05_language_reference/12_foreign_language_integration.md:27
+#: src/05_language_reference/12_foreign_language_integration.md:49
 msgid ""
 "`include` declaration can include a file of foreign languages. The first "
 "argument is the same as `embed` declaration, and the second is a relative "
@@ -3999,7 +4051,7 @@ msgstr ""
 "第一引数は `embed` 宣言と同じです。第二引数はソースコードからの相対ファイルパ"
 "スです。"
 
-#: src/05_language_reference/12_foreign_language_integration.md:30
+#: src/05_language_reference/12_foreign_language_integration.md:52
 msgid ""
 "```veryl\n"
 "include(inline, \"module.sv\");\n"
@@ -5127,30 +5179,63 @@ msgstr ""
 "スト"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:32
+msgid "The `sources` field"
+msgstr "`sources` フィールド"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:34
+msgid ""
+"By default, the Veryl compiler collects and translate all `*.veryl` files "
+"which are visible from the project root. You can specify directries where "
+"the Veryl compiler collect files by using the `sources` field."
+msgstr ""
+"デフォルトではVerylコンパイラはプロジェクトルートから見える全ての `*.veryl` ファイルを"
+"処理します。特定のディレクトリだけを処理するために `sources` フィールドを使用することができます。"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:37
+msgid ""
+"```toml\n"
+"[build]\n"
+"sources = [\"rtl/foo_module\", \"rtl/bar_module\"]\n"
+"```"
+msgstr ""
+"```toml\n"
+"[build]\n"
+"sources = [\"rtl/foo_module\", \"rtl/bar_module\"]\n"
+"```"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:42
+msgid ""
+"For the above exmaple, the Veryl compiler collect `*.veryl` files from `rtl/"
+"foo_module` and `rtl/bar_module`."
+msgstr ""
+"上記の例では、Verylコンパイラは `rtl/foo_module` と `rtl/bar_module` の"
+"`*.veryl` ファイルを処理します。"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:44
 msgid "The `target` field"
 msgstr "`target` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:34
+#: src/06_development_environment/01_project_configuration/01_build.md:46
 msgid ""
 "The `target` field specifies where the generated codes will be placed at. "
 "The available types are below:"
 msgstr "`target` フィールドはコードの生成先を指定します。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:37
+#: src/06_development_environment/01_project_configuration/01_build.md:49
 msgid "`source` -- as the same directory as the source code"
 msgstr "`source` -- ソースコードと同じディレクトリ"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:38
-#: src/06_development_environment/01_project_configuration/01_build.md:99
-#: src/06_development_environment/01_project_configuration/04_test.md:60
+#: src/06_development_environment/01_project_configuration/01_build.md:50
+#: src/06_development_environment/01_project_configuration/01_build.md:111
+#: src/06_development_environment/01_project_configuration/04_test.md:38
 msgid "`directory` -- specified directory"
 msgstr "`directory` -- 特定のディレクトリ"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:39
+#: src/06_development_environment/01_project_configuration/01_build.md:51
 msgid "`bundle` -- specified file"
 msgstr "`bundle` -- 特定のファイル"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:41
+#: src/06_development_environment/01_project_configuration/01_build.md:53
 msgid ""
 "If you want to use `directory` or `bundle`, you should specify the target "
 "path by `path` key."
@@ -5158,7 +5243,7 @@ msgstr ""
 "`directory` あるいは `bundle` を指定する場合は、ターゲットパスを `path` キー"
 "で指定します。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:43
+#: src/06_development_environment/01_project_configuration/01_build.md:55
 msgid ""
 "```toml\n"
 "[build]\n"
@@ -5170,11 +5255,11 @@ msgstr ""
 "target = {type = \"directory\", path = \"[dst dir]\"}\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:48
+#: src/06_development_environment/01_project_configuration/01_build.md:60
 msgid "The `implicit_parameter_types` field"
 msgstr "`implicit_parameter_types` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:50
+#: src/06_development_environment/01_project_configuration/01_build.md:62
 msgid ""
 "The `implicit_parameter_types` field lists the types which will be elided in "
 "`parameter` declaration of the generated codes. This is because some EDA "
@@ -5186,7 +5271,7 @@ msgstr ""
 "を `parameter` 宣言で使うことができないためです。例えば `string` を指定する場"
 "合は以下のようにします。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:54
+#: src/06_development_environment/01_project_configuration/01_build.md:66
 #: src/06_development_environment/09_compatibility.md:18
 msgid ""
 "```toml\n"
@@ -5199,11 +5284,11 @@ msgstr ""
 "implicit_parameter_types = [\"string\"]\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:59
+#: src/06_development_environment/01_project_configuration/01_build.md:71
 msgid "The `omit_project_prefix` field"
 msgstr "`omit_project_prefix` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:61
+#: src/06_development_environment/01_project_configuration/01_build.md:73
 msgid ""
 "If `omit_project_prefix` is set to `true`, the project prefix of module/"
 "interface/package name will be omitted. This is `false` by default."
@@ -5212,11 +5297,11 @@ msgstr ""
 "ケージ名のプロジェクトプレフィックスは省略されます。この値はデフォルトで "
 "`false` です。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:69
+#: src/06_development_environment/01_project_configuration/01_build.md:81
 msgid "The `strip_comments` field"
 msgstr "`strip_comments` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:71
+#: src/06_development_environment/01_project_configuration/01_build.md:83
 msgid ""
 "If `strip_comments` is set to `true`, all comments will be stripped. This is "
 "`false` by default."
@@ -5224,11 +5309,11 @@ msgstr ""
 "`strip_comments` が `true` のとき、コメント出力は省略されます。この値はデフォ"
 "ルトで `false` です。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:79
+#: src/06_development_environment/01_project_configuration/01_build.md:91
 msgid "The `*_prefix` and `*_suffix` field"
 msgstr "`*_prefix` と `*_suffix` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:81
+#: src/06_development_environment/01_project_configuration/01_build.md:93
 msgid ""
 "`*_prefix` and `*_suffix` represent additional prefix and suffix for the "
 "generated code. The available configurations are below:"
@@ -5236,60 +5321,60 @@ msgstr ""
 "`*_prefix` と `*_suffix` はコード生成時の追加のプレフィックスとサフィックスを"
 "指定します。指定可能な設定は以下の通りです。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:84
+#: src/06_development_environment/01_project_configuration/01_build.md:96
 msgid ""
 "`clock_posedge_prefix`: Prefix for `clock` type at `clock_type = posedge`"
 msgstr ""
 "`clock_posedge_prefix`: `clock_type = posedge` のときの `clock` 型のプレ"
 "フィックス"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:85
+#: src/06_development_environment/01_project_configuration/01_build.md:97
 msgid ""
 "`clock_posedge_suffix`: Suffix for `clock` type at `clock_type = posedge`"
 msgstr ""
 "`clock_posedge_suffix`: `clock_type = posedge` のときの `clock` 型のサフィッ"
 "クス"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:86
+#: src/06_development_environment/01_project_configuration/01_build.md:98
 msgid ""
 "`clock_negedge_prefix`: Prefix for `clock` type at `clock_type = negedge`"
 msgstr ""
 "`clock_negedge_prefix`: `clock_type = negedge` のときの `clock` 型のプレ"
 "フィックス"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:87
+#: src/06_development_environment/01_project_configuration/01_build.md:99
 msgid ""
 "`clock_negedge_suffix`: Suffix for `clock` type at `clock_type = negedge`"
 msgstr ""
 "`clock_negedge_suffix`: `clock_type = negedge` のときの `clock` 型のサフィッ"
 "クス"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:88
+#: src/06_development_environment/01_project_configuration/01_build.md:100
 msgid "`reset_high_prefix`: Prefix for `reset` type at `reset_type = *_high`"
 msgstr ""
 "`reset_high_prefix`: `reset_type = *_high` のときの `reset` 型のプレフィック"
 "ス"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:89
+#: src/06_development_environment/01_project_configuration/01_build.md:101
 msgid "`reset_high_suffix`: Suffix for `reset` type at `reset_type = *_high`"
 msgstr ""
 "`reset_high_suffix`: `reset_type = *_high` のときの `reset` 型のサフィックス"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:90
+#: src/06_development_environment/01_project_configuration/01_build.md:102
 msgid "`reset_low_prefix`: Prefix for `reset` type at `reset_type = *_low`"
 msgstr ""
 "`reset_low_prefix`: `reset_type = *_low` のときの `reset` 型のプレフィックス"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:91
+#: src/06_development_environment/01_project_configuration/01_build.md:103
 msgid "`reset_low_suffix`: Suffix for `reset` type at `reset_type = *_low`"
 msgstr ""
 "`reset_low_suffix`: `reset_type = *_low` のときの `reset` 型のサフィックス"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:93
+#: src/06_development_environment/01_project_configuration/01_build.md:105
 msgid "The `sourcemap_target` field"
 msgstr "`sourcemap_target` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:95
+#: src/06_development_environment/01_project_configuration/01_build.md:107
 msgid ""
 "The `sourcemap_target` field specifies where the generated source maps will "
 "be placed at. The available types are below:"
@@ -5297,24 +5382,24 @@ msgstr ""
 "`sourcemap_target` フィールドはソースマップの生成先を指定します。指定可能な設"
 "定は以下の通りです。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:98
-#: src/06_development_environment/01_project_configuration/04_test.md:59
+#: src/06_development_environment/01_project_configuration/01_build.md:110
+#: src/06_development_environment/01_project_configuration/04_test.md:37
 msgid "`target` -- as the same directory as the target code"
 msgstr "`target` -- ターゲットコードと同じディレクトリ"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:100
+#: src/06_development_environment/01_project_configuration/01_build.md:112
 msgid "`none` -- no source map"
 msgstr "`none` -- ソースマップなし"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:102
-#: src/06_development_environment/01_project_configuration/04_test.md:62
+#: src/06_development_environment/01_project_configuration/01_build.md:114
+#: src/06_development_environment/01_project_configuration/04_test.md:40
 msgid ""
 "If you want to use `directory`, you should specify the target path by `path` "
 "key."
 msgstr ""
 "`directory` を指定する場合は、ターゲットパスを `path` キーで指定します。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:104
+#: src/06_development_environment/01_project_configuration/01_build.md:116
 msgid ""
 "```toml\n"
 "[build]\n"
@@ -5326,11 +5411,11 @@ msgstr ""
 "sourcemap_target = {type = \"directory\", path = \"[dst dir]\"}\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:109
+#: src/06_development_environment/01_project_configuration/01_build.md:121
 msgid "The `expand_inside_operation` field"
 msgstr "`expand_inside_operation` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:111
+#: src/06_development_environment/01_project_configuration/01_build.md:123
 msgid ""
 "If `expand_inside_operation` is set to `true`, operations using `inside` "
 "operator will be expended to logic using `==?` operator. This is because "
@@ -5340,11 +5425,11 @@ msgstr ""
 "` 演算子を使った論理に展開されます。これはいくつかのEDAツールが`inside` 演算"
 "子をサポートしていないためです。この値はデフォルトで `false` です。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:120
+#: src/06_development_environment/01_project_configuration/01_build.md:132
 msgid "The `hashed_mangled_name` field"
 msgstr "`hashed_mangled_name` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:122
+#: src/06_development_environment/01_project_configuration/01_build.md:134
 msgid ""
 "If `hashed_mangled_name` is set `true`, part showing the given generic "
 "arguments within the output component name is hashed. This option prevent "
@@ -5352,28 +5437,28 @@ msgid ""
 "`false` by default."
 msgstr ""
 "`hashed_mangled_name` が `true` のとき、出力されるコンポーネント名のうちジェ"
-"ネリック引数を示す部分がハッシュ化されます。この設定はジェネリック引数が多いときに"
-"マングリングされた名前が長くなりすぎるのを防ぎます。この値はデフォルトで "
-"`false` です。"
+"ネリック引数を示す部分がハッシュ化されます。この設定はジェネリック引数が多い"
+"ときにマングリングされた名前が長くなりすぎるのを防ぎます。この値はデフォルト"
+"で `false` です。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:131
-#: src/06_development_environment/01_project_configuration/01_build.md:147
+#: src/06_development_environment/01_project_configuration/01_build.md:143
+#: src/06_development_environment/01_project_configuration/01_build.md:159
 msgid "Example:"
 msgstr "例:"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:133
+#: src/06_development_environment/01_project_configuration/01_build.md:145
 msgid "Un-hashed name: `prj___PkgA__0__1__2__3`"
 msgstr "ハッシュ化されていない名前: `prj___PkgA__0__1__2__3`"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:134
+#: src/06_development_environment/01_project_configuration/01_build.md:146
 msgid "Hashed name: `prj___PkgA__3894375d1deadabb`"
 msgstr "ハッシュ化された名前: `prj___PkgA__3894375d1deadabb`"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:136
+#: src/06_development_environment/01_project_configuration/01_build.md:148
 msgid "The `flatten_array_interface` field"
 msgstr "`flatten_array_interface` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:138
+#: src/06_development_environment/01_project_configuration/01_build.md:150
 msgid ""
 "If `flatten_array_interface` is set true, multi-demensional array instance/"
 "modport is flattened into a single demensional array. Some EDA tools do not "
@@ -5384,29 +5469,29 @@ msgstr ""
 "は1次元に展開されます。この設定は多次元配列をサポートしていないEDAツールをサ"
 "ポートするためのものです。この値はデフォルトで `false` です。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:149
+#: src/06_development_environment/01_project_configuration/01_build.md:161
 msgid "Veryl code"
 msgstr "Veryl コード"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:163
+#: src/06_development_environment/01_project_configuration/01_build.md:175
 msgid "Generated SystemVerilog code with `flatten_array_interface` = true"
 msgstr "`flatten_array_interface = true` で生成された SystemVerilog コード"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:177
+#: src/06_development_environment/01_project_configuration/01_build.md:189
 msgid "The `exclude_std` field"
 msgstr "`exclude_std` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:179
+#: src/06_development_environment/01_project_configuration/01_build.md:191
 msgid ""
 "If `exclude_std` is set to `true`, standard library will not be included."
 msgstr ""
 "`exclude_std` が `true` のとき、標準ライブラリはインクルードされません。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:186
+#: src/06_development_environment/01_project_configuration/01_build.md:198
 msgid "The `emit_cond_type` field"
 msgstr "`emit_cond_type` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:188
+#: src/06_development_environment/01_project_configuration/01_build.md:200
 msgid ""
 "If `emit_cond_type` is set to `true`, condition type like `unique`, "
 "`unique0` and `priority` is emitted."
@@ -5414,11 +5499,11 @@ msgstr ""
 "`emit_cond_type` が `true` のとき、`unique` `unique0` `priority` といった指定"
 "が出力されます。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:195
+#: src/06_development_environment/01_project_configuration/01_build.md:207
 msgid "The `instance_depth_limit` field"
 msgstr "`instance_depth_limit` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:197
+#: src/06_development_environment/01_project_configuration/01_build.md:209
 msgid ""
 "`instance_depth_limit` is the maximum depth of instance hierarchy. The "
 "default value is 128."
@@ -5426,11 +5511,11 @@ msgstr ""
 "`instance_depth_limit` はインスタンス階層の最大深さです。デフォルト値は 128 "
 "です。"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:204
+#: src/06_development_environment/01_project_configuration/01_build.md:216
 msgid "The `instance_total_limit` field"
 msgstr "`instance_total_limi` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:206
+#: src/06_development_environment/01_project_configuration/01_build.md:218
 msgid ""
 "`instance_total_limit` is the maximum sub-instances in a module. The default "
 "value is 1048576."
@@ -5452,10 +5537,9 @@ msgstr "設定"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:12
 #: src/06_development_environment/01_project_configuration/03_lint.md:16
-#: src/06_development_environment/01_project_configuration/04_test.md:16
-#: src/06_development_environment/01_project_configuration/04_test.md:30
-#: src/06_development_environment/01_project_configuration/04_test.md:39
-#: src/06_development_environment/01_project_configuration/04_test.md:48
+#: src/06_development_environment/01_project_configuration/04_test.md:59
+#: src/06_development_environment/01_project_configuration/04_test.md:68
+#: src/06_development_environment/01_project_configuration/04_test.md:77
 #: src/06_development_environment/01_project_configuration/05_publish.md:13
 #: src/06_development_environment/03_publish_project.md:53
 #: src/06_development_environment/08_language_server.md:9
@@ -5465,10 +5549,9 @@ msgstr "設定"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:12
 #: src/06_development_environment/01_project_configuration/03_lint.md:16
-#: src/06_development_environment/01_project_configuration/04_test.md:16
-#: src/06_development_environment/01_project_configuration/04_test.md:30
-#: src/06_development_environment/01_project_configuration/04_test.md:39
-#: src/06_development_environment/01_project_configuration/04_test.md:48
+#: src/06_development_environment/01_project_configuration/04_test.md:59
+#: src/06_development_environment/01_project_configuration/04_test.md:68
+#: src/06_development_environment/01_project_configuration/04_test.md:77
 #: src/06_development_environment/01_project_configuration/05_publish.md:13
 #: src/06_development_environment/08_language_server.md:9
 #: src/06_development_environment/10_documentation.md:59
@@ -5477,10 +5560,9 @@ msgstr "設定値"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:12
 #: src/06_development_environment/01_project_configuration/03_lint.md:16
-#: src/06_development_environment/01_project_configuration/04_test.md:16
-#: src/06_development_environment/01_project_configuration/04_test.md:30
-#: src/06_development_environment/01_project_configuration/04_test.md:39
-#: src/06_development_environment/01_project_configuration/04_test.md:48
+#: src/06_development_environment/01_project_configuration/04_test.md:59
+#: src/06_development_environment/01_project_configuration/04_test.md:68
+#: src/06_development_environment/01_project_configuration/04_test.md:77
 #: src/06_development_environment/01_project_configuration/05_publish.md:13
 #: src/06_development_environment/08_language_server.md:9
 #: src/06_development_environment/10_documentation.md:59
@@ -6436,7 +6518,6 @@ msgid "regex required of wire type variable[^wire]"
 msgstr "ワイヤ変数[^wire]の必須正規表現"
 
 #: src/06_development_environment/01_project_configuration/03_lint.md:119
-#: src/06_development_environment/01_project_configuration/04_test.md:20
 msgid "The available values are"
 msgstr "設定可能な値は以下です。"
 
@@ -6500,119 +6581,61 @@ msgstr ""
 "```"
 
 #: src/06_development_environment/01_project_configuration/04_test.md:14
-msgid "This section contains configurations of test."
-msgstr "このセクションはテストの設定です。"
+msgid "The `simulator` field"
+msgstr "`simulator` フィールド"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:18
-msgid "simulator"
-msgstr "simulator"
+#: src/06_development_environment/01_project_configuration/04_test.md:16
+msgid ""
+"The `simulator` field specifies default simulator. The available types are "
+"below:"
+msgstr ""
+"`simulator` フィールドはデフォルトのシミュレータを指定します。"
+"以下のタイプを指定できます。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:18
-msgid "simulator name[^sim]"
-msgstr "シミュレータ名[^sim]"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:18
-msgid "default simulator"
-msgstr "デフォルトのシミュレータ"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:22
+#: src/06_development_environment/01_project_configuration/04_test.md:19
 msgid "`\"verilator\"`"
 msgstr "`\"verilator\"`"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:23
+#: src/06_development_environment/01_project_configuration/04_test.md:20
 msgid "`\"vcs\"`"
 msgstr "`\"vcs\"`"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:24
+#: src/06_development_environment/01_project_configuration/04_test.md:21
 msgid "`\"vivado\"`"
 msgstr "`\"vivado\"`"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:26
-msgid "The `[test.verilator]` section"
-msgstr "`[test.verilator]` セクション"
+#: src/06_development_environment/01_project_configuration/04_test.md:23
+msgid "The `include_files` field"
+msgstr "`include_files` フィールド"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:28
-msgid "This section contains configurations of test by Verilator."
-msgstr "このセクションはVerilatorによるテストの設定です。"
+#: src/06_development_environment/01_project_configuration/04_test.md:25
+msgid "The `include_files` field specifies extra files used for simulation."
+msgstr ""
+"`include_files` フィールドはシミュレーションに使う追加のファイルを指定します。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:32
-#: src/06_development_environment/01_project_configuration/04_test.md:41
-#: src/06_development_environment/01_project_configuration/04_test.md:50
-msgid "compile_args"
-msgstr "compile_args"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:32
-#: src/06_development_environment/01_project_configuration/04_test.md:33
-#: src/06_development_environment/01_project_configuration/04_test.md:41
-#: src/06_development_environment/01_project_configuration/04_test.md:42
-#: src/06_development_environment/01_project_configuration/04_test.md:50
-#: src/06_development_environment/01_project_configuration/04_test.md:51
-#: src/06_development_environment/01_project_configuration/04_test.md:52
-msgid "\\[string\\]"
-msgstr "\\[文字列\\]"
+#: src/06_development_environment/01_project_configuration/04_test.md:27
+msgid ""
+"```toml\n"
+"[test]\n"
+"include_files = [\"test/mem.hex\"]\n"
+"```"
+msgstr ""
+"```toml\n"
+"[test]\n"
+"include_files = [\"test/mem.hex\"]\n"
+"```"
 
 #: src/06_development_environment/01_project_configuration/04_test.md:32
-msgid "additional arguments to `verilator` command"
-msgstr "`verilator` コマンドへの追加の引数"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:33
-#: src/06_development_environment/01_project_configuration/04_test.md:42
-#: src/06_development_environment/01_project_configuration/04_test.md:52
-msgid "simulate_args"
-msgstr "simulate_args"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:33
-#: src/06_development_environment/01_project_configuration/04_test.md:42
-msgid "additional arguments to simulation binary"
-msgstr "シミュレーションバイナリへの追加の引数"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:35
-msgid "The `[test.vcs]` section"
-msgstr "`[test.vcs]` セクション"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:37
-msgid "This section contains configurations of test by VCS."
-msgstr "このセクションはVCSによるテストの設定です。"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:41
-msgid "additional arguments to `vcs` command"
-msgstr "`vcs` コマンドへの追加の引数"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:44
-msgid "The `[test.vivado]` section"
-msgstr "`[test.vivado]` セクション"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:46
-msgid "This section contains configurations of test by Vivado."
-msgstr "このセクションはVivadoによるテストの設定です。"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:50
-msgid "additional arguments to `xvlog` command"
-msgstr "`xvlog` コマンドへの追加の引数"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:51
-msgid "elaborate_args"
-msgstr "elaborate_args"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:51
-msgid "additional arguments to `xelab` command"
-msgstr "`xelab` コマンドへの追加の引数"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:52
-msgid "additional arguments to `xsim` command"
-msgstr "`xsim` コマンドへの追加の引数"
-
-#: src/06_development_environment/01_project_configuration/04_test.md:54
 msgid "The `waveform_target` field"
 msgstr "`waveform_target` フィールド"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:56
+#: src/06_development_environment/01_project_configuration/04_test.md:34
 msgid ""
 "The `waveform_target` field specifies where the generated waveforms will be "
 "placed at. The available types are below:"
 msgstr "`waveform_target` フィールドは波形の生成先を指定します。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:64
+#: src/06_development_environment/01_project_configuration/04_test.md:42
 msgid ""
 "```toml\n"
 "[test]\n"
@@ -6624,11 +6647,11 @@ msgstr ""
 "waveform_target = {type = \"directory\", path = \"[dst dir]\"}\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:69
+#: src/06_development_environment/01_project_configuration/04_test.md:47
 msgid "The `waveform_format` field"
 msgstr "`waveform_format` フィールド"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:71
+#: src/06_development_environment/01_project_configuration/04_test.md:49
 msgid ""
 "The `waveform_format` field specifies in which format the waveform will be "
 "dumped. The available formats are:"
@@ -6636,7 +6659,7 @@ msgstr ""
 "`waveform_format` フィールドはダンプされる波形のフォーマットを指定します。指"
 "定できる値は以下の通りです。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:74
+#: src/06_development_environment/01_project_configuration/04_test.md:52
 msgid ""
 "`vcd` -- The default value and most readable format across all vendors. But "
 "also not very feature rich"
@@ -6644,13 +6667,88 @@ msgstr ""
 "`vcd` -- デフォルト値であり、多くのベンダーでサポートされていますが機能は限定"
 "的です。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:75
+#: src/06_development_environment/01_project_configuration/04_test.md:53
 msgid ""
 "`fst` -- This format has some more features, e.g. printing enum values "
 "instead of integers. `gtkwave` and `surfer` can read this format."
 msgstr ""
 "`fst` -- 整数の代わりにenum値を表示するなどいくつかの機能をサポートしていま"
 "す。`gtkwave` と `surfer` で扱うことができます。"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:55
+msgid "The `[test.verilator]` section"
+msgstr "`[test.verilator]` セクション"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:57
+msgid "This section contains configurations of test by Verilator."
+msgstr "このセクションはVerilatorによるテストの設定です。"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:61
+#: src/06_development_environment/01_project_configuration/04_test.md:70
+#: src/06_development_environment/01_project_configuration/04_test.md:79
+msgid "compile_args"
+msgstr "compile_args"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:61
+#: src/06_development_environment/01_project_configuration/04_test.md:62
+#: src/06_development_environment/01_project_configuration/04_test.md:70
+#: src/06_development_environment/01_project_configuration/04_test.md:71
+#: src/06_development_environment/01_project_configuration/04_test.md:79
+#: src/06_development_environment/01_project_configuration/04_test.md:80
+#: src/06_development_environment/01_project_configuration/04_test.md:81
+msgid "\\[string\\]"
+msgstr "\\[文字列\\]"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:61
+msgid "additional arguments to `verilator` command"
+msgstr "`verilator` コマンドへの追加の引数"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:62
+#: src/06_development_environment/01_project_configuration/04_test.md:71
+#: src/06_development_environment/01_project_configuration/04_test.md:81
+msgid "simulate_args"
+msgstr "simulate_args"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:62
+#: src/06_development_environment/01_project_configuration/04_test.md:71
+msgid "additional arguments to simulation binary"
+msgstr "シミュレーションバイナリへの追加の引数"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:64
+msgid "The `[test.vcs]` section"
+msgstr "`[test.vcs]` セクション"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:66
+msgid "This section contains configurations of test by VCS."
+msgstr "このセクションはVCSによるテストの設定です。"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:70
+msgid "additional arguments to `vcs` command"
+msgstr "`vcs` コマンドへの追加の引数"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:73
+msgid "The `[test.vivado]` section"
+msgstr "`[test.vivado]` セクション"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:75
+msgid "This section contains configurations of test by Vivado."
+msgstr "このセクションはVivadoによるテストの設定です。"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:79
+msgid "additional arguments to `xvlog` command"
+msgstr "`xvlog` コマンドへの追加の引数"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:80
+msgid "elaborate_args"
+msgstr "elaborate_args"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:80
+msgid "additional arguments to `xelab` command"
+msgstr "`xelab` コマンドへの追加の引数"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:81
+msgid "additional arguments to `xsim` command"
+msgstr "`xsim` コマンドへの追加の引数"
 
 #: src/06_development_environment/01_project_configuration/05_publish.md:3
 msgid ""
@@ -8931,7 +9029,8 @@ msgid ""
 "StatementBlockGroup: { Attribute } ( LBrace { StatementBlockGroup } RBrace | "
 "StatementBlockItem );\n"
 "\n"
-"StatementBlockItem: VarDeclaration | LetStatement | Statement;\n"
+"StatementBlockItem: VarDeclaration | LetStatement | ConstDeclaration | "
+"Statement;\n"
 "\n"
 "Statement: IdentifierStatement\n"
 "         | IfStatement\n"
@@ -9268,6 +9367,7 @@ msgid ""
 "            | InitialDeclaration\n"
 "            | FinalDeclaration\n"
 "            | UnsafeBlock\n"
+"            | EmbedDeclaration\n"
 "            ;\n"
 "\n"
 "// "
@@ -9289,6 +9389,7 @@ msgid ""
 "           | FunctionDeclaration\n"
 "           | ImportDeclaration\n"
 "           | AliasDeclaration\n"
+"           | EmbedDeclaration\n"
 "           ;\n"
 "\n"
 "// "
@@ -9339,7 +9440,7 @@ msgid ""
 "ProtoConstDeclaration: Const Identifier Colon ( ArrayType | Type ) "
 "Semicolon;\n"
 "\n"
-"ProtoTypeDefDeclaration: Type Identifier Semicolon;\n"
+"ProtoTypeDefDeclaration: Type Identifier [ Equ ArrayType ] Semicolon;\n"
 "\n"
 "ProtoFunctionDeclaration: Function Identifier [ WithGenericParameter ] "
 "[ PortDeclaration ] [ MinusGT ScalarType ] Semicolon;\n"
@@ -9515,6 +9616,18 @@ msgstr "unknown_port"
 #: src/07_appendix/02_semantic_error.md:55
 msgid "unused_variable"
 msgstr "unused_variable"
+
+#~ msgid "This section contains configurations of test."
+#~ msgstr "このセクションはテストの設定です。"
+
+#~ msgid "simulator"
+#~ msgstr "simulator"
+
+#~ msgid "simulator name[^sim]"
+#~ msgstr "シミュレータ名[^sim]"
+
+#~ msgid "default simulator"
+#~ msgstr "デフォルトのシミュレータ"
 
 #~ msgid ""
 #~ "```toml\n"
