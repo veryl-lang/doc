@@ -55,6 +55,25 @@ verylup update --pkg veryl-x86_64-linux.zip
 verylup install 0.12.0 --pkg veryl-x86_64-linux.zip
 ```
 
+## Proxy
+
+Verylup refers the following environment variables for proxy configuration:
+
+* `HTTPS_PROXY`
+* `https_proxy`
+* `ALL_PROXY`
+* `all_proxy`
+
+As proxy protocol, `http` and `socks5` are supported.
+
+### Proxy config
+
+Instead of environment variables, you can specify proxy configuration for verylup only.
+
+```
+verylup config set proxy socks5://127.0.0.1:1086
+```
+
 ## Nightly channel
 
 To use the latest features easily, nightly channel is available.
