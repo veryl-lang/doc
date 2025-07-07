@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-07-07T09:51:11+09:00\n"
+"POT-Creation-Date: 2025-07-07T16:52:35+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -3629,8 +3629,8 @@ msgid ""
 "Symbols imported via an import declaration can be referenced anywhere within "
 "the namespace where the import declaration is placed."
 msgstr ""
-"インポート宣言によるシンボルのインポートは、そのインポート宣言が置かれた名前空間内の"
-"任意の場所から参照できます。"
+"インポート宣言によるシンボルのインポートは、そのインポート宣言が置かれた名前"
+"空間内の任意の場所から参照できます。"
 
 #: src/05_language_reference/06_declaration/12_import_export.md:23
 msgid ""
@@ -4033,9 +4033,9 @@ msgid ""
 "the body of module declaration, interface declaration and package "
 "declaration. This usage is for integration with SystemVerilog testbench."
 msgstr ""
-"`inline` かつ `sv` 指定された `embed` 宣言はモジュール宣言、インターフェース宣言"
-"及びパッケージ宣言の中に配置することができます。"
-"これはSystemVerilogテストベンチとの統合に使用できます。"
+"`inline` かつ `sv` 指定された `embed` 宣言はモジュール宣言、インターフェース"
+"宣言及びパッケージ宣言の中に配置することができます。これはSystemVerilogテスト"
+"ベンチとの統合に使用できます。"
 
 #: src/05_language_reference/12_foreign_language_integration.md:47
 msgid "`include` declaration"
@@ -5188,8 +5188,9 @@ msgid ""
 "which are visible from the project root. You can specify directries where "
 "the Veryl compiler collect files by using the `sources` field."
 msgstr ""
-"デフォルトではVerylコンパイラはプロジェクトルートから見える全ての `*.veryl` ファイルを"
-"処理します。特定のディレクトリだけを処理するために `sources` フィールドを使用することができます。"
+"デフォルトではVerylコンパイラはプロジェクトルートから見える全ての `*.veryl` "
+"ファイルを処理します。特定のディレクトリだけを処理するために `sources` フィー"
+"ルドを使用することができます。"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:37
 msgid ""
@@ -5208,8 +5209,8 @@ msgid ""
 "For the above exmaple, the Veryl compiler collect `*.veryl` files from `rtl/"
 "foo_module` and `rtl/bar_module`."
 msgstr ""
-"上記の例では、Verylコンパイラは `rtl/foo_module` と `rtl/bar_module` の"
-"`*.veryl` ファイルを処理します。"
+"上記の例では、Verylコンパイラは `rtl/foo_module` と `rtl/bar_module` の`*."
+"veryl` ファイルを処理します。"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:44
 msgid "The `target` field"
@@ -6589,8 +6590,8 @@ msgid ""
 "The `simulator` field specifies default simulator. The available types are "
 "below:"
 msgstr ""
-"`simulator` フィールドはデフォルトのシミュレータを指定します。"
-"以下のタイプを指定できます。"
+"`simulator` フィールドはデフォルトのシミュレータを指定します。以下のタイプを"
+"指定できます。"
 
 #: src/06_development_environment/01_project_configuration/04_test.md:19
 msgid "`\"verilator\"`"
@@ -6611,7 +6612,8 @@ msgstr "`include_files` フィールド"
 #: src/06_development_environment/01_project_configuration/04_test.md:25
 msgid "The `include_files` field specifies extra files used for simulation."
 msgstr ""
-"`include_files` フィールドはシミュレーションに使う追加のファイルを指定します。"
+"`include_files` フィールドはシミュレーションに使う追加のファイルを指定しま"
+"す。"
 
 #: src/06_development_environment/01_project_configuration/04_test.md:27
 msgid ""
@@ -7960,10 +7962,62 @@ msgstr ""
 "す。"
 
 #: src/06_development_environment/13_verylup.md:58
+msgid "Proxy"
+msgstr "プロキシ"
+
+#: src/06_development_environment/13_verylup.md:60
+msgid ""
+"Verylup refers the following environment variables for proxy configuration:"
+msgstr ""
+"Verylupはプロキシ設定として以下の環境変数を参照します。"
+
+#: src/06_development_environment/13_verylup.md:62
+msgid "`HTTPS_PROXY`"
+msgstr "`HTTPS_PROXY`"
+
+#: src/06_development_environment/13_verylup.md:63
+msgid "`https_proxy`"
+msgstr "`https_proxy`"
+
+#: src/06_development_environment/13_verylup.md:64
+msgid "`ALL_PROXY`"
+msgstr "`ALL_PROXY`"
+
+#: src/06_development_environment/13_verylup.md:65
+msgid "`all_proxy`"
+msgstr "`all_proxy`"
+
+#: src/06_development_environment/13_verylup.md:67
+msgid "As proxy protocol, `http` and `socks5` are supported."
+msgstr ""
+"プロキシのプロトコルとしては `http` と `socks5` がサポートされています。"
+
+#: src/06_development_environment/13_verylup.md:69
+msgid "Proxy config"
+msgstr "プロキシ設定"
+
+#: src/06_development_environment/13_verylup.md:71
+msgid ""
+"Instead of environment variables, you can specify proxy configuration for "
+"verylup only."
+msgstr ""
+"環境変数の代わりにverylupだけのプロキシ設定を指定することができます。"
+
+#: src/06_development_environment/13_verylup.md:73
+msgid ""
+"```\n"
+"verylup config set proxy socks5://127.0.0.1:1086\n"
+"```"
+msgstr ""
+"```\n"
+"verylup config set proxy socks5://127.0.0.1:1086\n"
+"```"
+
+#: src/06_development_environment/13_verylup.md:77
 msgid "Nightly channel"
 msgstr "ナイトリーチャンネル"
 
-#: src/06_development_environment/13_verylup.md:60
+#: src/06_development_environment/13_verylup.md:79
 msgid ""
 "To use the latest features easily, nightly channel is available. Nightly "
 "channel is built daily from the master branch."
@@ -7971,7 +8025,7 @@ msgstr ""
 "最新の機能を簡単に試すために、ナイトリーチャンネルが利用できます。ナイトリー"
 "チャンネルはマスターブランチから毎日ビルドされます。"
 
-#: src/06_development_environment/13_verylup.md:67
+#: src/06_development_environment/13_verylup.md:86
 msgid ""
 "By default, nightly channel is not enabled after installation. So the "
 "following ways can be used to enable it."
@@ -7979,7 +8033,7 @@ msgstr ""
 "デフォルトではナイトリーチャンネルはインストールしても有効になりません。以下"
 "の方法で有効にすることができます。"
 
-#: src/06_development_environment/13_verylup.md:70
+#: src/06_development_environment/13_verylup.md:89
 msgid ""
 "```\n"
 "// Use +nightly\n"
@@ -8003,11 +8057,11 @@ msgstr ""
 "verylup override set nightly\n"
 "```"
 
-#: src/06_development_environment/13_verylup.md:81
+#: src/06_development_environment/13_verylup.md:100
 msgid "For Veryl Developer"
 msgstr "Veryl開発者向け"
 
-#: src/06_development_environment/13_verylup.md:83
+#: src/06_development_environment/13_verylup.md:102
 msgid ""
 "For Veryl developer, a special toolchain target `local` is prepared. If "
 "`verylup install local` is executed in your local Veryl repository, the "
@@ -8019,7 +8073,7 @@ msgstr ""
 "ツールチェーンを `local` ツールチェーンとしてインストールします。`local` ツー"
 "ルチェーンが存在するときはデフォルトのツールチェーンになります。"
 
-#: src/06_development_environment/13_verylup.md:87
+#: src/06_development_environment/13_verylup.md:106
 msgid ""
 "```\n"
 "// Build and install the toolchain from local Veryl repository\n"
