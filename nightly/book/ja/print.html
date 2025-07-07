@@ -2196,6 +2196,21 @@ module ModuleA {
     import PackageA::paramA;
 }
 </code></pre>
+<p>インポート宣言によるシンボルのインポートは、そのインポート宣言が置かれた名前空間内の任意の場所から参照できます。</p>
+<pre><code class="language-veryl playground">package PackageA {
+    const WIDTH: u32 = 8;
+}
+
+module ModuleA (
+    i_d: input  logic&lt;WIDTH&gt;, // 有効な参照
+    o_d: output logic&lt;WIDTH&gt;, // 有効な参照
+) {
+    import PackageA::WIDTH;
+
+    let d  : logic&lt;WIDTH&gt; = i_d; // 有効な参照
+    assign o_d = d;
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="connect"><a class="header" href="#connect">Connect</a></h1>
 <p>あるインターフェースをほかのインターフェースに接続するために各メンバーを代入する代わりに <code>connect</code> 宣言を使用することができます。<code>connect</code> 宣言はインターフェースの全てのメンバーを自動的に接続します。</p>
 <p>代入の方向はmodportによって決まります。つまり <code>output</code> メンバーが <code>input</code> メンバーに代入されます。<code>connect</code> の引数がインターフェースインスタンスの場合、方向を決定するためにmodportの指定が必要です。</p>
@@ -2454,6 +2469,24 @@ pub package PackageA {}
     module ModuleSv;
     endmodule
 }}}
+</code></pre>
+<p><code>inline</code> かつ <code>sv</code> 指定された <code>embed</code> 宣言はモジュール宣言、インターフェース宣言及びパッケージ宣言の中に配置することができます。これはSystemVerilogテストベンチとの統合に使用できます。</p>
+<pre><code class="language-veryl playground">#[allow(unused_variable)]
+interface bus_monitor_if {
+    var clk    : clock   ;
+    var ready  : logic   ;
+    var valid  : logic   ;
+    var payload: logic&lt;8&gt;;
+
+    embed (inline) sv{{{
+        clocking monitor_cb @(posedge clk);
+            input ready;
+            input valid;
+            input payload;
+        endclocking
+    }}}
+
+}
 </code></pre>
 <h2 id="include-宣言"><a class="header" href="#include-宣言"><code>include</code> 宣言</a></h2>
 <p><code>include</code> 宣言により他言語のファイルを含めることができます。<code>include</code> 宣言の第一引数は <code>embed</code> 宣言と同じです。第二引数はソースコードからの相対ファイルパスです。</p>
@@ -3006,6 +3039,12 @@ repository = "https://github.com/veryl-lang/veryl"
 <li><code>relative</code> – プレーンテキスト形式の相対パスのリスト</li>
 <li><code>flgen</code> – <a href="https://github.com/pezy-computing/flgen">flgen</a> 形式のファイルリスト</li>
 </ul>
+<h2 id="sources-フィールド"><a class="header" href="#sources-フィールド"><code>sources</code> フィールド</a></h2>
+<p>デフォルトではVerylコンパイラはプロジェクトルートから見える全ての <code>*.veryl</code> ファイルを処理します。特定のディレクトリだけを処理するために <code>sources</code> フィールドを使用することができます。</p>
+<pre><code class="language-toml">[build]
+sources = ["rtl/foo_module", "rtl/bar_module"]
+</code></pre>
+<p>上記の例では、Verylコンパイラは <code>rtl/foo_module</code> と <code>rtl/bar_module</code> の<code>*.veryl</code> ファイルを処理します。</p>
 <h2 id="target-フィールド"><a class="header" href="#target-フィールド"><code>target</code> フィールド</a></h2>
 <p><code>target</code> フィールドはコードの生成先を指定します。</p>
 <ul>
@@ -3264,15 +3303,33 @@ simulator = "vcs"
 </code></pre>
 <h2 id="設定-2"><a class="header" href="#設定-2">設定</a></h2>
 <h2 id="test-セクション"><a class="header" href="#test-セクション"><code>[test]</code> セクション</a></h2>
-<p>このセクションはテストの設定です。</p>
-<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
-<tr><td>simulator</td><td>シミュレータ名<sup class="footnote-reference" id="fr-sim-1"><a href="#footnote-sim">1</a></sup></td><td>デフォルトのシミュレータ</td></tr>
-</tbody></table>
-</div>
+<h3 id="simulator-フィールド"><a class="header" href="#simulator-フィールド"><code>simulator</code> フィールド</a></h3>
+<p><code>simulator</code> フィールドはデフォルトのシミュレータを指定します。以下のタイプを指定できます。</p>
 <ul>
 <li><code>"verilator"</code></li>
 <li><code>"vcs"</code></li>
 <li><code>"vivado"</code></li>
+</ul>
+<h3 id="include_files-フィールド"><a class="header" href="#include_files-フィールド"><code>include_files</code> フィールド</a></h3>
+<p><code>include_files</code> フィールドはシミュレーションに使う追加のファイルを指定します。</p>
+<pre><code class="language-toml">[test]
+include_files = ["test/mem.hex"]
+</code></pre>
+<h3 id="waveform_target-フィールド"><a class="header" href="#waveform_target-フィールド"><code>waveform_target</code> フィールド</a></h3>
+<p><code>waveform_target</code> フィールドは波形の生成先を指定します。</p>
+<ul>
+<li><code>target</code> – ターゲットコードと同じディレクトリ</li>
+<li><code>directory</code> – 特定のディレクトリ</li>
+</ul>
+<p><code>directory</code> を指定する場合は、ターゲットパスを <code>path</code> キーで指定します。</p>
+<pre><code class="language-toml">[test]
+waveform_target = {type = "directory", path = "[dst dir]"}
+</code></pre>
+<h3 id="waveform_format-フィールド"><a class="header" href="#waveform_format-フィールド"><code>waveform_format</code> フィールド</a></h3>
+<p><code>waveform_format</code> フィールドはダンプされる波形のフォーマットを指定します。指定できる値は以下の通りです。</p>
+<ul>
+<li><code>vcd</code> – デフォルト値であり、多くのベンダーでサポートされていますが機能は限定的です。</li>
+<li><code>fst</code> – 整数の代わりにenum値を表示するなどいくつかの機能をサポートしています。<code>gtkwave</code> と <code>surfer</code> で扱うことができます。</li>
 </ul>
 <h2 id="testverilator-セクション"><a class="header" href="#testverilator-セクション"><code>[test.verilator]</code> セクション</a></h2>
 <p>このセクションはVerilatorによるテストの設定です。</p>
@@ -3295,28 +3352,7 @@ simulator = "vcs"
 <tr><td>elaborate_args</td><td>[文字列]</td><td><code>xelab</code> コマンドへの追加の引数</td></tr>
 <tr><td>simulate_args</td><td>[文字列]</td><td><code>xsim</code> コマンドへの追加の引数</td></tr>
 </tbody></table>
-</div>
-<h2 id="waveform_target-フィールド"><a class="header" href="#waveform_target-フィールド"><code>waveform_target</code> フィールド</a></h2>
-<p><code>waveform_target</code> フィールドは波形の生成先を指定します。</p>
-<ul>
-<li><code>target</code> – ターゲットコードと同じディレクトリ</li>
-<li><code>directory</code> – 特定のディレクトリ</li>
-</ul>
-<p><code>directory</code> を指定する場合は、ターゲットパスを <code>path</code> キーで指定します。</p>
-<pre><code class="language-toml">[test]
-waveform_target = {type = "directory", path = "[dst dir]"}
-</code></pre>
-<h2 id="waveform_format-フィールド"><a class="header" href="#waveform_format-フィールド"><code>waveform_format</code> フィールド</a></h2>
-<p><code>waveform_format</code> フィールドはダンプされる波形のフォーマットを指定します。指定できる値は以下の通りです。</p>
-<ul>
-<li><code>vcd</code> – デフォルト値であり、多くのベンダーでサポートされていますが機能は限定的です。</li>
-<li><code>fst</code> – 整数の代わりにenum値を表示するなどいくつかの機能をサポートしています。<code>gtkwave</code> と <code>surfer</code> で扱うことができます。</li>
-</ul>
-<hr>
-<ol class="footnote-definition"><li id="footnote-sim">
-<p>設定可能な値は以下です。 <a href="#fr-sim-1">↩</a></p>
-</li>
-</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="publish"><a class="header" href="#publish">Publish</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="publish"><a class="header" href="#publish">Publish</a></h1>
 <p><code>[publish]</code> セクションは以下のようにプロジェクト公開の設定を指定します。</p>
 <pre><code class="language-toml">[publish]
 bump_commit = true

@@ -224,6 +224,24 @@
     endmodule
 }}}
 </code></pre>
+<p><code>inline</code> かつ <code>sv</code> 指定された <code>embed</code> 宣言はモジュール宣言、インターフェース宣言及びパッケージ宣言の中に配置することができます。これはSystemVerilogテストベンチとの統合に使用できます。</p>
+<pre><code class="language-veryl playground">#[allow(unused_variable)]
+interface bus_monitor_if {
+    var clk    : clock   ;
+    var ready  : logic   ;
+    var valid  : logic   ;
+    var payload: logic&lt;8&gt;;
+
+    embed (inline) sv{{{
+        clocking monitor_cb @(posedge clk);
+            input ready;
+            input valid;
+            input payload;
+        endclocking
+    }}}
+
+}
+</code></pre>
 <h2 id="include-宣言"><a class="header" href="#include-宣言"><code>include</code> 宣言</a></h2>
 <p><code>include</code> 宣言により他言語のファイルを含めることができます。<code>include</code> 宣言の第一引数は <code>embed</code> 宣言と同じです。第二引数はソースコードからの相対ファイルパスです。</p>
 <pre><code class="language-veryl">include(inline, "module.sv");

@@ -230,6 +230,12 @@
 <li><code>relative</code> – プレーンテキスト形式の相対パスのリスト</li>
 <li><code>flgen</code> – <a href="https://github.com/pezy-computing/flgen">flgen</a> 形式のファイルリスト</li>
 </ul>
+<h2 id="sources-フィールド"><a class="header" href="#sources-フィールド"><code>sources</code> フィールド</a></h2>
+<p>デフォルトではVerylコンパイラはプロジェクトルートから見える全ての <code>*.veryl</code> ファイルを処理します。特定のディレクトリだけを処理するために <code>sources</code> フィールドを使用することができます。</p>
+<pre><code class="language-toml">[build]
+sources = ["rtl/foo_module", "rtl/bar_module"]
+</code></pre>
+<p>上記の例では、Verylコンパイラは <code>rtl/foo_module</code> と <code>rtl/bar_module</code> の<code>*.veryl</code> ファイルを処理します。</p>
 <h2 id="target-フィールド"><a class="header" href="#target-フィールド"><code>target</code> フィールド</a></h2>
 <p><code>target</code> フィールドはコードの生成先を指定します。</p>
 <ul>

@@ -214,15 +214,33 @@ simulator = "vcs"
 </code></pre>
 <h2 id="設定"><a class="header" href="#設定">設定</a></h2>
 <h2 id="test-セクション"><a class="header" href="#test-セクション"><code>[test]</code> セクション</a></h2>
-<p>このセクションはテストの設定です。</p>
-<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
-<tr><td>simulator</td><td>シミュレータ名<sup class="footnote-reference" id="fr-sim-1"><a href="#footnote-sim">1</a></sup></td><td>デフォルトのシミュレータ</td></tr>
-</tbody></table>
-</div>
+<h3 id="simulator-フィールド"><a class="header" href="#simulator-フィールド"><code>simulator</code> フィールド</a></h3>
+<p><code>simulator</code> フィールドはデフォルトのシミュレータを指定します。以下のタイプを指定できます。</p>
 <ul>
 <li><code>"verilator"</code></li>
 <li><code>"vcs"</code></li>
 <li><code>"vivado"</code></li>
+</ul>
+<h3 id="include_files-フィールド"><a class="header" href="#include_files-フィールド"><code>include_files</code> フィールド</a></h3>
+<p><code>include_files</code> フィールドはシミュレーションに使う追加のファイルを指定します。</p>
+<pre><code class="language-toml">[test]
+include_files = ["test/mem.hex"]
+</code></pre>
+<h3 id="waveform_target-フィールド"><a class="header" href="#waveform_target-フィールド"><code>waveform_target</code> フィールド</a></h3>
+<p><code>waveform_target</code> フィールドは波形の生成先を指定します。</p>
+<ul>
+<li><code>target</code> – ターゲットコードと同じディレクトリ</li>
+<li><code>directory</code> – 特定のディレクトリ</li>
+</ul>
+<p><code>directory</code> を指定する場合は、ターゲットパスを <code>path</code> キーで指定します。</p>
+<pre><code class="language-toml">[test]
+waveform_target = {type = "directory", path = "[dst dir]"}
+</code></pre>
+<h3 id="waveform_format-フィールド"><a class="header" href="#waveform_format-フィールド"><code>waveform_format</code> フィールド</a></h3>
+<p><code>waveform_format</code> フィールドはダンプされる波形のフォーマットを指定します。指定できる値は以下の通りです。</p>
+<ul>
+<li><code>vcd</code> – デフォルト値であり、多くのベンダーでサポートされていますが機能は限定的です。</li>
+<li><code>fst</code> – 整数の代わりにenum値を表示するなどいくつかの機能をサポートしています。<code>gtkwave</code> と <code>surfer</code> で扱うことができます。</li>
 </ul>
 <h2 id="testverilator-セクション"><a class="header" href="#testverilator-セクション"><code>[test.verilator]</code> セクション</a></h2>
 <p>このセクションはVerilatorによるテストの設定です。</p>
@@ -246,27 +264,6 @@ simulator = "vcs"
 <tr><td>simulate_args</td><td>[文字列]</td><td><code>xsim</code> コマンドへの追加の引数</td></tr>
 </tbody></table>
 </div>
-<h2 id="waveform_target-フィールド"><a class="header" href="#waveform_target-フィールド"><code>waveform_target</code> フィールド</a></h2>
-<p><code>waveform_target</code> フィールドは波形の生成先を指定します。</p>
-<ul>
-<li><code>target</code> – ターゲットコードと同じディレクトリ</li>
-<li><code>directory</code> – 特定のディレクトリ</li>
-</ul>
-<p><code>directory</code> を指定する場合は、ターゲットパスを <code>path</code> キーで指定します。</p>
-<pre><code class="language-toml">[test]
-waveform_target = {type = "directory", path = "[dst dir]"}
-</code></pre>
-<h2 id="waveform_format-フィールド"><a class="header" href="#waveform_format-フィールド"><code>waveform_format</code> フィールド</a></h2>
-<p><code>waveform_format</code> フィールドはダンプされる波形のフォーマットを指定します。指定できる値は以下の通りです。</p>
-<ul>
-<li><code>vcd</code> – デフォルト値であり、多くのベンダーでサポートされていますが機能は限定的です。</li>
-<li><code>fst</code> – 整数の代わりにenum値を表示するなどいくつかの機能をサポートしています。<code>gtkwave</code> と <code>surfer</code> で扱うことができます。</li>
-</ul>
-<hr>
-<ol class="footnote-definition"><li id="footnote-sim">
-<p>設定可能な値は以下です。 <a href="#fr-sim-1">↩</a></p>
-</li>
-</ol>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
