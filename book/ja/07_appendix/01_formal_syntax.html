@@ -830,7 +830,7 @@ StatementBlock: LBrace { StatementBlockGroup } RBrace;
 
 StatementBlockGroup: { Attribute } ( LBrace { StatementBlockGroup } RBrace | StatementBlockItem );
 
-StatementBlockItem: VarDeclaration | LetStatement | Statement;
+StatementBlockItem: VarDeclaration | LetStatement | ConstDeclaration | Statement;
 
 Statement: IdentifierStatement
          | IfStatement
@@ -1103,6 +1103,7 @@ GenerateItem: LetDeclaration
             | InitialDeclaration
             | FinalDeclaration
             | UnsafeBlock
+            | EmbedDeclaration
             ;
 
 // ----------------------------------------------------------------------------
@@ -1120,6 +1121,7 @@ PackageItem: ConstDeclaration
            | FunctionDeclaration
            | ImportDeclaration
            | AliasDeclaration
+           | EmbedDeclaration
            ;
 
 // ----------------------------------------------------------------------------
@@ -1160,7 +1162,7 @@ ProtoPacakgeItem: ProtoConstDeclaration
 
 ProtoConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Semicolon;
 
-ProtoTypeDefDeclaration: Type Identifier Semicolon;
+ProtoTypeDefDeclaration: Type Identifier [ Equ ArrayType ] Semicolon;
 
 ProtoFunctionDeclaration: Function Identifier [ WithGenericParameter ] [ PortDeclaration ] [ MinusGT ScalarType ] Semicolon;
 

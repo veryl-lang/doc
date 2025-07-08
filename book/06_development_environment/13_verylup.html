@@ -240,6 +240,19 @@ The procedure of offline installation is below:</p>
 <pre><code>verylup update --pkg veryl-x86_64-linux.zip
 verylup install 0.12.0 --pkg veryl-x86_64-linux.zip
 </code></pre>
+<h2 id="proxy"><a class="header" href="#proxy">Proxy</a></h2>
+<p>Verylup refers the following environment variables for proxy configuration:</p>
+<ul>
+<li><code>HTTPS_PROXY</code></li>
+<li><code>https_proxy</code></li>
+<li><code>ALL_PROXY</code></li>
+<li><code>all_proxy</code></li>
+</ul>
+<p>As proxy protocol, <code>http</code> and <code>socks5</code> are supported.</p>
+<h3 id="proxy-config"><a class="header" href="#proxy-config">Proxy config</a></h3>
+<p>Instead of environment variables, you can specify proxy configuration for verylup only.</p>
+<pre><code>verylup config set proxy socks5://127.0.0.1:1086
+</code></pre>
 <h2 id="nightly-channel"><a class="header" href="#nightly-channel">Nightly channel</a></h2>
 <p>To use the latest features easily, nightly channel is available.
 Nightly channel is built daily from the master branch.</p>

@@ -2,750 +2,750 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://doc.veryl-lang.org/book/01_introduction.html</loc>
-        <lastmod>2025-06-02T01:18:57.792Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.284Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/02_features.html</loc>
-        <lastmod>2025-06-02T01:18:57.795Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.287Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/03_getting_started.html</loc>
-        <lastmod>2025-06-02T01:18:57.796Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.288Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/04_code_examples.html</loc>
-        <lastmod>2025-06-02T01:18:57.798Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.290Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference.html</loc>
-        <lastmod>2025-06-02T01:18:57.801Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.293Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment.html</loc>
-        <lastmod>2025-06-02T01:18:57.837Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.329Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/07_appendix.html</loc>
-        <lastmod>2025-06-02T01:18:57.851Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.342Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/index.html</loc>
-        <lastmod>2025-06-02T01:18:57.793Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.285Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/03_getting_started/01_installation.html</loc>
-        <lastmod>2025-06-02T01:18:57.796Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.288Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/03_getting_started/02_hello_world.html</loc>
-        <lastmod>2025-06-02T01:18:57.797Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.289Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/04_code_examples/01_module.html</loc>
-        <lastmod>2025-06-02T01:18:57.798Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.290Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/04_code_examples/02_instantiation.html</loc>
-        <lastmod>2025-06-02T01:18:57.799Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.291Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/04_code_examples/03_interface.html</loc>
-        <lastmod>2025-06-02T01:18:57.800Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.291Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/04_code_examples/04_package.html</loc>
-        <lastmod>2025-06-02T01:18:57.800Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.292Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/01_source_code_structure.html</loc>
-        <lastmod>2025-06-02T01:18:57.801Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.293Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/02_lexical_structure.html</loc>
-        <lastmod>2025-06-02T01:18:57.802Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.294Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/03_data_type.html</loc>
-        <lastmod>2025-06-02T01:18:57.804Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.296Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/04_expression.html</loc>
-        <lastmod>2025-06-02T01:18:57.807Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.299Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/05_statement.html</loc>
-        <lastmod>2025-06-02T01:18:57.815Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.306Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/06_declaration.html</loc>
-        <lastmod>2025-06-02T01:18:57.819Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.311Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/07_module.html</loc>
-        <lastmod>2025-06-02T01:18:57.828Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.320Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/08_interface.html</loc>
-        <lastmod>2025-06-02T01:18:57.829Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.320Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/09_package.html</loc>
-        <lastmod>2025-06-02T01:18:57.829Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.321Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/10_systemverilog_interoperation.html</loc>
-        <lastmod>2025-06-02T01:18:57.830Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.322Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/11_visibility.html</loc>
-        <lastmod>2025-06-02T01:18:57.830Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.322Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/12_foreign_language_integration.html</loc>
-        <lastmod>2025-06-02T01:18:57.831Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.323Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/13_integrated_test.html</loc>
-        <lastmod>2025-06-02T01:18:57.832Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.323Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/14_generics.html</loc>
-        <lastmod>2025-06-02T01:18:57.832Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.324Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/15_clock_domain_annotation.html</loc>
-        <lastmod>2025-06-02T01:18:57.834Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.326Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/16_standard_library.html</loc>
-        <lastmod>2025-06-02T01:18:57.836Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.328Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/17_alias.html</loc>
-        <lastmod>2025-06-02T01:18:57.836Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.328Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration.html</loc>
-        <lastmod>2025-06-02T01:18:57.838Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.330Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/02_dependencies.html</loc>
-        <lastmod>2025-06-02T01:18:57.843Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.334Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/03_publish_project.html</loc>
-        <lastmod>2025-06-02T01:18:57.844Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.335Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/04_directory_layout.html</loc>
-        <lastmod>2025-06-02T01:18:57.844Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.336Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/05_formatter.html</loc>
-        <lastmod>2025-06-02T01:18:57.845Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.336Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/06_linter.html</loc>
-        <lastmod>2025-06-02T01:18:57.846Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.337Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/07_simulator.html</loc>
-        <lastmod>2025-06-02T01:18:57.846Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.337Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/08_language_server.html</loc>
-        <lastmod>2025-06-02T01:18:57.847Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.338Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/09_compatibility.html</loc>
-        <lastmod>2025-06-02T01:18:57.847Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.339Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/10_documentation.html</loc>
-        <lastmod>2025-06-02T01:18:57.848Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.339Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/11_github_action.html</loc>
-        <lastmod>2025-06-02T01:18:57.849Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.340Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/12_source_map.html</loc>
-        <lastmod>2025-06-02T01:18:57.849Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.341Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/13_verylup.html</loc>
-        <lastmod>2025-06-02T01:18:57.850Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.341Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/14_migrate_to_new_version.html</loc>
-        <lastmod>2025-06-02T01:18:57.851Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.342Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/07_appendix/01_formal_syntax.html</loc>
-        <lastmod>2025-06-02T01:18:57.852Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.343Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/07_appendix/02_semantic_error.html</loc>
-        <lastmod>2025-06-02T01:18:57.852Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.344Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/01_introduction.html</loc>
-        <lastmod>2025-06-02T01:18:58.482Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.081Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/02_features.html</loc>
-        <lastmod>2025-06-02T01:18:58.485Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.084Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/03_getting_started.html</loc>
-        <lastmod>2025-06-02T01:18:58.486Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.084Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/04_code_examples.html</loc>
-        <lastmod>2025-06-02T01:18:58.488Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.086Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference.html</loc>
-        <lastmod>2025-06-02T01:18:58.491Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.089Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment.html</loc>
-        <lastmod>2025-06-02T01:18:58.527Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.125Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/07_appendix.html</loc>
-        <lastmod>2025-06-02T01:18:58.540Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.139Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/404.html</loc>
-        <lastmod>2025-06-02T01:18:58.542Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.141Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/index.html</loc>
-        <lastmod>2025-06-02T01:18:58.483Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.081Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/02_lexical_structure/01_operator.html</loc>
-        <lastmod>2025-06-02T01:18:57.802Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.294Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/02_lexical_structure/02_number.html</loc>
-        <lastmod>2025-06-02T01:18:57.803Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.295Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/02_lexical_structure/03_array_literal.html</loc>
-        <lastmod>2025-06-02T01:18:57.804Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.296Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/03_data_type/01_builtin_type.html</loc>
-        <lastmod>2025-06-02T01:18:57.805Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.297Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/03_data_type/02_user_defined_type.html</loc>
-        <lastmod>2025-06-02T01:18:57.806Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.298Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/03_data_type/03_array.html</loc>
-        <lastmod>2025-06-02T01:18:57.806Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.298Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/03_data_type/04_clock_reset.html</loc>
-        <lastmod>2025-06-02T01:18:57.807Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.299Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/04_expression/01_operator_precedence.html</loc>
-        <lastmod>2025-06-02T01:18:57.808Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.300Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/04_expression/02_function_call.html</loc>
-        <lastmod>2025-06-02T01:18:57.809Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.301Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/04_expression/03_concatenation.html</loc>
-        <lastmod>2025-06-02T01:18:57.809Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.301Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/04_expression/04_if.html</loc>
-        <lastmod>2025-06-02T01:18:57.810Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.302Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/04_expression/05_case_switch.html</loc>
-        <lastmod>2025-06-02T01:18:57.811Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.302Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/04_expression/06_bit_select.html</loc>
-        <lastmod>2025-06-02T01:18:57.811Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.303Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/04_expression/07_range.html</loc>
-        <lastmod>2025-06-02T01:18:57.812Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.304Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/04_expression/08_msb_lsb.html</loc>
-        <lastmod>2025-06-02T01:18:57.812Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.304Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/04_expression/09_inside_outside.html</loc>
-        <lastmod>2025-06-02T01:18:57.813Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.305Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/04_expression/10_type_cast.html</loc>
-        <lastmod>2025-06-02T01:18:57.813Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.305Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/04_expression/11_struct_constructor.html</loc>
-        <lastmod>2025-06-02T01:18:57.814Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.306Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/05_statement/01_assignment.html</loc>
-        <lastmod>2025-06-02T01:18:57.815Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.307Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/05_statement/02_function_call.html</loc>
-        <lastmod>2025-06-02T01:18:57.816Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.308Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/05_statement/03_if.html</loc>
-        <lastmod>2025-06-02T01:18:57.816Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.308Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/05_statement/04_case_switch.html</loc>
-        <lastmod>2025-06-02T01:18:57.817Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.309Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/05_statement/05_for.html</loc>
-        <lastmod>2025-06-02T01:18:57.818Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.309Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/05_statement/06_return.html</loc>
-        <lastmod>2025-06-02T01:18:57.818Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.310Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/05_statement/07_let.html</loc>
-        <lastmod>2025-06-02T01:18:57.819Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.311Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/06_declaration/01_variable.html</loc>
-        <lastmod>2025-06-02T01:18:57.820Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.312Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/06_declaration/02_parameter.html</loc>
-        <lastmod>2025-06-02T01:18:57.820Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.312Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/06_declaration/03_register.html</loc>
-        <lastmod>2025-06-02T01:18:57.821Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.313Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/06_declaration/04_combinational.html</loc>
-        <lastmod>2025-06-02T01:18:57.822Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.313Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/06_declaration/05_assign.html</loc>
-        <lastmod>2025-06-02T01:18:57.822Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.314Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/06_declaration/06_function.html</loc>
-        <lastmod>2025-06-02T01:18:57.823Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.315Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/06_declaration/07_initial_final.html</loc>
-        <lastmod>2025-06-02T01:18:57.823Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.315Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/06_declaration/08_attribute.html</loc>
-        <lastmod>2025-06-02T01:18:57.824Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.316Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/06_declaration/09_generate.html</loc>
-        <lastmod>2025-06-02T01:18:57.825Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.317Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/06_declaration/10_instantiation.html</loc>
-        <lastmod>2025-06-02T01:18:57.825Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.317Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/06_declaration/11_named_block.html</loc>
-        <lastmod>2025-06-02T01:18:57.826Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.318Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/06_declaration/12_import_export.html</loc>
-        <lastmod>2025-06-02T01:18:57.827Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.318Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/06_declaration/13_connect.html</loc>
-        <lastmod>2025-06-02T01:18:57.827Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.319Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/14_generics/01_default_parameter.html</loc>
-        <lastmod>2025-06-02T01:18:57.833Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.325Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/14_generics/02_prototype.html</loc>
-        <lastmod>2025-06-02T01:18:57.834Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.326Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.html</loc>
-        <lastmod>2025-06-02T01:18:57.835Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.327Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/01_build.html</loc>
-        <lastmod>2025-06-02T01:18:57.839Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.331Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/02_format.html</loc>
-        <lastmod>2025-06-02T01:18:57.839Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.331Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/03_lint.html</loc>
-        <lastmod>2025-06-02T01:18:57.840Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.332Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/04_test.html</loc>
-        <lastmod>2025-06-02T01:18:57.841Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.333Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/05_publish.html</loc>
-        <lastmod>2025-06-02T01:18:57.842Z</lastmod>
+        <lastmod>2025-07-08T09:09:37.334Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/03_getting_started/01_installation.html</loc>
-        <lastmod>2025-06-02T01:18:58.486Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.085Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/03_getting_started/02_hello_world.html</loc>
-        <lastmod>2025-06-02T01:18:58.487Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.085Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/04_code_examples/01_module.html</loc>
-        <lastmod>2025-06-02T01:18:58.488Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.087Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/04_code_examples/02_instantiation.html</loc>
-        <lastmod>2025-06-02T01:18:58.489Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.087Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/04_code_examples/03_interface.html</loc>
-        <lastmod>2025-06-02T01:18:58.489Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.088Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/04_code_examples/04_package.html</loc>
-        <lastmod>2025-06-02T01:18:58.490Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.088Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/01_source_code_structure.html</loc>
-        <lastmod>2025-06-02T01:18:58.491Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.090Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/02_lexical_structure.html</loc>
-        <lastmod>2025-06-02T01:18:58.492Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.090Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/03_data_type.html</loc>
-        <lastmod>2025-06-02T01:18:58.494Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.093Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression.html</loc>
-        <lastmod>2025-06-02T01:18:58.497Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.096Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/05_statement.html</loc>
-        <lastmod>2025-06-02T01:18:58.504Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.103Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration.html</loc>
-        <lastmod>2025-06-02T01:18:58.509Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.108Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/07_module.html</loc>
-        <lastmod>2025-06-02T01:18:58.518Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.116Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/08_interface.html</loc>
-        <lastmod>2025-06-02T01:18:58.518Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.117Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/09_package.html</loc>
-        <lastmod>2025-06-02T01:18:58.519Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.118Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/10_systemverilog_interoperation.html</loc>
-        <lastmod>2025-06-02T01:18:58.519Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.118Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/11_visibility.html</loc>
-        <lastmod>2025-06-02T01:18:58.520Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.119Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/12_foreign_language_integration.html</loc>
-        <lastmod>2025-06-02T01:18:58.521Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.119Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/13_integrated_test.html</loc>
-        <lastmod>2025-06-02T01:18:58.521Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.120Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/14_generics.html</loc>
-        <lastmod>2025-06-02T01:18:58.522Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.121Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/15_clock_domain_annotation.html</loc>
-        <lastmod>2025-06-02T01:18:58.524Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.123Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/16_standard_library.html</loc>
-        <lastmod>2025-06-02T01:18:58.525Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.124Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/17_alias.html</loc>
-        <lastmod>2025-06-02T01:18:58.526Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.125Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration.html</loc>
-        <lastmod>2025-06-02T01:18:58.527Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.126Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/02_dependencies.html</loc>
-        <lastmod>2025-06-02T01:18:58.532Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.131Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/03_publish_project.html</loc>
-        <lastmod>2025-06-02T01:18:58.533Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.132Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/04_directory_layout.html</loc>
-        <lastmod>2025-06-02T01:18:58.533Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.132Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/05_formatter.html</loc>
-        <lastmod>2025-06-02T01:18:58.534Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.133Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/06_linter.html</loc>
-        <lastmod>2025-06-02T01:18:58.534Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.133Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/07_simulator.html</loc>
-        <lastmod>2025-06-02T01:18:58.535Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.134Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/08_language_server.html</loc>
-        <lastmod>2025-06-02T01:18:58.536Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.135Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/09_compatibility.html</loc>
-        <lastmod>2025-06-02T01:18:58.536Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.135Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/10_documentation.html</loc>
-        <lastmod>2025-06-02T01:18:58.537Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.136Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/11_github_action.html</loc>
-        <lastmod>2025-06-02T01:18:58.538Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.137Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/12_source_map.html</loc>
-        <lastmod>2025-06-02T01:18:58.538Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.137Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/13_verylup.html</loc>
-        <lastmod>2025-06-02T01:18:58.539Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.138Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/14_migrate_to_new_version.html</loc>
-        <lastmod>2025-06-02T01:18:58.539Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.139Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/07_appendix/01_formal_syntax.html</loc>
-        <lastmod>2025-06-02T01:18:58.541Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.140Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/07_appendix/02_semantic_error.html</loc>
-        <lastmod>2025-06-02T01:18:58.541Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.140Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/02_lexical_structure/01_operator.html</loc>
-        <lastmod>2025-06-02T01:18:58.492Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.091Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/02_lexical_structure/02_number.html</loc>
-        <lastmod>2025-06-02T01:18:58.493Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.092Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/02_lexical_structure/03_array_literal.html</loc>
-        <lastmod>2025-06-02T01:18:58.494Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.092Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/03_data_type/01_builtin_type.html</loc>
-        <lastmod>2025-06-02T01:18:58.495Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.093Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/03_data_type/02_user_defined_type.html</loc>
-        <lastmod>2025-06-02T01:18:58.496Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.094Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/03_data_type/03_array.html</loc>
-        <lastmod>2025-06-02T01:18:58.496Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.095Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/03_data_type/04_clock_reset.html</loc>
-        <lastmod>2025-06-02T01:18:58.497Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.095Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/01_operator_precedence.html</loc>
-        <lastmod>2025-06-02T01:18:58.498Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.097Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/02_function_call.html</loc>
-        <lastmod>2025-06-02T01:18:58.499Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.097Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/03_concatenation.html</loc>
-        <lastmod>2025-06-02T01:18:58.499Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.098Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/04_if.html</loc>
-        <lastmod>2025-06-02T01:18:58.500Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.098Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/05_case_switch.html</loc>
-        <lastmod>2025-06-02T01:18:58.500Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.099Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/06_bit_select.html</loc>
-        <lastmod>2025-06-02T01:18:58.501Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.100Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/07_range.html</loc>
-        <lastmod>2025-06-02T01:18:58.502Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.100Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/08_msb_lsb.html</loc>
-        <lastmod>2025-06-02T01:18:58.502Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.101Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/09_inside_outside.html</loc>
-        <lastmod>2025-06-02T01:18:58.503Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.101Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/10_type_cast.html</loc>
-        <lastmod>2025-06-02T01:18:58.503Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.102Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/04_expression/11_struct_constructor.html</loc>
-        <lastmod>2025-06-02T01:18:58.504Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.102Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/05_statement/01_assignment.html</loc>
-        <lastmod>2025-06-02T01:18:58.505Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.104Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/05_statement/02_function_call.html</loc>
-        <lastmod>2025-06-02T01:18:58.506Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.104Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/05_statement/03_if.html</loc>
-        <lastmod>2025-06-02T01:18:58.506Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.105Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/05_statement/04_case_switch.html</loc>
-        <lastmod>2025-06-02T01:18:58.507Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.105Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/05_statement/05_for.html</loc>
-        <lastmod>2025-06-02T01:18:58.507Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.106Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/05_statement/06_return.html</loc>
-        <lastmod>2025-06-02T01:18:58.508Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.107Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/05_statement/07_let.html</loc>
-        <lastmod>2025-06-02T01:18:58.509Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.107Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/01_variable.html</loc>
-        <lastmod>2025-06-02T01:18:58.510Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.108Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/02_parameter.html</loc>
-        <lastmod>2025-06-02T01:18:58.510Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.109Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/03_register.html</loc>
-        <lastmod>2025-06-02T01:18:58.511Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.109Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/04_combinational.html</loc>
-        <lastmod>2025-06-02T01:18:58.511Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.110Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/05_assign.html</loc>
-        <lastmod>2025-06-02T01:18:58.512Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.111Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/06_function.html</loc>
-        <lastmod>2025-06-02T01:18:58.513Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.111Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/07_initial_final.html</loc>
-        <lastmod>2025-06-02T01:18:58.513Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.112Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/08_attribute.html</loc>
-        <lastmod>2025-06-02T01:18:58.514Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.113Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/09_generate.html</loc>
-        <lastmod>2025-06-02T01:18:58.515Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.113Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/10_instantiation.html</loc>
-        <lastmod>2025-06-02T01:18:58.515Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.114Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/11_named_block.html</loc>
-        <lastmod>2025-06-02T01:18:58.516Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.114Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/12_import_export.html</loc>
-        <lastmod>2025-06-02T01:18:58.516Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.115Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/13_connect.html</loc>
-        <lastmod>2025-06-02T01:18:58.517Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.116Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/14_generics/01_default_parameter.html</loc>
-        <lastmod>2025-06-02T01:18:58.523Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.121Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/14_generics/02_prototype.html</loc>
-        <lastmod>2025-06-02T01:18:58.524Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.122Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.html</loc>
-        <lastmod>2025-06-02T01:18:58.525Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.124Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/01_build.html</loc>
-        <lastmod>2025-06-02T01:18:58.528Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.127Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/02_format.html</loc>
-        <lastmod>2025-06-02T01:18:58.529Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.128Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/03_lint.html</loc>
-        <lastmod>2025-06-02T01:18:58.530Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.129Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/04_test.html</loc>
-        <lastmod>2025-06-02T01:18:58.531Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.130Z</lastmod>
     </url>
     <url>
         <loc>https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/05_publish.html</loc>
-        <lastmod>2025-06-02T01:18:58.531Z</lastmod>
+        <lastmod>2025-07-08T09:09:38.130Z</lastmod>
     </url>
 </urlset>
