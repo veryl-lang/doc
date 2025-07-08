@@ -369,6 +369,26 @@ package PkgA::&lt;W: u32&gt; for ProtoPkg {
     type data_t = logic&lt;W&gt;;
 }
 </code></pre>
+<p>さらに、typedefプロトタイプは右辺に実際の型を指定することができます。これにより他のパッケージで定義された型をそのプロトタイプパッケージに導入し、他のコンポーネントから参照することができます。</p>
+<pre><code class="language-veryl playground">package FooPkg {
+    struct Foo {
+        foo: logic,
+    }
+}
+proto package BarProtoPkg {
+    type Foo = FooPkg::Foo;
+}
+package BarPkg for BarProtoPkg {
+    type Foo = FooPkg::Foo;
+}
+module ModuleA::&lt;PKG: BarProtoPkg&gt; {
+    var _foo    : PKG::Foo;
+    assign _foo.foo = 0;
+}
+module ModuleB {
+    inst u: ModuleA::&lt;BarPkg&gt;;
+}
+</code></pre>
 <h3 id="構造体列挙型ユニオン"><a class="header" href="#構造体列挙型ユニオン">構造体/列挙型/ユニオン</a></h3>
 <p>構造体、列挙型、ユニオンプロトタイプは型の識別子と各メンバーの識別子、データ型を指定します。</p>
 <pre><code class="language-veryl">proto package ProtoPkg {
