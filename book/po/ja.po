@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-07-07T16:52:35+09:00\n"
+"POT-Creation-Date: 2025-07-08T09:29:37+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -222,7 +222,7 @@ msgstr "assign"
 
 #: src/SUMMARY.md:50 src/05_language_reference/06_declaration/06_function.md:1
 #: src/05_language_reference/14_generics/02_prototype.md:137
-#: src/05_language_reference/14_generics/02_prototype.md:229
+#: src/05_language_reference/14_generics/02_prototype.md:253
 msgid "Function"
 msgstr "関数"
 
@@ -4468,12 +4468,12 @@ msgid "Const"
 msgstr "定数"
 
 #: src/05_language_reference/14_generics/02_prototype.md:137
-#: src/05_language_reference/14_generics/02_prototype.md:206
+#: src/05_language_reference/14_generics/02_prototype.md:230
 msgid "Struct/Enum/Union"
 msgstr "構造体/列挙型/ユニオン"
 
 #: src/05_language_reference/14_generics/02_prototype.md:137
-#: src/05_language_reference/14_generics/02_prototype.md:261
+#: src/05_language_reference/14_generics/02_prototype.md:285
 msgid "Modport"
 msgstr "modport"
 
@@ -4518,7 +4518,17 @@ msgstr ""
 "Typedefプロトタイプは型エイリアスの識別子を指定します。ジェネリックなパラメー"
 "タのプレースホルダとして使用できます。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:208
+#: src/05_language_reference/14_generics/02_prototype.md:206
+msgid ""
+"Furthermore, a typedef prototype can specify its actual type on its RHS. "
+"This allows a type symbol defined in a different package to be imported into "
+"the proto package and referenced from other components through it."
+msgstr ""
+"さらに、typedefプロトタイプは右辺に実際の型を指定することができます。"
+"これにより他のパッケージで定義された型をそのプロトタイプパッケージに導入し、"
+"他のコンポーネントから参照することができます。"
+
+#: src/05_language_reference/14_generics/02_prototype.md:232
 msgid ""
 "Struct, Enum and Union prototypes specify identifier name of a struct/enum/"
 "union and identifier name and data type of each members."
@@ -4526,7 +4536,7 @@ msgstr ""
 "構造体、列挙型、ユニオンプロトタイプは型の識別子と各メンバーの識別子、データ"
 "型を指定します。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:231
+#: src/05_language_reference/14_generics/02_prototype.md:255
 msgid ""
 "Function prototype specifies identifier name and return data type of a "
 "function, and direction and data type of each arguments."
@@ -4534,11 +4544,11 @@ msgstr ""
 "関数プロトタイプは識別子と戻り値のデータ型、引数の方向とデータ型を指定しま"
 "す。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:239
+#: src/05_language_reference/14_generics/02_prototype.md:263
 msgid "Alias Module/Interface/Package"
 msgstr "モジュール/インターフェース/パッケージ エイリアス"
 
-#: src/05_language_reference/14_generics/02_prototype.md:241
+#: src/05_language_reference/14_generics/02_prototype.md:265
 msgid ""
 "Module alias prototype, interface alias prototype and package alias protoype "
 "specify identifier name and prototype of a module/interface/pacakge alias. "
@@ -4548,7 +4558,7 @@ msgstr ""
 "ジュール、インターフェース、パッケージのプロトタイプを指定します。そのエイリ"
 "アスの実際の型は与えられたプロトタイプに制約されます。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:263
+#: src/05_language_reference/14_generics/02_prototype.md:287
 msgid ""
 "Modport prototype specifis identifier name of a modport, and identifier name "
 "and direction of each membres."
@@ -7968,8 +7978,7 @@ msgstr "プロキシ"
 #: src/06_development_environment/13_verylup.md:60
 msgid ""
 "Verylup refers the following environment variables for proxy configuration:"
-msgstr ""
-"Verylupはプロキシ設定として以下の環境変数を参照します。"
+msgstr "Verylupはプロキシ設定として以下の環境変数を参照します。"
 
 #: src/06_development_environment/13_verylup.md:62
 msgid "`HTTPS_PROXY`"
@@ -8000,8 +8009,7 @@ msgstr "プロキシ設定"
 msgid ""
 "Instead of environment variables, you can specify proxy configuration for "
 "verylup only."
-msgstr ""
-"環境変数の代わりにverylupだけのプロキシ設定を指定することができます。"
+msgstr "環境変数の代わりにverylupだけのプロキシ設定を指定することができます。"
 
 #: src/06_development_environment/13_verylup.md:73
 msgid ""
