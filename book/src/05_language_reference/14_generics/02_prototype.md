@@ -203,6 +203,30 @@ package PkgA::<W: u32> for ProtoPkg {
 }
 ```
 
+Furthermore, a typedef prototype can specify its actual type on its RHS.
+This allows a type symbol defined in a different package to be imported into the proto package and referenced from other components through it.
+
+```veryl,playground
+package FooPkg {
+    struct Foo {
+        foo: logic,
+    }
+}
+proto package BarProtoPkg {
+    type Foo = FooPkg::Foo;
+}
+package BarPkg for BarProtoPkg {
+    type Foo = FooPkg::Foo;
+}
+module ModuleA::<PKG: BarProtoPkg> {
+    var _foo    : PKG::Foo;
+    assign _foo.foo = 0;
+}
+module ModuleB {
+    inst u: ModuleA::<BarPkg>;
+}
+```
+
 ### Struct/Enum/Union
 
 Struct, Enum and Union prototypes specify identifier name of a struct/enum/union and identifier name and data type of each members.
