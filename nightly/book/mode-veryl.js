@@ -2,10 +2,7 @@ ace.define("ace/mode/veryl_highlight_rules",["require","exports","module","ace/l
 var oop = require("../lib/oop");
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 var VerylHighlightRules = function () {
-    var keywords = "always_comb|always_ff|as|assign|bit|clock|clock_posedge|clock_negedge|else|enum|export|" +
-        "f32|f64|final|for|function|i32|i64|if|if_reset|import|in|initial|inout|input|" +
-        "inside|inst|interface|local|logic|modport|module|output|outside|" +
-        "package|param|pub|ref|repeat|reset|reset_async_high|reset_async_low|reset_sync_high|reset_sync_low|return|signed|step|struct|tri|u32|u64|var|let|break|embed|include|case|switch|unsafe|type|const|proto|converse|same";
+    var keywords = "case|default|else|if_reset|if|inside|outside|switch|converse|inout|input|output|same|false|lsb|msb|true|for|in|repeat|step|alias|always_comb|always_ff|assign|as|connect|const|final|import|initial|inst|let|param|return|break|type|var|embed|enum|function|include|interface|modport|module|package|proto|pub|struct|union|unsafe|bit|bool|clock|clock_posedge|clock_negedge|f32|f64|i8|i16|i32|i64|logic|reset|reset_async_high|reset_async_low|reset_sync_high|reset_sync_low|signed|string|tri|u8|u16|u32|u64";
     var keywordMapper = this.createKeywordMapper({
         "keyword": keywords,
     }, "identifier", false);
