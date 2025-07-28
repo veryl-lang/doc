@@ -174,3 +174,5 @@ module ModuleA {
     }
 }
 ```
+
+* `skip`: `veryl fmt` does not format modules, interfaces and packages on which `fmt` attribute with `skip` argument is specified.
