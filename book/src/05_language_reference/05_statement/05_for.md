@@ -29,7 +29,7 @@ module ModuleA {
     var a: logic<10>;
 
     always_comb {
-        for i: u32 in rev 0..10 {
+        for i: i32 in rev 0..10 {
             a += i;
 
             if i == 5 {
