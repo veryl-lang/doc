@@ -332,10 +332,10 @@ module ModuleA::&lt;PKG: ProtoA&gt; {
 </tbody></table>
 </div>
 <h3 id="parameter"><a class="header" href="#parameter">Parameter</a></h3>
-<p>Parameter prototype specifies identifier name, data type and default value of a parameter.</p>
+<p>Parameter prototype specifies identifier name and data type. Specification of default value is optional.</p>
 <pre><code class="language-veryl">proto module ModuleA #(
     param A: u32 = 0,
-    param B: u32 = 1,
+    param B: u32,
 );
 </code></pre>
 <h3 id="port"><a class="header" href="#port">Port</a></h3>
