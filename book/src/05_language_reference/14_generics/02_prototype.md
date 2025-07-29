@@ -142,12 +142,12 @@ The following table shows which prototypes can have which prototype items.
 
 ### Parameter
 
-Parameter prototype specifies identifier name, data type and default value of a parameter.
+Parameter prototype specifies identifier name and data type. Specification of default value is optional.
 
 ```veryl
 proto module ModuleA #(
     param A: u32 = 0,
-    param B: u32 = 1,
+    param B: u32,
 );
 ```
 
