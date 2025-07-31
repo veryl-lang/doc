@@ -221,3 +221,13 @@ instance_depth_limit = 256
 [build]
 instance_total_limit = 256
 ```
+
+## The `incremental` field
+
+If `incremental` is set to `true`, Veryl compiler re-generates only files related outdated files.
+The default value is `false`.
+
+```toml
+[build]
+incremental = true
+```
