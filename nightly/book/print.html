@@ -3450,6 +3450,12 @@ instance_depth_limit = 256
 <pre><code class="language-toml">[build]
 instance_total_limit = 256
 </code></pre>
+<h2 id="the-incremental-field"><a class="header" href="#the-incremental-field">The <code>incremental</code> field</a></h2>
+<p>If <code>incremental</code> is set to <code>true</code>, Veryl compiler re-generates only files related outdated files.
+The default value is <code>false</code>.</p>
+<pre><code class="language-toml">[build]
+incremental = true
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="format"><a class="header" href="#format">Format</a></h1>
 <p><code>[format]</code> section specifies the configuration for formatter like below:</p>
 <pre><code class="language-toml">[format]
