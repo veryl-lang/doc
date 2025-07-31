@@ -327,10 +327,10 @@ module ModuleA::&lt;PKG: ProtoA&gt; {
 </tbody></table>
 </div>
 <h3 id="パラメータ"><a class="header" href="#パラメータ">パラメータ</a></h3>
-<p>パラメータプロトタイプは識別子とデータ型、デフォルト値を指定します。</p>
+<p>パラメータプロトタイプは識別子とデータ型を指定します。デフォルト値の指定は省略できます。</p>
 <pre><code class="language-veryl">proto module ModuleA #(
     param A: u32 = 0,
-    param B: u32 = 1,
+    param B: u32,
 );
 </code></pre>
 <h3 id="ポート"><a class="header" href="#ポート">ポート</a></h3>

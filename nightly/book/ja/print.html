@@ -1791,6 +1791,21 @@ emit_cond_type = true
     }
 }
 </code></pre>
+<p><code>in</code> キーワードの後に <code>rev</code> キーワードを指定することで、ループを降順にすることができます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+
+    always_comb {
+        for i: i32 in rev 0..10 {
+            a += i;
+
+            if i == 5 {
+                break;
+            }
+        }
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="return"><a class="header" href="#return">return</a></h1>
 <p><code>return</code> 文は関数からの戻りを示します。<code>return</code> キーワードの後の式は関数の戻り値です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -2131,6 +2146,9 @@ module ModuleB {
     }
 }
 </code></pre>
+<ul>
+<li><code>skip</code>: <code>veryl fmt</code> はモジュール、インターフェース、パッケージをフォーマットしない</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="生成"><a class="header" href="#生成">生成</a></h1>
 <p>宣言や <code>for</code> や <code>if</code> を使って生成することができます。<code>:</code> で示すラベルは生成された複数の宣言を識別するのに必要です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -2142,6 +2160,35 @@ module ModuleB {
         } else { // else 句のラベルは省略可能
             assign a[i] = i + 2;
         }
+    }
+}
+</code></pre>
+<p><code>in</code> キーワードの後に <code>rev</code> キーワードを付けることで、ループを降順にすることができます。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_a: input  logic,
+    o_a: output logic,
+    i_b: input  logic,
+    o_b: output logic,
+) {
+    var a: logic&lt;4&gt;;
+    var b: logic&lt;4&gt;;
+
+    always_comb {
+        a[lsb] = i_a;
+        o_a    = a[msb];
+    }
+
+    for i in 0..4 :g_a {
+        assign a[i + 1] = a[i];
+    }
+
+    always_comb {
+        b[msb] = i_b;
+        o_b    = b[lsb];
+    }
+
+    for i in rev 0..4 :g_b {
+        assign b[i - 1] = b[i];
     }
 }
 </code></pre>
@@ -2749,10 +2796,10 @@ module ModuleA::&lt;PKG: ProtoA&gt; {
 </tbody></table>
 </div>
 <h3 id="パラメータ-1"><a class="header" href="#パラメータ-1">パラメータ</a></h3>
-<p>パラメータプロトタイプは識別子とデータ型、デフォルト値を指定します。</p>
+<p>パラメータプロトタイプは識別子とデータ型を指定します。デフォルト値の指定は省略できます。</p>
 <pre><code class="language-veryl">proto module ModuleA #(
     param A: u32 = 0,
-    param B: u32 = 1,
+    param B: u32,
 );
 </code></pre>
 <h3 id="ポート"><a class="header" href="#ポート">ポート</a></h3>
@@ -3176,6 +3223,11 @@ instance_depth_limit = 256
 <p><code>instance_total_limit</code> は1つのモジュール内のサブインスタンスの最大数です。デフォルト値は 1048576 です。</p>
 <pre><code class="language-toml">[build]
 instance_total_limit = 256
+</code></pre>
+<h2 id="incremental-フィールド"><a class="header" href="#incremental-フィールド"><code>incremental</code> フィールド</a></h2>
+<p><code>incremental</code> が <code>true</code> のとき、Verylコンパイラは更新されたファイルに関連したファイルのみを再生成します。デフォルト値は <code>false</code> です。</p>
+<pre><code class="language-toml">[build]
+incremental = true
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="format"><a class="header" href="#format">Format</a></h1>
 <p><code>[format]</code> セクションはフォーマッタの設定です。</p>
