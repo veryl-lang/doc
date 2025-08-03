@@ -348,6 +348,11 @@ instance_depth_limit = 256
 <pre><code class="language-toml">[build]
 instance_total_limit = 256
 </code></pre>
+<h2 id="incremental-フィールド"><a class="header" href="#incremental-フィールド"><code>incremental</code> フィールド</a></h2>
+<p><code>incremental</code> が <code>true</code> のとき、Verylコンパイラは更新されたファイルに関連したファイルのみを再生成します。デフォルト値は <code>false</code> です。</p>
+<pre><code class="language-toml">[build]
+incremental = true
+</code></pre>
 
                     </main>
 

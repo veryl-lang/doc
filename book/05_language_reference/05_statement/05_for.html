@@ -226,6 +226,21 @@ and <a href="../04_expression/07_range.html">range</a> is placed after it.</p>
     }
 }
 </code></pre>
+<p>You can iterate the loop in descending order by putting <code>rev</code> keyword after <code>in</code> keyword.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+
+    always_comb {
+        for i: i32 in rev 0..10 {
+            a += i;
+
+            if i == 5 {
+                break;
+            }
+        }
+    }
+}
+</code></pre>
 
                     </main>
 
