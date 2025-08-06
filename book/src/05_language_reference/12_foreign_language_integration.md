@@ -44,6 +44,24 @@ interface bus_monitor_if {
 }
 ```
 
+Scoped identifiers wrapped with `\{`( and `\}` in embed code blocks are resolved, and the results are placed there.
+
+```veryl,playground
+module Module47A {}
+
+module Module47B::<V: u32> {}
+
+module Module47C {
+    inst u_a: Module47A;
+
+    embed (inline) sv{{{
+        bind u_a \{ Module47B::<32> } u_b32 ();
+        bind u_a \{ Module47B::<64> } u_b64 ();
+    }}}
+
+}
+```
+
 ## `include` declaration
 
 `include` declaration can include a file of foreign languages.
