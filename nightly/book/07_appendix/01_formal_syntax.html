@@ -219,6 +219,7 @@ The following syntex definition of parol is formal syntax.</p>
 
 %on HashLBracketTerm %push Attr
 %on ColonColonLAngleTerm %push Generic
+%on EscapedRBraceTerm %pop
 %on TripleLBraceTerm %push Embed
 
 %scanner Embed {
@@ -226,6 +227,7 @@ The following syntex definition of parol is formal syntax.</p>
     %auto_ws_off
 
     %on LBraceTerm %push EmbedInner
+    %on EscapedLBraceTerm %push INITIAL
     %on TripleRBraceTerm %pop
 }
 
@@ -234,6 +236,7 @@ The following syntex definition of parol is formal syntax.</p>
     %auto_ws_off
 
     %on LBraceTerm %push EmbedInner
+    %on EscapedLBraceTerm %push INITIAL
     %on RBraceTerm %pop
 }
 
@@ -292,11 +295,13 @@ LAngleTerm            : &lt;INITIAL, Generic                         &gt;'&lt;' 
 QuestionTerm          : &lt;INITIAL                                  &gt;'?'                                                                                   : Token;
 QuoteLBraceTerm       : &lt;INITIAL, Generic                         &gt;"'\{"                                                                                 : Token;
 QuoteTerm             : &lt;INITIAL                                  &gt;"'"                                                                                   : Token;
+EscapedLBraceTerm     : &lt;                  Embed, EmbedInner      &gt;'\{'                                                                                  : Token;
 TripleLBraceTerm      : &lt;INITIAL                                  &gt;'{{{'                                                                                 : Token;
 LBraceTerm            : &lt;INITIAL, Generic, Embed, EmbedInner, Attr&gt;'{'                                                                                   : Token;
 LBracketTerm          : &lt;INITIAL, Generic,                    Attr&gt;'['                                                                                   : Token;
 LParenTerm            : &lt;INITIAL, Generic,                    Attr&gt;'('                                                                                   : Token;
 RAngleTerm            : &lt;INITIAL, Generic                         &gt;'&gt;'                                                                                   : Token;
+EscapedRBraceTerm     : &lt;INITIAL                                  &gt;'\}'                                                                                  : Token;
 TripleRBraceTerm      : &lt;                  Embed                  &gt;'}}}'                                                                                 : Token;
 RBraceTerm            : &lt;INITIAL, Generic,        EmbedInner, Attr&gt;'}'                                                                                   : Token;
 RBracketTerm          : &lt;INITIAL, Generic,                    Attr&gt;']'                                                                                   : Token;
@@ -385,7 +390,7 @@ UnsafeTerm            : &lt;INITIAL, Generic                         &gt;'unsafe
 VarTerm               : &lt;INITIAL, Generic                         &gt;'var'                                                                                 : Token; // Keyword: Statement
 DollarIdentifierTerm  : &lt;INITIAL, Generic                         &gt;/\$[a-zA-Z_][0-9a-zA-Z_$]*/                                                           : Token;
 IdentifierTerm        : &lt;INITIAL, Generic,                    Attr&gt;/(?:r#)?[a-zA-Z_][0-9a-zA-Z_$]*/                                                      : Token;
-AnyTerm               : &lt;                  Embed, EmbedInner      &gt;/[^{}]+/                                                                              : Token;
+AnyTerm               : &lt;                  Embed, EmbedInner      &gt;/(?:[^{}\\]|\\[^{])+/                                                                 : Token;
 
 // ----------------------------------------------------------------------------
 // Token
@@ -433,6 +438,7 @@ QuoteLBraceToken     : QuoteLBraceTerm     : Token Comments;
 QuoteToken           : QuoteTerm           : Token Comments;
 LAngleToken          : LAngleTerm          : Token Comments;
 EmbedLBraceToken     : LBraceTerm          : Token         ;
+EscapedLBraceToken   : EscapedLBraceTerm   : Token         ;
 TripleLBraceToken    : TripleLBraceTerm    : Token         ;
 LBraceToken          : LBraceTerm          : Token Comments;
 LBracketToken        : LBracketTerm        : Token Comments;
@@ -442,6 +448,7 @@ MinusGTToken         : MinusGTTerm         : Token Comments;
 PlusColonToken       : PlusColonTerm       : Token Comments;
 RAngleToken          : RAngleTerm          : Token Comments;
 EmbedRBraceToken     : RBraceTerm          : Token         ;
+EscapedRBraceToken   : EscapedRBraceTerm   : Token         ;
 TripleRBraceToken    : TripleRBraceTerm    : Token Comments;
 RBraceToken          : RBraceTerm          : Token Comments;
 RBracketToken        : RBracketTerm        : Token Comments;
@@ -580,6 +587,7 @@ QuoteLBrace     : QuoteLBraceToken     : VerylToken;
 Quote           : QuoteToken           : VerylToken;
 LAngle          : LAngleToken          : VerylToken;
 EmbedLBrace     : EmbedLBraceToken     : VerylToken;
+EscapedLBrace   : EscapedLBraceToken   : VerylToken;
 TripleLBrace    : TripleLBraceToken    : VerylToken;
 LBrace          : LBraceToken          : VerylToken;
 LBracket        : LBracketToken        : VerylToken;
@@ -589,6 +597,7 @@ MinusGT         : MinusGTToken         : VerylToken;
 PlusColon       : PlusColonToken       : VerylToken;
 RAngle          : RAngleToken          : VerylToken;
 EmbedRBrace     : EmbedRBraceToken     : VerylToken;
+EscapedRBrace   : EscapedRBraceToken   : VerylToken;
 TripleRBrace    : TripleRBraceToken    : VerylToken;
 RBrace          : RBraceToken          : VerylToken;
 RBracket        : RBracketToken        : VerylToken;
@@ -1216,7 +1225,10 @@ EmbedDeclaration: Embed LParen Identifier RParen Identifier EmbedContent;
 
 EmbedContent: TripleLBrace { EmbedItem } TripleRBrace;
 
+EmbedScopedIdentifier: EscapedLBrace ScopedIdentifier EscapedRBrace;
+
 EmbedItem: EmbedLBrace { EmbedItem } EmbedRBrace
+         | EmbedScopedIdentifier
          | Any;
 
 // ----------------------------------------------------------------------------
