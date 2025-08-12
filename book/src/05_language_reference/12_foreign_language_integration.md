@@ -44,7 +44,8 @@ interface bus_monitor_if {
 }
 ```
 
-Scoped identifiers wrapped with `\{`( and `\}` in embed code blocks are resolved, and the results are placed there.
+Identifiers defined in Veryl code can be placed within `embed` code blocks using the pair of `\{` and `\}`.
+These identifiers are then resolved, and the resolved identifiers are placed there.
 
 ```veryl,playground
 module Module47A {}
@@ -55,8 +56,8 @@ module Module47C {
     inst u_a: Module47A;
 
     embed (inline) sv{{{
-        bind u_a \{ Module47B::<32> } u_b32 ();
-        bind u_a \{ Module47B::<64> } u_b64 ();
+        bind u_a \{ Module47B::<32> \} u_b32 ();
+        bind u_a \{ Module47B::<64> \} u_b64 ();
     }}}
 
 }
