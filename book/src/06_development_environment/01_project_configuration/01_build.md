@@ -231,3 +231,12 @@ The default value is `false`.
 [build]
 incremental = true
 ```
+
+## The `error_count_limit` field
+
+Specify the maximum number of error messages to display. To show all messages, leave this field blank or set the value to 0.
+
+```toml
+[build]
+error_count_limit = 10
+```
