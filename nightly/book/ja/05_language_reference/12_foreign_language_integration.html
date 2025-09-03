@@ -242,6 +242,21 @@ interface bus_monitor_if {
 
 }
 </code></pre>
+<p>Verylコード内で定義された識別子は <code>embed</code> コードブロック内に <code>\{</code> と <code>\}</code> を用いて記述することができます。これらの識別子はコンパイル時に解決され、解決された名前がその場所に挿入されます。</p>
+<pre><code class="language-veryl playground">module Module47A {}
+
+module Module47B::&lt;V: u32&gt; {}
+
+module Module47C {
+    inst u_a: Module47A;
+
+    embed (inline) sv{{{
+        bind u_a \{ Module47B::&lt;32&gt; \} u_b32 ();
+        bind u_a \{ Module47B::&lt;64&gt; \} u_b64 ();
+    }}}
+
+}
+</code></pre>
 <h2 id="include-宣言"><a class="header" href="#include-宣言"><code>include</code> 宣言</a></h2>
 <p><code>include</code> 宣言により他言語のファイルを含めることができます。<code>include</code> 宣言の第一引数は <code>embed</code> 宣言と同じです。第二引数はソースコードからの相対ファイルパスです。</p>
 <pre><code class="language-veryl">include(inline, "module.sv");

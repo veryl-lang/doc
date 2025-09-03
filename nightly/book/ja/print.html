@@ -2535,6 +2535,21 @@ interface bus_monitor_if {
 
 }
 </code></pre>
+<p>Verylコード内で定義された識別子は <code>embed</code> コードブロック内に <code>\{</code> と <code>\}</code> を用いて記述することができます。これらの識別子はコンパイル時に解決され、解決された名前がその場所に挿入されます。</p>
+<pre><code class="language-veryl playground">module Module47A {}
+
+module Module47B::&lt;V: u32&gt; {}
+
+module Module47C {
+    inst u_a: Module47A;
+
+    embed (inline) sv{{{
+        bind u_a \{ Module47B::&lt;32&gt; \} u_b32 ();
+        bind u_a \{ Module47B::&lt;64&gt; \} u_b64 ();
+    }}}
+
+}
+</code></pre>
 <h2 id="include-宣言"><a class="header" href="#include-宣言"><code>include</code> 宣言</a></h2>
 <p><code>include</code> 宣言により他言語のファイルを含めることができます。<code>include</code> 宣言の第一引数は <code>embed</code> 宣言と同じです。第二引数はソースコードからの相対ファイルパスです。</p>
 <pre><code class="language-veryl">include(inline, "module.sv");
@@ -3228,6 +3243,11 @@ instance_total_limit = 256
 <p><code>incremental</code> が <code>true</code> のとき、Verylコンパイラは更新されたファイルに関連したファイルのみを再生成します。デフォルト値は <code>false</code> です。</p>
 <pre><code class="language-toml">[build]
 incremental = true
+</code></pre>
+<h2 id="error_count_limit-フィールド"><a class="header" href="#error_count_limit-フィールド"><code>error_count_limit</code> フィールド</a></h2>
+<p>表示するエラーメッセージの最大数を指定します。全てのメッセージを表示するにはフィールドを設定しないか、0を指定します。</p>
+<pre><code class="language-toml">[build]
+error_count_limit = 10
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="format"><a class="header" href="#format">Format</a></h1>
 <p><code>[format]</code> セクションはフォーマッタの設定です。</p>
