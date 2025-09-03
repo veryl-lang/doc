@@ -241,6 +241,7 @@ These tools accelerate the development process and significantly enhance product
 <li><a href="02_features.html#range-based-for--inside--outside">Range-based <code>for</code> / <code>inside</code> / <code>outside</code></a></li>
 <li><a href="02_features.html#msb-notation"><code>msb</code> notation</a></li>
 <li><a href="02_features.html#let-statement"><code>let</code> statement</a></li>
+<li><a href="02_features.html#connect-operator"><code>&lt;&gt;</code> operator</a></li>
 <li><a href="02_features.html#named-block">Named block</a></li>
 <li><a href="02_features.html#visibility-control">Visibility control</a></li>
 </ul>
@@ -644,6 +645,36 @@ end
 <pre><code class="language-veryl">always_ff {
     let tmp: logic = b + 1;
     x = tmp;
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="connect-operator"><a class="header" href="#connect-operator"><code>&lt;&gt;</code> operator</a></h2>
+<p><code>&lt;&gt;</code> operator can connect two interfaces. It simplifies SystemVerilog’s interface connection requiring each member assignments.</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">always_comb begin
+    mst_if0.cmd   = bus_if0.cmd;
+    bus_if0.ready = mst_if0.ready;
+end
+
+always_comb begin
+    mst_if1.cmd   = bus_if1.cmd;
+    bus_if1.ready = mst_if1.ready;
+end
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">connect mst_if0 &lt;&gt; bus_if0.slave;
+
+always_comb {
+    mst_if1 &lt;&gt; bus_if1.slave;
 }
 </code></pre>
 </td>

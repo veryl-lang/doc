@@ -237,6 +237,7 @@
 <li><a href="02_features.html#range-based-for--inside--outside">範囲 <code>for</code> / <code>inside</code> / <code>outside</code></a></li>
 <li><a href="02_features.html#msb-notation"><code>msb</code> 記法</a></li>
 <li><a href="02_features.html#let-statement"><code>let</code> 文</a></li>
+<li><a href="02_features.html#connect-operator"><code>&lt;&gt;</code> 演算子</a></li>
 <li><a href="02_features.html#named-block">名前付きブロック</a></li>
 <li><a href="02_features.html#visibility-control">可視性制御</a></li>
 </ul>
@@ -621,6 +622,36 @@ end
 <pre><code class="language-veryl">always_ff {
     let tmp: logic = b + 1;
     x = tmp;
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="connect-operator"><a class="header" href="#connect-operator"><code>&lt;&gt;</code> 演算子</a></h2>
+<p><code>&lt;&gt;</code> 演算子は2つのインターフェースを接続します。SystemVerilogではインターフェースを接続するためにぞれぞれのメンバーを代入する必要がありましたが、簡単に接続することができるようになります。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">always_comb begin
+    mst_if0.cmd   = bus_if0.cmd;
+    bus_if0.ready = mst_if0.ready;
+end
+
+always_comb begin
+    mst_if1.cmd   = bus_if1.cmd;
+    bus_if1.ready = mst_if1.ready;
+end
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">connect mst_if0 &lt;&gt; bus_if0.slave;
+
+always_comb {
+    mst_if1 &lt;&gt; bus_if1.slave;
 }
 </code></pre>
 </td>
