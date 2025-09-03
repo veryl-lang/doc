@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-09-03T14:26:35+09:00\n"
+"POT-Creation-Date: 2025-09-03T16:07:14+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -270,7 +270,7 @@ msgstr "他言語組み込み"
 msgid "Integrated Test"
 msgstr "組み込みテスト"
 
-#: src/SUMMARY.md:65 src/02_features.md:66
+#: src/SUMMARY.md:65 src/02_features.md:67
 #: src/05_language_reference/14_generics.md:1
 msgid "Generics"
 msgstr "ジェネリクス"
@@ -285,7 +285,7 @@ msgstr "デフォルトパラメータ"
 msgid "Prototype"
 msgstr "プロトタイプ"
 
-#: src/SUMMARY.md:68 src/02_features.md:122
+#: src/SUMMARY.md:68 src/02_features.md:123
 #: src/05_language_reference/15_clock_domain_annotation.md:1
 msgid "Clock Domain Annotation"
 msgstr "クロックドメインアノテーション"
@@ -573,18 +573,22 @@ msgid "[`let` statement](02_features.md#let-statement)"
 msgstr "[`let` 文](02_features.md#let-statement)"
 
 #: src/02_features.md:21
+msgid "[`<>` operator](02_features.md#connect-operator)"
+msgstr "[`<>` 演算子](02_features.md#connect-operator)"
+
+#: src/02_features.md:22
 msgid "[Named block](02_features.md#named-block)"
 msgstr "[名前付きブロック](02_features.md#named-block)"
 
-#: src/02_features.md:22
+#: src/02_features.md:23
 msgid "[Visibility control](02_features.md#visibility-control)"
 msgstr "[可視性制御](02_features.md#visibility-control)"
 
-#: src/02_features.md:24
+#: src/02_features.md:25
 msgid "Real-time diagnostics"
 msgstr "リアルタイム診断"
 
-#: src/02_features.md:26
+#: src/02_features.md:27
 msgid ""
 "Issues such as undefined, unused, or unassigned variables are notified in "
 "real-time while editing in the editor. In the following example, adding the "
@@ -595,11 +599,11 @@ msgstr ""
 "通知されます。次の例では、未使用変数として通知された変数に `_` プレフィックス"
 "を付加することで未使用であることを明示し、警告を抑制しています。"
 
-#: src/02_features.md:32
+#: src/02_features.md:33
 msgid "Auto formatting"
 msgstr "自動フォーマット"
 
-#: src/02_features.md:34
+#: src/02_features.md:35
 msgid ""
 "In addition to the automatic formatting feature integrated with the editor, "
 "formatting through the command line and formatting checks in CI are also "
@@ -608,11 +612,11 @@ msgstr ""
 "エディタと連携した自動フォーマット機能のほか、コマンドラインでのフォーマット"
 "やCIでのフォーマットチェックも可能です。"
 
-#: src/02_features.md:40
+#: src/02_features.md:41
 msgid "Integrated test"
 msgstr "組み込みテスト"
 
-#: src/02_features.md:42
+#: src/02_features.md:43
 msgid ""
 "Test code written by SystemVerilog or [cocotb](https://www.cocotb.org) can "
 "be embeded in Veryl code, it can be executed through `veryl test` command."
@@ -620,7 +624,7 @@ msgstr ""
 "SystemVerilogまたは[cocotb](https://www.cocotb.org)で書かれたテストコードを"
 "Verylに埋め込み、`veryl test` コマンドで実行することができます。"
 
-#: src/02_features.md:45
+#: src/02_features.md:46
 msgid ""
 "```veryl\n"
 "#[test(test1)]\n"
@@ -634,11 +638,11 @@ msgid ""
 "```"
 msgstr ""
 
-#: src/02_features.md:56
+#: src/02_features.md:57
 msgid "Dependency management"
 msgstr "依存関係管理"
 
-#: src/02_features.md:58
+#: src/02_features.md:59
 msgid ""
 "Veryl includes a built-in dependency management feature, allowing for easy "
 "incorporation of libraries by simply adding the repository path and version "
@@ -648,7 +652,7 @@ msgstr ""
 "ライブラリのリポジトリパスとバージョンを追加するだけで、簡単にライブラリを組"
 "み込むことができます。"
 
-#: src/02_features.md:61
+#: src/02_features.md:62
 msgid ""
 "```toml\n"
 "[dependencies]\n"
@@ -662,7 +666,7 @@ msgstr ""
 "version = \"0.1.0\"}\n"
 "```"
 
-#: src/02_features.md:68
+#: src/02_features.md:69
 msgid ""
 "Code generation through generics achieves more reusable code than "
 "traditional parameter override. Parameters in function like the following "
@@ -674,7 +678,7 @@ msgstr ""
 "でなく、インスタンスのモジュール名や構造体定義の型名もパラメータ化することが"
 "できます。"
 
-#: src/02_features.md:124
+#: src/02_features.md:125
 msgid ""
 "If there are some clocks in a module, explicit clock domain annotation and "
 "`unsafe (cdc)` block at the clock domain boundaries are required. By the "
@@ -687,7 +691,7 @@ msgstr ""
 "イラは意図しないクロックドメインクロッシングをエラーとして検出し、明示的な "
 "`unsafe (cdc)` ブロックによりレビューが容易になります。"
 
-#: src/02_features.md:135
+#: src/02_features.md:136
 msgid ""
 "```verilog\n"
 "module ModuleA (\n"
@@ -719,11 +723,11 @@ msgstr ""
 "endmodule\n"
 "```"
 
-#: src/02_features.md:172
+#: src/02_features.md:173
 msgid "Trailing comma"
 msgstr "末尾カンマ"
 
-#: src/02_features.md:174
+#: src/02_features.md:175
 msgid ""
 "Trailing comma is a syntax where a comma is placed after the last element in "
 "a list. It facilitates the addition and removal of elements and reduces "
@@ -733,11 +737,11 @@ msgstr ""
 "り、要素の追加や削除が容易になり、バージョン管理システムにおける不必要な差異"
 "を減らすことができます。"
 
-#: src/02_features.md:210
+#: src/02_features.md:211
 msgid "Abstraction of clock and reset"
 msgstr "クロックとリセットの抽象化"
 
-#: src/02_features.md:212
+#: src/02_features.md:213
 msgid ""
 "There is no need to specify the polarity and synchronicity of the clock and "
 "reset in the syntax; these can be specified during build-time configuration. "
@@ -749,7 +753,7 @@ msgstr ""
 "性・非同期リセットとFPGA向けの正極性・同期リセットのそれぞれのコードを生成す"
 "ることができます。"
 
-#: src/02_features.md:217
+#: src/02_features.md:218
 msgid ""
 "Additionally, explicit `clock` and `reset` type enables to check whether "
 "clock and reset are correctly connected to registers. If there is a single "
@@ -759,11 +763,11 @@ msgstr ""
 "接続が正しく行われているかどうかを確認することができます。モジュール内にク"
 "ロックとリセットが1つだけの場合、レジスタへの接続を省略することもできます。"
 
-#: src/02_features.md:263 src/05_language_reference/02_lexical_structure.md:33
+#: src/02_features.md:264 src/05_language_reference/02_lexical_structure.md:33
 msgid "Documentation comment"
 msgstr "ドキュメンテーションコメント"
 
-#: src/02_features.md:265
+#: src/02_features.md:266
 msgid ""
 "Writing module descriptions as documentation comments allows for automatic "
 "documentation generation. You can use not only plain text but also the "
@@ -773,19 +777,19 @@ msgstr ""
 "を自動生成することができます。単なるテキストだけでなく、以下のフォーマットを"
 "使用することができます。"
 
-#: src/02_features.md:268
+#: src/02_features.md:269
 msgid "[Markdown](https://www.markdownguide.org)"
 msgstr "[Markdown](https://www.markdownguide.org)"
 
-#: src/02_features.md:269
+#: src/02_features.md:270
 msgid "Waveform using [WaveDrom](https://wavedrom.com)"
 msgstr "[WaveDrom](https://wavedrom.com)による波形記述"
 
-#: src/02_features.md:270
+#: src/02_features.md:271
 msgid "Diagram using [Mermaid](https://mermaid.js.org)"
 msgstr "[Mermaid](https://mermaid.js.org)によるダイアグラム記述"
 
-#: src/02_features.md:280
+#: src/02_features.md:281
 msgid ""
 "```verilog\n"
 "// Comment\n"
@@ -799,7 +803,7 @@ msgstr ""
 "endmodule\n"
 "```"
 
-#: src/02_features.md:289
+#: src/02_features.md:290
 msgid ""
 "````veryl\n"
 "/// Documentation comment written by Markdown\n"
@@ -827,11 +831,11 @@ msgstr ""
 "}\n"
 "````"
 
-#: src/02_features.md:306
+#: src/02_features.md:307
 msgid "Compound assignment operator in `always_ff`"
 msgstr "`always_ff` での複合代入演算子"
 
-#: src/02_features.md:308
+#: src/02_features.md:309
 msgid ""
 "There is no dedicated non-blocking assignment operator; within `always_ff`, "
 "non-blocking assignments are inferred, while within `always_comb`, blocking "
@@ -843,11 +847,11 @@ msgstr ""
 "`always_ff` 内でも `always_comb` 内と同様に様々な複合代入演算子を使用すること"
 "ができます。"
 
-#: src/02_features.md:343
+#: src/02_features.md:344
 msgid "Individual namespace of enum variant"
 msgstr "独立した名前空間を持つenumバリアント"
 
-#: src/02_features.md:345
+#: src/02_features.md:346
 msgid ""
 "Variants of an enum are defined within separate namespaces for each enum, "
 "thus preventing unintended name collisions."
@@ -855,11 +859,11 @@ msgstr ""
 "enumのバリアントはenum毎に独立した名前空間を持っており意図しない名前の衝突を"
 "防ぐことができます。"
 
-#: src/02_features.md:383
+#: src/02_features.md:384
 msgid "`repeat` of concatenation"
 msgstr "ビット連結における `repeat`"
 
-#: src/02_features.md:385
+#: src/02_features.md:386
 msgid ""
 "By adopting the explicit `repeat` syntax as a repetition description in bit "
 "concatenation, readability improves over complex combinations of `{}`."
@@ -867,11 +871,11 @@ msgstr ""
 "ビット連結における繰り返し記述として明示的な `repeat` 記法を採用し、 複雑な "
 "`{}` の組み合わせより可読性が向上しています。"
 
-#: src/02_features.md:413
+#: src/02_features.md:414
 msgid "`if` / `case` expression"
 msgstr "`if` / `case` 式"
 
-#: src/02_features.md:415
+#: src/02_features.md:416
 msgid ""
 "By adopting `if` and `case` expressions instead of the ternary operator, "
 "readability improves, especially when comparing a large number of items."
@@ -879,11 +883,11 @@ msgstr ""
 "三項演算子の代わりに if 式と case 式を採用することで、比較するアイテム数が多"
 "い場合の可読性が向上します。"
 
-#: src/02_features.md:451
+#: src/02_features.md:452
 msgid "Range-based `for` / `inside` / `outside`"
 msgstr "範囲 `for` / `inside` / `outside`"
 
-#: src/02_features.md:453
+#: src/02_features.md:454
 msgid ""
 "With notation representing closed intervals `..=` and half-open intervals `.."
 "`, it is possible to uniformly describe ranges using `for`, `inside`, and "
@@ -893,11 +897,11 @@ msgstr ""
 "一的に記述できるようにしました。また、`inside` の逆を意味する `outside` も導"
 "入しました。"
 
-#: src/02_features.md:485
+#: src/02_features.md:486
 msgid "`msb` notation"
 msgstr "`msb` 記法"
 
-#: src/02_features.md:487
+#: src/02_features.md:488
 msgid ""
 "The `msb` notation, indicating the most significant bit, eliminates the need "
 "to calculate the most significant bit from parameters, making intentions "
@@ -906,11 +910,11 @@ msgstr ""
 "最上位ビットを示す `msb` 記法により、パラメータから最上位ビットを計算する必要"
 "がなくなり、より意図を明確にすることができます。"
 
-#: src/02_features.md:516
+#: src/02_features.md:517
 msgid "`let` statement"
 msgstr "`let` 文"
 
-#: src/02_features.md:518
+#: src/02_features.md:519
 msgid ""
 "There is a dedicated `let` statement available for binding values "
 "simultaneously with variable declaration, which can be used in various "
@@ -919,20 +923,32 @@ msgstr ""
 "変数宣言と同時に値を束縛する専用の `let` 文が用意されており、SystemVerilogで"
 "はサポートされていなかった様々な場所で使用することができます。"
 
-#: src/02_features.md:551
+#: src/02_features.md:552
+msgid "`<>` operator"
+msgstr "`<>` 演算子"
+
+#: src/02_features.md:554
+msgid ""
+"`<>` operator can connect two interfaces. It simplifies SystemVerilog's "
+"interface connection requiring each member assignments."
+msgstr ""
+"`<>` 演算子は2つのインターフェースを接続します。"
+"SystemVerilogではインターフェースを接続するためにぞれぞれのメンバーを代入する必要がありましたが、簡単に接続することができるようになります。"
+
+#: src/02_features.md:591
 msgid "Named block"
 msgstr "名前付きブロック"
 
-#: src/02_features.md:553
+#: src/02_features.md:593
 msgid "You can define named blocks to limit the scope of variables."
 msgstr ""
 "変数のスコープを限定するための名前付きブロックを定義することができます。"
 
-#: src/02_features.md:580
+#: src/02_features.md:620
 msgid "Visibility control"
 msgstr "可視性制御"
 
-#: src/02_features.md:582
+#: src/02_features.md:622
 msgid ""
 "Modules without the `pub` keyword cannot be referenced from outside the "
 "project and are not included in automatic documentation generation. This "
@@ -4067,8 +4083,9 @@ msgid ""
 "using the pair of `\\{` and `\\}`. These identifiers are then resolved, and "
 "the resolved identifiers are placed there."
 msgstr ""
-"Verylコード内で定義された識別子は `embed` コードブロック内に `\\{` と `\\}` を用いて記述することができます。"
-"これらの識別子はコンパイル時に解決され、解決された名前がその場所に挿入されます。"
+"Verylコード内で定義された識別子は `embed` コードブロック内に `\\{` と `\\}` "
+"を用いて記述することができます。これらの識別子はコンパイル時に解決され、解決"
+"された名前がその場所に挿入されます。"
 
 #: src/05_language_reference/12_foreign_language_integration.md:66
 msgid "`include` declaration"
@@ -5590,8 +5607,8 @@ msgid ""
 "Specify the maximum number of error messages to display. To show all "
 "messages, leave this field blank or set the value to 0."
 msgstr ""
-"表示するエラーメッセージの最大数を指定します。"
-"全てのメッセージを表示するにはフィールドを設定しないか、0を指定します。"
+"表示するエラーメッセージの最大数を指定します。全てのメッセージを表示するには"
+"フィールドを設定しないか、0を指定します。"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:3
 msgid ""
