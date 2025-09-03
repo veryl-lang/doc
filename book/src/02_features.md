@@ -18,6 +18,7 @@ In this chapter, we introduce the features of Veryl along with clear examples.
 * [Range-based `for` / `inside` / `outside`](02_features.md#range-based-for--inside--outside)
 * [`msb` notation](02_features.md#msb-notation)
 * [`let` statement](02_features.md#let-statement)
+* [`<>` operator](02_features.md#connect-operator)
 * [Named block](02_features.md#named-block)
 * [Visibility control](02_features.md#visibility-control)
 
@@ -558,6 +559,47 @@ end
 always_ff {
     let tmp: logic = b + 1;
     x = tmp;
+}
+# }
+```
+
+</td>
+</tr>
+</table>
+
+## `<>` operator {#connect-operator}
+
+`<>` operator can connect two interfaces. It simplifies SystemVerilog's interface connection requiring each member assignments.
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+always_comb begin
+    mst_if0.cmd   = bus_if0.cmd;
+    bus_if0.ready = mst_if0.ready;
+end
+
+always_comb begin
+    mst_if1.cmd   = bus_if1.cmd;
+    bus_if1.ready = mst_if1.ready;
+end
+```
+
+</td>
+<td>
+
+```veryl
+# module ModuleA {
+connect mst_if0 <> bus_if0.slave;
+
+always_comb {
+    mst_if1 <> bus_if1.slave;
 }
 # }
 ```
