@@ -2248,6 +2248,41 @@ module ModuleB #(
     bb: input logic&lt;10&gt;,
 ) {}
 </code></pre>
+<p><code>bind</code> 宣言もサポートされており、SystemVerilogのbind宣言に変換されます。SystemVerilogと異なり、ターゲットスコープとしてインスタンスを指定することはできず、モジュールかインターフェースのみ指定することができます。</p>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var a: logic;
+    modport mp {
+        a: input,
+    }
+}
+
+module ModuleA (
+    i_clk: input clock,
+    i_rst: input reset,
+) {
+    inst a_if: InterfaceA;
+}
+
+module ModuleB (
+    i_clk: input   clock         ,
+    i_rst: input   reset         ,
+    a_if : modport InterfaceA::mp,
+) {}
+
+module ModuleC {
+    bind ModuleA &lt;- u0: ModuleB (
+        i_clk  ,
+        i_rst  ,
+        a_if   ,
+    );
+}
+
+bind ModuleA &lt;- u1: ModuleB (
+    i_clk: i_clk,
+    i_rst: i_rst,
+    a_if : a_if ,
+);
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="名前付きブロック"><a class="header" href="#名前付きブロック">名前付きブロック</a></h1>
 <p><code>{}</code> ブロックにラベルを付けることができます。そのような名前付きブロックは独立した名前空間を持ちます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
