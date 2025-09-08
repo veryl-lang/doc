@@ -246,6 +246,22 @@ interface bus_monitor_if {
 
 }
 </code></pre>
+<p>Identifiers defined in Veryl code can be placed within <code>embed</code> code blocks using the pair of <code>\{</code> and <code>\}</code>.
+These identifiers are then resolved, and the resolved identifiers are placed there.</p>
+<pre><code class="language-veryl playground">module Module47A {}
+
+module Module47B::&lt;V: u32&gt; {}
+
+module Module47C {
+    inst u_a: Module47A;
+
+    embed (inline) sv{{{
+        bind u_a \{ Module47B::&lt;32&gt; \} u_b32 ();
+        bind u_a \{ Module47B::&lt;64&gt; \} u_b64 ();
+    }}}
+
+}
+</code></pre>
 <h2 id="include-declaration"><a class="header" href="#include-declaration"><code>include</code> declaration</a></h2>
 <p><code>include</code> declaration can include a file of foreign languages.
 The first argument is the same as <code>embed</code> declaration, and the second is a relative file path from the source code.</p>
