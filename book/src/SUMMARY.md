@@ -89,6 +89,7 @@
     - [Source Map](./06_development_environment/12_source_map.md)
     - [verylup](./06_development_environment/13_verylup.md)
     - [Migrate to New Version](./06_development_environment/14_migrate_to_new_version.md)
+    - [Docker Image](./06_development_environment/15_docker_image.md)
 - [Appendix](./07_appendix.md)
     - [Formal Syntax](./07_appendix/01_formal_syntax.md)
     - [Semantic Error](./07_appendix/02_semantic_error.md)
