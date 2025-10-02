@@ -4234,6 +4234,33 @@ Therefore, multi version migration can be done like below:</p>
 <pre><code class="language-console">$ veryl +0.15.0 migrate  # from v0.14.0 to v0.15.0
 $ veryl +0.16.0 migrate  # from v0.15.0 to v0.16.0
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="docker-image"><a class="header" href="#docker-image">Docker Image</a></h1>
+<p>The official Docker image is provided through Docker Hub.</p>
+<p><a href="https://hub.docker.com/r/veryllang/veryl">https://hub.docker.com/r/veryllang/veryl</a></p>
+<p>The image can be used as the base image for your custormized image, GitLab CI/CD and so on.
+Here is some examples to use the image.</p>
+<h2 id="docker-command"><a class="header" href="#docker-command"><code>docker</code> command</a></h2>
+<p>You can pull the image from <code>veryllang/veryl</code>.</p>
+<pre><code class="language-console">$ docker pull veryllang/veryl
+</code></pre>
+<h2 id="dockerfile"><a class="header" href="#dockerfile"><code>Dockerfile</code></a></h2>
+<p>If you want to use the image as a base of your Docker image, the following <code>FROM</code> directive can be used.</p>
+<pre><code class="language-Dockerfile">FROM veryllang/veryl:latest
+</code></pre>
+<h2 id="gitlab-cicd"><a class="header" href="#gitlab-cicd">GitLab CI/CD</a></h2>
+<p>The following is an example of <code>.gitlab-ci.yml</code> for GitLab CI/CD.</p>
+<pre><code class="language-yaml">image: "veryllang/veryl"
+
+build:
+  stage: build
+  script:
+    - veryl build
+
+fmt:
+  stage: build
+  script:
+    - veryl fmt --check
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="formal-syntax"><a class="header" href="#formal-syntax">Formal Syntax</a></h1>
 <p>Veryl’s parser is based on parser generator <a href="https://github.com/jsinger67/parol">parol</a>.

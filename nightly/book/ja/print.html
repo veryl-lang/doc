@@ -3956,6 +3956,32 @@ $ veryl migrate
 <pre><code class="language-console">$ veryl +0.15.0 migrate  # from v0.14.0 to v0.15.0
 $ veryl +0.16.0 migrate  # from v0.15.0 to v0.16.0
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="docker-イメージ"><a class="header" href="#docker-イメージ">Docker イメージ</a></h1>
+<p>公式のDockerイメージはDocker Hubを通して提供されています。</p>
+<p><a href="https://hub.docker.com/r/veryllang/veryl">https://hub.docker.com/r/veryllang/veryl</a></p>
+<p>イメージはカスタムイメージのベースや、GitLab CI/CDのために使うことができます。以下に使用例をいくつか示します。</p>
+<h2 id="docker-コマンド"><a class="header" href="#docker-コマンド"><code>docker</code> コマンド</a></h2>
+<p>イメージを <code>veryllang/veryl</code> からプルできます。</p>
+<pre><code class="language-console">$ docker pull veryllang/veryl
+</code></pre>
+<h2 id="dockerfile"><a class="header" href="#dockerfile"><code>Dockerfile</code></a></h2>
+<p>Dockerイメージのベースとして使用する場合は、以下の <code>FROM</code> ディレクティブを使用できます。</p>
+<pre><code class="language-Dockerfile">FROM veryllang/veryl:latest
+</code></pre>
+<h2 id="gitlab-cicd"><a class="header" href="#gitlab-cicd">GitLab CI/CD</a></h2>
+<p>GitLab CI/CD のための <code>.gitlab-ci.yml</code> の例は以下になります。</p>
+<pre><code class="language-yaml">image: "veryllang/veryl"
+
+build:
+  stage: build
+  script:
+    - veryl build
+
+fmt:
+  stage: build
+  script:
+    - veryl fmt --check
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="補遺"><a class="header" href="#補遺">補遺</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="構文"><a class="header" href="#構文">構文</a></h1>
 <p>Veryl のパーサはパーサジェネレータ <a href="https://github.com/jsinger67/parol">parol</a>を使っています。以下の parol の構文定義が正式な構文です。</p>
