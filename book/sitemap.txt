@@ -43,6 +43,7 @@ https://doc.veryl-lang.org/book/06_development_environment/11_github_action.html
 https://doc.veryl-lang.org/book/06_development_environment/12_source_map.html
 https://doc.veryl-lang.org/book/06_development_environment/13_verylup.html
 https://doc.veryl-lang.org/book/06_development_environment/14_migrate_to_new_version.html
+https://doc.veryl-lang.org/book/06_development_environment/15_docker_image.html
 https://doc.veryl-lang.org/book/07_appendix/01_formal_syntax.html
 https://doc.veryl-lang.org/book/07_appendix/02_semantic_error.html
 https://doc.veryl-lang.org/book/ja/01_introduction.html
@@ -137,6 +138,7 @@ https://doc.veryl-lang.org/book/ja/06_development_environment/11_github_action.h
 https://doc.veryl-lang.org/book/ja/06_development_environment/12_source_map.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/13_verylup.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/14_migrate_to_new_version.html
+https://doc.veryl-lang.org/book/ja/06_development_environment/15_docker_image.html
 https://doc.veryl-lang.org/book/ja/07_appendix/01_formal_syntax.html
 https://doc.veryl-lang.org/book/ja/07_appendix/02_semantic_error.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/02_lexical_structure/01_operator.html
