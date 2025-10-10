@@ -15,12 +15,12 @@ The available configurations are [here](./01_project_configuration/04_test.md).
 ## cocotb
 
 `cocotb` tests require `python3` environment in which `cocotb` is installed.
-The supported version of `cocotb` is 1.9.0 only.
+The supported version of `cocotb` is 1.9.x and 2.0.x.
 
 For example, it can be installed by the following command.
 
 ```console
-$ pip3 install cocotb==1.9.0
+$ pip3 install cocotb==2.0.0
 ```
 
 As simulator backend, Verilator is only supported.
