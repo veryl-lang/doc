@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-10-29T10:53:40+09:00\n"
+"POT-Creation-Date: 2025-10-30T19:03:33+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -2547,10 +2547,9 @@ msgstr "高い"
 
 #: src/05_language_reference/04_expression/01_operator_precedence.md:8
 msgid ""
-"`+` `-` `!` `~` `&` `~&` <code>\\|</code> <code>~\\|</code> `^` `~^` `^~` "
-"(unary)"
+"`+` `-` `!` `~` `&` `~&` <code>\\|</code> <code>~\\|</code> `^` `~^` (unary)"
 msgstr ""
-"`+` `-` `!` `~` `&` `~&` <code>\\|</code> <code>~\\|</code> `^` `~^` `^~` (単"
+"`+` `-` `!` `~` `&` `~&` <code>\\|</code> <code>~\\|</code> `^` `~^` (単"
 "項)"
 
 #: src/05_language_reference/04_expression/01_operator_precedence.md:9
@@ -2574,16 +2573,16 @@ msgid "`<:` `<=` `>:` `>=`"
 msgstr "`<:` `<=` `>:` `>=`"
 
 #: src/05_language_reference/04_expression/01_operator_precedence.md:14
-msgid "`==` `!=` `===` `!==` `==?` `!=?`"
-msgstr "`==` `!=` `===` `!==` `==?` `!=?`"
+msgid "`==` `!=` `==?` `!=?`"
+msgstr "`==` `!=` `==?` `!=?`"
 
 #: src/05_language_reference/04_expression/01_operator_precedence.md:15
 msgid "`&` (binary)"
 msgstr "`&` (二項)"
 
 #: src/05_language_reference/04_expression/01_operator_precedence.md:16
-msgid "`^` `~^` `^~` (binary)"
-msgstr "`^` `~^` `^~` (二項)"
+msgid "`^` `~^` (binary)"
+msgstr "`^` `~^` (二項)"
 
 #: src/05_language_reference/04_expression/01_operator_precedence.md:17
 msgid "<code>\\|</code> (binary)"
