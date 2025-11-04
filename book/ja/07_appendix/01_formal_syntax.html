@@ -261,7 +261,7 @@
 // Longest match should be first
 
 CommentsTerm          : &lt;INITIAL, Generic, EmbedHeader,                            Attr&gt;"(?:(?:(?://.*(?:\r\n|\r|\n)?)|(?:(?ms)/\*/?([^/]|[^*]/)*\*/))\s*)+"                  : Token;
-StringLiteralTerm     : &lt;INITIAL, Generic,                                         Attr&gt;"\u{0022}(?:\\[\u{0022}\\/bfnrt]|u[0-9a-fA-F]{4}|[^\u{0022}\\\u0000-\u001F])*\u{0022}": Token;
+StringLiteralTerm     : &lt;INITIAL         ,                                         Attr&gt;"\u{0022}(?:\\[\u{0022}\\/bfnrt]|u[0-9a-fA-F]{4}|[^\u{0022}\\\u0000-\u001F])*\u{0022}": Token;
 ExponentTerm          : &lt;INITIAL, Generic                                              &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*[eE][+-]?[0-9]+(?:_[0-9]+)*/                   : Token;
 FixedPointTerm        : &lt;INITIAL, Generic                                              &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*/                                              : Token;
 BasedTerm             : &lt;INITIAL, Generic                                              &gt;/(?:[0-9]+(?:_[0-9]+)*)?'s?[bodh][0-9a-fA-FxzXZ]+(?:_[0-9a-fA-FxzXZ]+)*/              : Token;
@@ -278,40 +278,40 @@ Operator11Term        : &lt;INITIAL                                             
 Operator10Term        : &lt;INITIAL                                                       &gt;"\+|-"                                                                                : Token;
 Operator09Term        : &lt;INITIAL                                                       &gt;"&lt;&lt;&lt;|&gt;&gt;&gt;|&lt;&lt;|&gt;&gt;"                                                                       : Token;
 Operator08Term        : &lt;INITIAL                                                       &gt;"&lt;=|&gt;=|&lt;:|&gt;:"                                                                         : Token;
-Operator07Term        : &lt;INITIAL                                                       &gt;"===|==\?|!==|!=\?|==|!="                                                             : Token;
+Operator07Term        : &lt;INITIAL                                                       &gt;"==\?|!=\?|==|!="                                                                     : Token;
 Operator03Term        : &lt;INITIAL                                                       &gt;"&amp;&amp;"                                                                                  : Token;
 Operator02Term        : &lt;INITIAL                                                       &gt;"\|\|"                                                                                : Token;
 Operator06Term        : &lt;INITIAL                                                       &gt;"&amp;"                                                                                   : Token;
-Operator05Term        : &lt;INITIAL                                                       &gt;"\^~|\^|~\^"                                                                          : Token;
+Operator05Term        : &lt;INITIAL                                                       &gt;"\^|~\^"                                                                              : Token;
 Operator04Term        : &lt;INITIAL                                                       &gt;"\|"                                                                                  : Token;
 UnaryOperatorTerm     : &lt;INITIAL                                                       &gt;"~&amp;|~\||!|~"                                                                          : Token;
 ColonColonLAngleTerm  : &lt;INITIAL, Generic                                              &gt;'::&lt;'                                                                                 : Token;
 ColonColonTerm        : &lt;INITIAL, Generic                                              &gt;'::'                                                                                  : Token;
 ColonTerm             : &lt;INITIAL, Generic                                              &gt;':'                                                                                   : Token;
 CommaTerm             : &lt;INITIAL, Generic,                                         Attr&gt;','                                                                                   : Token;
-DotDotEquTerm         : &lt;INITIAL, Generic                                              &gt;'..='                                                                                 : Token;
-DotDotTerm            : &lt;INITIAL, Generic                                              &gt;'..'                                                                                  : Token;
+DotDotEquTerm         : &lt;INITIAL                                                       &gt;'..='                                                                                 : Token;
+DotDotTerm            : &lt;INITIAL                                                       &gt;'..'                                                                                  : Token;
 DotTerm               : &lt;INITIAL, Generic                                              &gt;'.'                                                                                   : Token;
 EquTerm               : &lt;INITIAL, Generic                                              &gt;'='                                                                                   : Token;
 HashLBracketTerm      : &lt;INITIAL                                                       &gt;'#['                                                                                  : Token;
-HashTerm              : &lt;INITIAL, Generic                                              &gt;'#'                                                                                   : Token;
-LAngleTerm            : &lt;INITIAL, Generic                                              &gt;'&lt;'                                                                                   : Token;
+HashTerm              : &lt;INITIAL                                                       &gt;'#'                                                                                   : Token;
+LAngleTerm            : &lt;INITIAL                                                       &gt;'&lt;'                                                                                   : Token;
 QuestionTerm          : &lt;INITIAL                                                       &gt;'?'                                                                                   : Token;
-QuoteLBraceTerm       : &lt;INITIAL, Generic                                              &gt;"'\{"                                                                                 : Token;
+QuoteLBraceTerm       : &lt;INITIAL                                                       &gt;"'\{"                                                                                 : Token;
 QuoteTerm             : &lt;INITIAL                                                       &gt;"'"                                                                                   : Token;
 EscapedLBraceTerm     : &lt;                               EmbedBody, EmbedBodyInner      &gt;'\{'                                                                                  : Token;
 TripleLBraceTerm      : &lt;                  EmbedHeader                                 &gt;'{{{'                                                                                 : Token;
-LBraceTerm            : &lt;INITIAL, Generic,              EmbedBody, EmbedBodyInner, Attr&gt;'{'                                                                                   : Token;
-LBracketTerm          : &lt;INITIAL, Generic,                                         Attr&gt;'['                                                                                   : Token;
-LParenTerm            : &lt;INITIAL, Generic, EmbedHeader,                            Attr&gt;'('                                                                                   : Token;
+LBraceTerm            : &lt;INITIAL         ,              EmbedBody, EmbedBodyInner, Attr&gt;'{'                                                                                   : Token;
+LBracketTerm          : &lt;INITIAL,                                                  Attr&gt;'['                                                                                   : Token;
+LParenTerm            : &lt;INITIAL         , EmbedHeader,                            Attr&gt;'('                                                                                   : Token;
 RAngleTerm            : &lt;INITIAL, Generic                                              &gt;'&gt;'                                                                                   : Token;
 EscapedRBraceTerm     : &lt;INITIAL                                                       &gt;'\}'                                                                                  : Token;
 TripleRBraceTerm      : &lt;                               EmbedBody                      &gt;'}}}'                                                                                 : Token;
-RBraceTerm            : &lt;INITIAL, Generic,                         EmbedBodyInner, Attr&gt;'}'                                                                                   : Token;
-RBracketTerm          : &lt;INITIAL, Generic,                                         Attr&gt;']'                                                                                   : Token;
-RParenTerm            : &lt;INITIAL, Generic, EmbedHeader,                            Attr&gt;')'                                                                                   : Token;
-SemicolonTerm         : &lt;INITIAL, Generic                                              &gt;';'                                                                                   : Token;
-StarTerm              : &lt;INITIAL, Generic                                              &gt;'*'                                                                                   : Token;
+RBraceTerm            : &lt;INITIAL,                                  EmbedBodyInner, Attr&gt;'}'                                                                                   : Token;
+RBracketTerm          : &lt;INITIAL,                                                  Attr&gt;']'                                                                                   : Token;
+RParenTerm            : &lt;INITIAL,          EmbedHeader,                            Attr&gt;')'                                                                                   : Token;
+SemicolonTerm         : &lt;INITIAL                                                       &gt;';'                                                                                   : Token;
+StarTerm              : &lt;INITIAL                                                       &gt;'*'                                                                                   : Token;
 
 // Keywords are reflected to syntax highlight definitions through highlightgen tool.
 // Please refer support/highlightgen/README.md if you want to add a keyword.
@@ -333,7 +333,7 @@ ConstTerm             : &lt;INITIAL, Generic                                    
 ConverseTerm          : &lt;INITIAL, Generic                                             &gt;'converse'                                                                            : Token; // Keyword: Direction
 DefaultTerm           : &lt;INITIAL, Generic                                             &gt;'default'                                                                             : Token; // Keyword: Conditional
 ElseTerm              : &lt;INITIAL, Generic                                             &gt;'else'                                                                                : Token; // Keyword: Conditional
-EmbedTerm             : &lt;INITIAL                                                      &gt;'embed'                                                                               : Token; // Keyword: Structure
+EmbedTerm             : &lt;INITIAL, Generic                                             &gt;'embed'                                                                               : Token; // Keyword: Structure
 EnumTerm              : &lt;INITIAL, Generic                                             &gt;'enum'                                                                                : Token; // Keyword: Structure
 F32Term               : &lt;INITIAL, Generic                                             &gt;'f32'                                                                                 : Token; // Keyword: Type
 F64Term               : &lt;INITIAL, Generic                                             &gt;'f64'                                                                                 : Token; // Keyword: Type
@@ -722,6 +722,7 @@ RealNumber: FixedPoint
 HierarchicalIdentifier: Identifier { Select } { Dot Identifier { Select } };
 ScopedIdentifier      : ( DollarIdentifier | Identifier [ WithGenericArgument ] ) { ColonColon Identifier [ WithGenericArgument ] };
 ExpressionIdentifier  : ScopedIdentifier [ Width ] { Select } { Dot Identifier { Select } };
+GenericArgIdentifier  : ScopedIdentifier { Dot Identifier };
 
 // ----------------------------------------------------------------------------
 // Expression
@@ -1070,7 +1071,7 @@ WithGenericArgument: ColonColonLAngle [ WithGenericArgumentList ] RAngle;
 
 WithGenericArgumentList: WithGenericArgumentItem { Comma WithGenericArgumentItem } [ Comma ];
 
-WithGenericArgumentItem: ExpressionIdentifier
+WithGenericArgumentItem: GenericArgIdentifier
                        | FixedType
                        | Number
                        | BooleanLiteral
