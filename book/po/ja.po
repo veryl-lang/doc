@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-10-30T19:03:33+09:00\n"
+"POT-Creation-Date: 2025-11-05T13:37:51+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -2549,8 +2549,7 @@ msgstr "高い"
 msgid ""
 "`+` `-` `!` `~` `&` `~&` <code>\\|</code> <code>~\\|</code> `^` `~^` (unary)"
 msgstr ""
-"`+` `-` `!` `~` `&` `~&` <code>\\|</code> <code>~\\|</code> `^` `~^` (単"
-"項)"
+"`+` `-` `!` `~` `&` `~&` <code>\\|</code> <code>~\\|</code> `^` `~^` (単項)"
 
 #: src/05_language_reference/04_expression/01_operator_precedence.md:9
 msgid "`**`"
@@ -8001,10 +8000,16 @@ msgstr ""
 "インストール後、`veryl` コマンドで `+` によるバージョン指定が可能になります。"
 
 #: src/06_development_environment/13_verylup.md:28
+msgid ""
+"If you specify like `+0.12`, the latest version in `0.12.x` is selected."
+msgstr ""
+"`+0.12` のように指定すると、`0.12.x` のうち最新バージョンが選択されます。"
+
+#: src/06_development_environment/13_verylup.md:30
 msgid "Toolchain override for directories"
 msgstr "ディレクトリ毎のツールチェーンオーバーライド"
 
-#: src/06_development_environment/13_verylup.md:30
+#: src/06_development_environment/13_verylup.md:32
 msgid ""
 "If you want to use a specific version of Veryl for specific directories, "
 "`verylup override` can be used."
@@ -8012,7 +8017,7 @@ msgstr ""
 "もし特定にディレクトリで特定のバージョンのVerylを使用したい場合は、`verylup "
 "override` を使うことができます。"
 
-#: src/06_development_environment/13_verylup.md:36
+#: src/06_development_environment/13_verylup.md:38
 msgid ""
 "`verylup override` can be executed in arbitrary directories in a Veryl "
 "project. After this command, the default toolchain becomes `0.12.0` in the "
@@ -8022,11 +8027,11 @@ msgstr ""
 "このコマンドを実行すると、そのプロジェクトのデフォルトのツールチェーンは "
 "`0.12.0` になります。"
 
-#: src/06_development_environment/13_verylup.md:39
+#: src/06_development_environment/13_verylup.md:41
 msgid "Offline installation"
 msgstr "オフラインインストール"
 
-#: src/06_development_environment/13_verylup.md:41
+#: src/06_development_environment/13_verylup.md:43
 msgid ""
 "If you want to verylup on an environment without internet access, offline "
 "installation can be used. The procedure of offline installation is below:"
@@ -8034,7 +8039,7 @@ msgstr ""
 "インターネットアクセスのない環境にインストールしたい場合は、オフラインインス"
 "トールが利用できます。オフラインインストールの手順は以下の通りです。"
 
-#: src/06_development_environment/13_verylup.md:44
+#: src/06_development_environment/13_verylup.md:46
 msgid ""
 "Download the latest toolchain package from [Veryl release page](https://"
 "github.com/veryl-lang/veryl/releases)."
@@ -8042,12 +8047,12 @@ msgstr ""
 "最新のツールチェーンパッケージを[Veryl リリースページ](https://github.com/"
 "veryl-lang/veryl/releases/latest)からダウンロードする"
 
-#: src/06_development_environment/13_verylup.md:45
+#: src/06_development_environment/13_verylup.md:47
 msgid ""
 "Execute `veryl setup` with `--pkg` specification like the following command."
 msgstr "以下のように`veryl setup` を `--pkg` 指定付きで実行する"
 
-#: src/06_development_environment/13_verylup.md:51
+#: src/06_development_environment/13_verylup.md:53
 msgid ""
 "If you want to update/install toolchain, `--pkg` specification is required "
 "as the same as setup."
@@ -8055,47 +8060,47 @@ msgstr ""
 "ツールチェーンの更新やインストールもセットアップと同様に `--pkg` 指定が必要で"
 "す。"
 
-#: src/06_development_environment/13_verylup.md:58
+#: src/06_development_environment/13_verylup.md:60
 msgid "Proxy"
 msgstr "プロキシ"
 
-#: src/06_development_environment/13_verylup.md:60
+#: src/06_development_environment/13_verylup.md:62
 msgid ""
 "Verylup refers the following environment variables for proxy configuration:"
 msgstr "Verylupはプロキシ設定として以下の環境変数を参照します。"
 
-#: src/06_development_environment/13_verylup.md:62
+#: src/06_development_environment/13_verylup.md:64
 msgid "`HTTPS_PROXY`"
 msgstr "`HTTPS_PROXY`"
 
-#: src/06_development_environment/13_verylup.md:63
+#: src/06_development_environment/13_verylup.md:65
 msgid "`https_proxy`"
 msgstr "`https_proxy`"
 
-#: src/06_development_environment/13_verylup.md:64
+#: src/06_development_environment/13_verylup.md:66
 msgid "`ALL_PROXY`"
 msgstr "`ALL_PROXY`"
 
-#: src/06_development_environment/13_verylup.md:65
+#: src/06_development_environment/13_verylup.md:67
 msgid "`all_proxy`"
 msgstr "`all_proxy`"
 
-#: src/06_development_environment/13_verylup.md:67
+#: src/06_development_environment/13_verylup.md:69
 msgid "As proxy protocol, `http` and `socks5` are supported."
 msgstr ""
 "プロキシのプロトコルとしては `http` と `socks5` がサポートされています。"
 
-#: src/06_development_environment/13_verylup.md:69
+#: src/06_development_environment/13_verylup.md:71
 msgid "Proxy config"
 msgstr "プロキシ設定"
 
-#: src/06_development_environment/13_verylup.md:71
+#: src/06_development_environment/13_verylup.md:73
 msgid ""
 "Instead of environment variables, you can specify proxy configuration for "
 "verylup only."
 msgstr "環境変数の代わりにverylupだけのプロキシ設定を指定することができます。"
 
-#: src/06_development_environment/13_verylup.md:73
+#: src/06_development_environment/13_verylup.md:75
 msgid ""
 "```\n"
 "verylup config set proxy socks5://127.0.0.1:1086\n"
@@ -8105,11 +8110,11 @@ msgstr ""
 "verylup config set proxy socks5://127.0.0.1:1086\n"
 "```"
 
-#: src/06_development_environment/13_verylup.md:77
+#: src/06_development_environment/13_verylup.md:79
 msgid "Nightly channel"
 msgstr "ナイトリーチャンネル"
 
-#: src/06_development_environment/13_verylup.md:79
+#: src/06_development_environment/13_verylup.md:81
 msgid ""
 "To use the latest features easily, nightly channel is available. Nightly "
 "channel is built daily from the master branch."
@@ -8117,7 +8122,7 @@ msgstr ""
 "最新の機能を簡単に試すために、ナイトリーチャンネルが利用できます。ナイトリー"
 "チャンネルはマスターブランチから毎日ビルドされます。"
 
-#: src/06_development_environment/13_verylup.md:86
+#: src/06_development_environment/13_verylup.md:88
 msgid ""
 "By default, nightly channel is not enabled after installation. So the "
 "following ways can be used to enable it."
@@ -8125,7 +8130,7 @@ msgstr ""
 "デフォルトではナイトリーチャンネルはインストールしても有効になりません。以下"
 "の方法で有効にすることができます。"
 
-#: src/06_development_environment/13_verylup.md:89
+#: src/06_development_environment/13_verylup.md:91
 msgid ""
 "```\n"
 "// Use +nightly\n"
@@ -8149,11 +8154,11 @@ msgstr ""
 "verylup override set nightly\n"
 "```"
 
-#: src/06_development_environment/13_verylup.md:100
+#: src/06_development_environment/13_verylup.md:102
 msgid "For Veryl Developer"
 msgstr "Veryl開発者向け"
 
-#: src/06_development_environment/13_verylup.md:102
+#: src/06_development_environment/13_verylup.md:104
 msgid ""
 "For Veryl developer, a special toolchain target `local` is prepared. If "
 "`verylup install local` is executed in your local Veryl repository, the "
@@ -8165,7 +8170,7 @@ msgstr ""
 "ツールチェーンを `local` ツールチェーンとしてインストールします。`local` ツー"
 "ルチェーンが存在するときはデフォルトのツールチェーンになります。"
 
-#: src/06_development_environment/13_verylup.md:106
+#: src/06_development_environment/13_verylup.md:108
 msgid ""
 "```\n"
 "// Build and install the toolchain from local Veryl repository\n"
