@@ -25,6 +25,8 @@ After installing it, `+` version specifier can be used in `veryl` command like b
 veryl +0.12.0 build
 ```
 
+If you specify like `+0.12`, the latest version in `0.12.x` is selected.
+
 ## Toolchain override for directories
 
 If you want to use a specific version of Veryl for specific directories, `verylup override` can be used.
