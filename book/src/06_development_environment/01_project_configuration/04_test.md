@@ -18,6 +18,7 @@ The available types are below:
 
 * `"verilator"`
 * `"vcs"`
+* `"dsim"`
 * `"vivado"`
 
 ### The `include_files` field
@@ -69,6 +70,15 @@ This section contains configurations of test by VCS.
 |---------------|----------|-------------------------------------------|
 | compile_args  | [string] | additional arguments to `vcs` command     |
 | simulate_args | [string] | additional arguments to simulation binary |
+
+## The `[test.dsim]` section
+
+This section contains configurations of test by DSim.
+
+| Configuration | Value    | Description                                            |
+|---------------|----------|--------------------------------------------------------|
+| compile_args  | [string] | additional arguments to `dsim` command for compilation |
+| simulate_args | [string] | additional arguments to `dsim` command for simulation  |
 
 ## The `[test.vivado]` section
 
