@@ -29,7 +29,8 @@ jobs:
       - name: Setup mdBook
         uses: peaceiris/actions-mdbook@v1
         with:
-          mdbook-version: 'latest'
+          mdbook-version: '0.4.52'
+          #mdbook-version: 'latest'
       - name: Install mdbook-i18n-helpers
         run: |
           cargo install mdbook-i18n-helpers
