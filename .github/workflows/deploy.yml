@@ -33,7 +33,7 @@ jobs:
           #mdbook-version: 'latest'
       - name: Install mdbook-i18n-helpers
         run: |
-          cargo install mdbook-i18n-helpers
+          cargo install mdbook-i18n-helpers --version 0.3.6
       - name: Install static-sitemap-cli
         run: npm install static-sitemap-cli
       - name: Build mdbook plugin
