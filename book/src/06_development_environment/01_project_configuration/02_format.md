@@ -9,6 +9,7 @@ indent_width = 4
 
 ## Available configurations
 
-| Configuration | Value   | Description           |
-|---------------|---------|-----------------------|
-| indent_width  | integer | indent width by space |
+| Configuration  | Value   | Default | Description           |
+|----------------|---------|---------|-----------------------|
+| indent_width   | integer | 4       | indent width by space |
+| vertical_align | boolean | true    | enable vertial align  |
