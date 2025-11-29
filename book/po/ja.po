@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-11-05T13:37:51+09:00\n"
+"POT-Creation-Date: 2025-11-29T18:10:18+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -5295,7 +5295,7 @@ msgstr "`source` -- ソースコードと同じディレクトリ"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:50
 #: src/06_development_environment/01_project_configuration/01_build.md:111
-#: src/06_development_environment/01_project_configuration/04_test.md:38
+#: src/06_development_environment/01_project_configuration/04_test.md:39
 msgid "`directory` -- specified directory"
 msgstr "`directory` -- 特定のディレクトリ"
 
@@ -5451,7 +5451,7 @@ msgstr ""
 "定は以下の通りです。"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:110
-#: src/06_development_environment/01_project_configuration/04_test.md:37
+#: src/06_development_environment/01_project_configuration/04_test.md:38
 msgid "`target` -- as the same directory as the target code"
 msgstr "`target` -- ターゲットコードと同じディレクトリ"
 
@@ -5460,7 +5460,7 @@ msgid "`none` -- no source map"
 msgstr "`none` -- ソースマップなし"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:114
-#: src/06_development_environment/01_project_configuration/04_test.md:40
+#: src/06_development_environment/01_project_configuration/04_test.md:41
 msgid ""
 "If you want to use `directory`, you should specify the target path by `path` "
 "key."
@@ -5629,9 +5629,10 @@ msgstr "設定"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:12
 #: src/06_development_environment/01_project_configuration/03_lint.md:16
-#: src/06_development_environment/01_project_configuration/04_test.md:59
-#: src/06_development_environment/01_project_configuration/04_test.md:68
-#: src/06_development_environment/01_project_configuration/04_test.md:77
+#: src/06_development_environment/01_project_configuration/04_test.md:60
+#: src/06_development_environment/01_project_configuration/04_test.md:69
+#: src/06_development_environment/01_project_configuration/04_test.md:78
+#: src/06_development_environment/01_project_configuration/04_test.md:87
 #: src/06_development_environment/01_project_configuration/05_publish.md:13
 #: src/06_development_environment/03_publish_project.md:53
 #: src/06_development_environment/08_language_server.md:9
@@ -5641,9 +5642,10 @@ msgstr "設定"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:12
 #: src/06_development_environment/01_project_configuration/03_lint.md:16
-#: src/06_development_environment/01_project_configuration/04_test.md:59
-#: src/06_development_environment/01_project_configuration/04_test.md:68
-#: src/06_development_environment/01_project_configuration/04_test.md:77
+#: src/06_development_environment/01_project_configuration/04_test.md:60
+#: src/06_development_environment/01_project_configuration/04_test.md:69
+#: src/06_development_environment/01_project_configuration/04_test.md:78
+#: src/06_development_environment/01_project_configuration/04_test.md:87
 #: src/06_development_environment/01_project_configuration/05_publish.md:13
 #: src/06_development_environment/08_language_server.md:9
 #: src/06_development_environment/10_documentation.md:59
@@ -5651,10 +5653,18 @@ msgid "Value"
 msgstr "設定値"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:12
+#: src/06_development_environment/01_project_configuration/05_publish.md:13
+#: src/06_development_environment/08_language_server.md:9
+#: src/06_development_environment/10_documentation.md:59
+msgid "Default"
+msgstr "デフォルト"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:12
 #: src/06_development_environment/01_project_configuration/03_lint.md:16
-#: src/06_development_environment/01_project_configuration/04_test.md:59
-#: src/06_development_environment/01_project_configuration/04_test.md:68
-#: src/06_development_environment/01_project_configuration/04_test.md:77
+#: src/06_development_environment/01_project_configuration/04_test.md:60
+#: src/06_development_environment/01_project_configuration/04_test.md:69
+#: src/06_development_environment/01_project_configuration/04_test.md:78
+#: src/06_development_environment/01_project_configuration/04_test.md:87
 #: src/06_development_environment/01_project_configuration/05_publish.md:13
 #: src/06_development_environment/08_language_server.md:9
 #: src/06_development_environment/10_documentation.md:59
@@ -5670,8 +5680,31 @@ msgid "integer"
 msgstr "整数"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:14
+msgid "4"
+msgstr "4"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:14
 msgid "indent width by space"
 msgstr "インデントのスペース幅"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:15
+msgid "vertical_align"
+msgstr "vertical_align"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:15
+#: src/06_development_environment/01_project_configuration/05_publish.md:15
+#: src/06_development_environment/01_project_configuration/05_publish.md:16
+#: src/06_development_environment/08_language_server.md:11
+msgid "boolean"
+msgstr "ブーリアン"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:15
+msgid "true"
+msgstr "true"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:15
+msgid "enable vertial align"
+msgstr "垂直方向の調整を有効にする"
 
 #: src/06_development_environment/01_project_configuration/03_lint.md:3
 msgid "`[lint]` section specifies the configuration for linter like below:"
@@ -6693,20 +6726,24 @@ msgid "`\"vcs\"`"
 msgstr "`\"vcs\"`"
 
 #: src/06_development_environment/01_project_configuration/04_test.md:21
+msgid "`\"dsim\"`"
+msgstr "`\"dsim\"`"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:22
 msgid "`\"vivado\"`"
 msgstr "`\"vivado\"`"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:23
+#: src/06_development_environment/01_project_configuration/04_test.md:24
 msgid "The `include_files` field"
 msgstr "`include_files` フィールド"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:25
+#: src/06_development_environment/01_project_configuration/04_test.md:26
 msgid "The `include_files` field specifies extra files used for simulation."
 msgstr ""
 "`include_files` フィールドはシミュレーションに使う追加のファイルを指定しま"
 "す。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:27
+#: src/06_development_environment/01_project_configuration/04_test.md:28
 msgid ""
 "```toml\n"
 "[test]\n"
@@ -6718,17 +6755,17 @@ msgstr ""
 "include_files = [\"test/mem.hex\"]\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:32
+#: src/06_development_environment/01_project_configuration/04_test.md:33
 msgid "The `waveform_target` field"
 msgstr "`waveform_target` フィールド"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:34
+#: src/06_development_environment/01_project_configuration/04_test.md:35
 msgid ""
 "The `waveform_target` field specifies where the generated waveforms will be "
 "placed at. The available types are below:"
 msgstr "`waveform_target` フィールドは波形の生成先を指定します。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:42
+#: src/06_development_environment/01_project_configuration/04_test.md:43
 msgid ""
 "```toml\n"
 "[test]\n"
@@ -6740,11 +6777,11 @@ msgstr ""
 "waveform_target = {type = \"directory\", path = \"[dst dir]\"}\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:47
+#: src/06_development_environment/01_project_configuration/04_test.md:48
 msgid "The `waveform_format` field"
 msgstr "`waveform_format` フィールド"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:49
+#: src/06_development_environment/01_project_configuration/04_test.md:50
 msgid ""
 "The `waveform_format` field specifies in which format the waveform will be "
 "dumped. The available formats are:"
@@ -6752,7 +6789,7 @@ msgstr ""
 "`waveform_format` フィールドはダンプされる波形のフォーマットを指定します。指"
 "定できる値は以下の通りです。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:52
+#: src/06_development_environment/01_project_configuration/04_test.md:53
 msgid ""
 "`vcd` -- The default value and most readable format across all vendors. But "
 "also not very feature rich"
@@ -6760,7 +6797,7 @@ msgstr ""
 "`vcd` -- デフォルト値であり、多くのベンダーでサポートされていますが機能は限定"
 "的です。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:53
+#: src/06_development_environment/01_project_configuration/04_test.md:54
 msgid ""
 "`fst` -- This format has some more features, e.g. printing enum values "
 "instead of integers. `gtkwave` and `surfer` can read this format."
@@ -6768,78 +6805,98 @@ msgstr ""
 "`fst` -- 整数の代わりにenum値を表示するなどいくつかの機能をサポートしていま"
 "す。`gtkwave` と `surfer` で扱うことができます。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:55
+#: src/06_development_environment/01_project_configuration/04_test.md:56
 msgid "The `[test.verilator]` section"
 msgstr "`[test.verilator]` セクション"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:57
+#: src/06_development_environment/01_project_configuration/04_test.md:58
 msgid "This section contains configurations of test by Verilator."
 msgstr "このセクションはVerilatorによるテストの設定です。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:61
-#: src/06_development_environment/01_project_configuration/04_test.md:70
-#: src/06_development_environment/01_project_configuration/04_test.md:79
+#: src/06_development_environment/01_project_configuration/04_test.md:62
+#: src/06_development_environment/01_project_configuration/04_test.md:71
+#: src/06_development_environment/01_project_configuration/04_test.md:80
+#: src/06_development_environment/01_project_configuration/04_test.md:89
 msgid "compile_args"
 msgstr "compile_args"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:61
 #: src/06_development_environment/01_project_configuration/04_test.md:62
-#: src/06_development_environment/01_project_configuration/04_test.md:70
+#: src/06_development_environment/01_project_configuration/04_test.md:63
 #: src/06_development_environment/01_project_configuration/04_test.md:71
-#: src/06_development_environment/01_project_configuration/04_test.md:79
+#: src/06_development_environment/01_project_configuration/04_test.md:72
 #: src/06_development_environment/01_project_configuration/04_test.md:80
 #: src/06_development_environment/01_project_configuration/04_test.md:81
+#: src/06_development_environment/01_project_configuration/04_test.md:89
+#: src/06_development_environment/01_project_configuration/04_test.md:90
+#: src/06_development_environment/01_project_configuration/04_test.md:91
 msgid "\\[string\\]"
 msgstr "\\[文字列\\]"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:61
+#: src/06_development_environment/01_project_configuration/04_test.md:62
 msgid "additional arguments to `verilator` command"
 msgstr "`verilator` コマンドへの追加の引数"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:62
-#: src/06_development_environment/01_project_configuration/04_test.md:71
+#: src/06_development_environment/01_project_configuration/04_test.md:63
+#: src/06_development_environment/01_project_configuration/04_test.md:72
 #: src/06_development_environment/01_project_configuration/04_test.md:81
+#: src/06_development_environment/01_project_configuration/04_test.md:91
 msgid "simulate_args"
 msgstr "simulate_args"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:62
-#: src/06_development_environment/01_project_configuration/04_test.md:71
+#: src/06_development_environment/01_project_configuration/04_test.md:63
+#: src/06_development_environment/01_project_configuration/04_test.md:72
 msgid "additional arguments to simulation binary"
 msgstr "シミュレーションバイナリへの追加の引数"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:64
+#: src/06_development_environment/01_project_configuration/04_test.md:65
 msgid "The `[test.vcs]` section"
 msgstr "`[test.vcs]` セクション"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:66
+#: src/06_development_environment/01_project_configuration/04_test.md:67
 msgid "This section contains configurations of test by VCS."
 msgstr "このセクションはVCSによるテストの設定です。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:70
+#: src/06_development_environment/01_project_configuration/04_test.md:71
 msgid "additional arguments to `vcs` command"
 msgstr "`vcs` コマンドへの追加の引数"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:73
+#: src/06_development_environment/01_project_configuration/04_test.md:74
+msgid "The `[test.dsim]` section"
+msgstr "`[test.dsim]` セクション"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:76
+msgid "This section contains configurations of test by DSim."
+msgstr "このセクションはDSimによるテストの設定です。"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:80
+msgid "additional arguments to `dsim` command for compilation"
+msgstr "`dsim` コマンドへの追加の引数"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:81
+msgid "additional arguments to `dsim` command for simulation"
+msgstr "`dsim` コマンドへの追加の引数"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:83
 msgid "The `[test.vivado]` section"
 msgstr "`[test.vivado]` セクション"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:75
+#: src/06_development_environment/01_project_configuration/04_test.md:85
 msgid "This section contains configurations of test by Vivado."
 msgstr "このセクションはVivadoによるテストの設定です。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:79
+#: src/06_development_environment/01_project_configuration/04_test.md:89
 msgid "additional arguments to `xvlog` command"
 msgstr "`xvlog` コマンドへの追加の引数"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:80
+#: src/06_development_environment/01_project_configuration/04_test.md:90
 msgid "elaborate_args"
 msgstr "elaborate_args"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:80
+#: src/06_development_environment/01_project_configuration/04_test.md:90
 msgid "additional arguments to `xelab` command"
 msgstr "`xelab` コマンドへの追加の引数"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:81
+#: src/06_development_environment/01_project_configuration/04_test.md:91
 msgid "additional arguments to `xsim` command"
 msgstr "`xsim` コマンドへの追加の引数"
 
@@ -6864,21 +6921,9 @@ msgstr ""
 "bump_commit_message = \"Bump\"\n"
 "```"
 
-#: src/06_development_environment/01_project_configuration/05_publish.md:13
-#: src/06_development_environment/08_language_server.md:9
-#: src/06_development_environment/10_documentation.md:59
-msgid "Default"
-msgstr "デフォルト"
-
 #: src/06_development_environment/01_project_configuration/05_publish.md:15
 msgid "bump_commit"
 msgstr "bump_commit"
-
-#: src/06_development_environment/01_project_configuration/05_publish.md:15
-#: src/06_development_environment/01_project_configuration/05_publish.md:16
-#: src/06_development_environment/08_language_server.md:11
-msgid "boolean"
-msgstr "ブーリアン"
 
 #: src/06_development_environment/01_project_configuration/05_publish.md:15
 #: src/06_development_environment/01_project_configuration/05_publish.md:16
@@ -7427,6 +7472,10 @@ msgstr ""
 "[Synopsys VCS](https://www.synopsys.com/verification/simulation/vcs.html)"
 
 #: src/06_development_environment/07_simulator.md:8
+msgid "[Altair DSim](https://altair.com/dsim)"
+msgstr "[Altair DSim](https://altair.com/dsim)"
+
+#: src/06_development_environment/07_simulator.md:9
 msgid ""
 "[AMD Vivado Simulator](https://www.xilinx.com/products/design-tools/vivado/"
 "verification.html)"
@@ -7434,7 +7483,7 @@ msgstr ""
 "[AMD Vivado Simulator](https://www.xilinx.com/products/design-tools/vivado/"
 "verification.html)"
 
-#: src/06_development_environment/07_simulator.md:10
+#: src/06_development_environment/07_simulator.md:11
 msgid ""
 "Verilator is the default simulator. If no simulator is specified through "
 "`Veryl.toml` and command-line option, it will be used."
@@ -7442,17 +7491,17 @@ msgstr ""
 "Verilatorはデフォルトのシミュレータです。`Veryl.toml`やコマンドラインオプショ"
 "ンでシミュレータが指定されていない場合に使用されます。"
 
-#: src/06_development_environment/07_simulator.md:13
+#: src/06_development_environment/07_simulator.md:14
 msgid ""
 "The available configurations are [here](./01_project_configuration/04_test."
 "md)."
 msgstr "全設定の説明は[こちら](./01_project_configuration/04_test.md)。"
 
-#: src/06_development_environment/07_simulator.md:15
+#: src/06_development_environment/07_simulator.md:16
 msgid "cocotb"
 msgstr "cocotb"
 
-#: src/06_development_environment/07_simulator.md:17
+#: src/06_development_environment/07_simulator.md:18
 msgid ""
 "`cocotb` tests require `python3` environment in which `cocotb` is installed. "
 "The supported version of `cocotb` is 1.9.x and 2.0.x."
@@ -7461,11 +7510,11 @@ msgstr ""
 "が必要です。サポートされている `cocotb` のバージョンは 1.9.x あるいは 2.0.x "
 "です。"
 
-#: src/06_development_environment/07_simulator.md:20
+#: src/06_development_environment/07_simulator.md:21
 msgid "For example, it can be installed by the following command."
 msgstr "例えば以下のコマンドでインストールすることができます。"
 
-#: src/06_development_environment/07_simulator.md:26
+#: src/06_development_environment/07_simulator.md:27
 msgid "As simulator backend, Verilator is only supported."
 msgstr "シミュレータバックエンドとしては Verilator のみサポートされています。"
 
