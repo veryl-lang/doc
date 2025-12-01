@@ -3317,8 +3317,9 @@ error_count_limit = 10
 indent_width = 4
 </code></pre>
 <h2 id="設定"><a class="header" href="#設定">設定</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
-<tr><td>indent_width</td><td>整数</td><td>インデントのスペース幅</td></tr>
+<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr></thead><tbody>
+<tr><td>indent_width</td><td>整数</td><td>4</td><td>インデントのスペース幅</td></tr>
+<tr><td>vertical_align</td><td>ブーリアン</td><td>true</td><td>垂直方向の調整を有効にする</td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="lint"><a class="header" href="#lint">Lint</a></h1>
 <p><code>[lint]</code> セクションはリンターの設定です。</p>
@@ -3462,6 +3463,7 @@ simulator = "vcs"
 <ul>
 <li><code>"verilator"</code></li>
 <li><code>"vcs"</code></li>
+<li><code>"dsim"</code></li>
 <li><code>"vivado"</code></li>
 </ul>
 <h3 id="include_files-フィールド"><a class="header" href="#include_files-フィールド"><code>include_files</code> フィールド</a></h3>
@@ -3497,6 +3499,13 @@ waveform_target = {type = "directory", path = "[dst dir]"}
 <div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
 <tr><td>compile_args</td><td>[文字列]</td><td><code>vcs</code> コマンドへの追加の引数</td></tr>
 <tr><td>simulate_args</td><td>[文字列]</td><td>シミュレーションバイナリへの追加の引数</td></tr>
+</tbody></table>
+</div>
+<h2 id="testdsim-セクション"><a class="header" href="#testdsim-セクション"><code>[test.dsim]</code> セクション</a></h2>
+<p>このセクションはDSimによるテストの設定です。</p>
+<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
+<tr><td>compile_args</td><td>[文字列]</td><td><code>dsim</code> コマンドへの追加の引数</td></tr>
+<tr><td>simulate_args</td><td>[文字列]</td><td><code>dsim</code> コマンドへの追加の引数</td></tr>
 </tbody></table>
 </div>
 <h2 id="testvivado-セクション"><a class="header" href="#testvivado-セクション"><code>[test.vivado]</code> セクション</a></h2>
@@ -3723,6 +3732,7 @@ target = {type = "directory", path = "target"}
 <ul>
 <li><a href="https://www.veripool.org/verilator/">Verilator</a></li>
 <li><a href="https://www.synopsys.com/verification/simulation/vcs.html">Synopsys VCS</a></li>
+<li><a href="https://altair.com/dsim">Altair DSim</a></li>
 <li><a href="https://www.xilinx.com/products/design-tools/vivado/verification.html">AMD Vivado Simulator</a></li>
 </ul>
 <p>Verilatorはデフォルトのシミュレータです。<code>Veryl.toml</code>やコマンドラインオプションでシミュレータが指定されていない場合に使用されます。</p>
@@ -3888,6 +3898,7 @@ $ [command] | sourcemap-resolver   # on-the-fly annotation by pipe
 <p>インストール後、<code>veryl</code> コマンドで <code>+</code> によるバージョン指定が可能になります。</p>
 <pre><code>veryl +0.12.0 build
 </code></pre>
+<p><code>+0.12</code> のように指定すると、<code>0.12.x</code> のうち最新バージョンが選択されます。</p>
 <h2 id="ディレクトリ毎のツールチェーンオーバーライド"><a class="header" href="#ディレクトリ毎のツールチェーンオーバーライド">ディレクトリ毎のツールチェーンオーバーライド</a></h2>
 <p>もし特定にディレクトリで特定のバージョンのVerylを使用したい場合は、<code>verylup override</code> を使うことができます。</p>
 <pre><code>verylup override set 0.12.0

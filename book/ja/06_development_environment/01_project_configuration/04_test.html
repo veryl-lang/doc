@@ -219,6 +219,7 @@ simulator = "vcs"
 <ul>
 <li><code>"verilator"</code></li>
 <li><code>"vcs"</code></li>
+<li><code>"dsim"</code></li>
 <li><code>"vivado"</code></li>
 </ul>
 <h3 id="include_files-フィールド"><a class="header" href="#include_files-フィールド"><code>include_files</code> フィールド</a></h3>
@@ -254,6 +255,13 @@ waveform_target = {type = "directory", path = "[dst dir]"}
 <div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
 <tr><td>compile_args</td><td>[文字列]</td><td><code>vcs</code> コマンドへの追加の引数</td></tr>
 <tr><td>simulate_args</td><td>[文字列]</td><td>シミュレーションバイナリへの追加の引数</td></tr>
+</tbody></table>
+</div>
+<h2 id="testdsim-セクション"><a class="header" href="#testdsim-セクション"><code>[test.dsim]</code> セクション</a></h2>
+<p>このセクションはDSimによるテストの設定です。</p>
+<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
+<tr><td>compile_args</td><td>[文字列]</td><td><code>dsim</code> コマンドへの追加の引数</td></tr>
+<tr><td>simulate_args</td><td>[文字列]</td><td><code>dsim</code> コマンドへの追加の引数</td></tr>
 </tbody></table>
 </div>
 <h2 id="testvivado-セクション"><a class="header" href="#testvivado-セクション"><code>[test.vivado]</code> セクション</a></h2>

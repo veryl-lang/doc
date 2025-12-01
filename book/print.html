@@ -3546,8 +3546,9 @@ error_count_limit = 10
 indent_width = 4
 </code></pre>
 <h2 id="available-configurations"><a class="header" href="#available-configurations">Available configurations</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Value</th><th>Description</th></tr></thead><tbody>
-<tr><td>indent_width</td><td>integer</td><td>indent width by space</td></tr>
+<div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Value</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<tr><td>indent_width</td><td>integer</td><td>4</td><td>indent width by space</td></tr>
+<tr><td>vertical_align</td><td>boolean</td><td>true</td><td>enable vertial align</td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="lint"><a class="header" href="#lint">Lint</a></h1>
 <p><code>[lint]</code> section specifies the configuration for linter like below:</p>
@@ -3692,6 +3693,7 @@ The available types are below:</p>
 <ul>
 <li><code>"verilator"</code></li>
 <li><code>"vcs"</code></li>
+<li><code>"dsim"</code></li>
 <li><code>"vivado"</code></li>
 </ul>
 <h3 id="the-include_files-field"><a class="header" href="#the-include_files-field">The <code>include_files</code> field</a></h3>
@@ -3729,6 +3731,13 @@ The available formats are:</p>
 <div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Value</th><th>Description</th></tr></thead><tbody>
 <tr><td>compile_args</td><td>[string]</td><td>additional arguments to <code>vcs</code> command</td></tr>
 <tr><td>simulate_args</td><td>[string]</td><td>additional arguments to simulation binary</td></tr>
+</tbody></table>
+</div>
+<h2 id="the-testdsim-section"><a class="header" href="#the-testdsim-section">The <code>[test.dsim]</code> section</a></h2>
+<p>This section contains configurations of test by DSim.</p>
+<div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Value</th><th>Description</th></tr></thead><tbody>
+<tr><td>compile_args</td><td>[string]</td><td>additional arguments to <code>dsim</code> command for compilation</td></tr>
+<tr><td>simulate_args</td><td>[string]</td><td>additional arguments to <code>dsim</code> command for simulation</td></tr>
 </tbody></table>
 </div>
 <h2 id="the-testvivado-section"><a class="header" href="#the-testvivado-section">The <code>[test.vivado]</code> section</a></h2>
@@ -3978,6 +3987,7 @@ Supported simulators are below:</p>
 <ul>
 <li><a href="https://www.veripool.org/verilator/">Verilator</a></li>
 <li><a href="https://www.synopsys.com/verification/simulation/vcs.html">Synopsys VCS</a></li>
+<li><a href="https://altair.com/dsim">Altair DSim</a></li>
 <li><a href="https://www.xilinx.com/products/design-tools/vivado/verification.html">AMD Vivado Simulator</a></li>
 </ul>
 <p>Verilator is the default simulator.
@@ -4157,6 +4167,7 @@ It eases to update and switch toolchains.</p>
 <p>After installing it, <code>+</code> version specifier can be used in <code>veryl</code> command like below:</p>
 <pre><code>veryl +0.12.0 build
 </code></pre>
+<p>If you specify like <code>+0.12</code>, the latest version in <code>0.12.x</code> is selected.</p>
 <h2 id="toolchain-override-for-directories"><a class="header" href="#toolchain-override-for-directories">Toolchain override for directories</a></h2>
 <p>If you want to use a specific version of Veryl for specific directories, <code>verylup override</code> can be used.</p>
 <pre><code>verylup override set 0.12.0
