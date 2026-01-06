@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2025-11-29T18:10:18+09:00\n"
+"POT-Creation-Date: 2026-01-06T12:22:17+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -1103,10 +1103,29 @@ msgid "[Vim / Neovim plugin](https://github.com/veryl-lang/veryl.vim)"
 msgstr "[Vim / Neovim plugin](https://github.com/veryl-lang/veryl.vim)"
 
 #: src/03_getting_started/01_installation.md:57
+msgid "Zed"
+msgstr "Zed"
+
+#: src/03_getting_started/01_installation.md:59
+msgid ""
+"For [Zed](https://zed.dev/), Veryl extension is provided. The extension "
+"provides file type detection, syntex highlight and language server "
+"integration. You can install it by searching \"Veryl\" in extension panel or "
+"the following URL."
+msgstr ""
+"[Zed](https://zed.dev/) 向けに Veryl 拡張が提供されています。拡張はファイルタイプ"
+"の検出とシンタックスハイライト、言語サーバの組み込みを提供します。拡張パネル"
+"から \"Veryl\" で検索するか、以下の URL からインストールしてください。"
+
+#: src/03_getting_started/01_installation.md:63
+msgid "[Veryl extension for Zed](https://zed.dev/extensions/veryl)"
+msgstr "[Veryl extension for Zed](https://zed.dev/extensions/veryl)"
+
+#: src/03_getting_started/01_installation.md:65
 msgid "Other Editors"
 msgstr "そのほかのエディタ"
 
-#: src/03_getting_started/01_installation.md:59
+#: src/03_getting_started/01_installation.md:67
 msgid ""
 "Veryl provides language server. So other editors supporting language server "
 "(ex. Emacs) can use it."
@@ -1114,11 +1133,11 @@ msgstr ""
 "Veryl は言語サーバを提供しているので、言語サーバをサポートしているエディタ"
 "（例えば Emacs）であれば利用できます。"
 
-#: src/03_getting_started/01_installation.md:61
+#: src/03_getting_started/01_installation.md:69
 msgid "Shell Completion"
 msgstr "シェル補完"
 
-#: src/03_getting_started/01_installation.md:63
+#: src/03_getting_started/01_installation.md:71
 msgid ""
 "Shell completion script for `veryl` and `verylup` is provided through "
 "`verylup completion`. For example, the following command generates "
@@ -1127,31 +1146,31 @@ msgstr ""
 "`veryl` と `verylup` のシェル補完スクリプトは `verylup completion` によって提"
 "供されます。例えば以下のコマンドはzsh向けの補完スクリプトを生成します。"
 
-#: src/03_getting_started/01_installation.md:71
+#: src/03_getting_started/01_installation.md:79
 msgid "Supported shells are below:"
 msgstr "サポートされているシェルは以下の通りです。"
 
-#: src/03_getting_started/01_installation.md:73
+#: src/03_getting_started/01_installation.md:81
 msgid "Bash"
 msgstr "Bash"
 
-#: src/03_getting_started/01_installation.md:74
+#: src/03_getting_started/01_installation.md:82
 msgid "Elvish"
 msgstr "Elvish"
 
-#: src/03_getting_started/01_installation.md:75
+#: src/03_getting_started/01_installation.md:83
 msgid "Fish"
 msgstr "Fish"
 
-#: src/03_getting_started/01_installation.md:76
+#: src/03_getting_started/01_installation.md:84
 msgid "PowerShell"
 msgstr "PowerShell"
 
-#: src/03_getting_started/01_installation.md:77
+#: src/03_getting_started/01_installation.md:85
 msgid "Zsh"
 msgstr "Zsh"
 
-#: src/03_getting_started/01_installation.md:79
+#: src/03_getting_started/01_installation.md:87
 msgid ""
 "Please refer the documentation of each shell for usage of generated scripts."
 msgstr ""

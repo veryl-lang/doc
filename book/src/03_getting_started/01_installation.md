@@ -54,6 +54,14 @@ There are some instructions for plugin installation and language server integrat
 
 [Vim / Neovim plugin](https://github.com/veryl-lang/veryl.vim)
 
+### Zed
+
+For [Zed](https://zed.dev/), Veryl extension is provided.
+The extension provides file type detection, syntex highlight and language server integration.
+You can install it by searching "Veryl" in extension panel or the following URL.
+
+[Veryl extension for Zed](https://zed.dev/extensions/veryl)
+
 ### Other Editors
 
 Veryl provides language server. So other editors supporting language server (ex. Emacs) can use it.
