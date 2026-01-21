@@ -2,12 +2,11 @@ use miette::{GraphicalReportHandler, GraphicalTheme, Report, ThemeCharacters, Th
 use semver::Version;
 use std::collections::HashMap;
 use std::path::PathBuf;
-use veryl_analyzer::{Analyzer, namespace_table, symbol_table};
+use veryl_analyzer::{Analyzer, Context, namespace_table, symbol_table};
 use veryl_emitter::Emitter;
 use veryl_formatter::Formatter;
 use veryl_metadata::{
-    Build, BuildInfo, Doc, EnvVar, Format, Lint, Lockfile, Metadata, Project, Pubfile, Publish,
-    Test,
+    Build, BuildInfo, Doc, Format, Lint, Lockfile, Metadata, Project, Pubfile, Publish, Test,
 };
 use veryl_parser::{Parser, resource_table};
 use wasm_bindgen::prelude::*;
@@ -71,7 +70,6 @@ fn metadata() -> Metadata {
         lockfile_path: "".into(),
         lockfile: Lockfile::default(),
         build_info: BuildInfo::default(),
-        env_var: EnvVar::default(),
     }
 }
 
@@ -91,12 +89,17 @@ pub fn build(source: &str) -> Result {
             }
 
             let analyzer = Analyzer::new(&metadata);
+            let mut context = Context::default();
             let mut errors = Vec::new();
-            errors.append(&mut analyzer.analyze_pass1("project", "", &parser.veryl));
+            errors.append(&mut analyzer.analyze_pass1("project", &parser.veryl));
             errors.append(&mut Analyzer::analyze_post_pass1());
-            errors.append(&mut analyzer.analyze_pass2("project", "", &parser.veryl));
-            let info = Analyzer::analyze_post_pass2();
-            errors.append(&mut analyzer.analyze_pass3("project", "", &parser.veryl, &info));
+            errors.append(&mut analyzer.analyze_pass2(
+                "project",
+                &parser.veryl,
+                &mut context,
+                None,
+            ));
+            errors.append(&mut Analyzer::analyze_post_pass2());
 
             let err = !errors.is_empty();
 
