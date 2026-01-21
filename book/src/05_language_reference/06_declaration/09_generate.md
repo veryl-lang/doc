@@ -44,7 +44,9 @@ module ModuleA (
     }
 
     for i in rev 0..4 :g_b {
-        assign b[i - 1] = b[i];
+        if i != 0 :g {
+            assign b[i - 1] = b[i];
+        }
     }
 }
 ```
