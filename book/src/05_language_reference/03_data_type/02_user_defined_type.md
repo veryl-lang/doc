@@ -48,7 +48,8 @@ module A {
 }
 ```
 
-If the type of `enum` is omitted, it will be infered from the variants automatically.
+If the type of `enum` is omitted, it will be infered from the variants automatically and `logic` is used as its base type.
+`#[enum_base_type(TYPE)]` attribute can be used to specify the base type if you want.
 
 ```veryl,playground
 module A {
@@ -56,6 +57,12 @@ module A {
         member_a,
         member_b,
         member_c = 3,
+    }
+
+    #[enum_base_type(bit)]
+    enum EnumB {
+        member_d = 1,
+        member_e = 3,
     }
 }
 ```
