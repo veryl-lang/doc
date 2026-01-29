@@ -287,10 +287,12 @@
 }
 </code></pre>
 <h2 id="ブーリアン型"><a class="header" href="#ブーリアン型">ブーリアン型</a></h2>
-<p><code>bool</code> は ブーリアンを表す <code>logic&lt;1&gt;</code> の型エイリアスです。<code>1'b1</code> と <code>1'b0</code> を表す <code>true</code> と <code>false</code> も使用できます。</p>
+<p><code>bbool</code> と <code>lbool</code> は ブーリアンを表す <code>bit&lt;1&gt;</code> と <code>logic&lt;1&gt;</code> の型エイリアスです。<code>1'b1</code> と <code>1'b0</code> を表す <code>true</code> と <code>false</code> も使用できます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    const a: bool = true;
-    const b: bool = false;
+    const A: bbool = true;
+    const B: bbool = false;
+    const C: lbool = true;
+    const D: lbool = false;
 }
 </code></pre>
 

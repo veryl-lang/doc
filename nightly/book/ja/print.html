@@ -1261,10 +1261,12 @@ a = 1 || 1;
 }
 </code></pre>
 <h2 id="ブーリアン型"><a class="header" href="#ブーリアン型">ブーリアン型</a></h2>
-<p><code>bool</code> は ブーリアンを表す <code>logic&lt;1&gt;</code> の型エイリアスです。<code>1'b1</code> と <code>1'b0</code> を表す <code>true</code> と <code>false</code> も使用できます。</p>
+<p><code>bbool</code> と <code>lbool</code> は ブーリアンを表す <code>bit&lt;1&gt;</code> と <code>logic&lt;1&gt;</code> の型エイリアスです。<code>1'b1</code> と <code>1'b0</code> を表す <code>true</code> と <code>false</code> も使用できます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    const a: bool = true;
-    const b: bool = false;
+    const A: bbool = true;
+    const B: bbool = false;
+    const C: lbool = true;
+    const D: lbool = false;
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ユーザ定義型"><a class="header" href="#ユーザ定義型">ユーザ定義型</a></h1>
@@ -4111,7 +4113,9 @@ AssignTerm            : &lt;INITIAL, Generic                                    
 AsTerm                : &lt;INITIAL, Generic                                             &gt;'as'                                                                                  : Token; // Keyword: Statement
 BindTerm              : &lt;INITIAL, Generic                                             &gt;'bind'                                                                                : Token; // Keyword: Statement
 BitTerm               : &lt;INITIAL, Generic                                             &gt;'bit'                                                                                 : Token; // Keyword: Type
-BoolTerm              : &lt;INITIAL, Generic                                             &gt;'bool'                                                                                : Token; // Keyword: Type
+BlockTerm             : &lt;INITIAL, Generic                                             &gt;'block'                                                                               : Token; // Keyword: Statement
+BBoolTerm             : &lt;INITIAL, Generic                                             &gt;'bbool'                                                                               : Token; // Keyword: Type
+LBoolTerm             : &lt;INITIAL, Generic                                             &gt;'lbool'                                                                               : Token; // Keyword: Type
 CaseTerm              : &lt;INITIAL, Generic                                             &gt;'case'                                                                                : Token; // Keyword: Conditional
 ClockTerm             : &lt;INITIAL, Generic                                             &gt;'clock'                                                                               : Token; // Keyword: Type
 ClockPosedgeTerm      : &lt;INITIAL, Generic                                             &gt;'clock_posedge'                                                                       : Token; // Keyword: Type
@@ -4257,7 +4261,9 @@ AsToken            : AsTerm            : Token Comments;
 AssignToken        : AssignTerm        : Token Comments;
 BindToken          : BindTerm          : Token Comments;
 BitToken           : BitTerm           : Token Comments;
-BoolToken          : BoolTerm          : Token Comments;
+BlockToken         : BlockTerm         : Token Comments;
+BBoolToken         : BBoolTerm         : Token Comments;
+LBoolToken         : LBoolTerm         : Token Comments;
 CaseToken          : CaseTerm          : Token Comments;
 ClockToken         : ClockTerm         : Token Comments;
 ClockPosedgeToken  : ClockPosedgeTerm  : Token Comments;
@@ -4409,7 +4415,9 @@ As            : AsToken            : VerylToken;
 Assign        : AssignToken        : VerylToken;
 Bind          : BindToken          : VerylToken;
 Bit           : BitToken           : VerylToken;
-Bool          : BoolToken          : VerylToken;
+Block         : BlockToken         : VerylToken;
+BBool         : BBoolToken         : VerylToken;
+LBool         : LBoolToken         : VerylToken;
 Break         : BreakToken         : VerylToken;
 Case          : CaseToken          : VerylToken;
 Clock         : ClockToken         : VerylToken;
@@ -4616,7 +4624,7 @@ RangeOperator: DotDot
 // ScalarType / ArrayType / CastingType
 // ----------------------------------------------------------------------------
 
-FixedType: U8 | U16 | U32 | U64 | I8 | I16| I32 | I64 | F32 | F64 | Bool | Strin;
+FixedType: U8 | U16 | U32 | U64 | I8 | I16| I32 | I64 | F32 | F64 | BBool | LBool | Strin;
 
 VariableType: Clock
             | ClockPosedge
@@ -4649,7 +4657,8 @@ CastingType: U8
            | I64
            | F32
            | F64
-           | Bool
+           | BBool
+           | LBool
            | Clock
            | ClockPosedge
            | ClockNegedge
@@ -4675,9 +4684,9 @@ ClockDomain: Quote Identifier;
 
 StatementBlock: LBrace { StatementBlockGroup } RBrace;
 
-StatementBlockGroup: { Attribute } ( LBrace { StatementBlockGroup } RBrace | StatementBlockItem );
+StatementBlockGroup: { Attribute } ( Block LBrace { StatementBlockGroup } RBrace | StatementBlockItem );
 
-StatementBlockItem: VarDeclaration | LetStatement | ConstDeclaration | Statement;
+StatementBlockItem: VarDeclaration | LetStatement | ConstDeclaration | Statement | ConcatenationAssignment;
 
 Statement: IdentifierStatement
          | IfStatement
@@ -4692,6 +4701,8 @@ Statement: IdentifierStatement
 LetStatement: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Semicolon;
 
 IdentifierStatement: ExpressionIdentifier ( FunctionCall | Assignment ) Semicolon;
+
+ConcatenationAssignment: LBrace AssignConcatenationList RBrace Equ Expression Semicolon;
 
 Assignment: ( Equ | AssignmentOperator | DiamondOperator ) Expression;
 
