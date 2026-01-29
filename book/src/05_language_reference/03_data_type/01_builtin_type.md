@@ -111,12 +111,14 @@ module ModuleA {
 
 ## Boolean type
 
-`bool` is a type alias of `logic<1>` to express boolean.
+`bbool` and `lbool` are type aliases of `bit<1>` and `logic<1>` to express boolean.
 `true` and `false` literal which express `1'b1` and `1'b0` can be used.
 
 ```veryl,playground
 module ModuleA {
-    const a: bool = true;
-    const b: bool = false;
+    const A: bbool = true;
+    const B: bbool = false;
+    const C: lbool = true;
+    const D: lbool = false;
 }
 ```
