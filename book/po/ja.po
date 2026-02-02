@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2026-01-29T15:23:58+09:00\n"
+"POT-Creation-Date: 2026-02-02T10:01:11+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -39,7 +39,7 @@ msgstr "Hello, World!"
 msgid "Code Examples"
 msgstr "コード例"
 
-#: src/SUMMARY.md:9 src/SUMMARY.md:58 src/04_code_examples/01_module.md:1
+#: src/SUMMARY.md:9 src/SUMMARY.md:59 src/04_code_examples/01_module.md:1
 #: src/05_language_reference/07_module.md:1
 #: src/05_language_reference/14_generics/02_prototype.md:139
 msgid "Module"
@@ -51,13 +51,13 @@ msgstr "モジュール"
 msgid "Instantiation"
 msgstr "インスタンス"
 
-#: src/SUMMARY.md:11 src/SUMMARY.md:59 src/04_code_examples/03_interface.md:1
+#: src/SUMMARY.md:11 src/SUMMARY.md:60 src/04_code_examples/03_interface.md:1
 #: src/05_language_reference/08_interface.md:1
 #: src/05_language_reference/14_generics/02_prototype.md:140
 msgid "Interface"
 msgstr "インターフェース"
 
-#: src/SUMMARY.md:12 src/SUMMARY.md:60 src/04_code_examples/04_package.md:1
+#: src/SUMMARY.md:12 src/SUMMARY.md:61 src/04_code_examples/04_package.md:1
 #: src/05_language_reference/09_package.md:1
 #: src/05_language_reference/14_generics/02_prototype.md:141
 msgid "Package"
@@ -252,159 +252,163 @@ msgstr "Import / Export"
 msgid "Connect"
 msgstr "Connect"
 
-#: src/SUMMARY.md:61
+#: src/SUMMARY.md:58 src/05_language_reference/06_declaration/14_block.md:1
+msgid "Block"
+msgstr "ブロック"
+
+#: src/SUMMARY.md:62
 #: src/05_language_reference/10_systemverilog_interoperation.md:1
 msgid "SystemVerilog Interoperation"
 msgstr "SystemVerilogとの相互運用"
 
-#: src/SUMMARY.md:62 src/05_language_reference/11_visibility.md:1
+#: src/SUMMARY.md:63 src/05_language_reference/11_visibility.md:1
 msgid "Visibility"
 msgstr "可視性"
 
-#: src/SUMMARY.md:63
+#: src/SUMMARY.md:64
 #: src/05_language_reference/12_foreign_language_integration.md:1
 msgid "Foreign Language Integration"
 msgstr "他言語組み込み"
 
-#: src/SUMMARY.md:64 src/05_language_reference/13_integrated_test.md:1
+#: src/SUMMARY.md:65 src/05_language_reference/13_integrated_test.md:1
 msgid "Integrated Test"
 msgstr "組み込みテスト"
 
-#: src/SUMMARY.md:65 src/02_features.md:67
+#: src/SUMMARY.md:66 src/02_features.md:67
 #: src/05_language_reference/14_generics.md:1
 msgid "Generics"
 msgstr "ジェネリクス"
 
-#: src/SUMMARY.md:66
+#: src/SUMMARY.md:67
 #: src/05_language_reference/14_generics/01_default_parameter.md:1
 msgid "Default Parameter"
 msgstr "デフォルトパラメータ"
 
-#: src/SUMMARY.md:67 src/05_language_reference/14_generics/02_prototype.md:1
+#: src/SUMMARY.md:68 src/05_language_reference/14_generics/02_prototype.md:1
 #: src/05_language_reference/14_generics/02_prototype.md:137
 msgid "Prototype"
 msgstr "プロトタイプ"
 
-#: src/SUMMARY.md:68 src/02_features.md:123
+#: src/SUMMARY.md:69 src/02_features.md:123
 #: src/05_language_reference/15_clock_domain_annotation.md:1
 msgid "Clock Domain Annotation"
 msgstr "クロックドメインアノテーション"
 
-#: src/SUMMARY.md:69
+#: src/SUMMARY.md:70
 #: src/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.md:1
 msgid "Unsafe CDC"
 msgstr "Unsafe CDC"
 
-#: src/SUMMARY.md:70 src/05_language_reference/16_standard_library.md:1
+#: src/SUMMARY.md:71 src/05_language_reference/16_standard_library.md:1
 msgid "Standard Library"
 msgstr "標準ライブラリ"
 
-#: src/SUMMARY.md:71 src/05_language_reference/14_generics/02_prototype.md:137
+#: src/SUMMARY.md:72 src/05_language_reference/14_generics/02_prototype.md:137
 #: src/05_language_reference/17_alias.md:1
 msgid "Alias"
 msgstr "エイリアス"
 
-#: src/SUMMARY.md:72 src/06_development_environment.md:1
+#: src/SUMMARY.md:73 src/06_development_environment.md:1
 msgid "Development Environment"
 msgstr "開発環境"
 
-#: src/SUMMARY.md:73
+#: src/SUMMARY.md:74
 #: src/06_development_environment/01_project_configuration.md:1
 msgid "Project Configuration"
 msgstr "プロジェクト設定"
 
-#: src/SUMMARY.md:74
+#: src/SUMMARY.md:75
 #: src/06_development_environment/01_project_configuration/01_build.md:1
 msgid "Build"
 msgstr "Build"
 
-#: src/SUMMARY.md:75
+#: src/SUMMARY.md:76
 #: src/06_development_environment/01_project_configuration/02_format.md:1
 msgid "Format"
 msgstr "Format"
 
-#: src/SUMMARY.md:76
+#: src/SUMMARY.md:77
 #: src/06_development_environment/01_project_configuration/03_lint.md:1
 msgid "Lint"
 msgstr "Lint"
 
-#: src/SUMMARY.md:77
+#: src/SUMMARY.md:78
 #: src/06_development_environment/01_project_configuration/04_test.md:1
 #: src/06_development_environment/11_github_action.md:47
 msgid "Test"
 msgstr "Test"
 
-#: src/SUMMARY.md:78
+#: src/SUMMARY.md:79
 #: src/06_development_environment/01_project_configuration/05_publish.md:1
 msgid "Publish"
 msgstr "Publish"
 
-#: src/SUMMARY.md:79 src/06_development_environment/02_dependencies.md:1
+#: src/SUMMARY.md:80 src/06_development_environment/02_dependencies.md:1
 msgid "Dependencies"
 msgstr "依存関係"
 
-#: src/SUMMARY.md:80 src/06_development_environment/03_publish_project.md:1
+#: src/SUMMARY.md:81 src/06_development_environment/03_publish_project.md:1
 msgid "Publish Project"
 msgstr "プロジェクトを公開する"
 
-#: src/SUMMARY.md:81 src/06_development_environment/04_directory_layout.md:1
+#: src/SUMMARY.md:82 src/06_development_environment/04_directory_layout.md:1
 msgid "Directory Layout"
 msgstr "ディレクトリ構成"
 
-#: src/SUMMARY.md:82 src/06_development_environment/05_formatter.md:1
+#: src/SUMMARY.md:83 src/06_development_environment/05_formatter.md:1
 msgid "Formatter"
 msgstr "フォーマッタ"
 
-#: src/SUMMARY.md:83 src/06_development_environment/06_linter.md:1
+#: src/SUMMARY.md:84 src/06_development_environment/06_linter.md:1
 msgid "Linter"
 msgstr "リンタ"
 
-#: src/SUMMARY.md:84 src/06_development_environment/07_simulator.md:1
+#: src/SUMMARY.md:85 src/06_development_environment/07_simulator.md:1
 msgid "Simulator"
 msgstr "シミュレータ"
 
-#: src/SUMMARY.md:85 src/06_development_environment/08_language_server.md:1
+#: src/SUMMARY.md:86 src/06_development_environment/08_language_server.md:1
 msgid "Language Server"
 msgstr "言語サーバ"
 
-#: src/SUMMARY.md:86 src/06_development_environment/09_compatibility.md:1
+#: src/SUMMARY.md:87 src/06_development_environment/09_compatibility.md:1
 msgid "Compatibility"
 msgstr "互換性"
 
-#: src/SUMMARY.md:87 src/06_development_environment/10_documentation.md:1
+#: src/SUMMARY.md:88 src/06_development_environment/10_documentation.md:1
 msgid "Documentation"
 msgstr "ドキュメンテーション"
 
-#: src/SUMMARY.md:88 src/06_development_environment/11_github_action.md:1
+#: src/SUMMARY.md:89 src/06_development_environment/11_github_action.md:1
 msgid "GitHub Action"
 msgstr "GitHub Action"
 
-#: src/SUMMARY.md:89 src/06_development_environment/12_source_map.md:1
+#: src/SUMMARY.md:90 src/06_development_environment/12_source_map.md:1
 msgid "Source Map"
 msgstr "ソースマップ"
 
-#: src/SUMMARY.md:90 src/06_development_environment/13_verylup.md:1
+#: src/SUMMARY.md:91 src/06_development_environment/13_verylup.md:1
 msgid "verylup"
 msgstr "verylup"
 
-#: src/SUMMARY.md:91
+#: src/SUMMARY.md:92
 #: src/06_development_environment/14_migrate_to_new_version.md:1
 msgid "Migrate to New Version"
 msgstr "新バージョンへの移行"
 
-#: src/SUMMARY.md:92 src/06_development_environment/15_docker_image.md:1
+#: src/SUMMARY.md:93 src/06_development_environment/15_docker_image.md:1
 msgid "Docker Image"
 msgstr "Docker イメージ"
 
-#: src/SUMMARY.md:93 src/07_appendix.md:1
+#: src/SUMMARY.md:94 src/07_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:94 src/07_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:95 src/07_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:95 src/07_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:96 src/07_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -2341,8 +2345,8 @@ msgid ""
 "boolean. `true` and `false` literal which express `1'b1` and `1'b0` can be "
 "used."
 msgstr ""
-"`bbool` と `lbool` は ブーリアンを表す `bit<1>` と `logic<1>` の型エイリアスです。`1'b1` と `1'b0` を"
-"表す `true` と `false` も使用できます。"
+"`bbool` と `lbool` は ブーリアンを表す `bit<1>` と `logic<1>` の型エイリアス"
+"です。`1'b1` と `1'b0` を表す `true` と `false` も使用できます。"
 
 #: src/05_language_reference/03_data_type/02_user_defined_type.md:3
 msgid "Struct"
@@ -3057,6 +3061,62 @@ msgstr ""
 "る条件を満たさない場合に合成結果が不正になる可能性があります。そのためデフォ"
 "ルトではアトリビュートは無視され、以下の設定がある場合のみ出力されます。"
 
+#: src/05_language_reference/05_statement/04_case_switch.md:73
+msgid "Concatenation in left-hand side"
+msgstr ""
+
+#: src/05_language_reference/05_statement/04_case_switch.md:75
+msgid ""
+"If you want to use bit concatenation in left-hand of case/switch, "
+"surrounding `{}` is necessary, even if the statement is single."
+msgstr ""
+
+#: src/05_language_reference/05_statement/04_case_switch.md:78
+msgid ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    let a: logic<10> = 1;\n"
+"    var b: logic<10>;\n"
+"    var c: logic<10>;\n"
+"\n"
+"    always_comb {\n"
+"        case a {\n"
+"            // This is not allowed\n"
+"            //0: {b, c} = 1;\n"
+"            //default: {b, c} = 2;\n"
+"            0: {\n"
+"                {b, c} = 1;\n"
+"            }\n"
+"            default: {\n"
+"                {b, c} = 2;\n"
+"            }\n"
+"        }\n"
+"    }\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    let a: logic<10> = 1;\n"
+"    var b: logic<10>;\n"
+"    var c: logic<10>;\n"
+"\n"
+"    always_comb {\n"
+"        case a {\n"
+"            // これは禁止\n"
+"            //0: {b, c} = 1;\n"
+"            //default: {b, c} = 2;\n"
+"            0: {\n"
+"                {b, c} = 1;\n"
+"            }\n"
+"            default: {\n"
+"                {b, c} = 2;\n"
+"            }\n"
+"        }\n"
+"    }\n"
+"}\n"
+"```"
+
 #: src/05_language_reference/05_statement/05_for.md:3
 msgid ""
 "`for` statement represent repetition. Loop variable is placed before `in` "
@@ -3170,11 +3230,21 @@ msgstr ""
 "モジュール内にクロックとリセットが1つしかない場合、クロックとリセットの指定は"
 "省略できます。"
 
+#: src/05_language_reference/06_declaration/03_register.md:49
+msgid ""
+"Concatenation can be used as the left hand side in `always_ff` declaration."
+msgstr "`always_ff` 宣言の左辺には連結も使用することができます。"
+
 #: src/05_language_reference/06_declaration/04_combinational.md:3
 msgid ""
 "If a variable is assigned in `always_comb` declaration, it means "
 "combinational circuit."
 msgstr "`always_comb` で代入される変数は組み合わせ回路を意味します。"
+
+#: src/05_language_reference/06_declaration/04_combinational.md:16
+msgid ""
+"Concatenation can be used as the left hand side in `always_comb` declaration."
+msgstr "`always_comb` 宣言の左辺には連結も使用することができます。"
 
 #: src/05_language_reference/06_declaration/05_assign.md:3
 msgid "`assign` declaration can assign expression to variable."
@@ -3295,21 +3365,25 @@ msgstr "指定可能なリント名は以下の通りです。"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:32
 msgid "`unused_variable`"
-msgstr "unused_variable"
+msgstr "`unused_variable`"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:33
-msgid "`missing_reset_statement`"
-msgstr "missing_reset_statement"
+msgid "`unassign_variable`"
+msgstr "`unassign_variable`"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:34
-msgid "`missing_port`"
-msgstr "missing_port"
+msgid "`missing_reset_statement`"
+msgstr "`missing_reset_statement`"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:36
+#: src/05_language_reference/06_declaration/08_attribute.md:35
+msgid "`missing_port`"
+msgstr "`missing_port`"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:37
 msgid "`ifdef`/`ifndef`/`elsif`/`else` Attribute"
 msgstr "`ifdef`/`ifndef`/`elsif`/`else` アトリビュート"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:38
+#: src/05_language_reference/06_declaration/08_attribute.md:39
 msgid ""
 "`ifdef` and `ifndef` attributes are used to control whether the annotated "
 "code block is enabled by defined value. In addition, the code block with "
@@ -3321,7 +3395,7 @@ msgstr ""
 "`ifndef` のついたコードブロックに続けてオプションとして `elsif` と `else` ア"
 "トリビュートの付いたブロックを書くこともできます。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:41
+#: src/05_language_reference/06_declaration/08_attribute.md:42
 msgid ""
 "The following example shows a usage of these attributes and which code "
 "blocks will be enabled according to defined values."
@@ -3329,11 +3403,11 @@ msgstr ""
 "以下の例はこれらのアトリビュートの使用方法と、各コードブロックが定義された値"
 "によって有効になる様子を示しています。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:43
+#: src/05_language_reference/06_declaration/08_attribute.md:44
 msgid "For the sequence of `ifdef`/`elsif`/`else` attributes"
 msgstr "`ifdef`/`elsif`/`else` の順に宣言されたアトリビュート"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:44
+#: src/05_language_reference/06_declaration/08_attribute.md:45
 msgid ""
 "If `DEFINE_A` is defined, the code block with `#[ifdef(DEFINE_A)]` (code "
 "block a) is enbaled, and code blocks with `#[ifndef(DEFINE_B)]` and "
@@ -3343,7 +3417,7 @@ msgstr ""
 "ク（コードブロックa）が有効になり、`#[ifndef(DEFINE_B)]` と `#[else]` のつい"
 "たコードブロック（コードブロックbとc）は無効になります。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:45
+#: src/05_language_reference/06_declaration/08_attribute.md:46
 msgid ""
 "If `DEFINE_A` is not defined and `DEFINE_B` is defiend, the code block with "
 "`#[elsif(DEFINE_B)]` (code block b) is enabled, and code blocks with "
@@ -3354,7 +3428,7 @@ msgstr ""
 "`#[ifndef(DEFINE_A)]` と `#[else]` のついたコードブロック（コードブロックaと"
 "c）は無効になります。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:46
+#: src/05_language_reference/06_declaration/08_attribute.md:47
 msgid ""
 "If `DEFINE_A` and `DEFINE_B` are not defined the code block with `#[else]` "
 "is enabled, and code blocks with `#[ifdef(DEFINE_A)]` and "
@@ -3364,11 +3438,11 @@ msgstr ""
 "ロックが有効になり、`#[ifndef(DEFINE_A)]` と `#[elsif(DEFINE_B)]` のついた"
 "コードブロック（コードブロックaとb）は無効になります。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:47
+#: src/05_language_reference/06_declaration/08_attribute.md:48
 msgid "For the sequence of `ifndef`/`else` attributes"
 msgstr "`ifndef`/`else` の順に宣言されたアトリビュート"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:48
+#: src/05_language_reference/06_declaration/08_attribute.md:49
 msgid ""
 "If `DEFINE_D` is not defined, the code block with `#[ifndef(DEFINE_D)]` "
 "(code block d) is enabled, and the code block with `#[else]` (code block e) "
@@ -3378,7 +3452,7 @@ msgstr ""
 "ブロック（コードブロックd）が有効になり、`#[else]` のついたコードブロック"
 "（コードブロックe）は無効になります。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:49
+#: src/05_language_reference/06_declaration/08_attribute.md:50
 msgid ""
 "If `DEFINE_D` is defined, the code block with `#[else]` (code block e) is "
 "enabled, and the code block with `#[ifndef(DEFINE_D)]` (code block d) is "
@@ -3388,7 +3462,7 @@ msgstr ""
 "クe）が有効になり、`#[ifndef(DEFINE_D)]` のついたコードブロック（コードブロッ"
 "クd）は無効になります。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:51
+#: src/05_language_reference/06_declaration/08_attribute.md:52
 msgid ""
 "```veryl,playground\n"
 "module ModuleA {\n"
@@ -3452,7 +3526,7 @@ msgstr ""
 "}\n"
 "```"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:82
+#: src/05_language_reference/06_declaration/08_attribute.md:83
 msgid ""
 "To avoid complex adjustment around trailing comma in generated code, the "
 "last item with `ifdef` in comma-separated list is forbidden."
@@ -3460,11 +3534,11 @@ msgstr ""
 "生成されたコードにおける末尾カンマ周りの複雑な調整を回避するため、カンマ区切"
 "りリストの最後のアイテムに`ifdef`をつけることは禁止されています。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:84
+#: src/05_language_reference/06_declaration/08_attribute.md:85
 msgid "`expand` Attribute"
 msgstr "`expand` アトリビュート"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:86
+#: src/05_language_reference/06_declaration/08_attribute.md:87
 msgid ""
 "If `expand` attribute is set, structured ports such as `modport` are "
 "expanded into each Verilog ports. Synthesis tools may require that ports of "
@@ -3476,15 +3550,15 @@ msgstr ""
 "がそのようなポートを含んではならない場合があり、そのような場合にこのアトリ"
 "ビュートを使うことができます。使用可能な引数は以下の通りです。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:90
+#: src/05_language_reference/06_declaration/08_attribute.md:91
 msgid "`modport`: Expand ports of which direction is `modport`"
 msgstr "`modport`: ポート方向が `modport` のポートを展開する"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:132
+#: src/05_language_reference/06_declaration/08_attribute.md:133
 msgid "`align` Attribute"
 msgstr "`align` アトリビュート"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:134
+#: src/05_language_reference/06_declaration/08_attribute.md:135
 msgid ""
 "`align` attribute is used to control vertical alignment by formatter. If "
 "`number` is specified as an argument of `align` attribute, all numbers are "
@@ -3494,11 +3568,11 @@ msgstr ""
 "す。`number` が `align` の引数として指定されたとき、全ての数値は整列されま"
 "す。`identifier` も使用可能です。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:159
+#: src/05_language_reference/06_declaration/08_attribute.md:160
 msgid "`fmt` Attribute"
 msgstr "`fmt` アトリビュート"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:161
+#: src/05_language_reference/06_declaration/08_attribute.md:162
 msgid ""
 "`fmt` attribute is used to control formatiing way. The following arguments "
 "are supported:"
@@ -3506,11 +3580,11 @@ msgstr ""
 "`fmt` アトリビュートはフォーマットの方法を制御することができます。以下の引数"
 "がサポートされています。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:164
+#: src/05_language_reference/06_declaration/08_attribute.md:165
 msgid "`compact`: compact formatting without newlines"
 msgstr "`compact`: 改行なしのコンパクトなフォーマット"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:178
+#: src/05_language_reference/06_declaration/08_attribute.md:179
 msgid ""
 "`skip`: `veryl fmt` does not format modules, interfaces and packages on "
 "which `fmt` attribute with `skip` argument is specified."
@@ -3755,6 +3829,19 @@ msgstr ""
 #: src/05_language_reference/06_declaration/13_connect.md:9
 msgid "The connection operator `<>` can be used in `always_comb` too."
 msgstr "接続演算子 `<>` は `always_comb` 中でも使用することができます。"
+
+#: src/05_language_reference/06_declaration/14_block.md:3
+msgid ""
+"In `always_comb` and `always_ff`, `block` keyword can be used for grouping "
+"some statements."
+msgstr ""
+"`always_comb` と `always_ff` では、`block` キーワードによって複数の文をグループ化することができます。"
+
+#: src/05_language_reference/06_declaration/14_block.md:19
+msgid ""
+"`block` declaration can be used to assign an attribute to some statements."
+msgstr ""
+"`block` 宣言は複数の文にアトリビュートを付与するために利用できます。"
 
 #: src/05_language_reference/07_module.md:3
 msgid ""
@@ -5612,28 +5699,54 @@ msgstr ""
 "フォルト値は 1048576 です。"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:225
-msgid "The `incremental` field"
-msgstr "`incremental` フィールド"
+msgid "The `evaluate_size_limit` field"
+msgstr "`evaluate_size_limit` フィールド"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:227
 msgid ""
-"If `incremental` is set to `true`, Veryl compiler re-generates only files "
-"related outdated files. The default value is `false`."
+"`evaluate_size_limit` is the maximum size which is evaluated by semantic "
+"analyzer. The default value is 1048576. This is applied to the size of `bit`/"
+"`logic`, loop count, and so on."
 msgstr ""
-"`incremental` が `true` のとき、Verylコンパイラは更新されたファイルに関連した"
-"ファイルのみを再生成します。デフォルト値は `false` です。"
+"`evaluate_size_limit` はセマンティックアナライザーによって評価される最大サイズです。"
+"デフォルト値は 1048576 です。この値は `bit` / `logic` のサイズやループ回数などに適用されます。"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:235
+msgid "The `evaluate_array_limit` field"
+msgstr "`evaluate_array_limit` フィールド"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:237
+msgid ""
+"`evaluate_array_limit` is the maximum array size which enables to trace "
+"unassigned. The default value is 128. The array having size over this limit "
+"is excluded from the targets of unassigned checking."
+msgstr ""
+"`evaluate_array_limit` は未割り当ての追跡を有効にする配列の最大サイズです。"
+"デフォルト値は 128 です。このサイズを超える配列は未割り当てチェックの対象となりません。"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:245
 msgid "The `error_count_limit` field"
 msgstr "`error_count_limit` フィールド"
 
-#: src/06_development_environment/01_project_configuration/01_build.md:237
+#: src/06_development_environment/01_project_configuration/01_build.md:247
 msgid ""
 "Specify the maximum number of error messages to display. To show all "
 "messages, leave this field blank or set the value to 0."
 msgstr ""
 "表示するエラーメッセージの最大数を指定します。全てのメッセージを表示するには"
 "フィールドを設定しないか、0を指定します。"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:254
+msgid "The `incremental` field"
+msgstr "`incremental` フィールド"
+
+#: src/06_development_environment/01_project_configuration/01_build.md:256
+msgid ""
+"If `incremental` is set to `true`, Veryl compiler re-generates only files "
+"related outdated files. The default value is `false`."
+msgstr ""
+"`incremental` が `true` のとき、Verylコンパイラは更新されたファイルに関連した"
+"ファイルのみを再生成します。デフォルト値は `false` です。"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:3
 msgid ""
