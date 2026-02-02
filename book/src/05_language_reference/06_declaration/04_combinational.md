@@ -12,3 +12,16 @@ module ModuleA {
     }
 }
 ```
+
+Concatenation can be used as the left hand side in `always_comb` declaration.
+
+```veryl,playground
+module ModuleA {
+    var a: logic<10>;
+    var b: logic<10>;
+
+    always_comb {
+        {a, b} = 1;
+    }
+}
+```

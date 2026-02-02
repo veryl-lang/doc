@@ -55,6 +55,7 @@
         - [Named Block](./05_language_reference/06_declaration/11_named_block.md)
         - [Import / Export](./05_language_reference/06_declaration/12_import_export.md)
         - [Connect](./05_language_reference/06_declaration/13_connect.md)
+        - [Block](./05_language_reference/06_declaration/14_block.md)
     - [Module](./05_language_reference/07_module.md)
     - [Interface](./05_language_reference/08_interface.md)
     - [Package](./05_language_reference/09_package.md)

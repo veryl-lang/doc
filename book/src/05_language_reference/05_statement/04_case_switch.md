@@ -69,3 +69,30 @@ So these attributes are ignored by default, and if there is the following config
 [build]
 emit_cond_type = true
 ```
+
+## Concatenation in left-hand side
+
+If you want to use bit concatenation in left-hand of case/switch, 
+surrounding `{}` is necessary, even if the statement is single.
+
+```veryl,playground
+module ModuleA {
+    let a: logic<10> = 1;
+    var b: logic<10>;
+    var c: logic<10>;
+
+    always_comb {
+        case a {
+            // This is not allowed
+            //0: {b, c} = 1;
+            //default: {b, c} = 2;
+            0: {
+                {b, c} = 1;
+            }
+            default: {
+                {b, c} = 2;
+            }
+        }
+    }
+}
+```

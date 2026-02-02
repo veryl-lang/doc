@@ -30,6 +30,7 @@ module ModuleA {
 Available lint names are below:
 
 * `unused_variable`
+* `unassign_variable`
 * `missing_reset_statement`
 * `missing_port`
 

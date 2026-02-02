@@ -222,14 +222,24 @@ instance_depth_limit = 256
 instance_total_limit = 256
 ```
 
-## The `incremental` field
+## The `evaluate_size_limit` field
 
-If `incremental` is set to `true`, Veryl compiler re-generates only files related outdated files.
-The default value is `false`.
+`evaluate_size_limit` is the maximum size which is evaluated by semantic analyzer. The default value is 1048576.
+This is applied to the size of `bit`/`logic`, loop count, and so on.
 
 ```toml
 [build]
-incremental = true
+evaluate_size_limit = 256
+```
+
+## The `evaluate_array_limit` field
+
+`evaluate_array_limit` is the maximum array size which enables to trace unassigned. The default value is 128.
+The array having size over this limit is excluded from the targets of unassigned checking.
+
+```toml
+[build]
+evaluate_size_limit = 256
 ```
 
 ## The `error_count_limit` field
@@ -239,4 +249,14 @@ Specify the maximum number of error messages to display. To show all messages, l
 ```toml
 [build]
 error_count_limit = 10
+```
+
+## The `incremental` field
+
+If `incremental` is set to `true`, Veryl compiler re-generates only files related outdated files.
+The default value is `false`.
+
+```toml
+[build]
+incremental = true
 ```

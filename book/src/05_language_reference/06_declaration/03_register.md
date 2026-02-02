@@ -45,3 +45,18 @@ module ModuleA (
     }
 }
 ```
+
+Concatenation can be used as the left hand side in `always_ff` declaration.
+
+```veryl,playground
+module ModuleA (
+    i_clk: input clock,
+) {
+    var a: logic<10>;
+    var b: logic<10>;
+
+    always_ff {
+        {a, b} = 1;
+    }
+}
+```
