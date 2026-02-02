@@ -1806,6 +1806,28 @@ module ModuleA {
 <pre><code class="language-toml">[build]
 emit_cond_type = true
 </code></pre>
+<h2 id="concatenation-in-left-hand-side"><a class="header" href="#concatenation-in-left-hand-side">Concatenation in left-hand side</a></h2>
+<p>If you want to use bit concatenation in left-hand of case/switch, surrounding <code>{}</code> is necessary, even if the statement is single.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a: logic&lt;10&gt; = 1;
+    var b: logic&lt;10&gt;;
+    var c: logic&lt;10&gt;;
+
+    always_comb {
+        case a {
+            // これは禁止
+            //0: {b, c} = 1;
+            //default: {b, c} = 2;
+            0: {
+                {b, c} = 1;
+            }
+            default: {
+                {b, c} = 2;
+            }
+        }
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="for"><a class="header" href="#for">for</a></h1>
 <p><code>for</code> 文は繰り返しを表します。<code>in</code> キーワードの前にループ変数を、後に<a href="05_language_reference/05_statement/../04_expression/07_range.html">範囲</a>を書きます。</p>
 <p><code>break</code> を使ってループを中断することもできます。</p>
@@ -1931,6 +1953,18 @@ emit_cond_type = true
     }
 }
 </code></pre>
+<p><code>always_ff</code> 宣言の左辺には連結も使用することができます。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_ff {
+        {a, b} = 1;
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="組み合わせ回路"><a class="header" href="#組み合わせ回路">組み合わせ回路</a></h1>
 <p><code>always_comb</code> で代入される変数は組み合わせ回路を意味します。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -1939,6 +1973,16 @@ emit_cond_type = true
 
     always_comb {
         b = a + 1;
+    }
+}
+</code></pre>
+<p><code>always_comb</code> 宣言の左辺には連結も使用することができます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        {a, b} = 1;
     }
 }
 </code></pre>
@@ -2047,9 +2091,10 @@ module ModuleA {
 </code></pre>
 <p>指定可能なリント名は以下の通りです。</p>
 <ul>
-<li>unused_variable</li>
-<li>missing_reset_statement</li>
-<li>missing_port</li>
+<li><code>unused_variable</code></li>
+<li><code>unassign_variable</code></li>
+<li><code>missing_reset_statement</code></li>
+<li><code>missing_port</code></li>
 </ul>
 <h2 id="ifdefifndefelsifelse-アトリビュート"><a class="header" href="#ifdefifndefelsifelse-アトリビュート"><code>ifdef</code>/<code>ifndef</code>/<code>elsif</code>/<code>else</code> アトリビュート</a></h2>
 <p><code>ifdef</code> と <code>ifndef</code> アトリビュートは定義された値によってコードブロックを有効にするかどうかを制御するために使用することができます。さらに、<code>ifdef</code> と <code>ifndef</code> のついたコードブロックに続けてオプションとして <code>elsif</code> と <code>else</code> アトリビュートの付いたブロックを書くこともできます。</p>
@@ -2362,6 +2407,39 @@ module ModuleA (
     }
     always_comb {
         slv_if1 &lt;&gt; bus_if1.master;
+    }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ブロック"><a class="header" href="#ブロック">ブロック</a></h1>
+<p><code>always_comb</code> と <code>always_ff</code> では、<code>block</code> キーワードによって複数の文をグループ化することができます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        block {
+            a = 1;
+            b = 2;
+        }
+    }
+}
+</code></pre>
+<p><code>block</code> 宣言は複数の文にアトリビュートを付与するために利用できます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        #[ifdef(A)]
+        block {
+            a = 1;
+            b = 2;
+        }
+        #[else]
+        block {
+            a = 3;
+            b = 4;
+        }
     }
 }
 </code></pre>
@@ -3308,15 +3386,25 @@ instance_depth_limit = 256
 <pre><code class="language-toml">[build]
 instance_total_limit = 256
 </code></pre>
-<h2 id="incremental-フィールド"><a class="header" href="#incremental-フィールド"><code>incremental</code> フィールド</a></h2>
-<p><code>incremental</code> が <code>true</code> のとき、Verylコンパイラは更新されたファイルに関連したファイルのみを再生成します。デフォルト値は <code>false</code> です。</p>
+<h2 id="evaluate_size_limit-フィールド"><a class="header" href="#evaluate_size_limit-フィールド"><code>evaluate_size_limit</code> フィールド</a></h2>
+<p><code>evaluate_size_limit</code> はセマンティックアナライザーによって評価される最大サイズです。デフォルト値は 1048576 です。この値は <code>bit</code> / <code>logic</code> のサイズやループ回数などに適用されます。</p>
 <pre><code class="language-toml">[build]
-incremental = true
+evaluate_size_limit = 256
+</code></pre>
+<h2 id="evaluate_array_limit-フィールド"><a class="header" href="#evaluate_array_limit-フィールド"><code>evaluate_array_limit</code> フィールド</a></h2>
+<p><code>evaluate_array_limit</code> は未割り当ての追跡を有効にする配列の最大サイズです。デフォルト値は 128 です。このサイズを超える配列は未割り当てチェックの対象となりません。</p>
+<pre><code class="language-toml">[build]
+evaluate_size_limit = 256
 </code></pre>
 <h2 id="error_count_limit-フィールド"><a class="header" href="#error_count_limit-フィールド"><code>error_count_limit</code> フィールド</a></h2>
 <p>表示するエラーメッセージの最大数を指定します。全てのメッセージを表示するにはフィールドを設定しないか、0を指定します。</p>
 <pre><code class="language-toml">[build]
 error_count_limit = 10
+</code></pre>
+<h2 id="incremental-フィールド"><a class="header" href="#incremental-フィールド"><code>incremental</code> フィールド</a></h2>
+<p><code>incremental</code> が <code>true</code> のとき、Verylコンパイラは更新されたファイルに関連したファイルのみを再生成します。デフォルト値は <code>false</code> です。</p>
+<pre><code class="language-toml">[build]
+incremental = true
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="format"><a class="header" href="#format">Format</a></h1>
 <p><code>[format]</code> セクションはフォーマッタの設定です。</p>

@@ -265,6 +265,28 @@
 <pre><code class="language-toml">[build]
 emit_cond_type = true
 </code></pre>
+<h2 id="concatenation-in-left-hand-side"><a class="header" href="#concatenation-in-left-hand-side">Concatenation in left-hand side</a></h2>
+<p>If you want to use bit concatenation in left-hand of case/switch, surrounding <code>{}</code> is necessary, even if the statement is single.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a: logic&lt;10&gt; = 1;
+    var b: logic&lt;10&gt;;
+    var c: logic&lt;10&gt;;
+
+    always_comb {
+        case a {
+            // これは禁止
+            //0: {b, c} = 1;
+            //default: {b, c} = 2;
+            0: {
+                {b, c} = 1;
+            }
+            default: {
+                {b, c} = 2;
+            }
+        }
+    }
+}
+</code></pre>
 
                     </main>
 

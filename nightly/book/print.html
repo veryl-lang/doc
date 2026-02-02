@@ -1920,6 +1920,29 @@ So these attributes are ignored by default, and if there is the following config
 <pre><code class="language-toml">[build]
 emit_cond_type = true
 </code></pre>
+<h2 id="concatenation-in-left-hand-side"><a class="header" href="#concatenation-in-left-hand-side">Concatenation in left-hand side</a></h2>
+<p>If you want to use bit concatenation in left-hand of case/switch,
+surrounding <code>{}</code> is necessary, even if the statement is single.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a: logic&lt;10&gt; = 1;
+    var b: logic&lt;10&gt;;
+    var c: logic&lt;10&gt;;
+
+    always_comb {
+        case a {
+            // This is not allowed
+            //0: {b, c} = 1;
+            //default: {b, c} = 2;
+            0: {
+                {b, c} = 1;
+            }
+            default: {
+                {b, c} = 2;
+            }
+        }
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="for"><a class="header" href="#for">For</a></h1>
 <p><code>for</code> statement represent repetition.
 Loop variable is placed before <code>in</code> keyword,
@@ -2060,6 +2083,18 @@ The actual porality and synchronisity can be configured through <code>[build]</c
     }
 }
 </code></pre>
+<p>Concatenation can be used as the left hand side in <code>always_ff</code> declaration.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_ff {
+        {a, b} = 1;
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="combinational"><a class="header" href="#combinational">Combinational</a></h1>
 <p>If a variable is assigned in <code>always_comb</code> declaration, it means combinational circuit.</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -2068,6 +2103,16 @@ The actual porality and synchronisity can be configured through <code>[build]</c
 
     always_comb {
         b = a + 1;
+    }
+}
+</code></pre>
+<p>Concatenation can be used as the left hand side in <code>always_comb</code> declaration.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        {a, b} = 1;
     }
 }
 </code></pre>
@@ -2182,6 +2227,7 @@ It will be transpiled to SystemVerilog attribute <code>(*  *)</code>.</p>
 <p>Available lint names are below:</p>
 <ul>
 <li><code>unused_variable</code></li>
+<li><code>unassign_variable</code></li>
 <li><code>missing_reset_statement</code></li>
 <li><code>missing_port</code></li>
 </ul>
@@ -2512,6 +2558,39 @@ module ModuleA (
     }
     always_comb {
         slv_if1 &lt;&gt; bus_if1.master;
+    }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="block"><a class="header" href="#block">Block</a></h1>
+<p>In <code>always_comb</code> and <code>always_ff</code>, <code>block</code> keyword can be used for grouping some statements.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        block {
+            a = 1;
+            b = 2;
+        }
+    }
+}
+</code></pre>
+<p><code>block</code> declaration can be used to assign an attribute to some statements.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        #[ifdef(A)]
+        block {
+            a = 1;
+            b = 2;
+        }
+        #[else]
+        block {
+            a = 3;
+            b = 4;
+        }
     }
 }
 </code></pre>
@@ -3538,16 +3617,28 @@ instance_depth_limit = 256
 <pre><code class="language-toml">[build]
 instance_total_limit = 256
 </code></pre>
-<h2 id="the-incremental-field"><a class="header" href="#the-incremental-field">The <code>incremental</code> field</a></h2>
-<p>If <code>incremental</code> is set to <code>true</code>, Veryl compiler re-generates only files related outdated files.
-The default value is <code>false</code>.</p>
+<h2 id="the-evaluate_size_limit-field"><a class="header" href="#the-evaluate_size_limit-field">The <code>evaluate_size_limit</code> field</a></h2>
+<p><code>evaluate_size_limit</code> is the maximum size which is evaluated by semantic analyzer. The default value is 1048576.
+This is applied to the size of <code>bit</code>/<code>logic</code>, loop count, and so on.</p>
 <pre><code class="language-toml">[build]
-incremental = true
+evaluate_size_limit = 256
+</code></pre>
+<h2 id="the-evaluate_array_limit-field"><a class="header" href="#the-evaluate_array_limit-field">The <code>evaluate_array_limit</code> field</a></h2>
+<p><code>evaluate_array_limit</code> is the maximum array size which enables to trace unassigned. The default value is 128.
+The array having size over this limit is excluded from the targets of unassigned checking.</p>
+<pre><code class="language-toml">[build]
+evaluate_size_limit = 256
 </code></pre>
 <h2 id="the-error_count_limit-field"><a class="header" href="#the-error_count_limit-field">The <code>error_count_limit</code> field</a></h2>
 <p>Specify the maximum number of error messages to display. To show all messages, leave this field blank or set the value to 0.</p>
 <pre><code class="language-toml">[build]
 error_count_limit = 10
+</code></pre>
+<h2 id="the-incremental-field"><a class="header" href="#the-incremental-field">The <code>incremental</code> field</a></h2>
+<p>If <code>incremental</code> is set to <code>true</code>, Veryl compiler re-generates only files related outdated files.
+The default value is <code>false</code>.</p>
+<pre><code class="language-toml">[build]
+incremental = true
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="format"><a class="header" href="#format">Format</a></h1>
 <p><code>[format]</code> section specifies the configuration for formatter like below:</p>
