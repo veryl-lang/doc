@@ -2,7 +2,7 @@ ace.define("ace/mode/veryl_highlight_rules",["require","exports","module","ace/l
 var oop = require("../lib/oop");
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 var VerylHighlightRules = function () {
-    var keywords = "case|default|else|if_reset|if|inside|outside|switch|converse|inout|input|output|same|false|lsb|msb|true|for|in|repeat|rev|step|alias|always_comb|always_ff|assign|as|bind|connect|const|final|import|initial|inst|let|param|return|break|type|var|embed|enum|function|include|interface|modport|module|package|proto|pub|struct|union|unsafe|bit|bool|clock|clock_posedge|clock_negedge|f32|f64|i8|i16|i32|i64|logic|reset|reset_async_high|reset_async_low|reset_sync_high|reset_sync_low|signed|string|tri|u8|u16|u32|u64";
+    var keywords = "case|default|else|if_reset|if|inside|outside|switch|converse|inout|input|output|same|false|lsb|msb|true|for|in|repeat|rev|step|alias|always_comb|always_ff|assign|as|bind|block|connect|const|final|import|initial|inst|let|param|return|break|type|var|embed|enum|function|include|interface|modport|module|package|proto|pub|struct|union|unsafe|bit|bbool|lbool|clock|clock_posedge|clock_negedge|f32|f64|i8|i16|i32|i64|logic|reset|reset_async_high|reset_async_low|reset_sync_high|reset_sync_low|signed|string|tri|u8|u16|u32|u64";
     var keywordMapper = this.createKeywordMapper({
         "keyword": keywords,
     }, "identifier", false);
@@ -80,4 +80,3 @@ exports.Mode = Mode;
                         }
                     });
                 })();
-            

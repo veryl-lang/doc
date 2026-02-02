@@ -261,7 +261,7 @@ The following syntex definition of parol is formal syntax.</p>
 
 // Longest match should be first
 
-CommentsTerm          : &lt;INITIAL, Generic, EmbedHeader,                            Attr&gt;"(?:(?:(?://.*(?:\r\n|\r|\n)?)|(?:(?ms)/\*/?([^/]|[^*]/)*\*/))\s*)+"                  : Token;
+CommentsTerm          : &lt;INITIAL, Generic, EmbedHeader,                            Attr&gt;"(?:(?:(?://.*(?:\r\n|\r|\n))|(?:(?ms)/\*/?([^/]|[^*]/)*\*/))\s*)+"                   : Token;
 StringLiteralTerm     : &lt;INITIAL         ,                                         Attr&gt;"\u{0022}(?:\\[\u{0022}\\/bfnrt]|u[0-9a-fA-F]{4}|[^\u{0022}\\\u0000-\u001F])*\u{0022}": Token;
 ExponentTerm          : &lt;INITIAL, Generic                                              &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*[eE][+-]?[0-9]+(?:_[0-9]+)*/                   : Token;
 FixedPointTerm        : &lt;INITIAL, Generic                                              &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*/                                              : Token;
@@ -324,7 +324,9 @@ AssignTerm            : &lt;INITIAL, Generic                                    
 AsTerm                : &lt;INITIAL, Generic                                             &gt;'as'                                                                                  : Token; // Keyword: Statement
 BindTerm              : &lt;INITIAL, Generic                                             &gt;'bind'                                                                                : Token; // Keyword: Statement
 BitTerm               : &lt;INITIAL, Generic                                             &gt;'bit'                                                                                 : Token; // Keyword: Type
-BoolTerm              : &lt;INITIAL, Generic                                             &gt;'bool'                                                                                : Token; // Keyword: Type
+BlockTerm             : &lt;INITIAL, Generic                                             &gt;'block'                                                                               : Token; // Keyword: Statement
+BBoolTerm             : &lt;INITIAL, Generic                                             &gt;'bbool'                                                                               : Token; // Keyword: Type
+LBoolTerm             : &lt;INITIAL, Generic                                             &gt;'lbool'                                                                               : Token; // Keyword: Type
 CaseTerm              : &lt;INITIAL, Generic                                             &gt;'case'                                                                                : Token; // Keyword: Conditional
 ClockTerm             : &lt;INITIAL, Generic                                             &gt;'clock'                                                                               : Token; // Keyword: Type
 ClockPosedgeTerm      : &lt;INITIAL, Generic                                             &gt;'clock_posedge'                                                                       : Token; // Keyword: Type
@@ -470,7 +472,9 @@ AsToken            : AsTerm            : Token Comments;
 AssignToken        : AssignTerm        : Token Comments;
 BindToken          : BindTerm          : Token Comments;
 BitToken           : BitTerm           : Token Comments;
-BoolToken          : BoolTerm          : Token Comments;
+BlockToken         : BlockTerm         : Token Comments;
+BBoolToken         : BBoolTerm         : Token Comments;
+LBoolToken         : LBoolTerm         : Token Comments;
 CaseToken          : CaseTerm          : Token Comments;
 ClockToken         : ClockTerm         : Token Comments;
 ClockPosedgeToken  : ClockPosedgeTerm  : Token Comments;
@@ -622,7 +626,9 @@ As            : AsToken            : VerylToken;
 Assign        : AssignToken        : VerylToken;
 Bind          : BindToken          : VerylToken;
 Bit           : BitToken           : VerylToken;
-Bool          : BoolToken          : VerylToken;
+Block         : BlockToken         : VerylToken;
+BBool         : BBoolToken         : VerylToken;
+LBool         : LBoolToken         : VerylToken;
 Break         : BreakToken         : VerylToken;
 Case          : CaseToken          : VerylToken;
 Clock         : ClockToken         : VerylToken;
@@ -829,7 +835,7 @@ RangeOperator: DotDot
 // ScalarType / ArrayType / CastingType
 // ----------------------------------------------------------------------------
 
-FixedType: U8 | U16 | U32 | U64 | I8 | I16| I32 | I64 | F32 | F64 | Bool | Strin;
+FixedType: U8 | U16 | U32 | U64 | I8 | I16| I32 | I64 | F32 | F64 | BBool | LBool | Strin;
 
 VariableType: Clock
             | ClockPosedge
@@ -862,7 +868,8 @@ CastingType: U8
            | I64
            | F32
            | F64
-           | Bool
+           | BBool
+           | LBool
            | Clock
            | ClockPosedge
            | ClockNegedge
@@ -888,9 +895,9 @@ ClockDomain: Quote Identifier;
 
 StatementBlock: LBrace { StatementBlockGroup } RBrace;
 
-StatementBlockGroup: { Attribute } ( LBrace { StatementBlockGroup } RBrace | StatementBlockItem );
+StatementBlockGroup: { Attribute } ( Block LBrace { StatementBlockGroup } RBrace | StatementBlockItem );
 
-StatementBlockItem: VarDeclaration | LetStatement | ConstDeclaration | Statement;
+StatementBlockItem: VarDeclaration | LetStatement | ConstDeclaration | Statement | ConcatenationAssignment;
 
 Statement: IdentifierStatement
          | IfStatement
@@ -905,6 +912,8 @@ Statement: IdentifierStatement
 LetStatement: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Semicolon;
 
 IdentifierStatement: ExpressionIdentifier ( FunctionCall | Assignment ) Semicolon;
+
+ConcatenationAssignment: LBrace AssignConcatenationList RBrace Equ Expression Semicolon;
 
 Assignment: ( Equ | AssignmentOperator | DiamondOperator ) Expression;
 

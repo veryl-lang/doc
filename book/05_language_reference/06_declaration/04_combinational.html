@@ -218,6 +218,16 @@
     }
 }
 </code></pre>
+<p>Concatenation can be used as the left hand side in <code>always_comb</code> declaration.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        {a, b} = 1;
+    }
+}
+</code></pre>
 
                     </main>
 

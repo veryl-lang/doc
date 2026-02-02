@@ -732,6 +732,9 @@ module ModuleB {
 <h3 id="vim--neovim"><a class="header" href="#vim--neovim">Vim / Neovim</a></h3>
 <p>Vim / Neovim 向けに Veryl プラグインが提供されています。プラグインはファイルタイプの検出とシンタックスハイライトを提供します。プラグインのインストールと言語サーバの組み込みは以下の URL を参照してください。</p>
 <p><a href="https://github.com/veryl-lang/veryl.vim">Vim / Neovim plugin</a></p>
+<h3 id="zed"><a class="header" href="#zed">Zed</a></h3>
+<p><a href="https://zed.dev/">Zed</a> 向けに Veryl 拡張が提供されています。拡張はファイルタイプの検出とシンタックスハイライト、言語サーバの組み込みを提供します。拡張パネルから “Veryl” で検索するか、以下の URL からインストールしてください。</p>
+<p><a href="https://zed.dev/extensions/veryl">Veryl extension for Zed</a></p>
 <h3 id="そのほかのエディタ"><a class="header" href="#そのほかのエディタ">そのほかのエディタ</a></h3>
 <p>Veryl は言語サーバを提供しているので、言語サーバをサポートしているエディタ（例えば Emacs）であれば利用できます。</p>
 <h2 id="シェル補完"><a class="header" href="#シェル補完">シェル補完</a></h2>
@@ -1258,10 +1261,12 @@ a = 1 || 1;
 }
 </code></pre>
 <h2 id="ブーリアン型"><a class="header" href="#ブーリアン型">ブーリアン型</a></h2>
-<p><code>bool</code> は ブーリアンを表す <code>logic&lt;1&gt;</code> の型エイリアスです。<code>1'b1</code> と <code>1'b0</code> を表す <code>true</code> と <code>false</code> も使用できます。</p>
+<p><code>bbool</code> と <code>lbool</code> は ブーリアンを表す <code>bit&lt;1&gt;</code> と <code>logic&lt;1&gt;</code> の型エイリアスです。<code>1'b1</code> と <code>1'b0</code> を表す <code>true</code> と <code>false</code> も使用できます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    const a: bool = true;
-    const b: bool = false;
+    const A: bbool = true;
+    const B: bbool = false;
+    const C: lbool = true;
+    const D: lbool = false;
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ユーザ定義型"><a class="header" href="#ユーザ定義型">ユーザ定義型</a></h1>
@@ -1801,6 +1806,28 @@ module ModuleA {
 <pre><code class="language-toml">[build]
 emit_cond_type = true
 </code></pre>
+<h2 id="concatenation-in-left-hand-side"><a class="header" href="#concatenation-in-left-hand-side">Concatenation in left-hand side</a></h2>
+<p>If you want to use bit concatenation in left-hand of case/switch, surrounding <code>{}</code> is necessary, even if the statement is single.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a: logic&lt;10&gt; = 1;
+    var b: logic&lt;10&gt;;
+    var c: logic&lt;10&gt;;
+
+    always_comb {
+        case a {
+            // これは禁止
+            //0: {b, c} = 1;
+            //default: {b, c} = 2;
+            0: {
+                {b, c} = 1;
+            }
+            default: {
+                {b, c} = 2;
+            }
+        }
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="for"><a class="header" href="#for">for</a></h1>
 <p><code>for</code> 文は繰り返しを表します。<code>in</code> キーワードの前にループ変数を、後に<a href="05_language_reference/05_statement/../04_expression/07_range.html">範囲</a>を書きます。</p>
 <p><code>break</code> を使ってループを中断することもできます。</p>
@@ -1926,6 +1953,18 @@ emit_cond_type = true
     }
 }
 </code></pre>
+<p><code>always_ff</code> 宣言の左辺には連結も使用することができます。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_ff {
+        {a, b} = 1;
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="組み合わせ回路"><a class="header" href="#組み合わせ回路">組み合わせ回路</a></h1>
 <p><code>always_comb</code> で代入される変数は組み合わせ回路を意味します。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -1934,6 +1973,16 @@ emit_cond_type = true
 
     always_comb {
         b = a + 1;
+    }
+}
+</code></pre>
+<p><code>always_comb</code> 宣言の左辺には連結も使用することができます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        {a, b} = 1;
     }
 }
 </code></pre>
@@ -2042,9 +2091,10 @@ module ModuleA {
 </code></pre>
 <p>指定可能なリント名は以下の通りです。</p>
 <ul>
-<li>unused_variable</li>
-<li>missing_reset_statement</li>
-<li>missing_port</li>
+<li><code>unused_variable</code></li>
+<li><code>unassign_variable</code></li>
+<li><code>missing_reset_statement</code></li>
+<li><code>missing_port</code></li>
 </ul>
 <h2 id="ifdefifndefelsifelse-アトリビュート"><a class="header" href="#ifdefifndefelsifelse-アトリビュート"><code>ifdef</code>/<code>ifndef</code>/<code>elsif</code>/<code>else</code> アトリビュート</a></h2>
 <p><code>ifdef</code> と <code>ifndef</code> アトリビュートは定義された値によってコードブロックを有効にするかどうかを制御するために使用することができます。さらに、<code>ifdef</code> と <code>ifndef</code> のついたコードブロックに続けてオプションとして <code>elsif</code> と <code>else</code> アトリビュートの付いたブロックを書くこともできます。</p>
@@ -2215,7 +2265,9 @@ module ModuleB {
     }
 
     for i in rev 0..4 :g_b {
-        assign b[i - 1] = b[i];
+        if i != 0 :g {
+            assign b[i - 1] = b[i];
+        }
     }
 }
 </code></pre>
@@ -2355,6 +2407,39 @@ module ModuleA (
     }
     always_comb {
         slv_if1 &lt;&gt; bus_if1.master;
+    }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ブロック"><a class="header" href="#ブロック">ブロック</a></h1>
+<p><code>always_comb</code> と <code>always_ff</code> では、<code>block</code> キーワードによって複数の文をグループ化することができます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        block {
+            a = 1;
+            b = 2;
+        }
+    }
+}
+</code></pre>
+<p><code>block</code> 宣言は複数の文にアトリビュートを付与するために利用できます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        #[ifdef(A)]
+        block {
+            a = 1;
+            b = 2;
+        }
+        #[else]
+        block {
+            a = 3;
+            b = 4;
+        }
     }
 }
 </code></pre>
@@ -3301,15 +3386,25 @@ instance_depth_limit = 256
 <pre><code class="language-toml">[build]
 instance_total_limit = 256
 </code></pre>
-<h2 id="incremental-フィールド"><a class="header" href="#incremental-フィールド"><code>incremental</code> フィールド</a></h2>
-<p><code>incremental</code> が <code>true</code> のとき、Verylコンパイラは更新されたファイルに関連したファイルのみを再生成します。デフォルト値は <code>false</code> です。</p>
+<h2 id="evaluate_size_limit-フィールド"><a class="header" href="#evaluate_size_limit-フィールド"><code>evaluate_size_limit</code> フィールド</a></h2>
+<p><code>evaluate_size_limit</code> はセマンティックアナライザーによって評価される最大サイズです。デフォルト値は 1048576 です。この値は <code>bit</code> / <code>logic</code> のサイズやループ回数などに適用されます。</p>
 <pre><code class="language-toml">[build]
-incremental = true
+evaluate_size_limit = 256
+</code></pre>
+<h2 id="evaluate_array_limit-フィールド"><a class="header" href="#evaluate_array_limit-フィールド"><code>evaluate_array_limit</code> フィールド</a></h2>
+<p><code>evaluate_array_limit</code> は未割り当ての追跡を有効にする配列の最大サイズです。デフォルト値は 128 です。このサイズを超える配列は未割り当てチェックの対象となりません。</p>
+<pre><code class="language-toml">[build]
+evaluate_size_limit = 256
 </code></pre>
 <h2 id="error_count_limit-フィールド"><a class="header" href="#error_count_limit-フィールド"><code>error_count_limit</code> フィールド</a></h2>
 <p>表示するエラーメッセージの最大数を指定します。全てのメッセージを表示するにはフィールドを設定しないか、0を指定します。</p>
 <pre><code class="language-toml">[build]
 error_count_limit = 10
+</code></pre>
+<h2 id="incremental-フィールド"><a class="header" href="#incremental-フィールド"><code>incremental</code> フィールド</a></h2>
+<p><code>incremental</code> が <code>true</code> のとき、Verylコンパイラは更新されたファイルに関連したファイルのみを再生成します。デフォルト値は <code>false</code> です。</p>
+<pre><code class="language-toml">[build]
+incremental = true
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="format"><a class="header" href="#format">Format</a></h1>
 <p><code>[format]</code> セクションはフォーマッタの設定です。</p>
@@ -4043,7 +4138,7 @@ fmt:
 
 // Longest match should be first
 
-CommentsTerm          : &lt;INITIAL, Generic, EmbedHeader,                            Attr&gt;"(?:(?:(?://.*(?:\r\n|\r|\n)?)|(?:(?ms)/\*/?([^/]|[^*]/)*\*/))\s*)+"                  : Token;
+CommentsTerm          : &lt;INITIAL, Generic, EmbedHeader,                            Attr&gt;"(?:(?:(?://.*(?:\r\n|\r|\n))|(?:(?ms)/\*/?([^/]|[^*]/)*\*/))\s*)+"                   : Token;
 StringLiteralTerm     : &lt;INITIAL         ,                                         Attr&gt;"\u{0022}(?:\\[\u{0022}\\/bfnrt]|u[0-9a-fA-F]{4}|[^\u{0022}\\\u0000-\u001F])*\u{0022}": Token;
 ExponentTerm          : &lt;INITIAL, Generic                                              &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*[eE][+-]?[0-9]+(?:_[0-9]+)*/                   : Token;
 FixedPointTerm        : &lt;INITIAL, Generic                                              &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*/                                              : Token;
@@ -4106,7 +4201,9 @@ AssignTerm            : &lt;INITIAL, Generic                                    
 AsTerm                : &lt;INITIAL, Generic                                             &gt;'as'                                                                                  : Token; // Keyword: Statement
 BindTerm              : &lt;INITIAL, Generic                                             &gt;'bind'                                                                                : Token; // Keyword: Statement
 BitTerm               : &lt;INITIAL, Generic                                             &gt;'bit'                                                                                 : Token; // Keyword: Type
-BoolTerm              : &lt;INITIAL, Generic                                             &gt;'bool'                                                                                : Token; // Keyword: Type
+BlockTerm             : &lt;INITIAL, Generic                                             &gt;'block'                                                                               : Token; // Keyword: Statement
+BBoolTerm             : &lt;INITIAL, Generic                                             &gt;'bbool'                                                                               : Token; // Keyword: Type
+LBoolTerm             : &lt;INITIAL, Generic                                             &gt;'lbool'                                                                               : Token; // Keyword: Type
 CaseTerm              : &lt;INITIAL, Generic                                             &gt;'case'                                                                                : Token; // Keyword: Conditional
 ClockTerm             : &lt;INITIAL, Generic                                             &gt;'clock'                                                                               : Token; // Keyword: Type
 ClockPosedgeTerm      : &lt;INITIAL, Generic                                             &gt;'clock_posedge'                                                                       : Token; // Keyword: Type
@@ -4252,7 +4349,9 @@ AsToken            : AsTerm            : Token Comments;
 AssignToken        : AssignTerm        : Token Comments;
 BindToken          : BindTerm          : Token Comments;
 BitToken           : BitTerm           : Token Comments;
-BoolToken          : BoolTerm          : Token Comments;
+BlockToken         : BlockTerm         : Token Comments;
+BBoolToken         : BBoolTerm         : Token Comments;
+LBoolToken         : LBoolTerm         : Token Comments;
 CaseToken          : CaseTerm          : Token Comments;
 ClockToken         : ClockTerm         : Token Comments;
 ClockPosedgeToken  : ClockPosedgeTerm  : Token Comments;
@@ -4404,7 +4503,9 @@ As            : AsToken            : VerylToken;
 Assign        : AssignToken        : VerylToken;
 Bind          : BindToken          : VerylToken;
 Bit           : BitToken           : VerylToken;
-Bool          : BoolToken          : VerylToken;
+Block         : BlockToken         : VerylToken;
+BBool         : BBoolToken         : VerylToken;
+LBool         : LBoolToken         : VerylToken;
 Break         : BreakToken         : VerylToken;
 Case          : CaseToken          : VerylToken;
 Clock         : ClockToken         : VerylToken;
@@ -4611,7 +4712,7 @@ RangeOperator: DotDot
 // ScalarType / ArrayType / CastingType
 // ----------------------------------------------------------------------------
 
-FixedType: U8 | U16 | U32 | U64 | I8 | I16| I32 | I64 | F32 | F64 | Bool | Strin;
+FixedType: U8 | U16 | U32 | U64 | I8 | I16| I32 | I64 | F32 | F64 | BBool | LBool | Strin;
 
 VariableType: Clock
             | ClockPosedge
@@ -4644,7 +4745,8 @@ CastingType: U8
            | I64
            | F32
            | F64
-           | Bool
+           | BBool
+           | LBool
            | Clock
            | ClockPosedge
            | ClockNegedge
@@ -4670,9 +4772,9 @@ ClockDomain: Quote Identifier;
 
 StatementBlock: LBrace { StatementBlockGroup } RBrace;
 
-StatementBlockGroup: { Attribute } ( LBrace { StatementBlockGroup } RBrace | StatementBlockItem );
+StatementBlockGroup: { Attribute } ( Block LBrace { StatementBlockGroup } RBrace | StatementBlockItem );
 
-StatementBlockItem: VarDeclaration | LetStatement | ConstDeclaration | Statement;
+StatementBlockItem: VarDeclaration | LetStatement | ConstDeclaration | Statement | ConcatenationAssignment;
 
 Statement: IdentifierStatement
          | IfStatement
@@ -4687,6 +4789,8 @@ Statement: IdentifierStatement
 LetStatement: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Semicolon;
 
 IdentifierStatement: ExpressionIdentifier ( FunctionCall | Assignment ) Semicolon;
+
+ConcatenationAssignment: LBrace AssignConcatenationList RBrace Equ Expression Semicolon;
 
 Assignment: ( Equ | AssignmentOperator | DiamondOperator ) Expression;
 

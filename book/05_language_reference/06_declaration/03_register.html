@@ -248,6 +248,18 @@ The actual porality and synchronisity can be configured through <code>[build]</c
     }
 }
 </code></pre>
+<p>Concatenation can be used as the left hand side in <code>always_ff</code> declaration.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_ff {
+        {a, b} = 1;
+    }
+}
+</code></pre>
 
                     </main>
 

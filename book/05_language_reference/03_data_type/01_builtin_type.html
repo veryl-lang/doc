@@ -292,11 +292,13 @@ Variable of <code>type</code> can be defined as <code>param</code> or <code>cons
 }
 </code></pre>
 <h2 id="boolean-type"><a class="header" href="#boolean-type">Boolean type</a></h2>
-<p><code>bool</code> is a type alias of <code>logic&lt;1&gt;</code> to express boolean.
+<p><code>bbool</code> and <code>lbool</code> are type aliases of <code>bit&lt;1&gt;</code> and <code>logic&lt;1&gt;</code> to express boolean.
 <code>true</code> and <code>false</code> literal which express <code>1'b1</code> and <code>1'b0</code> can be used.</p>
 <pre><code class="language-veryl playground">module ModuleA {
-    const a: bool = true;
-    const b: bool = false;
+    const A: bbool = true;
+    const B: bbool = false;
+    const C: lbool = true;
+    const D: lbool = false;
 }
 </code></pre>
 

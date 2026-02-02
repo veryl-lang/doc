@@ -218,6 +218,16 @@
     }
 }
 </code></pre>
+<p><code>always_comb</code> 宣言の左辺には連結も使用することができます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        {a, b} = 1;
+    }
+}
+</code></pre>
 
                     </main>
 

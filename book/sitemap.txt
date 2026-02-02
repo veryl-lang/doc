@@ -93,6 +93,7 @@ https://doc.veryl-lang.org/book/05_language_reference/06_declaration/10_instanti
 https://doc.veryl-lang.org/book/05_language_reference/06_declaration/11_named_block.html
 https://doc.veryl-lang.org/book/05_language_reference/06_declaration/12_import_export.html
 https://doc.veryl-lang.org/book/05_language_reference/06_declaration/13_connect.html
+https://doc.veryl-lang.org/book/05_language_reference/06_declaration/14_block.html
 https://doc.veryl-lang.org/book/05_language_reference/14_generics/01_default_parameter.html
 https://doc.veryl-lang.org/book/05_language_reference/14_generics/02_prototype.html
 https://doc.veryl-lang.org/book/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.html
@@ -179,6 +180,7 @@ https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/10_insta
 https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/11_named_block.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/12_import_export.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/13_connect.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/14_block.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/14_generics/01_default_parameter.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/14_generics/02_prototype.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.html

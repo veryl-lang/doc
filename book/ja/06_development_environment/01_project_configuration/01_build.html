@@ -348,15 +348,25 @@ instance_depth_limit = 256
 <pre><code class="language-toml">[build]
 instance_total_limit = 256
 </code></pre>
-<h2 id="incremental-フィールド"><a class="header" href="#incremental-フィールド"><code>incremental</code> フィールド</a></h2>
-<p><code>incremental</code> が <code>true</code> のとき、Verylコンパイラは更新されたファイルに関連したファイルのみを再生成します。デフォルト値は <code>false</code> です。</p>
+<h2 id="evaluate_size_limit-フィールド"><a class="header" href="#evaluate_size_limit-フィールド"><code>evaluate_size_limit</code> フィールド</a></h2>
+<p><code>evaluate_size_limit</code> はセマンティックアナライザーによって評価される最大サイズです。デフォルト値は 1048576 です。この値は <code>bit</code> / <code>logic</code> のサイズやループ回数などに適用されます。</p>
 <pre><code class="language-toml">[build]
-incremental = true
+evaluate_size_limit = 256
+</code></pre>
+<h2 id="evaluate_array_limit-フィールド"><a class="header" href="#evaluate_array_limit-フィールド"><code>evaluate_array_limit</code> フィールド</a></h2>
+<p><code>evaluate_array_limit</code> は未割り当ての追跡を有効にする配列の最大サイズです。デフォルト値は 128 です。このサイズを超える配列は未割り当てチェックの対象となりません。</p>
+<pre><code class="language-toml">[build]
+evaluate_size_limit = 256
 </code></pre>
 <h2 id="error_count_limit-フィールド"><a class="header" href="#error_count_limit-フィールド"><code>error_count_limit</code> フィールド</a></h2>
 <p>表示するエラーメッセージの最大数を指定します。全てのメッセージを表示するにはフィールドを設定しないか、0を指定します。</p>
 <pre><code class="language-toml">[build]
 error_count_limit = 10
+</code></pre>
+<h2 id="incremental-フィールド"><a class="header" href="#incremental-フィールド"><code>incremental</code> フィールド</a></h2>
+<p><code>incremental</code> が <code>true</code> のとき、Verylコンパイラは更新されたファイルに関連したファイルのみを再生成します。デフォルト値は <code>false</code> です。</p>
+<pre><code class="language-toml">[build]
+incremental = true
 </code></pre>
 
                     </main>
