@@ -1,0 +1,329 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head prefix="og: http://ogp.me/ns#">
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Installation - The Veryl Hardware Description Language</title>
+
+
+        <!-- Custom HTML head -->
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NXW2P6CCF3"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+        
+            gtag('config', 'G-NXW2P6CCF3');
+        </script>
+        
+        <script>
+            (function () {
+                // See these pages for details:
+                // https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
+                // https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics
+        
+                function gen_canonical_href(lang) {
+                    let base = "https://doc.veryl-lang.org/book";
+                    let canonical_href;
+                    if (lang == "en") {
+                        canonical_href = `${base}/03_getting_started/01_installation.md`;
+                    } else {
+                        canonical_href = `${base}/${lang}/03_getting_started/01_installation.md`;
+                    }
+                    canonical_href = canonical_href.slice(0, -"md".length) + "html";
+                    if (canonical_href.endsWith("/index.html")) {
+                        canonical_href = canonical_href.slice(0, -"index.html".length);
+                    }
+                    return canonical_href;
+                }
+        
+                const canonical_href = gen_canonical_href("en");
+
+                let link = document.createElement("link");
+                link.rel = "canonical";
+                link.href = canonical_href;
+                document.head.appendChild(link);
+        
+                const langs = ["en", "ja"];
+                for (const lang of langs) {
+                    const canonical_href = gen_canonical_href(lang);
+        
+                    let link = document.createElement("link");
+                    link.rel = "alternate";
+                    link.hreflang = lang;
+                    link.href = canonical_href;
+                    document.head.appendChild(link);
+                }
+            })()
+        </script>
+        
+        <meta property="og:url" content="https://github.com/veryl-lang/veryl" />
+        <meta property="og:title" content="Veryl: A Modern Hardware Description Language" />
+        <meta property="og:description" content="Veryl is a hardware description language which is designed as a SystemVerilog alternative." />
+        <meta property="og:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/css/language-picker.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Veryl Hardware Description Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<p>Veryl can be intalled through the official toolchain installer <code>verylup</code>.
+We recommend to use <code>verylup</code> because it provides some usefule features like toolchain update.</p>
+<blockquote>
+<p>Note: If you want install on an enviromnent without internet access, you can use <a href="../06_development_environment/13_verylup.html#offline-installation">offline installation</a>.</p>
+</blockquote>
+<h2 id="requirement"><a class="header" href="#requirement">Requirement</a></h2>
+<p>Veryl uses <code>git</code> command internally. Please confirm <code>git</code> can be launched.</p>
+<h2 id="install-verylup"><a class="header" href="#install-verylup">Install verylup</a></h2>
+<h3 id="download-binary"><a class="header" href="#download-binary">Download binary</a></h3>
+<p>Download from <a href="https://github.com/veryl-lang/verylup/releases/latest">release page</a>, and extract to the directory in <code>PATH</code>.</p>
+<h3 id="cargo"><a class="header" href="#cargo">Cargo</a></h3>
+<p>You can install with <a href="https://crates.io/crates/verylup">cargo</a>.</p>
+<pre><code>cargo install verylup
+</code></pre>
+<h2 id="setup-verylup"><a class="header" href="#setup-verylup">Setup verylup</a></h2>
+<p>After installing verylup, the following command is required once at first.
+It downloads the latest toolchain and creates <code>veryl</code> and <code>veryl-ls</code> command at the same location as verylup.</p>
+<pre><code>verylup setup
+</code></pre>
+<p>Now <code>veryl</code> command can be used!</p>
+<h2 id="editor-integration"><a class="header" href="#editor-integration">Editor integration</a></h2>
+<p><a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code">Visual Studio Code</a> and <a href="https://github.com/vim/vim">Vim</a> / <a href="https://neovim.io">Neovim</a> are supported officially.</p>
+<h3 id="visual-studio-code"><a class="header" href="#visual-studio-code">Visual Studio Code</a></h3>
+<p>For Visual Studio Code, Veryl extension is provided.
+The extension provides file type detection, syntex highlight and language server integration.
+You can install it by searching “Veryl” in extension panel or the following URL.</p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=dalance.vscode-veryl">Veryl extension for Visual Studio Code</a></p>
+<h3 id="vim--neovim"><a class="header" href="#vim--neovim">Vim / Neovim</a></h3>
+<p>For Vim / Neovim, Veryl plugin is provided.
+The plugin provides file type detection, syntex highlight.
+There are some instructions for plugin installation and language server integration in the following URL.</p>
+<p><a href="https://github.com/veryl-lang/veryl.vim">Vim / Neovim plugin</a></p>
+<h3 id="zed"><a class="header" href="#zed">Zed</a></h3>
+<p>For <a href="https://zed.dev/">Zed</a>, Veryl extension is provided.
+The extension provides file type detection, syntex highlight and language server integration.
+You can install it by searching “Veryl” in extension panel or the following URL.</p>
+<p><a href="https://zed.dev/extensions/veryl">Veryl extension for Zed</a></p>
+<h3 id="other-editors"><a class="header" href="#other-editors">Other Editors</a></h3>
+<p>Veryl provides language server. So other editors supporting language server (ex. Emacs) can use it.</p>
+<h2 id="shell-completion"><a class="header" href="#shell-completion">Shell Completion</a></h2>
+<p>Shell completion script for <code>veryl</code> and <code>verylup</code> is provided through <code>verylup completion</code>.
+For example, the following command generates completion script for zsh.</p>
+<pre><code>verylup completion zsh veryl   &gt; _veryl
+verylup completion zsh verylup &gt; _verylup
+</code></pre>
+<p>Supported shells are below:</p>
+<ul>
+<li>Bash</li>
+<li>Elvish</li>
+<li>Fish</li>
+<li>PowerShell</li>
+<li>Zsh</li>
+</ul>
+<p>Please refer the documentation of each shell for usage of generated scripts.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../03_getting_started.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../03_getting_started/02_hello_world.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../03_getting_started.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../03_getting_started/02_hello_world.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+        <script type="module">
+            import init, {build, format} from "https://doc.veryl-lang.org/nightly/playground/pkg/veryl_wasm.js";
+            init().then(() => {});
+            window.build = build;
+        </script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mode-veryl.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../theme/language-picker.js"></script>
+
+
+    </div>
+    </body>
+</html>
