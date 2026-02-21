@@ -74,10 +74,10 @@ export function set_hook() {
 function __wbg_get_imports() {
     const import0 = {
         __proto__: null,
-        __wbg___wbindgen_throw_be289d5034ed271b: function(arg0, arg1) {
+        __wbg___wbindgen_throw_83ebd457a191bc2a: function(arg0, arg1) {
             throw new Error(getStringFromWasm0(arg0, arg1));
         },
-        __wbg_error_7534b8e9a36f1ab4: function(arg0, arg1) {
+        __wbg_error_a6fa202b58aa1cd3: function(arg0, arg1) {
             let deferred0_0;
             let deferred0_1;
             try {
@@ -88,11 +88,11 @@ function __wbg_get_imports() {
                 wasm.__wbindgen_export(deferred0_0, deferred0_1, 1);
             }
         },
-        __wbg_new_8a6f238a6ece86ea: function() {
+        __wbg_new_227d7c05414eb861: function() {
             const ret = new Error();
             return addHeapObject(ret);
         },
-        __wbg_stack_0ed75d68575b0f3c: function(arg0, arg1) {
+        __wbg_stack_3b0d974bbf31e44f: function(arg0, arg1) {
             const ret = getObject(arg1).stack;
             const ptr1 = passStringToWasm0(ret, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
             const len1 = WASM_VECTOR_LEN;
@@ -123,7 +123,7 @@ function addHeapObject(obj) {
 }
 
 function dropObject(idx) {
-    if (idx < 132) return;
+    if (idx < 1028) return;
     heap[idx] = heap_next;
     heap_next = idx;
 }
@@ -151,7 +151,7 @@ function getUint8ArrayMemory0() {
 
 function getObject(idx) { return heap[idx]; }
 
-let heap = new Array(128).fill(undefined);
+let heap = new Array(1024).fill(undefined);
 heap.push(undefined, null, true, false);
 
 let heap_next = heap.length;
