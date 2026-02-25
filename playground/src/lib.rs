@@ -51,7 +51,7 @@ fn metadata() -> Metadata {
     Metadata {
         project: Project {
             name: "project".into(),
-            version: Version::parse("0.0.0").unwrap(),
+            version: Some(Version::parse("0.0.0").unwrap()),
             authors: vec![],
             description: None,
             license: None,
