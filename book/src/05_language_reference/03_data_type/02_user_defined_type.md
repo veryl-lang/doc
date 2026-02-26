@@ -8,9 +8,9 @@ It can contain some fields, and these fields can be access through `.` operator.
 ```veryl,playground
 module ModuleA {
     struct StructA {
-        member_a: logic    ,
-        member_b: logic<10>,
-        member_c: u32      ,
+        member_a: bit    ,
+        member_b: bit<10>,
+        member_c: u32    ,
     }
 
     var a: StructA;
