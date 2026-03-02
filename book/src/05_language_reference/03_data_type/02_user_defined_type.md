@@ -48,14 +48,25 @@ module A {
 }
 ```
 
-If the type of `enum` is omitted, it will be infered from the variants automatically.
+If the type of `enum` is omitted, `logic` is used as the default base type and its width will be inferred from the variants automatically.
+`logic<_>` or `bit<_>` can be used to specify the base type explicitly.
 
 ```veryl,playground
 module A {
+    // base type: logic
+    // width: 2
     enum EnumA {
         member_a,
         member_b,
         member_c = 3,
+    }
+
+    // base type: bit
+    // width: 3
+    enum EnumB: bit<_> {
+        member_d = 4,
+        member_e,
+        member_f,
     }
 }
 ```
