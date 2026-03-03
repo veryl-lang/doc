@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2026-02-27:01:11+09:00\n"
+"POT-Creation-Date: 2026-03-03T13:40:37+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -2380,17 +2380,60 @@ msgstr ""
 
 #: src/05_language_reference/03_data_type/02_user_defined_type.md:51
 msgid ""
-"If the type of `enum` is omitted, it will be infered from the variants "
-"automatically."
+"If the type of `enum` is omitted, `logic` is used as the default base type "
+"and its width will be inferred from the variants automatically. `logic<_>` "
+"or `bit<_>` can be used to specify the base type explicitly."
 msgstr ""
-"`enum` の型が省略されている場合、適切なサイズの型がバリアントから自動的に推定"
-"されます。"
+"`enum` の型が省略された場合、デフォルトの型として `logic` を使い、幅はバリアントから自動的に推論します。"
+"`logic<_>` と `bit<_>` は型のみ明示的に指定する場合に利用できます。"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:67
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:54
+msgid ""
+"```veryl,playground\n"
+"module A {\n"
+"    // base type: logic\n"
+"    // width: 2\n"
+"    enum EnumA {\n"
+"        member_a,\n"
+"        member_b,\n"
+"        member_c = 3,\n"
+"    }\n"
+"\n"
+"    // base type: bit\n"
+"    // width: 3\n"
+"    enum EnumB: bit<_> {\n"
+"        member_d = 4,\n"
+"        member_e,\n"
+"        member_f,\n"
+"    }\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module A {\n"
+"    // 型: logic\n"
+"    // 幅: 2\n"
+"    enum EnumA {\n"
+"        member_a,\n"
+"        member_b,\n"
+"        member_c = 3,\n"
+"    }\n"
+"\n"
+"    // 型: bit\n"
+"    // 幅: 3\n"
+"    enum EnumB: bit<_> {\n"
+"        member_d = 4,\n"
+"        member_e,\n"
+"        member_f,\n"
+"    }\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:78
 msgid "Enum Encoding"
 msgstr "列挙型エンコーディング"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:69
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:80
 msgid ""
 "By default, the value of each variant is assigned sequentially if it is "
 "omitted. If you want to specify value encoding, `#[enum_encoding]` attribute "
@@ -2400,23 +2443,23 @@ msgstr ""
 "の割り当てのエンコードを指定したい場合は、`#[enum_encoding]` アトリビュートを"
 "指定できます。使用できるエンコードは以下の通りです。"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:73
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:84
 msgid "`sequential`"
 msgstr "`sequential`"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:74
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:85
 msgid "`onehot`"
 msgstr "`onehot`"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:75
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:86
 msgid "`gray`"
 msgstr "`gray`"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:96
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:107
 msgid "Union"
 msgstr "ユニオン"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:98
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:109
 msgid ""
 "A Veryl `union` is a packed, untagged sum type and is transpiled to "
 "SystemVerilog's `packed union`. Each  union variant should have the same "
@@ -2426,13 +2469,13 @@ msgstr ""
 "にトランスパイルされます。ユニオンのそれぞれのバリアントの幅は同じでなければ"
 "なりません。"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:118
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:129
 #: src/05_language_reference/14_generics/02_prototype.md:137
 #: src/05_language_reference/14_generics/02_prototype.md:193
 msgid "Typedef"
 msgstr "型定義"
 
-#: src/05_language_reference/03_data_type/02_user_defined_type.md:120
+#: src/05_language_reference/03_data_type/02_user_defined_type.md:131
 msgid ""
 "The `type` keyword can be used to define a type alias to scalar or array "
 "types."
@@ -3835,13 +3878,13 @@ msgid ""
 "In `always_comb` and `always_ff`, `block` keyword can be used for grouping "
 "some statements."
 msgstr ""
-"`always_comb` と `always_ff` では、`block` キーワードによって複数の文をグループ化することができます。"
+"`always_comb` と `always_ff` では、`block` キーワードによって複数の文をグルー"
+"プ化することができます。"
 
 #: src/05_language_reference/06_declaration/14_block.md:19
 msgid ""
 "`block` declaration can be used to assign an attribute to some statements."
-msgstr ""
-"`block` 宣言は複数の文にアトリビュートを付与するために利用できます。"
+msgstr "`block` 宣言は複数の文にアトリビュートを付与するために利用できます。"
 
 #: src/05_language_reference/07_module.md:3
 msgid ""
@@ -5708,8 +5751,9 @@ msgid ""
 "analyzer. The default value is 1048576. This is applied to the size of `bit`/"
 "`logic`, loop count, and so on."
 msgstr ""
-"`evaluate_size_limit` はセマンティックアナライザーによって評価される最大サイズです。"
-"デフォルト値は 1048576 です。この値は `bit` / `logic` のサイズやループ回数などに適用されます。"
+"`evaluate_size_limit` はセマンティックアナライザーによって評価される最大サイ"
+"ズです。デフォルト値は 1048576 です。この値は `bit` / `logic` のサイズやルー"
+"プ回数などに適用されます。"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:235
 msgid "The `evaluate_array_limit` field"
@@ -5721,8 +5765,9 @@ msgid ""
 "unassigned. The default value is 128. The array having size over this limit "
 "is excluded from the targets of unassigned checking."
 msgstr ""
-"`evaluate_array_limit` は未割り当ての追跡を有効にする配列の最大サイズです。"
-"デフォルト値は 128 です。このサイズを超える配列は未割り当てチェックの対象となりません。"
+"`evaluate_array_limit` は未割り当ての追跡を有効にする配列の最大サイズです。デ"
+"フォルト値は 128 です。このサイズを超える配列は未割り当てチェックの対象となり"
+"ません。"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:245
 msgid "The `error_count_limit` field"
@@ -10206,6 +10251,13 @@ msgstr "unknown_port"
 #: src/07_appendix/02_semantic_error.md:55
 msgid "unused_variable"
 msgstr "unused_variable"
+
+#~ msgid ""
+#~ "If the type of `enum` is omitted, it will be infered from the variants "
+#~ "automatically."
+#~ msgstr ""
+#~ "`enum` の型が省略されている場合、適切なサイズの型がバリアントから自動的に"
+#~ "推定されます。"
 
 #~ msgid "This section contains configurations of test."
 #~ msgstr "このセクションはテストの設定です。"
