@@ -241,12 +241,22 @@ You can define `struct` data types within module and package declarations but no
     assign a = EnumA::member_a;
 }
 </code></pre>
-<p><code>enum</code> の型が省略されている場合、適切なサイズの型がバリアントから自動的に推定されます。</p>
+<p><code>enum</code> の型が省略された場合、デフォルトの型として <code>logic</code> を使い、幅はバリアントから自動的に推論します。<code>logic&lt;_&gt;</code> と <code>bit&lt;_&gt;</code> は型のみ明示的に指定する場合に利用できます。</p>
 <pre><code class="language-veryl playground">module A {
+    // 型: logic
+    // 幅: 2
     enum EnumA {
         member_a,
         member_b,
         member_c = 3,
+    }
+
+    // 型: bit
+    // 幅: 3
+    enum EnumB: bit&lt;_&gt; {
+        member_d = 4,
+        member_e,
+        member_f,
     }
 }
 </code></pre>
