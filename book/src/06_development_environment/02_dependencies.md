@@ -2,7 +2,7 @@
 
 If you want to add other Veryl projects to dependencies of your project, you can add them to `[dependencies]` section in `Veryl.toml`.
 The left hand side of entry is the project name of the dependency, and the right hand side is the source and version.
-`github` is a syntax sugger to refer a repository on GitHub. Instead of it, `git` with a full URL can be used.
+`github` is a syntax sugar to refer a repository on GitHub. Instead of it, `git` with a full URL can be used.
 
 ```toml
 [dependencies]

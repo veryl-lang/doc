@@ -3,7 +3,7 @@
 Variable declaration is started by `var` keyword.
 After `var`, variable name, `:`, and the type of the variable are followed.
 
-If there are unused variables, warning will be occured.
+If there are unused variables, warning will be occurred.
 Variable name starting with `_` means unused variable, and suppresses the warning.
 
 If you want to bind a value to a name at the declaration, `let` can be used instead of `var`.

@@ -10,8 +10,8 @@ The specified clock and reset should have `clock` / `reset` type and the witdh o
 `if_reset` is a special keyword which can be used in `always_ff`.
 It means reset condition of the register variable.
 If `if_reset` is used, `always_ff` must have reset variable.
-`if_reset` can be conceal reset porality and synchronisity.
-The actual porality and synchronisity can be configured through `[build]` section of `Veryl.toml`.
+`if_reset` can be conceal reset polarity and synchronicity.
+The actual polarity and synchronicity can be configured through `[build]` section of `Veryl.toml`.
 
 If there is a single clock and reset in the module, clock and reset specification can be omitted.
 
