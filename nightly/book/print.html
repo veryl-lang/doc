@@ -1297,6 +1297,23 @@ Multi-dimentional can be specified by <code>&lt;X, Y, Z,,,&gt;</code>.</p>
     let _h: i64 = 1;
 }
 </code></pre>
+<h2 id="positive-integer-type"><a class="header" href="#positive-integer-type">Positive integer type</a></h2>
+<p>There are some positive integer types:</p>
+<ul>
+<li><code>p8</code> : 8bit positive unsigned integer</li>
+<li><code>p16</code>: 16bit positive unsigned integer</li>
+<li><code>p32</code>: 32bit positive unsigned integer</li>
+<li><code>p64</code>: 64bit positive unsigned integer</li>
+</ul>
+<p>Positive integer types enforce compile-time validation that assigned values are greater than zero.
+Only positive literal values and expressions that evaluate to positive values are accepted.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    // let _a: p8  = 1;
+    // let _b: p16 = 100;
+    // let _c: p32 = 65536;
+    // let _d: p64 = 1000000;
+}
+</code></pre>
 <h2 id="floating-point-type"><a class="header" href="#floating-point-type">Floating point type</a></h2>
 <p>There are some floating point types:</p>
 <ul>
