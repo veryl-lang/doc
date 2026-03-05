@@ -214,10 +214,10 @@
 The available types are below:</p>
 <ul>
 <li><code>posedge</code> – positive edge</li>
-<li><code>negedge</code> – negetive edge</li>
+<li><code>negedge</code> – negative edge</li>
 </ul>
 <h2 id="the-reset_type-field"><a class="header" href="#the-reset_type-field">The <code>reset_type</code> field</a></h2>
-<p>The <code>reset_type</code> field specifies reset polarity and synchronisity.
+<p>The <code>reset_type</code> field specifies reset polarity and synchronicity.
 The available types are below:</p>
 <ul>
 <li><code>async_low</code> – asynchronous and active low</li>
@@ -235,7 +235,7 @@ The available types are below:</p>
 </ul>
 <h2 id="the-sources-field"><a class="header" href="#the-sources-field">The <code>sources</code> field</a></h2>
 <p>By default, the Veryl compiler collects and translate all <code>*.veryl</code> files which are visible from the project root.
-You can specify directries where the Veryl compiler collect files by using the <code>sources</code> field.</p>
+You can specify directories where the Veryl compiler collect files by using the <code>sources</code> field.</p>
 <pre><code class="language-toml">[build]
 sources = ["rtl/foo_module", "rtl/bar_module"]
 </code></pre>

@@ -256,7 +256,7 @@ formatting through the command line and formatting checks in CI are also possibl
 <video src="./img/format.mp4" autoplay loop muted>
 </video>
 <h2 id="integrated-test"><a class="header" href="#integrated-test">Integrated test</a></h2>
-<p>Test code written by SystemVerilog or <a href="https://www.cocotb.org">cocotb</a> can be embeded in Veryl code,
+<p>Test code written by SystemVerilog or <a href="https://www.cocotb.org">cocotb</a> can be embedded in Veryl code,
 it can be executed through <code>veryl test</code> command.</p>
 <pre><code class="language-veryl">#[test(test1)]
 embed (inline) sv{{{
@@ -348,10 +348,10 @@ endmodule
 <pre><code class="language-veryl">module ModuleA (
     i_clk_a: input  'a clock,
     i_dat_a: input  'a logic,
-    i_dat_a: output 'a logic,
+    o_dat_a: output 'a logic,
     i_clk_b: input  'b clock,
     i_dat_b: input  'b logic,
-    i_dat_b: output 'b logic,
+    o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
         assign o_dat_b = i_dat_a;
@@ -920,7 +920,7 @@ module ModuleA #(
 
     // always_ff statement with reset
     //   `always_ff` can take a mandatory clock and a optional reset
-    //   `if_reset` means `if (i_rst)`. This conceals reset porality
+    //   `if_reset` means `if (i_rst)`. This conceals reset polarity
     //   `()` of `if` is not required
     //   `=` in `always_ff` is non-blocking assignment
     always_ff (i_clk, i_rst) {
@@ -1049,7 +1049,7 @@ module ModuleA {
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="language-reference"><a class="header" href="#language-reference">Language Reference</a></h1>
-<p>In this chapter, we’ll discuss the lauguage definition of Veryl.</p>
+<p>In this chapter, we’ll discuss the language definition of Veryl.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="source-code-structure"><a class="header" href="#source-code-structure">Source Code Structure</a></h1>
 <p>Veryl’s source code is composed by some <code>module</code>, <code>interface</code> and <code>package</code>.</p>
 <pre><code class="language-veryl playground">module ModuleA {}
@@ -2027,7 +2027,7 @@ It can be used in <code>always_ff</code>, <code>always_comb</code> and function 
 <div style="break-before: page; page-break-before: always;"></div><h1 id="variable"><a class="header" href="#variable">Variable</a></h1>
 <p>Variable declaration is started by <code>var</code> keyword.
 After <code>var</code>, variable name, <code>:</code>, and the type of the variable are followed.</p>
-<p>If there are unused variables, warning will be occured.
+<p>If there are unused variables, warning will be occurred.
 Variable name starting with <code>_</code> means unused variable, and suppresses the warning.</p>
 <p>If you want to bind a value to a name at the declaration, <code>let</code> can be used instead of <code>var</code>.</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -2044,7 +2044,7 @@ Variable name starting with <code>_</code> means unused variable, and suppresses
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="parameter"><a class="header" href="#parameter">Parameter</a></h1>
-<p>Parameter can be declarated as the same as variable.
+<p>Parameter can be declared as the same as variable.
 <code>param</code> keyword can be used at module header, it can be overridden at instantiation.
 <code>const</code> keyword can be used in module, it can’t be overridden.</p>
 <pre><code class="language-veryl playground">module ModuleA #(
@@ -2062,8 +2062,8 @@ The specified clock and reset should have <code>clock</code> / <code>reset</code
 <p><code>if_reset</code> is a special keyword which can be used in <code>always_ff</code>.
 It means reset condition of the register variable.
 If <code>if_reset</code> is used, <code>always_ff</code> must have reset variable.
-<code>if_reset</code> can be conceal reset porality and synchronisity.
-The actual porality and synchronisity can be configured through <code>[build]</code> section of <code>Veryl.toml</code>.</p>
+<code>if_reset</code> can be conceal reset polarity and synchronicity.
+The actual polarity and synchronicity can be configured through <code>[build]</code> section of <code>Veryl.toml</code>.</p>
 <p>If there is a single clock and reset in the module, clock and reset specification can be omitted.</p>
 <pre><code class="language-veryl playground">module ModuleA (
     i_clk: input clock,
@@ -2820,7 +2820,7 @@ It depeneds on implementation (e.g. simulator, synthesizer) whether each symbols
 <p>By default, all top level items of a project (module, interface and package) are private.
 The “private” means they are not visible from other project.</p>
 <p><code>pub</code> keyword can be used to specify an item as public to other project.
-<code>veryl doc</code> will generate <a href="05_language_reference/../05_development_environment/09_documentation.html">documents</a> of public items only.</p>
+<code>veryl doc</code> will generate <a href="05_language_reference/../06_development_environment/10_documentation.html">documents</a> of public items only.</p>
 <pre><code class="language-veryl playground">pub module ModuleA {}
 
 pub interface InterfaceA {}
@@ -2902,7 +2902,7 @@ If <code>--wave</code> option is specified, waveforms are generated.</p>
 The top level module of the block must have the same name as the test name.</p>
 <p>The messages through <code>$info</code>, <code>$warning</code>, <code>$error</code> and <code>$fatal</code> system function are handled by Veryl compiler, and shown as exectution log.
 The calls of <code>$error</code> and <code>$fatal</code> are treated as test failure.</p>
-<p>The following example, a SystemVerilog source code embeded by <code>embed</code> declaration are marked as test.</p>
+<p>The following example, a SystemVerilog source code embedded by <code>embed</code> declaration are marked as test.</p>
 <pre><code class="language-veryl playground">#[test(test1)]
 embed (inline) sv{{{
     module test1;
@@ -2932,7 +2932,7 @@ The following items support generics:</p>
 <li>union</li>
 </ul>
 <p>Each generic definition has generic parameters (often an uppercase letter is used like <code>T</code>) which can be placed as identifier or expression in the definition.
-Generic parameters are declarated after item’s identifier with <code>::&lt;&gt;</code>.</p>
+Generic parameters are declared after item’s identifier with <code>::&lt;&gt;</code>.</p>
 <p>Each generic parameter should have generic bound after colon like <code>T: TypeName</code>.
 Generic bound represents what value can be passed to the generic parameter.
 The available generic bounds are below:</p>
@@ -3477,10 +3477,10 @@ Available configurations is <a href="06_development_environment/./02_dependencie
 The available types are below:</p>
 <ul>
 <li><code>posedge</code> – positive edge</li>
-<li><code>negedge</code> – negetive edge</li>
+<li><code>negedge</code> – negative edge</li>
 </ul>
 <h2 id="the-reset_type-field"><a class="header" href="#the-reset_type-field">The <code>reset_type</code> field</a></h2>
-<p>The <code>reset_type</code> field specifies reset polarity and synchronisity.
+<p>The <code>reset_type</code> field specifies reset polarity and synchronicity.
 The available types are below:</p>
 <ul>
 <li><code>async_low</code> – asynchronous and active low</li>
@@ -3498,7 +3498,7 @@ The available types are below:</p>
 </ul>
 <h2 id="the-sources-field"><a class="header" href="#the-sources-field">The <code>sources</code> field</a></h2>
 <p>By default, the Veryl compiler collects and translate all <code>*.veryl</code> files which are visible from the project root.
-You can specify directries where the Veryl compiler collect files by using the <code>sources</code> field.</p>
+You can specify directories where the Veryl compiler collect files by using the <code>sources</code> field.</p>
 <pre><code class="language-toml">[build]
 sources = ["rtl/foo_module", "rtl/bar_module"]
 </code></pre>
@@ -3868,13 +3868,13 @@ bump_commit_message = "Bump"
 <div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Value</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td>bump_commit</td><td>boolean</td><td>false</td><td>automatic commit after bump</td></tr>
 <tr><td>publish_commit</td><td>boolean</td><td>false</td><td>automatic commit after publish</td></tr>
-<tr><td>bump_commit_mesasge</td><td>string</td><td>“chore: Bump version”</td><td>commit message after bump</td></tr>
-<tr><td>publish_commit_mesasge</td><td>string</td><td>“chore: Publish”</td><td>commit message after publish</td></tr>
+<tr><td>bump_commit_message</td><td>string</td><td>“chore: Bump version”</td><td>commit message after bump</td></tr>
+<tr><td>publish_commit_message</td><td>string</td><td>“chore: Publish”</td><td>commit message after publish</td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h1>
 <p>If you want to add other Veryl projects to dependencies of your project, you can add them to <code>[dependencies]</code> section in <code>Veryl.toml</code>.
 The left hand side of entry is the project name of the dependency, and the right hand side is the source and version.
-<code>github</code> is a syntax sugger to refer a repository on GitHub. Instead of it, <code>git</code> with a full URL can be used.</p>
+<code>github</code> is a syntax sugar to refer a repository on GitHub. Instead of it, <code>git</code> with a full URL can be used.</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
 
@@ -3950,7 +3950,7 @@ veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = ".
 <p>This means that if there is <code>../veryl_sample</code>, it is used, and if not, it is pulled from the Git repository.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="publish-project"><a class="header" href="#publish-project">Publish Project</a></h1>
 <p>To publish your project, <code>veryl publish</code> can be used.
-Publising means to associate a version with a git revision.</p>
+Publishing means to associate a version with a git revision.</p>
 <pre><code>$ veryl publish
 [INFO ]   Publishing release (0.2.1 @ 297bc6b24c5ceca9e648c3ea5e01011c67d7efe7)
 [INFO ]      Writing metadata ([path to project]/Veryl.pub)

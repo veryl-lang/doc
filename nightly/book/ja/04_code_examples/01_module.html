@@ -208,34 +208,34 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="モジュール"><a class="header" href="#モジュール">モジュール</a></h1>
-<pre><code class="language-veryl playground editable">// モジュール定義
+<pre><code class="language-veryl playground editable">// module definition
 module ModuleA #(
     param ParamA: u32 = 10,
-    const ParamB: u32 = 10, // 末尾カンマが可能です
+    const ParamB: u32 = 10, // trailing comma is allowed
 ) (
-    i_clk : input  clock            , // `clock` はクロックのための特別な型です
-    i_rst : input  reset            , // `reset` はリセットのための特別な型です
+    i_clk : input  clock            , // `clock` is a special type for clock
+    i_rst : input  reset            , // `reset` is a special type for reset
     i_sel : input  logic            ,
-    i_data: input  logic&lt;ParamA&gt; [2], // `[]` は SystemVerilog のアンパック配列です
-    o_data: output logic&lt;ParamA&gt;    , // `&lt;&gt;` は SystemVerilog のパック配列です
+    i_data: input  logic&lt;ParamA&gt; [2], // `[]` means unpacked array in SystemVerilog
+    o_data: output logic&lt;ParamA&gt;    , // `&lt;&gt;` means packed array in SystemVerilog
 ) {
-    // ローカルパラメータ宣言
-    //   モジュール内では `param` は使えません
+    // const parameter declaration
+    //   `param` is not allowed in module
     const ParamC: u32 = 10;
 
-    // 変数宣言
+    // variable declaration
     var r_data0: logic&lt;ParamA&gt;;
     var r_data1: logic&lt;ParamA&gt;;
     var r_data2: logic&lt;ParamA&gt;;
 
-    // 値の束縛
+    // value binding
     let _w_data2: logic&lt;ParamA&gt; = i_data[0];
 
-    // リセット付き always_ff 文
-    //   `always_ff` はクロック（必須）とリセット（オプション）を持ちます
-    //   `if_reset` は `if (i_rst)` を意味し、リセット極性を隠蔽するための構文です
-    //   `if` 文に `()` はいりません
-    //   `always_ff` 内の `=` はノンブロッキング代入です
+    // always_ff statement with reset
+    //   `always_ff` can take a mandatory clock and a optional reset
+    //   `if_reset` means `if (i_rst)`. This conceals reset porality
+    //   `()` of `if` is not required
+    //   `=` in `always_ff` is non-blocking assignment
     always_ff (i_clk, i_rst) {
         if_reset {
             r_data0 = 0;
@@ -246,13 +246,13 @@ module ModuleA #(
         }
     }
 
-    // リセットなし always_ff 文
+    // always_ff statement without reset
     always_ff (i_clk) {
         r_data1 = r_data0;
     }
 
-    // モジュール内にクロックとリセットが1つしかない場合
-    // クロックとリセットの指定は省略できます
+    // clock and reset can be omitted
+    // if there is a single clock and reset in the module
     always_ff {
         r_data2 = r_data1;
     }

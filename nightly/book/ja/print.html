@@ -851,34 +851,34 @@ endmodule
 <p>さらに、この章のコードブロックは編集することもできます。それぞれのコードを編集して実行してみましょう。</p>
 <p>Veryl のソースコードは SystemVerilog と同様に、<code>module</code>、<code>interface</code>、<code>package</code> を持ちます。この章ではそれらの例を示します。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="モジュール"><a class="header" href="#モジュール">モジュール</a></h1>
-<pre><code class="language-veryl playground editable">// モジュール定義
+<pre><code class="language-veryl playground editable">// module definition
 module ModuleA #(
     param ParamA: u32 = 10,
-    const ParamB: u32 = 10, // 末尾カンマが可能です
+    const ParamB: u32 = 10, // trailing comma is allowed
 ) (
-    i_clk : input  clock            , // `clock` はクロックのための特別な型です
-    i_rst : input  reset            , // `reset` はリセットのための特別な型です
+    i_clk : input  clock            , // `clock` is a special type for clock
+    i_rst : input  reset            , // `reset` is a special type for reset
     i_sel : input  logic            ,
-    i_data: input  logic&lt;ParamA&gt; [2], // `[]` は SystemVerilog のアンパック配列です
-    o_data: output logic&lt;ParamA&gt;    , // `&lt;&gt;` は SystemVerilog のパック配列です
+    i_data: input  logic&lt;ParamA&gt; [2], // `[]` means unpacked array in SystemVerilog
+    o_data: output logic&lt;ParamA&gt;    , // `&lt;&gt;` means packed array in SystemVerilog
 ) {
-    // ローカルパラメータ宣言
-    //   モジュール内では `param` は使えません
+    // const parameter declaration
+    //   `param` is not allowed in module
     const ParamC: u32 = 10;
 
-    // 変数宣言
+    // variable declaration
     var r_data0: logic&lt;ParamA&gt;;
     var r_data1: logic&lt;ParamA&gt;;
     var r_data2: logic&lt;ParamA&gt;;
 
-    // 値の束縛
+    // value binding
     let _w_data2: logic&lt;ParamA&gt; = i_data[0];
 
-    // リセット付き always_ff 文
-    //   `always_ff` はクロック（必須）とリセット（オプション）を持ちます
-    //   `if_reset` は `if (i_rst)` を意味し、リセット極性を隠蔽するための構文です
-    //   `if` 文に `()` はいりません
-    //   `always_ff` 内の `=` はノンブロッキング代入です
+    // always_ff statement with reset
+    //   `always_ff` can take a mandatory clock and a optional reset
+    //   `if_reset` means `if (i_rst)`. This conceals reset porality
+    //   `()` of `if` is not required
+    //   `=` in `always_ff` is non-blocking assignment
     always_ff (i_clk, i_rst) {
         if_reset {
             r_data0 = 0;
@@ -889,13 +889,13 @@ module ModuleA #(
         }
     }
 
-    // リセットなし always_ff 文
+    // always_ff statement without reset
     always_ff (i_clk) {
         r_data1 = r_data0;
     }
 
-    // モジュール内にクロックとリセットが1つしかない場合
-    // クロックとリセットの指定は省略できます
+    // clock and reset can be omitted
+    // if there is a single clock and reset in the module
     always_ff {
         r_data2 = r_data1;
     }
@@ -1005,7 +1005,7 @@ module ModuleA {
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="言語リファレンス"><a class="header" href="#言語リファレンス">言語リファレンス</a></h1>
-<p>この章では Veryl の言語仕様について説明します。</p>
+<p>In this chapter, we’ll discuss the lauguage definition of Veryl.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ソースコードの構造"><a class="header" href="#ソースコードの構造">ソースコードの構造</a></h1>
 <p>Veryl のソースコードはいくつかの <code>module</code>、<code>interface</code>、<code>package</code> からなります。</p>
 <pre><code class="language-veryl playground">module ModuleA {}
@@ -1922,7 +1922,7 @@ emit_cond_type = true
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="パラメータ"><a class="header" href="#パラメータ">パラメータ</a></h1>
-<p>パラメータは変数と同時に宣言できます。<code>param</code> キーワードはモジュールヘッダで使用することができ、インスタンス時に上書きできます。<code>const</code> キーワードはモジュール内で使用することができ、上書きできません。</p>
+<p>Parameter can be declarated as the same as variable. <code>param</code> keyword can be used at module header, it can be overridden at instantiation. <code>const</code> keyword can be used in module, it can’t be overridden.</p>
 <pre><code class="language-veryl playground">module ModuleA #(
     param ParamA: u32 = 1,
 ) {
@@ -1932,7 +1932,7 @@ emit_cond_type = true
 <div style="break-before: page; page-break-before: always;"></div><h1 id="レジスタ"><a class="header" href="#レジスタ">レジスタ</a></h1>
 <p>レジスタ変数とは <code>always_ff</code> で代入される変数です。合成フェーズでフリップフロップにマップされます。</p>
 <p><code>always_ff</code> は必須のクロック変数、オプションのリセット変数、<code>{}</code> ブロックをとります。クロックとリセットは <code>()</code> に書きます。指定されたクロックとリセットは <code>clock</code> / <code>reset</code> 型を持ち、そのビット幅は1ビットでなければなりません。</p>
-<p><code>if_reset</code> は <code>always_ff</code> に書ける特別なキーワードで、そのレジスタ変数のリセット条件を示します。<code>if_reset</code> を使う場合は <code>always_ff</code> のリセット変数は必須です。これを使うことで、リセットの極性と同期性を隠ぺいすることができます。実際の極性と同期性は <code>Veryl.toml</code> の <code>[build]</code> セクションで設定できます。</p>
+<p><code>if_reset</code> is a special keyword which can be used in <code>always_ff</code>. It means reset condition of the register variable. If <code>if_reset</code> is used, <code>always_ff</code> must have reset variable. <code>if_reset</code> can be conceal reset porality and synchronisity. The actual porality and synchronisity can be configured through <code>[build]</code> section of <code>Veryl.toml</code>.</p>
 <p>モジュール内にクロックとリセットが1つしかない場合、クロックとリセットの指定は省略できます。</p>
 <pre><code class="language-veryl playground">module ModuleA (
     i_clk: input clock,
@@ -2749,7 +2749,7 @@ embed (cocotb) py{{{
 <li>構造体</li>
 <li>ユニオン</li>
 </ul>
-<p>それぞれのジェネリック定義はジェネリックパラメータ（<code>T</code> のような大文字1文字がよく使われます）を持ち、定義内で識別子や式として配置できます。ジェネリックパラメータはアイテムの識別子の後に <code>::&lt;&gt;</code> を用いて宣言します。</p>
+<p>Each generic definition has generic parameters (often an uppercase letter is used like <code>T</code>) which can be placed as identifier or expression in the definition. Generic parameters are declarated after item’s identifier with <code>::&lt;&gt;</code>.</p>
 <p>各ジェネリックパラメータにはコロンの後に <code>T: TypeName</code> のようなジェネリック境界が必要です。ジェネリック境界はどのような値をそのパラメータに渡すことができるかを示します。使用可能なジェネリック境界は以下の通りです。</p>
 <ul>
 <li><code>type</code>: 任意の型を渡すことができる</li>
@@ -3264,7 +3264,7 @@ repository = "https://github.com/veryl-lang/veryl"
 <li><code>negedge</code> – 立ち下がりエッジ</li>
 </ul>
 <h2 id="reset_type-フィールド"><a class="header" href="#reset_type-フィールド"><code>reset_type</code> フィールド</a></h2>
-<p><code>reset_type</code> フィールドはリセットの極性と同期性を指定します。</p>
+<p>The <code>reset_type</code> field specifies reset polarity and synchronisity. The available types are below:</p>
 <ul>
 <li><code>async_low</code> – 非同期・負極性</li>
 <li><code>async_high</code> – 非同期・正極性</li>
@@ -3279,7 +3279,7 @@ repository = "https://github.com/veryl-lang/veryl"
 <li><code>flgen</code> – <a href="https://github.com/pezy-computing/flgen">flgen</a> 形式のファイルリスト</li>
 </ul>
 <h2 id="sources-フィールド"><a class="header" href="#sources-フィールド"><code>sources</code> フィールド</a></h2>
-<p>デフォルトではVerylコンパイラはプロジェクトルートから見える全ての <code>*.veryl</code> ファイルを処理します。特定のディレクトリだけを処理するために <code>sources</code> フィールドを使用することができます。</p>
+<p>By default, the Veryl compiler collects and translate all <code>*.veryl</code> files which are visible from the project root. You can specify directries where the Veryl compiler collect files by using the <code>sources</code> field.</p>
 <pre><code class="language-toml">[build]
 sources = ["rtl/foo_module", "rtl/bar_module"]
 </code></pre>
@@ -3634,7 +3634,7 @@ bump_commit_message = "Bump"
 <tr><td>publish_commit_mesasge</td><td>文字列</td><td>“chore: Publish”</td><td>公開後のコミットメッセージ</td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h1>
-<p>他の Veryl プロジェクトへの依存関係をプロジェクトに追加したい場合、<code>Veryl.toml</code> に <code>[dependencies]</code> セクションを追加します。エントリの左辺は依存関係のプロジェクト名、右辺はソースパスとバージョンです。<code>github</code> はGitHub上のリポジトリを参照する糖衣構文です。代わりに <code>git</code> を用いてURL全体を指定することもできます。</p>
+<p>If you want to add other Veryl projects to dependencies of your project, you can add them to <code>[dependencies]</code> section in <code>Veryl.toml</code>. The left hand side of entry is the project name of the dependency, and the right hand side is the source and version. <code>github</code> is a syntax sugger to refer a repository on GitHub. Instead of it, <code>git</code> with a full URL can be used.</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
 
@@ -3699,7 +3699,7 @@ veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = ".
 </code></pre>
 <p>これは <code>../veryl_sample</code> が存在する場合はそれを使い、そうでない場合は Git から取得する、という意味です。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="プロジェクトを公開する"><a class="header" href="#プロジェクトを公開する">プロジェクトを公開する</a></h1>
-<p>プロジェクトを公開するには <code>veryl publish</code> コマンドを使います。公開とはバージョン番号とgitのリビジョンを紐づけることです。</p>
+<p>To publish your project, <code>veryl publish</code> can be used. Publising means to associate a version with a git revision.</p>
 <pre><code>$ veryl publish
 [INFO ]   Publishing release (0.2.1 @ 297bc6b24c5ceca9e648c3ea5e01011c67d7efe7)
 [INFO ]      Writing metadata ([path to project]/Veryl.pub)

@@ -216,7 +216,7 @@
 <li><code>negedge</code> – 立ち下がりエッジ</li>
 </ul>
 <h2 id="reset_type-フィールド"><a class="header" href="#reset_type-フィールド"><code>reset_type</code> フィールド</a></h2>
-<p><code>reset_type</code> フィールドはリセットの極性と同期性を指定します。</p>
+<p>The <code>reset_type</code> field specifies reset polarity and synchronisity. The available types are below:</p>
 <ul>
 <li><code>async_low</code> – 非同期・負極性</li>
 <li><code>async_high</code> – 非同期・正極性</li>
@@ -231,7 +231,7 @@
 <li><code>flgen</code> – <a href="https://github.com/pezy-computing/flgen">flgen</a> 形式のファイルリスト</li>
 </ul>
 <h2 id="sources-フィールド"><a class="header" href="#sources-フィールド"><code>sources</code> フィールド</a></h2>
-<p>デフォルトではVerylコンパイラはプロジェクトルートから見える全ての <code>*.veryl</code> ファイルを処理します。特定のディレクトリだけを処理するために <code>sources</code> フィールドを使用することができます。</p>
+<p>By default, the Veryl compiler collects and translate all <code>*.veryl</code> files which are visible from the project root. You can specify directries where the Veryl compiler collect files by using the <code>sources</code> field.</p>
 <pre><code class="language-toml">[build]
 sources = ["rtl/foo_module", "rtl/bar_module"]
 </code></pre>
