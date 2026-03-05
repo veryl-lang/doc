@@ -19,7 +19,7 @@ The top level module of the block must have the same name as the test name.
 The messages through `$info`, `$warning`, `$error` and `$fatal` system function are handled by Veryl compiler, and shown as exectution log.
 The calls of `$error` and `$fatal` are treated as test failure.
 
-The following example, a SystemVerilog source code embeded by `embed` declaration are marked as test.
+The following example, a SystemVerilog source code embedded by `embed` declaration are marked as test.
 
 ```veryl,playground
 #[test(test1)]

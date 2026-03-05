@@ -8,11 +8,11 @@ The `clock_type` field specifies which clock edge is used to drive flip-flop.
 The available types are below:
 
 * `posedge` -- positive edge
-* `negedge` -- negetive edge
+* `negedge` -- negative edge
 
 ## The `reset_type` field
 
-The `reset_type` field specifies reset polarity and synchronisity.
+The `reset_type` field specifies reset polarity and synchronicity.
 The available types are below:
 
 * `async_low` -- asynchronous and active low
@@ -32,7 +32,7 @@ The available types are below:
 ## The `sources` field
 
 By default, the Veryl compiler collects and translate all `*.veryl` files which are visible from the project root.
-You can specify directries where the Veryl compiler collect files by using the `sources` field.
+You can specify directories where the Veryl compiler collect files by using the `sources` field.
 
 ```toml
 [build]

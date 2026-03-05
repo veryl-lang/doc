@@ -1,3 +1,3 @@
 # Language Reference
 
-In this chapter, we'll discuss the lauguage definition of Veryl.
+In this chapter, we'll discuss the language definition of Veryl.
