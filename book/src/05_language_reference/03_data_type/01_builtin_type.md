@@ -84,10 +84,10 @@ Only positive literal values and expressions that evaluate to positive values ar
 
 ```veryl,playground
 module ModuleA {
-    let _a: p8  = 1;
-    let _b: p16 = 100;
-    let _c: p32 = 65536;
-    let _d: p64 = 1000000;
+    // let _a: p8  = 1;
+    // let _b: p16 = 100;
+    // let _c: p32 = 65536;
+    // let _d: p64 = 1000000;
 }
 ```
 
