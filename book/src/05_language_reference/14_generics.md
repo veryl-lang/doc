@@ -11,7 +11,7 @@ The following items support generics:
 * union
 
 Each generic definition has generic parameters (often an uppercase letter is used like `T`) which can be placed as identifier or expression in the definition.
-Generic parameters are declarated after item's identifier with `::<>`.
+Generic parameters are declared after item's identifier with `::<>`.
 
 Each generic parameter should have generic bound after colon like `T: TypeName`.
 Generic bound represents what value can be passed to the generic parameter.

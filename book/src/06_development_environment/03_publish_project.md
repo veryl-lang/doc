@@ -1,7 +1,7 @@
 # Publish Project
 
 To publish your project, `veryl publish` can be used.
-Publising means to associate a version with a git revision.
+Publishing means to associate a version with a git revision.
 
 ```
 $ veryl publish

@@ -70,6 +70,27 @@ module ModuleA {
 }
 ```
 
+## Positive integer type
+
+There are some positive integer types:
+
+* `p8` : 8bit positive unsigned integer
+* `p16`: 16bit positive unsigned integer
+* `p32`: 32bit positive unsigned integer
+* `p64`: 64bit positive unsigned integer
+
+Positive integer types enforce compile-time validation that assigned values are greater than zero.
+Only positive literal values and expressions that evaluate to positive values are accepted.
+
+```veryl,playground
+module ModuleA {
+    // let _a: p8  = 1;
+    // let _b: p16 = 100;
+    // let _c: p32 = 65536;
+    // let _d: p64 = 1000000;
+}
+```
+
 ## Floating point type
 
 There are some floating point types:

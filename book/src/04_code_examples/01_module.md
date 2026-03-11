@@ -26,7 +26,7 @@ module ModuleA #(
 
     // always_ff statement with reset
     //   `always_ff` can take a mandatory clock and a optional reset
-    //   `if_reset` means `if (i_rst)`. This conceals reset porality
+    //   `if_reset` means `if (i_rst)`. This conceals reset polarity
     //   `()` of `if` is not required
     //   `=` in `always_ff` is non-blocking assignment
     always_ff (i_clk, i_rst) {
