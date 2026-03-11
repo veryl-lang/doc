@@ -44,7 +44,7 @@ For Visual Studio Code, Veryl extension is provided.
 The extension provides file type detection, syntex highlight and language server integration.
 You can install it by searching "Veryl" in extension panel or the following URL.
 
-[Veryl extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=dalance.vscode-veryl)
+[Veryl extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=veryl-lang.veryl-vscode)
 
 ### Vim / Neovim
 
