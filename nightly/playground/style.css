@@ -285,6 +285,15 @@ body {
   font-family: 'JetBrains Mono', 'Source Code Pro', monospace;
 }
 
+.panel-tab[data-output] {
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.panel-tab[data-output]:hover {
+  color: var(--text-primary);
+}
+
 .panel-tab.active {
   color: var(--text-primary);
   border-bottom-color: var(--accent);

@@ -60,6 +60,17 @@ export function build(source) {
  * @param {string} source
  * @returns {Result}
  */
+export function dump_ir(source) {
+    const ptr0 = passStringToWasm0(source, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
+    const len0 = WASM_VECTOR_LEN;
+    const ret = wasm.dump_ir(ptr0, len0);
+    return Result.__wrap(ret);
+}
+
+/**
+ * @param {string} source
+ * @returns {Result}
+ */
 export function format(source) {
     const ptr0 = passStringToWasm0(source, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
     const len0 = WASM_VECTOR_LEN;
