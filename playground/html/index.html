@@ -120,7 +120,8 @@ module ModuleA #(
     <!-- Mobile Tabs -->
     <div class="mobile-tabs">
       <button class="mobile-tab active" data-panel="source">Source</button>
-      <button class="mobile-tab" data-panel="output">Output</button>
+      <button class="mobile-tab" data-panel="output" data-output="sv">Output</button>
+      <button class="mobile-tab" data-panel="output" data-output="ir">IR</button>
     </div>
 
     <!-- Main Panels -->
@@ -136,10 +137,12 @@ module ModuleA #(
 
       <div class="panel panel-output">
         <div class="panel-header">
-          <span class="panel-tab active">output.sv</span>
+          <span class="panel-tab active" data-output="sv">output.sv</span>
+          <span class="panel-tab" data-output="ir">IR</span>
           <button id="btn-copy" class="btn-icon-sm" title="Copy output">&#128203;</button>
         </div>
         <div id="output-container" class="panel-body"></div>
+        <div id="ir-container" class="panel-body" style="display:none"></div>
       </div>
     </main>
 
@@ -179,7 +182,7 @@ module ModuleA #(
 
     <script type="module">
       // ===== WASM imports =====
-      import init, {set_hook, build as wasmBuild, format as wasmFormat} from "./pkg/veryl_wasm.js";
+      import init, {set_hook, build as wasmBuild, dump_ir as wasmDumpIr, format as wasmFormat} from "./pkg/veryl_wasm.js";
 
       // ===== CodeMirror imports =====
       import {EditorView, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter} from "@codemirror/view";
@@ -198,6 +201,7 @@ module ModuleA #(
       import {Compartment} from "@codemirror/state";
       const themeCompartment = new Compartment();
       const outputThemeCompartment = new Compartment();
+      const irThemeCompartment = new Compartment();
 
       const lightTheme = EditorView.theme({
         "&": { backgroundColor: "var(--bg-editor)" },
@@ -252,6 +256,7 @@ module ModuleA #(
         if (updateEditors && typeof sourceEditor !== "undefined") {
           sourceEditor.dispatch({ effects: themeCompartment.reconfigure(cmThemeFor(theme)) });
           outputEditor.dispatch({ effects: outputThemeCompartment.reconfigure(cmThemeFor(theme)) });
+          irEditor.dispatch({ effects: irThemeCompartment.reconfigure(cmThemeFor(theme)) });
         }
       }
 
@@ -314,9 +319,45 @@ module ModuleA #(
         parent: document.getElementById("output-container"),
       });
 
+      const irExtensions = [
+        lineNumbers(),
+        syntaxHighlighting(defaultHighlightStyle),
+        irThemeCompartment.of(cmThemeFor(initialThemeName)),
+        EditorState.readOnly.of(true),
+        EditorView.lineWrapping,
+      ];
+
+      const irEditor = new EditorView({
+        state: EditorState.create({
+          doc: "",
+          extensions: irExtensions,
+        }),
+        parent: document.getElementById("ir-container"),
+      });
+
+      // ===== Output tab state =====
+      let activeOutputTab = "sv";
+
+      function switchOutputTab(tab) {
+        activeOutputTab = tab;
+        const svContainer = document.getElementById("output-container");
+        const irContainer = document.getElementById("ir-container");
+        svContainer.style.display = tab === "sv" ? "" : "none";
+        irContainer.style.display = tab === "ir" ? "" : "none";
+        document.querySelectorAll(".panel-output .panel-tab").forEach(t => {
+          t.classList.toggle("active", t.dataset.output === tab);
+        });
+      }
+
       function setOutput(text) {
         outputEditor.dispatch({
           changes: { from: 0, to: outputEditor.state.doc.length, insert: text }
+        });
+      }
+
+      function setIrOutput(text) {
+        irEditor.dispatch({
+          changes: { from: 0, to: irEditor.state.doc.length, insert: text }
         });
       }
 
@@ -374,12 +415,15 @@ module ModuleA #(
           const elapsed = (performance.now() - t0).toFixed(0);
           if (err) {
             setOutput("");
+            setIrOutput("");
             setProblems(content, 1);
             setStatus("error", "Build failed");
             // Expand bottom panel if collapsed
             document.getElementById("bottom-panel").classList.remove("collapsed");
           } else {
             setOutput(content);
+            const irResult = wasmDumpIr(src);
+            setIrOutput(irResult.err() ? irResult.content() : irResult.content());
             setProblems("", 0);
             setStatus("ok", "Ready");
           }
@@ -455,9 +499,17 @@ module ModuleA #(
         }
       });
 
+      // Output tab switching
+      document.querySelectorAll(".panel-output .panel-tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+          if (tab.dataset.output) switchOutputTab(tab.dataset.output);
+        });
+      });
+
       // Copy output
       document.getElementById("btn-copy").addEventListener("click", () => {
-        const text = outputEditor.state.doc.toString();
+        const editor = activeOutputTab === "ir" ? irEditor : outputEditor;
+        const text = editor.state.doc.toString();
         if (!text) { showToast("No output to copy"); return; }
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(text).then(() => {
@@ -493,6 +545,7 @@ module ModuleA #(
           const panelName = tab.dataset.panel;
           document.querySelectorAll(".panel").forEach(p => p.classList.remove("mobile-active"));
           document.querySelector(`.panel-${panelName}`).classList.add("mobile-active");
+          if (tab.dataset.output) switchOutputTab(tab.dataset.output);
         });
       });
 
