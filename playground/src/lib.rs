@@ -2,7 +2,7 @@ use miette::{GraphicalReportHandler, GraphicalTheme, Report, ThemeCharacters, Th
 use semver::Version;
 use std::collections::HashMap;
 use std::path::PathBuf;
-use veryl_analyzer::{Analyzer, Context, namespace_table, symbol_table};
+use veryl_analyzer::{Analyzer, Context, ir::Ir, namespace_table, symbol_table};
 use veryl_emitter::Emitter;
 use veryl_formatter::Formatter;
 use veryl_metadata::{
@@ -130,6 +130,50 @@ pub fn build(source: &str) -> Result {
 }
 
 #[wasm_bindgen]
+pub fn dump_ir(source: &str) -> Result {
+    let metadata = metadata();
+    match Parser::parse(source, &"") {
+        Ok(parser) => {
+            if let Some(path) = resource_table::get_path_id(PathBuf::from("")) {
+                symbol_table::drop(path);
+                namespace_table::drop(path);
+            }
+
+            let analyzer = Analyzer::new(&metadata);
+            let mut context = Context::default();
+            let mut ir = Ir::default();
+            let mut errors = Vec::new();
+            errors.append(&mut analyzer.analyze_pass1("project", &parser.veryl));
+            errors.append(&mut Analyzer::analyze_post_pass1());
+            errors.append(&mut analyzer.analyze_pass2(
+                "project",
+                &parser.veryl,
+                &mut context,
+                Some(&mut ir),
+            ));
+            errors.append(&mut Analyzer::analyze_post_pass2());
+
+            let err = !errors.is_empty();
+            let content = if err {
+                let mut text = String::new();
+                for e in errors {
+                    text.push_str(&render_err(e.into()));
+                }
+                text
+            } else {
+                ir.to_string()
+            };
+
+            Result { err, content }
+        }
+        Err(e) => Result {
+            err: true,
+            content: render_err(e.into()),
+        },
+    }
+}
+
+#[wasm_bindgen]
 pub fn format(source: &str) -> Result {
     let metadata = metadata();
     match Parser::parse(source, &"") {
@@ -238,6 +282,23 @@ module ModuleA #(
 
         assert_eq!(ret.err, false);
         assert_eq!(ret.content, text);
+    }
+
+    #[test]
+    fn dump_ir_default_code() {
+        let text = get_default_code();
+        let ret = dump_ir(&text);
+
+        assert_eq!(ret.err, false);
+        assert_ne!(ret.content, "");
+    }
+
+    #[wasm_bindgen_test]
+    fn dump_ir_on_wasm() {
+        let ret = dump_ir(&SRC);
+
+        assert_eq!(ret.err, false);
+        assert_ne!(ret.content, "");
     }
 
     #[wasm_bindgen_test]
