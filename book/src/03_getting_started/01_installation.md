@@ -36,7 +36,7 @@ Now `veryl` command can be used!
 
 ## Editor integration
 
-[Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code) and [Vim](https://github.com/vim/vim) / [Neovim](https://neovim.io) are supported officially.
+[Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code), [Vim](https://github.com/vim/vim) / [Neovim](https://neovim.io), and [Zed](https://zed.dev) are supported officially.
 
 ### Visual Studio Code
 
