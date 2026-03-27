@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2026-03-27T12:30:09+09:00\n"
+"POT-Creation-Date: 2026-03-27T12:57:38+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -3376,8 +3376,8 @@ msgid ""
 "Global functions can be generic and can be published with `pub` for cross-"
 "project use."
 msgstr ""
-"グローバル関数はジェネリックにすることができ、`pub` を付与することでプロジェクト間で公開す"
-"ることもできます。"
+"グローバル関数はジェネリックにすることができ、`pub` を付与することでプロジェ"
+"クト間で公開することもできます。"
 
 #: src/05_language_reference/06_declaration/07_initial_final.md:3
 msgid ""
@@ -4345,12 +4345,12 @@ msgid "There are three ways to describe integrated test:"
 msgstr "組み込みテストの記述方法は3種類あります。"
 
 #: src/05_language_reference/13_integrated_test.md:8
-#: src/05_language_reference/13_integrated_test.md:15
+#: src/05_language_reference/13_integrated_test.md:16
 msgid "Native test"
 msgstr "ネイティブテスト"
 
 #: src/05_language_reference/13_integrated_test.md:9
-#: src/05_language_reference/13_integrated_test.md:128
+#: src/05_language_reference/13_integrated_test.md:129
 msgid "SystemVerilog test"
 msgstr "SystemVerilogテスト"
 
@@ -4360,15 +4360,19 @@ msgstr "[cocotb](https://www.cocotb.org) テスト"
 
 #: src/05_language_reference/13_integrated_test.md:12
 msgid ""
-"About RTL simulator used by `veryl test`, see [Simulator]"
-"(../06_development_environment/07_simulator.md). If `--wave` option is "
-"specified, waveforms are generated."
+"Native test uses Veryl's built-in simulator, while SystemVerilog test and "
+"cocotb test use an external RTL simulator. About external RTL simulators "
+"used by `veryl test`, see [Simulator]"
+"(../06_development_environment/07_simulator.md). For all test types, if `--"
+"wave` option is specified, waveforms are generated."
 msgstr ""
-"`veryl test` で使用される RTLシミュレータについては [シミュレータ]"
-"(../06_development_environment/07_simulator.md) を参照してください。`--wave` "
-"オプションで波形を生成することもできます。"
+"ネイティブテストはVerylの組み込みシミュレータを使用し、SystemVerilogテストと"
+"cocotbテストは外部のRTLシミュレータを使用します。`veryl test` で使用される外"
+"部RTLシミュレータについては [シミュレータ]"
+"(../06_development_environment/07_simulator.md) を参照してください。すべての"
+"テスト種別で、`--wave` オプションを指定すると波形を生成できます。"
 
-#: src/05_language_reference/13_integrated_test.md:17
+#: src/05_language_reference/13_integrated_test.md:18
 msgid ""
 "Native test allows writing testbenches directly in Veryl without embedding "
 "SystemVerilog or using external frameworks. A module with "
@@ -4379,31 +4383,31 @@ msgstr ""
 "Verylで直接テストベンチを記述できます。`#[test(test_name)]` 属性が付けられた"
 "モジュール（`embed` 宣言なし）がネイティブテストとして扱われます。"
 
-#: src/05_language_reference/13_integrated_test.md:20
+#: src/05_language_reference/13_integrated_test.md:21
 msgid "The following testbench components are available:"
 msgstr "以下のテストベンチコンポーネントが利用可能です。"
 
-#: src/05_language_reference/13_integrated_test.md:22
+#: src/05_language_reference/13_integrated_test.md:23
 msgid ""
 "`$tb::clock_gen` — clock signal generator (with optional `#(period: N)` "
 "parameter)"
 msgstr ""
-"`$tb::clock_gen` — クロック信号生成器（オプションで `#(period: N)` パラメー"
-"タを指定可能）"
+"`$tb::clock_gen` — クロック信号生成器（オプションで `#(period: N)` パラメータ"
+"を指定可能）"
 
-#: src/05_language_reference/13_integrated_test.md:23
+#: src/05_language_reference/13_integrated_test.md:24
 msgid ""
 "`$tb::reset_gen` — reset signal generator (with optional `#(cycles: N)` "
 "parameter)"
 msgstr ""
-"`$tb::reset_gen` — リセット信号生成器（オプションで `#(cycles: N)` パラメー"
-"タを指定可能）"
+"`$tb::reset_gen` — リセット信号生成器（オプションで `#(cycles: N)` パラメータ"
+"を指定可能）"
 
-#: src/05_language_reference/13_integrated_test.md:25
+#: src/05_language_reference/13_integrated_test.md:26
 msgid "And the following system functions can be used in `initial` blocks:"
 msgstr "また、以下のシステム関数が `initial` ブロック内で使用できます。"
 
-#: src/05_language_reference/13_integrated_test.md:27
+#: src/05_language_reference/13_integrated_test.md:28
 msgid ""
 "`$assert(condition)` or `$assert(condition, message)` — check assertions "
 "during simulation"
@@ -4411,47 +4415,47 @@ msgstr ""
 "`$assert(condition)` または `$assert(condition, message)` — シミュレーション"
 "中にアサーションを検証"
 
-#: src/05_language_reference/13_integrated_test.md:28
+#: src/05_language_reference/13_integrated_test.md:29
 msgid "`$finish()` — terminate simulation"
 msgstr "`$finish()` — シミュレーションを終了"
 
-#: src/05_language_reference/13_integrated_test.md:30
+#: src/05_language_reference/13_integrated_test.md:31
 msgid "Basic example"
 msgstr "基本的な例"
 
-#: src/05_language_reference/13_integrated_test.md:69
+#: src/05_language_reference/13_integrated_test.md:70
 msgid "Testbench methods"
 msgstr "テストベンチメソッド"
 
-#: src/05_language_reference/13_integrated_test.md:71
+#: src/05_language_reference/13_integrated_test.md:72
 msgid "`clock_gen` provides the `next` method to advance clock cycles:"
 msgstr "`clock_gen` はクロックサイクルを進める `next` メソッドを提供します。"
 
-#: src/05_language_reference/13_integrated_test.md:73
+#: src/05_language_reference/13_integrated_test.md:74
 msgid "`clk.next()` — advance clock by 1 cycle"
 msgstr "`clk.next()` — クロックを1サイクル進める"
 
-#: src/05_language_reference/13_integrated_test.md:74
+#: src/05_language_reference/13_integrated_test.md:75
 msgid "`clk.next(N)` — advance clock by `N` cycles"
 msgstr "`clk.next(N)` — クロックを `N` サイクル進める"
 
-#: src/05_language_reference/13_integrated_test.md:76
+#: src/05_language_reference/13_integrated_test.md:77
 msgid "`reset_gen` provides the `assert` method to assert reset:"
 msgstr "`reset_gen` はリセットをアサートする `assert` メソッドを提供します。"
 
-#: src/05_language_reference/13_integrated_test.md:78
+#: src/05_language_reference/13_integrated_test.md:79
 msgid "`rst.assert(clk)` — assert reset synchronized to clock"
 msgstr "`rst.assert(clk)` — クロックに同期してリセットをアサート"
 
-#: src/05_language_reference/13_integrated_test.md:79
+#: src/05_language_reference/13_integrated_test.md:80
 msgid "`rst.assert(clk, duration)` — assert reset for specified duration"
 msgstr "`rst.assert(clk, duration)` — 指定された期間リセットをアサート"
 
-#: src/05_language_reference/13_integrated_test.md:81
+#: src/05_language_reference/13_integrated_test.md:82
 msgid "The reset duration can also be configured at instantiation:"
 msgstr "リセット期間はインスタンス化時にも設定できます。"
 
-#: src/05_language_reference/13_integrated_test.md:83
+#: src/05_language_reference/13_integrated_test.md:84
 msgid ""
 "```veryl,playground\n"
 "#[test(test_reset_cycles_param)]\n"
@@ -4469,18 +4473,18 @@ msgid ""
 "```"
 msgstr ""
 
-#: src/05_language_reference/13_integrated_test.md:98
+#: src/05_language_reference/13_integrated_test.md:99
 msgid "Function calls in testbench"
 msgstr "テストベンチ内の関数呼び出し"
 
-#: src/05_language_reference/13_integrated_test.md:100
+#: src/05_language_reference/13_integrated_test.md:101
 msgid ""
 "Testbench methods like `clk.next` can be called from user-defined functions:"
 msgstr ""
-"`clk.next` などのテストベンチメソッドはユーザー定義関数から呼び出すことがで"
-"きます。"
+"`clk.next` などのテストベンチメソッドはユーザー定義関数から呼び出すことができ"
+"ます。"
 
-#: src/05_language_reference/13_integrated_test.md:102
+#: src/05_language_reference/13_integrated_test.md:103
 msgid ""
 "```veryl,playground\n"
 "#[test(test_function_call)]\n"
@@ -4509,7 +4513,7 @@ msgid ""
 "```"
 msgstr ""
 
-#: src/05_language_reference/13_integrated_test.md:130
+#: src/05_language_reference/13_integrated_test.md:131
 msgid ""
 "SystemVerilog test can be described with `inline` specifier. The top level "
 "module of the block must have the same name as the test name."
@@ -4517,7 +4521,7 @@ msgstr ""
 "SystemVerilog テストは `inline` 指定子で記述することができます。ブロックの"
 "トップレベルモジュールはテスト名と同じでなければなりません。"
 
-#: src/05_language_reference/13_integrated_test.md:133
+#: src/05_language_reference/13_integrated_test.md:134
 msgid ""
 "The messages through `$info`, `$warning`, `$error` and `$fatal` system "
 "function are handled by Veryl compiler, and shown as exectution log. The "
@@ -4527,7 +4531,7 @@ msgstr ""
 "コンパイラにより実行ログとして表示されます。`$error` と `$fatal` の呼び出しは"
 "テストの失敗として扱われます。"
 
-#: src/05_language_reference/13_integrated_test.md:136
+#: src/05_language_reference/13_integrated_test.md:137
 msgid ""
 "The following example, a SystemVerilog source code embedded by `embed` "
 "declaration are marked as test."
@@ -4535,7 +4539,7 @@ msgstr ""
 "以下の例では SystemVerilog のソースコードを `embed` 宣言で埋め込み、テストと"
 "してマークしています。"
 
-#: src/05_language_reference/13_integrated_test.md:138
+#: src/05_language_reference/13_integrated_test.md:139
 msgid ""
 "```veryl,playground\n"
 "#[test(test1)]\n"
@@ -4559,11 +4563,11 @@ msgstr ""
 "}}}\n"
 "```"
 
-#: src/05_language_reference/13_integrated_test.md:149
+#: src/05_language_reference/13_integrated_test.md:150
 msgid "cocotb test"
 msgstr "cocotb テスト"
 
-#: src/05_language_reference/13_integrated_test.md:151
+#: src/05_language_reference/13_integrated_test.md:152
 msgid ""
 "cocotb test can be described with `cocotb` specifier. The target module name "
 "for test should be specified by the second argument of `#[test]` attribute."
@@ -7928,28 +7932,42 @@ msgid ""
 msgstr "全設定の説明は[こちら](./01_project_configuration/03_lint.md)。"
 
 #: src/06_development_environment/07_simulator.md:3
-msgid ""
-"Test by RTL simulator is executed through `veryl test`. Supported simulators "
-"are below:"
-msgstr ""
-"RTLシミュレータによるテストは `veryl test` で実行することができます。サポート"
-"されているシミュレータは以下の通りです。"
+msgid "Test is executed through `veryl test`."
+msgstr "テストは `veryl test` で実行することができます。"
 
-#: src/06_development_environment/07_simulator.md:6
+#: src/06_development_environment/07_simulator.md:5
+msgid ""
+"For [native test](../05_language_reference/13_integrated_test.md#native-"
+"test), Veryl's built-in simulator is used. No external simulator "
+"installation is required."
+msgstr ""
+"[ネイティブテスト](../05_language_reference/13_integrated_test.md#native-test)"
+" ではVerylの組み込みシミュレータが使用されます。外部シミュレータのインストー"
+"ルは不要です。"
+
+#: src/06_development_environment/07_simulator.md:8
+msgid ""
+"For SystemVerilog test and cocotb test, an external RTL simulator is "
+"required. Supported simulators are below:"
+msgstr ""
+"SystemVerilogテストとcocotbテストでは、外部のRTLシミュレータが必要です。サ"
+"ポートされているシミュレータは以下の通りです。"
+
+#: src/06_development_environment/07_simulator.md:11
 msgid "[Verilator](https://www.veripool.org/verilator/)"
 msgstr "[Verilator](https://www.veripool.org/verilator/)"
 
-#: src/06_development_environment/07_simulator.md:7
+#: src/06_development_environment/07_simulator.md:12
 msgid ""
 "[Synopsys VCS](https://www.synopsys.com/verification/simulation/vcs.html)"
 msgstr ""
 "[Synopsys VCS](https://www.synopsys.com/verification/simulation/vcs.html)"
 
-#: src/06_development_environment/07_simulator.md:8
+#: src/06_development_environment/07_simulator.md:13
 msgid "[Altair DSim](https://altair.com/dsim)"
 msgstr "[Altair DSim](https://altair.com/dsim)"
 
-#: src/06_development_environment/07_simulator.md:9
+#: src/06_development_environment/07_simulator.md:14
 msgid ""
 "[AMD Vivado Simulator](https://www.xilinx.com/products/design-tools/vivado/"
 "verification.html)"
@@ -7957,7 +7975,7 @@ msgstr ""
 "[AMD Vivado Simulator](https://www.xilinx.com/products/design-tools/vivado/"
 "verification.html)"
 
-#: src/06_development_environment/07_simulator.md:11
+#: src/06_development_environment/07_simulator.md:16
 msgid ""
 "Verilator is the default simulator. If no simulator is specified through "
 "`Veryl.toml` and command-line option, it will be used."
@@ -7965,17 +7983,17 @@ msgstr ""
 "Verilatorはデフォルトのシミュレータです。`Veryl.toml`やコマンドラインオプショ"
 "ンでシミュレータが指定されていない場合に使用されます。"
 
-#: src/06_development_environment/07_simulator.md:14
+#: src/06_development_environment/07_simulator.md:19
 msgid ""
 "The available configurations are [here](./01_project_configuration/04_test."
 "md)."
 msgstr "全設定の説明は[こちら](./01_project_configuration/04_test.md)。"
 
-#: src/06_development_environment/07_simulator.md:16
+#: src/06_development_environment/07_simulator.md:21
 msgid "cocotb"
 msgstr "cocotb"
 
-#: src/06_development_environment/07_simulator.md:18
+#: src/06_development_environment/07_simulator.md:23
 msgid ""
 "`cocotb` tests require `python3` environment in which `cocotb` is installed. "
 "The supported version of `cocotb` is 1.9.x and 2.0.x."
@@ -7984,11 +8002,11 @@ msgstr ""
 "が必要です。サポートされている `cocotb` のバージョンは 1.9.x あるいは 2.0.x "
 "です。"
 
-#: src/06_development_environment/07_simulator.md:21
+#: src/06_development_environment/07_simulator.md:26
 msgid "For example, it can be installed by the following command."
 msgstr "例えば以下のコマンドでインストールすることができます。"
 
-#: src/06_development_environment/07_simulator.md:27
+#: src/06_development_environment/07_simulator.md:32
 msgid "As simulator backend, Verilator is only supported."
 msgstr "シミュレータバックエンドとしては Verilator のみサポートされています。"
 
