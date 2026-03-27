@@ -143,7 +143,7 @@ msgstr "if"
 #: src/05_language_reference/04_expression/05_case_switch.md:1
 #: src/05_language_reference/05_statement/04_case_switch.md:1
 msgid "Case / Switch"
-msgstr ""
+msgstr "Case / Switch"
 
 #: src/SUMMARY.md:30 src/05_language_reference/04_expression/06_bit_select.md:1
 msgid "Bit Select"
@@ -625,7 +625,6 @@ msgid "Integrated test"
 msgstr "組み込みテスト"
 
 #: src/02_features.md:43
-#, fuzzy
 msgid ""
 "Test code written by SystemVerilog or [cocotb](https://www.cocotb.org) can "
 "be embedded in Veryl code, it can be executed through `veryl test` command."
@@ -1057,15 +1056,14 @@ msgid "Editor integration"
 msgstr "エディタ設定"
 
 #: src/03_getting_started/01_installation.md:39
-#, fuzzy
 msgid ""
 "[Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-"
 "studio-code), [Vim](https://github.com/vim/vim) / [Neovim](https://neovim."
 "io), and [Zed](https://zed.dev) are supported officially."
 msgstr ""
 "公式には [Visual Studio Code](https://azure.microsoft.com/ja-jp/products/"
-"visual-studio-code) と [Vim](https://github.com/vim/vim) / [Neovim](https://"
-"neovim.io) がサポートされています。"
+"visual-studio-code)、[Vim](https://github.com/vim/vim) / [Neovim](https://"
+"neovim.io)、[Zed](https://zed.dev) がサポートされています。"
 
 #: src/03_getting_started/01_installation.md:41
 msgid "Visual Studio Code"
@@ -3142,13 +3140,15 @@ msgstr ""
 
 #: src/05_language_reference/05_statement/04_case_switch.md:73
 msgid "Concatenation in left-hand side"
-msgstr ""
+msgstr "左辺でのビット連結"
 
 #: src/05_language_reference/05_statement/04_case_switch.md:75
 msgid ""
 "If you want to use bit concatenation in left-hand of case/switch, "
 "surrounding `{}` is necessary, even if the statement is single."
 msgstr ""
+"case/switchの左辺でビット連結を使用する場合、文が1つだけであっても `{}` で囲"
+"む必要があります。"
 
 #: src/05_language_reference/05_statement/04_case_switch.md:78
 msgid ""
@@ -3247,7 +3247,6 @@ msgid ""
 msgstr "変数宣言は `var` キーワードで始まり、変数名、`:`、変数の型と続きます。"
 
 #: src/05_language_reference/06_declaration/01_variable.md:6
-#, fuzzy
 msgid ""
 "If there are unused variables, warning will be occurred. Variable name "
 "starting with `_` means unused variable, and suppresses the warning."
@@ -4242,7 +4241,6 @@ msgstr ""
 "できないことを意味します。"
 
 #: src/05_language_reference/11_visibility.md:6
-#, fuzzy
 msgid ""
 "`pub` keyword can be used to specify an item as public to other project. "
 "`veryl doc` will generate [documents]"
@@ -4250,7 +4248,7 @@ msgid ""
 msgstr ""
 "`pub` キーワードによって他のプロジェクトから見えるように指定することができま"
 "す。`veryl doc` コマンドはパブリックなアイテムの [ドキュメント]"
-"(../05_development_environment/09_documentation.md) のみを生成します。"
+"(../06_development_environment/10_documentation.md) のみを生成します。"
 
 #: src/05_language_reference/12_foreign_language_integration.md:3
 msgid "`embed` declaration"
@@ -5640,7 +5638,6 @@ msgid "`posedge` -- positive edge"
 msgstr "`posedge` -- 立ち上がりエッジ"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:11
-#, fuzzy
 msgid "`negedge` -- negative edge"
 msgstr "`negedge` -- 立ち下がりエッジ"
 
@@ -7421,9 +7418,8 @@ msgid "automatic commit after publish"
 msgstr "公開後の自動コミット"
 
 #: src/06_development_environment/01_project_configuration/05_publish.md:17
-#, fuzzy
 msgid "bump_commit_message"
-msgstr "bump_commit_mesasge"
+msgstr "bump_commit_message"
 
 #: src/06_development_environment/01_project_configuration/05_publish.md:17
 msgid "\"chore: Bump version\""
@@ -7434,9 +7430,8 @@ msgid "commit message after bump"
 msgstr "バージョンアップ後のコミットメッセージ"
 
 #: src/06_development_environment/01_project_configuration/05_publish.md:18
-#, fuzzy
 msgid "publish_commit_message"
-msgstr "publish_commit_mesasge"
+msgstr "publish_commit_message"
 
 #: src/06_development_environment/01_project_configuration/05_publish.md:18
 msgid "\"chore: Publish\""
