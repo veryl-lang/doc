@@ -257,6 +257,47 @@ path = "document"
 <tr><td>path</td><td>文字列</td><td>“doc”</td><td>出力ディレクトリへのパス</td></tr>
 </tbody></table>
 </div>
+<h2 id="ドキュメンテーションテスト"><a class="header" href="#ドキュメンテーションテスト">ドキュメンテーションテスト</a></h2>
+<p>WaveDromブロックは <code>wavedrom</code> の代わりに <code>wavedrom,test</code> コードブロックを使うことでドキュメンテーションテストとしても利用できます。波形の信号名はモジュールポートと名前で照合されます（<code>i_</code>/<code>o_</code> プレフィックスと <code>_n</code> サフィックスは自動的に除去されます）。クロックとリセット信号は適切に認識・処理されます。</p>
+<p>ドキュメンテーションテストは他の組み込みテストとともに <code>veryl test</code> コマンドで実行されます。</p>
+<p>使用可能なwave文字は以下です。</p>
+<ul>
+<li><code>p</code>, <code>P</code>, <code>n</code>, <code>N</code> — クロック信号（ポジティブ/ネガティブエッジ）</li>
+<li><code>0</code>, <code>1</code> — 論理値</li>
+<li><code>x</code>, <code>z</code> — 不定 / ハイインピーダンス</li>
+<li><code>.</code> — 前の値を繰り返し</li>
+<li><code>=</code>, <code>2</code>-<code>9</code> — データ値（<code>data</code> 配列と併用）</li>
+</ul>
+<pre><code class="language-veryl playground">/// 1サイクル遅延レジスタ
+///
+/// ```wavedrom,test
+/// {signal: [
+///   {name: 'clk',   wave: 'p........'},
+///   {name: 'rst_n', wave: '0.1......'},
+///   {name: 'din',   wave: '0.01.0.1.'},
+///   {name: 'dout',  wave: '0...1.0.1'}
+/// ]}
+/// ```
+pub module ModuleB (
+    i_clk  : input  'a clock,
+    i_rst_n: input  'a reset,
+    i_din  : input  'a logic,
+    o_dout : output 'a logic,
+) {
+    var r_data: 'a logic;
+
+    always_ff {
+        if_reset {
+            r_data = 0;
+        } else {
+            r_data = i_din;
+        }
+    }
+
+    assign o_dout = r_data;
+}
+</code></pre>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

@@ -260,6 +260,22 @@
     let _h: i64 = 1;
 }
 </code></pre>
+<h2 id="正の整数型"><a class="header" href="#正の整数型">正の整数型</a></h2>
+<p>正の整数型にはいくつかの種類があります。</p>
+<ul>
+<li><code>p8</code>：8ビットの正の符号なし整数</li>
+<li><code>p16</code>：16ビットの正の符号なし整数</li>
+<li><code>p32</code>：32ビットの正の符号なし整数</li>
+<li><code>p64</code>：64ビットの正の符号なし整数</li>
+</ul>
+<p>正の整数型はコンパイル時に代入値がゼロより大きいことを検証します。正のリテラル値および正の値に評価される式のみが受け入れられます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let _a: p8  = 1;
+    let _b: p16 = 100;
+    let _c: p32 = 65536;
+    let _d: p64 = 1000000;
+}
+</code></pre>
 <h2 id="浮動小数点数型"><a class="header" href="#浮動小数点数型">浮動小数点数型</a></h2>
 <p>浮動小数点数型にもいくつかの種類があります。</p>
 <ul>

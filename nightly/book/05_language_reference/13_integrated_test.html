@@ -210,13 +210,115 @@
                         <h1 id="integrated-test"><a class="header" href="#integrated-test">Integrated Test</a></h1>
 <p>Integrated test can be marked by <code>#[test(test_name)]</code> attribute.
 The marked block will be identified as test, and executed through <code>veryl test</code> command.</p>
-<p>There are two way to describe integrated test:</p>
+<p>There are three ways to describe integrated test:</p>
 <ul>
+<li>Native test</li>
 <li>SystemVerilog test</li>
 <li><a href="https://www.cocotb.org">cocotb</a> test</li>
 </ul>
-<p>About RTL simulator used by <code>veryl test</code>, see <a href="../06_development_environment/07_simulator.html">Simulator</a>.
-If <code>--wave</code> option is specified, waveforms are generated.</p>
+<p>Native test uses Veryl’s built-in simulator, while SystemVerilog test and cocotb test use an external RTL simulator.
+About external RTL simulators used by <code>veryl test</code>, see <a href="../06_development_environment/07_simulator.html">Simulator</a>.
+For all test types, if <code>--wave</code> option is specified, waveforms are generated.</p>
+<h2 id="native-test"><a class="header" href="#native-test">Native test</a></h2>
+<p>Native test allows writing testbenches directly in Veryl without embedding SystemVerilog or using external frameworks.
+A module with <code>#[test(test_name)]</code> attribute (without <code>embed</code> declaration) is treated as a native test.</p>
+<p>The following testbench components are available:</p>
+<ul>
+<li><code>$tb::clock_gen</code> — clock signal generator (with optional <code>#(period: N)</code> parameter)</li>
+<li><code>$tb::reset_gen</code> — reset signal generator (with optional <code>#(cycles: N)</code> parameter)</li>
+</ul>
+<p>And the following system functions can be used in <code>initial</code> blocks:</p>
+<ul>
+<li><code>$assert(condition)</code> or <code>$assert(condition, message)</code> — check assertions during simulation</li>
+<li><code>$finish()</code> — terminate simulation</li>
+</ul>
+<h3 id="basic-example"><a class="header" href="#basic-example">Basic example</a></h3>
+<pre><code class="language-veryl playground">module Counter (
+    clk: input  clock    ,
+    rst: input  reset    ,
+    cnt: output logic&lt;32&gt;,
+) {
+    always_ff {
+        if_reset {
+            cnt = 0;
+        } else {
+            cnt += 1;
+        }
+    }
+}
+
+#[test(test_counter)]
+module test_counter {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    var cnt: logic&lt;32&gt;;
+
+    inst dut: Counter (
+        clk: clk,
+        rst: rst,
+        cnt: cnt,
+    );
+
+    initial {
+        rst.assert(clk);
+        clk.next  (10);
+        $assert   (cnt == 32'd10);
+        $finish   ();
+    }
+}
+</code></pre>
+<h3 id="testbench-methods"><a class="header" href="#testbench-methods">Testbench methods</a></h3>
+<p><code>clock_gen</code> provides the <code>next</code> method to advance clock cycles:</p>
+<ul>
+<li><code>clk.next()</code> — advance clock by 1 cycle</li>
+<li><code>clk.next(N)</code> — advance clock by <code>N</code> cycles</li>
+</ul>
+<p><code>reset_gen</code> provides the <code>assert</code> method to assert reset:</p>
+<ul>
+<li><code>rst.assert(clk)</code> — assert reset synchronized to clock</li>
+<li><code>rst.assert(clk, duration)</code> — assert reset for specified duration</li>
+</ul>
+<p>The reset duration can also be configured at instantiation:</p>
+<pre><code class="language-veryl playground">#[test(test_reset_cycles_param)]
+module test_reset_cycles_param {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen #( cycles: 5 );
+
+    // ...
+
+    initial {
+        rst.assert(clk);
+        // ...
+    }
+}
+</code></pre>
+<h3 id="function-calls-in-testbench"><a class="header" href="#function-calls-in-testbench">Function calls in testbench</a></h3>
+<p>Testbench methods like <code>clk.next</code> can be called from user-defined functions:</p>
+<pre><code class="language-veryl playground">#[test(test_function_call)]
+module test_function_call {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    var cnt: logic&lt;32&gt;;
+
+    // inst dut: Counter (clk, rst, cnt);
+
+    function step_n (
+        n: input logic&lt;32&gt;,
+    ) {
+        clk.next(n);
+    }
+
+    initial {
+        rst.assert(clk);
+        step_n    (5);
+        step_n    (5);
+        $assert   (cnt == 32'd10);
+        $finish   ();
+    }
+}
+</code></pre>
 <h2 id="systemverilog-test"><a class="header" href="#systemverilog-test">SystemVerilog test</a></h2>
 <p>SystemVerilog test can be described with <code>inline</code> specifier.
 The top level module of the block must have the same name as the test name.</p>

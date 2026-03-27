@@ -338,10 +338,10 @@ endmodule
 <pre><code class="language-veryl">module ModuleA (
     i_clk_a: input  'a clock,
     i_dat_a: input  'a logic,
-    i_dat_a: output 'a logic,
+    o_dat_a: output 'a logic,
     i_clk_b: input  'b clock,
     i_dat_b: input  'b logic,
-    i_dat_b: output 'b logic,
+    o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
         assign o_dat_b = i_dat_a;
@@ -725,7 +725,7 @@ module ModuleB {
 </code></pre>
 <p>これで <code>veryl</code> コマンドが使えるようになりました。</p>
 <h2 id="エディタ設定"><a class="header" href="#エディタ設定">エディタ設定</a></h2>
-<p>公式には <a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code">Visual Studio Code</a> と <a href="https://github.com/vim/vim">Vim</a> / <a href="https://neovim.io">Neovim</a> がサポートされています。</p>
+<p>公式には <a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code">Visual Studio Code</a>、<a href="https://github.com/vim/vim">Vim</a> / <a href="https://neovim.io">Neovim</a>、<a href="https://zed.dev">Zed</a> がサポートされています。</p>
 <h3 id="visual-studio-code"><a class="header" href="#visual-studio-code">Visual Studio Code</a></h3>
 <p>Visual Studio Code 向けに Veryl 拡張が提供されています。拡張はファイルタイプの検出とシンタックスハイライト、言語サーバの組み込みを提供します。拡張パネルから “Veryl” で検索するか、以下の URL からインストールしてください。</p>
 <p><a href="https://marketplace.visualstudio.com/items?itemName=veryl-lang.veryl-vscode">Veryl extension for Visual Studio Code</a></p>
@@ -851,34 +851,34 @@ endmodule
 <p>さらに、この章のコードブロックは編集することもできます。それぞれのコードを編集して実行してみましょう。</p>
 <p>Veryl のソースコードは SystemVerilog と同様に、<code>module</code>、<code>interface</code>、<code>package</code> を持ちます。この章ではそれらの例を示します。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="モジュール"><a class="header" href="#モジュール">モジュール</a></h1>
-<pre><code class="language-veryl playground editable">// module definition
+<pre><code class="language-veryl playground editable">// モジュール定義
 module ModuleA #(
     param ParamA: u32 = 10,
-    const ParamB: u32 = 10, // trailing comma is allowed
+    const ParamB: u32 = 10, // 末尾カンマが可能です
 ) (
-    i_clk : input  clock            , // `clock` is a special type for clock
-    i_rst : input  reset            , // `reset` is a special type for reset
+    i_clk : input  clock            , // `clock` はクロックのための特別な型です
+    i_rst : input  reset            , // `reset` はリセットのための特別な型です
     i_sel : input  logic            ,
-    i_data: input  logic&lt;ParamA&gt; [2], // `[]` means unpacked array in SystemVerilog
-    o_data: output logic&lt;ParamA&gt;    , // `&lt;&gt;` means packed array in SystemVerilog
+    i_data: input  logic&lt;ParamA&gt; [2], // `[]` は SystemVerilog のアンパック配列です
+    o_data: output logic&lt;ParamA&gt;    , // `&lt;&gt;` は SystemVerilog のパック配列です
 ) {
-    // const parameter declaration
-    //   `param` is not allowed in module
+    // ローカルパラメータ宣言
+    //   モジュール内では `param` は使えません
     const ParamC: u32 = 10;
 
-    // variable declaration
+    // 変数宣言
     var r_data0: logic&lt;ParamA&gt;;
     var r_data1: logic&lt;ParamA&gt;;
     var r_data2: logic&lt;ParamA&gt;;
 
-    // value binding
+    // 値の束縛
     let _w_data2: logic&lt;ParamA&gt; = i_data[0];
 
-    // always_ff statement with reset
-    //   `always_ff` can take a mandatory clock and a optional reset
-    //   `if_reset` means `if (i_rst)`. This conceals reset porality
-    //   `()` of `if` is not required
-    //   `=` in `always_ff` is non-blocking assignment
+    // リセット付き always_ff 文
+    //   `always_ff` はクロック（必須）とリセット（オプション）を持ちます
+    //   `if_reset` は `if (i_rst)` を意味し、リセット極性を隠蔽するための構文です
+    //   `if` 文に `()` はいりません
+    //   `always_ff` 内の `=` はノンブロッキング代入です
     always_ff (i_clk, i_rst) {
         if_reset {
             r_data0 = 0;
@@ -889,13 +889,13 @@ module ModuleA #(
         }
     }
 
-    // always_ff statement without reset
+    // リセットなし always_ff 文
     always_ff (i_clk) {
         r_data1 = r_data0;
     }
 
-    // clock and reset can be omitted
-    // if there is a single clock and reset in the module
+    // モジュール内にクロックとリセットが1つしかない場合
+    // クロックとリセットの指定は省略できます
     always_ff {
         r_data2 = r_data1;
     }
@@ -1005,7 +1005,7 @@ module ModuleA {
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="言語リファレンス"><a class="header" href="#言語リファレンス">言語リファレンス</a></h1>
-<p>In this chapter, we’ll discuss the lauguage definition of Veryl.</p>
+<p>この章では Veryl の言語仕様について説明します。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ソースコードの構造"><a class="header" href="#ソースコードの構造">ソースコードの構造</a></h1>
 <p>Veryl のソースコードはいくつかの <code>module</code>、<code>interface</code>、<code>package</code> からなります。</p>
 <pre><code class="language-veryl playground">module ModuleA {}
@@ -1232,6 +1232,22 @@ a = 1 || 1;
     let _f: i16 = 1;
     let _g: i32 = 1;
     let _h: i64 = 1;
+}
+</code></pre>
+<h2 id="正の整数型"><a class="header" href="#正の整数型">正の整数型</a></h2>
+<p>正の整数型にはいくつかの種類があります。</p>
+<ul>
+<li><code>p8</code>：8ビットの正の符号なし整数</li>
+<li><code>p16</code>：16ビットの正の符号なし整数</li>
+<li><code>p32</code>：32ビットの正の符号なし整数</li>
+<li><code>p64</code>：64ビットの正の符号なし整数</li>
+</ul>
+<p>正の整数型はコンパイル時に代入値がゼロより大きいことを検証します。正のリテラル値および正の値に評価される式のみが受け入れられます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let _a: p8  = 1;
+    let _b: p16 = 100;
+    let _c: p32 = 65536;
+    let _d: p64 = 1000000;
 }
 </code></pre>
 <h2 id="浮動小数点数型"><a class="header" href="#浮動小数点数型">浮動小数点数型</a></h2>
@@ -1816,8 +1832,8 @@ module ModuleA {
 <pre><code class="language-toml">[build]
 emit_cond_type = true
 </code></pre>
-<h2 id="concatenation-in-left-hand-side"><a class="header" href="#concatenation-in-left-hand-side">Concatenation in left-hand side</a></h2>
-<p>If you want to use bit concatenation in left-hand of case/switch, surrounding <code>{}</code> is necessary, even if the statement is single.</p>
+<h2 id="左辺でのビット連結"><a class="header" href="#左辺でのビット連結">左辺でのビット連結</a></h2>
+<p>case/switchの左辺でビット連結を使用する場合、文が1つだけであっても <code>{}</code> で囲む必要があります。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
@@ -1922,7 +1938,7 @@ emit_cond_type = true
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="パラメータ"><a class="header" href="#パラメータ">パラメータ</a></h1>
-<p>Parameter can be declarated as the same as variable. <code>param</code> keyword can be used at module header, it can be overridden at instantiation. <code>const</code> keyword can be used in module, it can’t be overridden.</p>
+<p>パラメータは変数と同時に宣言できます。<code>param</code> キーワードはモジュールヘッダで使用することができ、インスタンス時に上書きできます。<code>const</code> キーワードはモジュール内で使用することができ、上書きできません。</p>
 <pre><code class="language-veryl playground">module ModuleA #(
     param ParamA: u32 = 1,
 ) {
@@ -1932,7 +1948,7 @@ emit_cond_type = true
 <div style="break-before: page; page-break-before: always;"></div><h1 id="レジスタ"><a class="header" href="#レジスタ">レジスタ</a></h1>
 <p>レジスタ変数とは <code>always_ff</code> で代入される変数です。合成フェーズでフリップフロップにマップされます。</p>
 <p><code>always_ff</code> は必須のクロック変数、オプションのリセット変数、<code>{}</code> ブロックをとります。クロックとリセットは <code>()</code> に書きます。指定されたクロックとリセットは <code>clock</code> / <code>reset</code> 型を持ち、そのビット幅は1ビットでなければなりません。</p>
-<p><code>if_reset</code> is a special keyword which can be used in <code>always_ff</code>. It means reset condition of the register variable. If <code>if_reset</code> is used, <code>always_ff</code> must have reset variable. <code>if_reset</code> can be conceal reset porality and synchronisity. The actual porality and synchronisity can be configured through <code>[build]</code> section of <code>Veryl.toml</code>.</p>
+<p><code>if_reset</code> は <code>always_ff</code> に書ける特別なキーワードで、そのレジスタ変数のリセット条件を示します。<code>if_reset</code> を使う場合は <code>always_ff</code> のリセット変数は必須です。これを使うことで、リセットの極性と同期性を隠ぺいすることができます。実際の極性と同期性は <code>Veryl.toml</code> の <code>[build]</code> セクションで設定できます。</p>
 <p>モジュール内にクロックとリセットが1つしかない場合、クロックとリセットの指定は省略できます。</p>
 <pre><code class="language-veryl playground">module ModuleA (
     i_clk: input clock,
@@ -2067,6 +2083,26 @@ module ModuleA {
     always_comb {
         FunctionA(a_if, b_if);
     }
+}
+</code></pre>
+<h2 id="グローバル関数"><a class="header" href="#グローバル関数">グローバル関数</a></h2>
+<p>プロジェクト名前空間レベル（<code>module</code>、<code>interface</code>、<code>package</code> の外側）で定義された関数はグローバル関数と呼ばれます。グローバル関数がモジュールから呼び出されると、生成される SystemVerilog では呼び出し元モジュールの名前空間に展開されます。</p>
+<p>グローバル関数はジェネリックにすることができ、<code>pub</code> を付与することでプロジェクト間で公開することもできます。</p>
+<pre><code class="language-veryl playground">pub function add::&lt;W: u32&gt; (
+    a: input logic&lt;W&gt;,
+    b: input logic&lt;W&gt;,
+) -&gt; logic&lt;W&gt; {
+    return a + b;
+}
+
+module ModuleA #(
+    param WIDTH: u32 = 8,
+) (
+    i_a: input  logic&lt;WIDTH&gt;,
+    i_b: input  logic&lt;WIDTH&gt;,
+    o_c: output logic&lt;WIDTH&gt;,
+) {
+    assign o_c = add::&lt;WIDTH&gt;(i_a, i_b);
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="initial--final"><a class="header" href="#initial--final">initial / final</a></h1>
@@ -2562,8 +2598,8 @@ module ModuleA (
 <ul>
 <li><code>..input</code>: インターフェース内の全ての変数を <code>input</code> として追加</li>
 <li><code>..output</code>: インターフェース内の全ての変数を <code>output</code> として追加</li>
-<li><code>..same(modport_name)</code>: <code>modport_name</code> と同じ変数を同じ方向で追加</li>
-<li><code>..converse(modport_name)</code>: <code>modport_name</code> と同じ変数を、方向を逆にして追加</li>
+<li><code>..same(modport_name, ...)</code>: 指定されたmodportと同じメンバーを同じ方向で追加（インポートされた関数を含む）</li>
+<li><code>..converse(modport_name, ...)</code>: 指定されたmodportと同じメンバーを、方向を逆にして追加（インポートされた関数はそのまま維持）</li>
 </ul>
 <p>デフォルトメンバーの指定は通常の明示的なメンバーと一緒に使うこともできます。</p>
 <pre><code class="language-veryl playground">interface InterfaceA {
@@ -2571,14 +2607,21 @@ module ModuleA (
     var b: logic;
     var c: logic;
 
-    modport master {
+    modport mp_a {
         a: output,
-        b: input ,
-        c: input ,
+    }
+
+    modport mp_b {
+        b: input,
+        c: input,
+    }
+
+    modport master {
+        ..same(mp_a, mp_b)
     }
 
     modport slave {
-        ..converse(master)
+        ..converse(mp_a, mp_b)
     }
 
     modport monitor {
@@ -2650,7 +2693,7 @@ module ModuleB (
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="可視性"><a class="header" href="#可視性">可視性</a></h1>
 <p>デフォルトではプロジェクトのトップレベルアイテム（モジュール、インターフェース、パッケージ）はプライベートです。プライベートとは他のプロジェクトから参照できないことを意味します。</p>
-<p><code>pub</code> キーワードによって他のプロジェクトから見えるように指定することができます。<code>veryl doc</code> コマンドはパブリックなアイテムの <a href="05_language_reference/../05_development_environment/09_documentation.html">ドキュメント</a> のみを生成します。</p>
+<p><code>pub</code> キーワードによって他のプロジェクトから見えるように指定することができます。<code>veryl doc</code> コマンドはパブリックなアイテムの <a href="05_language_reference/../06_development_environment/10_documentation.html">ドキュメント</a> のみを生成します。</p>
 <pre><code class="language-veryl playground">pub module ModuleA {}
 
 pub interface InterfaceA {}
@@ -2713,12 +2756,112 @@ module Module47C {
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="組み込みテスト"><a class="header" href="#組み込みテスト">組み込みテスト</a></h1>
 <p>組み込みテストは <code>#[test(test_name)]</code> アトリビュートでマークすることができます。マークされたブロックはテストとして認識され、 <code>veryl test</code> コマンドによって実行されます。</p>
-<p>組み込みテストにはいくつかの種類があります。</p>
+<p>組み込みテストの記述方法は3種類あります。</p>
 <ul>
+<li>ネイティブテスト</li>
 <li>SystemVerilogテスト</li>
 <li><a href="https://www.cocotb.org">cocotb</a> テスト</li>
 </ul>
-<p><code>veryl test</code> で使用される RTLシミュレータについては <a href="05_language_reference/../06_development_environment/07_simulator.html">シミュレータ</a> を参照してください。<code>--wave</code> オプションで波形を生成することもできます。</p>
+<p>ネイティブテストはVerylの組み込みシミュレータを使用し、SystemVerilogテストとcocotbテストは外部のRTLシミュレータを使用します。<code>veryl test</code> で使用される外部RTLシミュレータについては <a href="05_language_reference/../06_development_environment/07_simulator.html">シミュレータ</a> を参照してください。すべてのテスト種別で、<code>--wave</code> オプションを指定すると波形を生成できます。</p>
+<h2 id="ネイティブテスト"><a class="header" href="#ネイティブテスト">ネイティブテスト</a></h2>
+<p>ネイティブテストでは、SystemVerilogの埋め込みや外部フレームワークを使わずに、Verylで直接テストベンチを記述できます。<code>#[test(test_name)]</code> 属性が付けられたモジュール（<code>embed</code> 宣言なし）がネイティブテストとして扱われます。</p>
+<p>以下のテストベンチコンポーネントが利用可能です。</p>
+<ul>
+<li><code>$tb::clock_gen</code> — クロック信号生成器（オプションで <code>#(period: N)</code> パラメータを指定可能）</li>
+<li><code>$tb::reset_gen</code> — リセット信号生成器（オプションで <code>#(cycles: N)</code> パラメータを指定可能）</li>
+</ul>
+<p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
+<ul>
+<li><code>$assert(condition)</code> または <code>$assert(condition, message)</code> — シミュレーション中にアサーションを検証</li>
+<li><code>$finish()</code> — シミュレーションを終了</li>
+</ul>
+<h3 id="基本的な例"><a class="header" href="#基本的な例">基本的な例</a></h3>
+<pre><code class="language-veryl playground">module Counter (
+    clk: input  clock    ,
+    rst: input  reset    ,
+    cnt: output logic&lt;32&gt;,
+) {
+    always_ff {
+        if_reset {
+            cnt = 0;
+        } else {
+            cnt += 1;
+        }
+    }
+}
+
+#[test(test_counter)]
+module test_counter {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    var cnt: logic&lt;32&gt;;
+
+    inst dut: Counter (
+        clk: clk,
+        rst: rst,
+        cnt: cnt,
+    );
+
+    initial {
+        rst.assert(clk);
+        clk.next  (10);
+        $assert   (cnt == 32'd10);
+        $finish   ();
+    }
+}
+</code></pre>
+<h3 id="テストベンチメソッド"><a class="header" href="#テストベンチメソッド">テストベンチメソッド</a></h3>
+<p><code>clock_gen</code> はクロックサイクルを進める <code>next</code> メソッドを提供します。</p>
+<ul>
+<li><code>clk.next()</code> — クロックを1サイクル進める</li>
+<li><code>clk.next(N)</code> — クロックを <code>N</code> サイクル進める</li>
+</ul>
+<p><code>reset_gen</code> はリセットをアサートする <code>assert</code> メソッドを提供します。</p>
+<ul>
+<li><code>rst.assert(clk)</code> — クロックに同期してリセットをアサート</li>
+<li><code>rst.assert(clk, duration)</code> — 指定された期間リセットをアサート</li>
+</ul>
+<p>リセット期間はインスタンス化時にも設定できます。</p>
+<pre><code class="language-veryl playground">#[test(test_reset_cycles_param)]
+module test_reset_cycles_param {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen #( cycles: 5 );
+
+    // ...
+
+    initial {
+        rst.assert(clk);
+        // ...
+    }
+}
+</code></pre>
+<h3 id="テストベンチ内の関数呼び出し"><a class="header" href="#テストベンチ内の関数呼び出し">テストベンチ内の関数呼び出し</a></h3>
+<p><code>clk.next</code> などのテストベンチメソッドはユーザー定義関数から呼び出すことができます。</p>
+<pre><code class="language-veryl playground">#[test(test_function_call)]
+module test_function_call {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    var cnt: logic&lt;32&gt;;
+
+    // inst dut: Counter (clk, rst, cnt);
+
+    function step_n (
+        n: input logic&lt;32&gt;,
+    ) {
+        clk.next(n);
+    }
+
+    initial {
+        rst.assert(clk);
+        step_n    (5);
+        step_n    (5);
+        $assert   (cnt == 32'd10);
+        $finish   ();
+    }
+}
+</code></pre>
 <h2 id="systemverilogテスト"><a class="header" href="#systemverilogテスト">SystemVerilogテスト</a></h2>
 <p>SystemVerilog テストは <code>inline</code> 指定子で記述することができます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
 <p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>
@@ -2749,7 +2892,7 @@ embed (cocotb) py{{{
 <li>構造体</li>
 <li>ユニオン</li>
 </ul>
-<p>Each generic definition has generic parameters (often an uppercase letter is used like <code>T</code>) which can be placed as identifier or expression in the definition. Generic parameters are declarated after item’s identifier with <code>::&lt;&gt;</code>.</p>
+<p>それぞれのジェネリック定義はジェネリックパラメータ（<code>T</code> のような大文字1文字がよく使われます）を持ち、定義内で識別子や式として配置できます。ジェネリックパラメータはアイテムの識別子の後に <code>::&lt;&gt;</code> を用いて宣言します。</p>
 <p>各ジェネリックパラメータにはコロンの後に <code>T: TypeName</code> のようなジェネリック境界が必要です。ジェネリック境界はどのような値をそのパラメータに渡すことができるかを示します。使用可能なジェネリック境界は以下の通りです。</p>
 <ul>
 <li><code>type</code>: 任意の型を渡すことができる</li>
@@ -3130,6 +3273,37 @@ module top {
 
 interface InterfaceA {}
 </code></pre>
+<h2 id="クロックドメインの推論"><a class="header" href="#クロックドメインの推論">クロックドメインの推論</a></h2>
+<p>クロックドメインアノテーションなしで宣言された変数は、ドメインを自動的に推論できます。ドメインは <code>assign</code> 文の右辺または <code>always_ff</code> ブロックのクロックから推論されます。</p>
+<p>ポート宣言は公開インターフェースであり明示的であるべきなので、推論が可能な場合でもポート宣言のクロックドメインアノテーションは省略できません。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk_a: input  'a clock,
+    i_rst_a: input  'a reset,
+    i_dat_a: input  'a logic,
+    o_dat_a: output 'a logic,
+    i_clk_b: input  'b clock,
+    i_rst_b: input  'b reset,
+    i_dat_b: input  'b logic,
+    o_dat_b: output 'b logic,
+) {
+    // assignの右辺から 'a と推論
+    var x: logic;
+
+    assign x       = i_dat_a;
+    assign o_dat_a = x;
+
+    // always_ffのクロックから 'b と推論
+    var y: logic;
+    always_ff (i_clk_b, i_rst_b) {
+        if_reset {
+            y = 0;
+        } else {
+            y = i_dat_b;
+        }
+    }
+    assign o_dat_b = y;
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="unsafe-cdc"><a class="header" href="#unsafe-cdc">Unsafe CDC</a></h1>
 <p>Veryl コンパイラはクロックドメインクロッシングをエラーとして検出します。そのためクロックドメインクロッシングを行う場所には明示的な <code>unsafe (cdc)</code> ブロックが必要です。ブロック内ではクロックドメインクロッシングのチェックが抑制されるため、設計者はそれが安全かどうか注意深く確認する必要があります。</p>
 <pre><code class="language-veryl playground">module ModuleA (
@@ -3264,7 +3438,7 @@ repository = "https://github.com/veryl-lang/veryl"
 <li><code>negedge</code> – 立ち下がりエッジ</li>
 </ul>
 <h2 id="reset_type-フィールド"><a class="header" href="#reset_type-フィールド"><code>reset_type</code> フィールド</a></h2>
-<p>The <code>reset_type</code> field specifies reset polarity and synchronisity. The available types are below:</p>
+<p><code>reset_type</code> フィールドはリセットの極性と同期性を指定します。</p>
 <ul>
 <li><code>async_low</code> – 非同期・負極性</li>
 <li><code>async_high</code> – 非同期・正極性</li>
@@ -3279,7 +3453,7 @@ repository = "https://github.com/veryl-lang/veryl"
 <li><code>flgen</code> – <a href="https://github.com/pezy-computing/flgen">flgen</a> 形式のファイルリスト</li>
 </ul>
 <h2 id="sources-フィールド"><a class="header" href="#sources-フィールド"><code>sources</code> フィールド</a></h2>
-<p>By default, the Veryl compiler collects and translate all <code>*.veryl</code> files which are visible from the project root. You can specify directries where the Veryl compiler collect files by using the <code>sources</code> field.</p>
+<p>デフォルトではVerylコンパイラはプロジェクトルートから見える全ての <code>*.veryl</code> ファイルを処理します。特定のディレクトリだけを処理するために <code>sources</code> フィールドを使用することができます。</p>
 <pre><code class="language-toml">[build]
 sources = ["rtl/foo_module", "rtl/bar_module"]
 </code></pre>
@@ -3630,11 +3804,11 @@ bump_commit_message = "Bump"
 <div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr></thead><tbody>
 <tr><td>bump_commit</td><td>ブーリアン</td><td>false</td><td>バージョンアップ後の自動コミット</td></tr>
 <tr><td>publish_commit</td><td>ブーリアン</td><td>false</td><td>公開後の自動コミット</td></tr>
-<tr><td>bump_commit_mesasge</td><td>文字列</td><td>“chore: Bump version”</td><td>バージョンアップ後のコミットメッセージ</td></tr>
-<tr><td>publish_commit_mesasge</td><td>文字列</td><td>“chore: Publish”</td><td>公開後のコミットメッセージ</td></tr>
+<tr><td>bump_commit_message</td><td>文字列</td><td>“chore: Bump version”</td><td>バージョンアップ後のコミットメッセージ</td></tr>
+<tr><td>publish_commit_message</td><td>文字列</td><td>“chore: Publish”</td><td>公開後のコミットメッセージ</td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h1>
-<p>If you want to add other Veryl projects to dependencies of your project, you can add them to <code>[dependencies]</code> section in <code>Veryl.toml</code>. The left hand side of entry is the project name of the dependency, and the right hand side is the source and version. <code>github</code> is a syntax sugger to refer a repository on GitHub. Instead of it, <code>git</code> with a full URL can be used.</p>
+<p>他の Veryl プロジェクトへの依存関係をプロジェクトに追加したい場合、<code>Veryl.toml</code> に <code>[dependencies]</code> セクションを追加します。エントリの左辺は依存関係のプロジェクト名、右辺はソースパスとバージョンです。<code>github</code> はGitHub上のリポジトリを参照する糖衣構文です。代わりに <code>git</code> を用いてURL全体を指定することもできます。</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
 
@@ -3699,7 +3873,7 @@ veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = ".
 </code></pre>
 <p>これは <code>../veryl_sample</code> が存在する場合はそれを使い、そうでない場合は Git から取得する、という意味です。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="プロジェクトを公開する"><a class="header" href="#プロジェクトを公開する">プロジェクトを公開する</a></h1>
-<p>To publish your project, <code>veryl publish</code> can be used. Publising means to associate a version with a git revision.</p>
+<p>プロジェクトを公開するには <code>veryl publish</code> コマンドを使います。公開とはバージョン番号とgitのリビジョンを紐づけることです。</p>
 <pre><code>$ veryl publish
 [INFO ]   Publishing release (0.2.1 @ 297bc6b24c5ceca9e648c3ea5e01011c67d7efe7)
 [INFO ]      Writing metadata ([path to project]/Veryl.pub)
@@ -3833,7 +4007,9 @@ target = {type = "directory", path = "target"}
 <p><code>veryl check</code> あるいは <code>veryl build</code> でリントチェックができます。あるいは言語サーバはリアルタイムでのチェックを行います。</p>
 <p>全設定の説明は<a href="06_development_environment/./01_project_configuration/03_lint.html">こちら</a>。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="シミュレータ"><a class="header" href="#シミュレータ">シミュレータ</a></h1>
-<p>RTLシミュレータによるテストは <code>veryl test</code> で実行することができます。サポートされているシミュレータは以下の通りです。</p>
+<p>テストは <code>veryl test</code> で実行することができます。</p>
+<p><a href="06_development_environment/../05_language_reference/13_integrated_test.html#native-test">ネイティブテスト</a> ではVerylの組み込みシミュレータが使用されます。外部シミュレータのインストールは不要です。</p>
+<p>SystemVerilogテストとcocotbテストでは、外部のRTLシミュレータが必要です。サポートされているシミュレータは以下の通りです。</p>
 <ul>
 <li><a href="https://www.veripool.org/verilator/">Verilator</a></li>
 <li><a href="https://www.synopsys.com/verification/simulation/vcs.html">Synopsys VCS</a></li>
@@ -3924,7 +4100,48 @@ path = "document"
 <div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr></thead><tbody>
 <tr><td>path</td><td>文字列</td><td>“doc”</td><td>出力ディレクトリへのパス</td></tr>
 </tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="github-action"><a class="header" href="#github-action">GitHub Action</a></h1>
+</div>
+<h2 id="ドキュメンテーションテスト"><a class="header" href="#ドキュメンテーションテスト">ドキュメンテーションテスト</a></h2>
+<p>WaveDromブロックは <code>wavedrom</code> の代わりに <code>wavedrom,test</code> コードブロックを使うことでドキュメンテーションテストとしても利用できます。波形の信号名はモジュールポートと名前で照合されます（<code>i_</code>/<code>o_</code> プレフィックスと <code>_n</code> サフィックスは自動的に除去されます）。クロックとリセット信号は適切に認識・処理されます。</p>
+<p>ドキュメンテーションテストは他の組み込みテストとともに <code>veryl test</code> コマンドで実行されます。</p>
+<p>使用可能なwave文字は以下です。</p>
+<ul>
+<li><code>p</code>, <code>P</code>, <code>n</code>, <code>N</code> — クロック信号（ポジティブ/ネガティブエッジ）</li>
+<li><code>0</code>, <code>1</code> — 論理値</li>
+<li><code>x</code>, <code>z</code> — 不定 / ハイインピーダンス</li>
+<li><code>.</code> — 前の値を繰り返し</li>
+<li><code>=</code>, <code>2</code>-<code>9</code> — データ値（<code>data</code> 配列と併用）</li>
+</ul>
+<pre><code class="language-veryl playground">/// 1サイクル遅延レジスタ
+///
+/// ```wavedrom,test
+/// {signal: [
+///   {name: 'clk',   wave: 'p........'},
+///   {name: 'rst_n', wave: '0.1......'},
+///   {name: 'din',   wave: '0.01.0.1.'},
+///   {name: 'dout',  wave: '0...1.0.1'}
+/// ]}
+/// ```
+pub module ModuleB (
+    i_clk  : input  'a clock,
+    i_rst_n: input  'a reset,
+    i_din  : input  'a logic,
+    o_dout : output 'a logic,
+) {
+    var r_data: 'a logic;
+
+    always_ff {
+        if_reset {
+            r_data = 0;
+        } else {
+            r_data = i_din;
+        }
+    }
+
+    assign o_dout = r_data;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="github-action"><a class="header" href="#github-action">GitHub Action</a></h1>
 <p>ビルド済みのVerylバイナリをダウンロードするための公式GitHub actionが提供されています。</p>
 <p><a href="https://github.com/marketplace/actions/setup-veryl">https://github.com/marketplace/actions/setup-veryl</a></p>
 <p>GitHub actionスクリプトの例は以下の通りです。</p>

@@ -257,8 +257,8 @@ module ModuleA (
 <ul>
 <li><code>..input</code>: all variables in the interface as <code>input</code></li>
 <li><code>..output</code>: all variables in the interface as <code>output</code></li>
-<li><code>..same(modport_name)</code>: the same variables as <code>modport_name</code></li>
-<li><code>..converse(modport_name)</code>: the same variables as <code>modport_name</code>, but all direction is converse</li>
+<li><code>..same(modport_name, ...)</code>: the same members as specified modports (including imported functions)</li>
+<li><code>..converse(modport_name, ...)</code>: the same members as specified modports, but all direction is converse (imported functions are kept as-is)</li>
 </ul>
 <p>Specifing default members can be used with normal explicit members.</p>
 <pre><code class="language-veryl playground">interface InterfaceA {
@@ -266,14 +266,21 @@ module ModuleA (
     var b: logic;
     var c: logic;
 
-    modport master {
+    modport mp_a {
         a: output,
-        b: input ,
-        c: input ,
+    }
+
+    modport mp_b {
+        b: input,
+        c: input,
+    }
+
+    modport master {
+        ..same(mp_a, mp_b)
     }
 
     modport slave {
-        ..converse(master)
+        ..converse(mp_a, mp_b)
     }
 
     modport monitor {

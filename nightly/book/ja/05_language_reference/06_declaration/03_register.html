@@ -210,7 +210,7 @@
                         <h1 id="レジスタ"><a class="header" href="#レジスタ">レジスタ</a></h1>
 <p>レジスタ変数とは <code>always_ff</code> で代入される変数です。合成フェーズでフリップフロップにマップされます。</p>
 <p><code>always_ff</code> は必須のクロック変数、オプションのリセット変数、<code>{}</code> ブロックをとります。クロックとリセットは <code>()</code> に書きます。指定されたクロックとリセットは <code>clock</code> / <code>reset</code> 型を持ち、そのビット幅は1ビットでなければなりません。</p>
-<p><code>if_reset</code> is a special keyword which can be used in <code>always_ff</code>. It means reset condition of the register variable. If <code>if_reset</code> is used, <code>always_ff</code> must have reset variable. <code>if_reset</code> can be conceal reset porality and synchronisity. The actual porality and synchronisity can be configured through <code>[build]</code> section of <code>Veryl.toml</code>.</p>
+<p><code>if_reset</code> は <code>always_ff</code> に書ける特別なキーワードで、そのレジスタ変数のリセット条件を示します。<code>if_reset</code> を使う場合は <code>always_ff</code> のリセット変数は必須です。これを使うことで、リセットの極性と同期性を隠ぺいすることができます。実際の極性と同期性は <code>Veryl.toml</code> の <code>[build]</code> セクションで設定できます。</p>
 <p>モジュール内にクロックとリセットが1つしかない場合、クロックとリセットの指定は省略できます。</p>
 <pre><code class="language-veryl playground">module ModuleA (
     i_clk: input clock,

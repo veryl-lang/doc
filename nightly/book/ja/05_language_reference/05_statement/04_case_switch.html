@@ -265,8 +265,8 @@
 <pre><code class="language-toml">[build]
 emit_cond_type = true
 </code></pre>
-<h2 id="concatenation-in-left-hand-side"><a class="header" href="#concatenation-in-left-hand-side">Concatenation in left-hand side</a></h2>
-<p>If you want to use bit concatenation in left-hand of case/switch, surrounding <code>{}</code> is necessary, even if the statement is single.</p>
+<h2 id="左辺でのビット連結"><a class="header" href="#左辺でのビット連結">左辺でのビット連結</a></h2>
+<p>case/switchの左辺でビット連結を使用する場合、文が1つだけであっても <code>{}</code> で囲む必要があります。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
