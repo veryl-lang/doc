@@ -57,3 +57,41 @@ module ModuleA {
 
 interface InterfaceA {}
 ```
+
+## Clock domain inference
+
+Variables declared without clock domain annotation can have their domain inferred automatically.
+The domain is inferred from the right-hand side of `assign` statements or the clock of `always_ff` blocks.
+
+Note that clock domain annotation on port declarations cannot be omitted even if inference is possible,
+because port declarations are public interfaces and should be explicit.
+
+```veryl,playground
+module ModuleA (
+    i_clk_a: input  'a clock,
+    i_rst_a: input  'a reset,
+    i_dat_a: input  'a logic,
+    o_dat_a: output 'a logic,
+    i_clk_b: input  'b clock,
+    i_rst_b: input  'b reset,
+    i_dat_b: input  'b logic,
+    o_dat_b: output 'b logic,
+) {
+    // inferred as 'a from assign RHS
+    var x: logic;
+
+    assign x       = i_dat_a;
+    assign o_dat_a = x;
+
+    // inferred as 'b from always_ff clock
+    var y: logic;
+    always_ff (i_clk_b, i_rst_b) {
+        if_reset {
+            y = 0;
+        } else {
+            y = i_dat_b;
+        }
+    }
+    assign o_dat_b = y;
+}
+```

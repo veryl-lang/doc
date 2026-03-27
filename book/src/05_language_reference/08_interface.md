@@ -58,8 +58,8 @@ Instead of specifing all members of modport, default members can be specified li
 
 * `..input`: all variables in the interface as `input`
 * `..output`: all variables in the interface as `output`
-* `..same(modport_name)`: the same variables as `modport_name`
-* `..converse(modport_name)`: the same variables as `modport_name`, but all direction is converse
+* `..same(modport_name, ...)`: the same members as specified modports (including imported functions)
+* `..converse(modport_name, ...)`: the same members as specified modports, but all direction is converse (imported functions are kept as-is)
 
 Specifing default members can be used with normal explicit members.
 
@@ -69,14 +69,21 @@ interface InterfaceA {
     var b: logic;
     var c: logic;
 
-    modport master {
+    modport mp_a {
         a: output,
-        b: input ,
-        c: input ,
+    }
+
+    modport mp_b {
+        b: input,
+        c: input,
+    }
+
+    modport master {
+        ..same(mp_a, mp_b)
     }
 
     modport slave {
-        ..converse(master)
+        ..converse(mp_a, mp_b)
     }
 
     modport monitor {

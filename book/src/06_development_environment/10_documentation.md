@@ -59,3 +59,50 @@ path = "document"
 | Configuration | Value   | Default | Description              |
 |---------------|---------|---------|--------------------------|
 | path          | string  | "doc"   | path to output directory |
+
+## Documentation test
+
+WaveDrom blocks can also be used as documentation tests by using `wavedrom,test` code block instead of `wavedrom`.
+The waveform signals are matched to module ports by name (with `i_`/`o_` prefix and `_n` suffix removed automatically).
+Clock and reset signals are recognized and handled appropriately.
+
+Documentation tests are executed through `veryl test` command along with other integrated tests.
+
+The available wave characters are:
+
+* `p`, `P`, `n`, `N` — clock signals (positive/negative edge)
+* `0`, `1` — logic values
+* `x`, `z` — unknown / high-impedance
+* `.` — repeat previous value
+* `=`, `2`-`9` — data values (with `data` array)
+
+```veryl,playground
+/// 1-cycle delay register.
+///
+/// ```wavedrom,test
+/// {signal: [
+///   {name: 'clk',   wave: 'p........'},
+///   {name: 'rst_n', wave: '0.1......'},
+///   {name: 'din',   wave: '0.01.0.1.'},
+///   {name: 'dout',  wave: '0...1.0.1'}
+/// ]}
+/// ```
+pub module ModuleB (
+    i_clk  : input  'a clock,
+    i_rst_n: input  'a reset,
+    i_din  : input  'a logic,
+    o_dout : output 'a logic,
+) {
+    var r_data: 'a logic;
+
+    always_ff {
+        if_reset {
+            r_data = 0;
+        } else {
+            r_data = i_din;
+        }
+    }
+
+    assign o_dout = r_data;
+}
+```
