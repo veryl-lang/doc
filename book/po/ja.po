@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2026-03-11T17:36:44+09:00\n"
+"POT-Creation-Date: 2026-03-27T12:30:09+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -625,9 +625,10 @@ msgid "Integrated test"
 msgstr "組み込みテスト"
 
 #: src/02_features.md:43
+#, fuzzy
 msgid ""
 "Test code written by SystemVerilog or [cocotb](https://www.cocotb.org) can "
-"be embeded in Veryl code, it can be executed through `veryl test` command."
+"be embedded in Veryl code, it can be executed through `veryl test` command."
 msgstr ""
 "SystemVerilogまたは[cocotb](https://www.cocotb.org)で書かれたテストコードを"
 "Verylに埋め込み、`veryl test` コマンドで実行することができます。"
@@ -1056,10 +1057,11 @@ msgid "Editor integration"
 msgstr "エディタ設定"
 
 #: src/03_getting_started/01_installation.md:39
+#, fuzzy
 msgid ""
 "[Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-"
-"studio-code) and [Vim](https://github.com/vim/vim) / [Neovim](https://neovim."
-"io) are supported officially."
+"studio-code), [Vim](https://github.com/vim/vim) / [Neovim](https://neovim."
+"io), and [Zed](https://zed.dev) are supported officially."
 msgstr ""
 "公式には [Visual Studio Code](https://azure.microsoft.com/ja-jp/products/"
 "visual-studio-code) と [Vim](https://github.com/vim/vim) / [Neovim](https://"
@@ -2282,34 +2284,67 @@ msgid "`i64`: 64bit signed integer"
 msgstr "`i64`：64ビットの符号付き整数"
 
 #: src/05_language_reference/03_data_type/01_builtin_type.md:73
+msgid "Positive integer type"
+msgstr "正の整数型"
+
+#: src/05_language_reference/03_data_type/01_builtin_type.md:75
+msgid "There are some positive integer types:"
+msgstr "正の整数型にはいくつかの種類があります。"
+
+#: src/05_language_reference/03_data_type/01_builtin_type.md:77
+msgid "`p8` : 8bit positive unsigned integer"
+msgstr "`p8`：8ビットの正の符号なし整数"
+
+#: src/05_language_reference/03_data_type/01_builtin_type.md:78
+msgid "`p16`: 16bit positive unsigned integer"
+msgstr "`p16`：16ビットの正の符号なし整数"
+
+#: src/05_language_reference/03_data_type/01_builtin_type.md:79
+msgid "`p32`: 32bit positive unsigned integer"
+msgstr "`p32`：32ビットの正の符号なし整数"
+
+#: src/05_language_reference/03_data_type/01_builtin_type.md:80
+msgid "`p64`: 64bit positive unsigned integer"
+msgstr "`p64`：64ビットの正の符号なし整数"
+
+#: src/05_language_reference/03_data_type/01_builtin_type.md:82
+msgid ""
+"Positive integer types enforce compile-time validation that assigned values "
+"are greater than zero. Only positive literal values and expressions that "
+"evaluate to positive values are accepted."
+msgstr ""
+"正の整数型はコンパイル時に代入値がゼロより大きいことを検証します。正のリテラ"
+"ル値および正の値に評価される式のみが受け入れられます。"
+
+#: src/05_language_reference/03_data_type/01_builtin_type.md:94
 msgid "Floating point type"
 msgstr "浮動小数点数型"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:75
+#: src/05_language_reference/03_data_type/01_builtin_type.md:96
 msgid "There are some floating point types:"
 msgstr "浮動小数点数型にもいくつかの種類があります。"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:77
+#: src/05_language_reference/03_data_type/01_builtin_type.md:98
 msgid "`f32`: 32bit floating point"
 msgstr "`f32`：32ビット浮動小数点数"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:78
+#: src/05_language_reference/03_data_type/01_builtin_type.md:99
 msgid "`f64`: 64bit floating point"
 msgstr "`f64`：64ビット浮動小数点数"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:80
+#: src/05_language_reference/03_data_type/01_builtin_type.md:101
 msgid "Both of them are represented as described by IEEE Std 754."
 msgstr "いずれも IEEE Std 754 準拠の表現です。"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:89
+#: src/05_language_reference/03_data_type/01_builtin_type.md:110
 msgid "String type"
 msgstr "文字列型"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:91
+#: src/05_language_reference/03_data_type/01_builtin_type.md:112
 msgid "`string` is string type."
 msgstr "`string` は文字列を表す型です。"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:93
+#: src/05_language_reference/03_data_type/01_builtin_type.md:114
 msgid ""
 "```veryl,playground\n"
 "module ModuleA {\n"
@@ -2323,11 +2358,11 @@ msgstr ""
 "}\n"
 "```"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:99
+#: src/05_language_reference/03_data_type/01_builtin_type.md:120
 msgid "Type type"
 msgstr "Type型"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:101
+#: src/05_language_reference/03_data_type/01_builtin_type.md:122
 msgid ""
 "`type` is a type which represents type kind. Variable of `type` can be "
 "defined as `param` or `const` only."
@@ -2335,11 +2370,11 @@ msgstr ""
 "`type` は型の種類を表す型です。`type` 型の変数は `param` か `const` としての"
 "み定義可能です。"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:112
+#: src/05_language_reference/03_data_type/01_builtin_type.md:133
 msgid "Boolean type"
 msgstr "ブーリアン型"
 
-#: src/05_language_reference/03_data_type/01_builtin_type.md:114
+#: src/05_language_reference/03_data_type/01_builtin_type.md:135
 msgid ""
 "`bbool` and `lbool` are type aliases of `bit<1>` and `logic<1>` to express "
 "boolean. `true` and `false` literal which express `1'b1` and `1'b0` can be "
@@ -3212,8 +3247,9 @@ msgid ""
 msgstr "変数宣言は `var` キーワードで始まり、変数名、`:`、変数の型と続きます。"
 
 #: src/05_language_reference/06_declaration/01_variable.md:6
+#, fuzzy
 msgid ""
-"If there are unused variables, warning will be occured. Variable name "
+"If there are unused variables, warning will be occurred. Variable name "
 "starting with `_` means unused variable, and suppresses the warning."
 msgstr ""
 "未使用の変数は警告が発生します。`_` で始まる変数名は未使用変数を意味し、警告"
@@ -3319,6 +3355,30 @@ msgid ""
 msgstr ""
 "インターフェースのmodportは引数の型としても使用できます。与えられたmodportは"
 "SystemVerilog生成時にVerilogポートに展開されます。"
+
+#: src/05_language_reference/06_declaration/06_function.md:68
+msgid "Global function"
+msgstr "グローバル関数"
+
+#: src/05_language_reference/06_declaration/06_function.md:70
+msgid ""
+"Functions defined at the project namespace level (outside of `module`, "
+"`interface`, and `package`) are called global functions. When a global "
+"function is called from a module, it is emitted into the caller module's "
+"namespace in the generated SystemVerilog."
+msgstr ""
+"プロジェクト名前空間レベル（`module`、`interface`、`package` の外側）で定義さ"
+"れた関数はグローバル関数と呼ばれます。グローバル関数がモジュールから呼び出さ"
+"れると、生成される SystemVerilog では呼び出し元モジュールの名前空間に展開され"
+"ます。"
+
+#: src/05_language_reference/06_declaration/06_function.md:73
+msgid ""
+"Global functions can be generic and can be published with `pub` for cross-"
+"project use."
+msgstr ""
+"グローバル関数はジェネリックにすることができ、`pub` を付与することでプロジェクト間で公開す"
+"ることもできます。"
 
 #: src/05_language_reference/06_declaration/07_initial_final.md:3
 msgid ""
@@ -4065,26 +4125,31 @@ msgid "`..output`: all variables in the interface as `output`"
 msgstr "`..output`: インターフェース内の全ての変数を `output` として追加"
 
 #: src/05_language_reference/08_interface.md:61
-msgid "`..same(modport_name)`: the same variables as `modport_name`"
-msgstr "`..same(modport_name)`: `modport_name` と同じ変数を同じ方向で追加"
+msgid ""
+"`..same(modport_name, ...)`: the same members as specified modports "
+"(including imported functions)"
+msgstr ""
+"`..same(modport_name, ...)`: 指定されたmodportと同じメンバーを同じ方向で追加"
+"（インポートされた関数を含む）"
 
 #: src/05_language_reference/08_interface.md:62
 msgid ""
-"`..converse(modport_name)`: the same variables as `modport_name`, but all "
-"direction is converse"
+"`..converse(modport_name, ...)`: the same members as specified modports, but "
+"all direction is converse (imported functions are kept as-is)"
 msgstr ""
-"`..converse(modport_name)`: `modport_name` と同じ変数を、方向を逆にして追加"
+"`..converse(modport_name, ...)`: 指定されたmodportと同じメンバーを、方向を逆"
+"にして追加（インポートされた関数はそのまま維持）"
 
 #: src/05_language_reference/08_interface.md:64
 msgid "Specifing default members can be used with normal explicit members."
 msgstr ""
 "デフォルトメンバーの指定は通常の明示的なメンバーと一緒に使うこともできます。"
 
-#: src/05_language_reference/08_interface.md:93
+#: src/05_language_reference/08_interface.md:100
 msgid "Connect interface instances/modport ports"
 msgstr "インターフェースインスタンスとmodportポートの接続"
 
-#: src/05_language_reference/08_interface.md:95
+#: src/05_language_reference/08_interface.md:102
 msgid ""
 "An interface instance and a modport port can be connected with a module port "
 "of which type is compatible with it or is the `generic` interface with the "
@@ -4177,10 +4242,11 @@ msgstr ""
 "できないことを意味します。"
 
 #: src/05_language_reference/11_visibility.md:6
+#, fuzzy
 msgid ""
 "`pub` keyword can be used to specify an item as public to other project. "
 "`veryl doc` will generate [documents]"
-"(../05_development_environment/09_documentation.md) of public items only."
+"(../06_development_environment/10_documentation.md) of public items only."
 msgstr ""
 "`pub` キーワードによって他のプロジェクトから見えるように指定することができま"
 "す。`veryl doc` コマンドはパブリックなアイテムの [ドキュメント]"
@@ -4277,19 +4343,24 @@ msgstr ""
 "て実行されます。"
 
 #: src/05_language_reference/13_integrated_test.md:6
-msgid "There are two way to describe integrated test:"
-msgstr "組み込みテストにはいくつかの種類があります。"
+msgid "There are three ways to describe integrated test:"
+msgstr "組み込みテストの記述方法は3種類あります。"
 
 #: src/05_language_reference/13_integrated_test.md:8
-#: src/05_language_reference/13_integrated_test.md:14
+#: src/05_language_reference/13_integrated_test.md:15
+msgid "Native test"
+msgstr "ネイティブテスト"
+
+#: src/05_language_reference/13_integrated_test.md:9
+#: src/05_language_reference/13_integrated_test.md:128
 msgid "SystemVerilog test"
 msgstr "SystemVerilogテスト"
 
-#: src/05_language_reference/13_integrated_test.md:9
+#: src/05_language_reference/13_integrated_test.md:10
 msgid "[cocotb](https://www.cocotb.org) test"
 msgstr "[cocotb](https://www.cocotb.org) テスト"
 
-#: src/05_language_reference/13_integrated_test.md:11
+#: src/05_language_reference/13_integrated_test.md:12
 msgid ""
 "About RTL simulator used by `veryl test`, see [Simulator]"
 "(../06_development_environment/07_simulator.md). If `--wave` option is "
@@ -4299,7 +4370,148 @@ msgstr ""
 "(../06_development_environment/07_simulator.md) を参照してください。`--wave` "
 "オプションで波形を生成することもできます。"
 
-#: src/05_language_reference/13_integrated_test.md:16
+#: src/05_language_reference/13_integrated_test.md:17
+msgid ""
+"Native test allows writing testbenches directly in Veryl without embedding "
+"SystemVerilog or using external frameworks. A module with "
+"`#[test(test_name)]` attribute (without `embed` declaration) is treated as a "
+"native test."
+msgstr ""
+"ネイティブテストでは、SystemVerilogの埋め込みや外部フレームワークを使わずに、"
+"Verylで直接テストベンチを記述できます。`#[test(test_name)]` 属性が付けられた"
+"モジュール（`embed` 宣言なし）がネイティブテストとして扱われます。"
+
+#: src/05_language_reference/13_integrated_test.md:20
+msgid "The following testbench components are available:"
+msgstr "以下のテストベンチコンポーネントが利用可能です。"
+
+#: src/05_language_reference/13_integrated_test.md:22
+msgid ""
+"`$tb::clock_gen` — clock signal generator (with optional `#(period: N)` "
+"parameter)"
+msgstr ""
+"`$tb::clock_gen` — クロック信号生成器（オプションで `#(period: N)` パラメー"
+"タを指定可能）"
+
+#: src/05_language_reference/13_integrated_test.md:23
+msgid ""
+"`$tb::reset_gen` — reset signal generator (with optional `#(cycles: N)` "
+"parameter)"
+msgstr ""
+"`$tb::reset_gen` — リセット信号生成器（オプションで `#(cycles: N)` パラメー"
+"タを指定可能）"
+
+#: src/05_language_reference/13_integrated_test.md:25
+msgid "And the following system functions can be used in `initial` blocks:"
+msgstr "また、以下のシステム関数が `initial` ブロック内で使用できます。"
+
+#: src/05_language_reference/13_integrated_test.md:27
+msgid ""
+"`$assert(condition)` or `$assert(condition, message)` — check assertions "
+"during simulation"
+msgstr ""
+"`$assert(condition)` または `$assert(condition, message)` — シミュレーション"
+"中にアサーションを検証"
+
+#: src/05_language_reference/13_integrated_test.md:28
+msgid "`$finish()` — terminate simulation"
+msgstr "`$finish()` — シミュレーションを終了"
+
+#: src/05_language_reference/13_integrated_test.md:30
+msgid "Basic example"
+msgstr "基本的な例"
+
+#: src/05_language_reference/13_integrated_test.md:69
+msgid "Testbench methods"
+msgstr "テストベンチメソッド"
+
+#: src/05_language_reference/13_integrated_test.md:71
+msgid "`clock_gen` provides the `next` method to advance clock cycles:"
+msgstr "`clock_gen` はクロックサイクルを進める `next` メソッドを提供します。"
+
+#: src/05_language_reference/13_integrated_test.md:73
+msgid "`clk.next()` — advance clock by 1 cycle"
+msgstr "`clk.next()` — クロックを1サイクル進める"
+
+#: src/05_language_reference/13_integrated_test.md:74
+msgid "`clk.next(N)` — advance clock by `N` cycles"
+msgstr "`clk.next(N)` — クロックを `N` サイクル進める"
+
+#: src/05_language_reference/13_integrated_test.md:76
+msgid "`reset_gen` provides the `assert` method to assert reset:"
+msgstr "`reset_gen` はリセットをアサートする `assert` メソッドを提供します。"
+
+#: src/05_language_reference/13_integrated_test.md:78
+msgid "`rst.assert(clk)` — assert reset synchronized to clock"
+msgstr "`rst.assert(clk)` — クロックに同期してリセットをアサート"
+
+#: src/05_language_reference/13_integrated_test.md:79
+msgid "`rst.assert(clk, duration)` — assert reset for specified duration"
+msgstr "`rst.assert(clk, duration)` — 指定された期間リセットをアサート"
+
+#: src/05_language_reference/13_integrated_test.md:81
+msgid "The reset duration can also be configured at instantiation:"
+msgstr "リセット期間はインスタンス化時にも設定できます。"
+
+#: src/05_language_reference/13_integrated_test.md:83
+msgid ""
+"```veryl,playground\n"
+"#[test(test_reset_cycles_param)]\n"
+"module test_reset_cycles_param {\n"
+"    inst clk: $tb::clock_gen;\n"
+"    inst rst: $tb::reset_gen #( cycles: 5 );\n"
+"\n"
+"    // ...\n"
+"\n"
+"    initial {\n"
+"        rst.assert(clk);\n"
+"        // ...\n"
+"    }\n"
+"}\n"
+"```"
+msgstr ""
+
+#: src/05_language_reference/13_integrated_test.md:98
+msgid "Function calls in testbench"
+msgstr "テストベンチ内の関数呼び出し"
+
+#: src/05_language_reference/13_integrated_test.md:100
+msgid ""
+"Testbench methods like `clk.next` can be called from user-defined functions:"
+msgstr ""
+"`clk.next` などのテストベンチメソッドはユーザー定義関数から呼び出すことがで"
+"きます。"
+
+#: src/05_language_reference/13_integrated_test.md:102
+msgid ""
+"```veryl,playground\n"
+"#[test(test_function_call)]\n"
+"module test_function_call {\n"
+"    inst clk: $tb::clock_gen;\n"
+"    inst rst: $tb::reset_gen;\n"
+"\n"
+"    var cnt: logic<32>;\n"
+"\n"
+"    // inst dut: Counter (clk, rst, cnt);\n"
+"\n"
+"    function step_n (\n"
+"        n: input logic<32>,\n"
+"    ) {\n"
+"        clk.next(n);\n"
+"    }\n"
+"\n"
+"    initial {\n"
+"        rst.assert(clk);\n"
+"        step_n    (5);\n"
+"        step_n    (5);\n"
+"        $assert   (cnt == 32'd10);\n"
+"        $finish   ();\n"
+"    }\n"
+"}\n"
+"```"
+msgstr ""
+
+#: src/05_language_reference/13_integrated_test.md:130
 msgid ""
 "SystemVerilog test can be described with `inline` specifier. The top level "
 "module of the block must have the same name as the test name."
@@ -4307,7 +4519,7 @@ msgstr ""
 "SystemVerilog テストは `inline` 指定子で記述することができます。ブロックの"
 "トップレベルモジュールはテスト名と同じでなければなりません。"
 
-#: src/05_language_reference/13_integrated_test.md:19
+#: src/05_language_reference/13_integrated_test.md:133
 msgid ""
 "The messages through `$info`, `$warning`, `$error` and `$fatal` system "
 "function are handled by Veryl compiler, and shown as exectution log. The "
@@ -4317,15 +4529,15 @@ msgstr ""
 "コンパイラにより実行ログとして表示されます。`$error` と `$fatal` の呼び出しは"
 "テストの失敗として扱われます。"
 
-#: src/05_language_reference/13_integrated_test.md:22
+#: src/05_language_reference/13_integrated_test.md:136
 msgid ""
-"The following example, a SystemVerilog source code embeded by `embed` "
+"The following example, a SystemVerilog source code embedded by `embed` "
 "declaration are marked as test."
 msgstr ""
 "以下の例では SystemVerilog のソースコードを `embed` 宣言で埋め込み、テストと"
 "してマークしています。"
 
-#: src/05_language_reference/13_integrated_test.md:24
+#: src/05_language_reference/13_integrated_test.md:138
 msgid ""
 "```veryl,playground\n"
 "#[test(test1)]\n"
@@ -4349,11 +4561,11 @@ msgstr ""
 "}}}\n"
 "```"
 
-#: src/05_language_reference/13_integrated_test.md:35
+#: src/05_language_reference/13_integrated_test.md:149
 msgid "cocotb test"
 msgstr "cocotb テスト"
 
-#: src/05_language_reference/13_integrated_test.md:37
+#: src/05_language_reference/13_integrated_test.md:151
 msgid ""
 "cocotb test can be described with `cocotb` specifier. The target module name "
 "for test should be specified by the second argument of `#[test]` attribute."
@@ -4397,8 +4609,8 @@ msgstr "ユニオン"
 msgid ""
 "Each generic definition has generic parameters (often an uppercase letter is "
 "used like `T`) which can be placed as identifier or expression in the "
-"definition. Generic parameters are declared after item's identifier with "
-"`::<>`."
+"definition. Generic parameters are declared after item's identifier with `::"
+"<>`."
 msgstr ""
 "それぞれのジェネリック定義はジェネリックパラメータ（`T` のような大文字1文字が"
 "よく使われます）を持ち、定義内で識別子や式として配置できます。ジェネリックパ"
@@ -4866,6 +5078,91 @@ msgstr ""
 msgid "Interface instances can have clock domain annotation."
 msgstr ""
 "インターフェースインスタンスもクロックドメインアノテーションを指定可能です。"
+
+#: src/05_language_reference/15_clock_domain_annotation.md:61
+msgid "Clock domain inference"
+msgstr "クロックドメインの推論"
+
+#: src/05_language_reference/15_clock_domain_annotation.md:63
+msgid ""
+"Variables declared without clock domain annotation can have their domain "
+"inferred automatically. The domain is inferred from the right-hand side of "
+"`assign` statements or the clock of `always_ff` blocks."
+msgstr ""
+"クロックドメインアノテーションなしで宣言された変数は、ドメインを自動的に推論"
+"できます。ドメインは `assign` 文の右辺または `always_ff` ブロックのクロックか"
+"ら推論されます。"
+
+#: src/05_language_reference/15_clock_domain_annotation.md:66
+msgid ""
+"Note that clock domain annotation on port declarations cannot be omitted "
+"even if inference is possible, because port declarations are public "
+"interfaces and should be explicit."
+msgstr ""
+"ポート宣言は公開インターフェースであり明示的であるべきなので、推論が可能な場"
+"合でもポート宣言のクロックドメインアノテーションは省略できません。"
+
+#: src/05_language_reference/15_clock_domain_annotation.md:69
+msgid ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk_a: input  'a clock,\n"
+"    i_rst_a: input  'a reset,\n"
+"    i_dat_a: input  'a logic,\n"
+"    o_dat_a: output 'a logic,\n"
+"    i_clk_b: input  'b clock,\n"
+"    i_rst_b: input  'b reset,\n"
+"    i_dat_b: input  'b logic,\n"
+"    o_dat_b: output 'b logic,\n"
+") {\n"
+"    // inferred as 'a from assign RHS\n"
+"    var x: logic;\n"
+"\n"
+"    assign x       = i_dat_a;\n"
+"    assign o_dat_a = x;\n"
+"\n"
+"    // inferred as 'b from always_ff clock\n"
+"    var y: logic;\n"
+"    always_ff (i_clk_b, i_rst_b) {\n"
+"        if_reset {\n"
+"            y = 0;\n"
+"        } else {\n"
+"            y = i_dat_b;\n"
+"        }\n"
+"    }\n"
+"    assign o_dat_b = y;\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk_a: input  'a clock,\n"
+"    i_rst_a: input  'a reset,\n"
+"    i_dat_a: input  'a logic,\n"
+"    o_dat_a: output 'a logic,\n"
+"    i_clk_b: input  'b clock,\n"
+"    i_rst_b: input  'b reset,\n"
+"    i_dat_b: input  'b logic,\n"
+"    o_dat_b: output 'b logic,\n"
+") {\n"
+"    // assignの右辺から 'a と推論\n"
+"    var x: logic;\n"
+"\n"
+"    assign x       = i_dat_a;\n"
+"    assign o_dat_a = x;\n"
+"\n"
+"    // always_ffのクロックから 'b と推論\n"
+"    var y: logic;\n"
+"    always_ff (i_clk_b, i_rst_b) {\n"
+"        if_reset {\n"
+"            y = 0;\n"
+"        } else {\n"
+"            y = i_dat_b;\n"
+"        }\n"
+"    }\n"
+"    assign o_dat_b = y;\n"
+"}\n"
+"```"
 
 #: src/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.md:3
 msgid ""
@@ -5343,7 +5640,8 @@ msgid "`posedge` -- positive edge"
 msgstr "`posedge` -- 立ち上がりエッジ"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:11
-msgid "`negedge` -- negetive edge"
+#, fuzzy
+msgid "`negedge` -- negative edge"
 msgstr "`negedge` -- 立ち下がりエッジ"
 
 #: src/06_development_environment/01_project_configuration/01_build.md:13
@@ -7123,7 +7421,8 @@ msgid "automatic commit after publish"
 msgstr "公開後の自動コミット"
 
 #: src/06_development_environment/01_project_configuration/05_publish.md:17
-msgid "bump_commit_mesasge"
+#, fuzzy
+msgid "bump_commit_message"
 msgstr "bump_commit_mesasge"
 
 #: src/06_development_environment/01_project_configuration/05_publish.md:17
@@ -7135,7 +7434,8 @@ msgid "commit message after bump"
 msgstr "バージョンアップ後のコミットメッセージ"
 
 #: src/06_development_environment/01_project_configuration/05_publish.md:18
-msgid "publish_commit_mesasge"
+#, fuzzy
+msgid "publish_commit_message"
 msgstr "publish_commit_mesasge"
 
 #: src/06_development_environment/01_project_configuration/05_publish.md:18
@@ -7941,6 +8241,119 @@ msgstr "\"doc\""
 msgid "path to output directory"
 msgstr "出力ディレクトリへのパス"
 
+#: src/06_development_environment/10_documentation.md:63
+msgid "Documentation test"
+msgstr "ドキュメンテーションテスト"
+
+#: src/06_development_environment/10_documentation.md:65
+msgid ""
+"WaveDrom blocks can also be used as documentation tests by using `wavedrom,"
+"test` code block instead of `wavedrom`. The waveform signals are matched to "
+"module ports by name (with `i_`/`o_` prefix and `_n` suffix removed "
+"automatically). Clock and reset signals are recognized and handled "
+"appropriately."
+msgstr ""
+"WaveDromブロックは `wavedrom` の代わりに `wavedrom,test` コードブロックを使う"
+"ことでドキュメンテーションテストとしても利用できます。波形の信号名はモジュー"
+"ルポートと名前で照合されます（`i_`/`o_` プレフィックスと `_n` サフィックスは"
+"自動的に除去されます）。クロックとリセット信号は適切に認識・処理されます。"
+
+#: src/06_development_environment/10_documentation.md:69
+msgid ""
+"Documentation tests are executed through `veryl test` command along with "
+"other integrated tests."
+msgstr ""
+"ドキュメンテーションテストは他の組み込みテストとともに `veryl test` コマンド"
+"で実行されます。"
+
+#: src/06_development_environment/10_documentation.md:71
+msgid "The available wave characters are:"
+msgstr "使用可能なwave文字は以下です。"
+
+#: src/06_development_environment/10_documentation.md:73
+msgid "`p`, `P`, `n`, `N` — clock signals (positive/negative edge)"
+msgstr "`p`, `P`, `n`, `N` — クロック信号（ポジティブ/ネガティブエッジ）"
+
+#: src/06_development_environment/10_documentation.md:74
+msgid "`0`, `1` — logic values"
+msgstr "`0`, `1` — 論理値"
+
+#: src/06_development_environment/10_documentation.md:75
+msgid "`x`, `z` — unknown / high-impedance"
+msgstr "`x`, `z` — 不定 / ハイインピーダンス"
+
+#: src/06_development_environment/10_documentation.md:76
+msgid "`.` — repeat previous value"
+msgstr "`.` — 前の値を繰り返し"
+
+#: src/06_development_environment/10_documentation.md:77
+msgid "`=`, `2`\\-`9` — data values (with `data` array)"
+msgstr "`=`, `2`\\-`9` — データ値（`data` 配列と併用）"
+
+#: src/06_development_environment/10_documentation.md:79
+msgid ""
+"````veryl,playground\n"
+"/// 1-cycle delay register.\n"
+"///\n"
+"/// ```wavedrom,test\n"
+"/// {signal: [\n"
+"///   {name: 'clk',   wave: 'p........'},\n"
+"///   {name: 'rst_n', wave: '0.1......'},\n"
+"///   {name: 'din',   wave: '0.01.0.1.'},\n"
+"///   {name: 'dout',  wave: '0...1.0.1'}\n"
+"/// ]}\n"
+"/// ```\n"
+"pub module ModuleB (\n"
+"    i_clk  : input  'a clock,\n"
+"    i_rst_n: input  'a reset,\n"
+"    i_din  : input  'a logic,\n"
+"    o_dout : output 'a logic,\n"
+") {\n"
+"    var r_data: 'a logic;\n"
+"\n"
+"    always_ff {\n"
+"        if_reset {\n"
+"            r_data = 0;\n"
+"        } else {\n"
+"            r_data = i_din;\n"
+"        }\n"
+"    }\n"
+"\n"
+"    assign o_dout = r_data;\n"
+"}\n"
+"````"
+msgstr ""
+"````veryl,playground\n"
+"/// 1サイクル遅延レジスタ\n"
+"///\n"
+"/// ```wavedrom,test\n"
+"/// {signal: [\n"
+"///   {name: 'clk',   wave: 'p........'},\n"
+"///   {name: 'rst_n', wave: '0.1......'},\n"
+"///   {name: 'din',   wave: '0.01.0.1.'},\n"
+"///   {name: 'dout',  wave: '0...1.0.1'}\n"
+"/// ]}\n"
+"/// ```\n"
+"pub module ModuleB (\n"
+"    i_clk  : input  'a clock,\n"
+"    i_rst_n: input  'a reset,\n"
+"    i_din  : input  'a logic,\n"
+"    o_dout : output 'a logic,\n"
+") {\n"
+"    var r_data: 'a logic;\n"
+"\n"
+"    always_ff {\n"
+"        if_reset {\n"
+"            r_data = 0;\n"
+"        } else {\n"
+"            r_data = i_din;\n"
+"        }\n"
+"    }\n"
+"\n"
+"    assign o_dout = r_data;\n"
+"}\n"
+"````"
+
 #: src/06_development_environment/11_github_action.md:3
 msgid ""
 "The official GitHub action to download a prebuilt binary of Veryl is "
@@ -8634,48 +9047,35 @@ msgid ""
 "<INITIAL                                                       "
 ">'<>'                                                                                  : "
 "Token;\n"
-"Operator12Term        : "
+"Operator08Term        : "
 "<INITIAL                                                       >\"\\*\\*"
 "\"                                                                                : "
 "Token;\n"
-"Operator11Term        : "
+"Operator07Term        : "
 "<INITIAL                                                       >\"/|%"
 "\"                                                                                 : "
 "Token;\n"
-"Operator10Term        : "
+"Operator06Term        : "
 "<INITIAL                                                       >\"\\+|-"
 "\"                                                                                : "
 "Token;\n"
-"Operator09Term        : "
-"<INITIAL                                                       >\"<<<|>>>|<<|"
-">>\"                                                                       : "
-"Token;\n"
-"Operator08Term        : "
-"<INITIAL                                                       >\"<=|>=|<:|>:"
-"\"                                                                         : "
-"Token;\n"
-"Operator07Term        : "
-"<INITIAL                                                       >\"==\\?|!="
-"\\?|==|!="
-"\"                                                                     : "
-"Token;\n"
-"Operator03Term        : "
-"<INITIAL                                                       >\"&&"
-"\"                                                                                  : "
-"Token;\n"
 "Operator02Term        : "
-"<INITIAL                                                       >\"\\|\\|"
-"\"                                                                                : "
+"<INITIAL                                                       >\"<<<|>>>|<<|"
+">>|==\\?|!=\\?|==|!=|<=|>=|<:|>:"
+"\"                                           : Token;\n"
+"Operator01Term        : "
+"<INITIAL                                                       >\"\\|\\||&&"
+"\"                                                                             : "
 "Token;\n"
-"Operator06Term        : "
+"Operator05Term        : "
 "<INITIAL                                                       >\"&"
 "\"                                                                                   : "
 "Token;\n"
-"Operator05Term        : "
+"Operator04Term        : "
 "<INITIAL                                                       >\"\\^|~\\^"
 "\"                                                                              : "
 "Token;\n"
-"Operator04Term        : "
+"Operator03Term        : "
 "<INITIAL                                                       >\"\\|"
 "\"                                                                                  : "
 "Token;\n"
@@ -9160,6 +9560,7 @@ msgid ""
 "\n"
 "AssignmentOperatorToken: AssignmentOperatorTerm: Token Comments;\n"
 "DiamondOperatorToken   : DiamondOperatorTerm   : Token Comments;\n"
+"Operator01Token        : Operator01Term        : Token Comments;\n"
 "Operator02Token        : Operator02Term        : Token Comments;\n"
 "Operator03Token        : Operator03Term        : Token Comments;\n"
 "Operator04Token        : Operator04Term        : Token Comments;\n"
@@ -9167,10 +9568,6 @@ msgid ""
 "Operator06Token        : Operator06Term        : Token Comments;\n"
 "Operator07Token        : Operator07Term        : Token Comments;\n"
 "Operator08Token        : Operator08Term        : Token Comments;\n"
-"Operator09Token        : Operator09Term        : Token Comments;\n"
-"Operator10Token        : Operator10Term        : Token Comments;\n"
-"Operator11Token        : Operator11Term        : Token Comments;\n"
-"Operator12Token        : Operator12Term        : Token Comments;\n"
 "UnaryOperatorToken     : UnaryOperatorTerm     : Token Comments;\n"
 "\n"
 "ColonToken           : ColonTerm           : Token Comments;\n"
@@ -9318,6 +9715,7 @@ msgid ""
 "// Operator\n"
 "AssignmentOperator: AssignmentOperatorToken: VerylToken;\n"
 "DiamondOperator   : DiamondOperatorToken   : VerylToken;\n"
+"Operator01        : Operator01Token        : VerylToken;\n"
 "Operator02        : Operator02Token        : VerylToken;\n"
 "Operator03        : Operator03Token        : VerylToken;\n"
 "Operator04        : Operator04Token        : VerylToken;\n"
@@ -9325,10 +9723,6 @@ msgid ""
 "Operator06        : Operator06Token        : VerylToken;\n"
 "Operator07        : Operator07Token        : VerylToken;\n"
 "Operator08        : Operator08Token        : VerylToken;\n"
-"Operator09        : Operator09Token        : VerylToken;\n"
-"Operator10        : Operator10Token        : VerylToken;\n"
-"Operator11        : Operator11Token        : VerylToken;\n"
-"Operator12        : Operator12Token        : VerylToken;\n"
 "UnaryOperator     : UnaryOperatorToken     : VerylToken;\n"
 "\n"
 "// Symbol\n"
@@ -9501,20 +9895,13 @@ msgid ""
 "\n"
 "Expression  : IfExpression;\n"
 "IfExpression: { If Expression Question Expression Colon } Expression01;\n"
-"Expression01: Expression02 { Operator02 Expression02 };\n"
-"Expression02: Expression03 { Operator03 Expression03 };\n"
-"Expression03: Expression04 { Operator04 Expression04 };\n"
-"Expression04: Expression05 { Operator05 Expression05 };\n"
-"Expression05: Expression06 { Operator06 Expression06 };\n"
-"Expression06: Expression07 { Operator07 Expression07 };\n"
-"Expression07: Expression08 { Operator08 Expression08 };\n"
-"Expression08: Expression09 { Operator09 Expression09 };\n"
-"Expression09: Expression10 { Operator10 Expression10 };\n"
-"Expression10: Expression11 { ( Operator11 | Star ) Expression11 };\n"
-"Expression11: Expression12 { Operator12 Expression12 };\n"
-"Expression12: Expression13 [ As CastingType ];\n"
-"Expression13: { ( UnaryOperator | Operator10 | Operator06 | Operator04 | "
-"Operator05 ) } Factor;\n"
+"Expression01: Expression02 { Expression01Op Expression02 };\n"
+"Expression02: { Expression02Op } Factor [ As CastingType ];\n"
+"\n"
+"Expression01Op: Operator01 | Operator02 | Operator03 | Operator04 | "
+"Operator05 | Operator06 | Operator07 | Star | Operator08;\n"
+"Expression02Op: UnaryOperator | Operator06 | Operator05 | Operator03 | "
+"Operator04;\n"
 "\n"
 "Factor: Number\n"
 "      | BooleanLiteral\n"
@@ -9799,8 +10186,10 @@ msgid ""
 "\n"
 "ModportDefault: Input\n"
 "              | Output\n"
-"              | Same LParen Identifier RParen\n"
-"              | Converse LParen Identifier RParen;\n"
+"              | Same LParen ModportDefaultList RParen\n"
+"              | Converse LParen ModportDefaultList RParen;\n"
+"\n"
+"ModportDefaultList: Identifier { Comma Identifier } [ Comma ];\n"
 "\n"
 "EnumDeclaration: Enum Identifier [ Colon ScalarType ] LBrace EnumList "
 "RBrace;\n"
@@ -10157,6 +10546,7 @@ msgid ""
 "                     | PackageDeclaration\n"
 "                     | AliasDeclaration\n"
 "                     | ProtoDeclaration\n"
+"                     | FunctionDeclaration\n"
 "                     ;\n"
 "\n"
 "// "
