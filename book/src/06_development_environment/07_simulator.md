@@ -1,6 +1,11 @@
 # Simulator
 
-Test by RTL simulator is executed through `veryl test`.
+Test is executed through `veryl test`.
+
+For [native test](../05_language_reference/13_integrated_test.md#native-test), Veryl's built-in simulator is used.
+No external simulator installation is required.
+
+For SystemVerilog test and cocotb test, an external RTL simulator is required.
 Supported simulators are below:
 
 * [Verilator](https://www.veripool.org/verilator/)
