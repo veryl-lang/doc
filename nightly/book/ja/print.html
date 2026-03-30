@@ -2763,6 +2763,19 @@ module Module47C {
 <li><a href="https://www.cocotb.org">cocotb</a> テスト</li>
 </ul>
 <p>ネイティブテストはVerylの組み込みシミュレータを使用し、SystemVerilogテストとcocotbテストは外部のRTLシミュレータを使用します。<code>veryl test</code> で使用される外部RTLシミュレータについては <a href="05_language_reference/../06_development_environment/07_simulator.html">シミュレータ</a> を参照してください。すべてのテスト種別で、<code>--wave</code> オプションを指定すると波形を生成できます。</p>
+<p><code>#[ignore]</code> 属性を追加することでデフォルトでは無視するテストを指定できます。無視されたテストは <code>--ignored</code> オプションで実行できます。<code>--include-ignored</code> オプションを使うと通常のテストと無視されたテストの両方を実行します。</p>
+<pre><code class="language-veryl playground">#[test(test_ignored)]
+#[ignore]
+module test_ignored {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    initial {
+        rst.assert(clk);
+        $finish   ();
+    }
+}
+</code></pre>
 <h2 id="ネイティブテスト"><a class="header" href="#ネイティブテスト">ネイティブテスト</a></h2>
 <p>ネイティブテストでは、SystemVerilogの埋め込みや外部フレームワークを使わずに、Verylで直接テストベンチを記述できます。<code>#[test(test_name)]</code> 属性が付けられたモジュール（<code>embed</code> 宣言なし）がネイティブテストとして扱われます。</p>
 <p>以下のテストベンチコンポーネントが利用可能です。</p>

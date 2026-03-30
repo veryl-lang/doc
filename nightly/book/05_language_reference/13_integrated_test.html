@@ -219,6 +219,21 @@ The marked block will be identified as test, and executed through <code>veryl te
 <p>Native test uses Veryl’s built-in simulator, while SystemVerilog test and cocotb test use an external RTL simulator.
 About external RTL simulators used by <code>veryl test</code>, see <a href="../06_development_environment/07_simulator.html">Simulator</a>.
 For all test types, if <code>--wave</code> option is specified, waveforms are generated.</p>
+<p>Tests can be skipped by adding <code>#[ignore]</code> attribute.
+Ignored tests are not executed by default, but can be run with <code>--ignored</code> option.
+<code>--include-ignored</code> option runs both normal and ignored tests.</p>
+<pre><code class="language-veryl playground">#[test(test_ignored)]
+#[ignore]
+module test_ignored {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    initial {
+        rst.assert(clk);
+        $finish   ();
+    }
+}
+</code></pre>
 <h2 id="native-test"><a class="header" href="#native-test">Native test</a></h2>
 <p>Native test allows writing testbenches directly in Veryl without embedding SystemVerilog or using external frameworks.
 A module with <code>#[test(test_name)]</code> attribute (without <code>embed</code> declaration) is treated as a native test.</p>
