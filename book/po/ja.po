@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2026-03-27T12:57:38+09:00\n"
+"POT-Creation-Date: 2026-03-30T11:24:19+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -4345,12 +4345,12 @@ msgid "There are three ways to describe integrated test:"
 msgstr "組み込みテストの記述方法は3種類あります。"
 
 #: src/05_language_reference/13_integrated_test.md:8
-#: src/05_language_reference/13_integrated_test.md:16
+#: src/05_language_reference/13_integrated_test.md:34
 msgid "Native test"
 msgstr "ネイティブテスト"
 
 #: src/05_language_reference/13_integrated_test.md:9
-#: src/05_language_reference/13_integrated_test.md:129
+#: src/05_language_reference/13_integrated_test.md:147
 msgid "SystemVerilog test"
 msgstr "SystemVerilogテスト"
 
@@ -4372,7 +4372,18 @@ msgstr ""
 "(../06_development_environment/07_simulator.md) を参照してください。すべての"
 "テスト種別で、`--wave` オプションを指定すると波形を生成できます。"
 
-#: src/05_language_reference/13_integrated_test.md:18
+#: src/05_language_reference/13_integrated_test.md:16
+msgid ""
+"Tests can be skipped by adding `#[ignore]` attribute. Ignored tests are not "
+"executed by default, but can be run with `--ignored` option. `--include-"
+"ignored` option runs both normal and ignored tests."
+msgstr ""
+"`#[ignore]` 属性を追加することでデフォルトでは無視するテストを指定できます。"
+"無視されたテストは `--ignored` オプションで実行できます。`--"
+"include-ignored` オプションを使うと通常のテストと無視されたテストの両方を実行"
+"します。"
+
+#: src/05_language_reference/13_integrated_test.md:36
 msgid ""
 "Native test allows writing testbenches directly in Veryl without embedding "
 "SystemVerilog or using external frameworks. A module with "
@@ -4383,11 +4394,11 @@ msgstr ""
 "Verylで直接テストベンチを記述できます。`#[test(test_name)]` 属性が付けられた"
 "モジュール（`embed` 宣言なし）がネイティブテストとして扱われます。"
 
-#: src/05_language_reference/13_integrated_test.md:21
+#: src/05_language_reference/13_integrated_test.md:39
 msgid "The following testbench components are available:"
 msgstr "以下のテストベンチコンポーネントが利用可能です。"
 
-#: src/05_language_reference/13_integrated_test.md:23
+#: src/05_language_reference/13_integrated_test.md:41
 msgid ""
 "`$tb::clock_gen` — clock signal generator (with optional `#(period: N)` "
 "parameter)"
@@ -4395,7 +4406,7 @@ msgstr ""
 "`$tb::clock_gen` — クロック信号生成器（オプションで `#(period: N)` パラメータ"
 "を指定可能）"
 
-#: src/05_language_reference/13_integrated_test.md:24
+#: src/05_language_reference/13_integrated_test.md:42
 msgid ""
 "`$tb::reset_gen` — reset signal generator (with optional `#(cycles: N)` "
 "parameter)"
@@ -4403,11 +4414,11 @@ msgstr ""
 "`$tb::reset_gen` — リセット信号生成器（オプションで `#(cycles: N)` パラメータ"
 "を指定可能）"
 
-#: src/05_language_reference/13_integrated_test.md:26
+#: src/05_language_reference/13_integrated_test.md:44
 msgid "And the following system functions can be used in `initial` blocks:"
 msgstr "また、以下のシステム関数が `initial` ブロック内で使用できます。"
 
-#: src/05_language_reference/13_integrated_test.md:28
+#: src/05_language_reference/13_integrated_test.md:46
 msgid ""
 "`$assert(condition)` or `$assert(condition, message)` — check assertions "
 "during simulation"
@@ -4415,47 +4426,47 @@ msgstr ""
 "`$assert(condition)` または `$assert(condition, message)` — シミュレーション"
 "中にアサーションを検証"
 
-#: src/05_language_reference/13_integrated_test.md:29
+#: src/05_language_reference/13_integrated_test.md:47
 msgid "`$finish()` — terminate simulation"
 msgstr "`$finish()` — シミュレーションを終了"
 
-#: src/05_language_reference/13_integrated_test.md:31
+#: src/05_language_reference/13_integrated_test.md:49
 msgid "Basic example"
 msgstr "基本的な例"
 
-#: src/05_language_reference/13_integrated_test.md:70
+#: src/05_language_reference/13_integrated_test.md:88
 msgid "Testbench methods"
 msgstr "テストベンチメソッド"
 
-#: src/05_language_reference/13_integrated_test.md:72
+#: src/05_language_reference/13_integrated_test.md:90
 msgid "`clock_gen` provides the `next` method to advance clock cycles:"
 msgstr "`clock_gen` はクロックサイクルを進める `next` メソッドを提供します。"
 
-#: src/05_language_reference/13_integrated_test.md:74
+#: src/05_language_reference/13_integrated_test.md:92
 msgid "`clk.next()` — advance clock by 1 cycle"
 msgstr "`clk.next()` — クロックを1サイクル進める"
 
-#: src/05_language_reference/13_integrated_test.md:75
+#: src/05_language_reference/13_integrated_test.md:93
 msgid "`clk.next(N)` — advance clock by `N` cycles"
 msgstr "`clk.next(N)` — クロックを `N` サイクル進める"
 
-#: src/05_language_reference/13_integrated_test.md:77
+#: src/05_language_reference/13_integrated_test.md:95
 msgid "`reset_gen` provides the `assert` method to assert reset:"
 msgstr "`reset_gen` はリセットをアサートする `assert` メソッドを提供します。"
 
-#: src/05_language_reference/13_integrated_test.md:79
+#: src/05_language_reference/13_integrated_test.md:97
 msgid "`rst.assert(clk)` — assert reset synchronized to clock"
 msgstr "`rst.assert(clk)` — クロックに同期してリセットをアサート"
 
-#: src/05_language_reference/13_integrated_test.md:80
+#: src/05_language_reference/13_integrated_test.md:98
 msgid "`rst.assert(clk, duration)` — assert reset for specified duration"
 msgstr "`rst.assert(clk, duration)` — 指定された期間リセットをアサート"
 
-#: src/05_language_reference/13_integrated_test.md:82
+#: src/05_language_reference/13_integrated_test.md:100
 msgid "The reset duration can also be configured at instantiation:"
 msgstr "リセット期間はインスタンス化時にも設定できます。"
 
-#: src/05_language_reference/13_integrated_test.md:84
+#: src/05_language_reference/13_integrated_test.md:102
 msgid ""
 "```veryl,playground\n"
 "#[test(test_reset_cycles_param)]\n"
@@ -4473,18 +4484,18 @@ msgid ""
 "```"
 msgstr ""
 
-#: src/05_language_reference/13_integrated_test.md:99
+#: src/05_language_reference/13_integrated_test.md:117
 msgid "Function calls in testbench"
 msgstr "テストベンチ内の関数呼び出し"
 
-#: src/05_language_reference/13_integrated_test.md:101
+#: src/05_language_reference/13_integrated_test.md:119
 msgid ""
 "Testbench methods like `clk.next` can be called from user-defined functions:"
 msgstr ""
 "`clk.next` などのテストベンチメソッドはユーザー定義関数から呼び出すことができ"
 "ます。"
 
-#: src/05_language_reference/13_integrated_test.md:103
+#: src/05_language_reference/13_integrated_test.md:121
 msgid ""
 "```veryl,playground\n"
 "#[test(test_function_call)]\n"
@@ -4513,7 +4524,7 @@ msgid ""
 "```"
 msgstr ""
 
-#: src/05_language_reference/13_integrated_test.md:131
+#: src/05_language_reference/13_integrated_test.md:149
 msgid ""
 "SystemVerilog test can be described with `inline` specifier. The top level "
 "module of the block must have the same name as the test name."
@@ -4521,7 +4532,7 @@ msgstr ""
 "SystemVerilog テストは `inline` 指定子で記述することができます。ブロックの"
 "トップレベルモジュールはテスト名と同じでなければなりません。"
 
-#: src/05_language_reference/13_integrated_test.md:134
+#: src/05_language_reference/13_integrated_test.md:152
 msgid ""
 "The messages through `$info`, `$warning`, `$error` and `$fatal` system "
 "function are handled by Veryl compiler, and shown as exectution log. The "
@@ -4531,7 +4542,7 @@ msgstr ""
 "コンパイラにより実行ログとして表示されます。`$error` と `$fatal` の呼び出しは"
 "テストの失敗として扱われます。"
 
-#: src/05_language_reference/13_integrated_test.md:137
+#: src/05_language_reference/13_integrated_test.md:155
 msgid ""
 "The following example, a SystemVerilog source code embedded by `embed` "
 "declaration are marked as test."
@@ -4539,7 +4550,7 @@ msgstr ""
 "以下の例では SystemVerilog のソースコードを `embed` 宣言で埋め込み、テストと"
 "してマークしています。"
 
-#: src/05_language_reference/13_integrated_test.md:139
+#: src/05_language_reference/13_integrated_test.md:157
 msgid ""
 "```veryl,playground\n"
 "#[test(test1)]\n"
@@ -4563,11 +4574,11 @@ msgstr ""
 "}}}\n"
 "```"
 
-#: src/05_language_reference/13_integrated_test.md:150
+#: src/05_language_reference/13_integrated_test.md:168
 msgid "cocotb test"
 msgstr "cocotb テスト"
 
-#: src/05_language_reference/13_integrated_test.md:152
+#: src/05_language_reference/13_integrated_test.md:170
 msgid ""
 "cocotb test can be described with `cocotb` specifier. The target module name "
 "for test should be specified by the second argument of `#[test]` attribute."
@@ -7941,9 +7952,9 @@ msgid ""
 "test), Veryl's built-in simulator is used. No external simulator "
 "installation is required."
 msgstr ""
-"[ネイティブテスト](../05_language_reference/13_integrated_test.md#native-test)"
-" ではVerylの組み込みシミュレータが使用されます。外部シミュレータのインストー"
-"ルは不要です。"
+"[ネイティブテスト](../05_language_reference/13_integrated_test.md#native-"
+"test) ではVerylの組み込みシミュレータが使用されます。外部シミュレータのインス"
+"トールは不要です。"
 
 #: src/06_development_environment/07_simulator.md:8
 msgid ""
