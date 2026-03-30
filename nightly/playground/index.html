@@ -27,6 +27,7 @@
         "@codemirror/commands": "https://esm.sh/*@codemirror/commands@6.8.1",
         "@codemirror/search": "https://esm.sh/*@codemirror/search@6.5.10",
         "@codemirror/autocomplete": "https://esm.sh/*@codemirror/autocomplete@6.18.6",
+        "@codemirror/lint": "https://esm.sh/*@codemirror/lint@6.8.5",
         "@codemirror/legacy-modes/mode/verilog": "https://esm.sh/*@codemirror/legacy-modes@6.5.1/mode/verilog",
         "@lezer/common": "https://esm.sh/*@lezer/common@1.2.3",
         "@lezer/highlight": "https://esm.sh/*@lezer/highlight@1.2.1",
@@ -40,7 +41,6 @@
     </script>
   </head>
   <body data-theme="light">
-    <!-- Hidden textarea for test compatibility -->
     <textarea id="default-source" style="display:none">
 // module definition
 module ModuleA #(
@@ -88,7 +88,6 @@ module ModuleA #(
 }
     </textarea>
 
-    <!-- Toolbar -->
     <header class="toolbar">
       <div class="toolbar-brand">
         <span class="logo">V</span>
@@ -99,11 +98,14 @@ module ModuleA #(
           <svg viewBox="0 0 16 16" width="14" height="14"><path d="M4 2l10 6-10 6V2z" fill="currentColor"/></svg>
           Build
         </button>
+        <button id="btn-simulate" class="btn btn-ghost" title="Simulate (Ctrl+Shift+Enter)">Simulate</button>
         <button id="btn-format" class="btn btn-ghost" title="Format (Ctrl+Shift+F)">Format</button>
         <select id="exampleSelect">
           <option disabled selected value>Select Example</option>
+          <option value="default">Syntax Example</option>
           <option value="hello.veryl">Hello, World!</option>
           <option value="halfadder.veryl">Half Adder</option>
+          <option value="counter_tb.veryl">Counter Testbench</option>
         </select>
       </div>
       <div class="toolbar-right">
@@ -117,18 +119,18 @@ module ModuleA #(
       </div>
     </header>
 
-    <!-- Mobile Tabs -->
     <div class="mobile-tabs">
       <button class="mobile-tab active" data-panel="source">Source</button>
-      <button class="mobile-tab" data-panel="output" data-output="sv">Output</button>
+      <button class="mobile-tab" data-panel="output" data-output="sv">SystemVerilog</button>
       <button class="mobile-tab" data-panel="output" data-output="ir">IR</button>
+      <button class="mobile-tab" data-panel="output" data-output="console">Console</button>
+      <button class="mobile-tab" data-panel="output" data-output="waveform">Waveform</button>
     </div>
 
-    <!-- Main Panels -->
     <main class="panels">
       <div class="panel panel-source mobile-active">
         <div class="panel-header">
-          <span class="panel-tab active">source.veryl</span>
+          <span class="panel-tab active">Veryl</span>
         </div>
         <div id="editor-container" class="panel-body"></div>
       </div>
@@ -137,16 +139,24 @@ module ModuleA #(
 
       <div class="panel panel-output">
         <div class="panel-header">
-          <span class="panel-tab active" data-output="sv">output.sv</span>
+          <span class="panel-tab active" data-output="sv">SystemVerilog</span>
           <span class="panel-tab" data-output="ir">IR</span>
+          <span class="panel-tab" data-output="console">Console</span>
+          <span class="panel-tab" data-output="waveform">Waveform</span>
           <button id="btn-copy" class="btn-icon-sm" title="Copy output">&#128203;</button>
         </div>
         <div id="output-container" class="panel-body"></div>
         <div id="ir-container" class="panel-body" style="display:none"></div>
+        <div id="console-container" class="panel-body" style="display:none"></div>
+        <div id="waveform-container" class="panel-body" style="display:none">
+          <div class="waveform-actions">
+            <button id="btn-download-vcd" class="btn btn-ghost btn-sm">Download VCD</button>
+          </div>
+          <iframe id="surfer-iframe" class="surfer-frame" src="./surfer/index.html" title="Waveform Viewer"></iframe>
+        </div>
       </div>
     </main>
 
-    <!-- Bottom Panel -->
     <div class="bottom-panel" id="bottom-panel">
       <div class="bottom-panel-header">
         <button class="bottom-tab active" data-panel="problems">
@@ -157,21 +167,19 @@ module ModuleA #(
       <div class="bottom-panel-body" id="bottom-panel-body">No problems detected.</div>
     </div>
 
-    <!-- Status Bar -->
     <footer class="statusbar">
       <span id="status-text"><span class="status-dot"></span> Ready</span>
       <span id="build-time"></span>
     </footer>
 
-    <!-- Toast -->
     <div class="toast" id="toast"></div>
 
-    <!-- Help Overlay -->
     <div class="help-overlay" id="help-overlay">
       <div class="help-dialog">
         <h2>Keyboard Shortcuts</h2>
         <table>
           <tr><td><kbd>Ctrl</kbd>+<kbd>Enter</kbd></td><td>Build</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd></td><td>Simulate</td></tr>
           <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd></td><td>Format</td></tr>
           <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Format</td></tr>
           <tr><td><kbd>Escape</kbd></td><td>Close dialog</td></tr>
@@ -182,7 +190,7 @@ module ModuleA #(
 
     <script type="module">
       // ===== WASM imports =====
-      import init, {set_hook, build as wasmBuild, dump_ir as wasmDumpIr, format as wasmFormat} from "./pkg/veryl_wasm.js";
+      import init, {set_hook, build as wasmBuild, dump_ir as wasmDumpIr, format as wasmFormat, simulate as wasmSimulate} from "./pkg/veryl_wasm.js";
 
       // ===== CodeMirror imports =====
       import {EditorView, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter} from "@codemirror/view";
@@ -191,6 +199,7 @@ module ModuleA #(
       import {defaultKeymap, history, historyKeymap, indentWithTab} from "@codemirror/commands";
       import {searchKeymap, highlightSelectionMatches} from "@codemirror/search";
       import {closeBrackets, closeBracketsKeymap} from "@codemirror/autocomplete";
+      import {lintGutter, setDiagnostics} from "@codemirror/lint";
       import {verilog} from "@codemirror/legacy-modes/mode/verilog";
 
       // ===== Veryl Language Mode =====
@@ -202,6 +211,7 @@ module ModuleA #(
       const themeCompartment = new Compartment();
       const outputThemeCompartment = new Compartment();
       const irThemeCompartment = new Compartment();
+      const consoleThemeCompartment = new Compartment();
 
       const lightTheme = EditorView.theme({
         "&": { backgroundColor: "var(--bg-editor)" },
@@ -257,6 +267,7 @@ module ModuleA #(
           sourceEditor.dispatch({ effects: themeCompartment.reconfigure(cmThemeFor(theme)) });
           outputEditor.dispatch({ effects: outputThemeCompartment.reconfigure(cmThemeFor(theme)) });
           irEditor.dispatch({ effects: irThemeCompartment.reconfigure(cmThemeFor(theme)) });
+          consoleEditor.dispatch({ effects: consoleThemeCompartment.reconfigure(cmThemeFor(theme)) });
         }
       }
 
@@ -266,6 +277,7 @@ module ModuleA #(
       const initialThemeName = getInitialTheme();
       const sourceExtensions = [
         lineNumbers(),
+        lintGutter(),
         highlightActiveLine(),
         highlightActiveLineGutter(),
         bracketMatching(),
@@ -335,15 +347,36 @@ module ModuleA #(
         parent: document.getElementById("ir-container"),
       });
 
+      const consoleExtensions = [
+        lineNumbers(),
+        syntaxHighlighting(defaultHighlightStyle),
+        consoleThemeCompartment.of(cmThemeFor(initialThemeName)),
+        EditorState.readOnly.of(true),
+        EditorView.lineWrapping,
+      ];
+
+      const consoleEditor = new EditorView({
+        state: EditorState.create({
+          doc: "",
+          extensions: consoleExtensions,
+        }),
+        parent: document.getElementById("console-container"),
+      });
+
       // ===== Output tab state =====
       let activeOutputTab = "sv";
 
       function switchOutputTab(tab) {
         activeOutputTab = tab;
-        const svContainer = document.getElementById("output-container");
-        const irContainer = document.getElementById("ir-container");
-        svContainer.style.display = tab === "sv" ? "" : "none";
-        irContainer.style.display = tab === "ir" ? "" : "none";
+        const containers = {
+          sv: document.getElementById("output-container"),
+          ir: document.getElementById("ir-container"),
+          console: document.getElementById("console-container"),
+          waveform: document.getElementById("waveform-container"),
+        };
+        for (const [key, el] of Object.entries(containers)) {
+          el.style.display = key === tab ? "" : "none";
+        }
         document.querySelectorAll(".panel-output .panel-tab").forEach(t => {
           t.classList.toggle("active", t.dataset.output === tab);
         });
@@ -359,6 +392,71 @@ module ModuleA #(
         irEditor.dispatch({
           changes: { from: 0, to: irEditor.state.doc.length, insert: text }
         });
+      }
+
+      function applyDiagnostics(diagJson) {
+        try {
+          const diags = JSON.parse(diagJson);
+          const docLen = sourceEditor.state.doc.length;
+          const cmDiags = diags
+            .filter(d => d.from >= 0 && d.to <= docLen)
+            .map(d => ({from: d.from, to: d.to, severity: d.severity, message: d.message}));
+          sourceEditor.dispatch(setDiagnostics(sourceEditor.state, cmDiags));
+        } catch (e) {
+          sourceEditor.dispatch(setDiagnostics(sourceEditor.state, []));
+        }
+      }
+
+      function clearDiagnostics() {
+        sourceEditor.dispatch(setDiagnostics(sourceEditor.state, []));
+      }
+
+      function setConsoleOutput(text) {
+        consoleEditor.dispatch({
+          changes: { from: 0, to: consoleEditor.state.doc.length, insert: text }
+        });
+      }
+
+      let currentVcdData = null;
+      let surferLoaded = false;
+      let pendingVcd = null;
+
+      // Listen for Surfer loaded notification
+      window.addEventListener("message", (event) => {
+        if (event.data && event.data.type === "surfer-loaded") {
+          surferLoaded = true;
+          if (pendingVcd) {
+            sendVcdToSurfer(pendingVcd, currentTopModule);
+            pendingVcd = null;
+          }
+        }
+      });
+
+      function sendVcdToSurfer(vcdText, topModule) {
+        const blob = new Blob([vcdText], { type: "text/plain" });
+        const blobUrl = URL.createObjectURL(blob);
+        const iframe = document.getElementById("surfer-iframe");
+        iframe.contentWindow.postMessage({command: "LoadUrl", url: blobUrl}, "*");
+        setTimeout(() => {
+          const scopeRef = {strs: [topModule], id: "None"};
+          const msg = {AddScope: [scopeRef, true]};
+          iframe.contentWindow.postMessage({command: "InjectMessage", message: JSON.stringify(msg)}, "*");
+          setTimeout(() => {
+            iframe.contentWindow.postMessage({command: "InjectMessage", message: JSON.stringify("ZoomToFit")}, "*");
+          }, 300);
+        }, 500);
+      }
+
+      let currentTopModule = null;
+
+      function setVcdOutput(vcdText, topModule) {
+        currentVcdData = vcdText;
+        currentTopModule = topModule;
+        if (surferLoaded) {
+          sendVcdToSurfer(vcdText, topModule);
+        } else {
+          pendingVcd = vcdText;
+        }
       }
 
       function getSource() {
@@ -412,13 +510,13 @@ module ModuleA #(
           const result = wasmBuild(src);
           const content = result.content();
           const err = result.err();
+          applyDiagnostics(result.diagnostics());
           const elapsed = (performance.now() - t0).toFixed(0);
           if (err) {
             setOutput("");
             setIrOutput("");
             setProblems(content, 1);
             setStatus("error", "Build failed");
-            // Expand bottom panel if collapsed
             document.getElementById("bottom-panel").classList.remove("collapsed");
           } else {
             setOutput(content);
@@ -426,10 +524,47 @@ module ModuleA #(
             setIrOutput(irResult.err() ? irResult.content() : irResult.content());
             setProblems("", 0);
             setStatus("ok", "Ready");
+            switchOutputTab("sv");
           }
           buildTimeEl.textContent = `Built in ${elapsed}ms`;
         } catch (error) {
           setOutput("");
+          setProblems("Unexpected error: " + error.message, 1);
+          setStatus("error", "Error");
+        }
+      };
+
+      // ===== Simulate =====
+      window.simulate = () => {
+        setStatus("building", "Simulating...");
+        const t0 = performance.now();
+        try {
+          const src = getSource();
+          const result = wasmSimulate(src);
+          const err = result.err();
+          applyDiagnostics(result.diagnostics());
+          const consoleOut = result.console();
+          const vcd = result.vcd();
+          const topModule = result.top_module();
+          const elapsed = (performance.now() - t0).toFixed(0);
+          if (err) {
+            setConsoleOutput(consoleOut);
+            setProblems(consoleOut, 1);
+            setStatus("error", "Simulation failed");
+            switchOutputTab("console");
+            document.getElementById("bottom-panel").classList.remove("collapsed");
+          } else {
+            setConsoleOutput(consoleOut || "Simulation passed.");
+            if (vcd) {
+              setVcdOutput(vcd, topModule);
+            }
+            setProblems("", 0);
+            setStatus("ok", "Ready");
+            switchOutputTab(vcd ? "waveform" : "console");
+          }
+          buildTimeEl.textContent = `Simulated in ${elapsed}ms`;
+        } catch (error) {
+          setConsoleOutput("");
           setProblems("Unexpected error: " + error.message, 1);
           setStatus("error", "Error");
         }
@@ -448,6 +583,7 @@ module ModuleA #(
             document.getElementById("bottom-panel").classList.remove("collapsed");
           } else {
             setSource(content);
+            clearDiagnostics();
             setProblems("", 0);
             setStatus("ok", "Formatted");
             setTimeout(() => setStatus("ok", "Ready"), 1500);
@@ -460,6 +596,10 @@ module ModuleA #(
 
       // ===== Change example =====
       window.changeExample = async (name) => {
+        if (name === "default") {
+          setSource(defaultSource);
+          return;
+        }
         const response = await fetch("./examples/" + name);
         if (response.ok) {
           const content = await response.text();
@@ -468,21 +608,18 @@ module ModuleA #(
       };
 
       // ===== Event listeners =====
-
-      // Toolbar buttons
       document.getElementById("btn-build").addEventListener("click", window.build);
+      document.getElementById("btn-simulate").addEventListener("click", window.simulate);
       document.getElementById("btn-format").addEventListener("click", window.format);
       document.getElementById("exampleSelect").addEventListener("change", function() {
         window.changeExample(this.value);
       });
 
-      // Theme toggle
       document.getElementById("btn-theme").addEventListener("click", () => {
         const current = document.body.getAttribute("data-theme");
         applyTheme(current === "dark" ? "light" : "dark", true);
       });
 
-      // Share URL
       document.getElementById("btn-share").addEventListener("click", () => {
         const src = getSource();
         const encoded = btoa(unescape(encodeURIComponent(src)));
@@ -499,17 +636,16 @@ module ModuleA #(
         }
       });
 
-      // Output tab switching
       document.querySelectorAll(".panel-output .panel-tab").forEach(tab => {
         tab.addEventListener("click", () => {
           if (tab.dataset.output) switchOutputTab(tab.dataset.output);
         });
       });
 
-      // Copy output
       document.getElementById("btn-copy").addEventListener("click", () => {
-        const editor = activeOutputTab === "ir" ? irEditor : outputEditor;
-        const text = editor.state.doc.toString();
+        const editorMap = { sv: outputEditor, ir: irEditor, console: consoleEditor };
+        const editor = editorMap[activeOutputTab];
+        const text = editor ? editor.state.doc.toString() : "";
         if (!text) { showToast("No output to copy"); return; }
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(text).then(() => {
@@ -520,7 +656,17 @@ module ModuleA #(
         }
       });
 
-      // Help overlay
+      document.getElementById("btn-download-vcd").addEventListener("click", () => {
+        if (!currentVcdData) { showToast("No VCD data"); return; }
+        const blob = new Blob([currentVcdData], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "simulation.vcd";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
       const helpOverlay = document.getElementById("help-overlay");
       document.getElementById("btn-help").addEventListener("click", () => {
         helpOverlay.classList.toggle("show");
@@ -532,12 +678,10 @@ module ModuleA #(
         if (e.target === helpOverlay) helpOverlay.classList.remove("show");
       });
 
-      // Bottom panel toggle
       document.getElementById("btn-toggle-bottom").addEventListener("click", () => {
         document.getElementById("bottom-panel").classList.toggle("collapsed");
       });
 
-      // Mobile tabs
       document.querySelectorAll(".mobile-tab").forEach(tab => {
         tab.addEventListener("click", () => {
           document.querySelectorAll(".mobile-tab").forEach(t => t.classList.remove("active"));
@@ -552,22 +696,23 @@ module ModuleA #(
       // ===== Keyboard shortcuts =====
       document.addEventListener("keydown", (e) => {
         const mod = e.ctrlKey || e.metaKey;
-        // Ctrl/Cmd + Enter -> Build
+        if (mod && e.shiftKey && e.key === "Enter") {
+          e.preventDefault();
+          window.simulate();
+          return;
+        }
         if (mod && e.key === "Enter") {
           e.preventDefault();
           window.build();
         }
-        // Ctrl/Cmd + Shift + F -> Format
         if (mod && e.shiftKey && e.key === "F") {
           e.preventDefault();
           window.format();
         }
-        // Ctrl/Cmd + S -> Format
         if (mod && e.key === "s") {
           e.preventDefault();
           window.format();
         }
-        // Escape -> close help
         if (e.key === "Escape") {
           helpOverlay.classList.remove("show");
         }
@@ -578,11 +723,14 @@ module ModuleA #(
       const panels = document.querySelector(".panels");
       let isDragging = false;
 
+      const surferIframe = document.getElementById("surfer-iframe");
+
       gutter.addEventListener("mousedown", (e) => {
         isDragging = true;
         gutter.classList.add("dragging");
         document.body.style.cursor = "col-resize";
         document.body.style.userSelect = "none";
+        surferIframe.style.pointerEvents = "none";
         e.preventDefault();
       });
 
@@ -600,6 +748,7 @@ module ModuleA #(
         gutter.classList.remove("dragging");
         document.body.style.cursor = "";
         document.body.style.userSelect = "";
+        surferIframe.style.pointerEvents = "";
       });
     </script>
   </body>

@@ -739,3 +739,31 @@ body {
     max-width: 120px;
   }
 }
+
+/* ===== Waveform container ===== */
+#waveform-container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.waveform-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.btn-sm {
+  font-size: 12px;
+  padding: 2px 8px;
+}
+
+.surfer-frame {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  border: none;
+}
