@@ -17,6 +17,7 @@ veryl-emitter            = {git = "https://github.com/veryl-lang/veryl"}
 veryl-formatter          = {git = "https://github.com/veryl-lang/veryl"}
 veryl-metadata           = {git = "https://github.com/veryl-lang/veryl"}
 veryl-parser             = {git = "https://github.com/veryl-lang/veryl"}
+veryl-simulator          = {git = "https://github.com/veryl-lang/veryl"}
 wasm-bindgen             = "0.2.103"
 
 [dev-dependencies]
