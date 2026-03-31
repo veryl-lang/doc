@@ -112,6 +112,9 @@ module ModuleA #(
         <button id="btn-share" class="btn-icon" title="Share URL">
           <svg viewBox="0 0 16 16" width="16" height="16"><path d="M11 2.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm0 8a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM5 6.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm4.44-1.34l-2.88 1.68m2.88 2.32l-2.88-1.68" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
         </button>
+        <button id="btn-licenses" class="btn-icon" title="Third-party Licenses">
+          <svg viewBox="0 0 16 16" width="16" height="16"><path d="M4 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm1 3v1h6V4H5zm0 3v1h6V7H5zm0 3v1h4v-1H5z" fill="currentColor"/></svg>
+        </button>
         <button id="btn-help" class="btn-icon" title="Keyboard Shortcuts">?</button>
         <button id="btn-theme" class="btn-icon" title="Toggle Theme">
           <span class="theme-icon">&#9789;</span>
@@ -185,6 +188,15 @@ module ModuleA #(
           <tr><td><kbd>Escape</kbd></td><td>Close dialog</td></tr>
         </table>
         <button class="close-btn" id="btn-close-help">Close</button>
+      </div>
+    </div>
+
+    <div class="license-overlay" id="license-overlay">
+      <div class="license-dialog">
+        <h2>Third-party Licenses</h2>
+        <input type="text" id="license-search" class="license-search" placeholder="Search packages...">
+        <div id="license-list" class="license-list"></div>
+        <button class="close-btn" id="btn-close-licenses">Close</button>
       </div>
     </div>
 
@@ -678,6 +690,105 @@ module ModuleA #(
         if (e.target === helpOverlay) helpOverlay.classList.remove("show");
       });
 
+      // ===== License dialog =====
+      let licenseData = null;
+      const licenseOverlay = document.getElementById("license-overlay");
+      const licenseList = document.getElementById("license-list");
+      const licenseSearch = document.getElementById("license-search");
+
+      const categoryLabels = {
+        rust: "Rust Crates",
+        waveform: "Waveform Viewer",
+        frontend: "Frontend Libraries",
+      };
+
+      async function loadLicenses() {
+        if (licenseData) return licenseData;
+        try {
+          const resp = await fetch("./licenses.json");
+          licenseData = await resp.json();
+        } catch (e) {
+          licenseData = { licenses: [], crates: [] };
+        }
+        return licenseData;
+      }
+
+      function renderLicenses(data, filter) {
+        const lowerFilter = (filter || "").toLowerCase();
+        const licenseMap = {};
+        for (const lic of data.licenses) {
+          licenseMap[lic.id] = lic.text;
+        }
+
+        licenseList.innerHTML = "";
+
+        for (const [category, label] of Object.entries(categoryLabels)) {
+          const crates = data.crates
+            .filter(c => c.category === category)
+            .filter(c => !lowerFilter || c.name.toLowerCase().includes(lowerFilter));
+          if (crates.length === 0) continue;
+
+          const section = document.createElement("div");
+          section.className = "license-category";
+          section.innerHTML = `<h3>${label} <span class="license-count">(${crates.length})</span></h3>`;
+
+          for (const crate of crates) {
+            const item = document.createElement("div");
+            item.className = "license-item";
+
+            const version = crate.version ? ` ${crate.version}` : "";
+            const header = document.createElement("div");
+            header.className = "license-item-header";
+            header.innerHTML = `<span class="license-name">${crate.name}${version}</span><span class="license-spdx">${crate.license}</span>`;
+            header.addEventListener("click", () => {
+              item.classList.toggle("expanded");
+            });
+
+            const body = document.createElement("div");
+            body.className = "license-item-body";
+
+            let bodyHtml = "";
+            if (crate.url) {
+              bodyHtml += `<a href="${crate.url}" target="_blank" rel="noopener">${crate.url}</a>`;
+            }
+            const spdxIds = crate.license.split(/ OR | AND /);
+            for (const id of spdxIds) {
+              const trimmed = id.trim();
+              if (licenseMap[trimmed]) {
+                bodyHtml += `<pre class="license-text">${licenseMap[trimmed]}</pre>`;
+              }
+            }
+            body.innerHTML = bodyHtml;
+
+            item.appendChild(header);
+            item.appendChild(body);
+            section.appendChild(item);
+          }
+
+          licenseList.appendChild(section);
+        }
+      }
+
+      document.getElementById("btn-licenses").addEventListener("click", async () => {
+        licenseOverlay.classList.toggle("show");
+        if (licenseOverlay.classList.contains("show") && !licenseData) {
+          const data = await loadLicenses();
+          renderLicenses(data);
+        }
+      });
+
+      document.getElementById("btn-close-licenses").addEventListener("click", () => {
+        licenseOverlay.classList.remove("show");
+      });
+
+      licenseOverlay.addEventListener("click", (e) => {
+        if (e.target === licenseOverlay) licenseOverlay.classList.remove("show");
+      });
+
+      licenseSearch.addEventListener("input", () => {
+        if (licenseData) renderLicenses(licenseData, licenseSearch.value);
+      });
+
       document.getElementById("btn-toggle-bottom").addEventListener("click", () => {
         document.getElementById("bottom-panel").classList.toggle("collapsed");
       });
@@ -715,6 +826,7 @@ module ModuleA #(
         }
         if (e.key === "Escape") {
           helpOverlay.classList.remove("show");
+          licenseOverlay.classList.remove("show");
         }
       });
 

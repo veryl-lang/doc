@@ -90,6 +90,22 @@ jobs:
       - name: Remove .gitignore
         run: rm html/pkg/.gitignore
         working-directory: playground
+      - name: Install cargo-about
+        run: cargo install cargo-about
+      - name: Generate license data
+        working-directory: playground
+        run: |
+          cargo about generate --format json 2>/dev/null | jq '{
+            licenses: [.overview[] | {id: .id, name: .name, text: .text}],
+            crates: [.crates[] | {
+              name: .package.name,
+              version: .package.version,
+              license: .license,
+              url: (.package.repository // ("https://crates.io/crates/" + .package.name)),
+              category: "rust"
+            }]
+          }' > licenses-rust.json
+          jq -s '{licenses: (.[0].licenses + .[1].licenses), crates: (.[0].crates + .[1].crates)}' licenses-rust.json licenses-manual.json > html/licenses.json
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
