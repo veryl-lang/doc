@@ -1,6 +1,8 @@
 # Assign
 
 `assign` declaration can assign expression to variable.
+`assign` declarations are treated as combinational logic.
+See [Execution Model](../18_execution_model.md) for evaluation semantics.
 
 ```veryl,playground
 module ModuleA {

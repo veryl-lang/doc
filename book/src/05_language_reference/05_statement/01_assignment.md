@@ -38,3 +38,5 @@ module ModuleA (
     }
 }
 ```
+
+For details on when assigned values become visible, see [Execution Model](../18_execution_model.md).
