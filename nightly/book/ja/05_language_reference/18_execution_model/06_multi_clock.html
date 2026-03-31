@@ -3,7 +3,7 @@
     <head prefix="og: http://ogp.me/ns#">
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>代入 - The Veryl Hardware Description Language</title>
+        <title>マルチクロックドメイン - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
@@ -27,9 +27,9 @@
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
                     if (lang == "en") {
-                        canonical_href = `${base}/05_language_reference/05_statement/01_assignment.md`;
+                        canonical_href = `${base}/05_language_reference/18_execution_model/06_multi_clock.md`;
                     } else {
-                        canonical_href = `${base}/${lang}/05_language_reference/05_statement/01_assignment.md`;
+                        canonical_href = `${base}/${lang}/05_language_reference/18_execution_model/06_multi_clock.md`;
                     }
                     canonical_href = canonical_href.slice(0, -"md".length) + "html";
                     if (canonical_href.endsWith("/index.html")) {
@@ -207,53 +207,48 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="代入"><a class="header" href="#代入">代入</a></h1>
-<p>代入文は <code>変数 = 式;</code> の形式です。SystemVerilog と異なり、<code>always_comb</code> でも <code>always_ff</code> でも代入演算子は <code>=</code> です。以下のような代入演算子もあります。</p>
-<ul>
-<li><code>+=</code>：加算代入</li>
-<li><code>-=</code>：減算代入</li>
-<li><code>*=</code>：乗算代入</li>
-<li><code>/=</code>：除算代入</li>
-<li><code>%=</code>：剰余代入</li>
-<li><code>&amp;=</code>：ビットAND代入</li>
-<li><code>|=</code>：ビットOR代入</li>
-<li><code>^=</code>：ビットXOR代入</li>
-<li><code>&lt;&lt;=</code>：論理左シフト代入</li>
-<li><code>&gt;&gt;=</code>：論理右シフト代入</li>
-<li><code>&lt;&lt;&lt;=</code>：算術左シフト代入</li>
-<li><code>&gt;&gt;&gt;=</code>：算術右シフト代入</li>
-</ul>
+                        <h1 id="マルチクロックドメイン"><a class="header" href="#マルチクロックドメイン">マルチクロックドメイン</a></h1>
+<p>Verylは複数のクロックドメインを持つデザインをサポートしています。各クロックドメインは対応するクロックイベントにより独立してトリガーされます。</p>
+<h2 id="独立したドメイン評価"><a class="header" href="#独立したドメイン評価">独立したドメイン評価</a></h2>
+<p>クロックエッジが発生すると、そのクロックに対してセンシティブな <code>always_ff</code> ブロックのみが評価されます。FFコミットフェーズはそれらのブロックにより書き込まれた変数にのみ適用されます。他のクロックドメインは影響を受けません。</p>
+<h2 id="同時クロックエッジ"><a class="header" href="#同時クロックエッジ">同時クロックエッジ</a></h2>
+<p>2つのクロックが同時にエッジを持つ場合、各ドメインのイベント評価とFFコミットは一度に1ドメインずつ順次実行されます。FFの二重バッファモデル（current/next分離）により、各ドメインは自身の変数の一貫したスナップショットを参照するため、ドメインの処理順序に関係なく単一ドメインの動作は決定論的です。</p>
+<h2 id="クロスドメイン信号"><a class="header" href="#クロスドメイン信号">クロスドメイン信号</a></h2>
+<p>異なるクロックドメインの信号へのアクセスはクロックドメインクロッシング（CDC）です。Verylはクロスドメイン信号アクセスに <code>unsafe (cdc)</code> による明示的なアノテーションを要求します（<a href="../15_clock_domain_annotation.html">クロックドメインアノテーション</a>を参照）。</p>
+<p>同時エッジを持つドメイン間で <code>unsafe (cdc)</code> 信号が共有されている場合、ドメインの評価順序は共有信号値を通じて観測可能です。Verylはこの場合の特定の順序を保証しません。設計者は適切な同期回路（例：2段FFシンクロナイザ、ハンドシェイクプロトコル）により正確性を確保する必要があります。</p>
 <pre><code class="language-veryl playground">module ModuleA (
-    i_clk: input clock,
+    i_clk_a: input  'a clock   ,
+    i_rst_a: input  'a reset   ,
+    i_clk_b: input  'b clock   ,
+    i_dat_a: input  'a logic&lt;8&gt;,
+    o_dat_b: output 'b logic&lt;8&gt;,
 ) {
-    let a: logic&lt;10&gt; = 1;
-    var b: logic&lt;10&gt;;
-    var c: logic&lt;10&gt;;
-    var d: logic&lt;10&gt;;
-    var e: logic&lt;10&gt;;
+    var data_a: 'a logic&lt;8&gt;;
 
-    always_comb {
-        b =  a + 1;
-        c += a + 1;
+    always_ff (i_clk_a, i_rst_a) {
+        if_reset {
+            data_a = 0;
+        } else {
+            data_a = i_dat_a;
+        }
     }
 
-    always_ff (i_clk) {
-        d =  a + 1;
-        e -= a + 1;
+    // クロスドメインアクセスには unsafe (cdc) が必要
+    unsafe (cdc) {
+        assign o_dat_b = data_a;
     }
 }
 </code></pre>
-<p>代入された値がいつ参照可能になるかの詳細については、<a href="../18_execution_model.html">実行モデル</a>を参照してください。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../05_language_reference/05_statement.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../05_language_reference/18_execution_model/05_event_evaluation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../05_language_reference/05_statement/02_function_call.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../05_language_reference/18_execution_model/07_determinism.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -263,11 +258,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../05_language_reference/05_statement.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../05_language_reference/18_execution_model/05_event_evaluation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../05_language_reference/05_statement/02_function_call.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../05_language_reference/18_execution_model/07_determinism.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

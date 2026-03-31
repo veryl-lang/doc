@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="ja" class="light sidebar-visible" dir="ltr">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head prefix="og: http://ogp.me/ns#">
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>代入 - The Veryl Hardware Description Language</title>
+        <title>Determinism - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
@@ -27,9 +27,9 @@
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
                     if (lang == "en") {
-                        canonical_href = `${base}/05_language_reference/05_statement/01_assignment.md`;
+                        canonical_href = `${base}/05_language_reference/18_execution_model/07_determinism.md`;
                     } else {
-                        canonical_href = `${base}/${lang}/05_language_reference/05_statement/01_assignment.md`;
+                        canonical_href = `${base}/${lang}/05_language_reference/18_execution_model/07_determinism.md`;
                     }
                     canonical_href = canonical_href.slice(0, -"md".length) + "html";
                     if (canonical_href.endsWith("/index.html")) {
@@ -38,7 +38,7 @@
                     return canonical_href;
                 }
         
-                const canonical_href = gen_canonical_href("ja");
+                const canonical_href = gen_canonical_href("en");
 
                 let link = document.createElement("link");
                 link.rel = "canonical";
@@ -207,53 +207,35 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="代入"><a class="header" href="#代入">代入</a></h1>
-<p>代入文は <code>変数 = 式;</code> の形式です。SystemVerilog と異なり、<code>always_comb</code> でも <code>always_ff</code> でも代入演算子は <code>=</code> です。以下のような代入演算子もあります。</p>
+                        <h1 id="determinism"><a class="header" href="#determinism">Determinism</a></h1>
+<p>Veryl guarantees deterministic simulation: given the same source code and the same stimulus sequence, any compliant simulator will produce identical signal values at every simulation step.</p>
+<h2 id="how-veryl-achieves-determinism"><a class="header" href="#how-veryl-achieves-determinism">How Veryl Achieves Determinism</a></h2>
+<p>Veryl’s language constraints eliminate common sources of non-determinism in SystemVerilog:</p>
+<ol>
+<li><strong>No blocking/non-blocking confusion</strong> — A single <code>=</code> operator automatically infers the correct semantics, making it impossible to use the wrong assignment type.</li>
+<li><strong>Read/write isolation for FF variables</strong> — All <code>always_ff</code> blocks read from the same snapshot and write to independent “next” slots, so evaluation order never affects the result.</li>
+<li><strong>Deterministic combinational evaluation</strong> — Blocks propagate until stable, and combinational loops are detected at compile time.</li>
+<li><strong>Explicit clock domain crossing</strong> — Cross-domain access without <code>unsafe (cdc)</code> is a compile-time error, preventing accidental races.</li>
+</ol>
+<h2 id="scope-of-the-guarantee"><a class="header" href="#scope-of-the-guarantee">Scope of the Guarantee</a></h2>
+<p>The guarantee applies to <strong>observable signal values at simulation step boundaries</strong> (after each FF commit). Internal evaluation order within a phase is implementation-defined but does not affect observable results.</p>
+<h2 id="relation-to-systemverilog"><a class="header" href="#relation-to-systemverilog">Relation to SystemVerilog</a></h2>
+<p>The transpiled SystemVerilog output follows well-established deterministic patterns:</p>
 <ul>
-<li><code>+=</code>：加算代入</li>
-<li><code>-=</code>：減算代入</li>
-<li><code>*=</code>：乗算代入</li>
-<li><code>/=</code>：除算代入</li>
-<li><code>%=</code>：剰余代入</li>
-<li><code>&amp;=</code>：ビットAND代入</li>
-<li><code>|=</code>：ビットOR代入</li>
-<li><code>^=</code>：ビットXOR代入</li>
-<li><code>&lt;&lt;=</code>：論理左シフト代入</li>
-<li><code>&gt;&gt;=</code>：論理右シフト代入</li>
-<li><code>&lt;&lt;&lt;=</code>：算術左シフト代入</li>
-<li><code>&gt;&gt;&gt;=</code>：算術右シフト代入</li>
+<li><code>always_ff</code> with <code>&lt;=</code> (non-blocking) for sequential logic</li>
+<li><code>always_comb</code> with <code>=</code> (blocking) for combinational logic</li>
+<li>No mixed blocking/non-blocking assignments to the same variable</li>
 </ul>
-<pre><code class="language-veryl playground">module ModuleA (
-    i_clk: input clock,
-) {
-    let a: logic&lt;10&gt; = 1;
-    var b: logic&lt;10&gt;;
-    var c: logic&lt;10&gt;;
-    var d: logic&lt;10&gt;;
-    var e: logic&lt;10&gt;;
-
-    always_comb {
-        b =  a + 1;
-        c += a + 1;
-    }
-
-    always_ff (i_clk) {
-        d =  a + 1;
-        e -= a + 1;
-    }
-}
-</code></pre>
-<p>代入された値がいつ参照可能になるかの詳細については、<a href="../18_execution_model.html">実行モデル</a>を参照してください。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../05_language_reference/05_statement.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../05_language_reference/18_execution_model/06_multi_clock.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../05_language_reference/05_statement/02_function_call.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../06_development_environment.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -263,11 +245,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../05_language_reference/05_statement.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../05_language_reference/18_execution_model/06_multi_clock.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../05_language_reference/05_statement/02_function_call.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../06_development_environment.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

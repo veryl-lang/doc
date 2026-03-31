@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="ja" class="light sidebar-visible" dir="ltr">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head prefix="og: http://ogp.me/ns#">
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>代入 - The Veryl Hardware Description Language</title>
+        <title>Execution Model - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
@@ -27,9 +27,9 @@
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
                     if (lang == "en") {
-                        canonical_href = `${base}/05_language_reference/05_statement/01_assignment.md`;
+                        canonical_href = `${base}/05_language_reference/18_execution_model.md`;
                     } else {
-                        canonical_href = `${base}/${lang}/05_language_reference/05_statement/01_assignment.md`;
+                        canonical_href = `${base}/${lang}/05_language_reference/18_execution_model.md`;
                     }
                     canonical_href = canonical_href.slice(0, -"md".length) + "html";
                     if (canonical_href.endsWith("/index.html")) {
@@ -38,7 +38,7 @@
                     return canonical_href;
                 }
         
-                const canonical_href = gen_canonical_href("ja");
+                const canonical_href = gen_canonical_href("en");
 
                 let link = document.createElement("link");
                 link.rel = "canonical";
@@ -67,32 +67,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="shortcut icon" href="../../favicon.png">
-        <link rel="stylesheet" href="../../css/variables.css">
-        <link rel="stylesheet" href="../../css/general.css">
-        <link rel="stylesheet" href="../../css/chrome.css">
-        <link rel="stylesheet" href="../../css/print.css" media="print">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../../fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../../highlight.css">
-        <link rel="stylesheet" href="../../tomorrow-night.css">
-        <link rel="stylesheet" href="../../ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../../theme/css/language-picker.css">
+        <link rel="stylesheet" href="../theme/css/language-picker.css">
 
 
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "../../";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="body-container">
@@ -144,7 +144,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -178,7 +178,7 @@
                     <h1 class="menu-title">The Veryl Hardware Description Language</h1>
 
                     <div class="right-buttons">
-                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -207,53 +207,21 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="代入"><a class="header" href="#代入">代入</a></h1>
-<p>代入文は <code>変数 = 式;</code> の形式です。SystemVerilog と異なり、<code>always_comb</code> でも <code>always_ff</code> でも代入演算子は <code>=</code> です。以下のような代入演算子もあります。</p>
-<ul>
-<li><code>+=</code>：加算代入</li>
-<li><code>-=</code>：減算代入</li>
-<li><code>*=</code>：乗算代入</li>
-<li><code>/=</code>：除算代入</li>
-<li><code>%=</code>：剰余代入</li>
-<li><code>&amp;=</code>：ビットAND代入</li>
-<li><code>|=</code>：ビットOR代入</li>
-<li><code>^=</code>：ビットXOR代入</li>
-<li><code>&lt;&lt;=</code>：論理左シフト代入</li>
-<li><code>&gt;&gt;=</code>：論理右シフト代入</li>
-<li><code>&lt;&lt;&lt;=</code>：算術左シフト代入</li>
-<li><code>&gt;&gt;&gt;=</code>：算術右シフト代入</li>
-</ul>
-<pre><code class="language-veryl playground">module ModuleA (
-    i_clk: input clock,
-) {
-    let a: logic&lt;10&gt; = 1;
-    var b: logic&lt;10&gt;;
-    var c: logic&lt;10&gt;;
-    var d: logic&lt;10&gt;;
-    var e: logic&lt;10&gt;;
-
-    always_comb {
-        b =  a + 1;
-        c += a + 1;
-    }
-
-    always_ff (i_clk) {
-        d =  a + 1;
-        e -= a + 1;
-    }
-}
-</code></pre>
-<p>代入された値がいつ参照可能になるかの詳細については、<a href="../18_execution_model.html">実行モデル</a>を参照してください。</p>
+                        <h1 id="execution-model"><a class="header" href="#execution-model">Execution Model</a></h1>
+<p>Veryl’s execution model is based on the scheduling semantics of SystemVerilog (IEEE 1800).
+Through language-level constraints, Veryl enforces best practices that guarantee deterministic simulation, without requiring designers to understand the complex scheduling regions defined in the standard.</p>
+<p>Veryl’s built-in simulator conforms to this model.
+The transpiled SystemVerilog output also preserves these semantics, so any IEEE 1800 compliant simulator will produce equivalent results.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../05_language_reference/05_statement.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../05_language_reference/17_alias.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../05_language_reference/05_statement/02_function_call.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../05_language_reference/18_execution_model/01_variable_classification.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -263,11 +231,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../05_language_reference/05_statement.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../05_language_reference/17_alias.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../05_language_reference/05_statement/02_function_call.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../05_language_reference/18_execution_model/01_variable_classification.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -281,19 +249,19 @@
             window.playground_copyable = true;
         </script>
 
-        <script src="../../ace.js"></script>
-        <script src="../../editor.js"></script>
-        <script src="../../mode-rust.js"></script>
-        <script src="../../theme-dawn.js"></script>
-        <script src="../../theme-tomorrow_night.js"></script>
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
 
-        <script src="../../elasticlunr.min.js"></script>
-        <script src="../../mark.min.js"></script>
-        <script src="../../searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../../clipboard.min.js"></script>
-        <script src="../../highlight.js"></script>
-        <script src="../../book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
         <script type="module">
             import init, {build, format} from "https://doc.veryl-lang.org/nightly/playground/pkg/veryl_wasm.js";
             init().then(() => {});
@@ -301,9 +269,9 @@
         </script>
 
         <!-- Custom JS scripts -->
-        <script src="../../mode-veryl.js"></script>
-        <script src="../../editor.js"></script>
-        <script src="../../theme/language-picker.js"></script>
+        <script src="../mode-veryl.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../theme/language-picker.js"></script>
 
 
     </div>

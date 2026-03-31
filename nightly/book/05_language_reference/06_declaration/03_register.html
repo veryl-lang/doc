@@ -209,7 +209,9 @@
                     <main>
                         <h1 id="register"><a class="header" href="#register">Register</a></h1>
 <p>If a variable is assigned in <code>always_ff</code> declaration, it becomes register variable.
-Register variable will be mapped to flip-flop in synthesis phase.</p>
+Register variable will be mapped to flip-flop in synthesis phase.
+Register variables use non-blocking assignment semantics.
+See <a href="../18_execution_model.html">Execution Model</a> for the simulation cycle and commit behavior.</p>
 <p><code>always_ff</code> has mandatory clock variable, optional reset variable, and <code>{}</code> block.
 Clock and reset are placed in <code>()</code>.
 The specified clock and reset should have <code>clock</code> / <code>reset</code> type and the witdh of them should be 1bit.</p>

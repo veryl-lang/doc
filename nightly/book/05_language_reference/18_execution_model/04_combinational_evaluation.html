@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="ja" class="light sidebar-visible" dir="ltr">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head prefix="og: http://ogp.me/ns#">
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>代入 - The Veryl Hardware Description Language</title>
+        <title>Combinational Evaluation - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
@@ -27,9 +27,9 @@
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
                     if (lang == "en") {
-                        canonical_href = `${base}/05_language_reference/05_statement/01_assignment.md`;
+                        canonical_href = `${base}/05_language_reference/18_execution_model/04_combinational_evaluation.md`;
                     } else {
-                        canonical_href = `${base}/${lang}/05_language_reference/05_statement/01_assignment.md`;
+                        canonical_href = `${base}/${lang}/05_language_reference/18_execution_model/04_combinational_evaluation.md`;
                     }
                     canonical_href = canonical_href.slice(0, -"md".length) + "html";
                     if (canonical_href.endsWith("/index.html")) {
@@ -38,7 +38,7 @@
                     return canonical_href;
                 }
         
-                const canonical_href = gen_canonical_href("ja");
+                const canonical_href = gen_canonical_href("en");
 
                 let link = document.createElement("link");
                 link.rel = "canonical";
@@ -207,53 +207,46 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="代入"><a class="header" href="#代入">代入</a></h1>
-<p>代入文は <code>変数 = 式;</code> の形式です。SystemVerilog と異なり、<code>always_comb</code> でも <code>always_ff</code> でも代入演算子は <code>=</code> です。以下のような代入演算子もあります。</p>
-<ul>
-<li><code>+=</code>：加算代入</li>
-<li><code>-=</code>：減算代入</li>
-<li><code>*=</code>：乗算代入</li>
-<li><code>/=</code>：除算代入</li>
-<li><code>%=</code>：剰余代入</li>
-<li><code>&amp;=</code>：ビットAND代入</li>
-<li><code>|=</code>：ビットOR代入</li>
-<li><code>^=</code>：ビットXOR代入</li>
-<li><code>&lt;&lt;=</code>：論理左シフト代入</li>
-<li><code>&gt;&gt;=</code>：論理右シフト代入</li>
-<li><code>&lt;&lt;&lt;=</code>：算術左シフト代入</li>
-<li><code>&gt;&gt;&gt;=</code>：算術右シフト代入</li>
-</ul>
-<pre><code class="language-veryl playground">module ModuleA (
-    i_clk: input clock,
-) {
-    let a: logic&lt;10&gt; = 1;
-    var b: logic&lt;10&gt;;
-    var c: logic&lt;10&gt;;
-    var d: logic&lt;10&gt;;
-    var e: logic&lt;10&gt;;
+                        <h1 id="combinational-evaluation"><a class="header" href="#combinational-evaluation">Combinational Evaluation</a></h1>
+<p>Combinational logic (<code>always_comb</code> and <code>assign</code>) follows SystemVerilog semantics: each block is implicitly sensitive to its inputs and re-evaluated whenever they change.</p>
+<p>When a block updates a signal, dependent blocks are automatically re-triggered until all signals stabilize.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
+    var c: logic&lt;8&gt;;
+
+    assign a = 1;
 
     always_comb {
-        b =  a + 1;
-        c += a + 1;
+        b = a + 1; // re-evaluated when a changes
     }
 
-    always_ff (i_clk) {
-        d =  a + 1;
-        e -= a + 1;
+    always_comb {
+        c = b + 1; // re-evaluated when b changes
     }
 }
 </code></pre>
-<p>代入された値がいつ参照可能になるかの詳細については、<a href="../18_execution_model.html">実行モデル</a>を参照してください。</p>
+<p>In this example, the values are always <code>a = 1</code>, <code>b = 2</code>, <code>c = 3</code>, regardless of initial evaluation order.</p>
+<h2 id="combinational-loops"><a class="header" href="#combinational-loops">Combinational Loops</a></h2>
+<p>A combinational loop — where a variable depends on itself without an intervening register — is detected at compile time and reported as an error.</p>
+<pre><code class="language-text">// ERROR: combinational loop
+var x: logic&lt;8&gt;;
+always_comb {
+    x = x + 1; // x depends on itself
+}
+</code></pre>
+<h2 id="implementation-note"><a class="header" href="#implementation-note">Implementation Note</a></h2>
+<p>Veryl’s built-in simulator uses topological sorting to optimize evaluation order; the observable results are equivalent to the event-driven model described above.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../05_language_reference/05_statement.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../05_language_reference/18_execution_model/03_assignment_semantics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../05_language_reference/05_statement/02_function_call.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../05_language_reference/18_execution_model/05_event_evaluation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -263,11 +256,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../05_language_reference/05_statement.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../05_language_reference/18_execution_model/03_assignment_semantics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../05_language_reference/05_statement/02_function_call.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../05_language_reference/18_execution_model/05_event_evaluation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

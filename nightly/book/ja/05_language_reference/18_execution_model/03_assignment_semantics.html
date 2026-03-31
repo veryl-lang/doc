@@ -3,7 +3,7 @@
     <head prefix="og: http://ogp.me/ns#">
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>代入 - The Veryl Hardware Description Language</title>
+        <title>代入のセマンティクス - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
@@ -27,9 +27,9 @@
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
                     if (lang == "en") {
-                        canonical_href = `${base}/05_language_reference/05_statement/01_assignment.md`;
+                        canonical_href = `${base}/05_language_reference/18_execution_model/03_assignment_semantics.md`;
                     } else {
-                        canonical_href = `${base}/${lang}/05_language_reference/05_statement/01_assignment.md`;
+                        canonical_href = `${base}/${lang}/05_language_reference/18_execution_model/03_assignment_semantics.md`;
                     }
                     canonical_href = canonical_href.slice(0, -"md".length) + "html";
                     if (canonical_href.endsWith("/index.html")) {
@@ -207,53 +207,71 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="代入"><a class="header" href="#代入">代入</a></h1>
-<p>代入文は <code>変数 = 式;</code> の形式です。SystemVerilog と異なり、<code>always_comb</code> でも <code>always_ff</code> でも代入演算子は <code>=</code> です。以下のような代入演算子もあります。</p>
-<ul>
-<li><code>+=</code>：加算代入</li>
-<li><code>-=</code>：減算代入</li>
-<li><code>*=</code>：乗算代入</li>
-<li><code>/=</code>：除算代入</li>
-<li><code>%=</code>：剰余代入</li>
-<li><code>&amp;=</code>：ビットAND代入</li>
-<li><code>|=</code>：ビットOR代入</li>
-<li><code>^=</code>：ビットXOR代入</li>
-<li><code>&lt;&lt;=</code>：論理左シフト代入</li>
-<li><code>&gt;&gt;=</code>：論理右シフト代入</li>
-<li><code>&lt;&lt;&lt;=</code>：算術左シフト代入</li>
-<li><code>&gt;&gt;&gt;=</code>：算術右シフト代入</li>
-</ul>
-<pre><code class="language-veryl playground">module ModuleA (
-    i_clk: input clock,
-) {
-    let a: logic&lt;10&gt; = 1;
-    var b: logic&lt;10&gt;;
-    var c: logic&lt;10&gt;;
-    var d: logic&lt;10&gt;;
-    var e: logic&lt;10&gt;;
+                        <h1 id="代入のセマンティクス"><a class="header" href="#代入のセマンティクス">代入のセマンティクス</a></h1>
+<p>Verylはすべての代入に単一の <code>=</code> 演算子を使用します。実際のセマンティクス — ブロッキングかノンブロッキングか — は代入コンテキストにより自動的に決定されます。これにより、設計者が手動で従うべきSystemVerilogのベストプラクティスが強制されます。</p>
+<h2 id="ブロッキング代入"><a class="header" href="#ブロッキング代入">ブロッキング代入</a></h2>
+<p><code>always_comb</code> ブロックと <code>assign</code> 宣言では、<code>=</code> は<strong>ブロッキング代入</strong>を行います。代入された値は同一評価パス内の後続の読み取りから即座に参照可能です。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a: logic&lt;8&gt; = 1;
+    var b: logic&lt;8&gt;;
+    var c: logic&lt;8&gt;;
 
     always_comb {
-        b =  a + 1;
-        c += a + 1;
-    }
-
-    always_ff (i_clk) {
-        d =  a + 1;
-        e -= a + 1;
+        b = a + 1; // b は即座に 2 に更新される
+        c = b + 1; // c は b の新しい値 (2) を読むため、c = 3
     }
 }
 </code></pre>
-<p>代入された値がいつ参照可能になるかの詳細については、<a href="../18_execution_model.html">実行モデル</a>を参照してください。</p>
+<h2 id="ノンブロッキング代入"><a class="header" href="#ノンブロッキング代入">ノンブロッキング代入</a></h2>
+<p><code>always_ff</code> ブロック内では、モジュールレベル変数に対する <code>=</code> は<strong>ノンブロッキング代入</strong>を行います。代入された値はNBA更新フェーズにスケジュールされ、FFコミットまで反映されません。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
 
+    always_ff {
+        // a.next = 1（このフェーズ中 current の a は変化しない）
+        a = 1;
+        // a.current を読む（a.next ではない）ため、b.next = a.current + 1
+        b = a + 1;
+    }
+}
+</code></pre>
+<h2 id="always_ff-内のローカル束縛"><a class="header" href="#always_ff-内のローカル束縛"><code>always_ff</code> 内のローカル束縛</a></h2>
+<p><code>always_ff</code> 内の <code>let</code> 束縛は常に<strong>ブロッキング</strong>セマンティクスを使用します。ローカル束縛はブロック内の一時的な値であり、フリップフロップにマップされることはありません。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a     : logic&lt;8&gt;;
+    var result: logic&lt;8&gt;;
+
+    always_ff {
+        // ブロッキング：doubled は即座に利用可能
+        let doubled: logic&lt;8&gt; = a * 2;
+        // ノンブロッキング：result.next = doubled + 1
+        result = doubled + 1;
+    }
+}
+</code></pre>
+<h2 id="systemverilogへの対応"><a class="header" href="#systemverilogへの対応">SystemVerilogへの対応</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Verylコンテキスト</th><th>Veryl構文</th><th>SystemVerilog相当</th></tr></thead><tbody>
+<tr><td><code>always_comb</code></td><td><code>x = expr;</code></td><td><code>x = expr;</code>（ブロッキング）</td></tr>
+<tr><td><code>assign</code></td><td><code>assign x = expr;</code></td><td><code>assign x = expr;</code>（continuous assignment）</td></tr>
+<tr><td><code>always_ff</code>、モジュールレベル変数</td><td><code>x = expr;</code></td><td><code>x &lt;= expr;</code>（ノンブロッキング）</td></tr>
+<tr><td><code>always_ff</code>、ローカル <code>let</code></td><td><code>let x: T = expr;</code></td><td><code>x = expr;</code>（ブロッキング）</td></tr>
+<tr><td><code>always_ff</code>、複合代入</td><td><code>x += expr;</code></td><td><code>x &lt;= x + expr;</code>（ノンブロッキング）</td></tr>
+</tbody></table>
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../05_language_reference/05_statement.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../05_language_reference/18_execution_model/02_simulation_cycle.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../05_language_reference/05_statement/02_function_call.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../05_language_reference/18_execution_model/04_combinational_evaluation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -263,11 +281,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../05_language_reference/05_statement.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../05_language_reference/18_execution_model/02_simulation_cycle.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../05_language_reference/05_statement/02_function_call.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../05_language_reference/18_execution_model/04_combinational_evaluation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

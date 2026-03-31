@@ -3,7 +3,7 @@
     <head prefix="og: http://ogp.me/ns#">
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>代入 - The Veryl Hardware Description Language</title>
+        <title>変数の分類 - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
@@ -27,9 +27,9 @@
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
                     if (lang == "en") {
-                        canonical_href = `${base}/05_language_reference/05_statement/01_assignment.md`;
+                        canonical_href = `${base}/05_language_reference/18_execution_model/01_variable_classification.md`;
                     } else {
-                        canonical_href = `${base}/${lang}/05_language_reference/05_statement/01_assignment.md`;
+                        canonical_href = `${base}/${lang}/05_language_reference/18_execution_model/01_variable_classification.md`;
                     }
                     canonical_href = canonical_href.slice(0, -"md".length) + "html";
                     if (canonical_href.endsWith("/index.html")) {
@@ -207,53 +207,58 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="代入"><a class="header" href="#代入">代入</a></h1>
-<p>代入文は <code>変数 = 式;</code> の形式です。SystemVerilog と異なり、<code>always_comb</code> でも <code>always_ff</code> でも代入演算子は <code>=</code> です。以下のような代入演算子もあります。</p>
-<ul>
-<li><code>+=</code>：加算代入</li>
-<li><code>-=</code>：減算代入</li>
-<li><code>*=</code>：乗算代入</li>
-<li><code>/=</code>：除算代入</li>
-<li><code>%=</code>：剰余代入</li>
-<li><code>&amp;=</code>：ビットAND代入</li>
-<li><code>|=</code>：ビットOR代入</li>
-<li><code>^=</code>：ビットXOR代入</li>
-<li><code>&lt;&lt;=</code>：論理左シフト代入</li>
-<li><code>&gt;&gt;=</code>：論理右シフト代入</li>
-<li><code>&lt;&lt;&lt;=</code>：算術左シフト代入</li>
-<li><code>&gt;&gt;&gt;=</code>：算術右シフト代入</li>
-</ul>
+                        <h1 id="変数の分類"><a class="header" href="#変数の分類">変数の分類</a></h1>
+<p>変数は代入コンテキストによって分類され、これによりストレージと代入セマンティクスが決定されます。</p>
+<h2 id="ff変数レジスタ"><a class="header" href="#ff変数レジスタ">FF変数（レジスタ）</a></h2>
+<p>モジュールレベルの <code>var</code> が <code>always_ff</code> ブロック内で代入されると、<strong>フリップフロップ（FF）変数</strong>になります。FF変数は二重バッファモデルを使用します：すべてのブロックから読み取れる<strong>current</strong>値と、ノンブロッキング代入により書き込まれる<strong>next</strong>値です。next値はFFコミットフェーズの後にのみcurrent値になります（<a href="./02_simulation_cycle.html">シミュレーションサイクル</a>を参照）。</p>
+<h2 id="組み合わせ変数"><a class="header" href="#組み合わせ変数">組み合わせ変数</a></h2>
+<p>モジュールレベルの <code>var</code> が <code>always_comb</code> ブロック内または <code>assign</code> 宣言を通じて代入されると、<strong>組み合わせ変数</strong>になります。組み合わせ変数への書き込みは即座に反映され（ブロッキング代入セマンティクス）、評価順序における後続の読み取りから参照可能です。</p>
+<p>モジュールレベルの <code>let</code> 宣言は <code>var</code> + <code>assign</code> の省略形であるため、同様に組み合わせ変数を生成します。</p>
+<h2 id="定数"><a class="header" href="#定数">定数</a></h2>
+<p><code>const</code> 宣言は<strong>コンパイル時定数</strong>を定義します。定数はコンパイル時に評価され、不変であり、シミュレーションサイクルには参加しません。</p>
+<h2 id="ローカル束縛"><a class="header" href="#ローカル束縛">ローカル束縛</a></h2>
+<p><code>always_ff</code> または <code>always_comb</code> ブロック内の <code>let</code> 宣言は<strong>ローカル束縛</strong>を作成します。ローカル束縛は <code>always_ff</code> 内であっても常にブロッキング代入セマンティクスを使用します。フリップフロップにマップされることはなく、囲むブロックの外からは参照できません。</p>
 <pre><code class="language-veryl playground">module ModuleA (
     i_clk: input clock,
+    i_rst: input reset,
 ) {
-    let a: logic&lt;10&gt; = 1;
-    var b: logic&lt;10&gt;;
-    var c: logic&lt;10&gt;;
-    var d: logic&lt;10&gt;;
-    var e: logic&lt;10&gt;;
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
 
-    always_comb {
-        b =  a + 1;
-        c += a + 1;
+    // 組み合わせ変数（var + assign の省略形）
+    let c: logic&lt;8&gt; = a + 1;
+
+    // コンパイル時定数
+    const INIT: logic&lt;8&gt; = 0;
+
+    always_ff {
+        if_reset {
+            // FF変数（ノンブロッキング）
+            a = 0;
+        } else {
+            // ローカル束縛（ブロッキング、FFではない）
+            let temp: logic&lt;8&gt; = b + 1;
+            // FF変数（ノンブロッキング）
+            a = temp;
+        }
     }
 
-    always_ff (i_clk) {
-        d =  a + 1;
-        e -= a + 1;
+    always_comb {
+        // 組み合わせ変数（ブロッキング）
+        b = c + 1;
     }
 }
 </code></pre>
-<p>代入された値がいつ参照可能になるかの詳細については、<a href="../18_execution_model.html">実行モデル</a>を参照してください。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../05_language_reference/05_statement.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../05_language_reference/18_execution_model.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../05_language_reference/05_statement/02_function_call.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../05_language_reference/18_execution_model/02_simulation_cycle.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -263,11 +268,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../05_language_reference/05_statement.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../05_language_reference/18_execution_model.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../05_language_reference/05_statement/02_function_call.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../05_language_reference/18_execution_model/02_simulation_cycle.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

@@ -208,7 +208,9 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="combinational"><a class="header" href="#combinational">Combinational</a></h1>
-<p>If a variable is assigned in <code>always_comb</code> declaration, it means combinational circuit.</p>
+<p>If a variable is assigned in <code>always_comb</code> declaration, it means combinational circuit.
+Combinational variables use blocking assignment semantics and are re-evaluated when their inputs change.
+See <a href="../18_execution_model.html">Execution Model</a> for evaluation details.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;

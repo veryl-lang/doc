@@ -1859,6 +1859,7 @@ There are other assignment operators:</p>
     }
 }
 </code></pre>
+<p>For details on when assigned values become visible, see <a href="05_language_reference/05_statement/../18_execution_model.html">Execution Model</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-call-1"><a class="header" href="#function-call-1">Function Call</a></h1>
 <p>Function call can be used as statement.
 In this case, the return value of function will be ignored.</p>
@@ -2072,7 +2073,9 @@ Variable name starting with <code>_</code> means unused variable, and suppresses
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="register"><a class="header" href="#register">Register</a></h1>
 <p>If a variable is assigned in <code>always_ff</code> declaration, it becomes register variable.
-Register variable will be mapped to flip-flop in synthesis phase.</p>
+Register variable will be mapped to flip-flop in synthesis phase.
+Register variables use non-blocking assignment semantics.
+See <a href="05_language_reference/06_declaration/../18_execution_model.html">Execution Model</a> for the simulation cycle and commit behavior.</p>
 <p><code>always_ff</code> has mandatory clock variable, optional reset variable, and <code>{}</code> block.
 Clock and reset are placed in <code>()</code>.
 The specified clock and reset should have <code>clock</code> / <code>reset</code> type and the witdh of them should be 1bit.</p>
@@ -2124,7 +2127,9 @@ The actual polarity and synchronicity can be configured through <code>[build]</c
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="combinational"><a class="header" href="#combinational">Combinational</a></h1>
-<p>If a variable is assigned in <code>always_comb</code> declaration, it means combinational circuit.</p>
+<p>If a variable is assigned in <code>always_comb</code> declaration, it means combinational circuit.
+Combinational variables use blocking assignment semantics and are re-evaluated when their inputs change.
+See <a href="05_language_reference/06_declaration/../18_execution_model.html">Execution Model</a> for evaluation details.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
@@ -2145,7 +2150,9 @@ The actual polarity and synchronicity can be configured through <code>[build]</c
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="assign"><a class="header" href="#assign">Assign</a></h1>
-<p><code>assign</code> declaration can assign expression to variable.</p>
+<p><code>assign</code> declaration can assign expression to variable.
+<code>assign</code> declarations are treated as combinational logic.
+See <a href="05_language_reference/06_declaration/../18_execution_model.html">Execution Model</a> for evaluation semantics.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     var a: logic&lt;10&gt;;
 
@@ -3590,6 +3597,269 @@ Standard library is under <code>$std</code> namespace, and it can be used withou
 
 alias package PkgA123 = PkgA::&lt;1, 2, 3&gt;;
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="execution-model"><a class="header" href="#execution-model">Execution Model</a></h1>
+<p>Veryl’s execution model is based on the scheduling semantics of SystemVerilog (IEEE 1800).
+Through language-level constraints, Veryl enforces best practices that guarantee deterministic simulation, without requiring designers to understand the complex scheduling regions defined in the standard.</p>
+<p>Veryl’s built-in simulator conforms to this model.
+The transpiled SystemVerilog output also preserves these semantics, so any IEEE 1800 compliant simulator will produce equivalent results.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="variable-classification"><a class="header" href="#variable-classification">Variable Classification</a></h1>
+<p>Variables are classified by their assignment context, which determines storage and assignment semantics.</p>
+<h2 id="ff-variables-registers"><a class="header" href="#ff-variables-registers">FF Variables (Registers)</a></h2>
+<p>A module-level <code>var</code> assigned inside <code>always_ff</code> becomes a <strong>flip-flop (FF) variable</strong>.
+FF variables use a two-buffer model: a <strong>current</strong> value and a <strong>next</strong> value.
+The next value becomes current only after the FF commit phase (see <a href="05_language_reference/18_execution_model/./02_simulation_cycle.html">Simulation Cycle</a>).</p>
+<h2 id="combinational-variables"><a class="header" href="#combinational-variables">Combinational Variables</a></h2>
+<p>A module-level <code>var</code> assigned inside <code>always_comb</code> or via <code>assign</code> becomes a <strong>combinational variable</strong>.
+Writes take effect immediately and are visible to subsequent reads in evaluation order.</p>
+<p>A module-level <code>let</code> is a shorthand for <code>var</code> + <code>assign</code>, so it also produces a combinational variable.</p>
+<h2 id="constants"><a class="header" href="#constants">Constants</a></h2>
+<p>A <code>const</code> declaration defines an immutable <strong>compile-time constant</strong> that does not participate in the simulation cycle.</p>
+<h2 id="local-bindings"><a class="header" href="#local-bindings">Local Bindings</a></h2>
+<p>A <code>let</code> inside an <code>always_ff</code> or <code>always_comb</code> block creates a <strong>local binding</strong>.
+Local bindings always use blocking semantics, even inside <code>always_ff</code>, and are never mapped to flip-flops.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+    i_rst: input reset,
+) {
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
+
+    // combinational (shorthand for var + assign)
+    let c: logic&lt;8&gt; = a + 1;
+
+    // compile-time constant
+    const INIT: logic&lt;8&gt; = 0;
+
+    always_ff {
+        if_reset {
+            // FF variable (non-blocking)
+            a = 0;
+        } else {
+            // local binding (blocking, not a FF)
+            let temp: logic&lt;8&gt; = b + 1;
+            // FF variable (non-blocking)
+            a = temp;
+        }
+    }
+
+    always_comb {
+        // combinational variable (blocking)
+        b = c + 1;
+    }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="simulation-cycle"><a class="header" href="#simulation-cycle">Simulation Cycle</a></h1>
+<p>A simulation step consists of three phases executed in strict order, corresponding to a simplified view of the SystemVerilog scheduling regions.</p>
+<h2 id="the-three-phases"><a class="header" href="#the-three-phases">The Three Phases</a></h2>
+<pre><code class="language-text">    ┌──────────────────────────┐
+    │  Phase 1: Combinational  │  always_comb / assign blocks
+    │  Settlement              │  re-triggered on input changes
+    │  (SV Active region)      │  until all signals stabilize
+    └────────────┬─────────────┘
+                 │
+    ┌────────────▼─────────────┐
+    │  Phase 2: Event          │  always_ff blocks executed
+    │  Evaluation              │  Reads: current FF values
+    │  (SV Active + NBA)       │  Writes: scheduled as NBA
+    └────────────┬─────────────┘
+                 │
+    ┌────────────▼─────────────┐
+    │  Phase 3: FF Commit      │  All NBA writes take effect
+    │  (SV NBA Update)         │  Re-triggers Phase 1
+    └──────────────────────────┘
+</code></pre>
+<h3 id="phase-1-combinational-settlement"><a class="header" href="#phase-1-combinational-settlement">Phase 1: Combinational Settlement</a></h3>
+<p>All combinational logic (<code>always_comb</code> and <code>assign</code>) is evaluated.
+Blocks are re-triggered when their inputs change, and this propagation continues until all signals stabilize.</p>
+<h3 id="phase-2-event-evaluation"><a class="header" href="#phase-2-event-evaluation">Phase 2: Event Evaluation</a></h3>
+<p>All <code>always_ff</code> blocks sensitive to the triggered event (e.g., a clock edge) are executed.</p>
+<ul>
+<li><strong>Reads</strong> from FF variables see the <strong>current</strong> (pre-commit) values.</li>
+<li><strong>Writes</strong> to FF variables use non-blocking semantics and do <strong>not</strong> take effect immediately.</li>
+</ul>
+<h3 id="phase-3-ff-commit-nba-update"><a class="header" href="#phase-3-ff-commit-nba-update">Phase 3: FF Commit (NBA Update)</a></h3>
+<p>All non-blocking assignments from Phase 2 take effect atomically.
+After the commit, combinational logic is re-evaluated with the updated values (returning to Phase 1).</p>
+<h2 id="correspondence-to-systemverilog-scheduling-regions"><a class="header" href="#correspondence-to-systemverilog-scheduling-regions">Correspondence to SystemVerilog Scheduling Regions</a></h2>
+<p>Veryl’s language constraints ensure that only two of SystemVerilog’s scheduling regions are relevant:</p>
+<div class="table-wrapper"><table><thead><tr><th>SV Region</th><th>Veryl Phase</th><th>What happens</th></tr></thead><tbody>
+<tr><td>Active</td><td>Combinational Settlement</td><td><code>always_comb</code> evaluation and propagation</td></tr>
+<tr><td>Active</td><td>Event Evaluation (reads)</td><td><code>always_ff</code> reads current values</td></tr>
+<tr><td>NBA Update</td><td>Event Evaluation (writes) + FF Commit</td><td><code>always_ff</code> writes take effect</td></tr>
+</tbody></table>
+</div>
+<p>The other regions (Inactive, Observed, Reactive) are not needed because Veryl prohibits the patterns that require them (<code>#0</code> delays, program blocks, mixed assignment types).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="assignment-semantics"><a class="header" href="#assignment-semantics">Assignment Semantics</a></h1>
+<p>Veryl uses a single <code>=</code> operator for all assignments.
+The semantics — blocking or non-blocking — are automatically determined by context, enforcing SystemVerilog best practices.</p>
+<h2 id="blocking-assignment"><a class="header" href="#blocking-assignment">Blocking Assignment</a></h2>
+<p>In <code>always_comb</code> and <code>assign</code>, <code>=</code> performs a <strong>blocking assignment</strong> — the value is immediately visible to subsequent reads.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a: logic&lt;8&gt; = 1;
+    var b: logic&lt;8&gt;;
+    var c: logic&lt;8&gt;;
+
+    always_comb {
+        b = a + 1; // b is immediately updated to 2
+        c = b + 1; // c reads the new value of b (2), so c = 3
+    }
+}
+</code></pre>
+<h2 id="non-blocking-assignment"><a class="header" href="#non-blocking-assignment">Non-Blocking Assignment</a></h2>
+<p>In <code>always_ff</code>, <code>=</code> for module-level variables performs a <strong>non-blocking assignment</strong> — the value does not take effect until the FF commit.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
+
+    always_ff {
+        // a.next = 1 (current a is unchanged during this phase)
+        a = 1;
+        // reads a.current (not a.next), so b.next = a.current + 1
+        b = a + 1;
+    }
+}
+</code></pre>
+<h2 id="local-bindings-in-always_ff"><a class="header" href="#local-bindings-in-always_ff">Local Bindings in <code>always_ff</code></a></h2>
+<p>A <code>let</code> inside <code>always_ff</code> uses <strong>blocking</strong> semantics and is never mapped to a flip-flop.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a     : logic&lt;8&gt;;
+    var result: logic&lt;8&gt;;
+
+    always_ff {
+        // blocking: doubled is immediately available
+        let doubled: logic&lt;8&gt; = a * 2;
+        // non-blocking: result.next = doubled + 1
+        result = doubled + 1;
+    }
+}
+</code></pre>
+<h2 id="mapping-to-systemverilog"><a class="header" href="#mapping-to-systemverilog">Mapping to SystemVerilog</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Veryl context</th><th>Veryl syntax</th><th>SystemVerilog equivalent</th></tr></thead><tbody>
+<tr><td><code>always_comb</code></td><td><code>x = expr;</code></td><td><code>x = expr;</code> (blocking)</td></tr>
+<tr><td><code>assign</code></td><td><code>assign x = expr;</code></td><td><code>assign x = expr;</code> (continuous)</td></tr>
+<tr><td><code>always_ff</code>, module-level var</td><td><code>x = expr;</code></td><td><code>x &lt;= expr;</code> (non-blocking)</td></tr>
+<tr><td><code>always_ff</code>, local <code>let</code></td><td><code>let x: T = expr;</code></td><td><code>x = expr;</code> (blocking)</td></tr>
+<tr><td><code>always_ff</code>, compound</td><td><code>x += expr;</code></td><td><code>x &lt;= x + expr;</code> (non-blocking)</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="combinational-evaluation"><a class="header" href="#combinational-evaluation">Combinational Evaluation</a></h1>
+<p>Combinational logic (<code>always_comb</code> and <code>assign</code>) follows SystemVerilog semantics: each block is implicitly sensitive to its inputs and re-evaluated whenever they change.</p>
+<p>When a block updates a signal, dependent blocks are automatically re-triggered until all signals stabilize.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
+    var c: logic&lt;8&gt;;
+
+    assign a = 1;
+
+    always_comb {
+        b = a + 1; // re-evaluated when a changes
+    }
+
+    always_comb {
+        c = b + 1; // re-evaluated when b changes
+    }
+}
+</code></pre>
+<p>In this example, the values are always <code>a = 1</code>, <code>b = 2</code>, <code>c = 3</code>, regardless of initial evaluation order.</p>
+<h2 id="combinational-loops"><a class="header" href="#combinational-loops">Combinational Loops</a></h2>
+<p>A combinational loop — where a variable depends on itself without an intervening register — is detected at compile time and reported as an error.</p>
+<pre><code class="language-text">// ERROR: combinational loop
+var x: logic&lt;8&gt;;
+always_comb {
+    x = x + 1; // x depends on itself
+}
+</code></pre>
+<h2 id="implementation-note"><a class="header" href="#implementation-note">Implementation Note</a></h2>
+<p>Veryl’s built-in simulator uses topological sorting to optimize evaluation order; the observable results are equivalent to the event-driven model described above.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="event-evaluation"><a class="header" href="#event-evaluation">Event Evaluation</a></h1>
+<p>When a clock edge or reset event occurs, all <code>always_ff</code> blocks sensitive to that event are executed.</p>
+<ol>
+<li>All reads from FF variables see the <strong>current</strong> (pre-commit) values.</li>
+<li>All writes to FF variables are <strong>non-blocking</strong> and do not take effect until the FF commit phase.</li>
+</ol>
+<p>Because all blocks read from the same snapshot and write to independent “next” slots, the execution order does not affect the result.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
+
+    // These two blocks produce the same result regardless of evaluation order:
+
+    always_ff {
+        a = b; // a.next = b.current
+    }
+
+    always_ff {
+        b = a; // b.next = a.current
+    }
+
+    // After commit: a and b have swapped their values.
+}
+</code></pre>
+<h2 id="source-order"><a class="header" href="#source-order">Source Order</a></h2>
+<p><code>always_ff</code> blocks for the same event are evaluated in source order.</p>
+<h2 id="initial-and-final-blocks"><a class="header" href="#initial-and-final-blocks">Initial and Final Blocks</a></h2>
+<p><code>initial</code> blocks are evaluated once at simulation start, <code>final</code> blocks once at simulation end.
+These blocks are not synthesizable and are used for testbench and debugging purposes.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="multi-clock-domains"><a class="header" href="#multi-clock-domains">Multi-Clock Domains</a></h1>
+<p>Each clock domain is triggered independently by its associated clock event.</p>
+<h2 id="independent-domain-evaluation"><a class="header" href="#independent-domain-evaluation">Independent Domain Evaluation</a></h2>
+<p>When a clock edge occurs, only the <code>always_ff</code> blocks sensitive to that clock are evaluated.
+The FF commit applies only to the variables written by those blocks.</p>
+<h2 id="simultaneous-clock-edges"><a class="header" href="#simultaneous-clock-edges">Simultaneous Clock Edges</a></h2>
+<p>When two clocks have simultaneous edges, each domain is evaluated and committed sequentially.
+The two-buffer model ensures each domain sees a consistent snapshot of its own variables, so single-domain behavior is deterministic regardless of processing order.</p>
+<h2 id="cross-domain-signals"><a class="header" href="#cross-domain-signals">Cross-Domain Signals</a></h2>
+<p>Cross-domain signal access requires <code>unsafe (cdc)</code> (see <a href="05_language_reference/18_execution_model/../15_clock_domain_annotation.html">Clock Domain Annotation</a>).</p>
+<p>With simultaneous edges, the evaluation order between domains sharing <code>unsafe (cdc)</code> signals is not guaranteed.
+Designers must use proper synchronization (e.g., two-flop synchronizers, handshake protocols).</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk_a: input  'a clock   ,
+    i_rst_a: input  'a reset   ,
+    i_clk_b: input  'b clock   ,
+    i_dat_a: input  'a logic&lt;8&gt;,
+    o_dat_b: output 'b logic&lt;8&gt;,
+) {
+    var data_a: 'a logic&lt;8&gt;;
+
+    always_ff (i_clk_a, i_rst_a) {
+        if_reset {
+            data_a = 0;
+        } else {
+            data_a = i_dat_a;
+        }
+    }
+
+    // Cross-domain access requires unsafe (cdc)
+    unsafe (cdc) {
+        assign o_dat_b = data_a;
+    }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="determinism"><a class="header" href="#determinism">Determinism</a></h1>
+<p>Veryl guarantees deterministic simulation: given the same source code and the same stimulus sequence, any compliant simulator will produce identical signal values at every simulation step.</p>
+<h2 id="how-veryl-achieves-determinism"><a class="header" href="#how-veryl-achieves-determinism">How Veryl Achieves Determinism</a></h2>
+<p>Veryl’s language constraints eliminate common sources of non-determinism in SystemVerilog:</p>
+<ol>
+<li><strong>No blocking/non-blocking confusion</strong> — A single <code>=</code> operator automatically infers the correct semantics, making it impossible to use the wrong assignment type.</li>
+<li><strong>Read/write isolation for FF variables</strong> — All <code>always_ff</code> blocks read from the same snapshot and write to independent “next” slots, so evaluation order never affects the result.</li>
+<li><strong>Deterministic combinational evaluation</strong> — Blocks propagate until stable, and combinational loops are detected at compile time.</li>
+<li><strong>Explicit clock domain crossing</strong> — Cross-domain access without <code>unsafe (cdc)</code> is a compile-time error, preventing accidental races.</li>
+</ol>
+<h2 id="scope-of-the-guarantee"><a class="header" href="#scope-of-the-guarantee">Scope of the Guarantee</a></h2>
+<p>The guarantee applies to <strong>observable signal values at simulation step boundaries</strong> (after each FF commit). Internal evaluation order within a phase is implementation-defined but does not affect observable results.</p>
+<h2 id="relation-to-systemverilog"><a class="header" href="#relation-to-systemverilog">Relation to SystemVerilog</a></h2>
+<p>The transpiled SystemVerilog output follows well-established deterministic patterns:</p>
+<ul>
+<li><code>always_ff</code> with <code>&lt;=</code> (non-blocking) for sequential logic</li>
+<li><code>always_comb</code> with <code>=</code> (blocking) for combinational logic</li>
+<li>No mixed blocking/non-blocking assignments to the same variable</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="development-environment"><a class="header" href="#development-environment">Development Environment</a></h1>
 <p>In this chapter, we’ll discuss about development environment including project configuration and development tools.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="project-configuration"><a class="header" href="#project-configuration">Project Configuration</a></h1>
