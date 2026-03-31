@@ -2,6 +2,8 @@
 
 If a variable is assigned in `always_ff` declaration, it becomes register variable.
 Register variable will be mapped to flip-flop in synthesis phase.
+Register variables use non-blocking assignment semantics.
+See [Execution Model](../18_execution_model.md) for the simulation cycle and commit behavior.
 
 `always_ff` has mandatory clock variable, optional reset variable, and `{}` block.
 Clock and reset are placed in `()`.

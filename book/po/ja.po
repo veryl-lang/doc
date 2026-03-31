@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2026-03-30T11:24:19+09:00\n"
+"POT-Creation-Date: 2026-03-31T17:03:12+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -308,107 +308,146 @@ msgstr "標準ライブラリ"
 msgid "Alias"
 msgstr "エイリアス"
 
-#: src/SUMMARY.md:73 src/06_development_environment.md:1
+#: src/SUMMARY.md:73 src/05_language_reference/18_execution_model.md:1
+msgid "Execution Model"
+msgstr "実行モデル"
+
+#: src/SUMMARY.md:74
+#: src/05_language_reference/18_execution_model/01_variable_classification.md:1
+msgid "Variable Classification"
+msgstr "変数の分類"
+
+#: src/SUMMARY.md:75
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:1
+msgid "Simulation Cycle"
+msgstr "シミュレーションサイクル"
+
+#: src/SUMMARY.md:76
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:1
+msgid "Assignment Semantics"
+msgstr "代入のセマンティクス"
+
+#: src/SUMMARY.md:77
+#: src/05_language_reference/18_execution_model/04_combinational_evaluation.md:1
+msgid "Combinational Evaluation"
+msgstr "組み合わせロジックの評価"
+
+#: src/SUMMARY.md:78
+#: src/05_language_reference/18_execution_model/05_event_evaluation.md:1
+msgid "Event Evaluation"
+msgstr "イベント評価"
+
+#: src/SUMMARY.md:79
+#: src/05_language_reference/18_execution_model/06_multi_clock.md:1
+msgid "Multi-Clock Domains"
+msgstr "マルチクロックドメイン"
+
+#: src/SUMMARY.md:80
+#: src/05_language_reference/18_execution_model/07_determinism.md:1
+msgid "Determinism"
+msgstr "決定性"
+
+#: src/SUMMARY.md:81 src/06_development_environment.md:1
 msgid "Development Environment"
 msgstr "開発環境"
 
-#: src/SUMMARY.md:74
+#: src/SUMMARY.md:82
 #: src/06_development_environment/01_project_configuration.md:1
 msgid "Project Configuration"
 msgstr "プロジェクト設定"
 
-#: src/SUMMARY.md:75
+#: src/SUMMARY.md:83
 #: src/06_development_environment/01_project_configuration/01_build.md:1
 msgid "Build"
 msgstr "Build"
 
-#: src/SUMMARY.md:76
+#: src/SUMMARY.md:84
 #: src/06_development_environment/01_project_configuration/02_format.md:1
 msgid "Format"
 msgstr "Format"
 
-#: src/SUMMARY.md:77
+#: src/SUMMARY.md:85
 #: src/06_development_environment/01_project_configuration/03_lint.md:1
 msgid "Lint"
 msgstr "Lint"
 
-#: src/SUMMARY.md:78
+#: src/SUMMARY.md:86
 #: src/06_development_environment/01_project_configuration/04_test.md:1
 #: src/06_development_environment/11_github_action.md:47
 msgid "Test"
 msgstr "Test"
 
-#: src/SUMMARY.md:79
+#: src/SUMMARY.md:87
 #: src/06_development_environment/01_project_configuration/05_publish.md:1
 msgid "Publish"
 msgstr "Publish"
 
-#: src/SUMMARY.md:80 src/06_development_environment/02_dependencies.md:1
+#: src/SUMMARY.md:88 src/06_development_environment/02_dependencies.md:1
 msgid "Dependencies"
 msgstr "依存関係"
 
-#: src/SUMMARY.md:81 src/06_development_environment/03_publish_project.md:1
+#: src/SUMMARY.md:89 src/06_development_environment/03_publish_project.md:1
 msgid "Publish Project"
 msgstr "プロジェクトを公開する"
 
-#: src/SUMMARY.md:82 src/06_development_environment/04_directory_layout.md:1
+#: src/SUMMARY.md:90 src/06_development_environment/04_directory_layout.md:1
 msgid "Directory Layout"
 msgstr "ディレクトリ構成"
 
-#: src/SUMMARY.md:83 src/06_development_environment/05_formatter.md:1
+#: src/SUMMARY.md:91 src/06_development_environment/05_formatter.md:1
 msgid "Formatter"
 msgstr "フォーマッタ"
 
-#: src/SUMMARY.md:84 src/06_development_environment/06_linter.md:1
+#: src/SUMMARY.md:92 src/06_development_environment/06_linter.md:1
 msgid "Linter"
 msgstr "リンタ"
 
-#: src/SUMMARY.md:85 src/06_development_environment/07_simulator.md:1
+#: src/SUMMARY.md:93 src/06_development_environment/07_simulator.md:1
 msgid "Simulator"
 msgstr "シミュレータ"
 
-#: src/SUMMARY.md:86 src/06_development_environment/08_language_server.md:1
+#: src/SUMMARY.md:94 src/06_development_environment/08_language_server.md:1
 msgid "Language Server"
 msgstr "言語サーバ"
 
-#: src/SUMMARY.md:87 src/06_development_environment/09_compatibility.md:1
+#: src/SUMMARY.md:95 src/06_development_environment/09_compatibility.md:1
 msgid "Compatibility"
 msgstr "互換性"
 
-#: src/SUMMARY.md:88 src/06_development_environment/10_documentation.md:1
+#: src/SUMMARY.md:96 src/06_development_environment/10_documentation.md:1
 msgid "Documentation"
 msgstr "ドキュメンテーション"
 
-#: src/SUMMARY.md:89 src/06_development_environment/11_github_action.md:1
+#: src/SUMMARY.md:97 src/06_development_environment/11_github_action.md:1
 msgid "GitHub Action"
 msgstr "GitHub Action"
 
-#: src/SUMMARY.md:90 src/06_development_environment/12_source_map.md:1
+#: src/SUMMARY.md:98 src/06_development_environment/12_source_map.md:1
 msgid "Source Map"
 msgstr "ソースマップ"
 
-#: src/SUMMARY.md:91 src/06_development_environment/13_verylup.md:1
+#: src/SUMMARY.md:99 src/06_development_environment/13_verylup.md:1
 msgid "verylup"
 msgstr "verylup"
 
-#: src/SUMMARY.md:92
+#: src/SUMMARY.md:100
 #: src/06_development_environment/14_migrate_to_new_version.md:1
 msgid "Migrate to New Version"
 msgstr "新バージョンへの移行"
 
-#: src/SUMMARY.md:93 src/06_development_environment/15_docker_image.md:1
+#: src/SUMMARY.md:101 src/06_development_environment/15_docker_image.md:1
 msgid "Docker Image"
 msgstr "Docker イメージ"
 
-#: src/SUMMARY.md:94 src/07_appendix.md:1
+#: src/SUMMARY.md:102 src/07_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
-#: src/SUMMARY.md:95 src/07_appendix/01_formal_syntax.md:1
+#: src/SUMMARY.md:103 src/07_appendix/01_formal_syntax.md:1
 msgid "Formal Syntax"
 msgstr "構文"
 
-#: src/SUMMARY.md:96 src/07_appendix/02_semantic_error.md:1
+#: src/SUMMARY.md:104 src/07_appendix/02_semantic_error.md:1
 msgid "Semantic Error"
 msgstr "セマンティックエラー"
 
@@ -3073,6 +3112,14 @@ msgstr "`<<<=`：算術左シフト代入"
 msgid "`>>>=`: arithmetic right shift assignment"
 msgstr "`>>>=`：算術右シフト代入"
 
+#: src/05_language_reference/05_statement/01_assignment.md:42
+msgid ""
+"For details on when assigned values become visible, see [Execution Model]"
+"(../18_execution_model.md)."
+msgstr ""
+"代入された値がいつ参照可能になるかの詳細については、[実行モデル]"
+"(../18_execution_model.md)を参照してください。"
+
 #: src/05_language_reference/05_statement/02_function_call.md:3
 msgid ""
 "Function call can be used as statement. In this case, the return value of "
@@ -3273,12 +3320,17 @@ msgstr ""
 #: src/05_language_reference/06_declaration/03_register.md:3
 msgid ""
 "If a variable is assigned in `always_ff` declaration, it becomes register "
-"variable. Register variable will be mapped to flip-flop in synthesis phase."
+"variable. Register variable will be mapped to flip-flop in synthesis phase. "
+"Register variables use non-blocking assignment semantics. See [Execution "
+"Model](../18_execution_model.md) for the simulation cycle and commit "
+"behavior."
 msgstr ""
 "レジスタ変数とは `always_ff` で代入される変数です。合成フェーズでフリップフ"
-"ロップにマップされます。"
+"ロップにマップされます。レジスタ変数はノンブロッキング代入セマンティクスを使"
+"用します。シミュレーションサイクルとコミットの動作については[実行モデル]"
+"(../18_execution_model.md)を参照してください。"
 
-#: src/05_language_reference/06_declaration/03_register.md:6
+#: src/05_language_reference/06_declaration/03_register.md:8
 msgid ""
 "`always_ff` has mandatory clock variable, optional reset variable, and `{}` "
 "block. Clock and reset are placed in `()`. The specified clock and reset "
@@ -3288,7 +3340,7 @@ msgstr ""
 "ります。クロックとリセットは `()` に書きます。指定されたクロックとリセットは "
 "`clock` / `reset` 型を持ち、そのビット幅は1ビットでなければなりません。"
 
-#: src/05_language_reference/06_declaration/03_register.md:10
+#: src/05_language_reference/06_declaration/03_register.md:12
 msgid ""
 "`if_reset` is a special keyword which can be used in `always_ff`. It means "
 "reset condition of the register variable. If `if_reset` is used, `always_ff` "
@@ -3301,7 +3353,7 @@ msgstr ""
 "須です。これを使うことで、リセットの極性と同期性を隠ぺいすることができます。"
 "実際の極性と同期性は `Veryl.toml` の `[build]` セクションで設定できます。"
 
-#: src/05_language_reference/06_declaration/03_register.md:16
+#: src/05_language_reference/06_declaration/03_register.md:18
 msgid ""
 "If there is a single clock and reset in the module, clock and reset "
 "specification can be omitted."
@@ -3309,7 +3361,7 @@ msgstr ""
 "モジュール内にクロックとリセットが1つしかない場合、クロックとリセットの指定は"
 "省略できます。"
 
-#: src/05_language_reference/06_declaration/03_register.md:49
+#: src/05_language_reference/06_declaration/03_register.md:51
 msgid ""
 "Concatenation can be used as the left hand side in `always_ff` declaration."
 msgstr "`always_ff` 宣言の左辺には連結も使用することができます。"
@@ -3317,19 +3369,31 @@ msgstr "`always_ff` 宣言の左辺には連結も使用することができま
 #: src/05_language_reference/06_declaration/04_combinational.md:3
 msgid ""
 "If a variable is assigned in `always_comb` declaration, it means "
-"combinational circuit."
-msgstr "`always_comb` で代入される変数は組み合わせ回路を意味します。"
+"combinational circuit. Combinational variables use blocking assignment "
+"semantics and are re-evaluated when their inputs change. See [Execution "
+"Model](../18_execution_model.md) for evaluation details."
+msgstr ""
+"`always_comb` 宣言で代入される変数は組み合わせ回路を表します。組み合わせ変数"
+"はブロッキング代入セマンティクスを使用し、入力が変化したときに再評価されま"
+"す。評価の詳細については[実行モデル](../18_execution_model.md)を参照してくだ"
+"さい。"
 
-#: src/05_language_reference/06_declaration/04_combinational.md:16
+#: src/05_language_reference/06_declaration/04_combinational.md:18
 msgid ""
 "Concatenation can be used as the left hand side in `always_comb` declaration."
 msgstr "`always_comb` 宣言の左辺には連結も使用することができます。"
 
 #: src/05_language_reference/06_declaration/05_assign.md:3
-msgid "`assign` declaration can assign expression to variable."
-msgstr "`assign` 宣言で変数に式を代入することができます。"
+msgid ""
+"`assign` declaration can assign expression to variable. `assign` "
+"declarations are treated as combinational logic. See [Execution Model]"
+"(../18_execution_model.md) for evaluation semantics."
+msgstr ""
+"`assign` 宣言は変数に式を代入します。`assign` 宣言は組み合わせロジックとして"
+"扱われます。評価のセマンティクスについては[実行モデル](../18_execution_model."
+"md)を参照してください。"
 
-#: src/05_language_reference/06_declaration/05_assign.md:13
+#: src/05_language_reference/06_declaration/05_assign.md:15
 msgid ""
 "Concatenation can be used as the left hand side of `assign` declaration."
 msgstr "`assign` 宣言の左辺には連結も使用することができます。"
@@ -4379,9 +4443,8 @@ msgid ""
 "ignored` option runs both normal and ignored tests."
 msgstr ""
 "`#[ignore]` 属性を追加することでデフォルトでは無視するテストを指定できます。"
-"無視されたテストは `--ignored` オプションで実行できます。`--"
-"include-ignored` オプションを使うと通常のテストと無視されたテストの両方を実行"
-"します。"
+"無視されたテストは `--ignored` オプションで実行できます。`--include-ignored` "
+"オプションを使うと通常のテストと無視されたテストの両方を実行します。"
 
 #: src/05_language_reference/13_integrated_test.md:36
 msgid ""
@@ -5304,6 +5367,936 @@ msgstr ""
 "ジェネリック引数を持つモジュール、インターフェース、パッケージの名前は非常に"
 "長くなる場合があります。`alias` はそのような要素に短い名前をつけることができ"
 "ます。"
+
+#: src/05_language_reference/18_execution_model.md:3
+msgid ""
+"Veryl's execution model is based on the scheduling semantics of "
+"SystemVerilog (IEEE 1800). Through language-level constraints, Veryl "
+"enforces best practices that guarantee deterministic simulation, without "
+"requiring designers to understand the complex scheduling regions defined in "
+"the standard."
+msgstr ""
+"Verylの実行モデルはSystemVerilog (IEEE 1800) のスケジューリングセマンティクス"
+"に基づいています。Verylは言語レベルの制約により、標準で定義されている複雑なス"
+"ケジューリング領域を設計者が理解する必要なく、決定論的なシミュレーションを保"
+"証するベストプラクティスを強制します。"
+
+#: src/05_language_reference/18_execution_model.md:6
+msgid ""
+"Veryl's built-in simulator conforms to this model. The transpiled "
+"SystemVerilog output also preserves these semantics, so any IEEE 1800 "
+"compliant simulator will produce equivalent results."
+msgstr ""
+"Verylの組み込みシミュレータはこのモデルに準拠しています。トランスパイルされた"
+"SystemVerilog出力もこれらのセマンティクスを保持するため、IEEE 1800準拠のシ"
+"ミュレータであれば同等の結果が得られます。"
+
+#: src/05_language_reference/18_execution_model/01_variable_classification.md:3
+msgid ""
+"Variables are classified by their assignment context, which determines "
+"storage and assignment semantics."
+msgstr ""
+"変数は代入コンテキストによって分類され、これによりストレージと代入セマンティ"
+"クスが決定されます。"
+
+#: src/05_language_reference/18_execution_model/01_variable_classification.md:5
+msgid "FF Variables (Registers)"
+msgstr "FF変数（レジスタ）"
+
+#: src/05_language_reference/18_execution_model/01_variable_classification.md:7
+msgid ""
+"A module-level `var` assigned inside `always_ff` becomes a **flip-flop (FF) "
+"variable**. FF variables use a two-buffer model: a **current** value and a "
+"**next** value. The next value becomes current only after the FF commit "
+"phase (see [Simulation Cycle](./02_simulation_cycle.md))."
+msgstr ""
+"モジュールレベルの `var` が `always_ff` ブロック内で代入されると、**フリップ"
+"フロップ（FF）変数**になります。FF変数は二重バッファモデルを使用します：すべ"
+"てのブロックから読み取れる**current**値と、ノンブロッキング代入により書き込ま"
+"れる**next**値です。next値はFFコミットフェーズの後にのみcurrent値になります"
+"（[シミュレーションサイクル](./02_simulation_cycle.md)を参照）。"
+
+#: src/05_language_reference/18_execution_model/01_variable_classification.md:11
+msgid "Combinational Variables"
+msgstr "組み合わせ変数"
+
+#: src/05_language_reference/18_execution_model/01_variable_classification.md:13
+msgid ""
+"A module-level `var` assigned inside `always_comb` or via `assign` becomes a "
+"**combinational variable**. Writes take effect immediately and are visible "
+"to subsequent reads in evaluation order."
+msgstr ""
+"モジュールレベルの `var` が `always_comb` ブロック内または `assign` 宣言を通"
+"じて代入されると、**組み合わせ変数**になります。組み合わせ変数への書き込みは"
+"即座に反映され（ブロッキング代入セマンティクス）、評価順序における後続の読み"
+"取りから参照可能です。"
+
+#: src/05_language_reference/18_execution_model/01_variable_classification.md:16
+msgid ""
+"A module-level `let` is a shorthand for `var` + `assign`, so it also "
+"produces a combinational variable."
+msgstr ""
+"モジュールレベルの `let` 宣言は `var` + `assign` の省略形であるため、同様に組"
+"み合わせ変数を生成します。"
+
+#: src/05_language_reference/18_execution_model/01_variable_classification.md:18
+msgid "Constants"
+msgstr "定数"
+
+#: src/05_language_reference/18_execution_model/01_variable_classification.md:20
+msgid ""
+"A `const` declaration defines an immutable **compile-time constant** that "
+"does not participate in the simulation cycle."
+msgstr ""
+"`const` 宣言は**コンパイル時定数**を定義します。定数はコンパイル時に評価さ"
+"れ、不変であり、シミュレーションサイクルには参加しません。"
+
+#: src/05_language_reference/18_execution_model/01_variable_classification.md:22
+msgid "Local Bindings"
+msgstr "ローカル束縛"
+
+#: src/05_language_reference/18_execution_model/01_variable_classification.md:24
+msgid ""
+"A `let` inside an `always_ff` or `always_comb` block creates a **local "
+"binding**. Local bindings always use blocking semantics, even inside "
+"`always_ff`, and are never mapped to flip-flops."
+msgstr ""
+"`always_ff` または `always_comb` ブロック内の `let` 宣言は**ローカル束縛**を"
+"作成します。ローカル束縛は `always_ff` 内であっても常にブロッキング代入セマン"
+"ティクスを使用します。フリップフロップにマップされることはなく、囲むブロック"
+"の外からは参照できません。"
+
+#: src/05_language_reference/18_execution_model/01_variable_classification.md:27
+msgid ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk: input clock,\n"
+"    i_rst: input reset,\n"
+") {\n"
+"    var a: logic<8>;\n"
+"    var b: logic<8>;\n"
+"\n"
+"    // combinational (shorthand for var + assign)\n"
+"    let c: logic<8> = a + 1;\n"
+"\n"
+"    // compile-time constant\n"
+"    const INIT: logic<8> = 0;\n"
+"\n"
+"    always_ff {\n"
+"        if_reset {\n"
+"            // FF variable (non-blocking)\n"
+"            a = 0;\n"
+"        } else {\n"
+"            // local binding (blocking, not a FF)\n"
+"            let temp: logic<8> = b + 1;\n"
+"            // FF variable (non-blocking)\n"
+"            a = temp;\n"
+"        }\n"
+"    }\n"
+"\n"
+"    always_comb {\n"
+"        // combinational variable (blocking)\n"
+"        b = c + 1;\n"
+"    }\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk: input clock,\n"
+"    i_rst: input reset,\n"
+") {\n"
+"    var a: logic<8>;\n"
+"    var b: logic<8>;\n"
+"\n"
+"    // 組み合わせ変数（var + assign の省略形）\n"
+"    let c: logic<8> = a + 1;\n"
+"\n"
+"    // コンパイル時定数\n"
+"    const INIT: logic<8> = 0;\n"
+"\n"
+"    always_ff {\n"
+"        if_reset {\n"
+"            // FF変数（ノンブロッキング）\n"
+"            a = 0;\n"
+"        } else {\n"
+"            // ローカル束縛（ブロッキング、FFではない）\n"
+"            let temp: logic<8> = b + 1;\n"
+"            // FF変数（ノンブロッキング）\n"
+"            a = temp;\n"
+"        }\n"
+"    }\n"
+"\n"
+"    always_comb {\n"
+"        // 組み合わせ変数（ブロッキング）\n"
+"        b = c + 1;\n"
+"    }\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:3
+msgid ""
+"A simulation step consists of three phases executed in strict order, "
+"corresponding to a simplified view of the SystemVerilog scheduling regions."
+msgstr ""
+"Verylのシミュレーションステップは、厳密な順序で実行される3つのフェーズで構成"
+"されます。このモデルはVerylの言語制約により実現された、SystemVerilogスケ"
+"ジューリング領域の簡略化されたビューに対応します。"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:5
+msgid "The Three Phases"
+msgstr "3つのフェーズ"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:26
+msgid "Phase 1: Combinational Settlement"
+msgstr "フェーズ1：組み合わせロジックの収束"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:28
+msgid ""
+"All combinational logic (`always_comb` and `assign`) is evaluated. Blocks "
+"are re-triggered when their inputs change, and this propagation continues "
+"until all signals stabilize."
+msgstr ""
+"すべての組み合わせロジック（`always_comb` ブロックと `assign` 宣言）が評価さ"
+"れます。各ブロックはその入力信号に対してセンシティブです：あるブロックが信号"
+"を更新すると、その信号に依存するブロックが再評価されます。この伝播はすべての"
+"信号が安定するまで続きます。"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:31
+msgid "Phase 2: Event Evaluation"
+msgstr "フェーズ2：イベント評価"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:33
+msgid ""
+"All `always_ff` blocks sensitive to the triggered event (e.g., a clock edge) "
+"are executed."
+msgstr ""
+"トリガーされたイベント（例：クロックエッジ）に対してセンシティブなすべての "
+"`always_ff` ブロックが実行されます。このフェーズでは："
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:35
+msgid "**Reads** from FF variables see the **current** (pre-commit) values."
+msgstr "FF変数からの**読み取り**は**current**（コミット前）の値を参照します。"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:36
+msgid ""
+"**Writes** to FF variables use non-blocking semantics and do **not** take "
+"effect immediately."
+msgstr ""
+"FF変数への**書き込み**はノンブロッキングセマンティクスを使用します：値はNBA更"
+"新にスケジュールされ、即座には反映**されません**。"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:38
+msgid "Phase 3: FF Commit (NBA Update)"
+msgstr "フェーズ3：FFコミット（NBA更新）"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:40
+msgid ""
+"All non-blocking assignments from Phase 2 take effect atomically. After the "
+"commit, combinational logic is re-evaluated with the updated values "
+"(returning to Phase 1)."
+msgstr ""
+"フェーズ2からのすべてのノンブロッキング代入がアトミックに反映されます。すべて"
+"のFF変数の「next」値が新しい「current」値になります。コミット後、更新された値"
+"で組み合わせロジックが再評価されます（フェーズ1に戻る）。"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:43
+msgid "Correspondence to SystemVerilog Scheduling Regions"
+msgstr "SystemVerilogスケジューリング領域との対応"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:45
+msgid ""
+"Veryl's language constraints ensure that only two of SystemVerilog's "
+"scheduling regions are relevant:"
+msgstr ""
+"Verylの言語制約により、SystemVerilogのスケジューリング領域のうち関連するのは2"
+"つだけです："
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:47
+msgid "SV Region"
+msgstr "SV領域"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:47
+msgid "Veryl Phase"
+msgstr "Verylフェーズ"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:47
+msgid "What happens"
+msgstr "何が起こるか"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:49
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:50
+msgid "Active"
+msgstr "Active"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:49
+msgid "Combinational Settlement"
+msgstr "組み合わせロジックの収束"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:49
+msgid "`always_comb` evaluation and propagation"
+msgstr "`always_comb` の評価と伝播"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:50
+msgid "Event Evaluation (reads)"
+msgstr "イベント評価（読み取り）"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:50
+msgid "`always_ff` reads current values"
+msgstr "`always_ff` がcurrent値を読む"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:51
+msgid "NBA Update"
+msgstr "NBA更新"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:51
+msgid "Event Evaluation (writes) + FF Commit"
+msgstr "イベント評価（書き込み）+ FFコミット"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:51
+msgid "`always_ff` writes take effect"
+msgstr "`always_ff` の書き込みが反映される"
+
+#: src/05_language_reference/18_execution_model/02_simulation_cycle.md:53
+msgid ""
+"The other regions (Inactive, Observed, Reactive) are not needed because "
+"Veryl prohibits the patterns that require them (`#0` delays, program blocks, "
+"mixed assignment types)."
+msgstr ""
+"Inactive、Observed、Reactive領域は不要です。Verylはこれらを必要とするコーディ"
+"ングパターン（例：`#0` ディレイ、programブロック、同一変数へのブロッキング代"
+"入とノンブロッキング代入の混在）を許可しないためです。"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:3
+msgid ""
+"Veryl uses a single `=` operator for all assignments. The semantics — "
+"blocking or non-blocking — are automatically determined by context, "
+"enforcing SystemVerilog best practices."
+msgstr ""
+"Verylはすべての代入に単一の `=` 演算子を使用します。実際のセマンティクス — ブ"
+"ロッキングかノンブロッキングか — は代入コンテキストにより自動的に決定されま"
+"す。これにより、設計者が手動で従うべきSystemVerilogのベストプラクティスが強制"
+"されます。"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:6
+msgid "Blocking Assignment"
+msgstr "ブロッキング代入"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:8
+msgid ""
+"In `always_comb` and `assign`, `=` performs a **blocking assignment** — the "
+"value is immediately visible to subsequent reads."
+msgstr ""
+"`always_comb` ブロックと `assign` 宣言では、`=` は**ブロッキング代入**を行い"
+"ます。代入された値は同一評価パス内の後続の読み取りから即座に参照可能です。"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:10
+msgid ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    let a: logic<8> = 1;\n"
+"    var b: logic<8>;\n"
+"    var c: logic<8>;\n"
+"\n"
+"    always_comb {\n"
+"        b = a + 1; // b is immediately updated to 2\n"
+"        c = b + 1; // c reads the new value of b (2), so c = 3\n"
+"    }\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    let a: logic<8> = 1;\n"
+"    var b: logic<8>;\n"
+"    var c: logic<8>;\n"
+"\n"
+"    always_comb {\n"
+"        b = a + 1; // b は即座に 2 に更新される\n"
+"        c = b + 1; // c は b の新しい値 (2) を読むため、c = 3\n"
+"    }\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:23
+msgid "Non-Blocking Assignment"
+msgstr "ノンブロッキング代入"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:25
+msgid ""
+"In `always_ff`, `=` for module-level variables performs a **non-blocking "
+"assignment** — the value does not take effect until the FF commit."
+msgstr ""
+"`always_ff` ブロック内では、モジュールレベル変数に対する `=` は**ノンブロッキ"
+"ング代入**を行います。代入された値はNBA更新フェーズにスケジュールされ、FFコ"
+"ミットまで反映されません。"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:27
+msgid ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk: input clock,\n"
+") {\n"
+"    var a: logic<8>;\n"
+"    var b: logic<8>;\n"
+"\n"
+"    always_ff {\n"
+"        // a.next = 1 (current a is unchanged during this phase)\n"
+"        a = 1;\n"
+"        // reads a.current (not a.next), so b.next = a.current + 1\n"
+"        b = a + 1;\n"
+"    }\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk: input clock,\n"
+") {\n"
+"    var a: logic<8>;\n"
+"    var b: logic<8>;\n"
+"\n"
+"    always_ff {\n"
+"        // a.next = 1（このフェーズ中 current の a は変化しない）\n"
+"        a = 1;\n"
+"        // a.current を読む（a.next ではない）ため、b.next = a.current + 1\n"
+"        b = a + 1;\n"
+"    }\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:43
+msgid "Local Bindings in `always_ff`"
+msgstr "`always_ff` 内のローカル束縛"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:45
+msgid ""
+"A `let` inside `always_ff` uses **blocking** semantics and is never mapped "
+"to a flip-flop."
+msgstr ""
+"`always_ff` 内の `let` 束縛は常に**ブロッキング**セマンティクスを使用します。"
+"ローカル束縛はブロック内の一時的な値であり、フリップフロップにマップされるこ"
+"とはありません。"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:47
+msgid ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk: input clock,\n"
+") {\n"
+"    var a     : logic<8>;\n"
+"    var result: logic<8>;\n"
+"\n"
+"    always_ff {\n"
+"        // blocking: doubled is immediately available\n"
+"        let doubled: logic<8> = a * 2;\n"
+"        // non-blocking: result.next = doubled + 1\n"
+"        result = doubled + 1;\n"
+"    }\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk: input clock,\n"
+") {\n"
+"    var a     : logic<8>;\n"
+"    var result: logic<8>;\n"
+"\n"
+"    always_ff {\n"
+"        // ブロッキング：doubled は即座に利用可能\n"
+"        let doubled: logic<8> = a * 2;\n"
+"        // ノンブロッキング：result.next = doubled + 1\n"
+"        result = doubled + 1;\n"
+"    }\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:63
+msgid "Mapping to SystemVerilog"
+msgstr "SystemVerilogへの対応"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:65
+msgid "Veryl context"
+msgstr "Verylコンテキスト"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:65
+msgid "Veryl syntax"
+msgstr "Veryl構文"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:65
+msgid "SystemVerilog equivalent"
+msgstr "SystemVerilog相当"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:67
+msgid "`always_comb`"
+msgstr "`always_comb`"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:67
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:69
+msgid "`x = expr;`"
+msgstr "`x = expr;`"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:67
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:70
+msgid "`x = expr;` (blocking)"
+msgstr "`x = expr;`（ブロッキング）"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:68
+msgid "`assign`"
+msgstr "`assign`"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:68
+msgid "`assign x = expr;`"
+msgstr "`assign x = expr;`"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:68
+msgid "`assign x = expr;` (continuous)"
+msgstr "`assign x = expr;`（continuous assignment）"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:69
+msgid "`always_ff`, module-level var"
+msgstr "`always_ff`、モジュールレベル変数"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:69
+msgid "`x <= expr;` (non-blocking)"
+msgstr "`x <= expr;`（ノンブロッキング）"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:70
+msgid "`always_ff`, local `let`"
+msgstr "`always_ff`、ローカル `let`"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:70
+msgid "`let x: T = expr;`"
+msgstr "`let x: T = expr;`"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:71
+msgid "`always_ff`, compound"
+msgstr "`always_ff`、複合代入"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:71
+msgid "`x += expr;`"
+msgstr "`x += expr;`"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:71
+msgid "`x <= x + expr;` (non-blocking)"
+msgstr "`x <= x + expr;`（ノンブロッキング）"
+
+#: src/05_language_reference/18_execution_model/04_combinational_evaluation.md:3
+msgid ""
+"Combinational logic (`always_comb` and `assign`) follows SystemVerilog "
+"semantics: each block is implicitly sensitive to its inputs and re-evaluated "
+"whenever they change."
+msgstr ""
+"Verylの組み合わせロジック（`always_comb` ブロックと `assign` 宣言）は"
+"SystemVerilogと同じ評価セマンティクスに従います：各ブロックは暗黙的にその入力"
+"信号に対してセンシティブであり、入力が変化するたびに再評価されます。"
+
+#: src/05_language_reference/18_execution_model/04_combinational_evaluation.md:5
+msgid ""
+"When a block updates a signal, dependent blocks are automatically re-"
+"triggered until all signals stabilize."
+msgstr ""
+"ブロックが信号を更新すると、依存するブロックがすべての信号が安定するまで自動"
+"的に再トリガーされます。"
+
+#: src/05_language_reference/18_execution_model/04_combinational_evaluation.md:7
+msgid ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    var a: logic<8>;\n"
+"    var b: logic<8>;\n"
+"    var c: logic<8>;\n"
+"\n"
+"    assign a = 1;\n"
+"\n"
+"    always_comb {\n"
+"        b = a + 1; // re-evaluated when a changes\n"
+"    }\n"
+"\n"
+"    always_comb {\n"
+"        c = b + 1; // re-evaluated when b changes\n"
+"    }\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA {\n"
+"    var a: logic<8>;\n"
+"    var b: logic<8>;\n"
+"    var c: logic<8>;\n"
+"\n"
+"    assign a = 1;\n"
+"\n"
+"    always_comb {\n"
+"        b = a + 1; // a が変化すると再評価される\n"
+"    }\n"
+"\n"
+"    always_comb {\n"
+"        c = b + 1; // b が変化すると再評価される\n"
+"    }\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/18_execution_model/04_combinational_evaluation.md:25
+msgid ""
+"In this example, the values are always `a = 1`, `b = 2`, `c = 3`, regardless "
+"of initial evaluation order."
+msgstr ""
+"この例では、初期評価順序に関係なく、値は常に `a = 1`、`b = 2`、`c = 3` です。"
+
+#: src/05_language_reference/18_execution_model/04_combinational_evaluation.md:27
+msgid "Combinational Loops"
+msgstr "組み合わせループ"
+
+#: src/05_language_reference/18_execution_model/04_combinational_evaluation.md:29
+msgid ""
+"A combinational loop — where a variable depends on itself without an "
+"intervening register — is detected at compile time and reported as an error."
+msgstr ""
+"組み合わせループは、変数がレジスタを介さずに組み合わせロジックを通じて自身に"
+"依存する場合に発生します。Verylは組み合わせループをコンパイル時に検出し、エ"
+"ラーとして報告します。"
+
+#: src/05_language_reference/18_execution_model/04_combinational_evaluation.md:31
+msgid ""
+"```text\n"
+"// ERROR: combinational loop\n"
+"var x: logic<8>;\n"
+"always_comb {\n"
+"    x = x + 1; // x depends on itself\n"
+"}\n"
+"```"
+msgstr ""
+"```text\n"
+"// エラー：組み合わせループ\n"
+"var x: logic<8>;\n"
+"always_comb {\n"
+"    x = x + 1; // x が自身に依存している\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/18_execution_model/04_combinational_evaluation.md:39
+msgid "Implementation Note"
+msgstr "実装に関する注記"
+
+#: src/05_language_reference/18_execution_model/04_combinational_evaluation.md:41
+msgid ""
+"Veryl's built-in simulator uses topological sorting to optimize evaluation "
+"order; the observable results are equivalent to the event-driven model "
+"described above."
+msgstr ""
+"Verylの組み込みシミュレータは、データ依存関係のトポロジカルソートを使用して効"
+"率的な評価順序を決定し、再評価パスの回数を最小化します。これはパフォーマンス"
+"の最適化であり、観測可能な結果は上述のイベント駆動再トリガーモデルと同等で"
+"す。"
+
+#: src/05_language_reference/18_execution_model/05_event_evaluation.md:3
+msgid ""
+"When a clock edge or reset event occurs, all `always_ff` blocks sensitive to "
+"that event are executed."
+msgstr ""
+"クロックエッジまたはリセットイベントが発生すると、そのイベントに対してセンシ"
+"ティブなすべての `always_ff` ブロックが実行されます。イベント評価中："
+
+#: src/05_language_reference/18_execution_model/05_event_evaluation.md:5
+msgid "All reads from FF variables see the **current** (pre-commit) values."
+msgstr "FF変数からの**読み取り**は**current**（コミット前）の値を参照します。"
+
+#: src/05_language_reference/18_execution_model/05_event_evaluation.md:6
+msgid ""
+"All writes to FF variables are **non-blocking** and do not take effect until "
+"the FF commit phase."
+msgstr ""
+"FF変数へのすべての書き込みは**ノンブロッキング**です — NBA更新にスケジュール"
+"され、FFコミットフェーズまで反映されません。"
+
+#: src/05_language_reference/18_execution_model/05_event_evaluation.md:8
+msgid ""
+"Because all blocks read from the same snapshot and write to independent "
+"\"next\" slots, the execution order does not affect the result."
+msgstr ""
+"すべてのブロックが同じスナップショットから読み取り、独立した「next」スロット"
+"に書き込むため、`always_ff` ブロックの実行順序はシミュレーション結果に影響し"
+"ません。"
+
+#: src/05_language_reference/18_execution_model/05_event_evaluation.md:10
+msgid ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk: input clock,\n"
+") {\n"
+"    var a: logic<8>;\n"
+"    var b: logic<8>;\n"
+"\n"
+"    // These two blocks produce the same result regardless of evaluation "
+"order:\n"
+"\n"
+"    always_ff {\n"
+"        a = b; // a.next = b.current\n"
+"    }\n"
+"\n"
+"    always_ff {\n"
+"        b = a; // b.next = a.current\n"
+"    }\n"
+"\n"
+"    // After commit: a and b have swapped their values.\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk: input clock,\n"
+") {\n"
+"    var a: logic<8>;\n"
+"    var b: logic<8>;\n"
+"\n"
+"    // These two blocks produce the same result regardless of evaluation "
+"order:\n"
+"\n"
+"    always_ff {\n"
+"        a = b; // a.next = b.current\n"
+"    }\n"
+"\n"
+"    always_ff {\n"
+"        b = a; // b.next = a.current\n"
+"    }\n"
+"\n"
+"    // コミット後：a と b の値が入れ替わる。\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/18_execution_model/05_event_evaluation.md:31
+msgid "Source Order"
+msgstr "ソース順序"
+
+#: src/05_language_reference/18_execution_model/05_event_evaluation.md:33
+msgid "`always_ff` blocks for the same event are evaluated in source order."
+msgstr "同一イベントに対する `always_ff` ブロックはソース順序で評価されます。"
+
+#: src/05_language_reference/18_execution_model/05_event_evaluation.md:35
+msgid "Initial and Final Blocks"
+msgstr "initialブロックとfinalブロック"
+
+#: src/05_language_reference/18_execution_model/05_event_evaluation.md:37
+msgid ""
+"`initial` blocks are evaluated once at simulation start, `final` blocks once "
+"at simulation end. These blocks are not synthesizable and are used for "
+"testbench and debugging purposes."
+msgstr ""
+"`initial` ブロックはシミュレーション開始時に独立したイベントとして一度だけ評"
+"価されます。`final` ブロックはシミュレーション終了時に一度だけ評価されます。"
+"これらのブロックは合成不可であり、テストベンチやデバッグ目的で使用されます。"
+
+#: src/05_language_reference/18_execution_model/06_multi_clock.md:3
+msgid ""
+"Each clock domain is triggered independently by its associated clock event."
+msgstr ""
+"Verylは複数のクロックドメインを持つデザインをサポートしています。各クロックド"
+"メインは対応するクロックイベントにより独立してトリガーされます。"
+
+#: src/05_language_reference/18_execution_model/06_multi_clock.md:5
+msgid "Independent Domain Evaluation"
+msgstr "独立したドメイン評価"
+
+#: src/05_language_reference/18_execution_model/06_multi_clock.md:7
+msgid ""
+"When a clock edge occurs, only the `always_ff` blocks sensitive to that "
+"clock are evaluated. The FF commit applies only to the variables written by "
+"those blocks."
+msgstr ""
+"クロックエッジが発生すると、そのクロックに対してセンシティブな `always_ff` ブ"
+"ロックのみが評価されます。FFコミットフェーズはそれらのブロックにより書き込ま"
+"れた変数にのみ適用されます。他のクロックドメインは影響を受けません。"
+
+#: src/05_language_reference/18_execution_model/06_multi_clock.md:10
+msgid "Simultaneous Clock Edges"
+msgstr "同時クロックエッジ"
+
+#: src/05_language_reference/18_execution_model/06_multi_clock.md:12
+msgid ""
+"When two clocks have simultaneous edges, each domain is evaluated and "
+"committed sequentially. The two-buffer model ensures each domain sees a "
+"consistent snapshot of its own variables, so single-domain behavior is "
+"deterministic regardless of processing order."
+msgstr ""
+"2つのクロックが同時にエッジを持つ場合、各ドメインのイベント評価とFFコミットは"
+"一度に1ドメインずつ順次実行されます。FFの二重バッファモデル（current/next分"
+"離）により、各ドメインは自身の変数の一貫したスナップショットを参照するため、"
+"ドメインの処理順序に関係なく単一ドメインの動作は決定論的です。"
+
+#: src/05_language_reference/18_execution_model/06_multi_clock.md:15
+msgid "Cross-Domain Signals"
+msgstr "クロスドメイン信号"
+
+#: src/05_language_reference/18_execution_model/06_multi_clock.md:17
+msgid ""
+"Cross-domain signal access requires `unsafe (cdc)` (see [Clock Domain "
+"Annotation](../15_clock_domain_annotation.md))."
+msgstr ""
+"異なるクロックドメインの信号へのアクセスはクロックドメインクロッシング（CDC）"
+"です。Verylはクロスドメイン信号アクセスに `unsafe (cdc)` による明示的なアノ"
+"テーションを要求します（[クロックドメインアノテーション]"
+"(../15_clock_domain_annotation.md)を参照）。"
+
+#: src/05_language_reference/18_execution_model/06_multi_clock.md:19
+msgid ""
+"With simultaneous edges, the evaluation order between domains sharing "
+"`unsafe (cdc)` signals is not guaranteed. Designers must use proper "
+"synchronization (e.g., two-flop synchronizers, handshake protocols)."
+msgstr ""
+"同時エッジを持つドメイン間で `unsafe (cdc)` 信号が共有されている場合、ドメイ"
+"ンの評価順序は共有信号値を通じて観測可能です。Verylはこの場合の特定の順序を保"
+"証しません。設計者は適切な同期回路（例：2段FFシンクロナイザ、ハンドシェイクプ"
+"ロトコル）により正確性を確保する必要があります。"
+
+#: src/05_language_reference/18_execution_model/06_multi_clock.md:22
+msgid ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk_a: input  'a clock   ,\n"
+"    i_rst_a: input  'a reset   ,\n"
+"    i_clk_b: input  'b clock   ,\n"
+"    i_dat_a: input  'a logic<8>,\n"
+"    o_dat_b: output 'b logic<8>,\n"
+") {\n"
+"    var data_a: 'a logic<8>;\n"
+"\n"
+"    always_ff (i_clk_a, i_rst_a) {\n"
+"        if_reset {\n"
+"            data_a = 0;\n"
+"        } else {\n"
+"            data_a = i_dat_a;\n"
+"        }\n"
+"    }\n"
+"\n"
+"    // Cross-domain access requires unsafe (cdc)\n"
+"    unsafe (cdc) {\n"
+"        assign o_dat_b = data_a;\n"
+"    }\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"module ModuleA (\n"
+"    i_clk_a: input  'a clock   ,\n"
+"    i_rst_a: input  'a reset   ,\n"
+"    i_clk_b: input  'b clock   ,\n"
+"    i_dat_a: input  'a logic<8>,\n"
+"    o_dat_b: output 'b logic<8>,\n"
+") {\n"
+"    var data_a: 'a logic<8>;\n"
+"\n"
+"    always_ff (i_clk_a, i_rst_a) {\n"
+"        if_reset {\n"
+"            data_a = 0;\n"
+"        } else {\n"
+"            data_a = i_dat_a;\n"
+"        }\n"
+"    }\n"
+"\n"
+"    // クロスドメインアクセスには unsafe (cdc) が必要\n"
+"    unsafe (cdc) {\n"
+"        assign o_dat_b = data_a;\n"
+"    }\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/18_execution_model/07_determinism.md:3
+msgid ""
+"Veryl guarantees deterministic simulation: given the same source code and "
+"the same stimulus sequence, any compliant simulator will produce identical "
+"signal values at every simulation step."
+msgstr ""
+"Verylは決定論的シミュレーションを保証します：同一のソースコードと同一の刺激"
+"シーケンスが与えられた場合、準拠するシミュレータはすべてのシミュレーションス"
+"テップで同一の信号値を生成します。"
+
+#: src/05_language_reference/18_execution_model/07_determinism.md:5
+msgid "How Veryl Achieves Determinism"
+msgstr "Verylが決定性を実現する方法"
+
+#: src/05_language_reference/18_execution_model/07_determinism.md:7
+msgid ""
+"Veryl's language constraints eliminate common sources of non-determinism in "
+"SystemVerilog:"
+msgstr ""
+"Verylの言語制約はSystemVerilogにおける一般的な非決定性の原因を排除します："
+
+#: src/05_language_reference/18_execution_model/07_determinism.md:9
+msgid ""
+"**No blocking/non-blocking confusion** — A single `=` operator automatically "
+"infers the correct semantics, making it impossible to use the wrong "
+"assignment type."
+msgstr ""
+"Verylは単一の `=` 演算子を使用し、コンテキストに基づいて正しいセマンティクス"
+"を**自動推論**します。これにより、誤った代入タイプを誤って使用することが不可"
+"能になります。"
+
+#: src/05_language_reference/18_execution_model/07_determinism.md:10
+msgid ""
+"**Read/write isolation for FF variables** — All `always_ff` blocks read from "
+"the same snapshot and write to independent \"next\" slots, so evaluation "
+"order never affects the result."
+msgstr ""
+"すべてのブロックが同じスナップショットから読み取り、独立した「next」スロット"
+"に書き込むため、`always_ff` ブロックの実行順序はシミュレーション結果に影響し"
+"ません。"
+
+#: src/05_language_reference/18_execution_model/07_determinism.md:11
+msgid ""
+"**Deterministic combinational evaluation** — Blocks propagate until stable, "
+"and combinational loops are detected at compile time."
+msgstr ""
+"**決定論的な組み合わせ評価** — ブロックは安定するまで伝播し、組み合わせループ"
+"はコンパイル時に検出されます。"
+
+#: src/05_language_reference/18_execution_model/07_determinism.md:12
+msgid ""
+"**Explicit clock domain crossing** — Cross-domain access without `unsafe "
+"(cdc)` is a compile-time error, preventing accidental races."
+msgstr ""
+"**明示的なクロックドメインクロッシング** — `unsafe (cdc)` なしのクロスドメイ"
+"ンアクセスはコンパイル時エラーとなり、意図しないレースを防止します。"
+
+#: src/05_language_reference/18_execution_model/07_determinism.md:14
+msgid "Scope of the Guarantee"
+msgstr "保証の範囲"
+
+#: src/05_language_reference/18_execution_model/07_determinism.md:16
+msgid ""
+"The guarantee applies to **observable signal values at simulation step "
+"boundaries** (after each FF commit). Internal evaluation order within a "
+"phase is implementation-defined but does not affect observable results."
+msgstr ""
+"決定性の保証は**シミュレーションステップ境界での観測可能な信号値**（各FFコ"
+"ミット後）に適用されます。単一フェーズ内の内部評価順序（例：収束フェーズ内で"
+"の組み合わせブロック再評価の順序）は実装定義ですが、観測可能な結果は実装間で"
+"同一です。"
+
+#: src/05_language_reference/18_execution_model/07_determinism.md:18
+msgid "Relation to SystemVerilog"
+msgstr "SystemVerilogとの関係"
+
+#: src/05_language_reference/18_execution_model/07_determinism.md:20
+msgid ""
+"The transpiled SystemVerilog output follows well-established deterministic "
+"patterns:"
+msgstr ""
+"トランスパイルされたSystemVerilog出力は、IEEE 1800準拠のシミュレータが決定論"
+"的に処理する確立されたコーディングパターンに従います："
+
+#: src/05_language_reference/18_execution_model/07_determinism.md:22
+msgid "`always_ff` with `<=` (non-blocking) for sequential logic"
+msgstr "順序ロジックには `always_ff` と `<=`（ノンブロッキング）"
+
+#: src/05_language_reference/18_execution_model/07_determinism.md:23
+msgid "`always_comb` with `=` (blocking) for combinational logic"
+msgstr "組み合わせロジックには `always_comb` と `=`（ブロッキング）"
+
+#: src/05_language_reference/18_execution_model/07_determinism.md:24
+msgid "No mixed blocking/non-blocking assignments to the same variable"
+msgstr "同一変数へのブロッキング/ノンブロッキング代入の混在なし"
 
 #: src/06_development_environment.md:3
 msgid ""
@@ -10694,6 +11687,281 @@ msgstr "unknown_port"
 #: src/07_appendix/02_semantic_error.md:55
 msgid "unused_variable"
 msgstr "unused_variable"
+
+#~ msgid ""
+#~ "[Variable Classification](./18_execution_model/01_variable_classification."
+#~ "md)"
+#~ msgstr "[変数の分類](./18_execution_model/01_variable_classification.md)"
+
+#~ msgid "[Simulation Cycle](./18_execution_model/02_simulation_cycle.md)"
+#~ msgstr ""
+#~ "[シミュレーションサイクル](./18_execution_model/02_simulation_cycle.md)"
+
+#~ msgid ""
+#~ "[Assignment Semantics](./18_execution_model/03_assignment_semantics.md)"
+#~ msgstr ""
+#~ "[代入のセマンティクス](./18_execution_model/03_assignment_semantics.md)"
+
+#~ msgid ""
+#~ "[Combinational Evaluation]"
+#~ "(./18_execution_model/04_combinational_evaluation.md)"
+#~ msgstr ""
+#~ "[組み合わせロジックの評価]"
+#~ "(./18_execution_model/04_combinational_evaluation.md)"
+
+#~ msgid "[Event Evaluation](./18_execution_model/05_event_evaluation.md)"
+#~ msgstr "[イベント評価](./18_execution_model/05_event_evaluation.md)"
+
+#~ msgid "[Multi-Clock Domains](./18_execution_model/06_multi_clock.md)"
+#~ msgstr "[マルチクロックドメイン](./18_execution_model/06_multi_clock.md)"
+
+#~ msgid "[Determinism](./18_execution_model/07_determinism.md)"
+#~ msgstr "[決定性](./18_execution_model/07_determinism.md)"
+
+#~ msgid "The following subsections describe the execution model in detail:"
+#~ msgstr "以下のサブセクションで実行モデルの詳細を説明します："
+
+#~ msgid ""
+#~ "This corresponds to a SystemVerilog variable driven by `<=` (non-blocking "
+#~ "assignment) inside an `always_ff` block."
+#~ msgstr ""
+#~ "これはSystemVerilogの `always_ff` ブロック内で `<=`（ノンブロッキング代"
+#~ "入）により駆動される変数に対応します。"
+
+#~ msgid ""
+#~ "This corresponds to a SystemVerilog variable driven by `=` (blocking "
+#~ "assignment) inside an `always_comb` block."
+#~ msgstr ""
+#~ "これはSystemVerilogの `always_comb` ブロック内で `=`（ブロッキング代入）に"
+#~ "より駆動される変数に対応します。"
+
+#~ msgid ""
+#~ "This is the same behavior as SystemVerilog's event-driven re-triggering "
+#~ "of `always_comb` blocks within the Active region."
+#~ msgstr ""
+#~ "これはSystemVerilogのActive領域内における `always_comb` ブロックのイベント"
+#~ "駆動による再トリガーと同じ動作です。"
+
+#~ msgid ""
+#~ "This means the execution order of `always_ff` blocks does not affect the "
+#~ "result — all blocks observe the same snapshot of FF values."
+#~ msgstr ""
+#~ "これは `always_ff` ブロックの実行順序が結果に影響しないことを意味します — "
+#~ "すべてのブロックがFF値の同じスナップショットを参照します。"
+
+#~ msgid ""
+#~ "SystemVerilog defines multiple scheduling regions: Active, Inactive, NBA, "
+#~ "Observed, Reactive, and others. Veryl's language constraints (blocking "
+#~ "assignments only in `always_comb`, non-blocking assignments only in "
+#~ "`always_ff`) ensure that only two regions are relevant:"
+#~ msgstr ""
+#~ "SystemVerilogは複数のスケジューリング領域を定義しています：Active、"
+#~ "Inactive、NBA、Observed、Reactive、その他。Verylの言語制約（`always_comb` "
+#~ "ではブロッキング代入のみ、`always_ff` ではノンブロッキング代入のみ）によ"
+#~ "り、関連する領域は2つだけになります："
+
+#~ msgid "This corresponds to SystemVerilog `=` inside `always_comb`."
+#~ msgstr "これはSystemVerilogの `always_comb` 内の `=` に対応します。"
+
+#~ msgid "This corresponds to SystemVerilog `<=` inside `always_ff`."
+#~ msgstr "これはSystemVerilogの `always_ff` 内の `<=` に対応します。"
+
+#~ msgid "Evaluation Behavior"
+#~ msgstr "評価の動作"
+
+#~ msgid ""
+#~ "When a combinational block updates a signal, any other block that reads "
+#~ "that signal is automatically re-triggered. This chain of re-evaluations "
+#~ "continues until all combinational signals stabilize — the same behavior "
+#~ "as SystemVerilog's delta iteration for `always_comb` blocks."
+#~ msgstr ""
+#~ "組み合わせブロックが信号を更新すると、その信号を読み取る他のブロックが自動"
+#~ "的に再トリガーされます。この再評価の連鎖はすべての組み合わせ信号が安定する"
+#~ "まで続きます — SystemVerilogの `always_comb` ブロックに対するデルタイテ"
+#~ "レーションと同じ動作です。"
+
+#~ msgid ""
+#~ "In this example, a change to `a` triggers re-evaluation of the block "
+#~ "writing `b`, which in turn triggers re-evaluation of the block writing "
+#~ "`c`. The final values are always `a = 1`, `b = 2`, `c = 3`, regardless of "
+#~ "the order in which blocks are initially evaluated."
+#~ msgstr ""
+#~ "この例では、`a` の変化が `b` を書き込むブロックの再評価をトリガーし、それ"
+#~ "が `c` を書き込むブロックの再評価をトリガーします。最終的な値は、ブロック"
+#~ "の初期評価順序に関係なく、常に `a = 1`、`b = 2`、`c = 3` です。"
+
+#~ msgid ""
+#~ "Event evaluation covers the execution of `always_ff` blocks in response "
+#~ "to clock edges and reset assertions."
+#~ msgstr ""
+#~ "イベント評価は、クロックエッジとリセットアサーションに応答する "
+#~ "`always_ff` ブロックの実行を対象とします。"
+
+#~ msgid "Evaluation Rules"
+#~ msgstr "評価規則"
+
+#~ msgid ""
+#~ "All reads from FF variables see the **current** (pre-commit) values — the "
+#~ "values from the previous cycle."
+#~ msgstr ""
+#~ "FF変数からのすべての読み取りは**current**（コミット前）の値 — 前のサイクル"
+#~ "の値を参照します。"
+
+#~ msgid ""
+#~ "This is the standard SystemVerilog behavior for `always_ff` blocks using "
+#~ "non-blocking assignments (`<=`)."
+#~ msgstr ""
+#~ "これはノンブロッキング代入（`<=`）を使用する `always_ff` ブロックの標準的"
+#~ "なSystemVerilogの動作です。"
+
+#~ msgid ""
+#~ "`always_ff` blocks for the same event are evaluated in source order (the "
+#~ "order they appear in the source file). However, as explained above, this "
+#~ "order does not affect the results for well-formed designs because all "
+#~ "reads see pre-commit values."
+#~ msgstr ""
+#~ "同一イベントに対する `always_ff` ブロックはソース順序（ソースファイル内の"
+#~ "出現順）で評価されます。ただし、上述の通り、すべての読み取りがコミット前の"
+#~ "値を参照するため、適切に設計されたデザインではこの順序は結果に影響しませ"
+#~ "ん。"
+
+#~ msgid ""
+#~ "In SystemVerilog, several coding patterns can lead to non-deterministic "
+#~ "simulation results (race conditions). Veryl's language constraints "
+#~ "eliminate these sources of non-determinism:"
+#~ msgstr ""
+#~ "SystemVerilogでは、いくつかのコーディングパターンが非決定論的なシミュレー"
+#~ "ション結果（レースコンディション）を引き起こす可能性があります。Verylの言"
+#~ "語制約はこれらの非決定性の原因を排除します："
+
+#~ msgid "1. No Blocking/Non-Blocking Confusion"
+#~ msgstr "1. ブロッキング/ノンブロッキングの混同がない"
+
+#~ msgid ""
+#~ "In SystemVerilog, using `=` (blocking) instead of `<=` (non-blocking) "
+#~ "inside `always_ff` is a common source of race conditions — the result "
+#~ "depends on the simulator's evaluation order."
+#~ msgstr ""
+#~ "SystemVerilogでは、`always_ff` 内で `<=`（ノンブロッキング）の代わりに "
+#~ "`=`（ブロッキング）を使用することがレースコンディションの一般的な原因です "
+#~ "— 結果がシミュレータの評価順序に依存します。"
+
+#~ msgid "2. Read/Write Isolation for FF Variables"
+#~ msgstr "2. FF変数の読み書き分離"
+
+#~ msgid ""
+#~ "All `always_ff` blocks read from the same snapshot of current values and "
+#~ "write to independent \"next\" slots. This means the evaluation order of "
+#~ "`always_ff` blocks never affects the result — the same guarantee provided "
+#~ "by correct use of `<=` in SystemVerilog."
+#~ msgstr ""
+#~ "すべての `always_ff` ブロックはcurrent値の同じスナップショットから読み取"
+#~ "り、独立した「next」スロットに書き込みます。これは `always_ff` ブロックの"
+#~ "評価順序が結果に影響しないことを意味します — SystemVerilogでの `<=` の正し"
+#~ "い使用により提供される保証と同じです。"
+
+#~ msgid "3. Deterministic Combinational Evaluation"
+#~ msgstr "3. 決定論的な組み合わせ評価"
+
+#~ msgid ""
+#~ "Combinational blocks are re-triggered by input changes and propagate "
+#~ "until stable, following standard SystemVerilog `always_comb` semantics. "
+#~ "Veryl additionally detects combinational loops at compile time, "
+#~ "preventing designs that could produce simulator-dependent results."
+#~ msgstr ""
+#~ "組み合わせブロックは入力変化により再トリガーされ、安定するまで伝播します。"
+#~ "これは標準的なSystemVerilogの `always_comb` セマンティクスに従います。"
+#~ "Verylはさらに組み合わせループをコンパイル時に検出し、シミュレータ依存の結"
+#~ "果を生じうるデザインを防止します。"
+
+#~ msgid "4. Explicit Clock Domain Crossing"
+#~ msgstr "4. 明示的なクロックドメインクロッシング"
+
+#~ msgid ""
+#~ "Cross-domain signal access without `unsafe (cdc)` is a compile-time "
+#~ "error. This prevents accidental cross-domain races, which are a "
+#~ "significant source of non-determinism in multi-clock designs."
+#~ msgstr ""
+#~ "`unsafe (cdc)` なしのクロスドメイン信号アクセスはコンパイル時エラーです。"
+#~ "これにより、マルチクロックデザインにおける非決定性の重要な原因であるクロス"
+#~ "ドメインのレースを防止します。"
+
+#~ msgid ""
+#~ "These patterns are recommended by SystemVerilog coding guidelines (e.g., "
+#~ "Sutherland's \"Synthesizable SystemVerilog\") and are handled "
+#~ "consistently by all major simulators."
+#~ msgstr ""
+#~ "これらのパターンはSystemVerilogコーディングガイドライン（例：Sutherlandの"
+#~ "「Synthesizable SystemVerilog」）で推奨されており、すべての主要なシミュ"
+#~ "レータで一貫して処理されます。"
+
+#~ msgid "`always_comb x = expr;`"
+#~ msgstr "`always_comb x = expr;`"
+
+#~ msgid "Category"
+#~ msgstr "カテゴリ"
+
+#~ msgid "Assignment Context"
+#~ msgstr "代入コンテキスト"
+
+#~ msgid "Semantics"
+#~ msgstr "セマンティクス"
+
+#~ msgid "FF variable"
+#~ msgstr "FF変数"
+
+#~ msgid "`var` at module level"
+#~ msgstr "モジュールレベルの `var`"
+
+#~ msgid "`always_ff`"
+#~ msgstr "`always_ff`"
+
+#~ msgid "Non-blocking (`<=` in SV)"
+#~ msgstr "ノンブロッキング（SVでは `<=`）"
+
+#~ msgid "Combinational variable"
+#~ msgstr "組み合わせ変数"
+
+#~ msgid "`always_comb` / `assign`"
+#~ msgstr "`always_comb` / `assign`"
+
+#~ msgid "Blocking (`=` in SV)"
+#~ msgstr "ブロッキング（SVでは `=`）"
+
+#~ msgid "`let` at module level"
+#~ msgstr "モジュールレベルの `let`"
+
+#~ msgid "(implicit `assign`)"
+#~ msgstr "（暗黙の `assign`）"
+
+#~ msgid "Constant"
+#~ msgstr "定数"
+
+#~ msgid "`const`"
+#~ msgstr "`const`"
+
+#~ msgid "—"
+#~ msgstr "—"
+
+#~ msgid "Compile-time evaluated"
+#~ msgstr "コンパイル時評価"
+
+#~ msgid "Local binding"
+#~ msgstr "ローカル束縛"
+
+#~ msgid "`let` in block"
+#~ msgstr "ブロック内の `let`"
+
+#~ msgid "`always_ff` / `always_comb`"
+#~ msgstr "`always_ff` / `always_comb`"
+
+#~ msgid ""
+#~ "If a variable is assigned in `always_comb` declaration, it means "
+#~ "combinational circuit."
+#~ msgstr "`always_comb` で代入される変数は組み合わせ回路を意味します。"
+
+#~ msgid "`assign` declaration can assign expression to variable."
+#~ msgstr "`assign` 宣言で変数に式を代入することができます。"
 
 #~ msgid ""
 #~ "If the type of `enum` is omitted, it will be infered from the variants "

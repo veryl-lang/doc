@@ -1,6 +1,8 @@
 # Combinational
 
 If a variable is assigned in `always_comb` declaration, it means combinational circuit.
+Combinational variables use blocking assignment semantics and are re-evaluated when their inputs change.
+See [Execution Model](../18_execution_model.md) for evaluation details.
 
 ```veryl,playground
 module ModuleA {
