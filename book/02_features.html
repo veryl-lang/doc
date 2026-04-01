@@ -241,7 +241,7 @@ formatting through the command line and formatting checks in CI are also possibl
 <video src="./img/format.mp4" autoplay loop muted>
 </video>
 <h2 id="integrated-test"><a class="header" href="#integrated-test">Integrated test</a></h2>
-<p>Test code written by SystemVerilog or <a href="https://www.cocotb.org">cocotb</a> can be embeded in Veryl code,
+<p>Test code written by SystemVerilog or <a href="https://www.cocotb.org">cocotb</a> can be embedded in Veryl code,
 it can be executed through <code>veryl test</code> command.</p>
 <pre><code class="language-veryl">#[test(test1)]
 embed (inline) sv{{{
@@ -333,10 +333,10 @@ endmodule
 <pre><code class="language-veryl">module ModuleA (
     i_clk_a: input  'a clock,
     i_dat_a: input  'a logic,
-    i_dat_a: output 'a logic,
+    o_dat_a: output 'a logic,
     i_clk_b: input  'b clock,
     i_dat_b: input  'b logic,
-    i_dat_b: output 'b logic,
+    o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
         assign o_dat_b = i_dat_a;

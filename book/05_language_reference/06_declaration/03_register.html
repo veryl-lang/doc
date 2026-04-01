@@ -209,15 +209,17 @@
                     <main>
                         <h1 id="register"><a class="header" href="#register">Register</a></h1>
 <p>If a variable is assigned in <code>always_ff</code> declaration, it becomes register variable.
-Register variable will be mapped to flip-flop in synthesis phase.</p>
+Register variable will be mapped to flip-flop in synthesis phase.
+Register variables use non-blocking assignment semantics.
+See <a href="../18_execution_model.html">Execution Model</a> for the simulation cycle and commit behavior.</p>
 <p><code>always_ff</code> has mandatory clock variable, optional reset variable, and <code>{}</code> block.
 Clock and reset are placed in <code>()</code>.
 The specified clock and reset should have <code>clock</code> / <code>reset</code> type and the witdh of them should be 1bit.</p>
 <p><code>if_reset</code> is a special keyword which can be used in <code>always_ff</code>.
 It means reset condition of the register variable.
 If <code>if_reset</code> is used, <code>always_ff</code> must have reset variable.
-<code>if_reset</code> can be conceal reset porality and synchronisity.
-The actual porality and synchronisity can be configured through <code>[build]</code> section of <code>Veryl.toml</code>.</p>
+<code>if_reset</code> can be conceal reset polarity and synchronicity.
+The actual polarity and synchronicity can be configured through <code>[build]</code> section of <code>Veryl.toml</code>.</p>
 <p>If there is a single clock and reset in the module, clock and reset specification can be omitted.</p>
 <pre><code class="language-veryl playground">module ModuleA (
     i_clk: input clock,

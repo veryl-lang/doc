@@ -264,6 +264,26 @@ module ModuleA {
     }
 }
 </code></pre>
+<h2 id="グローバル関数"><a class="header" href="#グローバル関数">グローバル関数</a></h2>
+<p>プロジェクト名前空間レベル（<code>module</code>、<code>interface</code>、<code>package</code> の外側）で定義された関数はグローバル関数と呼ばれます。グローバル関数がモジュールから呼び出されると、生成される SystemVerilog では呼び出し元モジュールの名前空間に展開されます。</p>
+<p>グローバル関数はジェネリックにすることができ、<code>pub</code> を付与することでプロジェクト間で公開することもできます。</p>
+<pre><code class="language-veryl playground">pub function add::&lt;W: u32&gt; (
+    a: input logic&lt;W&gt;,
+    b: input logic&lt;W&gt;,
+) -&gt; logic&lt;W&gt; {
+    return a + b;
+}
+
+module ModuleA #(
+    param WIDTH: u32 = 8,
+) (
+    i_a: input  logic&lt;WIDTH&gt;,
+    i_b: input  logic&lt;WIDTH&gt;,
+    o_c: output logic&lt;WIDTH&gt;,
+) {
+    assign o_c = add::&lt;WIDTH&gt;(i_a, i_b);
+}
+</code></pre>
 
                     </main>
 

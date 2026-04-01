@@ -266,6 +266,27 @@ module ModuleA {
     }
 }
 </code></pre>
+<h2 id="global-function"><a class="header" href="#global-function">Global function</a></h2>
+<p>Functions defined at the project namespace level (outside of <code>module</code>, <code>interface</code>, and <code>package</code>) are called global functions.
+When a global function is called from a module, it is emitted into the caller module’s namespace in the generated SystemVerilog.</p>
+<p>Global functions can be generic and can be published with <code>pub</code> for cross-project use.</p>
+<pre><code class="language-veryl playground">pub function add::&lt;W: u32&gt; (
+    a: input logic&lt;W&gt;,
+    b: input logic&lt;W&gt;,
+) -&gt; logic&lt;W&gt; {
+    return a + b;
+}
+
+module ModuleA #(
+    param WIDTH: u32 = 8,
+) (
+    i_a: input  logic&lt;WIDTH&gt;,
+    i_b: input  logic&lt;WIDTH&gt;,
+    o_c: output logic&lt;WIDTH&gt;,
+) {
+    assign o_c = add::&lt;WIDTH&gt;(i_a, i_b);
+}
+</code></pre>
 
                     </main>
 

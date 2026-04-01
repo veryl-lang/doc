@@ -260,6 +260,49 @@ path = "document"
 <tr><td>path</td><td>string</td><td>“doc”</td><td>path to output directory</td></tr>
 </tbody></table>
 </div>
+<h2 id="documentation-test"><a class="header" href="#documentation-test">Documentation test</a></h2>
+<p>WaveDrom blocks can also be used as documentation tests by using <code>wavedrom,test</code> code block instead of <code>wavedrom</code>.
+The waveform signals are matched to module ports by name (with <code>i_</code>/<code>o_</code> prefix and <code>_n</code> suffix removed automatically).
+Clock and reset signals are recognized and handled appropriately.</p>
+<p>Documentation tests are executed through <code>veryl test</code> command along with other integrated tests.</p>
+<p>The available wave characters are:</p>
+<ul>
+<li><code>p</code>, <code>P</code>, <code>n</code>, <code>N</code> — clock signals (positive/negative edge)</li>
+<li><code>0</code>, <code>1</code> — logic values</li>
+<li><code>x</code>, <code>z</code> — unknown / high-impedance</li>
+<li><code>.</code> — repeat previous value</li>
+<li><code>=</code>, <code>2</code>-<code>9</code> — data values (with <code>data</code> array)</li>
+</ul>
+<pre><code class="language-veryl playground">/// 1-cycle delay register.
+///
+/// ```wavedrom,test
+/// {signal: [
+///   {name: 'clk',   wave: 'p........'},
+///   {name: 'rst_n', wave: '0.1......'},
+///   {name: 'din',   wave: '0.01.0.1.'},
+///   {name: 'dout',  wave: '0...1.0.1'}
+/// ]}
+/// ```
+pub module ModuleB (
+    i_clk  : input  'a clock,
+    i_rst_n: input  'a reset,
+    i_din  : input  'a logic,
+    o_dout : output 'a logic,
+) {
+    var r_data: 'a logic;
+
+    always_ff {
+        if_reset {
+            r_data = 0;
+        } else {
+            r_data = i_din;
+        }
+    }
+
+    assign o_dout = r_data;
+}
+</code></pre>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

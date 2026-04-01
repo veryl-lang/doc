@@ -208,7 +208,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="組み合わせ回路"><a class="header" href="#組み合わせ回路">組み合わせ回路</a></h1>
-<p><code>always_comb</code> で代入される変数は組み合わせ回路を意味します。</p>
+<p><code>always_comb</code> 宣言で代入される変数は組み合わせ回路を表します。組み合わせ変数はブロッキング代入セマンティクスを使用し、入力が変化したときに再評価されます。評価の詳細については<a href="../18_execution_model.html">実行モデル</a>を参照してください。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;

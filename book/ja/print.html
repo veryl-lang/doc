@@ -338,10 +338,10 @@ endmodule
 <pre><code class="language-veryl">module ModuleA (
     i_clk_a: input  'a clock,
     i_dat_a: input  'a logic,
-    i_dat_a: output 'a logic,
+    o_dat_a: output 'a logic,
     i_clk_b: input  'b clock,
     i_dat_b: input  'b logic,
-    i_dat_b: output 'b logic,
+    o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
         assign o_dat_b = i_dat_a;
@@ -725,10 +725,10 @@ module ModuleB {
 </code></pre>
 <p>これで <code>veryl</code> コマンドが使えるようになりました。</p>
 <h2 id="エディタ設定"><a class="header" href="#エディタ設定">エディタ設定</a></h2>
-<p>公式には <a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code">Visual Studio Code</a> と <a href="https://github.com/vim/vim">Vim</a> / <a href="https://neovim.io">Neovim</a> がサポートされています。</p>
+<p>公式には <a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code">Visual Studio Code</a>、<a href="https://github.com/vim/vim">Vim</a> / <a href="https://neovim.io">Neovim</a>、<a href="https://zed.dev">Zed</a> がサポートされています。</p>
 <h3 id="visual-studio-code"><a class="header" href="#visual-studio-code">Visual Studio Code</a></h3>
 <p>Visual Studio Code 向けに Veryl 拡張が提供されています。拡張はファイルタイプの検出とシンタックスハイライト、言語サーバの組み込みを提供します。拡張パネルから “Veryl” で検索するか、以下の URL からインストールしてください。</p>
-<p><a href="https://marketplace.visualstudio.com/items?itemName=dalance.vscode-veryl">Veryl extension for Visual Studio Code</a></p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=veryl-lang.veryl-vscode">Veryl extension for Visual Studio Code</a></p>
 <h3 id="vim--neovim"><a class="header" href="#vim--neovim">Vim / Neovim</a></h3>
 <p>Vim / Neovim 向けに Veryl プラグインが提供されています。プラグインはファイルタイプの検出とシンタックスハイライトを提供します。プラグインのインストールと言語サーバの組み込みは以下の URL を参照してください。</p>
 <p><a href="https://github.com/veryl-lang/veryl.vim">Vim / Neovim plugin</a></p>
@@ -1234,6 +1234,22 @@ a = 1 || 1;
     let _h: i64 = 1;
 }
 </code></pre>
+<h2 id="正の整数型"><a class="header" href="#正の整数型">正の整数型</a></h2>
+<p>正の整数型にはいくつかの種類があります。</p>
+<ul>
+<li><code>p8</code>：8ビットの正の符号なし整数</li>
+<li><code>p16</code>：16ビットの正の符号なし整数</li>
+<li><code>p32</code>：32ビットの正の符号なし整数</li>
+<li><code>p64</code>：64ビットの正の符号なし整数</li>
+</ul>
+<p>正の整数型はコンパイル時に代入値がゼロより大きいことを検証します。正のリテラル値および正の値に評価される式のみが受け入れられます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let _a: p8  = 1;
+    let _b: p16 = 100;
+    let _c: p32 = 65536;
+    let _d: p64 = 1000000;
+}
+</code></pre>
 <h2 id="浮動小数点数型"><a class="header" href="#浮動小数点数型">浮動小数点数型</a></h2>
 <p>浮動小数点数型にもいくつかの種類があります。</p>
 <ul>
@@ -1733,6 +1749,7 @@ module ModuleA {
     }
 }
 </code></pre>
+<p>代入された値がいつ参照可能になるかの詳細については、<a href="05_language_reference/05_statement/../18_execution_model.html">実行モデル</a>を参照してください。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="関数呼び出し-1"><a class="header" href="#関数呼び出し-1">関数呼び出し</a></h1>
 <p>関数呼び出しは文として使うこともできます。この場合、関数の戻り値は無視されます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -1816,8 +1833,8 @@ module ModuleA {
 <pre><code class="language-toml">[build]
 emit_cond_type = true
 </code></pre>
-<h2 id="concatenation-in-left-hand-side"><a class="header" href="#concatenation-in-left-hand-side">Concatenation in left-hand side</a></h2>
-<p>If you want to use bit concatenation in left-hand of case/switch, surrounding <code>{}</code> is necessary, even if the statement is single.</p>
+<h2 id="左辺でのビット連結"><a class="header" href="#左辺でのビット連結">左辺でのビット連結</a></h2>
+<p>case/switchの左辺でビット連結を使用する場合、文が1つだけであっても <code>{}</code> で囲む必要があります。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
@@ -1930,7 +1947,7 @@ emit_cond_type = true
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="レジスタ"><a class="header" href="#レジスタ">レジスタ</a></h1>
-<p>レジスタ変数とは <code>always_ff</code> で代入される変数です。合成フェーズでフリップフロップにマップされます。</p>
+<p>レジスタ変数とは <code>always_ff</code> で代入される変数です。合成フェーズでフリップフロップにマップされます。レジスタ変数はノンブロッキング代入セマンティクスを使用します。シミュレーションサイクルとコミットの動作については<a href="05_language_reference/06_declaration/../18_execution_model.html">実行モデル</a>を参照してください。</p>
 <p><code>always_ff</code> は必須のクロック変数、オプションのリセット変数、<code>{}</code> ブロックをとります。クロックとリセットは <code>()</code> に書きます。指定されたクロックとリセットは <code>clock</code> / <code>reset</code> 型を持ち、そのビット幅は1ビットでなければなりません。</p>
 <p><code>if_reset</code> は <code>always_ff</code> に書ける特別なキーワードで、そのレジスタ変数のリセット条件を示します。<code>if_reset</code> を使う場合は <code>always_ff</code> のリセット変数は必須です。これを使うことで、リセットの極性と同期性を隠ぺいすることができます。実際の極性と同期性は <code>Veryl.toml</code> の <code>[build]</code> セクションで設定できます。</p>
 <p>モジュール内にクロックとリセットが1つしかない場合、クロックとリセットの指定は省略できます。</p>
@@ -1976,7 +1993,7 @@ emit_cond_type = true
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="組み合わせ回路"><a class="header" href="#組み合わせ回路">組み合わせ回路</a></h1>
-<p><code>always_comb</code> で代入される変数は組み合わせ回路を意味します。</p>
+<p><code>always_comb</code> 宣言で代入される変数は組み合わせ回路を表します。組み合わせ変数はブロッキング代入セマンティクスを使用し、入力が変化したときに再評価されます。評価の詳細については<a href="05_language_reference/06_declaration/../18_execution_model.html">実行モデル</a>を参照してください。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
@@ -1997,7 +2014,7 @@ emit_cond_type = true
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="assign"><a class="header" href="#assign">assign</a></h1>
-<p><code>assign</code> 宣言で変数に式を代入することができます。</p>
+<p><code>assign</code> 宣言は変数に式を代入します。<code>assign</code> 宣言は組み合わせロジックとして扱われます。評価のセマンティクスについては<a href="05_language_reference/06_declaration/../18_execution_model.html">実行モデル</a>を参照してください。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     var a: logic&lt;10&gt;;
 
@@ -2067,6 +2084,26 @@ module ModuleA {
     always_comb {
         FunctionA(a_if, b_if);
     }
+}
+</code></pre>
+<h2 id="グローバル関数"><a class="header" href="#グローバル関数">グローバル関数</a></h2>
+<p>プロジェクト名前空間レベル（<code>module</code>、<code>interface</code>、<code>package</code> の外側）で定義された関数はグローバル関数と呼ばれます。グローバル関数がモジュールから呼び出されると、生成される SystemVerilog では呼び出し元モジュールの名前空間に展開されます。</p>
+<p>グローバル関数はジェネリックにすることができ、<code>pub</code> を付与することでプロジェクト間で公開することもできます。</p>
+<pre><code class="language-veryl playground">pub function add::&lt;W: u32&gt; (
+    a: input logic&lt;W&gt;,
+    b: input logic&lt;W&gt;,
+) -&gt; logic&lt;W&gt; {
+    return a + b;
+}
+
+module ModuleA #(
+    param WIDTH: u32 = 8,
+) (
+    i_a: input  logic&lt;WIDTH&gt;,
+    i_b: input  logic&lt;WIDTH&gt;,
+    o_c: output logic&lt;WIDTH&gt;,
+) {
+    assign o_c = add::&lt;WIDTH&gt;(i_a, i_b);
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="initial--final"><a class="header" href="#initial--final">initial / final</a></h1>
@@ -2562,8 +2599,8 @@ module ModuleA (
 <ul>
 <li><code>..input</code>: インターフェース内の全ての変数を <code>input</code> として追加</li>
 <li><code>..output</code>: インターフェース内の全ての変数を <code>output</code> として追加</li>
-<li><code>..same(modport_name)</code>: <code>modport_name</code> と同じ変数を同じ方向で追加</li>
-<li><code>..converse(modport_name)</code>: <code>modport_name</code> と同じ変数を、方向を逆にして追加</li>
+<li><code>..same(modport_name, ...)</code>: 指定されたmodportと同じメンバーを同じ方向で追加（インポートされた関数を含む）</li>
+<li><code>..converse(modport_name, ...)</code>: 指定されたmodportと同じメンバーを、方向を逆にして追加（インポートされた関数はそのまま維持）</li>
 </ul>
 <p>デフォルトメンバーの指定は通常の明示的なメンバーと一緒に使うこともできます。</p>
 <pre><code class="language-veryl playground">interface InterfaceA {
@@ -2571,14 +2608,21 @@ module ModuleA (
     var b: logic;
     var c: logic;
 
-    modport master {
+    modport mp_a {
         a: output,
-        b: input ,
-        c: input ,
+    }
+
+    modport mp_b {
+        b: input,
+        c: input,
+    }
+
+    modport master {
+        ..same(mp_a, mp_b)
     }
 
     modport slave {
-        ..converse(master)
+        ..converse(mp_a, mp_b)
     }
 
     modport monitor {
@@ -2650,7 +2694,7 @@ module ModuleB (
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="可視性"><a class="header" href="#可視性">可視性</a></h1>
 <p>デフォルトではプロジェクトのトップレベルアイテム（モジュール、インターフェース、パッケージ）はプライベートです。プライベートとは他のプロジェクトから参照できないことを意味します。</p>
-<p><code>pub</code> キーワードによって他のプロジェクトから見えるように指定することができます。<code>veryl doc</code> コマンドはパブリックなアイテムの <a href="05_language_reference/../05_development_environment/09_documentation.html">ドキュメント</a> のみを生成します。</p>
+<p><code>pub</code> キーワードによって他のプロジェクトから見えるように指定することができます。<code>veryl doc</code> コマンドはパブリックなアイテムの <a href="05_language_reference/../06_development_environment/10_documentation.html">ドキュメント</a> のみを生成します。</p>
 <pre><code class="language-veryl playground">pub module ModuleA {}
 
 pub interface InterfaceA {}
@@ -2713,12 +2757,125 @@ module Module47C {
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="組み込みテスト"><a class="header" href="#組み込みテスト">組み込みテスト</a></h1>
 <p>組み込みテストは <code>#[test(test_name)]</code> アトリビュートでマークすることができます。マークされたブロックはテストとして認識され、 <code>veryl test</code> コマンドによって実行されます。</p>
-<p>組み込みテストにはいくつかの種類があります。</p>
+<p>組み込みテストの記述方法は3種類あります。</p>
 <ul>
+<li>ネイティブテスト</li>
 <li>SystemVerilogテスト</li>
 <li><a href="https://www.cocotb.org">cocotb</a> テスト</li>
 </ul>
-<p><code>veryl test</code> で使用される RTLシミュレータについては <a href="05_language_reference/../06_development_environment/07_simulator.html">シミュレータ</a> を参照してください。<code>--wave</code> オプションで波形を生成することもできます。</p>
+<p>ネイティブテストはVerylの組み込みシミュレータを使用し、SystemVerilogテストとcocotbテストは外部のRTLシミュレータを使用します。<code>veryl test</code> で使用される外部RTLシミュレータについては <a href="05_language_reference/../06_development_environment/07_simulator.html">シミュレータ</a> を参照してください。すべてのテスト種別で、<code>--wave</code> オプションを指定すると波形を生成できます。</p>
+<p><code>#[ignore]</code> 属性を追加することでデフォルトでは無視するテストを指定できます。無視されたテストは <code>--ignored</code> オプションで実行できます。<code>--include-ignored</code> オプションを使うと通常のテストと無視されたテストの両方を実行します。</p>
+<pre><code class="language-veryl playground">#[test(test_ignored)]
+#[ignore]
+module test_ignored {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    initial {
+        rst.assert(clk);
+        $finish   ();
+    }
+}
+</code></pre>
+<h2 id="ネイティブテスト"><a class="header" href="#ネイティブテスト">ネイティブテスト</a></h2>
+<p>ネイティブテストでは、SystemVerilogの埋め込みや外部フレームワークを使わずに、Verylで直接テストベンチを記述できます。<code>#[test(test_name)]</code> 属性が付けられたモジュール（<code>embed</code> 宣言なし）がネイティブテストとして扱われます。</p>
+<p>以下のテストベンチコンポーネントが利用可能です。</p>
+<ul>
+<li><code>$tb::clock_gen</code> — クロック信号生成器（オプションで <code>#(period: N)</code> パラメータを指定可能）</li>
+<li><code>$tb::reset_gen</code> — リセット信号生成器（オプションで <code>#(cycles: N)</code> パラメータを指定可能）</li>
+</ul>
+<p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
+<ul>
+<li><code>$assert(condition)</code> または <code>$assert(condition, message)</code> — シミュレーション中にアサーションを検証</li>
+<li><code>$finish()</code> — シミュレーションを終了</li>
+</ul>
+<h3 id="基本的な例"><a class="header" href="#基本的な例">基本的な例</a></h3>
+<pre><code class="language-veryl playground">module Counter (
+    clk: input  clock    ,
+    rst: input  reset    ,
+    cnt: output logic&lt;32&gt;,
+) {
+    always_ff {
+        if_reset {
+            cnt = 0;
+        } else {
+            cnt += 1;
+        }
+    }
+}
+
+#[test(test_counter)]
+module test_counter {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    var cnt: logic&lt;32&gt;;
+
+    inst dut: Counter (
+        clk: clk,
+        rst: rst,
+        cnt: cnt,
+    );
+
+    initial {
+        rst.assert(clk);
+        clk.next  (10);
+        $assert   (cnt == 32'd10);
+        $finish   ();
+    }
+}
+</code></pre>
+<h3 id="テストベンチメソッド"><a class="header" href="#テストベンチメソッド">テストベンチメソッド</a></h3>
+<p><code>clock_gen</code> はクロックサイクルを進める <code>next</code> メソッドを提供します。</p>
+<ul>
+<li><code>clk.next()</code> — クロックを1サイクル進める</li>
+<li><code>clk.next(N)</code> — クロックを <code>N</code> サイクル進める</li>
+</ul>
+<p><code>reset_gen</code> はリセットをアサートする <code>assert</code> メソッドを提供します。</p>
+<ul>
+<li><code>rst.assert(clk)</code> — クロックに同期してリセットをアサート</li>
+<li><code>rst.assert(clk, duration)</code> — 指定された期間リセットをアサート</li>
+</ul>
+<p>リセット期間はインスタンス化時にも設定できます。</p>
+<pre><code class="language-veryl playground">#[test(test_reset_cycles_param)]
+module test_reset_cycles_param {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen #( cycles: 5 );
+
+    // ...
+
+    initial {
+        rst.assert(clk);
+        // ...
+    }
+}
+</code></pre>
+<h3 id="テストベンチ内の関数呼び出し"><a class="header" href="#テストベンチ内の関数呼び出し">テストベンチ内の関数呼び出し</a></h3>
+<p><code>clk.next</code> などのテストベンチメソッドはユーザー定義関数から呼び出すことができます。</p>
+<pre><code class="language-veryl playground">#[test(test_function_call)]
+module test_function_call {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    var cnt: logic&lt;32&gt;;
+
+    // inst dut: Counter (clk, rst, cnt);
+
+    function step_n (
+        n: input logic&lt;32&gt;,
+    ) {
+        clk.next(n);
+    }
+
+    initial {
+        rst.assert(clk);
+        step_n    (5);
+        step_n    (5);
+        $assert   (cnt == 32'd10);
+        $finish   ();
+    }
+}
+</code></pre>
 <h2 id="systemverilogテスト"><a class="header" href="#systemverilogテスト">SystemVerilogテスト</a></h2>
 <p>SystemVerilog テストは <code>inline</code> 指定子で記述することができます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
 <p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>
@@ -3130,6 +3287,37 @@ module top {
 
 interface InterfaceA {}
 </code></pre>
+<h2 id="クロックドメインの推論"><a class="header" href="#クロックドメインの推論">クロックドメインの推論</a></h2>
+<p>クロックドメインアノテーションなしで宣言された変数は、ドメインを自動的に推論できます。ドメインは <code>assign</code> 文の右辺または <code>always_ff</code> ブロックのクロックから推論されます。</p>
+<p>ポート宣言は公開インターフェースであり明示的であるべきなので、推論が可能な場合でもポート宣言のクロックドメインアノテーションは省略できません。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk_a: input  'a clock,
+    i_rst_a: input  'a reset,
+    i_dat_a: input  'a logic,
+    o_dat_a: output 'a logic,
+    i_clk_b: input  'b clock,
+    i_rst_b: input  'b reset,
+    i_dat_b: input  'b logic,
+    o_dat_b: output 'b logic,
+) {
+    // assignの右辺から 'a と推論
+    var x: logic;
+
+    assign x       = i_dat_a;
+    assign o_dat_a = x;
+
+    // always_ffのクロックから 'b と推論
+    var y: logic;
+    always_ff (i_clk_b, i_rst_b) {
+        if_reset {
+            y = 0;
+        } else {
+            y = i_dat_b;
+        }
+    }
+    assign o_dat_b = y;
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="unsafe-cdc"><a class="header" href="#unsafe-cdc">Unsafe CDC</a></h1>
 <p>Veryl コンパイラはクロックドメインクロッシングをエラーとして検出します。そのためクロックドメインクロッシングを行う場所には明示的な <code>unsafe (cdc)</code> ブロックが必要です。ブロック内ではクロックドメインクロッシングのチェックが抑制されるため、設計者はそれが安全かどうか注意深く確認する必要があります。</p>
 <pre><code class="language-veryl playground">module ModuleA (
@@ -3191,6 +3379,256 @@ interface InterfaceA {}
 
 alias package PkgA123 = PkgA::&lt;1, 2, 3&gt;;
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="実行モデル"><a class="header" href="#実行モデル">実行モデル</a></h1>
+<p>Verylの実行モデルはSystemVerilog (IEEE 1800) のスケジューリングセマンティクスに基づいています。Verylは言語レベルの制約により、標準で定義されている複雑なスケジューリング領域を設計者が理解する必要なく、決定論的なシミュレーションを保証するベストプラクティスを強制します。</p>
+<p>Verylの組み込みシミュレータはこのモデルに準拠しています。トランスパイルされたSystemVerilog出力もこれらのセマンティクスを保持するため、IEEE 1800準拠のシミュレータであれば同等の結果が得られます。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="変数の分類"><a class="header" href="#変数の分類">変数の分類</a></h1>
+<p>変数は代入コンテキストによって分類され、これによりストレージと代入セマンティクスが決定されます。</p>
+<h2 id="ff変数レジスタ"><a class="header" href="#ff変数レジスタ">FF変数（レジスタ）</a></h2>
+<p>モジュールレベルの <code>var</code> が <code>always_ff</code> ブロック内で代入されると、<strong>フリップフロップ（FF）変数</strong>になります。FF変数は二重バッファモデルを使用します：すべてのブロックから読み取れる<strong>current</strong>値と、ノンブロッキング代入により書き込まれる<strong>next</strong>値です。next値はFFコミットフェーズの後にのみcurrent値になります（<a href="05_language_reference/18_execution_model/./02_simulation_cycle.html">シミュレーションサイクル</a>を参照）。</p>
+<h2 id="組み合わせ変数"><a class="header" href="#組み合わせ変数">組み合わせ変数</a></h2>
+<p>モジュールレベルの <code>var</code> が <code>always_comb</code> ブロック内または <code>assign</code> 宣言を通じて代入されると、<strong>組み合わせ変数</strong>になります。組み合わせ変数への書き込みは即座に反映され（ブロッキング代入セマンティクス）、評価順序における後続の読み取りから参照可能です。</p>
+<p>モジュールレベルの <code>let</code> 宣言は <code>var</code> + <code>assign</code> の省略形であるため、同様に組み合わせ変数を生成します。</p>
+<h2 id="定数-1"><a class="header" href="#定数-1">定数</a></h2>
+<p><code>const</code> 宣言は<strong>コンパイル時定数</strong>を定義します。定数はコンパイル時に評価され、不変であり、シミュレーションサイクルには参加しません。</p>
+<h2 id="ローカル束縛"><a class="header" href="#ローカル束縛">ローカル束縛</a></h2>
+<p><code>always_ff</code> または <code>always_comb</code> ブロック内の <code>let</code> 宣言は<strong>ローカル束縛</strong>を作成します。ローカル束縛は <code>always_ff</code> 内であっても常にブロッキング代入セマンティクスを使用します。フリップフロップにマップされることはなく、囲むブロックの外からは参照できません。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+    i_rst: input reset,
+) {
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
+
+    // 組み合わせ変数（var + assign の省略形）
+    let c: logic&lt;8&gt; = a + 1;
+
+    // コンパイル時定数
+    const INIT: logic&lt;8&gt; = 0;
+
+    always_ff {
+        if_reset {
+            // FF変数（ノンブロッキング）
+            a = 0;
+        } else {
+            // ローカル束縛（ブロッキング、FFではない）
+            let temp: logic&lt;8&gt; = b + 1;
+            // FF変数（ノンブロッキング）
+            a = temp;
+        }
+    }
+
+    always_comb {
+        // 組み合わせ変数（ブロッキング）
+        b = c + 1;
+    }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="シミュレーションサイクル"><a class="header" href="#シミュレーションサイクル">シミュレーションサイクル</a></h1>
+<p>Verylのシミュレーションステップは、厳密な順序で実行される3つのフェーズで構成されます。このモデルはVerylの言語制約により実現された、SystemVerilogスケジューリング領域の簡略化されたビューに対応します。</p>
+<h2 id="3つのフェーズ"><a class="header" href="#3つのフェーズ">3つのフェーズ</a></h2>
+<pre><code class="language-text">    ┌──────────────────────────┐
+    │  Phase 1: Combinational  │  always_comb / assign blocks
+    │  Settlement              │  re-triggered on input changes
+    │  (SV Active region)      │  until all signals stabilize
+    └────────────┬─────────────┘
+                 │
+    ┌────────────▼─────────────┐
+    │  Phase 2: Event          │  always_ff blocks executed
+    │  Evaluation              │  Reads: current FF values
+    │  (SV Active + NBA)       │  Writes: scheduled as NBA
+    └────────────┬─────────────┘
+                 │
+    ┌────────────▼─────────────┐
+    │  Phase 3: FF Commit      │  All NBA writes take effect
+    │  (SV NBA Update)         │  Re-triggers Phase 1
+    └──────────────────────────┘
+</code></pre>
+<h3 id="フェーズ1組み合わせロジックの収束"><a class="header" href="#フェーズ1組み合わせロジックの収束">フェーズ1：組み合わせロジックの収束</a></h3>
+<p>すべての組み合わせロジック（<code>always_comb</code> ブロックと <code>assign</code> 宣言）が評価されます。各ブロックはその入力信号に対してセンシティブです：あるブロックが信号を更新すると、その信号に依存するブロックが再評価されます。この伝播はすべての信号が安定するまで続きます。</p>
+<h3 id="フェーズ2イベント評価"><a class="header" href="#フェーズ2イベント評価">フェーズ2：イベント評価</a></h3>
+<p>トリガーされたイベント（例：クロックエッジ）に対してセンシティブなすべての <code>always_ff</code> ブロックが実行されます。このフェーズでは：</p>
+<ul>
+<li>FF変数からの<strong>読み取り</strong>は<strong>current</strong>（コミット前）の値を参照します。</li>
+<li>FF変数への<strong>書き込み</strong>はノンブロッキングセマンティクスを使用します：値はNBA更新にスケジュールされ、即座には反映<strong>されません</strong>。</li>
+</ul>
+<h3 id="フェーズ3ffコミットnba更新"><a class="header" href="#フェーズ3ffコミットnba更新">フェーズ3：FFコミット（NBA更新）</a></h3>
+<p>フェーズ2からのすべてのノンブロッキング代入がアトミックに反映されます。すべてのFF変数の「next」値が新しい「current」値になります。コミット後、更新された値で組み合わせロジックが再評価されます（フェーズ1に戻る）。</p>
+<h2 id="systemverilogスケジューリング領域との対応"><a class="header" href="#systemverilogスケジューリング領域との対応">SystemVerilogスケジューリング領域との対応</a></h2>
+<p>Verylの言語制約により、SystemVerilogのスケジューリング領域のうち関連するのは2つだけです：</p>
+<div class="table-wrapper"><table><thead><tr><th>SV領域</th><th>Verylフェーズ</th><th>何が起こるか</th></tr></thead><tbody>
+<tr><td>Active</td><td>組み合わせロジックの収束</td><td><code>always_comb</code> の評価と伝播</td></tr>
+<tr><td>Active</td><td>イベント評価（読み取り）</td><td><code>always_ff</code> がcurrent値を読む</td></tr>
+<tr><td>NBA更新</td><td>イベント評価（書き込み）+ FFコミット</td><td><code>always_ff</code> の書き込みが反映される</td></tr>
+</tbody></table>
+</div>
+<p>Inactive、Observed、Reactive領域は不要です。Verylはこれらを必要とするコーディングパターン（例：<code>#0</code> ディレイ、programブロック、同一変数へのブロッキング代入とノンブロッキング代入の混在）を許可しないためです。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="代入のセマンティクス"><a class="header" href="#代入のセマンティクス">代入のセマンティクス</a></h1>
+<p>Verylはすべての代入に単一の <code>=</code> 演算子を使用します。実際のセマンティクス — ブロッキングかノンブロッキングか — は代入コンテキストにより自動的に決定されます。これにより、設計者が手動で従うべきSystemVerilogのベストプラクティスが強制されます。</p>
+<h2 id="ブロッキング代入"><a class="header" href="#ブロッキング代入">ブロッキング代入</a></h2>
+<p><code>always_comb</code> ブロックと <code>assign</code> 宣言では、<code>=</code> は<strong>ブロッキング代入</strong>を行います。代入された値は同一評価パス内の後続の読み取りから即座に参照可能です。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a: logic&lt;8&gt; = 1;
+    var b: logic&lt;8&gt;;
+    var c: logic&lt;8&gt;;
+
+    always_comb {
+        b = a + 1; // b は即座に 2 に更新される
+        c = b + 1; // c は b の新しい値 (2) を読むため、c = 3
+    }
+}
+</code></pre>
+<h2 id="ノンブロッキング代入"><a class="header" href="#ノンブロッキング代入">ノンブロッキング代入</a></h2>
+<p><code>always_ff</code> ブロック内では、モジュールレベル変数に対する <code>=</code> は<strong>ノンブロッキング代入</strong>を行います。代入された値はNBA更新フェーズにスケジュールされ、FFコミットまで反映されません。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
+
+    always_ff {
+        // a.next = 1（このフェーズ中 current の a は変化しない）
+        a = 1;
+        // a.current を読む（a.next ではない）ため、b.next = a.current + 1
+        b = a + 1;
+    }
+}
+</code></pre>
+<h2 id="always_ff-内のローカル束縛"><a class="header" href="#always_ff-内のローカル束縛"><code>always_ff</code> 内のローカル束縛</a></h2>
+<p><code>always_ff</code> 内の <code>let</code> 束縛は常に<strong>ブロッキング</strong>セマンティクスを使用します。ローカル束縛はブロック内の一時的な値であり、フリップフロップにマップされることはありません。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a     : logic&lt;8&gt;;
+    var result: logic&lt;8&gt;;
+
+    always_ff {
+        // ブロッキング：doubled は即座に利用可能
+        let doubled: logic&lt;8&gt; = a * 2;
+        // ノンブロッキング：result.next = doubled + 1
+        result = doubled + 1;
+    }
+}
+</code></pre>
+<h2 id="systemverilogへの対応"><a class="header" href="#systemverilogへの対応">SystemVerilogへの対応</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Verylコンテキスト</th><th>Veryl構文</th><th>SystemVerilog相当</th></tr></thead><tbody>
+<tr><td><code>always_comb</code></td><td><code>x = expr;</code></td><td><code>x = expr;</code>（ブロッキング）</td></tr>
+<tr><td><code>assign</code></td><td><code>assign x = expr;</code></td><td><code>assign x = expr;</code>（continuous assignment）</td></tr>
+<tr><td><code>always_ff</code>、モジュールレベル変数</td><td><code>x = expr;</code></td><td><code>x &lt;= expr;</code>（ノンブロッキング）</td></tr>
+<tr><td><code>always_ff</code>、ローカル <code>let</code></td><td><code>let x: T = expr;</code></td><td><code>x = expr;</code>（ブロッキング）</td></tr>
+<tr><td><code>always_ff</code>、複合代入</td><td><code>x += expr;</code></td><td><code>x &lt;= x + expr;</code>（ノンブロッキング）</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="組み合わせロジックの評価"><a class="header" href="#組み合わせロジックの評価">組み合わせロジックの評価</a></h1>
+<p>Verylの組み合わせロジック（<code>always_comb</code> ブロックと <code>assign</code> 宣言）はSystemVerilogと同じ評価セマンティクスに従います：各ブロックは暗黙的にその入力信号に対してセンシティブであり、入力が変化するたびに再評価されます。</p>
+<p>ブロックが信号を更新すると、依存するブロックがすべての信号が安定するまで自動的に再トリガーされます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
+    var c: logic&lt;8&gt;;
+
+    assign a = 1;
+
+    always_comb {
+        b = a + 1; // a が変化すると再評価される
+    }
+
+    always_comb {
+        c = b + 1; // b が変化すると再評価される
+    }
+}
+</code></pre>
+<p>この例では、初期評価順序に関係なく、値は常に <code>a = 1</code>、<code>b = 2</code>、<code>c = 3</code> です。</p>
+<h2 id="組み合わせループ"><a class="header" href="#組み合わせループ">組み合わせループ</a></h2>
+<p>組み合わせループは、変数がレジスタを介さずに組み合わせロジックを通じて自身に依存する場合に発生します。Verylは組み合わせループをコンパイル時に検出し、エラーとして報告します。</p>
+<pre><code class="language-text">// エラー：組み合わせループ
+var x: logic&lt;8&gt;;
+always_comb {
+    x = x + 1; // x が自身に依存している
+}
+</code></pre>
+<h2 id="実装に関する注記"><a class="header" href="#実装に関する注記">実装に関する注記</a></h2>
+<p>Verylの組み込みシミュレータは、データ依存関係のトポロジカルソートを使用して効率的な評価順序を決定し、再評価パスの回数を最小化します。これはパフォーマンスの最適化であり、観測可能な結果は上述のイベント駆動再トリガーモデルと同等です。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="イベント評価"><a class="header" href="#イベント評価">イベント評価</a></h1>
+<p>クロックエッジまたはリセットイベントが発生すると、そのイベントに対してセンシティブなすべての <code>always_ff</code> ブロックが実行されます。イベント評価中：</p>
+<ol>
+<li>FF変数からの<strong>読み取り</strong>は<strong>current</strong>（コミット前）の値を参照します。</li>
+<li>FF変数へのすべての書き込みは<strong>ノンブロッキング</strong>です — NBA更新にスケジュールされ、FFコミットフェーズまで反映されません。</li>
+</ol>
+<p>すべてのブロックが同じスナップショットから読み取り、独立した「next」スロットに書き込むため、<code>always_ff</code> ブロックの実行順序はシミュレーション結果に影響しません。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
+
+    // These two blocks produce the same result regardless of evaluation order:
+
+    always_ff {
+        a = b; // a.next = b.current
+    }
+
+    always_ff {
+        b = a; // b.next = a.current
+    }
+
+    // コミット後：a と b の値が入れ替わる。
+}
+</code></pre>
+<h2 id="ソース順序"><a class="header" href="#ソース順序">ソース順序</a></h2>
+<p>同一イベントに対する <code>always_ff</code> ブロックはソース順序で評価されます。</p>
+<h2 id="initialブロックとfinalブロック"><a class="header" href="#initialブロックとfinalブロック">initialブロックとfinalブロック</a></h2>
+<p><code>initial</code> ブロックはシミュレーション開始時に独立したイベントとして一度だけ評価されます。<code>final</code> ブロックはシミュレーション終了時に一度だけ評価されます。これらのブロックは合成不可であり、テストベンチやデバッグ目的で使用されます。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="マルチクロックドメイン"><a class="header" href="#マルチクロックドメイン">マルチクロックドメイン</a></h1>
+<p>Verylは複数のクロックドメインを持つデザインをサポートしています。各クロックドメインは対応するクロックイベントにより独立してトリガーされます。</p>
+<h2 id="独立したドメイン評価"><a class="header" href="#独立したドメイン評価">独立したドメイン評価</a></h2>
+<p>クロックエッジが発生すると、そのクロックに対してセンシティブな <code>always_ff</code> ブロックのみが評価されます。FFコミットフェーズはそれらのブロックにより書き込まれた変数にのみ適用されます。他のクロックドメインは影響を受けません。</p>
+<h2 id="同時クロックエッジ"><a class="header" href="#同時クロックエッジ">同時クロックエッジ</a></h2>
+<p>2つのクロックが同時にエッジを持つ場合、各ドメインのイベント評価とFFコミットは一度に1ドメインずつ順次実行されます。FFの二重バッファモデル（current/next分離）により、各ドメインは自身の変数の一貫したスナップショットを参照するため、ドメインの処理順序に関係なく単一ドメインの動作は決定論的です。</p>
+<h2 id="クロスドメイン信号"><a class="header" href="#クロスドメイン信号">クロスドメイン信号</a></h2>
+<p>異なるクロックドメインの信号へのアクセスはクロックドメインクロッシング（CDC）です。Verylはクロスドメイン信号アクセスに <code>unsafe (cdc)</code> による明示的なアノテーションを要求します（<a href="05_language_reference/18_execution_model/../15_clock_domain_annotation.html">クロックドメインアノテーション</a>を参照）。</p>
+<p>同時エッジを持つドメイン間で <code>unsafe (cdc)</code> 信号が共有されている場合、ドメインの評価順序は共有信号値を通じて観測可能です。Verylはこの場合の特定の順序を保証しません。設計者は適切な同期回路（例：2段FFシンクロナイザ、ハンドシェイクプロトコル）により正確性を確保する必要があります。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk_a: input  'a clock   ,
+    i_rst_a: input  'a reset   ,
+    i_clk_b: input  'b clock   ,
+    i_dat_a: input  'a logic&lt;8&gt;,
+    o_dat_b: output 'b logic&lt;8&gt;,
+) {
+    var data_a: 'a logic&lt;8&gt;;
+
+    always_ff (i_clk_a, i_rst_a) {
+        if_reset {
+            data_a = 0;
+        } else {
+            data_a = i_dat_a;
+        }
+    }
+
+    // クロスドメインアクセスには unsafe (cdc) が必要
+    unsafe (cdc) {
+        assign o_dat_b = data_a;
+    }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="決定性"><a class="header" href="#決定性">決定性</a></h1>
+<p>Verylは決定論的シミュレーションを保証します：同一のソースコードと同一の刺激シーケンスが与えられた場合、準拠するシミュレータはすべてのシミュレーションステップで同一の信号値を生成します。</p>
+<h2 id="verylが決定性を実現する方法"><a class="header" href="#verylが決定性を実現する方法">Verylが決定性を実現する方法</a></h2>
+<p>Verylの言語制約はSystemVerilogにおける一般的な非決定性の原因を排除します：</p>
+<ol>
+<li>Verylは単一の <code>=</code> 演算子を使用し、コンテキストに基づいて正しいセマンティクスを<strong>自動推論</strong>します。これにより、誤った代入タイプを誤って使用することが不可能になります。</li>
+<li>すべてのブロックが同じスナップショットから読み取り、独立した「next」スロットに書き込むため、<code>always_ff</code> ブロックの実行順序はシミュレーション結果に影響しません。</li>
+<li><strong>決定論的な組み合わせ評価</strong> — ブロックは安定するまで伝播し、組み合わせループはコンパイル時に検出されます。</li>
+<li><strong>明示的なクロックドメインクロッシング</strong> — <code>unsafe (cdc)</code> なしのクロスドメインアクセスはコンパイル時エラーとなり、意図しないレースを防止します。</li>
+</ol>
+<h2 id="保証の範囲"><a class="header" href="#保証の範囲">保証の範囲</a></h2>
+<p>決定性の保証は<strong>シミュレーションステップ境界での観測可能な信号値</strong>（各FFコミット後）に適用されます。単一フェーズ内の内部評価順序（例：収束フェーズ内での組み合わせブロック再評価の順序）は実装定義ですが、観測可能な結果は実装間で同一です。</p>
+<h2 id="systemverilogとの関係"><a class="header" href="#systemverilogとの関係">SystemVerilogとの関係</a></h2>
+<p>トランスパイルされたSystemVerilog出力は、IEEE 1800準拠のシミュレータが決定論的に処理する確立されたコーディングパターンに従います：</p>
+<ul>
+<li>順序ロジックには <code>always_ff</code> と <code>&lt;=</code>（ノンブロッキング）</li>
+<li>組み合わせロジックには <code>always_comb</code> と <code>=</code>（ブロッキング）</li>
+<li>同一変数へのブロッキング/ノンブロッキング代入の混在なし</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="開発環境"><a class="header" href="#開発環境">開発環境</a></h1>
 <p>この章ではプロジェクト設定や開発ツールなど開発環境について説明します。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="プロジェクト設定"><a class="header" href="#プロジェクト設定">プロジェクト設定</a></h1>
@@ -3630,8 +4068,8 @@ bump_commit_message = "Bump"
 <div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr></thead><tbody>
 <tr><td>bump_commit</td><td>ブーリアン</td><td>false</td><td>バージョンアップ後の自動コミット</td></tr>
 <tr><td>publish_commit</td><td>ブーリアン</td><td>false</td><td>公開後の自動コミット</td></tr>
-<tr><td>bump_commit_mesasge</td><td>文字列</td><td>“chore: Bump version”</td><td>バージョンアップ後のコミットメッセージ</td></tr>
-<tr><td>publish_commit_mesasge</td><td>文字列</td><td>“chore: Publish”</td><td>公開後のコミットメッセージ</td></tr>
+<tr><td>bump_commit_message</td><td>文字列</td><td>“chore: Bump version”</td><td>バージョンアップ後のコミットメッセージ</td></tr>
+<tr><td>publish_commit_message</td><td>文字列</td><td>“chore: Publish”</td><td>公開後のコミットメッセージ</td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h1>
 <p>他の Veryl プロジェクトへの依存関係をプロジェクトに追加したい場合、<code>Veryl.toml</code> に <code>[dependencies]</code> セクションを追加します。エントリの左辺は依存関係のプロジェクト名、右辺はソースパスとバージョンです。<code>github</code> はGitHub上のリポジトリを参照する糖衣構文です。代わりに <code>git</code> を用いてURL全体を指定することもできます。</p>
@@ -3833,7 +4271,9 @@ target = {type = "directory", path = "target"}
 <p><code>veryl check</code> あるいは <code>veryl build</code> でリントチェックができます。あるいは言語サーバはリアルタイムでのチェックを行います。</p>
 <p>全設定の説明は<a href="06_development_environment/./01_project_configuration/03_lint.html">こちら</a>。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="シミュレータ"><a class="header" href="#シミュレータ">シミュレータ</a></h1>
-<p>RTLシミュレータによるテストは <code>veryl test</code> で実行することができます。サポートされているシミュレータは以下の通りです。</p>
+<p>テストは <code>veryl test</code> で実行することができます。</p>
+<p><a href="06_development_environment/../05_language_reference/13_integrated_test.html#native-test">ネイティブテスト</a> ではVerylの組み込みシミュレータが使用されます。外部シミュレータのインストールは不要です。</p>
+<p>SystemVerilogテストとcocotbテストでは、外部のRTLシミュレータが必要です。サポートされているシミュレータは以下の通りです。</p>
 <ul>
 <li><a href="https://www.veripool.org/verilator/">Verilator</a></li>
 <li><a href="https://www.synopsys.com/verification/simulation/vcs.html">Synopsys VCS</a></li>
@@ -3924,7 +4364,48 @@ path = "document"
 <div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr></thead><tbody>
 <tr><td>path</td><td>文字列</td><td>“doc”</td><td>出力ディレクトリへのパス</td></tr>
 </tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="github-action"><a class="header" href="#github-action">GitHub Action</a></h1>
+</div>
+<h2 id="ドキュメンテーションテスト"><a class="header" href="#ドキュメンテーションテスト">ドキュメンテーションテスト</a></h2>
+<p>WaveDromブロックは <code>wavedrom</code> の代わりに <code>wavedrom,test</code> コードブロックを使うことでドキュメンテーションテストとしても利用できます。波形の信号名はモジュールポートと名前で照合されます（<code>i_</code>/<code>o_</code> プレフィックスと <code>_n</code> サフィックスは自動的に除去されます）。クロックとリセット信号は適切に認識・処理されます。</p>
+<p>ドキュメンテーションテストは他の組み込みテストとともに <code>veryl test</code> コマンドで実行されます。</p>
+<p>使用可能なwave文字は以下です。</p>
+<ul>
+<li><code>p</code>, <code>P</code>, <code>n</code>, <code>N</code> — クロック信号（ポジティブ/ネガティブエッジ）</li>
+<li><code>0</code>, <code>1</code> — 論理値</li>
+<li><code>x</code>, <code>z</code> — 不定 / ハイインピーダンス</li>
+<li><code>.</code> — 前の値を繰り返し</li>
+<li><code>=</code>, <code>2</code>-<code>9</code> — データ値（<code>data</code> 配列と併用）</li>
+</ul>
+<pre><code class="language-veryl playground">/// 1サイクル遅延レジスタ
+///
+/// ```wavedrom,test
+/// {signal: [
+///   {name: 'clk',   wave: 'p........'},
+///   {name: 'rst_n', wave: '0.1......'},
+///   {name: 'din',   wave: '0.01.0.1.'},
+///   {name: 'dout',  wave: '0...1.0.1'}
+/// ]}
+/// ```
+pub module ModuleB (
+    i_clk  : input  'a clock,
+    i_rst_n: input  'a reset,
+    i_din  : input  'a logic,
+    o_dout : output 'a logic,
+) {
+    var r_data: 'a logic;
+
+    always_ff {
+        if_reset {
+            r_data = 0;
+        } else {
+            r_data = i_din;
+        }
+    }
+
+    assign o_dout = r_data;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="github-action"><a class="header" href="#github-action">GitHub Action</a></h1>
 <p>ビルド済みのVerylバイナリをダウンロードするための公式GitHub actionが提供されています。</p>
 <p><a href="https://github.com/marketplace/actions/setup-veryl">https://github.com/marketplace/actions/setup-veryl</a></p>
 <p>GitHub actionスクリプトの例は以下の通りです。</p>
@@ -4161,17 +4642,14 @@ LTMinusTerm           : &lt;INITIAL                                             
 PlusColonTerm         : &lt;INITIAL                                                       &gt;'+:'                                                                                  : Token;
 AssignmentOperatorTerm: &lt;INITIAL                                                       &gt;"\+=|-=|\*=|/=|%=|&amp;=|\|=|\^=|&lt;&lt;=|&gt;&gt;=|&lt;&lt;&lt;=|&gt;&gt;&gt;="                                       : Token;
 DiamondOperatorTerm   : &lt;INITIAL                                                       &gt;'&lt;&gt;'                                                                                  : Token;
-Operator12Term        : &lt;INITIAL                                                       &gt;"\*\*"                                                                                : Token;
-Operator11Term        : &lt;INITIAL                                                       &gt;"/|%"                                                                                 : Token;
-Operator10Term        : &lt;INITIAL                                                       &gt;"\+|-"                                                                                : Token;
-Operator09Term        : &lt;INITIAL                                                       &gt;"&lt;&lt;&lt;|&gt;&gt;&gt;|&lt;&lt;|&gt;&gt;"                                                                       : Token;
-Operator08Term        : &lt;INITIAL                                                       &gt;"&lt;=|&gt;=|&lt;:|&gt;:"                                                                         : Token;
-Operator07Term        : &lt;INITIAL                                                       &gt;"==\?|!=\?|==|!="                                                                     : Token;
-Operator03Term        : &lt;INITIAL                                                       &gt;"&amp;&amp;"                                                                                  : Token;
-Operator02Term        : &lt;INITIAL                                                       &gt;"\|\|"                                                                                : Token;
-Operator06Term        : &lt;INITIAL                                                       &gt;"&amp;"                                                                                   : Token;
-Operator05Term        : &lt;INITIAL                                                       &gt;"\^|~\^"                                                                              : Token;
-Operator04Term        : &lt;INITIAL                                                       &gt;"\|"                                                                                  : Token;
+Operator08Term        : &lt;INITIAL                                                       &gt;"\*\*"                                                                                : Token;
+Operator07Term        : &lt;INITIAL                                                       &gt;"/|%"                                                                                 : Token;
+Operator06Term        : &lt;INITIAL                                                       &gt;"\+|-"                                                                                : Token;
+Operator02Term        : &lt;INITIAL                                                       &gt;"&lt;&lt;&lt;|&gt;&gt;&gt;|&lt;&lt;|&gt;&gt;|==\?|!=\?|==|!=|&lt;=|&gt;=|&lt;:|&gt;:"                                           : Token;
+Operator01Term        : &lt;INITIAL                                                       &gt;"\|\||&amp;&amp;"                                                                             : Token;
+Operator05Term        : &lt;INITIAL                                                       &gt;"&amp;"                                                                                   : Token;
+Operator04Term        : &lt;INITIAL                                                       &gt;"\^|~\^"                                                                              : Token;
+Operator03Term        : &lt;INITIAL                                                       &gt;"\|"                                                                                  : Token;
 UnaryOperatorTerm     : &lt;INITIAL                                                       &gt;"~&amp;|~\||!|~"                                                                          : Token;
 ColonColonLAngleTerm  : &lt;INITIAL, Generic                                              &gt;'::&lt;'                                                                                 : Token;
 ColonColonTerm        : &lt;INITIAL, Generic                                              &gt;'::'                                                                                  : Token;
@@ -4276,6 +4754,10 @@ SwitchTerm            : &lt;INITIAL, Generic                                    
 TriTerm               : &lt;INITIAL, Generic                                             &gt;'tri'                                                                                 : Token; // Keyword: Type
 TrueTerm              : &lt;INITIAL, Generic                                             &gt;'true'                                                                                : Token; // Keyword: Literal
 TypeTerm              : &lt;INITIAL, Generic                                             &gt;'type'                                                                                : Token; // Keyword: Statement
+P8Term                : &lt;INITIAL, Generic                                             &gt;'p8'                                                                                  : Token; // Keyword: Type
+P16Term               : &lt;INITIAL, Generic                                             &gt;'p16'                                                                                 : Token; // Keyword: Type
+P32Term               : &lt;INITIAL, Generic                                             &gt;'p32'                                                                                 : Token; // Keyword: Type
+P64Term               : &lt;INITIAL, Generic                                             &gt;'p64'                                                                                 : Token; // Keyword: Type
 U8Term                : &lt;INITIAL, Generic                                             &gt;'u8'                                                                                  : Token; // Keyword: Type
 U16Term               : &lt;INITIAL, Generic                                             &gt;'u16'                                                                                 : Token; // Keyword: Type
 U32Term               : &lt;INITIAL, Generic                                             &gt;'u32'                                                                                 : Token; // Keyword: Type
@@ -4305,6 +4787,7 @@ AllBitToken    : AllBitTerm    : Token Comments;
 
 AssignmentOperatorToken: AssignmentOperatorTerm: Token Comments;
 DiamondOperatorToken   : DiamondOperatorTerm   : Token Comments;
+Operator01Token        : Operator01Term        : Token Comments;
 Operator02Token        : Operator02Term        : Token Comments;
 Operator03Token        : Operator03Term        : Token Comments;
 Operator04Token        : Operator04Term        : Token Comments;
@@ -4312,10 +4795,6 @@ Operator05Token        : Operator05Term        : Token Comments;
 Operator06Token        : Operator06Term        : Token Comments;
 Operator07Token        : Operator07Term        : Token Comments;
 Operator08Token        : Operator08Term        : Token Comments;
-Operator09Token        : Operator09Term        : Token Comments;
-Operator10Token        : Operator10Term        : Token Comments;
-Operator11Token        : Operator11Term        : Token Comments;
-Operator12Token        : Operator12Term        : Token Comments;
 UnaryOperatorToken     : UnaryOperatorTerm     : Token Comments;
 
 ColonToken           : ColonTerm           : Token Comments;
@@ -4424,6 +4903,10 @@ SwitchToken        : SwitchTerm        : Token Comments;
 TriToken           : TriTerm           : Token Comments;
 TrueToken          : TrueTerm          : Token Comments;
 TypeToken          : TypeTerm          : Token Comments;
+P8Token            : P8Term            : Token Comments;
+P16Token           : P16Term           : Token Comments;
+P32Token           : P32Term           : Token Comments;
+P64Token           : P64Term           : Token Comments;
 U8Token            : U8Term            : Token Comments;
 U16Token           : U16Term           : Token Comments;
 U32Token           : U32Term           : Token Comments;
@@ -4457,6 +4940,7 @@ AllBit    : AllBitToken    : VerylToken;
 // Operator
 AssignmentOperator: AssignmentOperatorToken: VerylToken;
 DiamondOperator   : DiamondOperatorToken   : VerylToken;
+Operator01        : Operator01Token        : VerylToken;
 Operator02        : Operator02Token        : VerylToken;
 Operator03        : Operator03Token        : VerylToken;
 Operator04        : Operator04Token        : VerylToken;
@@ -4464,10 +4948,6 @@ Operator05        : Operator05Token        : VerylToken;
 Operator06        : Operator06Token        : VerylToken;
 Operator07        : Operator07Token        : VerylToken;
 Operator08        : Operator08Token        : VerylToken;
-Operator09        : Operator09Token        : VerylToken;
-Operator10        : Operator10Token        : VerylToken;
-Operator11        : Operator11Token        : VerylToken;
-Operator12        : Operator12Token        : VerylToken;
 UnaryOperator     : UnaryOperatorToken     : VerylToken;
 
 // Symbol
@@ -4578,6 +5058,10 @@ Switch        : SwitchToken        : VerylToken;
 Tri           : TriToken           : VerylToken;
 True          : TrueToken          : VerylToken;
 Type          : TypeToken          : VerylToken;
+P8            : P8Token            : VerylToken;
+P16           : P16Token           : VerylToken;
+P32           : P32Token           : VerylToken;
+P64           : P64Token           : VerylToken;
 U8            : U8Token            : VerylToken;
 U16           : U16Token           : VerylToken;
 U32           : U32Token           : VerylToken;
@@ -4624,19 +5108,11 @@ GenericArgIdentifier  : ScopedIdentifier { Dot Identifier };
 
 Expression  : IfExpression;
 IfExpression: { If Expression Question Expression Colon } Expression01;
-Expression01: Expression02 { Operator02 Expression02 };
-Expression02: Expression03 { Operator03 Expression03 };
-Expression03: Expression04 { Operator04 Expression04 };
-Expression04: Expression05 { Operator05 Expression05 };
-Expression05: Expression06 { Operator06 Expression06 };
-Expression06: Expression07 { Operator07 Expression07 };
-Expression07: Expression08 { Operator08 Expression08 };
-Expression08: Expression09 { Operator09 Expression09 };
-Expression09: Expression10 { Operator10 Expression10 };
-Expression10: Expression11 { ( Operator11 | Star ) Expression11 };
-Expression11: Expression12 { Operator12 Expression12 };
-Expression12: Expression13 [ As CastingType ];
-Expression13: { ( UnaryOperator | Operator10 | Operator06 | Operator04 | Operator05 ) } Factor;
+Expression01: Expression02 { Expression01Op Expression02 };
+Expression02: { Expression02Op } Factor [ As CastingType ];
+
+Expression01Op: Operator01 | Operator02 | Operator03 | Operator04 | Operator05 | Operator06 | Operator07 | Star | Operator08;
+Expression02Op: UnaryOperator | Operator06 | Operator05 | Operator03 | Operator04;
 
 Factor: Number
       | BooleanLiteral
@@ -4722,7 +5198,7 @@ RangeOperator: DotDot
 // ScalarType / ArrayType / CastingType
 // ----------------------------------------------------------------------------
 
-FixedType: U8 | U16 | U32 | U64 | I8 | I16| I32 | I64 | F32 | F64 | BBool | LBool | Strin;
+FixedType: P8 | P16 | P32 | P64 | U8 | U16 | U32 | U64 | I8 | I16| I32 | I64 | F32 | F64 | BBool | LBool | Strin;
 
 VariableType: Clock
             | ClockPosedge
@@ -4749,6 +5225,10 @@ CastingType: U8
            | U16
            | U32
            | U64
+           | P8
+           | P16
+           | P32
+           | P64
            | I8
            | I16
            | I32
@@ -4881,8 +5361,10 @@ ModportItem: Identifier Colon Direction;
 
 ModportDefault: Input
               | Output
-              | Same LParen Identifier RParen
-              | Converse LParen Identifier RParen;
+              | Same LParen ModportDefaultList RParen
+              | Converse LParen ModportDefaultList RParen;
+
+ModportDefaultList: Identifier { Comma Identifier } [ Comma ];
 
 EnumDeclaration: Enum Identifier [ Colon ScalarType ] LBrace EnumList RBrace;
 
@@ -5169,6 +5651,7 @@ PublicDescriptionItem: ModuleDeclaration
                      | PackageDeclaration
                      | AliasDeclaration
                      | ProtoDeclaration
+                     | FunctionDeclaration
                      ;
 
 // ----------------------------------------------------------------------------

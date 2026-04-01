@@ -29,6 +29,7 @@ https://doc.veryl-lang.org/book/05_language_reference/14_generics.html
 https://doc.veryl-lang.org/book/05_language_reference/15_clock_domain_annotation.html
 https://doc.veryl-lang.org/book/05_language_reference/16_standard_library.html
 https://doc.veryl-lang.org/book/05_language_reference/17_alias.html
+https://doc.veryl-lang.org/book/05_language_reference/18_execution_model.html
 https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration.html
 https://doc.veryl-lang.org/book/06_development_environment/02_dependencies.html
 https://doc.veryl-lang.org/book/06_development_environment/03_publish_project.html
@@ -97,6 +98,13 @@ https://doc.veryl-lang.org/book/05_language_reference/06_declaration/14_block.ht
 https://doc.veryl-lang.org/book/05_language_reference/14_generics/01_default_parameter.html
 https://doc.veryl-lang.org/book/05_language_reference/14_generics/02_prototype.html
 https://doc.veryl-lang.org/book/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.html
+https://doc.veryl-lang.org/book/05_language_reference/18_execution_model/01_variable_classification.html
+https://doc.veryl-lang.org/book/05_language_reference/18_execution_model/02_simulation_cycle.html
+https://doc.veryl-lang.org/book/05_language_reference/18_execution_model/03_assignment_semantics.html
+https://doc.veryl-lang.org/book/05_language_reference/18_execution_model/04_combinational_evaluation.html
+https://doc.veryl-lang.org/book/05_language_reference/18_execution_model/05_event_evaluation.html
+https://doc.veryl-lang.org/book/05_language_reference/18_execution_model/06_multi_clock.html
+https://doc.veryl-lang.org/book/05_language_reference/18_execution_model/07_determinism.html
 https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/01_build.html
 https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/02_format.html
 https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/03_lint.html
@@ -125,6 +133,7 @@ https://doc.veryl-lang.org/book/ja/05_language_reference/14_generics.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/15_clock_domain_annotation.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/16_standard_library.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/17_alias.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/18_execution_model.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/02_dependencies.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/03_publish_project.html
@@ -184,6 +193,13 @@ https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/14_block
 https://doc.veryl-lang.org/book/ja/05_language_reference/14_generics/01_default_parameter.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/14_generics/02_prototype.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/18_execution_model/01_variable_classification.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/18_execution_model/02_simulation_cycle.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/18_execution_model/03_assignment_semantics.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/18_execution_model/04_combinational_evaluation.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/18_execution_model/05_event_evaluation.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/18_execution_model/06_multi_clock.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/18_execution_model/07_determinism.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/01_build.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/02_format.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/03_lint.html

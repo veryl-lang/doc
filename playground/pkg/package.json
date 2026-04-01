@@ -2,6 +2,7 @@
   "name": "veryl-wasm",
   "type": "module",
   "version": "0.1.0",
+  "license": "MIT OR Apache-2.0",
   "files": [
     "veryl_wasm_bg.wasm",
     "veryl_wasm.js"

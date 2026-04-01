@@ -256,7 +256,7 @@ formatting through the command line and formatting checks in CI are also possibl
 <video src="./img/format.mp4" autoplay loop muted>
 </video>
 <h2 id="integrated-test"><a class="header" href="#integrated-test">Integrated test</a></h2>
-<p>Test code written by SystemVerilog or <a href="https://www.cocotb.org">cocotb</a> can be embeded in Veryl code,
+<p>Test code written by SystemVerilog or <a href="https://www.cocotb.org">cocotb</a> can be embedded in Veryl code,
 it can be executed through <code>veryl test</code> command.</p>
 <pre><code class="language-veryl">#[test(test1)]
 embed (inline) sv{{{
@@ -348,10 +348,10 @@ endmodule
 <pre><code class="language-veryl">module ModuleA (
     i_clk_a: input  'a clock,
     i_dat_a: input  'a logic,
-    i_dat_a: output 'a logic,
+    o_dat_a: output 'a logic,
     i_clk_b: input  'b clock,
     i_dat_b: input  'b logic,
-    i_dat_b: output 'b logic,
+    o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
         assign o_dat_b = i_dat_a;
@@ -752,12 +752,12 @@ It downloads the latest toolchain and creates <code>veryl</code> and <code>veryl
 </code></pre>
 <p>Now <code>veryl</code> command can be used!</p>
 <h2 id="editor-integration"><a class="header" href="#editor-integration">Editor integration</a></h2>
-<p><a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code">Visual Studio Code</a> and <a href="https://github.com/vim/vim">Vim</a> / <a href="https://neovim.io">Neovim</a> are supported officially.</p>
+<p><a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code">Visual Studio Code</a>, <a href="https://github.com/vim/vim">Vim</a> / <a href="https://neovim.io">Neovim</a>, and <a href="https://zed.dev">Zed</a> are supported officially.</p>
 <h3 id="visual-studio-code"><a class="header" href="#visual-studio-code">Visual Studio Code</a></h3>
 <p>For Visual Studio Code, Veryl extension is provided.
 The extension provides file type detection, syntex highlight and language server integration.
 You can install it by searching “Veryl” in extension panel or the following URL.</p>
-<p><a href="https://marketplace.visualstudio.com/items?itemName=dalance.vscode-veryl">Veryl extension for Visual Studio Code</a></p>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=veryl-lang.veryl-vscode">Veryl extension for Visual Studio Code</a></p>
 <h3 id="vim--neovim"><a class="header" href="#vim--neovim">Vim / Neovim</a></h3>
 <p>For Vim / Neovim, Veryl plugin is provided.
 The plugin provides file type detection, syntex highlight.
@@ -920,7 +920,7 @@ module ModuleA #(
 
     // always_ff statement with reset
     //   `always_ff` can take a mandatory clock and a optional reset
-    //   `if_reset` means `if (i_rst)`. This conceals reset porality
+    //   `if_reset` means `if (i_rst)`. This conceals reset polarity
     //   `()` of `if` is not required
     //   `=` in `always_ff` is non-blocking assignment
     always_ff (i_clk, i_rst) {
@@ -1049,7 +1049,7 @@ module ModuleA {
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="language-reference"><a class="header" href="#language-reference">Language Reference</a></h1>
-<p>In this chapter, we’ll discuss the lauguage definition of Veryl.</p>
+<p>In this chapter, we’ll discuss the language definition of Veryl.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="source-code-structure"><a class="header" href="#source-code-structure">Source Code Structure</a></h1>
 <p>Veryl’s source code is composed by some <code>module</code>, <code>interface</code> and <code>package</code>.</p>
 <pre><code class="language-veryl playground">module ModuleA {}
@@ -1295,6 +1295,23 @@ Multi-dimentional can be specified by <code>&lt;X, Y, Z,,,&gt;</code>.</p>
     let _f: i16 = 1;
     let _g: i32 = 1;
     let _h: i64 = 1;
+}
+</code></pre>
+<h2 id="positive-integer-type"><a class="header" href="#positive-integer-type">Positive integer type</a></h2>
+<p>There are some positive integer types:</p>
+<ul>
+<li><code>p8</code> : 8bit positive unsigned integer</li>
+<li><code>p16</code>: 16bit positive unsigned integer</li>
+<li><code>p32</code>: 32bit positive unsigned integer</li>
+<li><code>p64</code>: 64bit positive unsigned integer</li>
+</ul>
+<p>Positive integer types enforce compile-time validation that assigned values are greater than zero.
+Only positive literal values and expressions that evaluate to positive values are accepted.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let _a: p8  = 1;
+    let _b: p16 = 100;
+    let _c: p32 = 65536;
+    let _d: p64 = 1000000;
 }
 </code></pre>
 <h2 id="floating-point-type"><a class="header" href="#floating-point-type">Floating point type</a></h2>
@@ -1842,6 +1859,7 @@ There are other assignment operators:</p>
     }
 }
 </code></pre>
+<p>For details on when assigned values become visible, see <a href="05_language_reference/05_statement/../18_execution_model.html">Execution Model</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="function-call-1"><a class="header" href="#function-call-1">Function Call</a></h1>
 <p>Function call can be used as statement.
 In this case, the return value of function will be ignored.</p>
@@ -2027,7 +2045,7 @@ It can be used in <code>always_ff</code>, <code>always_comb</code> and function 
 <div style="break-before: page; page-break-before: always;"></div><h1 id="variable"><a class="header" href="#variable">Variable</a></h1>
 <p>Variable declaration is started by <code>var</code> keyword.
 After <code>var</code>, variable name, <code>:</code>, and the type of the variable are followed.</p>
-<p>If there are unused variables, warning will be occured.
+<p>If there are unused variables, warning will be occurred.
 Variable name starting with <code>_</code> means unused variable, and suppresses the warning.</p>
 <p>If you want to bind a value to a name at the declaration, <code>let</code> can be used instead of <code>var</code>.</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -2044,7 +2062,7 @@ Variable name starting with <code>_</code> means unused variable, and suppresses
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="parameter"><a class="header" href="#parameter">Parameter</a></h1>
-<p>Parameter can be declarated as the same as variable.
+<p>Parameter can be declared as the same as variable.
 <code>param</code> keyword can be used at module header, it can be overridden at instantiation.
 <code>const</code> keyword can be used in module, it can’t be overridden.</p>
 <pre><code class="language-veryl playground">module ModuleA #(
@@ -2055,15 +2073,17 @@ Variable name starting with <code>_</code> means unused variable, and suppresses
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="register"><a class="header" href="#register">Register</a></h1>
 <p>If a variable is assigned in <code>always_ff</code> declaration, it becomes register variable.
-Register variable will be mapped to flip-flop in synthesis phase.</p>
+Register variable will be mapped to flip-flop in synthesis phase.
+Register variables use non-blocking assignment semantics.
+See <a href="05_language_reference/06_declaration/../18_execution_model.html">Execution Model</a> for the simulation cycle and commit behavior.</p>
 <p><code>always_ff</code> has mandatory clock variable, optional reset variable, and <code>{}</code> block.
 Clock and reset are placed in <code>()</code>.
 The specified clock and reset should have <code>clock</code> / <code>reset</code> type and the witdh of them should be 1bit.</p>
 <p><code>if_reset</code> is a special keyword which can be used in <code>always_ff</code>.
 It means reset condition of the register variable.
 If <code>if_reset</code> is used, <code>always_ff</code> must have reset variable.
-<code>if_reset</code> can be conceal reset porality and synchronisity.
-The actual porality and synchronisity can be configured through <code>[build]</code> section of <code>Veryl.toml</code>.</p>
+<code>if_reset</code> can be conceal reset polarity and synchronicity.
+The actual polarity and synchronicity can be configured through <code>[build]</code> section of <code>Veryl.toml</code>.</p>
 <p>If there is a single clock and reset in the module, clock and reset specification can be omitted.</p>
 <pre><code class="language-veryl playground">module ModuleA (
     i_clk: input clock,
@@ -2107,7 +2127,9 @@ The actual porality and synchronisity can be configured through <code>[build]</c
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="combinational"><a class="header" href="#combinational">Combinational</a></h1>
-<p>If a variable is assigned in <code>always_comb</code> declaration, it means combinational circuit.</p>
+<p>If a variable is assigned in <code>always_comb</code> declaration, it means combinational circuit.
+Combinational variables use blocking assignment semantics and are re-evaluated when their inputs change.
+See <a href="05_language_reference/06_declaration/../18_execution_model.html">Execution Model</a> for evaluation details.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
@@ -2128,7 +2150,9 @@ The actual porality and synchronisity can be configured through <code>[build]</c
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="assign"><a class="header" href="#assign">Assign</a></h1>
-<p><code>assign</code> declaration can assign expression to variable.</p>
+<p><code>assign</code> declaration can assign expression to variable.
+<code>assign</code> declarations are treated as combinational logic.
+See <a href="05_language_reference/06_declaration/../18_execution_model.html">Execution Model</a> for evaluation semantics.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     var a: logic&lt;10&gt;;
 
@@ -2200,6 +2224,27 @@ module ModuleA {
     always_comb {
         FunctionA(a_if, b_if);
     }
+}
+</code></pre>
+<h2 id="global-function"><a class="header" href="#global-function">Global function</a></h2>
+<p>Functions defined at the project namespace level (outside of <code>module</code>, <code>interface</code>, and <code>package</code>) are called global functions.
+When a global function is called from a module, it is emitted into the caller module’s namespace in the generated SystemVerilog.</p>
+<p>Global functions can be generic and can be published with <code>pub</code> for cross-project use.</p>
+<pre><code class="language-veryl playground">pub function add::&lt;W: u32&gt; (
+    a: input logic&lt;W&gt;,
+    b: input logic&lt;W&gt;,
+) -&gt; logic&lt;W&gt; {
+    return a + b;
+}
+
+module ModuleA #(
+    param WIDTH: u32 = 8,
+) (
+    i_a: input  logic&lt;WIDTH&gt;,
+    i_b: input  logic&lt;WIDTH&gt;,
+    o_c: output logic&lt;WIDTH&gt;,
+) {
+    assign o_c = add::&lt;WIDTH&gt;(i_a, i_b);
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="initial--final"><a class="header" href="#initial--final">Initial / Final</a></h1>
@@ -2725,8 +2770,8 @@ module ModuleA (
 <ul>
 <li><code>..input</code>: all variables in the interface as <code>input</code></li>
 <li><code>..output</code>: all variables in the interface as <code>output</code></li>
-<li><code>..same(modport_name)</code>: the same variables as <code>modport_name</code></li>
-<li><code>..converse(modport_name)</code>: the same variables as <code>modport_name</code>, but all direction is converse</li>
+<li><code>..same(modport_name, ...)</code>: the same members as specified modports (including imported functions)</li>
+<li><code>..converse(modport_name, ...)</code>: the same members as specified modports, but all direction is converse (imported functions are kept as-is)</li>
 </ul>
 <p>Specifing default members can be used with normal explicit members.</p>
 <pre><code class="language-veryl playground">interface InterfaceA {
@@ -2734,14 +2779,21 @@ module ModuleA (
     var b: logic;
     var c: logic;
 
-    modport master {
+    modport mp_a {
         a: output,
-        b: input ,
-        c: input ,
+    }
+
+    modport mp_b {
+        b: input,
+        c: input,
+    }
+
+    modport master {
+        ..same(mp_a, mp_b)
     }
 
     modport slave {
-        ..converse(master)
+        ..converse(mp_a, mp_b)
     }
 
     modport monitor {
@@ -2820,7 +2872,7 @@ It depeneds on implementation (e.g. simulator, synthesizer) whether each symbols
 <p>By default, all top level items of a project (module, interface and package) are private.
 The “private” means they are not visible from other project.</p>
 <p><code>pub</code> keyword can be used to specify an item as public to other project.
-<code>veryl doc</code> will generate <a href="05_language_reference/../05_development_environment/09_documentation.html">documents</a> of public items only.</p>
+<code>veryl doc</code> will generate <a href="05_language_reference/../06_development_environment/10_documentation.html">documents</a> of public items only.</p>
 <pre><code class="language-veryl playground">pub module ModuleA {}
 
 pub interface InterfaceA {}
@@ -2890,19 +2942,136 @@ The first argument is the same as <code>embed</code> declaration, and the second
 <div style="break-before: page; page-break-before: always;"></div><h1 id="integrated-test"><a class="header" href="#integrated-test">Integrated Test</a></h1>
 <p>Integrated test can be marked by <code>#[test(test_name)]</code> attribute.
 The marked block will be identified as test, and executed through <code>veryl test</code> command.</p>
-<p>There are two way to describe integrated test:</p>
+<p>There are three ways to describe integrated test:</p>
 <ul>
+<li>Native test</li>
 <li>SystemVerilog test</li>
 <li><a href="https://www.cocotb.org">cocotb</a> test</li>
 </ul>
-<p>About RTL simulator used by <code>veryl test</code>, see <a href="05_language_reference/../06_development_environment/07_simulator.html">Simulator</a>.
-If <code>--wave</code> option is specified, waveforms are generated.</p>
+<p>Native test uses Veryl’s built-in simulator, while SystemVerilog test and cocotb test use an external RTL simulator.
+About external RTL simulators used by <code>veryl test</code>, see <a href="05_language_reference/../06_development_environment/07_simulator.html">Simulator</a>.
+For all test types, if <code>--wave</code> option is specified, waveforms are generated.</p>
+<p>Tests can be skipped by adding <code>#[ignore]</code> attribute.
+Ignored tests are not executed by default, but can be run with <code>--ignored</code> option.
+<code>--include-ignored</code> option runs both normal and ignored tests.</p>
+<pre><code class="language-veryl playground">#[test(test_ignored)]
+#[ignore]
+module test_ignored {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    initial {
+        rst.assert(clk);
+        $finish   ();
+    }
+}
+</code></pre>
+<h2 id="native-test"><a class="header" href="#native-test">Native test</a></h2>
+<p>Native test allows writing testbenches directly in Veryl without embedding SystemVerilog or using external frameworks.
+A module with <code>#[test(test_name)]</code> attribute (without <code>embed</code> declaration) is treated as a native test.</p>
+<p>The following testbench components are available:</p>
+<ul>
+<li><code>$tb::clock_gen</code> — clock signal generator (with optional <code>#(period: N)</code> parameter)</li>
+<li><code>$tb::reset_gen</code> — reset signal generator (with optional <code>#(cycles: N)</code> parameter)</li>
+</ul>
+<p>And the following system functions can be used in <code>initial</code> blocks:</p>
+<ul>
+<li><code>$assert(condition)</code> or <code>$assert(condition, message)</code> — check assertions during simulation</li>
+<li><code>$finish()</code> — terminate simulation</li>
+</ul>
+<h3 id="basic-example"><a class="header" href="#basic-example">Basic example</a></h3>
+<pre><code class="language-veryl playground">module Counter (
+    clk: input  clock    ,
+    rst: input  reset    ,
+    cnt: output logic&lt;32&gt;,
+) {
+    always_ff {
+        if_reset {
+            cnt = 0;
+        } else {
+            cnt += 1;
+        }
+    }
+}
+
+#[test(test_counter)]
+module test_counter {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    var cnt: logic&lt;32&gt;;
+
+    inst dut: Counter (
+        clk: clk,
+        rst: rst,
+        cnt: cnt,
+    );
+
+    initial {
+        rst.assert(clk);
+        clk.next  (10);
+        $assert   (cnt == 32'd10);
+        $finish   ();
+    }
+}
+</code></pre>
+<h3 id="testbench-methods"><a class="header" href="#testbench-methods">Testbench methods</a></h3>
+<p><code>clock_gen</code> provides the <code>next</code> method to advance clock cycles:</p>
+<ul>
+<li><code>clk.next()</code> — advance clock by 1 cycle</li>
+<li><code>clk.next(N)</code> — advance clock by <code>N</code> cycles</li>
+</ul>
+<p><code>reset_gen</code> provides the <code>assert</code> method to assert reset:</p>
+<ul>
+<li><code>rst.assert(clk)</code> — assert reset synchronized to clock</li>
+<li><code>rst.assert(clk, duration)</code> — assert reset for specified duration</li>
+</ul>
+<p>The reset duration can also be configured at instantiation:</p>
+<pre><code class="language-veryl playground">#[test(test_reset_cycles_param)]
+module test_reset_cycles_param {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen #( cycles: 5 );
+
+    // ...
+
+    initial {
+        rst.assert(clk);
+        // ...
+    }
+}
+</code></pre>
+<h3 id="function-calls-in-testbench"><a class="header" href="#function-calls-in-testbench">Function calls in testbench</a></h3>
+<p>Testbench methods like <code>clk.next</code> can be called from user-defined functions:</p>
+<pre><code class="language-veryl playground">#[test(test_function_call)]
+module test_function_call {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    var cnt: logic&lt;32&gt;;
+
+    // inst dut: Counter (clk, rst, cnt);
+
+    function step_n (
+        n: input logic&lt;32&gt;,
+    ) {
+        clk.next(n);
+    }
+
+    initial {
+        rst.assert(clk);
+        step_n    (5);
+        step_n    (5);
+        $assert   (cnt == 32'd10);
+        $finish   ();
+    }
+}
+</code></pre>
 <h2 id="systemverilog-test"><a class="header" href="#systemverilog-test">SystemVerilog test</a></h2>
 <p>SystemVerilog test can be described with <code>inline</code> specifier.
 The top level module of the block must have the same name as the test name.</p>
 <p>The messages through <code>$info</code>, <code>$warning</code>, <code>$error</code> and <code>$fatal</code> system function are handled by Veryl compiler, and shown as exectution log.
 The calls of <code>$error</code> and <code>$fatal</code> are treated as test failure.</p>
-<p>The following example, a SystemVerilog source code embeded by <code>embed</code> declaration are marked as test.</p>
+<p>The following example, a SystemVerilog source code embedded by <code>embed</code> declaration are marked as test.</p>
 <pre><code class="language-veryl playground">#[test(test1)]
 embed (inline) sv{{{
     module test1;
@@ -2932,7 +3101,7 @@ The following items support generics:</p>
 <li>union</li>
 </ul>
 <p>Each generic definition has generic parameters (often an uppercase letter is used like <code>T</code>) which can be placed as identifier or expression in the definition.
-Generic parameters are declarated after item’s identifier with <code>::&lt;&gt;</code>.</p>
+Generic parameters are declared after item’s identifier with <code>::&lt;&gt;</code>.</p>
 <p>Each generic parameter should have generic bound after colon like <code>T: TypeName</code>.
 Generic bound represents what value can be passed to the generic parameter.
 The available generic bounds are below:</p>
@@ -3329,6 +3498,39 @@ This can be used to specify that some clocks belong the same implicit clock doma
 
 interface InterfaceA {}
 </code></pre>
+<h2 id="clock-domain-inference"><a class="header" href="#clock-domain-inference">Clock domain inference</a></h2>
+<p>Variables declared without clock domain annotation can have their domain inferred automatically.
+The domain is inferred from the right-hand side of <code>assign</code> statements or the clock of <code>always_ff</code> blocks.</p>
+<p>Note that clock domain annotation on port declarations cannot be omitted even if inference is possible,
+because port declarations are public interfaces and should be explicit.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk_a: input  'a clock,
+    i_rst_a: input  'a reset,
+    i_dat_a: input  'a logic,
+    o_dat_a: output 'a logic,
+    i_clk_b: input  'b clock,
+    i_rst_b: input  'b reset,
+    i_dat_b: input  'b logic,
+    o_dat_b: output 'b logic,
+) {
+    // inferred as 'a from assign RHS
+    var x: logic;
+
+    assign x       = i_dat_a;
+    assign o_dat_a = x;
+
+    // inferred as 'b from always_ff clock
+    var y: logic;
+    always_ff (i_clk_b, i_rst_b) {
+        if_reset {
+            y = 0;
+        } else {
+            y = i_dat_b;
+        }
+    }
+    assign o_dat_b = y;
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="unsafe-cdc"><a class="header" href="#unsafe-cdc">Unsafe CDC</a></h1>
 <p>Veryl compiler detects clock domain crossing as error.
 So explicit <code>unsafe (cdc)</code> block is required for clock domain crossing.
@@ -3395,6 +3597,269 @@ Standard library is under <code>$std</code> namespace, and it can be used withou
 
 alias package PkgA123 = PkgA::&lt;1, 2, 3&gt;;
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="execution-model"><a class="header" href="#execution-model">Execution Model</a></h1>
+<p>Veryl’s execution model is based on the scheduling semantics of SystemVerilog (IEEE 1800).
+Through language-level constraints, Veryl enforces best practices that guarantee deterministic simulation, without requiring designers to understand the complex scheduling regions defined in the standard.</p>
+<p>Veryl’s built-in simulator conforms to this model.
+The transpiled SystemVerilog output also preserves these semantics, so any IEEE 1800 compliant simulator will produce equivalent results.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="variable-classification"><a class="header" href="#variable-classification">Variable Classification</a></h1>
+<p>Variables are classified by their assignment context, which determines storage and assignment semantics.</p>
+<h2 id="ff-variables-registers"><a class="header" href="#ff-variables-registers">FF Variables (Registers)</a></h2>
+<p>A module-level <code>var</code> assigned inside <code>always_ff</code> becomes a <strong>flip-flop (FF) variable</strong>.
+FF variables use a two-buffer model: a <strong>current</strong> value and a <strong>next</strong> value.
+The next value becomes current only after the FF commit phase (see <a href="05_language_reference/18_execution_model/./02_simulation_cycle.html">Simulation Cycle</a>).</p>
+<h2 id="combinational-variables"><a class="header" href="#combinational-variables">Combinational Variables</a></h2>
+<p>A module-level <code>var</code> assigned inside <code>always_comb</code> or via <code>assign</code> becomes a <strong>combinational variable</strong>.
+Writes take effect immediately and are visible to subsequent reads in evaluation order.</p>
+<p>A module-level <code>let</code> is a shorthand for <code>var</code> + <code>assign</code>, so it also produces a combinational variable.</p>
+<h2 id="constants"><a class="header" href="#constants">Constants</a></h2>
+<p>A <code>const</code> declaration defines an immutable <strong>compile-time constant</strong> that does not participate in the simulation cycle.</p>
+<h2 id="local-bindings"><a class="header" href="#local-bindings">Local Bindings</a></h2>
+<p>A <code>let</code> inside an <code>always_ff</code> or <code>always_comb</code> block creates a <strong>local binding</strong>.
+Local bindings always use blocking semantics, even inside <code>always_ff</code>, and are never mapped to flip-flops.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+    i_rst: input reset,
+) {
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
+
+    // combinational (shorthand for var + assign)
+    let c: logic&lt;8&gt; = a + 1;
+
+    // compile-time constant
+    const INIT: logic&lt;8&gt; = 0;
+
+    always_ff {
+        if_reset {
+            // FF variable (non-blocking)
+            a = 0;
+        } else {
+            // local binding (blocking, not a FF)
+            let temp: logic&lt;8&gt; = b + 1;
+            // FF variable (non-blocking)
+            a = temp;
+        }
+    }
+
+    always_comb {
+        // combinational variable (blocking)
+        b = c + 1;
+    }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="simulation-cycle"><a class="header" href="#simulation-cycle">Simulation Cycle</a></h1>
+<p>A simulation step consists of three phases executed in strict order, corresponding to a simplified view of the SystemVerilog scheduling regions.</p>
+<h2 id="the-three-phases"><a class="header" href="#the-three-phases">The Three Phases</a></h2>
+<pre><code class="language-text">    ┌──────────────────────────┐
+    │  Phase 1: Combinational  │  always_comb / assign blocks
+    │  Settlement              │  re-triggered on input changes
+    │  (SV Active region)      │  until all signals stabilize
+    └────────────┬─────────────┘
+                 │
+    ┌────────────▼─────────────┐
+    │  Phase 2: Event          │  always_ff blocks executed
+    │  Evaluation              │  Reads: current FF values
+    │  (SV Active + NBA)       │  Writes: scheduled as NBA
+    └────────────┬─────────────┘
+                 │
+    ┌────────────▼─────────────┐
+    │  Phase 3: FF Commit      │  All NBA writes take effect
+    │  (SV NBA Update)         │  Re-triggers Phase 1
+    └──────────────────────────┘
+</code></pre>
+<h3 id="phase-1-combinational-settlement"><a class="header" href="#phase-1-combinational-settlement">Phase 1: Combinational Settlement</a></h3>
+<p>All combinational logic (<code>always_comb</code> and <code>assign</code>) is evaluated.
+Blocks are re-triggered when their inputs change, and this propagation continues until all signals stabilize.</p>
+<h3 id="phase-2-event-evaluation"><a class="header" href="#phase-2-event-evaluation">Phase 2: Event Evaluation</a></h3>
+<p>All <code>always_ff</code> blocks sensitive to the triggered event (e.g., a clock edge) are executed.</p>
+<ul>
+<li><strong>Reads</strong> from FF variables see the <strong>current</strong> (pre-commit) values.</li>
+<li><strong>Writes</strong> to FF variables use non-blocking semantics and do <strong>not</strong> take effect immediately.</li>
+</ul>
+<h3 id="phase-3-ff-commit-nba-update"><a class="header" href="#phase-3-ff-commit-nba-update">Phase 3: FF Commit (NBA Update)</a></h3>
+<p>All non-blocking assignments from Phase 2 take effect atomically.
+After the commit, combinational logic is re-evaluated with the updated values (returning to Phase 1).</p>
+<h2 id="correspondence-to-systemverilog-scheduling-regions"><a class="header" href="#correspondence-to-systemverilog-scheduling-regions">Correspondence to SystemVerilog Scheduling Regions</a></h2>
+<p>Veryl’s language constraints ensure that only two of SystemVerilog’s scheduling regions are relevant:</p>
+<div class="table-wrapper"><table><thead><tr><th>SV Region</th><th>Veryl Phase</th><th>What happens</th></tr></thead><tbody>
+<tr><td>Active</td><td>Combinational Settlement</td><td><code>always_comb</code> evaluation and propagation</td></tr>
+<tr><td>Active</td><td>Event Evaluation (reads)</td><td><code>always_ff</code> reads current values</td></tr>
+<tr><td>NBA Update</td><td>Event Evaluation (writes) + FF Commit</td><td><code>always_ff</code> writes take effect</td></tr>
+</tbody></table>
+</div>
+<p>The other regions (Inactive, Observed, Reactive) are not needed because Veryl prohibits the patterns that require them (<code>#0</code> delays, program blocks, mixed assignment types).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="assignment-semantics"><a class="header" href="#assignment-semantics">Assignment Semantics</a></h1>
+<p>Veryl uses a single <code>=</code> operator for all assignments.
+The semantics — blocking or non-blocking — are automatically determined by context, enforcing SystemVerilog best practices.</p>
+<h2 id="blocking-assignment"><a class="header" href="#blocking-assignment">Blocking Assignment</a></h2>
+<p>In <code>always_comb</code> and <code>assign</code>, <code>=</code> performs a <strong>blocking assignment</strong> — the value is immediately visible to subsequent reads.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let a: logic&lt;8&gt; = 1;
+    var b: logic&lt;8&gt;;
+    var c: logic&lt;8&gt;;
+
+    always_comb {
+        b = a + 1; // b is immediately updated to 2
+        c = b + 1; // c reads the new value of b (2), so c = 3
+    }
+}
+</code></pre>
+<h2 id="non-blocking-assignment"><a class="header" href="#non-blocking-assignment">Non-Blocking Assignment</a></h2>
+<p>In <code>always_ff</code>, <code>=</code> for module-level variables performs a <strong>non-blocking assignment</strong> — the value does not take effect until the FF commit.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
+
+    always_ff {
+        // a.next = 1 (current a is unchanged during this phase)
+        a = 1;
+        // reads a.current (not a.next), so b.next = a.current + 1
+        b = a + 1;
+    }
+}
+</code></pre>
+<h2 id="local-bindings-in-always_ff"><a class="header" href="#local-bindings-in-always_ff">Local Bindings in <code>always_ff</code></a></h2>
+<p>A <code>let</code> inside <code>always_ff</code> uses <strong>blocking</strong> semantics and is never mapped to a flip-flop.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a     : logic&lt;8&gt;;
+    var result: logic&lt;8&gt;;
+
+    always_ff {
+        // blocking: doubled is immediately available
+        let doubled: logic&lt;8&gt; = a * 2;
+        // non-blocking: result.next = doubled + 1
+        result = doubled + 1;
+    }
+}
+</code></pre>
+<h2 id="mapping-to-systemverilog"><a class="header" href="#mapping-to-systemverilog">Mapping to SystemVerilog</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Veryl context</th><th>Veryl syntax</th><th>SystemVerilog equivalent</th></tr></thead><tbody>
+<tr><td><code>always_comb</code></td><td><code>x = expr;</code></td><td><code>x = expr;</code> (blocking)</td></tr>
+<tr><td><code>assign</code></td><td><code>assign x = expr;</code></td><td><code>assign x = expr;</code> (continuous)</td></tr>
+<tr><td><code>always_ff</code>, module-level var</td><td><code>x = expr;</code></td><td><code>x &lt;= expr;</code> (non-blocking)</td></tr>
+<tr><td><code>always_ff</code>, local <code>let</code></td><td><code>let x: T = expr;</code></td><td><code>x = expr;</code> (blocking)</td></tr>
+<tr><td><code>always_ff</code>, compound</td><td><code>x += expr;</code></td><td><code>x &lt;= x + expr;</code> (non-blocking)</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="combinational-evaluation"><a class="header" href="#combinational-evaluation">Combinational Evaluation</a></h1>
+<p>Combinational logic (<code>always_comb</code> and <code>assign</code>) follows SystemVerilog semantics: each block is implicitly sensitive to its inputs and re-evaluated whenever they change.</p>
+<p>When a block updates a signal, dependent blocks are automatically re-triggered until all signals stabilize.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
+    var c: logic&lt;8&gt;;
+
+    assign a = 1;
+
+    always_comb {
+        b = a + 1; // re-evaluated when a changes
+    }
+
+    always_comb {
+        c = b + 1; // re-evaluated when b changes
+    }
+}
+</code></pre>
+<p>In this example, the values are always <code>a = 1</code>, <code>b = 2</code>, <code>c = 3</code>, regardless of initial evaluation order.</p>
+<h2 id="combinational-loops"><a class="header" href="#combinational-loops">Combinational Loops</a></h2>
+<p>A combinational loop — where a variable depends on itself without an intervening register — is detected at compile time and reported as an error.</p>
+<pre><code class="language-text">// ERROR: combinational loop
+var x: logic&lt;8&gt;;
+always_comb {
+    x = x + 1; // x depends on itself
+}
+</code></pre>
+<h2 id="implementation-note"><a class="header" href="#implementation-note">Implementation Note</a></h2>
+<p>Veryl’s built-in simulator uses topological sorting to optimize evaluation order; the observable results are equivalent to the event-driven model described above.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="event-evaluation"><a class="header" href="#event-evaluation">Event Evaluation</a></h1>
+<p>When a clock edge or reset event occurs, all <code>always_ff</code> blocks sensitive to that event are executed.</p>
+<ol>
+<li>All reads from FF variables see the <strong>current</strong> (pre-commit) values.</li>
+<li>All writes to FF variables are <strong>non-blocking</strong> and do not take effect until the FF commit phase.</li>
+</ol>
+<p>Because all blocks read from the same snapshot and write to independent “next” slots, the execution order does not affect the result.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    var a: logic&lt;8&gt;;
+    var b: logic&lt;8&gt;;
+
+    // These two blocks produce the same result regardless of evaluation order:
+
+    always_ff {
+        a = b; // a.next = b.current
+    }
+
+    always_ff {
+        b = a; // b.next = a.current
+    }
+
+    // After commit: a and b have swapped their values.
+}
+</code></pre>
+<h2 id="source-order"><a class="header" href="#source-order">Source Order</a></h2>
+<p><code>always_ff</code> blocks for the same event are evaluated in source order.</p>
+<h2 id="initial-and-final-blocks"><a class="header" href="#initial-and-final-blocks">Initial and Final Blocks</a></h2>
+<p><code>initial</code> blocks are evaluated once at simulation start, <code>final</code> blocks once at simulation end.
+These blocks are not synthesizable and are used for testbench and debugging purposes.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="multi-clock-domains"><a class="header" href="#multi-clock-domains">Multi-Clock Domains</a></h1>
+<p>Each clock domain is triggered independently by its associated clock event.</p>
+<h2 id="independent-domain-evaluation"><a class="header" href="#independent-domain-evaluation">Independent Domain Evaluation</a></h2>
+<p>When a clock edge occurs, only the <code>always_ff</code> blocks sensitive to that clock are evaluated.
+The FF commit applies only to the variables written by those blocks.</p>
+<h2 id="simultaneous-clock-edges"><a class="header" href="#simultaneous-clock-edges">Simultaneous Clock Edges</a></h2>
+<p>When two clocks have simultaneous edges, each domain is evaluated and committed sequentially.
+The two-buffer model ensures each domain sees a consistent snapshot of its own variables, so single-domain behavior is deterministic regardless of processing order.</p>
+<h2 id="cross-domain-signals"><a class="header" href="#cross-domain-signals">Cross-Domain Signals</a></h2>
+<p>Cross-domain signal access requires <code>unsafe (cdc)</code> (see <a href="05_language_reference/18_execution_model/../15_clock_domain_annotation.html">Clock Domain Annotation</a>).</p>
+<p>With simultaneous edges, the evaluation order between domains sharing <code>unsafe (cdc)</code> signals is not guaranteed.
+Designers must use proper synchronization (e.g., two-flop synchronizers, handshake protocols).</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk_a: input  'a clock   ,
+    i_rst_a: input  'a reset   ,
+    i_clk_b: input  'b clock   ,
+    i_dat_a: input  'a logic&lt;8&gt;,
+    o_dat_b: output 'b logic&lt;8&gt;,
+) {
+    var data_a: 'a logic&lt;8&gt;;
+
+    always_ff (i_clk_a, i_rst_a) {
+        if_reset {
+            data_a = 0;
+        } else {
+            data_a = i_dat_a;
+        }
+    }
+
+    // Cross-domain access requires unsafe (cdc)
+    unsafe (cdc) {
+        assign o_dat_b = data_a;
+    }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="determinism"><a class="header" href="#determinism">Determinism</a></h1>
+<p>Veryl guarantees deterministic simulation: given the same source code and the same stimulus sequence, any compliant simulator will produce identical signal values at every simulation step.</p>
+<h2 id="how-veryl-achieves-determinism"><a class="header" href="#how-veryl-achieves-determinism">How Veryl Achieves Determinism</a></h2>
+<p>Veryl’s language constraints eliminate common sources of non-determinism in SystemVerilog:</p>
+<ol>
+<li><strong>No blocking/non-blocking confusion</strong> — A single <code>=</code> operator automatically infers the correct semantics, making it impossible to use the wrong assignment type.</li>
+<li><strong>Read/write isolation for FF variables</strong> — All <code>always_ff</code> blocks read from the same snapshot and write to independent “next” slots, so evaluation order never affects the result.</li>
+<li><strong>Deterministic combinational evaluation</strong> — Blocks propagate until stable, and combinational loops are detected at compile time.</li>
+<li><strong>Explicit clock domain crossing</strong> — Cross-domain access without <code>unsafe (cdc)</code> is a compile-time error, preventing accidental races.</li>
+</ol>
+<h2 id="scope-of-the-guarantee"><a class="header" href="#scope-of-the-guarantee">Scope of the Guarantee</a></h2>
+<p>The guarantee applies to <strong>observable signal values at simulation step boundaries</strong> (after each FF commit). Internal evaluation order within a phase is implementation-defined but does not affect observable results.</p>
+<h2 id="relation-to-systemverilog"><a class="header" href="#relation-to-systemverilog">Relation to SystemVerilog</a></h2>
+<p>The transpiled SystemVerilog output follows well-established deterministic patterns:</p>
+<ul>
+<li><code>always_ff</code> with <code>&lt;=</code> (non-blocking) for sequential logic</li>
+<li><code>always_comb</code> with <code>=</code> (blocking) for combinational logic</li>
+<li>No mixed blocking/non-blocking assignments to the same variable</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="development-environment"><a class="header" href="#development-environment">Development Environment</a></h1>
 <p>In this chapter, we’ll discuss about development environment including project configuration and development tools.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="project-configuration"><a class="header" href="#project-configuration">Project Configuration</a></h1>
@@ -3477,10 +3942,10 @@ Available configurations is <a href="06_development_environment/./02_dependencie
 The available types are below:</p>
 <ul>
 <li><code>posedge</code> – positive edge</li>
-<li><code>negedge</code> – negetive edge</li>
+<li><code>negedge</code> – negative edge</li>
 </ul>
 <h2 id="the-reset_type-field"><a class="header" href="#the-reset_type-field">The <code>reset_type</code> field</a></h2>
-<p>The <code>reset_type</code> field specifies reset polarity and synchronisity.
+<p>The <code>reset_type</code> field specifies reset polarity and synchronicity.
 The available types are below:</p>
 <ul>
 <li><code>async_low</code> – asynchronous and active low</li>
@@ -3498,7 +3963,7 @@ The available types are below:</p>
 </ul>
 <h2 id="the-sources-field"><a class="header" href="#the-sources-field">The <code>sources</code> field</a></h2>
 <p>By default, the Veryl compiler collects and translate all <code>*.veryl</code> files which are visible from the project root.
-You can specify directries where the Veryl compiler collect files by using the <code>sources</code> field.</p>
+You can specify directories where the Veryl compiler collect files by using the <code>sources</code> field.</p>
 <pre><code class="language-toml">[build]
 sources = ["rtl/foo_module", "rtl/bar_module"]
 </code></pre>
@@ -3868,13 +4333,13 @@ bump_commit_message = "Bump"
 <div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Value</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td>bump_commit</td><td>boolean</td><td>false</td><td>automatic commit after bump</td></tr>
 <tr><td>publish_commit</td><td>boolean</td><td>false</td><td>automatic commit after publish</td></tr>
-<tr><td>bump_commit_mesasge</td><td>string</td><td>“chore: Bump version”</td><td>commit message after bump</td></tr>
-<tr><td>publish_commit_mesasge</td><td>string</td><td>“chore: Publish”</td><td>commit message after publish</td></tr>
+<tr><td>bump_commit_message</td><td>string</td><td>“chore: Bump version”</td><td>commit message after bump</td></tr>
+<tr><td>publish_commit_message</td><td>string</td><td>“chore: Publish”</td><td>commit message after publish</td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h1>
 <p>If you want to add other Veryl projects to dependencies of your project, you can add them to <code>[dependencies]</code> section in <code>Veryl.toml</code>.
 The left hand side of entry is the project name of the dependency, and the right hand side is the source and version.
-<code>github</code> is a syntax sugger to refer a repository on GitHub. Instead of it, <code>git</code> with a full URL can be used.</p>
+<code>github</code> is a syntax sugar to refer a repository on GitHub. Instead of it, <code>git</code> with a full URL can be used.</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
 
@@ -3950,7 +4415,7 @@ veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = ".
 <p>This means that if there is <code>../veryl_sample</code>, it is used, and if not, it is pulled from the Git repository.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="publish-project"><a class="header" href="#publish-project">Publish Project</a></h1>
 <p>To publish your project, <code>veryl publish</code> can be used.
-Publising means to associate a version with a git revision.</p>
+Publishing means to associate a version with a git revision.</p>
 <pre><code>$ veryl publish
 [INFO ]   Publishing release (0.2.1 @ 297bc6b24c5ceca9e648c3ea5e01011c67d7efe7)
 [INFO ]      Writing metadata ([path to project]/Veryl.pub)
@@ -4093,7 +4558,10 @@ Alternatively, language server support formatting through <code>textDocument/for
 Alternatively, language server checks lint in real time.</p>
 <p>The available configurations are <a href="06_development_environment/./01_project_configuration/03_lint.html">here</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="simulator"><a class="header" href="#simulator">Simulator</a></h1>
-<p>Test by RTL simulator is executed through <code>veryl test</code>.
+<p>Test is executed through <code>veryl test</code>.</p>
+<p>For <a href="06_development_environment/../05_language_reference/13_integrated_test.html#native-test">native test</a>, Veryl’s built-in simulator is used.
+No external simulator installation is required.</p>
+<p>For SystemVerilog test and cocotb test, an external RTL simulator is required.
 Supported simulators are below:</p>
 <ul>
 <li><a href="https://www.veripool.org/verilator/">Verilator</a></li>
@@ -4194,7 +4662,50 @@ path = "document"
 <div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Value</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td>path</td><td>string</td><td>“doc”</td><td>path to output directory</td></tr>
 </tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="github-action"><a class="header" href="#github-action">GitHub Action</a></h1>
+</div>
+<h2 id="documentation-test"><a class="header" href="#documentation-test">Documentation test</a></h2>
+<p>WaveDrom blocks can also be used as documentation tests by using <code>wavedrom,test</code> code block instead of <code>wavedrom</code>.
+The waveform signals are matched to module ports by name (with <code>i_</code>/<code>o_</code> prefix and <code>_n</code> suffix removed automatically).
+Clock and reset signals are recognized and handled appropriately.</p>
+<p>Documentation tests are executed through <code>veryl test</code> command along with other integrated tests.</p>
+<p>The available wave characters are:</p>
+<ul>
+<li><code>p</code>, <code>P</code>, <code>n</code>, <code>N</code> — clock signals (positive/negative edge)</li>
+<li><code>0</code>, <code>1</code> — logic values</li>
+<li><code>x</code>, <code>z</code> — unknown / high-impedance</li>
+<li><code>.</code> — repeat previous value</li>
+<li><code>=</code>, <code>2</code>-<code>9</code> — data values (with <code>data</code> array)</li>
+</ul>
+<pre><code class="language-veryl playground">/// 1-cycle delay register.
+///
+/// ```wavedrom,test
+/// {signal: [
+///   {name: 'clk',   wave: 'p........'},
+///   {name: 'rst_n', wave: '0.1......'},
+///   {name: 'din',   wave: '0.01.0.1.'},
+///   {name: 'dout',  wave: '0...1.0.1'}
+/// ]}
+/// ```
+pub module ModuleB (
+    i_clk  : input  'a clock,
+    i_rst_n: input  'a reset,
+    i_din  : input  'a logic,
+    o_dout : output 'a logic,
+) {
+    var r_data: 'a logic;
+
+    always_ff {
+        if_reset {
+            r_data = 0;
+        } else {
+            r_data = i_din;
+        }
+    }
+
+    assign o_dout = r_data;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="github-action"><a class="header" href="#github-action">GitHub Action</a></h1>
 <p>The official GitHub action to download a prebuilt binary of Veryl is provided.</p>
 <p><a href="https://github.com/marketplace/actions/setup-veryl">https://github.com/marketplace/actions/setup-veryl</a></p>
 <p>The examples of GitHub action script are below:</p>
@@ -4447,17 +4958,14 @@ LTMinusTerm           : &lt;INITIAL                                             
 PlusColonTerm         : &lt;INITIAL                                                       &gt;'+:'                                                                                  : Token;
 AssignmentOperatorTerm: &lt;INITIAL                                                       &gt;"\+=|-=|\*=|/=|%=|&amp;=|\|=|\^=|&lt;&lt;=|&gt;&gt;=|&lt;&lt;&lt;=|&gt;&gt;&gt;="                                       : Token;
 DiamondOperatorTerm   : &lt;INITIAL                                                       &gt;'&lt;&gt;'                                                                                  : Token;
-Operator12Term        : &lt;INITIAL                                                       &gt;"\*\*"                                                                                : Token;
-Operator11Term        : &lt;INITIAL                                                       &gt;"/|%"                                                                                 : Token;
-Operator10Term        : &lt;INITIAL                                                       &gt;"\+|-"                                                                                : Token;
-Operator09Term        : &lt;INITIAL                                                       &gt;"&lt;&lt;&lt;|&gt;&gt;&gt;|&lt;&lt;|&gt;&gt;"                                                                       : Token;
-Operator08Term        : &lt;INITIAL                                                       &gt;"&lt;=|&gt;=|&lt;:|&gt;:"                                                                         : Token;
-Operator07Term        : &lt;INITIAL                                                       &gt;"==\?|!=\?|==|!="                                                                     : Token;
-Operator03Term        : &lt;INITIAL                                                       &gt;"&amp;&amp;"                                                                                  : Token;
-Operator02Term        : &lt;INITIAL                                                       &gt;"\|\|"                                                                                : Token;
-Operator06Term        : &lt;INITIAL                                                       &gt;"&amp;"                                                                                   : Token;
-Operator05Term        : &lt;INITIAL                                                       &gt;"\^|~\^"                                                                              : Token;
-Operator04Term        : &lt;INITIAL                                                       &gt;"\|"                                                                                  : Token;
+Operator08Term        : &lt;INITIAL                                                       &gt;"\*\*"                                                                                : Token;
+Operator07Term        : &lt;INITIAL                                                       &gt;"/|%"                                                                                 : Token;
+Operator06Term        : &lt;INITIAL                                                       &gt;"\+|-"                                                                                : Token;
+Operator02Term        : &lt;INITIAL                                                       &gt;"&lt;&lt;&lt;|&gt;&gt;&gt;|&lt;&lt;|&gt;&gt;|==\?|!=\?|==|!=|&lt;=|&gt;=|&lt;:|&gt;:"                                           : Token;
+Operator01Term        : &lt;INITIAL                                                       &gt;"\|\||&amp;&amp;"                                                                             : Token;
+Operator05Term        : &lt;INITIAL                                                       &gt;"&amp;"                                                                                   : Token;
+Operator04Term        : &lt;INITIAL                                                       &gt;"\^|~\^"                                                                              : Token;
+Operator03Term        : &lt;INITIAL                                                       &gt;"\|"                                                                                  : Token;
 UnaryOperatorTerm     : &lt;INITIAL                                                       &gt;"~&amp;|~\||!|~"                                                                          : Token;
 ColonColonLAngleTerm  : &lt;INITIAL, Generic                                              &gt;'::&lt;'                                                                                 : Token;
 ColonColonTerm        : &lt;INITIAL, Generic                                              &gt;'::'                                                                                  : Token;
@@ -4562,6 +5070,10 @@ SwitchTerm            : &lt;INITIAL, Generic                                    
 TriTerm               : &lt;INITIAL, Generic                                             &gt;'tri'                                                                                 : Token; // Keyword: Type
 TrueTerm              : &lt;INITIAL, Generic                                             &gt;'true'                                                                                : Token; // Keyword: Literal
 TypeTerm              : &lt;INITIAL, Generic                                             &gt;'type'                                                                                : Token; // Keyword: Statement
+P8Term                : &lt;INITIAL, Generic                                             &gt;'p8'                                                                                  : Token; // Keyword: Type
+P16Term               : &lt;INITIAL, Generic                                             &gt;'p16'                                                                                 : Token; // Keyword: Type
+P32Term               : &lt;INITIAL, Generic                                             &gt;'p32'                                                                                 : Token; // Keyword: Type
+P64Term               : &lt;INITIAL, Generic                                             &gt;'p64'                                                                                 : Token; // Keyword: Type
 U8Term                : &lt;INITIAL, Generic                                             &gt;'u8'                                                                                  : Token; // Keyword: Type
 U16Term               : &lt;INITIAL, Generic                                             &gt;'u16'                                                                                 : Token; // Keyword: Type
 U32Term               : &lt;INITIAL, Generic                                             &gt;'u32'                                                                                 : Token; // Keyword: Type
@@ -4591,6 +5103,7 @@ AllBitToken    : AllBitTerm    : Token Comments;
 
 AssignmentOperatorToken: AssignmentOperatorTerm: Token Comments;
 DiamondOperatorToken   : DiamondOperatorTerm   : Token Comments;
+Operator01Token        : Operator01Term        : Token Comments;
 Operator02Token        : Operator02Term        : Token Comments;
 Operator03Token        : Operator03Term        : Token Comments;
 Operator04Token        : Operator04Term        : Token Comments;
@@ -4598,10 +5111,6 @@ Operator05Token        : Operator05Term        : Token Comments;
 Operator06Token        : Operator06Term        : Token Comments;
 Operator07Token        : Operator07Term        : Token Comments;
 Operator08Token        : Operator08Term        : Token Comments;
-Operator09Token        : Operator09Term        : Token Comments;
-Operator10Token        : Operator10Term        : Token Comments;
-Operator11Token        : Operator11Term        : Token Comments;
-Operator12Token        : Operator12Term        : Token Comments;
 UnaryOperatorToken     : UnaryOperatorTerm     : Token Comments;
 
 ColonToken           : ColonTerm           : Token Comments;
@@ -4710,6 +5219,10 @@ SwitchToken        : SwitchTerm        : Token Comments;
 TriToken           : TriTerm           : Token Comments;
 TrueToken          : TrueTerm          : Token Comments;
 TypeToken          : TypeTerm          : Token Comments;
+P8Token            : P8Term            : Token Comments;
+P16Token           : P16Term           : Token Comments;
+P32Token           : P32Term           : Token Comments;
+P64Token           : P64Term           : Token Comments;
 U8Token            : U8Term            : Token Comments;
 U16Token           : U16Term           : Token Comments;
 U32Token           : U32Term           : Token Comments;
@@ -4743,6 +5256,7 @@ AllBit    : AllBitToken    : VerylToken;
 // Operator
 AssignmentOperator: AssignmentOperatorToken: VerylToken;
 DiamondOperator   : DiamondOperatorToken   : VerylToken;
+Operator01        : Operator01Token        : VerylToken;
 Operator02        : Operator02Token        : VerylToken;
 Operator03        : Operator03Token        : VerylToken;
 Operator04        : Operator04Token        : VerylToken;
@@ -4750,10 +5264,6 @@ Operator05        : Operator05Token        : VerylToken;
 Operator06        : Operator06Token        : VerylToken;
 Operator07        : Operator07Token        : VerylToken;
 Operator08        : Operator08Token        : VerylToken;
-Operator09        : Operator09Token        : VerylToken;
-Operator10        : Operator10Token        : VerylToken;
-Operator11        : Operator11Token        : VerylToken;
-Operator12        : Operator12Token        : VerylToken;
 UnaryOperator     : UnaryOperatorToken     : VerylToken;
 
 // Symbol
@@ -4864,6 +5374,10 @@ Switch        : SwitchToken        : VerylToken;
 Tri           : TriToken           : VerylToken;
 True          : TrueToken          : VerylToken;
 Type          : TypeToken          : VerylToken;
+P8            : P8Token            : VerylToken;
+P16           : P16Token           : VerylToken;
+P32           : P32Token           : VerylToken;
+P64           : P64Token           : VerylToken;
 U8            : U8Token            : VerylToken;
 U16           : U16Token           : VerylToken;
 U32           : U32Token           : VerylToken;
@@ -4910,19 +5424,11 @@ GenericArgIdentifier  : ScopedIdentifier { Dot Identifier };
 
 Expression  : IfExpression;
 IfExpression: { If Expression Question Expression Colon } Expression01;
-Expression01: Expression02 { Operator02 Expression02 };
-Expression02: Expression03 { Operator03 Expression03 };
-Expression03: Expression04 { Operator04 Expression04 };
-Expression04: Expression05 { Operator05 Expression05 };
-Expression05: Expression06 { Operator06 Expression06 };
-Expression06: Expression07 { Operator07 Expression07 };
-Expression07: Expression08 { Operator08 Expression08 };
-Expression08: Expression09 { Operator09 Expression09 };
-Expression09: Expression10 { Operator10 Expression10 };
-Expression10: Expression11 { ( Operator11 | Star ) Expression11 };
-Expression11: Expression12 { Operator12 Expression12 };
-Expression12: Expression13 [ As CastingType ];
-Expression13: { ( UnaryOperator | Operator10 | Operator06 | Operator04 | Operator05 ) } Factor;
+Expression01: Expression02 { Expression01Op Expression02 };
+Expression02: { Expression02Op } Factor [ As CastingType ];
+
+Expression01Op: Operator01 | Operator02 | Operator03 | Operator04 | Operator05 | Operator06 | Operator07 | Star | Operator08;
+Expression02Op: UnaryOperator | Operator06 | Operator05 | Operator03 | Operator04;
 
 Factor: Number
       | BooleanLiteral
@@ -5008,7 +5514,7 @@ RangeOperator: DotDot
 // ScalarType / ArrayType / CastingType
 // ----------------------------------------------------------------------------
 
-FixedType: U8 | U16 | U32 | U64 | I8 | I16| I32 | I64 | F32 | F64 | BBool | LBool | Strin;
+FixedType: P8 | P16 | P32 | P64 | U8 | U16 | U32 | U64 | I8 | I16| I32 | I64 | F32 | F64 | BBool | LBool | Strin;
 
 VariableType: Clock
             | ClockPosedge
@@ -5035,6 +5541,10 @@ CastingType: U8
            | U16
            | U32
            | U64
+           | P8
+           | P16
+           | P32
+           | P64
            | I8
            | I16
            | I32
@@ -5167,8 +5677,10 @@ ModportItem: Identifier Colon Direction;
 
 ModportDefault: Input
               | Output
-              | Same LParen Identifier RParen
-              | Converse LParen Identifier RParen;
+              | Same LParen ModportDefaultList RParen
+              | Converse LParen ModportDefaultList RParen;
+
+ModportDefaultList: Identifier { Comma Identifier } [ Comma ];
 
 EnumDeclaration: Enum Identifier [ Colon ScalarType ] LBrace EnumList RBrace;
 
@@ -5455,6 +5967,7 @@ PublicDescriptionItem: ModuleDeclaration
                      | PackageDeclaration
                      | AliasDeclaration
                      | ProtoDeclaration
+                     | FunctionDeclaration
                      ;
 
 // ----------------------------------------------------------------------------

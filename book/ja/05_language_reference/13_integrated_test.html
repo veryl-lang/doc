@@ -209,12 +209,125 @@
                     <main>
                         <h1 id="組み込みテスト"><a class="header" href="#組み込みテスト">組み込みテスト</a></h1>
 <p>組み込みテストは <code>#[test(test_name)]</code> アトリビュートでマークすることができます。マークされたブロックはテストとして認識され、 <code>veryl test</code> コマンドによって実行されます。</p>
-<p>組み込みテストにはいくつかの種類があります。</p>
+<p>組み込みテストの記述方法は3種類あります。</p>
 <ul>
+<li>ネイティブテスト</li>
 <li>SystemVerilogテスト</li>
 <li><a href="https://www.cocotb.org">cocotb</a> テスト</li>
 </ul>
-<p><code>veryl test</code> で使用される RTLシミュレータについては <a href="../06_development_environment/07_simulator.html">シミュレータ</a> を参照してください。<code>--wave</code> オプションで波形を生成することもできます。</p>
+<p>ネイティブテストはVerylの組み込みシミュレータを使用し、SystemVerilogテストとcocotbテストは外部のRTLシミュレータを使用します。<code>veryl test</code> で使用される外部RTLシミュレータについては <a href="../06_development_environment/07_simulator.html">シミュレータ</a> を参照してください。すべてのテスト種別で、<code>--wave</code> オプションを指定すると波形を生成できます。</p>
+<p><code>#[ignore]</code> 属性を追加することでデフォルトでは無視するテストを指定できます。無視されたテストは <code>--ignored</code> オプションで実行できます。<code>--include-ignored</code> オプションを使うと通常のテストと無視されたテストの両方を実行します。</p>
+<pre><code class="language-veryl playground">#[test(test_ignored)]
+#[ignore]
+module test_ignored {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    initial {
+        rst.assert(clk);
+        $finish   ();
+    }
+}
+</code></pre>
+<h2 id="ネイティブテスト"><a class="header" href="#ネイティブテスト">ネイティブテスト</a></h2>
+<p>ネイティブテストでは、SystemVerilogの埋め込みや外部フレームワークを使わずに、Verylで直接テストベンチを記述できます。<code>#[test(test_name)]</code> 属性が付けられたモジュール（<code>embed</code> 宣言なし）がネイティブテストとして扱われます。</p>
+<p>以下のテストベンチコンポーネントが利用可能です。</p>
+<ul>
+<li><code>$tb::clock_gen</code> — クロック信号生成器（オプションで <code>#(period: N)</code> パラメータを指定可能）</li>
+<li><code>$tb::reset_gen</code> — リセット信号生成器（オプションで <code>#(cycles: N)</code> パラメータを指定可能）</li>
+</ul>
+<p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
+<ul>
+<li><code>$assert(condition)</code> または <code>$assert(condition, message)</code> — シミュレーション中にアサーションを検証</li>
+<li><code>$finish()</code> — シミュレーションを終了</li>
+</ul>
+<h3 id="基本的な例"><a class="header" href="#基本的な例">基本的な例</a></h3>
+<pre><code class="language-veryl playground">module Counter (
+    clk: input  clock    ,
+    rst: input  reset    ,
+    cnt: output logic&lt;32&gt;,
+) {
+    always_ff {
+        if_reset {
+            cnt = 0;
+        } else {
+            cnt += 1;
+        }
+    }
+}
+
+#[test(test_counter)]
+module test_counter {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    var cnt: logic&lt;32&gt;;
+
+    inst dut: Counter (
+        clk: clk,
+        rst: rst,
+        cnt: cnt,
+    );
+
+    initial {
+        rst.assert(clk);
+        clk.next  (10);
+        $assert   (cnt == 32'd10);
+        $finish   ();
+    }
+}
+</code></pre>
+<h3 id="テストベンチメソッド"><a class="header" href="#テストベンチメソッド">テストベンチメソッド</a></h3>
+<p><code>clock_gen</code> はクロックサイクルを進める <code>next</code> メソッドを提供します。</p>
+<ul>
+<li><code>clk.next()</code> — クロックを1サイクル進める</li>
+<li><code>clk.next(N)</code> — クロックを <code>N</code> サイクル進める</li>
+</ul>
+<p><code>reset_gen</code> はリセットをアサートする <code>assert</code> メソッドを提供します。</p>
+<ul>
+<li><code>rst.assert(clk)</code> — クロックに同期してリセットをアサート</li>
+<li><code>rst.assert(clk, duration)</code> — 指定された期間リセットをアサート</li>
+</ul>
+<p>リセット期間はインスタンス化時にも設定できます。</p>
+<pre><code class="language-veryl playground">#[test(test_reset_cycles_param)]
+module test_reset_cycles_param {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen #( cycles: 5 );
+
+    // ...
+
+    initial {
+        rst.assert(clk);
+        // ...
+    }
+}
+</code></pre>
+<h3 id="テストベンチ内の関数呼び出し"><a class="header" href="#テストベンチ内の関数呼び出し">テストベンチ内の関数呼び出し</a></h3>
+<p><code>clk.next</code> などのテストベンチメソッドはユーザー定義関数から呼び出すことができます。</p>
+<pre><code class="language-veryl playground">#[test(test_function_call)]
+module test_function_call {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen;
+
+    var cnt: logic&lt;32&gt;;
+
+    // inst dut: Counter (clk, rst, cnt);
+
+    function step_n (
+        n: input logic&lt;32&gt;,
+    ) {
+        clk.next(n);
+    }
+
+    initial {
+        rst.assert(clk);
+        step_n    (5);
+        step_n    (5);
+        $assert   (cnt == 32'd10);
+        $finish   ();
+    }
+}
+</code></pre>
 <h2 id="systemverilogテスト"><a class="header" href="#systemverilogテスト">SystemVerilogテスト</a></h2>
 <p>SystemVerilog テストは <code>inline</code> 指定子で記述することができます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
 <p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>
