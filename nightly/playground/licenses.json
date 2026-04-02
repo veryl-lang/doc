@@ -445,49 +445,49 @@
     },
     {
       "name": "icu_collections",
-      "version": "2.1.1",
+      "version": "2.2.0",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
     },
     {
       "name": "icu_locale_core",
-      "version": "2.1.1",
+      "version": "2.2.0",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
     },
     {
       "name": "icu_normalizer",
-      "version": "2.1.1",
+      "version": "2.2.0",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
     },
     {
       "name": "icu_normalizer_data",
-      "version": "2.1.1",
+      "version": "2.2.0",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
     },
     {
       "name": "icu_properties",
-      "version": "2.1.2",
+      "version": "2.2.0",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
     },
     {
       "name": "icu_properties_data",
-      "version": "2.1.2",
+      "version": "2.2.0",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
     },
     {
       "name": "icu_provider",
-      "version": "2.1.1",
+      "version": "2.2.0",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
@@ -592,7 +592,7 @@
     },
     {
       "name": "litemap",
-      "version": "0.8.1",
+      "version": "0.8.2",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
@@ -732,7 +732,7 @@
     },
     {
       "name": "potential_utf",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
@@ -1054,14 +1054,14 @@
     },
     {
       "name": "tinystr",
-      "version": "0.8.2",
+      "version": "0.8.3",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
     },
     {
       "name": "toml",
-      "version": "1.1.1+spec-1.1.0",
+      "version": "1.1.2+spec-1.1.0",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/toml-rs/toml",
       "category": "rust"
@@ -1075,7 +1075,7 @@
     },
     {
       "name": "toml_parser",
-      "version": "1.1.1+spec-1.1.0",
+      "version": "1.1.2+spec-1.1.0",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/toml-rs/toml",
       "category": "rust"
@@ -1320,49 +1320,49 @@
     },
     {
       "name": "yoke",
-      "version": "0.8.1",
+      "version": "0.8.2",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
     },
     {
       "name": "yoke-derive",
-      "version": "0.8.1",
+      "version": "0.8.2",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
     },
     {
       "name": "zerofrom",
-      "version": "0.1.6",
+      "version": "0.1.7",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
     },
     {
       "name": "zerofrom-derive",
-      "version": "0.1.6",
+      "version": "0.1.7",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
     },
     {
       "name": "zerotrie",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
     },
     {
       "name": "zerovec",
-      "version": "0.11.5",
+      "version": "0.11.6",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
     },
     {
       "name": "zerovec-derive",
-      "version": "0.11.2",
+      "version": "0.11.3",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
