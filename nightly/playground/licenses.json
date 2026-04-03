@@ -550,7 +550,7 @@
     },
     {
       "name": "indexmap",
-      "version": "2.13.0",
+      "version": "2.13.1",
       "license": "Apache-2.0 OR MIT",
       "url": "https://github.com/indexmap-rs/indexmap",
       "category": "rust"
@@ -1299,7 +1299,7 @@
     },
     {
       "name": "writeable",
-      "version": "0.6.2",
+      "version": "0.6.3",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
