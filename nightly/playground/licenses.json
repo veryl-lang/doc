@@ -844,21 +844,21 @@
     },
     {
       "name": "scnr2",
-      "version": "0.5.1",
+      "version": "0.5.2",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/jsinger67/scnr2",
       "category": "rust"
     },
     {
       "name": "scnr2_generate",
-      "version": "0.5.1",
+      "version": "0.5.2",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/jsinger67/scnr2",
       "category": "rust"
     },
     {
       "name": "scnr2_macro",
-      "version": "0.5.1",
+      "version": "0.5.2",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/jsinger67/scnr2",
       "category": "rust"
