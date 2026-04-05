@@ -31,7 +31,9 @@ For example, module names can be used as actual parameters because it is accessi
 On the other hand, local parameters can't be used as actual parameters in many cases.
 This is caused by that the local parameters is not accessible from the potision of the generics declaration.
 
-## Generic Function
+## Examples
+
+### Generic Function
 
 ```veryl,playground
 module ModuleA {
@@ -46,7 +48,7 @@ module ModuleA {
 }
 ```
 
-## Generic Module/Interface
+### Generic Module/Interface
 
 ```veryl,playground
 module ModuleA {
@@ -64,7 +66,7 @@ module ModuleC for ProtoA {}
 module ModuleD for ProtoA {}
 ```
 
-## Generic Package
+### Generic Package
 
 ```veryl,playground
 package PackageA::<T: u32> {
@@ -77,7 +79,7 @@ module ModuleA {
 }
 ```
 
-## Generic Struct
+### Generic Struct
 
 ```veryl,playground
 package PackageA {
@@ -99,3 +101,37 @@ module ModuleA {
     var _c: StructA::<PackageA::TypeC>;
 }
 ```
+
+## `gen` declaration
+
+The `gen` declaration defines constants and types derived from generic parameters. The defined values can be used as generic arguments.
+
+```veryl,playground
+module ModuleA::<W: u32, T: type> (
+    a: output logic<W>,
+    b: output T       ,
+) {
+    always_comb {
+        a = '0;
+        b = '0;
+    }
+}
+module ModuleB::<A: u32, B: u32, C: u32> {
+    gen W: u32  = A + B;
+    gen T: type = logic<C>;
+
+    var a: logic<W>;
+    var b: T       ;
+
+    inst u: ModuleA::<W, T> (
+        a  ,
+        b  ,
+    );
+}
+module ModuleC {
+    inst u: ModuleB::<1, 2, 3>;
+
+}
+```
+
+In `ModuleB::<1, 2, 3>`, W = 1 + 2 = 3 and T = logic<3> are derived, and `ModuleA::<3, logic<3>>` is instantiated.
