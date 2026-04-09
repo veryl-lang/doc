@@ -340,6 +340,7 @@ FalseTerm             : &lt;INITIAL, Generic                                    
 FinalTerm             : &lt;INITIAL, Generic                                             &gt;'final'                                                                               : Token; // Keyword: Statement
 ForTerm               : &lt;INITIAL, Generic                                             &gt;'for'                                                                                 : Token; // Keyword: Repeat
 FunctionTerm          : &lt;INITIAL, Generic                                             &gt;'function'                                                                            : Token; // Keyword: Structure
+GenTerm               : &lt;INITIAL, Generic                                             &gt;'gen'                                                                                 : Token; // Keyword: Statement
 I8Term                : &lt;INITIAL, Generic                                             &gt;'i8'                                                                                  : Token; // Keyword: Type
 I16Term               : &lt;INITIAL, Generic                                             &gt;'i16'                                                                                 : Token; // Keyword: Type
 I32Term               : &lt;INITIAL, Generic                                             &gt;'i32'                                                                                 : Token; // Keyword: Type
@@ -489,6 +490,7 @@ FalseToken         : FalseTerm         : Token Comments;
 FinalToken         : FinalTerm         : Token Comments;
 ForToken           : ForTerm           : Token Comments;
 FunctionToken      : FunctionTerm      : Token Comments;
+GenToken           : GenTerm           : Token Comments;
 I8Token            : I8Term            : Token Comments;
 I16Token           : I16Term           : Token Comments;
 I32Token           : I32Term           : Token Comments;
@@ -645,6 +647,7 @@ False         : FalseToken         : VerylToken;
 Final         : FinalToken         : VerylToken;
 For           : ForToken           : VerylToken;
 Function      : FunctionToken      : VerylToken;
+Gen           : GenToken           : VerylToken;
 I8            : I8Token            : VerylToken;
 I16           : I16Token           : VerylToken;
 I32           : I32Token           : VerylToken;
@@ -895,7 +898,13 @@ StatementBlock: LBrace { StatementBlockGroup } RBrace;
 
 StatementBlockGroup: { Attribute } ( Block LBrace { StatementBlockGroup } RBrace | StatementBlockItem );
 
-StatementBlockItem: VarDeclaration | LetStatement | ConstDeclaration | Statement | ConcatenationAssignment;
+StatementBlockItem: VarDeclaration
+                  | LetStatement
+                  | ConstDeclaration
+                  | GenDeclaration
+                  | Statement
+                  | ConcatenationAssignment
+                  ;
 
 Statement: IdentifierStatement
          | IfStatement
@@ -958,6 +967,8 @@ LetDeclaration: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Se
 VarDeclaration: Var Identifier Colon [ ClockDomain ] ArrayType Semicolon;
 
 ConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Equ Expression Semicolon;
+
+GenDeclaration: Gen Identifier Colon ( GenericProtoBound | Type ) Equ Expression Semicolon;
 
 TypeDefDeclaration: Type Identifier Equ ArrayType Semicolon;
 
@@ -1163,6 +1174,7 @@ GenerateItem: LetDeclaration
             | InstDeclaration
             | BindDeclaration
             | ConstDeclaration
+            | GenDeclaration
             | AlwaysFfDeclaration
             | AlwaysCombDeclaration
             | AssignDeclaration
@@ -1191,6 +1203,7 @@ PackageDeclaration: Package Identifier [ WithGenericParameter ] [ For ScopedIden
 PackageGroup: { Attribute } ( LBrace { PackageGroup } RBrace | PackageItem );
 
 PackageItem: ConstDeclaration
+           | GenDeclaration
            | TypeDefDeclaration
            | EnumDeclaration
            | StructUnionDeclaration

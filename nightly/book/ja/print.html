@@ -2916,7 +2916,8 @@ embed (cocotb) py{{{
 <p>名前付きプロトタイプは特別なジェネリック境界です。詳細は <a href="05_language_reference/14_generics/02_prototype.html">プロトタイプ</a> を参照してください。</p>
 <p>ジェネリクスを使用するためには <code>::&lt;&gt;</code> を用いて実パラメータを与えます。実パラメータとしては数値リテラルと <code>::</code> で連結された識別子を使用することができます。</p>
 <p>さらに、実パラメータはジェネリクス定義位置から参照できなければなりません。例えば、モジュール名はプロジェクト全体から参照できるので、実パラメータとして使用できます。一方、ローカルパラメータは多くの場合、実パラメータとして使用できません。これはローカルパラメータがジェネリクス定義位置からは参照できない場合に発生します。</p>
-<h2 id="ジェネリック関数"><a class="header" href="#ジェネリック関数">ジェネリック関数</a></h2>
+<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<h3 id="ジェネリック関数"><a class="header" href="#ジェネリック関数">ジェネリック関数</a></h3>
 <pre><code class="language-veryl playground">module ModuleA {
     function FuncA::&lt;T: u32&gt; (
         a: input logic&lt;T&gt;,
@@ -2928,7 +2929,7 @@ embed (cocotb) py{{{
     let _b: logic&lt;20&gt; = FuncA::&lt;20&gt;(1);
 }
 </code></pre>
-<h2 id="ジェネリックモジュールインターフェース"><a class="header" href="#ジェネリックモジュールインターフェース">ジェネリックモジュール/インターフェース</a></h2>
+<h3 id="ジェネリックモジュールインターフェース"><a class="header" href="#ジェネリックモジュールインターフェース">ジェネリックモジュール/インターフェース</a></h3>
 <pre><code class="language-veryl playground">module ModuleA {
     inst u0: ModuleB::&lt;ModuleC&gt;;
     inst u1: ModuleB::&lt;ModuleD&gt;;
@@ -2943,7 +2944,7 @@ module ModuleB::&lt;T: ProtoA&gt; {
 module ModuleC for ProtoA {}
 module ModuleD for ProtoA {}
 </code></pre>
-<h2 id="ジェネリックパッケージ"><a class="header" href="#ジェネリックパッケージ">ジェネリックパッケージ</a></h2>
+<h3 id="ジェネリックパッケージ"><a class="header" href="#ジェネリックパッケージ">ジェネリックパッケージ</a></h3>
 <pre><code class="language-veryl playground">package PackageA::&lt;T: u32&gt; {
     const X: u32 = T;
 }
@@ -2953,7 +2954,7 @@ module ModuleA {
     const B: u32 = PackageA::&lt;2&gt;::X;
 }
 </code></pre>
-<h2 id="ジェネリック構造体"><a class="header" href="#ジェネリック構造体">ジェネリック構造体</a></h2>
+<h3 id="ジェネリック構造体"><a class="header" href="#ジェネリック構造体">ジェネリック構造体</a></h3>
 <pre><code class="language-veryl playground">package PackageA {
     type TypeB = u32;
     type TypeC = u64;
@@ -2973,6 +2974,35 @@ module ModuleA {
     var _c: StructA::&lt;PackageA::TypeC&gt;;
 }
 </code></pre>
+<h2 id="gen-declaration"><a class="header" href="#gen-declaration"><code>gen</code> declaration</a></h2>
+<p>The <code>gen</code> declaration defines constants and types derived from generic parameters. The defined values can be used as generic arguments.</p>
+<pre><code class="language-veryl playground">module ModuleA::&lt;W: u32, T: type&gt; (
+    a: output logic&lt;W&gt;,
+    b: output T       ,
+) {
+    always_comb {
+        a = '0;
+        b = '0;
+    }
+}
+module ModuleB::&lt;A: u32, B: u32, C: u32&gt; {
+    gen W: u32  = A + B;
+    gen T: type = logic&lt;C&gt;;
+
+    var a: logic&lt;W&gt;;
+    var b: T       ;
+
+    inst u: ModuleA::&lt;W, T&gt; (
+        a  ,
+        b  ,
+    );
+}
+module ModuleC {
+    inst u: ModuleB::&lt;1, 2, 3&gt;;
+
+}
+</code></pre>
+<p>In <code>ModuleB::&lt;1, 2, 3&gt;</code>, W = 1 + 2 = 3 and T = logic&lt;3&gt; are derived, and <code>ModuleA::&lt;3, logic&lt;3&gt;&gt;</code> is instantiated.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="デフォルトパラメータ"><a class="header" href="#デフォルトパラメータ">デフォルトパラメータ</a></h1>
 <p>ジェネリックパラメータはその後に <code>=</code> を加えることでデフォルト値を指定することができます。呼び出し側でパラメータ指定が省略された場合にデフォルト値が使われます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -4709,6 +4739,7 @@ FalseTerm             : &lt;INITIAL, Generic                                    
 FinalTerm             : &lt;INITIAL, Generic                                             &gt;'final'                                                                               : Token; // Keyword: Statement
 ForTerm               : &lt;INITIAL, Generic                                             &gt;'for'                                                                                 : Token; // Keyword: Repeat
 FunctionTerm          : &lt;INITIAL, Generic                                             &gt;'function'                                                                            : Token; // Keyword: Structure
+GenTerm               : &lt;INITIAL, Generic                                             &gt;'gen'                                                                                 : Token; // Keyword: Statement
 I8Term                : &lt;INITIAL, Generic                                             &gt;'i8'                                                                                  : Token; // Keyword: Type
 I16Term               : &lt;INITIAL, Generic                                             &gt;'i16'                                                                                 : Token; // Keyword: Type
 I32Term               : &lt;INITIAL, Generic                                             &gt;'i32'                                                                                 : Token; // Keyword: Type
@@ -4858,6 +4889,7 @@ FalseToken         : FalseTerm         : Token Comments;
 FinalToken         : FinalTerm         : Token Comments;
 ForToken           : ForTerm           : Token Comments;
 FunctionToken      : FunctionTerm      : Token Comments;
+GenToken           : GenTerm           : Token Comments;
 I8Token            : I8Term            : Token Comments;
 I16Token           : I16Term           : Token Comments;
 I32Token           : I32Term           : Token Comments;
@@ -5014,6 +5046,7 @@ False         : FalseToken         : VerylToken;
 Final         : FinalToken         : VerylToken;
 For           : ForToken           : VerylToken;
 Function      : FunctionToken      : VerylToken;
+Gen           : GenToken           : VerylToken;
 I8            : I8Token            : VerylToken;
 I16           : I16Token           : VerylToken;
 I32           : I32Token           : VerylToken;
@@ -5264,7 +5297,13 @@ StatementBlock: LBrace { StatementBlockGroup } RBrace;
 
 StatementBlockGroup: { Attribute } ( Block LBrace { StatementBlockGroup } RBrace | StatementBlockItem );
 
-StatementBlockItem: VarDeclaration | LetStatement | ConstDeclaration | Statement | ConcatenationAssignment;
+StatementBlockItem: VarDeclaration
+                  | LetStatement
+                  | ConstDeclaration
+                  | GenDeclaration
+                  | Statement
+                  | ConcatenationAssignment
+                  ;
 
 Statement: IdentifierStatement
          | IfStatement
@@ -5327,6 +5366,8 @@ LetDeclaration: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Se
 VarDeclaration: Var Identifier Colon [ ClockDomain ] ArrayType Semicolon;
 
 ConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Equ Expression Semicolon;
+
+GenDeclaration: Gen Identifier Colon ( GenericProtoBound | Type ) Equ Expression Semicolon;
 
 TypeDefDeclaration: Type Identifier Equ ArrayType Semicolon;
 
@@ -5532,6 +5573,7 @@ GenerateItem: LetDeclaration
             | InstDeclaration
             | BindDeclaration
             | ConstDeclaration
+            | GenDeclaration
             | AlwaysFfDeclaration
             | AlwaysCombDeclaration
             | AssignDeclaration
@@ -5560,6 +5602,7 @@ PackageDeclaration: Package Identifier [ WithGenericParameter ] [ For ScopedIden
 PackageGroup: { Attribute } ( LBrace { PackageGroup } RBrace | PackageItem );
 
 PackageItem: ConstDeclaration
+           | GenDeclaration
            | TypeDefDeclaration
            | EnumDeclaration
            | StructUnionDeclaration
