@@ -160,7 +160,7 @@ pub fn build(source: &str) -> Result {
                     &PathBuf::from("input.sv"),
                     &PathBuf::from("input.sv.map"),
                 );
-                emitter.emit("project", &parser.veryl);
+                emitter.emit("project", &parser.veryl, source);
                 emitter.as_str().to_owned()
             };
 
@@ -410,7 +410,7 @@ pub fn format(source: &str) -> Result {
     match Parser::parse(source, &"") {
         Ok(parser) => {
             let mut formatter = Formatter::new(&metadata);
-            formatter.format(&parser.veryl);
+            formatter.format(&parser.veryl, source);
             Result {
                 err: false,
                 content: formatter.as_str().to_owned(),
