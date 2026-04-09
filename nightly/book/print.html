@@ -3117,8 +3117,7 @@ As the actual parameters, numeric literal and identifier concatenated by <code>:
 For example, module names can be used as actual parameters because it is accessible through the whole project.
 On the other hand, local parameters can’t be used as actual parameters in many cases.
 This is caused by that the local parameters is not accessible from the potision of the generics declaration.</p>
-<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
-<h3 id="generic-function"><a class="header" href="#generic-function">Generic Function</a></h3>
+<h2 id="generic-function"><a class="header" href="#generic-function">Generic Function</a></h2>
 <pre><code class="language-veryl playground">module ModuleA {
     function FuncA::&lt;T: u32&gt; (
         a: input logic&lt;T&gt;,
@@ -3130,7 +3129,7 @@ This is caused by that the local parameters is not accessible from the potision 
     let _b: logic&lt;20&gt; = FuncA::&lt;20&gt;(1);
 }
 </code></pre>
-<h3 id="generic-moduleinterface"><a class="header" href="#generic-moduleinterface">Generic Module/Interface</a></h3>
+<h2 id="generic-moduleinterface"><a class="header" href="#generic-moduleinterface">Generic Module/Interface</a></h2>
 <pre><code class="language-veryl playground">module ModuleA {
     inst u0: ModuleB::&lt;ModuleC&gt;;
     inst u1: ModuleB::&lt;ModuleD&gt;;
@@ -3145,7 +3144,7 @@ module ModuleB::&lt;T: ProtoA&gt; {
 module ModuleC for ProtoA {}
 module ModuleD for ProtoA {}
 </code></pre>
-<h3 id="generic-package"><a class="header" href="#generic-package">Generic Package</a></h3>
+<h2 id="generic-package"><a class="header" href="#generic-package">Generic Package</a></h2>
 <pre><code class="language-veryl playground">package PackageA::&lt;T: u32&gt; {
     const X: u32 = T;
 }
@@ -3155,7 +3154,7 @@ module ModuleA {
     const B: u32 = PackageA::&lt;2&gt;::X;
 }
 </code></pre>
-<h3 id="generic-struct"><a class="header" href="#generic-struct">Generic Struct</a></h3>
+<h2 id="generic-struct"><a class="header" href="#generic-struct">Generic Struct</a></h2>
 <pre><code class="language-veryl playground">package PackageA {
     type TypeB = u32;
     type TypeC = u64;
@@ -3175,35 +3174,6 @@ module ModuleA {
     var _c: StructA::&lt;PackageA::TypeC&gt;;
 }
 </code></pre>
-<h2 id="gen-declaration"><a class="header" href="#gen-declaration"><code>gen</code> declaration</a></h2>
-<p>The <code>gen</code> declaration defines constants and types derived from generic parameters. The defined values can be used as generic arguments.</p>
-<pre><code class="language-veryl playground">module ModuleA::&lt;W: u32, T: type&gt; (
-    a: output logic&lt;W&gt;,
-    b: output T       ,
-) {
-    always_comb {
-        a = '0;
-        b = '0;
-    }
-}
-module ModuleB::&lt;A: u32, B: u32, C: u32&gt; {
-    gen W: u32  = A + B;
-    gen T: type = logic&lt;C&gt;;
-
-    var a: logic&lt;W&gt;;
-    var b: T       ;
-
-    inst u: ModuleA::&lt;W, T&gt; (
-        a  ,
-        b  ,
-    );
-}
-module ModuleC {
-    inst u: ModuleB::&lt;1, 2, 3&gt;;
-
-}
-</code></pre>
-<p>In <code>ModuleB::&lt;1, 2, 3&gt;</code>, W = 1 + 2 = 3 and T = logic&lt;3&gt; are derived, and <code>ModuleA::&lt;3, logic&lt;3&gt;&gt;</code> is instantiated.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="default-parameter"><a class="header" href="#default-parameter">Default Parameter</a></h1>
 <p>Generic parameter can take a default value through <code>=</code> after the generic parameter.
 If the parameter specifications at call site is omitted, the default value is used.</p>
