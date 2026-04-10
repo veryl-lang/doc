@@ -437,6 +437,13 @@
       "category": "rust"
     },
     {
+      "name": "hashbrown",
+      "version": "0.17.0",
+      "license": "MIT OR Apache-2.0",
+      "url": "https://github.com/rust-lang/hashbrown",
+      "category": "rust"
+    },
+    {
       "name": "heck",
       "version": "0.5.0",
       "license": "MIT OR Apache-2.0",
@@ -550,7 +557,7 @@
     },
     {
       "name": "indexmap",
-      "version": "2.13.1",
+      "version": "2.14.0",
       "license": "Apache-2.0 OR MIT",
       "url": "https://github.com/indexmap-rs/indexmap",
       "category": "rust"
