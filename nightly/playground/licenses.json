@@ -935,7 +935,7 @@
     },
     {
       "name": "similar",
-      "version": "3.0.0",
+      "version": "3.1.0",
       "license": "Apache-2.0",
       "url": "https://github.com/mitsuhiko/similar",
       "category": "rust"
@@ -1271,28 +1271,28 @@
     },
     {
       "name": "wasm-bindgen",
-      "version": "0.2.117",
+      "version": "0.2.118",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/wasm-bindgen/wasm-bindgen",
       "category": "rust"
     },
     {
       "name": "wasm-bindgen-macro",
-      "version": "0.2.117",
+      "version": "0.2.118",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/wasm-bindgen/wasm-bindgen/tree/master/crates/macro",
       "category": "rust"
     },
     {
       "name": "wasm-bindgen-macro-support",
-      "version": "0.2.117",
+      "version": "0.2.118",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/wasm-bindgen/wasm-bindgen/tree/master/crates/macro-support",
       "category": "rust"
     },
     {
       "name": "wasm-bindgen-shared",
-      "version": "0.2.117",
+      "version": "0.2.118",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/wasm-bindgen/wasm-bindgen/tree/master/crates/shared",
       "category": "rust"
