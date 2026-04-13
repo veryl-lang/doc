@@ -25,3 +25,20 @@ jobs:
       - name: Build mdbook
         run: mdbook build
         working-directory: book
+
+  playground:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - name: Test
+        run: cargo test
+        working-directory: playground
+      - name: Wasm test
+        run: wasm-pack test --node
+        working-directory: playground
