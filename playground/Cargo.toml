@@ -44,6 +44,10 @@ opt-level = 3
 [profile.release.build-override]
 opt-level = 3
 
+# Workaround for core2 v0.4.0 being yanked from crates.io
+[patch.crates-io]
+core2 = { git = "https://github.com/bbqsrc/core2", rev = "545e84bcb0f235b12e21351e0c69767958efe2a7" }
+
 # Workaround for Rust 1.87.0
 # https://github.com/rust-lang/rust/issues/141048
 [package.metadata.wasm-pack.profile.release]
