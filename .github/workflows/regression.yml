@@ -21,7 +21,7 @@ jobs:
           mdbook-version: '0.4.52'
           #mdbook-version: 'latest'
       - name: Build mdbook plugin
-        run: cargo install --git https://github.com/veryl-lang/veryl mdbook-veryl --config 'patch.crates-io.core2.git="https://github.com/bbqsrc/core2"' --config 'patch.crates-io.core2.rev="545e84bcb0f235b12e21351e0c69767958efe2a7"'
+        run: cargo install --git https://github.com/veryl-lang/veryl mdbook-veryl
       - name: Build mdbook
         run: mdbook build
         working-directory: book
