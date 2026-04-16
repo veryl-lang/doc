@@ -158,7 +158,7 @@
     },
     {
       "name": "clap",
-      "version": "4.6.0",
+      "version": "4.6.1",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/clap-rs/clap",
       "category": "rust"
@@ -172,7 +172,7 @@
     },
     {
       "name": "clap_derive",
-      "version": "4.6.0",
+      "version": "4.6.1",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/clap-rs/clap",
       "category": "rust"
@@ -203,13 +203,6 @@
       "version": "0.1.7",
       "license": "Apache-2.0 OR MIT",
       "url": "https://github.com/rustwasm/console_error_panic_hook",
-      "category": "rust"
-    },
-    {
-      "name": "core2",
-      "version": "0.4.0",
-      "license": "Apache-2.0 OR MIT",
-      "url": "https://github.com/bbqsrc/core2",
       "category": "rust"
     },
     {
@@ -529,21 +522,21 @@
     },
     {
       "name": "include-flate",
-      "version": "0.3.2",
+      "version": "0.3.3",
       "license": "Apache-2.0",
       "url": "https://github.com/SOF3/include-flate.git",
       "category": "rust"
     },
     {
       "name": "include-flate-codegen",
-      "version": "0.3.2",
+      "version": "0.3.3",
       "license": "Apache-2.0",
       "url": "https://github.com/SOF3/include-flate.git",
       "category": "rust"
     },
     {
       "name": "include-flate-compress",
-      "version": "0.3.2",
+      "version": "0.3.3",
       "license": "Apache-2.0",
       "url": "https://github.com/SOF3/include-flate.git",
       "category": "rust"
@@ -585,14 +578,14 @@
     },
     {
       "name": "libflate",
-      "version": "2.2.1",
+      "version": "2.3.0",
       "license": "MIT",
       "url": "https://github.com/sile/libflate",
       "category": "rust"
     },
     {
       "name": "libflate_lz77",
-      "version": "2.2.0",
+      "version": "2.3.0",
       "license": "MIT",
       "url": "https://github.com/sile/libflate",
       "category": "rust"
@@ -644,6 +637,13 @@
       "version": "0.8.9",
       "license": "MIT OR Zlib OR Apache-2.0",
       "url": "https://github.com/Frommi/miniz_oxide/tree/master/miniz_oxide",
+      "category": "rust"
+    },
+    {
+      "name": "no_std_io2",
+      "version": "0.9.3",
+      "license": "Apache-2.0 OR MIT",
+      "url": "https://github.com/wcampbell0x2a/no-std-io2",
       "category": "rust"
     },
     {
