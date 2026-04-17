@@ -249,7 +249,7 @@
     },
     {
       "name": "dary_heap",
-      "version": "0.3.8",
+      "version": "0.3.9",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/hanmertens/dary_heap",
       "category": "rust"
@@ -1166,7 +1166,7 @@
     },
     {
       "name": "uuid",
-      "version": "1.23.0",
+      "version": "1.23.1",
       "license": "Apache-2.0 OR MIT",
       "url": "https://github.com/uuid-rs/uuid",
       "category": "rust"
