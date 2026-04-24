@@ -485,7 +485,7 @@ end
 ```veryl
 # module ModuleA {
 # always_comb {
-for i: u32 in 0..10 {
+for i in 0..10 {
     a[i] = inside  X[i] {1..=10};
     b[i] = outside X[i] {1..=10};
 }

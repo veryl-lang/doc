@@ -11,7 +11,8 @@ use veryl_analyzer::{Analyzer, Context, ir::Ir, namespace_table, symbol_table};
 use veryl_emitter::Emitter;
 use veryl_formatter::Formatter;
 use veryl_metadata::{
-    Build, BuildInfo, Doc, Format, Lint, Lockfile, Metadata, Project, Pubfile, Publish, Test,
+    Build, BuildInfo, Doc, Format, Lint, Lockfile, Metadata, Project, Pubfile, Publish, Synth,
+    Test,
 };
 use veryl_parser::{Parser, resource_table};
 use veryl_simulator::ir::{self as sim_ir, Event};
@@ -106,6 +107,7 @@ fn metadata() -> Metadata {
         publish: Publish::default(),
         doc: Doc::default(),
         test: Test::default(),
+        synth: Synth::default(),
         dependencies: HashMap::new(),
         metadata_path: "".into(),
         pubfile_path: "".into(),
@@ -570,7 +572,7 @@ module ModuleA #(
 #[test(test_counter)]
 module test_counter {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen(clk);
 
     var cnt: logic<8>;
 
@@ -581,7 +583,7 @@ module test_counter {
     );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         clk.next  (10);
         $assert   (cnt == 8'd10);
         $finish   ();
