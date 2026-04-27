@@ -214,7 +214,7 @@
     var a: logic&lt;10&gt;;
 
     always_comb {
-        for i: u32 in 0..10 {
+        for i in 0..10 {
             a += i;
 
             if i == 5 {
@@ -229,7 +229,7 @@
     var a: logic&lt;10&gt;;
 
     always_comb {
-        for i: i32 in rev 0..10 {
+        for i in rev 0..10 {
             a += i;
 
             if i == 5 {

@@ -572,7 +572,7 @@ end
 </code></pre>
 </td>
 <td>
-<pre><code class="language-veryl">for i: u32 in 0..10 {
+<pre><code class="language-veryl">for i in 0..10 {
     a[i] = inside  X[i] {1..=10};
     b[i] = outside X[i] {1..=10};
 }
@@ -1651,9 +1651,9 @@ module ModuleA {
 <p>範囲は <code>for</code> 文などの場所で使うことができます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     initial {
-        for _i: u32 in 0..10 {}
+        for _i in 0..10 {}
 
-        for _j: u32 in 0..=10 {}
+        for _j in 0..=10 {}
     }
 }
 </code></pre>
@@ -1862,7 +1862,7 @@ emit_cond_type = true
     var a: logic&lt;10&gt;;
 
     always_comb {
-        for i: u32 in 0..10 {
+        for i in 0..10 {
             a += i;
 
             if i == 5 {
@@ -1877,7 +1877,7 @@ emit_cond_type = true
     var a: logic&lt;10&gt;;
 
     always_comb {
-        for i: i32 in rev 0..10 {
+        for i in rev 0..10 {
             a += i;
 
             if i == 5 {
@@ -2769,10 +2769,12 @@ module Module47C {
 #[ignore]
 module test_ignored {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         $finish   ();
     }
 }
@@ -2807,7 +2809,9 @@ module test_ignored {
 #[test(test_counter)]
 module test_counter {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     var cnt: logic&lt;32&gt;;
 
@@ -2818,7 +2822,7 @@ module test_counter {
     );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         clk.next  (10);
         $assert   (cnt == 32'd10);
         $finish   ();
@@ -2833,19 +2837,23 @@ module test_counter {
 </ul>
 <p><code>reset_gen</code> はリセットをアサートする <code>assert</code> メソッドを提供します。</p>
 <ul>
-<li><code>rst.assert(clk)</code> — クロックに同期してリセットをアサート</li>
-<li><code>rst.assert(clk, duration)</code> — 指定された期間リセットをアサート</li>
+<li><code>rst.assert()</code> — assert reset synchronized to clock</li>
+<li><code>rst.assert(duration)</code> — assert reset for specified duration</li>
 </ul>
 <p>リセット期間はインスタンス化時にも設定できます。</p>
 <pre><code class="language-veryl playground">#[test(test_reset_cycles_param)]
 module test_reset_cycles_param {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen #( cycles: 5 );
+    inst rst: $tb::reset_gen #(
+        cycles: 5,
+    ) (
+        clk  ,
+    );
 
     // ...
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         // ...
     }
 }
@@ -2855,7 +2863,9 @@ module test_reset_cycles_param {
 <pre><code class="language-veryl playground">#[test(test_function_call)]
 module test_function_call {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     var cnt: logic&lt;32&gt;;
 
@@ -2868,7 +2878,7 @@ module test_function_call {
     }
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         step_n    (5);
         step_n    (5);
         $assert   (cnt == 32'd10);
@@ -5331,7 +5341,7 @@ ReturnStatement: Return Expression Semicolon;
 
 BreakStatement: Break Semicolon;
 
-ForStatement: For Identifier Colon ScalarType In [ Rev ] Range [ Step AssignmentOperator Expression ] StatementBlock;
+ForStatement: For Identifier In [ Rev ] Range [ Step AssignmentOperator Expression ] StatementBlock;
 
 CaseStatement: Case Expression LBrace { CaseItem } RBrace;
 

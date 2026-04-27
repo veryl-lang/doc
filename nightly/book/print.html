@@ -594,7 +594,7 @@ end
 </code></pre>
 </td>
 <td>
-<pre><code class="language-veryl">for i: u32 in 0..10 {
+<pre><code class="language-veryl">for i in 0..10 {
     a[i] = inside  X[i] {1..=10};
     b[i] = outside X[i] {1..=10};
 }
@@ -1751,9 +1751,9 @@ Bit range selection can be specified by <code>[expression:expression]</code>.</p
 <p>Range can be used at some description like <code>for</code> statement.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     initial {
-        for _i: u32 in 0..10 {}
+        for _i in 0..10 {}
 
-        for _j: u32 in 0..=10 {}
+        for _j in 0..=10 {}
     }
 }
 </code></pre>
@@ -1981,7 +1981,7 @@ and <a href="05_language_reference/05_statement/../04_expression/07_range.html">
     var a: logic&lt;10&gt;;
 
     always_comb {
-        for i: u32 in 0..10 {
+        for i in 0..10 {
             a += i;
 
             if i == 5 {
@@ -1996,7 +1996,7 @@ and <a href="05_language_reference/05_statement/../04_expression/07_range.html">
     var a: logic&lt;10&gt;;
 
     always_comb {
-        for i: i32 in rev 0..10 {
+        for i in rev 0..10 {
             a += i;
 
             if i == 5 {
@@ -2958,10 +2958,12 @@ Ignored tests are not executed by default, but can be run with <code>--ignored</
 #[ignore]
 module test_ignored {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         $finish   ();
     }
 }
@@ -2997,7 +2999,9 @@ A module with <code>#[test(test_name)]</code> attribute (without <code>embed</co
 #[test(test_counter)]
 module test_counter {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     var cnt: logic&lt;32&gt;;
 
@@ -3008,7 +3012,7 @@ module test_counter {
     );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         clk.next  (10);
         $assert   (cnt == 32'd10);
         $finish   ();
@@ -3023,19 +3027,23 @@ module test_counter {
 </ul>
 <p><code>reset_gen</code> provides the <code>assert</code> method to assert reset:</p>
 <ul>
-<li><code>rst.assert(clk)</code> — assert reset synchronized to clock</li>
-<li><code>rst.assert(clk, duration)</code> — assert reset for specified duration</li>
+<li><code>rst.assert()</code> — assert reset synchronized to clock</li>
+<li><code>rst.assert(duration)</code> — assert reset for specified duration</li>
 </ul>
 <p>The reset duration can also be configured at instantiation:</p>
 <pre><code class="language-veryl playground">#[test(test_reset_cycles_param)]
 module test_reset_cycles_param {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen #( cycles: 5 );
+    inst rst: $tb::reset_gen #(
+        cycles: 5,
+    ) (
+        clk  ,
+    );
 
     // ...
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         // ...
     }
 }
@@ -3045,7 +3053,9 @@ module test_reset_cycles_param {
 <pre><code class="language-veryl playground">#[test(test_function_call)]
 module test_function_call {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     var cnt: logic&lt;32&gt;;
 
@@ -3058,7 +3068,7 @@ module test_function_call {
     }
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         step_n    (5);
         step_n    (5);
         $assert   (cnt == 32'd10);
@@ -5647,7 +5657,7 @@ ReturnStatement: Return Expression Semicolon;
 
 BreakStatement: Break Semicolon;
 
-ForStatement: For Identifier Colon ScalarType In [ Rev ] Range [ Step AssignmentOperator Expression ] StatementBlock;
+ForStatement: For Identifier In [ Rev ] Range [ Step AssignmentOperator Expression ] StatementBlock;
 
 CaseStatement: Case Expression LBrace { CaseItem } RBrace;
 

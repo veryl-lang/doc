@@ -256,7 +256,7 @@
     },
     {
       "name": "data-encoding",
-      "version": "2.10.0",
+      "version": "2.11.0",
       "license": "MIT",
       "url": "https://github.com/ia0/data-encoding",
       "category": "rust"
