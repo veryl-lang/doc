@@ -22,10 +22,12 @@ Ignored tests are not executed by default, but can be run with `--ignored` optio
 #[ignore]
 module test_ignored {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         $finish   ();
     }
 }
@@ -66,7 +68,9 @@ module Counter (
 #[test(test_counter)]
 module test_counter {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     var cnt: logic<32>;
 
@@ -77,7 +81,7 @@ module test_counter {
     );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         clk.next  (10);
         $assert   (cnt == 32'd10);
         $finish   ();
@@ -94,8 +98,8 @@ module test_counter {
 
 `reset_gen` provides the `assert` method to assert reset:
 
-* `rst.assert(clk)` — assert reset synchronized to clock
-* `rst.assert(clk, duration)` — assert reset for specified duration
+* `rst.assert()` — assert reset synchronized to clock
+* `rst.assert(duration)` — assert reset for specified duration
 
 The reset duration can also be configured at instantiation:
 
@@ -103,12 +107,16 @@ The reset duration can also be configured at instantiation:
 #[test(test_reset_cycles_param)]
 module test_reset_cycles_param {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen #( cycles: 5 );
+    inst rst: $tb::reset_gen #(
+        cycles: 5,
+    ) (
+        clk  ,
+    );
 
     // ...
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         // ...
     }
 }
@@ -122,7 +130,9 @@ Testbench methods like `clk.next` can be called from user-defined functions:
 #[test(test_function_call)]
 module test_function_call {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     var cnt: logic<32>;
 
@@ -135,7 +145,7 @@ module test_function_call {
     }
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         step_n    (5);
         step_n    (5);
         $assert   (cnt == 32'd10);
