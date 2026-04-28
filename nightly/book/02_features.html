@@ -215,6 +215,7 @@
 <li><a href="02_features.html#integrated-test">Integrated test</a></li>
 <li><a href="02_features.html#dependency-management">Dependency management</a></li>
 <li><a href="02_features.html#generics">Generics</a></li>
+<li><a href="02_features.html#type-inference">Type inference</a></li>
 <li><a href="02_features.html#clock-domain-annotation">Clock Domain Annotation</a></li>
 <li><a href="02_features.html#trailing-comma">Trailing comma</a></li>
 <li><a href="02_features.html#abstraction-of-clock-and-reset">Abstraction of clock and reset</a></li>
@@ -300,6 +301,39 @@ var b: logic&lt;10&gt;;
 always_comb {
     a = FuncA::&lt;10&gt;(1);
     b = FuncA::&lt;20&gt;(1);
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="type-inference"><a class="header" href="#type-inference">Type inference</a></h2>
+<p>Type annotations of <code>var</code>, <code>let</code> and <code>const</code> can be omitted when the type can be derived from
+the right hand side or the first assignment. Generic arguments of function calls can also be
+inferred from the argument’s declared types. Port and function signatures still require
+explicit types so that interfaces remain readable.</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">logic [8-1:0] a;
+logic [8-1:0] b;
+logic [8-1:0] c;
+assign a = 8'd0;
+assign b = a;
+always_comb begin
+    c = a;
+end
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">let a = 8'd0;
+let b = a;
+var c;
+always_comb {
+    c = a;
 }
 </code></pre>
 </td>

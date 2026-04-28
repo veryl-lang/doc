@@ -216,8 +216,18 @@ indent_width = 4
 <div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Value</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td>indent_width</td><td>integer</td><td>4</td><td>indent width by space</td></tr>
 <tr><td>vertical_align</td><td>boolean</td><td>true</td><td>enable vertial align</td></tr>
+<tr><td>newline_style</td><td><code>auto</code> / <code>native</code> / <code>unix</code> / <code>windows</code></td><td><code>auto</code></td><td>line ending style</td></tr>
 </tbody></table>
 </div>
+<p><code>newline_style</code> controls the line ending used by the formatter, the build emitter and the
+migrator output. The available values are:</p>
+<ul>
+<li><code>auto</code> — detect from the input file. If no newline exists, the platform native style is used.</li>
+<li><code>native</code> — use the platform native style (<code>\r\n</code> on Windows, <code>\n</code> elsewhere).</li>
+<li><code>unix</code> — always use <code>\n</code>.</li>
+<li><code>windows</code> — always use <code>\r\n</code>.</li>
+</ul>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

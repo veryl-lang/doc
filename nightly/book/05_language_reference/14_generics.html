@@ -322,6 +322,19 @@ module ModuleC {
 }
 </code></pre>
 <p>In <code>ModuleB::&lt;1, 2, 3&gt;</code>, W = 1 + 2 = 3 and T = logic&lt;3&gt; are derived, and <code>ModuleA::&lt;3, logic&lt;3&gt;&gt;</code> is instantiated.</p>
+<p>The right hand side expression of a <code>gen</code> declaration is subject to the same restrictions as
+actual generic arguments, because the resulting value is itself used as a generic argument.
+The expression can be composed only of:</p>
+<ul>
+<li>literals</li>
+<li>symbols defined in a package</li>
+<li>generic parameters</li>
+<li>other <code>gen</code> declarations</li>
+</ul>
+<h2 id="generic-argument-inference"><a class="header" href="#generic-argument-inference">Generic Argument Inference</a></h2>
+<p>For generic functions, the actual generic arguments after <code>::&lt;&gt;</code> can be omitted when they
+can be inferred from the call arguments.
+See <a href="19_type_inference.html#generic-argument-inference">Type Inference</a> for details.</p>
 
                     </main>
 
