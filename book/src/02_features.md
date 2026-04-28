@@ -7,6 +7,7 @@ In this chapter, we introduce the features of Veryl along with clear examples.
 * [Integrated test](02_features.md#integrated-test)
 * [Dependency management](02_features.md#dependency-management)
 * [Generics](02_features.md#generics)
+* [Type inference](02_features.md#type-inference)
 * [Clock Domain Annotation](02_features.md#clock-domain-annotation)
 * [Trailing comma](02_features.md#trailing-comma)
 * [Abstraction of clock and reset](02_features.md#abstraction-of-clock-and-reset)
@@ -114,6 +115,50 @@ var b: logic<10>;
 always_comb {
     a = FuncA::<10>(1);
     b = FuncA::<20>(1);
+}
+# }
+```
+
+</td>
+</tr>
+</table>
+
+## Type inference {#type-inference}
+
+Type annotations of `var`, `let` and `const` can be omitted when the type can be derived from
+the right hand side or the first assignment. Generic arguments of function calls can also be
+inferred from the argument's declared types. Port and function signatures still require
+explicit types so that interfaces remain readable.
+
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+
+```verilog
+logic [8-1:0] a;
+logic [8-1:0] b;
+logic [8-1:0] c;
+assign a = 8'd0;
+assign b = a;
+always_comb begin
+    c = a;
+end
+```
+
+</td>
+<td>
+
+```veryl
+# module ModuleA {
+let a = 8'd0;
+let b = a;
+var c;
+always_comb {
+    c = a;
 }
 # }
 ```

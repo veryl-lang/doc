@@ -45,7 +45,8 @@ The following testbench components are available:
 
 And the following system functions can be used in `initial` blocks:
 
-* `$assert(condition)` or `$assert(condition, message)` — check assertions during simulation
+* `$assert(condition)`, `$assert(condition, format, args...)` — check an assertion during simulation. On failure the simulation stops immediately and the test is reported as failed. `format` is a format string in the same style as `$display`, and `args` provides values formatted into it.
+* `$assert_continue(condition)`, `$assert_continue(condition, format, args...)` — same as `$assert` but the simulation continues after a failure, so multiple failures can be collected in a single run. The test is still reported as failed.
 * `$finish()` — terminate simulation
 
 ### Basic example

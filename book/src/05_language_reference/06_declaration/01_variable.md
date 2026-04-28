@@ -22,3 +22,7 @@ module ModuleA {
     assign _d = 1;
 }
 ```
+
+The type annotation can be omitted when it can be inferred from the right hand side
+or from a subsequent assignment.
+See [Type Inference](../19_type_inference.md) for the supported patterns.

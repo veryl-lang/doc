@@ -135,3 +135,18 @@ module ModuleC {
 ```
 
 In `ModuleB::<1, 2, 3>`, W = 1 + 2 = 3 and T = logic<3> are derived, and `ModuleA::<3, logic<3>>` is instantiated.
+
+The right hand side expression of a `gen` declaration is subject to the same restrictions as
+actual generic arguments, because the resulting value is itself used as a generic argument.
+The expression can be composed only of:
+
+* literals
+* symbols defined in a package
+* generic parameters
+* other `gen` declarations
+
+## Generic Argument Inference
+
+For generic functions, the actual generic arguments after `::<>` can be omitted when they
+can be inferred from the call arguments.
+See [Type Inference](19_type_inference.md#generic-argument-inference) for details.

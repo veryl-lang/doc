@@ -12,6 +12,7 @@
 * [`[lint]`](01_project_configuration.md#the-lint-section) --- Lint settings.
 * [`[test]`](01_project_configuration.md#the-test-section) --- Test settings.
 * [`[publish]`](01_project_configuration.md#the-publish-section) --- Publish settings.
+* [`[synth]`](01_project_configuration.md#the-synth-section) --- Synthesis settings.
 * [`[dependencies]`](01_project_configuration.md#the-dependencies-section) --- Library dependencies.
 
 ## The `[project]` section {#the-project-section}
@@ -95,6 +96,11 @@ Available configurations is [here](./01_project_configuration/04_test.md).
 
 The `[publish]` section contains the configurations of publishing.
 Available configurations is [here](./01_project_configuration/05_publish.md).
+
+## The `[synth]` section {#the-synth-section}
+
+The `[synth]` section contains the configurations of the synthesizer.
+Available configurations is [here](./01_project_configuration/06_synth.md).
 
 ## The `[dependencies]` section {#the-dependencies-section}
 

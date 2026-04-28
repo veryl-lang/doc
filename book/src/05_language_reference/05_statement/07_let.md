@@ -27,3 +27,6 @@ module ModuleA (
     }
 }
 ```
+
+The type annotation can be omitted when it can be inferred from the right hand side.
+See [Type Inference](../19_type_inference.md) for the inferable patterns.
