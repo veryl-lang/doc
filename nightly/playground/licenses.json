@@ -508,7 +508,7 @@
     },
     {
       "name": "idna_adapter",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "license": "Apache-2.0 OR MIT",
       "url": "https://github.com/hsivonen/idna_adapter",
       "category": "rust"
