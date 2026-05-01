@@ -216,8 +216,17 @@ indent_width = 4
 <div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr></thead><tbody>
 <tr><td>indent_width</td><td>整数</td><td>4</td><td>インデントのスペース幅</td></tr>
 <tr><td>vertical_align</td><td>ブーリアン</td><td>true</td><td>垂直方向の調整を有効にする</td></tr>
+<tr><td>newline_style</td><td><code>auto</code> / <code>native</code> / <code>unix</code> / <code>windows</code></td><td><code>auto</code></td><td>改行コードのスタイル</td></tr>
 </tbody></table>
 </div>
+<p><code>newline_style</code> はフォーマッタ、ビルドのエミッタ、マイグレータが出力する改行コードを制御します。利用可能な値は以下のとおりです。</p>
+<ul>
+<li><code>auto</code> — 入力ファイルから検出します。改行が存在しない場合は実行プラットフォームのネイティブスタイルが使用されます。</li>
+<li><code>native</code> — 実行プラットフォームのネイティブスタイル（Windows では <code>\r\n</code>、それ以外では <code>\n</code>）を使用します。</li>
+<li><code>unix</code> — 常に <code>\n</code> を使用します。</li>
+<li><code>windows</code> — 常に <code>\r\n</code> を使用します。</li>
+</ul>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

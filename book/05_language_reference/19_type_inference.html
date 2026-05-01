@@ -3,7 +3,7 @@
     <head prefix="og: http://ogp.me/ns#">
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Project Configuration - The Veryl Hardware Description Language</title>
+        <title>Type Inference - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
@@ -27,9 +27,9 @@
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
                     if (lang == "en") {
-                        canonical_href = `${base}/06_development_environment/01_project_configuration.md`;
+                        canonical_href = `${base}/05_language_reference/19_type_inference.md`;
                     } else {
-                        canonical_href = `${base}/${lang}/06_development_environment/01_project_configuration.md`;
+                        canonical_href = `${base}/${lang}/05_language_reference/19_type_inference.md`;
                     }
                     canonical_href = canonical_href.slice(0, -"md".length) + "html";
                     if (canonical_href.endsWith("/index.html")) {
@@ -207,93 +207,104 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="project-configuration"><a class="header" href="#project-configuration">Project Configuration</a></h1>
+                        <h1 id="type-inference"><a class="header" href="#type-inference">Type Inference</a></h1>
+<p>Type annotations and generic arguments can be omitted in some contexts when they can
+be derived from the surrounding code. This chapter summarizes the supported patterns.</p>
+<p>Port declarations of modules / interfaces / functions and function return types still
+require explicit types so that interfaces remain readable even if the type could be
+inferred.</p>
+<h2 id="variable-type-inference"><a class="header" href="#variable-type-inference">Variable Type Inference</a></h2>
+<p>The type annotation of <a href="06_declaration/01_variable.html"><code>var</code></a> and
+<a href="05_statement/07_let.html"><code>let</code></a> declarations, and of <a href="06_declaration/02_parameter.html"><code>const</code></a>
+declarations, can be omitted when the type can be inferred.</p>
+<p>For <code>var</code> declarations without a type, the type is inferred from the first subsequent
+assignment through <code>assign</code>, <code>always_comb</code> or <code>always_ff</code>.
+For <code>let</code> and <code>const</code> declarations, the type is inferred from the right hand side
+expression.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let _a: logic&lt;8&gt; = 0;
+
+    // Inferred from the type of `_a`.
+    let _b = _a;
+
+    // Inferred from the sized literal.
+    let _c = 8'd255;
+
+    // Inferred from the first assignment.
+    var _d;
+    assign _d = _a;
+
+    // Inferred from the first assignment in always_comb.
+    var _e;
+    always_comb {
+        _e = _a;
+    }
+
+    // `const` also supports inference.
+    const _F = 16'd100;
+}
+</code></pre>
+<p>The following expressions can be the source of type inference:</p>
 <ul>
-<li><a href="01_project_configuration.html#the-project-section"><code>[project]</code></a> — Defines a project.
+<li>Variable references</li>
+<li>Sized number literals (e.g. <code>8'd10</code>)</li>
+<li>Parenthesized expressions (recurses into the inner expression)</li>
+<li>Function calls (inferred from the return type)</li>
+</ul>
+<p>The following expressions are not supported because their types depend on the
+bit-width evaluation rules of SystemVerilog and may surprise users:</p>
 <ul>
-<li><a href="01_project_configuration.html#the-name-field"><code>name</code></a> — The name of the project.</li>
-<li><a href="01_project_configuration.html#the-version-field"><code>version</code></a> — The version of the project.</li>
-<li><a href="01_project_configuration.html#the-authors-field"><code>authors</code></a> — The authors of the project.</li>
-<li><a href="01_project_configuration.html#the-description-field"><code>description</code></a> — A description of the project.</li>
-<li><a href="01_project_configuration.html#the-license-field"><code>license</code></a> — The project license.</li>
-<li><a href="01_project_configuration.html#the-repository-field"><code>repository</code></a> — URL of the project source repository.</li>
+<li>Unsized number literals (e.g. <code>10</code>, <code>'0</code>)</li>
+<li>Operator expressions (e.g. <code>_a + 1</code>)</li>
+<li>Concatenation (e.g. <code>{_a, _a}</code>)</li>
+<li><code>if</code> / <code>case</code> expressions</li>
 </ul>
-</li>
-<li><a href="01_project_configuration.html#the-build-section"><code>[build]</code></a> — Build settings.</li>
-<li><a href="01_project_configuration.html#the-format-section"><code>[format]</code></a> — Format settings.</li>
-<li><a href="01_project_configuration.html#the-lint-section"><code>[lint]</code></a> — Lint settings.</li>
-<li><a href="01_project_configuration.html#the-test-section"><code>[test]</code></a> — Test settings.</li>
-<li><a href="01_project_configuration.html#the-publish-section"><code>[publish]</code></a> — Publish settings.</li>
-<li><a href="01_project_configuration.html#the-synth-section"><code>[synth]</code></a> — Synthesis settings.</li>
-<li><a href="01_project_configuration.html#the-dependencies-section"><code>[dependencies]</code></a> — Library dependencies.</li>
-</ul>
-<h2 id="the-project-section"><a class="header" href="#the-project-section">The <code>[project]</code> section</a></h2>
-<p>The first section of <code>Veryl.toml</code> is <code>[project]</code>.
-The mandatory fields are <code>name</code> and <code>version</code>.</p>
-<h3 id="the-name-field"><a class="header" href="#the-name-field">The <code>name</code> field</a></h3>
-<p>The project name is used as prefix in the generated codes.
-So the name must start with alphabet or <code>_</code>, and use only alphanumeric characters or <code>_</code>.</p>
-<h3 id="the-version-field"><a class="header" href="#the-version-field">The <code>version</code> field</a></h3>
-<p>The project version should follow <a href="https://semver.org/">Semantic Versioning</a>.
-The version is constructed by the following three numbers.</p>
-<ul>
-<li>Major – increment at incompatible changes</li>
-<li>Minor – increment at adding features with backward compatibility</li>
-<li>Patch – increment at bug fixes with backward compatibility</li>
-</ul>
-<pre><code class="language-toml">[project]
-version = "0.1.0"
+<p>If multiple assignments to the same <code>var</code> disagree on the inferred type, it is reported as
+<a href="../07_appendix/02_semantic_error.html#type_inference_conflict">type_inference_conflict</a>.
+For unsupported expressions,
+<a href="../07_appendix/02_semantic_error.html#type_inference_not_supported">type_inference_not_supported</a>
+is reported. In both cases, an explicit type annotation resolves the error.</p>
+<h2 id="generic-argument-inference"><a class="header" href="#generic-argument-inference">Generic Argument Inference</a></h2>
+<p>For generic functions, the actual generic arguments after <code>::&lt;&gt;</code> can be omitted when they
+can be inferred from the function arguments.
+The inference uses the declared type of each call argument to solve the generic parameters.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    function FuncId::&lt;T: u32&gt; (
+        x: input logic&lt;T&gt;,
+    ) -&gt; logic&lt;T&gt; {
+        return x;
+    }
+
+    function FuncWide::&lt;T: u32&gt; (
+        x: input logic&lt;T&gt;,
+    ) -&gt; logic&lt;T + 1&gt; {
+        return {1'b0, x};
+    }
+
+    let _a: logic&lt;8&gt;  = 0;
+    let _b: logic&lt;16&gt; = 0;
+
+    // T is inferred to be 8 / 16 from the argument's declared width.
+    let _r1: logic&lt;8&gt;  = FuncId(_a);
+    let _r2: logic&lt;16&gt; = FuncId(_b);
+
+    // `T + 1` pattern: argument width 8 resolves T = 8.
+    let _rw: logic&lt;9&gt; = FuncWide(_a);
+}
 </code></pre>
-<h3 id="the-authors-field"><a class="header" href="#the-authors-field">The <code>authors</code> field</a></h3>
-<p>The optional <code>authors</code> field lists in an array the people or organizations that are considered the “authors” of the project.
-The format of each string in the list is free. Name only, e-mail address only, and name with e-mail address included within angled brackets are commonly used.</p>
-<pre><code class="language-toml">[project]
-authors = ["Fnu Lnu", "anonymous@example.com", "Fnu Lnu &lt;anonymous@example.com&gt;"]
-</code></pre>
-<h3 id="the-description-field"><a class="header" href="#the-description-field">The <code>description</code> field</a></h3>
-<p>The <code>description</code> is a short blurb about the project. This should be plane text (not Markdown).</p>
-<h3 id="the-license-field"><a class="header" href="#the-license-field">The <code>license</code> field</a></h3>
-<p>The <code>license</code> field contains the name of license that the project is released under.
-The string should be follow <a href="https://spdx.github.io/spdx-spec/v2.3/SPDX-license-expressions">SPDX 2.3 license expression</a>.</p>
-<pre><code class="language-toml">[project]
-license = "MIT OR Apache-2.0"
-</code></pre>
-<h3 id="the-repository-field"><a class="header" href="#the-repository-field">The <code>repository</code> field</a></h3>
-<p>The <code>repository</code> field should be a URL to the source repository for the project.</p>
-<pre><code class="language-toml">[project]
-repository = "https://github.com/veryl-lang/veryl"
-</code></pre>
-<h2 id="the-build-section"><a class="header" href="#the-build-section">The <code>[build]</code> section</a></h2>
-<p>The <code>[build]</code> section contains the configurations of code generation.
-Available configurations is <a href="./01_project_configuration/01_build.html">here</a>.</p>
-<h2 id="the-format-section"><a class="header" href="#the-format-section">The <code>[format]</code> section</a></h2>
-<p>The <code>[format]</code> section contains the configurations of code formatter.
-Available configurations is <a href="./01_project_configuration/02_format.html">here</a>.</p>
-<h2 id="the-lint-section"><a class="header" href="#the-lint-section">The <code>[lint]</code> section</a></h2>
-<p>The <code>[lint]</code> section contains the configurations of linter.
-Available configurations is <a href="./01_project_configuration/03_lint.html">here</a>.</p>
-<h2 id="the-test-section"><a class="header" href="#the-test-section">The <code>[test]</code> section</a></h2>
-<p>The <code>[test]</code> section contains the configurations of test by RTL simulator.
-Available configurations is <a href="./01_project_configuration/04_test.html">here</a>.</p>
-<h2 id="the-publish-section"><a class="header" href="#the-publish-section">The <code>[publish]</code> section</a></h2>
-<p>The <code>[publish]</code> section contains the configurations of publishing.
-Available configurations is <a href="./01_project_configuration/05_publish.html">here</a>.</p>
-<h2 id="the-synth-section"><a class="header" href="#the-synth-section">The <code>[synth]</code> section</a></h2>
-<p>The <code>[synth]</code> section contains the configurations of the synthesizer.
-Available configurations is <a href="./01_project_configuration/06_synth.html">here</a>.</p>
-<h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section">The <code>[dependencies]</code> section</a></h2>
-<p>The <code>[dependencies]</code> section contains library dependencies.
-Available configurations is <a href="./02_dependencies.html">here</a>.</p>
+<p>Inference fails when the argument’s width cannot be determined from a variable declaration
+(for example a sized literal is passed). In that case, explicit generic arguments are required.
+See <a href="../07_appendix/02_semantic_error.html#generic_inference_failed">generic_inference_failed</a> for details.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../06_development_environment.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../05_language_reference/18_execution_model/07_determinism.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../06_development_environment/01_project_configuration/01_build.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../06_development_environment.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -303,11 +314,11 @@ Available configurations is <a href="./02_dependencies.html">here</a>.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../06_development_environment.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../05_language_reference/18_execution_model/07_determinism.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../06_development_environment/01_project_configuration/01_build.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../06_development_environment.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

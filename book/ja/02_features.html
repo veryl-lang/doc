@@ -215,6 +215,7 @@
 <li><a href="02_features.html#integrated-test">組み込みテスト</a></li>
 <li><a href="02_features.html#dependency-management">依存関係管理</a></li>
 <li><a href="02_features.html#generics">ジェネリクス</a></li>
+<li><a href="02_features.html#type-inference">型推論</a></li>
 <li><a href="02_features.html#clock-domain-annotation">クロックドメインアノテーション</a></li>
 <li><a href="02_features.html#trailing-comma">末尾カンマ</a></li>
 <li><a href="02_features.html#abstraction-of-clock-and-reset">クロックとリセットの抽象化</a></li>
@@ -295,6 +296,36 @@ var b: logic&lt;10&gt;;
 always_comb {
     a = FuncA::&lt;10&gt;(1);
     b = FuncA::&lt;20&gt;(1);
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="type-inference"><a class="header" href="#type-inference">型推論</a></h2>
+<p><code>var</code>、<code>let</code>、<code>const</code> の型注釈は、右辺や最初の代入から型が導出できる場合に省略できます。関数呼び出しのジェネリック引数も、実引数の宣言型から推論できます。ポートや関数のシグネチャはインターフェースの可読性を保つために、引き続き明示的な型指定が必要です。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">logic [8-1:0] a;
+logic [8-1:0] b;
+logic [8-1:0] c;
+assign a = 8'd0;
+assign b = a;
+always_comb begin
+    c = a;
+end
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">let a = 8'd0;
+let b = a;
+var c;
+always_comb {
+    c = a;
 }
 </code></pre>
 </td>
@@ -561,7 +592,7 @@ end
 </code></pre>
 </td>
 <td>
-<pre><code class="language-veryl">for i: u32 in 0..10 {
+<pre><code class="language-veryl">for i in 0..10 {
     a[i] = inside  X[i] {1..=10};
     b[i] = outside X[i] {1..=10};
 }

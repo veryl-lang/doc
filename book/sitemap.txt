@@ -30,6 +30,7 @@ https://doc.veryl-lang.org/book/05_language_reference/15_clock_domain_annotation
 https://doc.veryl-lang.org/book/05_language_reference/16_standard_library.html
 https://doc.veryl-lang.org/book/05_language_reference/17_alias.html
 https://doc.veryl-lang.org/book/05_language_reference/18_execution_model.html
+https://doc.veryl-lang.org/book/05_language_reference/19_type_inference.html
 https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration.html
 https://doc.veryl-lang.org/book/06_development_environment/02_dependencies.html
 https://doc.veryl-lang.org/book/06_development_environment/03_publish_project.html
@@ -45,6 +46,8 @@ https://doc.veryl-lang.org/book/06_development_environment/12_source_map.html
 https://doc.veryl-lang.org/book/06_development_environment/13_verylup.html
 https://doc.veryl-lang.org/book/06_development_environment/14_migrate_to_new_version.html
 https://doc.veryl-lang.org/book/06_development_environment/15_docker_image.html
+https://doc.veryl-lang.org/book/06_development_environment/16_translator.html
+https://doc.veryl-lang.org/book/06_development_environment/17_synthesizer.html
 https://doc.veryl-lang.org/book/07_appendix/01_formal_syntax.html
 https://doc.veryl-lang.org/book/07_appendix/02_semantic_error.html
 https://doc.veryl-lang.org/book/ja/01_introduction.html
@@ -110,6 +113,7 @@ https://doc.veryl-lang.org/book/06_development_environment/01_project_configurat
 https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/03_lint.html
 https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/04_test.html
 https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/05_publish.html
+https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/06_synth.html
 https://doc.veryl-lang.org/book/ja/03_getting_started/01_installation.html
 https://doc.veryl-lang.org/book/ja/03_getting_started/02_hello_world.html
 https://doc.veryl-lang.org/book/ja/04_code_examples/01_module.html
@@ -134,6 +138,7 @@ https://doc.veryl-lang.org/book/ja/05_language_reference/15_clock_domain_annotat
 https://doc.veryl-lang.org/book/ja/05_language_reference/16_standard_library.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/17_alias.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/18_execution_model.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/19_type_inference.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/02_dependencies.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/03_publish_project.html
@@ -149,6 +154,8 @@ https://doc.veryl-lang.org/book/ja/06_development_environment/12_source_map.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/13_verylup.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/14_migrate_to_new_version.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/15_docker_image.html
+https://doc.veryl-lang.org/book/ja/06_development_environment/16_translator.html
+https://doc.veryl-lang.org/book/ja/06_development_environment/17_synthesizer.html
 https://doc.veryl-lang.org/book/ja/07_appendix/01_formal_syntax.html
 https://doc.veryl-lang.org/book/ja/07_appendix/02_semantic_error.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/02_lexical_structure/01_operator.html
@@ -205,3 +212,4 @@ https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configu
 https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/03_lint.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/04_test.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/05_publish.html
+https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/06_synth.html

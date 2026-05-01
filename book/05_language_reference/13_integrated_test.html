@@ -226,10 +226,12 @@ Ignored tests are not executed by default, but can be run with <code>--ignored</
 #[ignore]
 module test_ignored {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         $finish   ();
     }
 }
@@ -244,7 +246,8 @@ A module with <code>#[test(test_name)]</code> attribute (without <code>embed</co
 </ul>
 <p>And the following system functions can be used in <code>initial</code> blocks:</p>
 <ul>
-<li><code>$assert(condition)</code> or <code>$assert(condition, message)</code> — check assertions during simulation</li>
+<li><code>$assert(condition)</code>, <code>$assert(condition, format, args...)</code> — check an assertion during simulation. On failure the simulation stops immediately and the test is reported as failed. <code>format</code> is a format string in the same style as <code>$display</code>, and <code>args</code> provides values formatted into it.</li>
+<li><code>$assert_continue(condition)</code>, <code>$assert_continue(condition, format, args...)</code> — same as <code>$assert</code> but the simulation continues after a failure, so multiple failures can be collected in a single run. The test is still reported as failed.</li>
 <li><code>$finish()</code> — terminate simulation</li>
 </ul>
 <h3 id="basic-example"><a class="header" href="#basic-example">Basic example</a></h3>
@@ -265,7 +268,9 @@ A module with <code>#[test(test_name)]</code> attribute (without <code>embed</co
 #[test(test_counter)]
 module test_counter {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     var cnt: logic&lt;32&gt;;
 
@@ -276,7 +281,7 @@ module test_counter {
     );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         clk.next  (10);
         $assert   (cnt == 32'd10);
         $finish   ();
@@ -291,19 +296,23 @@ module test_counter {
 </ul>
 <p><code>reset_gen</code> provides the <code>assert</code> method to assert reset:</p>
 <ul>
-<li><code>rst.assert(clk)</code> — assert reset synchronized to clock</li>
-<li><code>rst.assert(clk, duration)</code> — assert reset for specified duration</li>
+<li><code>rst.assert()</code> — assert reset synchronized to clock</li>
+<li><code>rst.assert(duration)</code> — assert reset for specified duration</li>
 </ul>
 <p>The reset duration can also be configured at instantiation:</p>
 <pre><code class="language-veryl playground">#[test(test_reset_cycles_param)]
 module test_reset_cycles_param {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen #( cycles: 5 );
+    inst rst: $tb::reset_gen #(
+        cycles: 5,
+    ) (
+        clk  ,
+    );
 
     // ...
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         // ...
     }
 }
@@ -313,7 +322,9 @@ module test_reset_cycles_param {
 <pre><code class="language-veryl playground">#[test(test_function_call)]
 module test_function_call {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     var cnt: logic&lt;32&gt;;
 
@@ -326,7 +337,7 @@ module test_function_call {
     }
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         step_n    (5);
         step_n    (5);
         $assert   (cnt == 32'd10);

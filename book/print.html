@@ -230,6 +230,7 @@ These tools accelerate the development process and significantly enhance product
 <li><a href="02_features.html#integrated-test">Integrated test</a></li>
 <li><a href="02_features.html#dependency-management">Dependency management</a></li>
 <li><a href="02_features.html#generics">Generics</a></li>
+<li><a href="02_features.html#type-inference">Type inference</a></li>
 <li><a href="02_features.html#clock-domain-annotation">Clock Domain Annotation</a></li>
 <li><a href="02_features.html#trailing-comma">Trailing comma</a></li>
 <li><a href="02_features.html#abstraction-of-clock-and-reset">Abstraction of clock and reset</a></li>
@@ -315,6 +316,39 @@ var b: logic&lt;10&gt;;
 always_comb {
     a = FuncA::&lt;10&gt;(1);
     b = FuncA::&lt;20&gt;(1);
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="type-inference"><a class="header" href="#type-inference">Type inference</a></h2>
+<p>Type annotations of <code>var</code>, <code>let</code> and <code>const</code> can be omitted when the type can be derived from
+the right hand side or the first assignment. Generic arguments of function calls can also be
+inferred from the argument’s declared types. Port and function signatures still require
+explicit types so that interfaces remain readable.</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">logic [8-1:0] a;
+logic [8-1:0] b;
+logic [8-1:0] c;
+assign a = 8'd0;
+assign b = a;
+always_comb begin
+    c = a;
+end
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">let a = 8'd0;
+let b = a;
+var c;
+always_comb {
+    c = a;
 }
 </code></pre>
 </td>
@@ -594,7 +628,7 @@ end
 </code></pre>
 </td>
 <td>
-<pre><code class="language-veryl">for i: u32 in 0..10 {
+<pre><code class="language-veryl">for i in 0..10 {
     a[i] = inside  X[i] {1..=10};
     b[i] = outside X[i] {1..=10};
 }
@@ -1751,9 +1785,9 @@ Bit range selection can be specified by <code>[expression:expression]</code>.</p
 <p>Range can be used at some description like <code>for</code> statement.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     initial {
-        for _i: u32 in 0..10 {}
+        for _i in 0..10 {}
 
-        for _j: u32 in 0..=10 {}
+        for _j in 0..=10 {}
     }
 }
 </code></pre>
@@ -1981,7 +2015,7 @@ and <a href="05_language_reference/05_statement/../04_expression/07_range.html">
     var a: logic&lt;10&gt;;
 
     always_comb {
-        for i: u32 in 0..10 {
+        for i in 0..10 {
             a += i;
 
             if i == 5 {
@@ -1996,7 +2030,7 @@ and <a href="05_language_reference/05_statement/../04_expression/07_range.html">
     var a: logic&lt;10&gt;;
 
     always_comb {
-        for i: i32 in rev 0..10 {
+        for i in rev 0..10 {
             a += i;
 
             if i == 5 {
@@ -2040,6 +2074,8 @@ It can be used in <code>always_ff</code>, <code>always_comb</code> and function 
     }
 }
 </code></pre>
+<p>The type annotation can be omitted when it can be inferred from the right hand side.
+See <a href="05_language_reference/05_statement/../19_type_inference.html">Type Inference</a> for the inferable patterns.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="declaration"><a class="header" href="#declaration">Declaration</a></h1>
 <p>In this chapter, we’ll discuss about declaration.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="variable"><a class="header" href="#variable">Variable</a></h1>
@@ -2061,6 +2097,9 @@ Variable name starting with <code>_</code> means unused variable, and suppresses
     assign _d = 1;
 }
 </code></pre>
+<p>The type annotation can be omitted when it can be inferred from the right hand side
+or from a subsequent assignment.
+See <a href="05_language_reference/06_declaration/../19_type_inference.html">Type Inference</a> for the supported patterns.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="parameter"><a class="header" href="#parameter">Parameter</a></h1>
 <p>Parameter can be declared as the same as variable.
 <code>param</code> keyword can be used at module header, it can be overridden at instantiation.
@@ -2958,10 +2997,12 @@ Ignored tests are not executed by default, but can be run with <code>--ignored</
 #[ignore]
 module test_ignored {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         $finish   ();
     }
 }
@@ -2976,7 +3017,8 @@ A module with <code>#[test(test_name)]</code> attribute (without <code>embed</co
 </ul>
 <p>And the following system functions can be used in <code>initial</code> blocks:</p>
 <ul>
-<li><code>$assert(condition)</code> or <code>$assert(condition, message)</code> — check assertions during simulation</li>
+<li><code>$assert(condition)</code>, <code>$assert(condition, format, args...)</code> — check an assertion during simulation. On failure the simulation stops immediately and the test is reported as failed. <code>format</code> is a format string in the same style as <code>$display</code>, and <code>args</code> provides values formatted into it.</li>
+<li><code>$assert_continue(condition)</code>, <code>$assert_continue(condition, format, args...)</code> — same as <code>$assert</code> but the simulation continues after a failure, so multiple failures can be collected in a single run. The test is still reported as failed.</li>
 <li><code>$finish()</code> — terminate simulation</li>
 </ul>
 <h3 id="basic-example"><a class="header" href="#basic-example">Basic example</a></h3>
@@ -2997,7 +3039,9 @@ A module with <code>#[test(test_name)]</code> attribute (without <code>embed</co
 #[test(test_counter)]
 module test_counter {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     var cnt: logic&lt;32&gt;;
 
@@ -3008,7 +3052,7 @@ module test_counter {
     );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         clk.next  (10);
         $assert   (cnt == 32'd10);
         $finish   ();
@@ -3023,19 +3067,23 @@ module test_counter {
 </ul>
 <p><code>reset_gen</code> provides the <code>assert</code> method to assert reset:</p>
 <ul>
-<li><code>rst.assert(clk)</code> — assert reset synchronized to clock</li>
-<li><code>rst.assert(clk, duration)</code> — assert reset for specified duration</li>
+<li><code>rst.assert()</code> — assert reset synchronized to clock</li>
+<li><code>rst.assert(duration)</code> — assert reset for specified duration</li>
 </ul>
 <p>The reset duration can also be configured at instantiation:</p>
 <pre><code class="language-veryl playground">#[test(test_reset_cycles_param)]
 module test_reset_cycles_param {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen #( cycles: 5 );
+    inst rst: $tb::reset_gen #(
+        cycles: 5,
+    ) (
+        clk  ,
+    );
 
     // ...
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         // ...
     }
 }
@@ -3045,7 +3093,9 @@ module test_reset_cycles_param {
 <pre><code class="language-veryl playground">#[test(test_function_call)]
 module test_function_call {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     var cnt: logic&lt;32&gt;;
 
@@ -3058,7 +3108,7 @@ module test_function_call {
     }
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         step_n    (5);
         step_n    (5);
         $assert   (cnt == 32'd10);
@@ -3117,7 +3167,8 @@ As the actual parameters, numeric literal and identifier concatenated by <code>:
 For example, module names can be used as actual parameters because it is accessible through the whole project.
 On the other hand, local parameters can’t be used as actual parameters in many cases.
 This is caused by that the local parameters is not accessible from the potision of the generics declaration.</p>
-<h2 id="generic-function"><a class="header" href="#generic-function">Generic Function</a></h2>
+<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<h3 id="generic-function"><a class="header" href="#generic-function">Generic Function</a></h3>
 <pre><code class="language-veryl playground">module ModuleA {
     function FuncA::&lt;T: u32&gt; (
         a: input logic&lt;T&gt;,
@@ -3129,7 +3180,7 @@ This is caused by that the local parameters is not accessible from the potision 
     let _b: logic&lt;20&gt; = FuncA::&lt;20&gt;(1);
 }
 </code></pre>
-<h2 id="generic-moduleinterface"><a class="header" href="#generic-moduleinterface">Generic Module/Interface</a></h2>
+<h3 id="generic-moduleinterface"><a class="header" href="#generic-moduleinterface">Generic Module/Interface</a></h3>
 <pre><code class="language-veryl playground">module ModuleA {
     inst u0: ModuleB::&lt;ModuleC&gt;;
     inst u1: ModuleB::&lt;ModuleD&gt;;
@@ -3144,7 +3195,7 @@ module ModuleB::&lt;T: ProtoA&gt; {
 module ModuleC for ProtoA {}
 module ModuleD for ProtoA {}
 </code></pre>
-<h2 id="generic-package"><a class="header" href="#generic-package">Generic Package</a></h2>
+<h3 id="generic-package"><a class="header" href="#generic-package">Generic Package</a></h3>
 <pre><code class="language-veryl playground">package PackageA::&lt;T: u32&gt; {
     const X: u32 = T;
 }
@@ -3154,7 +3205,7 @@ module ModuleA {
     const B: u32 = PackageA::&lt;2&gt;::X;
 }
 </code></pre>
-<h2 id="generic-struct"><a class="header" href="#generic-struct">Generic Struct</a></h2>
+<h3 id="generic-struct"><a class="header" href="#generic-struct">Generic Struct</a></h3>
 <pre><code class="language-veryl playground">package PackageA {
     type TypeB = u32;
     type TypeC = u64;
@@ -3174,6 +3225,48 @@ module ModuleA {
     var _c: StructA::&lt;PackageA::TypeC&gt;;
 }
 </code></pre>
+<h2 id="gen-declaration"><a class="header" href="#gen-declaration"><code>gen</code> declaration</a></h2>
+<p>The <code>gen</code> declaration defines constants and types derived from generic parameters. The defined values can be used as generic arguments.</p>
+<pre><code class="language-veryl playground">module ModuleA::&lt;W: u32, T: type&gt; (
+    a: output logic&lt;W&gt;,
+    b: output T       ,
+) {
+    always_comb {
+        a = '0;
+        b = '0;
+    }
+}
+module ModuleB::&lt;A: u32, B: u32, C: u32&gt; {
+    gen W: u32  = A + B;
+    gen T: type = logic&lt;C&gt;;
+
+    var a: logic&lt;W&gt;;
+    var b: T       ;
+
+    inst u: ModuleA::&lt;W, T&gt; (
+        a  ,
+        b  ,
+    );
+}
+module ModuleC {
+    inst u: ModuleB::&lt;1, 2, 3&gt;;
+
+}
+</code></pre>
+<p>In <code>ModuleB::&lt;1, 2, 3&gt;</code>, W = 1 + 2 = 3 and T = logic&lt;3&gt; are derived, and <code>ModuleA::&lt;3, logic&lt;3&gt;&gt;</code> is instantiated.</p>
+<p>The right hand side expression of a <code>gen</code> declaration is subject to the same restrictions as
+actual generic arguments, because the resulting value is itself used as a generic argument.
+The expression can be composed only of:</p>
+<ul>
+<li>literals</li>
+<li>symbols defined in a package</li>
+<li>generic parameters</li>
+<li>other <code>gen</code> declarations</li>
+</ul>
+<h2 id="generic-argument-inference"><a class="header" href="#generic-argument-inference">Generic Argument Inference</a></h2>
+<p>For generic functions, the actual generic arguments after <code>::&lt;&gt;</code> can be omitted when they
+can be inferred from the call arguments.
+See <a href="05_language_reference/19_type_inference.html#generic-argument-inference">Type Inference</a> for details.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="default-parameter"><a class="header" href="#default-parameter">Default Parameter</a></h1>
 <p>Generic parameter can take a default value through <code>=</code> after the generic parameter.
 If the parameter specifications at call site is omitted, the default value is used.</p>
@@ -3860,6 +3953,94 @@ Designers must use proper synchronization (e.g., two-flop synchronizers, handsha
 <li><code>always_comb</code> with <code>=</code> (blocking) for combinational logic</li>
 <li>No mixed blocking/non-blocking assignments to the same variable</li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="type-inference"><a class="header" href="#type-inference">Type Inference</a></h1>
+<p>Type annotations and generic arguments can be omitted in some contexts when they can
+be derived from the surrounding code. This chapter summarizes the supported patterns.</p>
+<p>Port declarations of modules / interfaces / functions and function return types still
+require explicit types so that interfaces remain readable even if the type could be
+inferred.</p>
+<h2 id="variable-type-inference"><a class="header" href="#variable-type-inference">Variable Type Inference</a></h2>
+<p>The type annotation of <a href="05_language_reference/06_declaration/01_variable.html"><code>var</code></a> and
+<a href="05_language_reference/05_statement/07_let.html"><code>let</code></a> declarations, and of <a href="05_language_reference/06_declaration/02_parameter.html"><code>const</code></a>
+declarations, can be omitted when the type can be inferred.</p>
+<p>For <code>var</code> declarations without a type, the type is inferred from the first subsequent
+assignment through <code>assign</code>, <code>always_comb</code> or <code>always_ff</code>.
+For <code>let</code> and <code>const</code> declarations, the type is inferred from the right hand side
+expression.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let _a: logic&lt;8&gt; = 0;
+
+    // Inferred from the type of `_a`.
+    let _b = _a;
+
+    // Inferred from the sized literal.
+    let _c = 8'd255;
+
+    // Inferred from the first assignment.
+    var _d;
+    assign _d = _a;
+
+    // Inferred from the first assignment in always_comb.
+    var _e;
+    always_comb {
+        _e = _a;
+    }
+
+    // `const` also supports inference.
+    const _F = 16'd100;
+}
+</code></pre>
+<p>The following expressions can be the source of type inference:</p>
+<ul>
+<li>Variable references</li>
+<li>Sized number literals (e.g. <code>8'd10</code>)</li>
+<li>Parenthesized expressions (recurses into the inner expression)</li>
+<li>Function calls (inferred from the return type)</li>
+</ul>
+<p>The following expressions are not supported because their types depend on the
+bit-width evaluation rules of SystemVerilog and may surprise users:</p>
+<ul>
+<li>Unsized number literals (e.g. <code>10</code>, <code>'0</code>)</li>
+<li>Operator expressions (e.g. <code>_a + 1</code>)</li>
+<li>Concatenation (e.g. <code>{_a, _a}</code>)</li>
+<li><code>if</code> / <code>case</code> expressions</li>
+</ul>
+<p>If multiple assignments to the same <code>var</code> disagree on the inferred type, it is reported as
+<a href="05_language_reference/../07_appendix/02_semantic_error.html#type_inference_conflict">type_inference_conflict</a>.
+For unsupported expressions,
+<a href="05_language_reference/../07_appendix/02_semantic_error.html#type_inference_not_supported">type_inference_not_supported</a>
+is reported. In both cases, an explicit type annotation resolves the error.</p>
+<h2 id="generic-argument-inference-1"><a class="header" href="#generic-argument-inference-1">Generic Argument Inference</a></h2>
+<p>For generic functions, the actual generic arguments after <code>::&lt;&gt;</code> can be omitted when they
+can be inferred from the function arguments.
+The inference uses the declared type of each call argument to solve the generic parameters.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    function FuncId::&lt;T: u32&gt; (
+        x: input logic&lt;T&gt;,
+    ) -&gt; logic&lt;T&gt; {
+        return x;
+    }
+
+    function FuncWide::&lt;T: u32&gt; (
+        x: input logic&lt;T&gt;,
+    ) -&gt; logic&lt;T + 1&gt; {
+        return {1'b0, x};
+    }
+
+    let _a: logic&lt;8&gt;  = 0;
+    let _b: logic&lt;16&gt; = 0;
+
+    // T is inferred to be 8 / 16 from the argument's declared width.
+    let _r1: logic&lt;8&gt;  = FuncId(_a);
+    let _r2: logic&lt;16&gt; = FuncId(_b);
+
+    // `T + 1` pattern: argument width 8 resolves T = 8.
+    let _rw: logic&lt;9&gt; = FuncWide(_a);
+}
+</code></pre>
+<p>Inference fails when the argument’s width cannot be determined from a variable declaration
+(for example a sized literal is passed). In that case, explicit generic arguments are required.
+See <a href="05_language_reference/../07_appendix/02_semantic_error.html#generic_inference_failed">generic_inference_failed</a> for details.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="development-environment"><a class="header" href="#development-environment">Development Environment</a></h1>
 <p>In this chapter, we’ll discuss about development environment including project configuration and development tools.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="project-configuration"><a class="header" href="#project-configuration">Project Configuration</a></h1>
@@ -3879,6 +4060,7 @@ Designers must use proper synchronization (e.g., two-flop synchronizers, handsha
 <li><a href="06_development_environment/01_project_configuration.html#the-lint-section"><code>[lint]</code></a> — Lint settings.</li>
 <li><a href="06_development_environment/01_project_configuration.html#the-test-section"><code>[test]</code></a> — Test settings.</li>
 <li><a href="06_development_environment/01_project_configuration.html#the-publish-section"><code>[publish]</code></a> — Publish settings.</li>
+<li><a href="06_development_environment/01_project_configuration.html#the-synth-section"><code>[synth]</code></a> — Synthesis settings.</li>
 <li><a href="06_development_environment/01_project_configuration.html#the-dependencies-section"><code>[dependencies]</code></a> — Library dependencies.</li>
 </ul>
 <h2 id="the-project-section"><a class="header" href="#the-project-section">The <code>[project]</code> section</a></h2>
@@ -3932,6 +4114,9 @@ Available configurations is <a href="06_development_environment/./01_project_con
 <h2 id="the-publish-section"><a class="header" href="#the-publish-section">The <code>[publish]</code> section</a></h2>
 <p>The <code>[publish]</code> section contains the configurations of publishing.
 Available configurations is <a href="06_development_environment/./01_project_configuration/05_publish.html">here</a>.</p>
+<h2 id="the-synth-section"><a class="header" href="#the-synth-section">The <code>[synth]</code> section</a></h2>
+<p>The <code>[synth]</code> section contains the configurations of the synthesizer.
+Available configurations is <a href="06_development_environment/./01_project_configuration/06_synth.html">here</a>.</p>
 <h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section">The <code>[dependencies]</code> section</a></h2>
 <p>The <code>[dependencies]</code> section contains library dependencies.
 Available configurations is <a href="06_development_environment/./02_dependencies.html">here</a>.</p>
@@ -4125,8 +4310,18 @@ indent_width = 4
 <div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Value</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td>indent_width</td><td>integer</td><td>4</td><td>indent width by space</td></tr>
 <tr><td>vertical_align</td><td>boolean</td><td>true</td><td>enable vertial align</td></tr>
+<tr><td>newline_style</td><td><code>auto</code> / <code>native</code> / <code>unix</code> / <code>windows</code></td><td><code>auto</code></td><td>line ending style</td></tr>
 </tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="lint"><a class="header" href="#lint">Lint</a></h1>
+</div>
+<p><code>newline_style</code> controls the line ending used by the formatter, the build emitter and the
+migrator output. The available values are:</p>
+<ul>
+<li><code>auto</code> — detect from the input file. If no newline exists, the platform native style is used.</li>
+<li><code>native</code> — use the platform native style (<code>\r\n</code> on Windows, <code>\n</code> elsewhere).</li>
+<li><code>unix</code> — always use <code>\n</code>.</li>
+<li><code>windows</code> — always use <code>\r\n</code>.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="lint"><a class="header" href="#lint">Lint</a></h1>
 <p><code>[lint]</code> section specifies the configuration for linter like below:</p>
 <pre><code class="language-toml">[lint.naming]
 case_enum = "snake"
@@ -4336,7 +4531,41 @@ bump_commit_message = "Bump"
 <tr><td>bump_commit_message</td><td>string</td><td>“chore: Bump version”</td><td>commit message after bump</td></tr>
 <tr><td>publish_commit_message</td><td>string</td><td>“chore: Publish”</td><td>commit message after publish</td></tr>
 </tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="synth"><a class="header" href="#synth">Synth</a></h1>
+<p><code>[synth]</code> section specifies the configuration for the <code>veryl synth</code> command,
+which performs lightweight logic synthesis to estimate area, timing and power.</p>
+<pre><code class="language-toml">[synth]
+top          = "TopModule"
+library      = "sky130"
+clock_freq   = 100.0
+activity     = 0.1
+timing_paths = 1
+</code></pre>
+<h2 id="available-configurations-4"><a class="header" href="#available-configurations-4">Available configurations</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Value</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<tr><td>top</td><td>string</td><td>(auto)</td><td>Default top module name. CLI <code>--top</code> overrides when supplied. If omitted, the first user module is used.</td></tr>
+<tr><td>library</td><td><code>sky130</code> / <code>asap7</code> / <code>gf180mcu</code> / <code>ihp-sg13g2</code></td><td><code>sky130</code></td><td>Built-in cell library / PDK to use.</td></tr>
+<tr><td>clock_freq</td><td>float</td><td>100.0</td><td>Clock frequency assumed for the dynamic-power estimate (MHz).</td></tr>
+<tr><td>activity</td><td>float (0.0–1.0)</td><td>0.1</td><td>Per-cycle toggle rate assumed for combinational nets.</td></tr>
+<tr><td>timing_paths</td><td>integer</td><td>1</td><td>Number of worst-delay endpoints to report in the timing dump.</td></tr>
+</tbody></table>
+</div>
+<h2 id="built-in-libraries"><a class="header" href="#built-in-libraries">Built-in libraries</a></h2>
+<p>The <code>library</code> field selects the built-in cell library used for area, timing and
+power estimation. All values are extracted or derived from public Liberty
+characterization data, calibrated for self-consistent “relative cost” rather
+than signoff-grade accuracy. Drive strength 1 cells are used throughout.</p>
+<div class="table-wrapper"><table><thead><tr><th><code>library</code></th><th>Process</th><th>Cell library / corner</th><th>Vdd</th><th>Source (license)</th></tr></thead><tbody>
+<tr><td><code>sky130</code></td><td>SkyWater 130nm planar CMOS</td><td><code>sky130_fd_sc_hd</code> / <code>tt_025C_1v80</code></td><td>1.8 V</td><td><a href="https://github.com/google/skywater-pdk">skywater-pdk</a> (Apache 2.0)</td></tr>
+<tr><td><code>asap7</code></td><td>ASU 7nm predictive FinFET</td><td><code>asap7sc7p5t</code> RVT / <code>tt_0p7V</code></td><td>0.7 V</td><td><a href="https://github.com/The-OpenROAD-Project/asap7">asap7</a> (BSD 3-Clause)</td></tr>
+<tr><td><code>gf180mcu</code></td><td>GlobalFoundries 180nm MCU planar CMOS</td><td><code>gf180mcu_fd_sc_mcu7t5v0</code> / <code>tt_025C_1v80</code></td><td>1.8 V</td><td><a href="https://github.com/google/gf180mcu-pdk">gf180mcu-pdk</a> (Apache 2.0)</td></tr>
+<tr><td><code>ihp-sg13g2</code></td><td>IHP 130nm SiGe BiCMOS</td><td><code>sg13g2_stdcell</code> / <code>typ_1p20V_25C</code></td><td>1.2 V</td><td><a href="https://github.com/IHP-GmbH/IHP-Open-PDK">IHP-Open-PDK</a> (Apache 2.0)</td></tr>
+</tbody></table>
+</div>
+<p>No Liberty source, schematic or layout from these PDKs is redistributed by Veryl;
+only a small number of cell-level area / delay / leakage / energy figures are used as
+reference data.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h1>
 <p>If you want to add other Veryl projects to dependencies of your project, you can add them to <code>[dependencies]</code> section in <code>Veryl.toml</code>.
 The left hand side of entry is the project name of the dependency, and the right hand side is the source and version.
 <code>github</code> is a syntax sugar to refer a repository on GitHub. Instead of it, <code>git</code> with a full URL can be used.</p>
@@ -4890,6 +5119,76 @@ fmt:
   script:
     - veryl fmt --check
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="translator"><a class="header" href="#translator">Translator</a></h1>
+<p><code>veryl translate</code> converts SystemVerilog source files into Veryl source.
+It is intended as a best-effort migration aid for existing SystemVerilog code bases;
+the result is not guaranteed to be a drop-in replacement and may need manual review.</p>
+<pre><code class="language-console">$ veryl translate foo.sv
+</code></pre>
+<p>Each input <code>.sv</code> file produces a <code>.veryl</code> file with the same basename next to it.
+After translation, the output is run through the Veryl formatter so the result follows
+the standard formatting style.</p>
+<h2 id="options"><a class="header" href="#options">Options</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>--stdout</code></td><td>Write the result to stdout instead of writing files. Useful for piping or redirecting to a non-default path.</td></tr>
+<tr><td><code>--strict</code></td><td>Exit with a non-zero status if any unsupported constructs are encountered.</td></tr>
+<tr><td><code>--no-format</code></td><td>Skip the Veryl formatter pass and emit the raw translator output.</td></tr>
+</tbody></table>
+</div>
+<h2 id="unsupported-constructs"><a class="header" href="#unsupported-constructs">Unsupported constructs</a></h2>
+<p>Some SystemVerilog constructs cannot be expressed in Veryl, or are not yet supported by the
+translator. When such a construct is encountered, a warning is emitted with the construct
+kind and source line, and the construct is left as a comment or placeholder in the output.
+A summary line reports the total number of unsupported constructs per file.</p>
+<p>In <code>--strict</code> mode, any unsupported construct causes <code>veryl translate</code> to exit with a
+non-zero status.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="synthesizer"><a class="header" href="#synthesizer">Synthesizer</a></h1>
+<p><code>veryl synth</code> performs lightweight logic synthesis on the project and reports
+approximate area, timing and power. It is intended as a quick feedback tool
+during design exploration, not a replacement for a production synthesis flow.
+The design is mapped to a representative subset of cells in the selected
+library, but place-and-route, load capacitance, drive strength and Vth selection
+are not considered.</p>
+<pre><code class="language-console">$ veryl synth
+</code></pre>
+<p>The top module is selected as follows, in order of priority:</p>
+<ol>
+<li>CLI <code>--top &lt;name&gt;</code> if supplied</li>
+<li><code>synth.top</code> in <code>Veryl.toml</code> if set</li>
+<li>The first user module discovered in the project</li>
+</ol>
+<p>The available configurations such as the cell library, clock frequency and
+toggle activity are described in <a href="06_development_environment/./01_project_configuration/06_synth.html"><code>[synth]</code></a>.</p>
+<h2 id="output"><a class="header" href="#output">Output</a></h2>
+<p>By default, <code>veryl synth</code> prints a one-line summary plus area / timing / power
+detail blocks:</p>
+<pre><code class="language-text">synth: TopModule — 123 gates, 17 FFs
+library: sky130_fd_sc_hd ...
+
+summary:
+  area:        1234.56 um²  (comb 1100.00, seq 134.56)
+  timing:        2.345 ns      8 levels  in_dat → out_dat
+  power:        0.1234 mW   (leak 0.0123 mW, dyn 0.1111 mW)
+                            @ f_clk = 100 MHz, activity = 0.10
+
+area:
+  ...
+timing:
+  ...
+power:
+  ...
+</code></pre>
+<h2 id="options-1"><a class="header" href="#options-1">Options</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>--top &lt;name&gt;</code></td><td>Top module name. Overrides <code>synth.top</code> in <code>Veryl.toml</code>.</td></tr>
+<tr><td><code>--timing-paths &lt;n&gt;</code></td><td>Number of worst-delay endpoints to report when dumping timing. Overrides <code>synth.timing_paths</code>.</td></tr>
+<tr><td><code>--dump-ir</code></td><td>Dump the gate-level IR (netlist of gates and flip-flops).</td></tr>
+<tr><td><code>--dump-area</code></td><td>Dump the per-cell-kind area breakdown.</td></tr>
+<tr><td><code>--dump-timing</code></td><td>Dump the critical path trace.</td></tr>
+<tr><td><code>--dump-power</code></td><td>Dump the power estimate (leakage + dynamic breakdown).</td></tr>
+</tbody></table>
+</div>
+<p>If no <code>--dump-*</code> flag is given, all three of area / timing / power are dumped.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="formal-syntax"><a class="header" href="#formal-syntax">Formal Syntax</a></h1>
 <p>Veryl’s parser is based on parser generator <a href="https://github.com/jsinger67/parol">parol</a>.
@@ -5025,6 +5324,7 @@ FalseTerm             : &lt;INITIAL, Generic                                    
 FinalTerm             : &lt;INITIAL, Generic                                             &gt;'final'                                                                               : Token; // Keyword: Statement
 ForTerm               : &lt;INITIAL, Generic                                             &gt;'for'                                                                                 : Token; // Keyword: Repeat
 FunctionTerm          : &lt;INITIAL, Generic                                             &gt;'function'                                                                            : Token; // Keyword: Structure
+GenTerm               : &lt;INITIAL, Generic                                             &gt;'gen'                                                                                 : Token; // Keyword: Statement
 I8Term                : &lt;INITIAL, Generic                                             &gt;'i8'                                                                                  : Token; // Keyword: Type
 I16Term               : &lt;INITIAL, Generic                                             &gt;'i16'                                                                                 : Token; // Keyword: Type
 I32Term               : &lt;INITIAL, Generic                                             &gt;'i32'                                                                                 : Token; // Keyword: Type
@@ -5174,6 +5474,7 @@ FalseToken         : FalseTerm         : Token Comments;
 FinalToken         : FinalTerm         : Token Comments;
 ForToken           : ForTerm           : Token Comments;
 FunctionToken      : FunctionTerm      : Token Comments;
+GenToken           : GenTerm           : Token Comments;
 I8Token            : I8Term            : Token Comments;
 I16Token           : I16Term           : Token Comments;
 I32Token           : I32Term           : Token Comments;
@@ -5330,6 +5631,7 @@ False         : FalseToken         : VerylToken;
 Final         : FinalToken         : VerylToken;
 For           : ForToken           : VerylToken;
 Function      : FunctionToken      : VerylToken;
+Gen           : GenToken           : VerylToken;
 I8            : I8Token            : VerylToken;
 I16           : I16Token           : VerylToken;
 I32           : I32Token           : VerylToken;
@@ -5580,7 +5882,13 @@ StatementBlock: LBrace { StatementBlockGroup } RBrace;
 
 StatementBlockGroup: { Attribute } ( Block LBrace { StatementBlockGroup } RBrace | StatementBlockItem );
 
-StatementBlockItem: VarDeclaration | LetStatement | ConstDeclaration | Statement | ConcatenationAssignment;
+StatementBlockItem: VarDeclaration
+                  | LetStatement
+                  | ConstDeclaration
+                  | GenDeclaration
+                  | Statement
+                  | ConcatenationAssignment
+                  ;
 
 Statement: IdentifierStatement
          | IfStatement
@@ -5592,7 +5900,7 @@ Statement: IdentifierStatement
          | SwitchStatement
          ;
 
-LetStatement: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Semicolon;
+LetStatement: Let Identifier [ Colon [ ClockDomain ] ArrayType ] Equ Expression Semicolon;
 
 IdentifierStatement: ExpressionIdentifier ( FunctionCall | Assignment ) Semicolon;
 
@@ -5608,7 +5916,7 @@ ReturnStatement: Return Expression Semicolon;
 
 BreakStatement: Break Semicolon;
 
-ForStatement: For Identifier Colon ScalarType In [ Rev ] Range [ Step AssignmentOperator Expression ] StatementBlock;
+ForStatement: For Identifier In [ Rev ] Range [ Step AssignmentOperator Expression ] StatementBlock;
 
 CaseStatement: Case Expression LBrace { CaseItem } RBrace;
 
@@ -5638,11 +5946,13 @@ AttributeItem: Identifier
 // Declaration
 // ----------------------------------------------------------------------------
 
-LetDeclaration: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Semicolon;
+LetDeclaration: Let Identifier [ Colon [ ClockDomain ] ArrayType ] Equ Expression Semicolon;
 
-VarDeclaration: Var Identifier Colon [ ClockDomain ] ArrayType Semicolon;
+VarDeclaration: Var Identifier [ Colon [ ClockDomain ] ArrayType ] Semicolon;
 
-ConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Equ Expression Semicolon;
+ConstDeclaration: Const Identifier [ Colon ( ArrayType | Type ) ] Equ Expression Semicolon;
+
+GenDeclaration: Gen Identifier Colon ( GenericProtoBound | Type ) Equ Expression Semicolon;
 
 TypeDefDeclaration: Type Identifier Equ ArrayType Semicolon;
 
@@ -5848,6 +6158,7 @@ GenerateItem: LetDeclaration
             | InstDeclaration
             | BindDeclaration
             | ConstDeclaration
+            | GenDeclaration
             | AlwaysFfDeclaration
             | AlwaysCombDeclaration
             | AssignDeclaration
@@ -5876,6 +6187,7 @@ PackageDeclaration: Package Identifier [ WithGenericParameter ] [ For ScopedIden
 PackageGroup: { Attribute } ( LBrace { PackageGroup } RBrace | PackageItem );
 
 PackageItem: ConstDeclaration
+           | GenDeclaration
            | TypeDefDeclaration
            | EnumDeclaration
            | StructUnionDeclaration
@@ -5977,33 +6289,317 @@ PublicDescriptionItem: ModuleDeclaration
 Veryl: Start { DescriptionGroup };
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="semantic-error"><a class="header" href="#semantic-error">Semantic Error</a></h1>
-<h2 id="duplicated_identifier"><a class="header" href="#duplicated_identifier">duplicated_identifier</a></h2>
-<h2 id="invalid_allow"><a class="header" href="#invalid_allow">invalid_allow</a></h2>
-<h2 id="invalid_direction"><a class="header" href="#invalid_direction">invalid_direction</a></h2>
-<h2 id="invalid_identifier"><a class="header" href="#invalid_identifier">invalid_identifier</a></h2>
-<h2 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h2>
-<h2 id="invalid_msb"><a class="header" href="#invalid_msb">invalid_msb</a></h2>
-<h2 id="invalid_number_character"><a class="header" href="#invalid_number_character">invalid_number_character</a></h2>
-<h2 id="invalid_statement"><a class="header" href="#invalid_statement">invalid_statement</a></h2>
-<h2 id="invalid_system_function"><a class="header" href="#invalid_system_function">invalid_system_function</a></h2>
-<h2 id="invalid_type_declaration"><a class="header" href="#invalid_type_declaration">invalid_type_declaration</a></h2>
-<p>This error is reported when <code>struct</code>, <code>enum</code> and <code>union</code> data types are defined within interface declarations.</p>
-<h2 id="mismatch_arity"><a class="header" href="#mismatch_arity">mismatch_arity</a></h2>
-<h2 id="mismatch_attribute_args"><a class="header" href="#mismatch_attribute_args">mismatch_attribute_args</a></h2>
-<h2 id="mismatch_type"><a class="header" href="#mismatch_type">mismatch_type</a></h2>
-<h2 id="missing_if_reset"><a class="header" href="#missing_if_reset">missing_if_reset</a></h2>
-<h2 id="missing_port"><a class="header" href="#missing_port">missing_port</a></h2>
-<h2 id="missing_reset_signal"><a class="header" href="#missing_reset_signal">missing_reset_signal</a></h2>
-<h2 id="missing_reset_statement"><a class="header" href="#missing_reset_statement">missing_reset_statement</a></h2>
-<h2 id="too_large_enum_variant"><a class="header" href="#too_large_enum_variant">too_large_enum_variant</a></h2>
-<h2 id="too_large_number"><a class="header" href="#too_large_number">too_large_number</a></h2>
-<h2 id="too_much_enum_variant"><a class="header" href="#too_much_enum_variant">too_much_enum_variant</a></h2>
-<h2 id="undefined_identifier"><a class="header" href="#undefined_identifier">undefined_identifier</a></h2>
-<h2 id="unknown_attribute"><a class="header" href="#unknown_attribute">unknown_attribute</a></h2>
-<h2 id="unknown_member"><a class="header" href="#unknown_member">unknown_member</a></h2>
-<h2 id="unknown_msb"><a class="header" href="#unknown_msb">unknown_msb</a></h2>
-<h2 id="unknown_port"><a class="header" href="#unknown_port">unknown_port</a></h2>
-<h2 id="unused_variable"><a class="header" href="#unused_variable">unused_variable</a></h2>
+<p>This appendix lists the diagnostics produced by the Veryl semantic analyzer.
+The diagnostics are split into hard errors that prevent compilation and
+warnings that allow compilation to continue.</p>
+<h2 id="errors"><a class="header" href="#errors">Errors</a></h2>
+<h3 id="ambiguous_elsif"><a class="header" href="#ambiguous_elsif">ambiguous_elsif</a></h3>
+<p>This error is reported when an <code>elsif</code> or <code>else</code> attribute cannot be unambiguously
+associated with a preceding <code>if</code> attribute.
+Restructure the surrounding code so that the relationship is clear.</p>
+<h3 id="anonymous_identifier_usage"><a class="header" href="#anonymous_identifier_usage">anonymous_identifier_usage</a></h3>
+<p>This error is reported when an anonymous identifier (<code>_</code>) is used in a position that
+requires a named identifier.</p>
+<h3 id="call_non_function"><a class="header" href="#call_non_function">call_non_function</a></h3>
+<p>This error is reported when a non-function symbol is called as if it were a function.
+Remove the call, or replace the symbol with an actual function.</p>
+<h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
+<p>This error is reported when two or more type definitions reference each other in a
+cycle. Break the cycle by removing or restructuring one of the references.</p>
+<h3 id="duplicated_identifier"><a class="header" href="#duplicated_identifier">duplicated_identifier</a></h3>
+<p>This error is reported when the same identifier is declared more than once in the same
+scope. Rename one of the declarations.</p>
+<h3 id="exceed_limit"><a class="header" href="#exceed_limit">exceed_limit</a></h3>
+<p>This error is reported when an internal limit such as instance depth, total instance
+count, or elaboration evaluation size is exceeded. Raise the corresponding limit in the
+<code>[build]</code> section of <code>Veryl.toml</code>, or simplify the design.</p>
+<h3 id="fixed_type_with_signed_modifier"><a class="header" href="#fixed_type_with_signed_modifier">fixed_type_with_signed_modifier</a></h3>
+<p>This error is reported when the <code>signed</code> modifier is applied to a fixed-width type
+(e.g. <code>u32</code>). Remove the <code>signed</code> modifier.</p>
+<h3 id="generic_inference_failed"><a class="header" href="#generic_inference_failed">generic_inference_failed</a></h3>
+<p>This error is reported when the actual generic arguments of a function call are omitted
+but the compiler cannot infer them from the call arguments.
+Provide explicit generic arguments through <code>::&lt;&gt;</code>, or pass an argument whose width can be
+determined from a variable declaration.</p>
+<h3 id="include_failure"><a class="header" href="#include_failure">include_failure</a></h3>
+<p>This error is reported when a file referenced by an <code>include</code> declaration cannot be read.
+Check the path and file permissions.</p>
+<h3 id="incompat_proto"><a class="header" href="#incompat_proto">incompat_proto</a></h3>
+<p>This error is reported when a module / interface / package marked <code>for {proto}</code> does
+not satisfy the prototype’s contract. Adjust the implementation so that it matches the
+prototype.</p>
+<h3 id="infinite_recursion"><a class="header" href="#infinite_recursion">infinite_recursion</a></h3>
+<p>This error is reported when a module instantiates itself, directly or transitively,
+with no condition that stops the recursion.
+Add a terminating condition (for example via a generic parameter and <code>if</code> generation),
+or restructure the design so the module does not refer back to itself.</p>
+<h3 id="invalid_assignment"><a class="header" href="#invalid_assignment">invalid_assignment</a></h3>
+<p>This error is reported when an unassignable symbol kind (constants, parameters, generic
+parameters, etc.) is the target of an assignment. Remove the assignment.</p>
+<h3 id="invalid_cast"><a class="header" href="#invalid_cast">invalid_cast</a></h3>
+<p>This error is reported when the source and target types of a type cast are not
+compatible. Choose a compatible target type.</p>
+<h3 id="invalid_clock"><a class="header" href="#invalid_clock">invalid_clock</a></h3>
+<p>This error is reported when a signal that is neither typed as <code>clock</code> nor a single-bit
+signal is connected as a clock. Use a <code>clock</code>-typed signal.</p>
+<h3 id="invalid_clock_domain"><a class="header" href="#invalid_clock_domain">invalid_clock_domain</a></h3>
+<p>This error is reported when a clock domain annotation is attached to a module instance,
+where it is not allowed. Remove the annotation.</p>
+<h3 id="invalid_connect_operand"><a class="header" href="#invalid_connect_operand">invalid_connect_operand</a></h3>
+<p>This error is reported when an operand of the <code>&lt;&gt;</code> connect operator is not a valid
+interface operand.</p>
+<h3 id="invalid_direction"><a class="header" href="#invalid_direction">invalid_direction</a></h3>
+<p>This error is reported when a port direction (<code>input</code>, <code>output</code>, <code>inout</code>, etc.) is used
+in a context where the direction is not allowed.
+Remove the direction modifier.</p>
+<h3 id="invalid_embed"><a class="header" href="#invalid_embed">invalid_embed</a></h3>
+<p>This error is reported when an <code>embed</code> declaration uses a way / language combination
+that is not allowed at the current position.</p>
+<h3 id="invalid_embed_identifier"><a class="header" href="#invalid_embed_identifier">invalid_embed_identifier</a></h3>
+<p>This error is reported when an embed identifier reference appears in an embed block
+other than <code>(way: inline / lang: sv)</code>.</p>
+<h3 id="invalid_enum_variant"><a class="header" href="#invalid_enum_variant">invalid_enum_variant</a></h3>
+<p>This error is reported when an enum variant’s value does not match the encoding declared
+for the enum (e.g. one-hot, gray).</p>
+<h3 id="invalid_factor"><a class="header" href="#invalid_factor">invalid_factor</a></h3>
+<p>This error is reported when a non-value symbol (e.g. a module name) is used as a factor
+in an expression.</p>
+<h3 id="invalid_import"><a class="header" href="#invalid_import">invalid_import</a></h3>
+<p>This error is reported when the referenced item cannot be imported (e.g. it is private
+or not a valid import target).</p>
+<h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
+<p>This error is reported when the <code>lsb</code> keyword appears in a context where the corresponding
+bit width cannot be determined.
+Replace <code>lsb</code> with a concrete index.</p>
+<h3 id="invalid_modifier"><a class="header" href="#invalid_modifier">invalid_modifier</a></h3>
+<p>This error is reported when a type modifier is used in a context that does not allow it.
+Remove the modifier.</p>
+<h3 id="invalid_modport_item"><a class="header" href="#invalid_modport_item">invalid_modport_item</a></h3>
+<p>This error is reported when a modport item refers to an identifier that is not of the
+expected kind.</p>
+<h3 id="invalid_msb"><a class="header" href="#invalid_msb">invalid_msb</a></h3>
+<p>This error is reported when the <code>msb</code> keyword appears in a context where the corresponding
+bit width cannot be determined.
+Replace <code>msb</code> with a concrete index.</p>
+<h3 id="invalid_number_character"><a class="header" href="#invalid_number_character">invalid_number_character</a></h3>
+<p>This error is reported when a numeric literal contains a character that is not valid for
+its base, such as a hexadecimal digit in a binary literal.</p>
+<h3 id="invalid_operand"><a class="header" href="#invalid_operand">invalid_operand</a></h3>
+<p>This error is reported when an operand kind incompatible with the operator is used.</p>
+<h3 id="invalid_port_default_value"><a class="header" href="#invalid_port_default_value">invalid_port_default_value</a></h3>
+<p>This error is reported when a port default value is invalid for the port’s type or
+direction.</p>
+<h3 id="invalid_reset"><a class="header" href="#invalid_reset">invalid_reset</a></h3>
+<p>This error is reported when a signal that is neither typed as <code>reset</code> nor a single-bit
+signal is connected as a reset. Use a <code>reset</code>-typed signal.</p>
+<h3 id="invalid_statement"><a class="header" href="#invalid_statement">invalid_statement</a></h3>
+<p>This error is reported when a statement appears in a context where it is not allowed
+(for example, a <code>return</code> outside a function).
+Remove or relocate the statement.</p>
+<h3 id="invalid_tb_usage"><a class="header" href="#invalid_tb_usage">invalid_tb_usage</a></h3>
+<p>This error is reported when a <code>$tb::*</code> testbench component is used outside a <code>#[test]</code>
+module. Move the usage inside a test module.</p>
+<h3 id="invalid_test"><a class="header" href="#invalid_test">invalid_test</a></h3>
+<p>This error is reported when a <code>#[test]</code> declaration is malformed.</p>
+<h3 id="invalid_type_declaration"><a class="header" href="#invalid_type_declaration">invalid_type_declaration</a></h3>
+<p>This error is reported when <code>struct</code>, <code>enum</code> or <code>union</code> data types are defined within
+interface declarations.</p>
+<h3 id="invalid_wavedrom"><a class="header" href="#invalid_wavedrom">invalid_wavedrom</a></h3>
+<p>This error is reported when a WaveDrom block in a documentation comment is invalid.</p>
+<h3 id="invisible_identifier"><a class="header" href="#invisible_identifier">invisible_identifier</a></h3>
+<p>This error is reported when an identifier is referenced from a position where it is not
+in scope (e.g. across visibility boundaries).</p>
+<h3 id="last_item_with_define"><a class="header" href="#last_item_with_define">last_item_with_define</a></h3>
+<p>This error is reported when an <code>ifdef</code> / <code>ifndef</code> / <code>elsif</code> / <code>else</code> attribute is
+attached to the last item in a comma-separated list, which makes the boundary ambiguous.</p>
+<h3 id="member_access_on_array"><a class="header" href="#member_access_on_array">member_access_on_array</a></h3>
+<p>This error is reported when a member is accessed on an array directly.
+Index the array first.</p>
+<h3 id="mismatch_attribute_args"><a class="header" href="#mismatch_attribute_args">mismatch_attribute_args</a></h3>
+<p>This error is reported when an attribute is supplied with arguments that do not match
+the expected form. Adjust the arguments to the attribute’s expected signature.</p>
+<h3 id="mismatch_clock_domain"><a class="header" href="#mismatch_clock_domain">mismatch_clock_domain</a></h3>
+<p>This error is reported when a signal is used across clock domain boundaries without an
+explicit <code>unsafe (cdc)</code> block.</p>
+<h3 id="mismatch_function_arity"><a class="header" href="#mismatch_function_arity">mismatch_function_arity</a></h3>
+<p>This error is reported when the number of arguments at a function call site does not
+match the function’s declaration.</p>
+<h3 id="mismatch_generics_arity"><a class="header" href="#mismatch_generics_arity">mismatch_generics_arity</a></h3>
+<p>This error is reported when the number of generic arguments at a call site does not
+match the declaration.</p>
+<h3 id="mismatch_type"><a class="header" href="#mismatch_type">mismatch_type</a></h3>
+<p>This error is reported when a value is used in a position that requires a different
+type. Examples include incompatible assignments and function arguments whose type does
+not match the parameter.</p>
+<h3 id="missing_clock_domain"><a class="header" href="#missing_clock_domain">missing_clock_domain</a></h3>
+<p>This error is reported when a module has multiple clocks but lacks clock domain
+annotations on its ports. Add the annotations.</p>
+<h3 id="missing_clock_signal"><a class="header" href="#missing_clock_signal">missing_clock_signal</a></h3>
+<p>This error is reported when an <code>always_ff</code> block is used without a clock signal in the
+enclosing module. Add a <code>clock</code> port.</p>
+<h3 id="missing_default_argument"><a class="header" href="#missing_default_argument">missing_default_argument</a></h3>
+<p>This error is reported when a generic parameter following a parameter with a default
+itself lacks a default. Default parameters must be at the end of the list.</p>
+<h3 id="missing_if_reset"><a class="header" href="#missing_if_reset">missing_if_reset</a></h3>
+<p>This error is reported when an <code>always_ff</code> block has a reset signal but no <code>if_reset</code>
+statement.
+Add an <code>if_reset</code> block to describe the reset behavior.</p>
+<h3 id="missing_reset_signal"><a class="header" href="#missing_reset_signal">missing_reset_signal</a></h3>
+<p>This error is reported when an <code>always_ff</code> block uses <code>if_reset</code> but no reset signal is
+available in the enclosing module.
+Add a <code>reset</code> port or connect a reset signal.</p>
+<h3 id="missing_tb_port"><a class="header" href="#missing_tb_port">missing_tb_port</a></h3>
+<p>This error is reported when a <code>$tb::*</code> testbench component is instantiated without
+connecting one of its required ports (e.g. the <code>clk</code> port of <code>$tb::reset_gen</code>).
+Add the required port connection at instantiation.</p>
+<h3 id="missing_tri"><a class="header" href="#missing_tri">missing_tri</a></h3>
+<p>This error is reported when an <code>inout</code> port is declared without the <code>tri</code> type modifier.
+Add the <code>tri</code> modifier.</p>
+<h3 id="mixed_function_argument"><a class="header" href="#mixed_function_argument">mixed_function_argument</a></h3>
+<p>This error is reported when both positional arguments and named arguments are used in
+the same function call. Use one style consistently.</p>
+<h3 id="multiple_assignment"><a class="header" href="#multiple_assignment">multiple_assignment</a></h3>
+<p>This error is reported when a single signal is assigned from more than one procedural
+block or <code>assign</code> statement. Drive each signal from a single source.</p>
+<h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
+<p>This error is reported when a default clock or reset is specified more than once in the
+same module.</p>
+<h3 id="non_positive_value"><a class="header" href="#non_positive_value">non_positive_value</a></h3>
+<p>This error is reported when a non-positive value is assigned to a positive type
+(<code>p8</code> / <code>p16</code> / <code>p32</code> / <code>p64</code>). Use a value greater than zero.</p>
+<h3 id="private_member"><a class="header" href="#private_member">private_member</a></h3>
+<p>This error is reported when a member declared as private is accessed from outside its
+declaring scope.</p>
+<h3 id="private_namespace"><a class="header" href="#private_namespace">private_namespace</a></h3>
+<p>This error is reported when a namespace declared as private is referenced from outside
+its declaring scope.</p>
+<h3 id="referring_before_definition"><a class="header" href="#referring_before_definition">referring_before_definition</a></h3>
+<p>This error is reported when an identifier is used before its declaration in a context
+that requires forward declaration. Move the definition before the reference.</p>
+<h3 id="reserved_identifier"><a class="header" href="#reserved_identifier">reserved_identifier</a></h3>
+<p>This error is reported when an identifier with the reserved <code>__</code> prefix is used. Choose
+a different name.</p>
+<h3 id="sv_keyword_usage"><a class="header" href="#sv_keyword_usage">sv_keyword_usage</a></h3>
+<p>This error is reported when a SystemVerilog keyword is used as a Veryl identifier.
+Rename so it does not conflict in the generated SystemVerilog.</p>
+<h3 id="sv_with_implicit_reset"><a class="header" href="#sv_with_implicit_reset">sv_with_implicit_reset</a></h3>
+<p>This error is reported when a <code>reset</code>-typed port with implicit synchronicity and
+polarity is connected to a SystemVerilog module port. Use an explicit type such as
+<code>reset_async_low</code> or <code>reset_sync_high</code>.</p>
+<h3 id="too_large_enum_variant"><a class="header" href="#too_large_enum_variant">too_large_enum_variant</a></h3>
+<p>This error is reported when the explicit value of an enum variant cannot be represented
+within the enum’s bit width.
+Reduce the value or widen the enum.</p>
+<h3 id="too_large_number"><a class="header" href="#too_large_number">too_large_number</a></h3>
+<p>This error is reported when a numeric literal exceeds the maximum value representable in
+its specified bit width.
+Increase the bit width or reduce the value.</p>
+<h3 id="too_much_enum_variant"><a class="header" href="#too_much_enum_variant">too_much_enum_variant</a></h3>
+<p>This error is reported when the number of variants in an enum exceeds what its bit width
+can encode.
+Widen the enum, or reduce the number of variants.</p>
+<h3 id="type_inference_conflict"><a class="header" href="#type_inference_conflict">type_inference_conflict</a></h3>
+<p>This error is reported when multiple assignments to an untyped <code>var</code> infer different types.
+All assignments to an untyped variable must agree on the same type, or the variable must
+be declared with an explicit type.</p>
+<h3 id="type_inference_not_supported"><a class="header" href="#type_inference_not_supported">type_inference_not_supported</a></h3>
+<p>This error is reported when the right hand side expression of an untyped <code>let</code> or <code>const</code>
+declaration is not supported for type inference. Operator expressions, unsized literals,
+concatenation and <code>if</code>/<code>case</code> expressions are not inferable.
+Add an explicit type annotation to resolve this error.</p>
+<h3 id="unassignable_output"><a class="header" href="#unassignable_output">unassignable_output</a></h3>
+<p>This error is reported when a read-only or otherwise unassignable expression is
+connected to an output port.</p>
+<h3 id="undefined_identifier"><a class="header" href="#undefined_identifier">undefined_identifier</a></h3>
+<p>This error is reported when an identifier is referenced before it has been declared.
+Declare the identifier, or correct the spelling.</p>
+<h3 id="unevaluatable_value"><a class="header" href="#unevaluatable_value">unevaluatable_value</a></h3>
+<p>This error is reported when a value that cannot be resolved at elaboration time is used
+where a constant is required (e.g. an array size).</p>
+<h3 id="unexpandable_modport"><a class="header" href="#unexpandable_modport">unexpandable_modport</a></h3>
+<p>This error is reported when a modport reference cannot be expanded into individual
+ports.</p>
+<h3 id="unknown_attribute"><a class="header" href="#unknown_attribute">unknown_attribute</a></h3>
+<p>This error is reported when an attribute name is not recognized by the compiler.
+Remove the attribute or correct the name.</p>
+<h3 id="unknown_embed_lang"><a class="header" href="#unknown_embed_lang">unknown_embed_lang</a></h3>
+<p>This error is reported when an <code>embed</code> declaration uses an unsupported language
+identifier.</p>
+<h3 id="unknown_embed_way"><a class="header" href="#unknown_embed_way">unknown_embed_way</a></h3>
+<p>This error is reported when an <code>embed</code> declaration uses an unsupported way identifier.</p>
+<h3 id="unknown_include_way"><a class="header" href="#unknown_include_way">unknown_include_way</a></h3>
+<p>This error is reported when an <code>include</code> declaration uses an unsupported way identifier.</p>
+<h3 id="unknown_member"><a class="header" href="#unknown_member">unknown_member</a></h3>
+<p>This error is reported when a member is accessed on a struct, union or interface that
+does not declare that member. Correct the member name.</p>
+<h3 id="unknown_msb"><a class="header" href="#unknown_msb">unknown_msb</a></h3>
+<p>This error is reported when the compiler cannot resolve the bit width referenced by <code>msb</code>.
+Specify a concrete index instead.</p>
+<h3 id="unknown_param"><a class="header" href="#unknown_param">unknown_param</a></h3>
+<p>This error is reported when an instantiation overrides a parameter that the module does
+not declare. Remove the override or correct the parameter name.</p>
+<h3 id="unknown_port"><a class="header" href="#unknown_port">unknown_port</a></h3>
+<p>This error is reported when a module is instantiated with a port name that the module
+does not declare.
+Remove the connection, or correct the port name.</p>
+<h3 id="unknown_tb_port"><a class="header" href="#unknown_tb_port">unknown_tb_port</a></h3>
+<p>This error is reported when a <code>$tb::*</code> testbench component is instantiated with a
+port name that does not exist on that component.
+Remove the unknown connection or correct the port name.</p>
+<h3 id="unknown_unsafe"><a class="header" href="#unknown_unsafe">unknown_unsafe</a></h3>
+<p>This error is reported when an <code>unsafe(...)</code> block uses an identifier that is not a
+valid unsafe category.</p>
+<h3 id="unresolvable_generic_expression"><a class="header" href="#unresolvable_generic_expression">unresolvable_generic_expression</a></h3>
+<p>This error is reported when an expression in a generic parameter cannot be resolved
+from the position of the generic’s definition.</p>
+<h3 id="wrong_seperator"><a class="header" href="#wrong_seperator">wrong_seperator</a></h3>
+<p>This error is reported when an incorrect separator (<code>::</code> vs <code>.</code>) is used between
+identifiers. Replace it with the correct separator.</p>
+<h2 id="warnings"><a class="header" href="#warnings">Warnings</a></h2>
+<h3 id="invalid_identifier"><a class="header" href="#invalid_identifier">invalid_identifier</a></h3>
+<p>This warning is reported when an identifier violates the configured naming rule
+(see <a href="07_appendix/../06_development_environment/01_project_configuration/03_lint.html">Lint</a>).
+Rename the identifier so that it follows the rule.</p>
+<h3 id="invalid_logical_operand"><a class="header" href="#invalid_logical_operand">invalid_logical_operand</a></h3>
+<p>This warning is reported when a multi-bit value is used as the operand of a logical
+operator. Reduce the operand to a single bit (for example with <code>==</code>).</p>
+<h3 id="invalid_select"><a class="header" href="#invalid_select">invalid_select</a></h3>
+<p>This warning is reported when a bit / range select is invalid (e.g. out of bounds).</p>
+<h3 id="mismatch_assignment"><a class="header" href="#mismatch_assignment">mismatch_assignment</a></h3>
+<p>This warning is reported when the source and destination types of an assignment do not
+match.</p>
+<h3 id="mismatch_function_arg"><a class="header" href="#mismatch_function_arg">mismatch_function_arg</a></h3>
+<p>This warning is reported when an argument’s type does not match the function’s parameter
+type.</p>
+<h3 id="missing_port"><a class="header" href="#missing_port">missing_port</a></h3>
+<p>This warning is reported when a module is instantiated without connecting one of its
+declared ports. Add the missing port connection.</p>
+<h3 id="missing_reset_statement"><a class="header" href="#missing_reset_statement">missing_reset_statement</a></h3>
+<p>This warning is reported when a register declared in an <code>always_ff</code> block with <code>if_reset</code>
+has no assignment in the <code>if_reset</code> branch. Add an assignment for the register so it has
+a defined reset value.</p>
+<h3 id="mixed_struct_union_member"><a class="header" href="#mixed_struct_union_member">mixed_struct_union_member</a></h3>
+<p>This warning is reported when a struct or union mixes 2-state and 4-state members.
+Unify the members to a single state.</p>
+<h3 id="unassign_variable"><a class="header" href="#unassign_variable">unassign_variable</a></h3>
+<p>This warning is reported when a declared variable is never assigned a value.</p>
+<h3 id="uncovered_branch"><a class="header" href="#uncovered_branch">uncovered_branch</a></h3>
+<p>This warning is reported when a signal is conditionally assigned in some branches but
+not all, which infers a latch.
+Add a default assignment, or cover all branches.</p>
+<h3 id="unenclosed_inner_if_expression"><a class="header" href="#unenclosed_inner_if_expression">unenclosed_inner_if_expression</a></h3>
+<p>This warning is reported when a nested <code>if</code> expression is not enclosed in parentheses.
+Add parentheses to make precedence explicit.</p>
+<h3 id="unsigned_arith_shift"><a class="header" href="#unsigned_arith_shift">unsigned_arith_shift</a></h3>
+<p>This warning is reported when an arithmetic shift is applied to an unsigned operand.
+The result is identical to a logical shift; use a logical shift to clarify intent.</p>
+<h3 id="unused_return"><a class="header" href="#unused_return">unused_return</a></h3>
+<p>This warning is reported when a function call’s return value is discarded.
+Assign the result to a variable, or use a function whose return value is intentionally
+ignored.</p>
+<h3 id="unused_variable"><a class="header" href="#unused_variable">unused_variable</a></h3>
+<p>This warning is reported when a declared variable is never read.
+Add the <code>_</code> prefix to its name to mark it as intentionally unused, or remove the declaration.</p>
 
                     </main>
 

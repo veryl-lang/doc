@@ -226,6 +226,7 @@
 <li><a href="02_features.html#integrated-test">組み込みテスト</a></li>
 <li><a href="02_features.html#dependency-management">依存関係管理</a></li>
 <li><a href="02_features.html#generics">ジェネリクス</a></li>
+<li><a href="02_features.html#type-inference">型推論</a></li>
 <li><a href="02_features.html#clock-domain-annotation">クロックドメインアノテーション</a></li>
 <li><a href="02_features.html#trailing-comma">末尾カンマ</a></li>
 <li><a href="02_features.html#abstraction-of-clock-and-reset">クロックとリセットの抽象化</a></li>
@@ -306,6 +307,36 @@ var b: logic&lt;10&gt;;
 always_comb {
     a = FuncA::&lt;10&gt;(1);
     b = FuncA::&lt;20&gt;(1);
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2 id="type-inference"><a class="header" href="#type-inference">型推論</a></h2>
+<p><code>var</code>、<code>let</code>、<code>const</code> の型注釈は、右辺や最初の代入から型が導出できる場合に省略できます。関数呼び出しのジェネリック引数も、実引数の宣言型から推論できます。ポートや関数のシグネチャはインターフェースの可読性を保つために、引き続き明示的な型指定が必要です。</p>
+<table>
+<tr>
+<th>SystemVerilog</th>
+<th>Veryl</th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-verilog">logic [8-1:0] a;
+logic [8-1:0] b;
+logic [8-1:0] c;
+assign a = 8'd0;
+assign b = a;
+always_comb begin
+    c = a;
+end
+</code></pre>
+</td>
+<td>
+<pre><code class="language-veryl">let a = 8'd0;
+let b = a;
+var c;
+always_comb {
+    c = a;
 }
 </code></pre>
 </td>
@@ -572,7 +603,7 @@ end
 </code></pre>
 </td>
 <td>
-<pre><code class="language-veryl">for i: u32 in 0..10 {
+<pre><code class="language-veryl">for i in 0..10 {
     a[i] = inside  X[i] {1..=10};
     b[i] = outside X[i] {1..=10};
 }
@@ -1651,9 +1682,9 @@ module ModuleA {
 <p>範囲は <code>for</code> 文などの場所で使うことができます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     initial {
-        for _i: u32 in 0..10 {}
+        for _i in 0..10 {}
 
-        for _j: u32 in 0..=10 {}
+        for _j in 0..=10 {}
     }
 }
 </code></pre>
@@ -1862,7 +1893,7 @@ emit_cond_type = true
     var a: logic&lt;10&gt;;
 
     always_comb {
-        for i: u32 in 0..10 {
+        for i in 0..10 {
             a += i;
 
             if i == 5 {
@@ -1877,7 +1908,7 @@ emit_cond_type = true
     var a: logic&lt;10&gt;;
 
     always_comb {
-        for i: i32 in rev 0..10 {
+        for i in rev 0..10 {
             a += i;
 
             if i == 5 {
@@ -1919,6 +1950,7 @@ emit_cond_type = true
     }
 }
 </code></pre>
+<p>右辺から型が推論できる場合、型注釈は省略できます。推論可能なパターンについては <a href="05_language_reference/05_statement/../19_type_inference.html">型推論</a> を参照してください。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="宣言"><a class="header" href="#宣言">宣言</a></h1>
 <p>この章では宣言について説明します。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="変数"><a class="header" href="#変数">変数</a></h1>
@@ -1938,6 +1970,7 @@ emit_cond_type = true
     assign _d = 1;
 }
 </code></pre>
+<p>右辺、またはそれ以降の代入から型が推論できる場合、型注釈は省略できます。サポートされるパターンについては <a href="05_language_reference/06_declaration/../19_type_inference.html">型推論</a> を参照してください。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="パラメータ"><a class="header" href="#パラメータ">パラメータ</a></h1>
 <p>パラメータは変数と同時に宣言できます。<code>param</code> キーワードはモジュールヘッダで使用することができ、インスタンス時に上書きできます。<code>const</code> キーワードはモジュール内で使用することができ、上書きできません。</p>
 <pre><code class="language-veryl playground">module ModuleA #(
@@ -2769,10 +2802,12 @@ module Module47C {
 #[ignore]
 module test_ignored {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         $finish   ();
     }
 }
@@ -2786,7 +2821,8 @@ module test_ignored {
 </ul>
 <p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
 <ul>
-<li><code>$assert(condition)</code> または <code>$assert(condition, message)</code> — シミュレーション中にアサーションを検証</li>
+<li><code>$assert(condition)</code>、<code>$assert(condition, format, args...)</code> — シミュレーション中にアサーションを検査します。失敗するとシミュレーションは即座に停止し、テストは失敗として報告されます。<code>format</code> は <code>$display</code> と同じ書式のフォーマット文字列で、<code>args</code> がそこへ埋め込む値を与えます。</li>
+<li><code>$assert_continue(condition)</code>、<code>$assert_continue(condition, format, args...)</code> — <code>$assert</code> と同じですが、失敗後もシミュレーションが続行されるため、1回の実行で複数の失敗をまとめて収集できます。テストは引き続き失敗として報告されます。</li>
 <li><code>$finish()</code> — シミュレーションを終了</li>
 </ul>
 <h3 id="基本的な例"><a class="header" href="#基本的な例">基本的な例</a></h3>
@@ -2807,7 +2843,9 @@ module test_ignored {
 #[test(test_counter)]
 module test_counter {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     var cnt: logic&lt;32&gt;;
 
@@ -2818,7 +2856,7 @@ module test_counter {
     );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         clk.next  (10);
         $assert   (cnt == 32'd10);
         $finish   ();
@@ -2833,19 +2871,23 @@ module test_counter {
 </ul>
 <p><code>reset_gen</code> はリセットをアサートする <code>assert</code> メソッドを提供します。</p>
 <ul>
-<li><code>rst.assert(clk)</code> — クロックに同期してリセットをアサート</li>
-<li><code>rst.assert(clk, duration)</code> — 指定された期間リセットをアサート</li>
+<li><code>rst.assert()</code> — クロックに同期してリセットをアサート</li>
+<li><code>rst.assert(duration)</code> — 指定された期間リセットをアサート</li>
 </ul>
 <p>リセット期間はインスタンス化時にも設定できます。</p>
 <pre><code class="language-veryl playground">#[test(test_reset_cycles_param)]
 module test_reset_cycles_param {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen #( cycles: 5 );
+    inst rst: $tb::reset_gen #(
+        cycles: 5,
+    ) (
+        clk  ,
+    );
 
     // ...
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         // ...
     }
 }
@@ -2855,7 +2897,9 @@ module test_reset_cycles_param {
 <pre><code class="language-veryl playground">#[test(test_function_call)]
 module test_function_call {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     var cnt: logic&lt;32&gt;;
 
@@ -2868,7 +2912,7 @@ module test_function_call {
     }
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         step_n    (5);
         step_n    (5);
         $assert   (cnt == 32'd10);
@@ -2916,7 +2960,8 @@ embed (cocotb) py{{{
 <p>名前付きプロトタイプは特別なジェネリック境界です。詳細は <a href="05_language_reference/14_generics/02_prototype.html">プロトタイプ</a> を参照してください。</p>
 <p>ジェネリクスを使用するためには <code>::&lt;&gt;</code> を用いて実パラメータを与えます。実パラメータとしては数値リテラルと <code>::</code> で連結された識別子を使用することができます。</p>
 <p>さらに、実パラメータはジェネリクス定義位置から参照できなければなりません。例えば、モジュール名はプロジェクト全体から参照できるので、実パラメータとして使用できます。一方、ローカルパラメータは多くの場合、実パラメータとして使用できません。これはローカルパラメータがジェネリクス定義位置からは参照できない場合に発生します。</p>
-<h2 id="ジェネリック関数"><a class="header" href="#ジェネリック関数">ジェネリック関数</a></h2>
+<h2 id="例"><a class="header" href="#例">例</a></h2>
+<h3 id="ジェネリック関数"><a class="header" href="#ジェネリック関数">ジェネリック関数</a></h3>
 <pre><code class="language-veryl playground">module ModuleA {
     function FuncA::&lt;T: u32&gt; (
         a: input logic&lt;T&gt;,
@@ -2928,7 +2973,7 @@ embed (cocotb) py{{{
     let _b: logic&lt;20&gt; = FuncA::&lt;20&gt;(1);
 }
 </code></pre>
-<h2 id="ジェネリックモジュールインターフェース"><a class="header" href="#ジェネリックモジュールインターフェース">ジェネリックモジュール/インターフェース</a></h2>
+<h3 id="ジェネリックモジュールインターフェース"><a class="header" href="#ジェネリックモジュールインターフェース">ジェネリックモジュール/インターフェース</a></h3>
 <pre><code class="language-veryl playground">module ModuleA {
     inst u0: ModuleB::&lt;ModuleC&gt;;
     inst u1: ModuleB::&lt;ModuleD&gt;;
@@ -2943,7 +2988,7 @@ module ModuleB::&lt;T: ProtoA&gt; {
 module ModuleC for ProtoA {}
 module ModuleD for ProtoA {}
 </code></pre>
-<h2 id="ジェネリックパッケージ"><a class="header" href="#ジェネリックパッケージ">ジェネリックパッケージ</a></h2>
+<h3 id="ジェネリックパッケージ"><a class="header" href="#ジェネリックパッケージ">ジェネリックパッケージ</a></h3>
 <pre><code class="language-veryl playground">package PackageA::&lt;T: u32&gt; {
     const X: u32 = T;
 }
@@ -2953,7 +2998,7 @@ module ModuleA {
     const B: u32 = PackageA::&lt;2&gt;::X;
 }
 </code></pre>
-<h2 id="ジェネリック構造体"><a class="header" href="#ジェネリック構造体">ジェネリック構造体</a></h2>
+<h3 id="ジェネリック構造体"><a class="header" href="#ジェネリック構造体">ジェネリック構造体</a></h3>
 <pre><code class="language-veryl playground">package PackageA {
     type TypeB = u32;
     type TypeC = u64;
@@ -2973,6 +3018,44 @@ module ModuleA {
     var _c: StructA::&lt;PackageA::TypeC&gt;;
 }
 </code></pre>
+<h2 id="gen-宣言"><a class="header" href="#gen-宣言"><code>gen</code> 宣言</a></h2>
+<p><code>gen</code> 宣言はジェネリックパラメータから派生する定数や型を定義します。定義された値はジェネリック引数として使用できます。</p>
+<pre><code class="language-veryl playground">module ModuleA::&lt;W: u32, T: type&gt; (
+    a: output logic&lt;W&gt;,
+    b: output T       ,
+) {
+    always_comb {
+        a = '0;
+        b = '0;
+    }
+}
+module ModuleB::&lt;A: u32, B: u32, C: u32&gt; {
+    gen W: u32  = A + B;
+    gen T: type = logic&lt;C&gt;;
+
+    var a: logic&lt;W&gt;;
+    var b: T       ;
+
+    inst u: ModuleA::&lt;W, T&gt; (
+        a  ,
+        b  ,
+    );
+}
+module ModuleC {
+    inst u: ModuleB::&lt;1, 2, 3&gt;;
+
+}
+</code></pre>
+<p><code>ModuleB::&lt;1, 2, 3&gt;</code> では W = 1 + 2 = 3 と T = logic&lt;3&gt; が導出され、<code>ModuleA::&lt;3, logic&lt;3&gt;&gt;</code> がインスタンス化されます。</p>
+<p><code>gen</code> 宣言の右辺式は、その結果の値自体がジェネリック引数として使われるため、実ジェネリック引数と同じ制約を受けます。式に使用できるのは以下のものだけです。</p>
+<ul>
+<li>リテラル</li>
+<li>パッケージ内で定義されたシンボル</li>
+<li>ジェネリックパラメータ</li>
+<li>他の <code>gen</code> 宣言</li>
+</ul>
+<h2 id="ジェネリック引数の推論"><a class="header" href="#ジェネリック引数の推論">ジェネリック引数の推論</a></h2>
+<p>ジェネリック関数では、呼び出し引数からジェネリック引数を推論できる場合、<code>::&lt;&gt;</code> 後の実引数を省略できます。詳細は <a href="05_language_reference/19_type_inference.html#generic-argument-inference">型推論</a> を参照してください。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="デフォルトパラメータ"><a class="header" href="#デフォルトパラメータ">デフォルトパラメータ</a></h1>
 <p>ジェネリックパラメータはその後に <code>=</code> を加えることでデフォルト値を指定することができます。呼び出し側でパラメータ指定が省略された場合にデフォルト値が使われます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -3629,6 +3712,77 @@ always_comb {
 <li>組み合わせロジックには <code>always_comb</code> と <code>=</code>（ブロッキング）</li>
 <li>同一変数へのブロッキング/ノンブロッキング代入の混在なし</li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="型推論"><a class="header" href="#型推論">型推論</a></h1>
+<p>型注釈やジェネリック引数は、周辺のコードから導出できる場合に省略できることがあります。この章ではサポートされるパターンをまとめます。</p>
+<p>モジュール／インターフェース／関数のポート宣言や関数の戻り値型は、型が推論可能であっても、インターフェースを明確に保つため引き続き型注釈が必要です。</p>
+<h2 id="変数の型推論"><a class="header" href="#変数の型推論">変数の型推論</a></h2>
+<p><a href="05_language_reference/06_declaration/01_variable.html"><code>var</code></a> や <a href="05_language_reference/05_statement/07_let.html"><code>let</code></a> 宣言、および <a href="05_language_reference/06_declaration/02_parameter.html"><code>const</code></a> 宣言の型注釈は、型が推論可能な場合に省略できます。</p>
+<p>型を持たない <code>var</code> 宣言では、<code>assign</code>、<code>always_comb</code>、<code>always_ff</code> を通じた最初の代入から型が推論されます。<code>let</code> および <code>const</code> 宣言では、右辺の式から型が推論されます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    let _a: logic&lt;8&gt; = 0;
+
+    // `_a` の型から推論される。
+    let _b = _a;
+
+    // ビット幅付きリテラルから推論される。
+    let _c = 8'd255;
+
+    // 最初の代入から推論される。
+    var _d;
+    assign _d = _a;
+
+    // always_comb 内の最初の代入から推論される。
+    var _e;
+    always_comb {
+        _e = _a;
+    }
+
+    // `const` も推論をサポートする。
+    const _F = 16'd100;
+}
+</code></pre>
+<p>以下の式は型推論の元として使用できます。</p>
+<ul>
+<li>変数参照</li>
+<li>ビット幅付き数値リテラル（例: <code>8'd10</code>）</li>
+<li>括弧で囲まれた式（内側の式へ再帰的に推論）</li>
+<li>関数呼び出し（戻り値の型から推論）</li>
+</ul>
+<p>以下の式は SystemVerilog のビット幅評価規則に依存し、ユーザーにとって予期しにくい結果になるため、サポートされません。</p>
+<ul>
+<li>ビット幅なし数値リテラル（例: <code>10</code>、<code>'0</code>）</li>
+<li>演算子を含む式（例: <code>_a + 1</code>）</li>
+<li>連結（例: <code>{_a, _a}</code>）</li>
+<li><code>if</code> / <code>case</code> 式</li>
+</ul>
+<p>同一の <code>var</code> に対する複数の代入で推論される型が一致しない場合、<a href="05_language_reference/../07_appendix/02_semantic_error.html#type_inference_conflict">type_inference_conflict</a> として報告されます。サポートされていない式の場合は <a href="05_language_reference/../07_appendix/02_semantic_error.html#type_inference_not_supported">type_inference_not_supported</a> が報告されます。いずれの場合も、明示的な型注釈を加えればエラーは解消されます。</p>
+<h2 id="ジェネリック引数の推論-1"><a class="header" href="#ジェネリック引数の推論-1">ジェネリック引数の推論</a></h2>
+<p>ジェネリック関数では、関数の引数からジェネリック引数を推論できる場合、<code>::&lt;&gt;</code> 後の実引数を省略できます。推論は各実引数の宣言型を用いてジェネリックパラメータを解決します。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    function FuncId::&lt;T: u32&gt; (
+        x: input logic&lt;T&gt;,
+    ) -&gt; logic&lt;T&gt; {
+        return x;
+    }
+
+    function FuncWide::&lt;T: u32&gt; (
+        x: input logic&lt;T&gt;,
+    ) -&gt; logic&lt;T + 1&gt; {
+        return {1'b0, x};
+    }
+
+    let _a: logic&lt;8&gt;  = 0;
+    let _b: logic&lt;16&gt; = 0;
+
+    // 実引数の宣言された幅から T が 8 / 16 に推論される。
+    let _r1: logic&lt;8&gt;  = FuncId(_a);
+    let _r2: logic&lt;16&gt; = FuncId(_b);
+
+    // `T + 1` パターン: 実引数の幅 8 から T = 8 が解決される。
+    let _rw: logic&lt;9&gt; = FuncWide(_a);
+}
+</code></pre>
+<p>実引数の幅を変数宣言から決定できない場合（例: ビット幅付きリテラルを渡した場合）、推論は失敗します。その場合は明示的なジェネリック引数が必要です。詳細は <a href="05_language_reference/../07_appendix/02_semantic_error.html#generic_inference_failed">generic_inference_failed</a> を参照してください。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="開発環境"><a class="header" href="#開発環境">開発環境</a></h1>
 <p>この章ではプロジェクト設定や開発ツールなど開発環境について説明します。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="プロジェクト設定"><a class="header" href="#プロジェクト設定">プロジェクト設定</a></h1>
@@ -3648,6 +3802,7 @@ always_comb {
 <li><a href="06_development_environment/01_project_configuration.html#the-lint-section"><code>[lint]</code></a> — リント設定</li>
 <li><a href="06_development_environment/01_project_configuration.html#the-test-section"><code>[test]</code></a> — テスト設定</li>
 <li><a href="06_development_environment/01_project_configuration.html#the-publish-section"><code>[publish]</code></a> — 公開設定</li>
+<li><a href="06_development_environment/01_project_configuration.html#the-synth-section"><code>[synth]</code></a> — 論理合成設定</li>
 <li><a href="06_development_environment/01_project_configuration.html#the-dependencies-section"><code>[dependencies]</code></a> — ライブラリの依存関係</li>
 </ul>
 <h2 id="the-project-section"><a class="header" href="#the-project-section"><code>[project]</code> セクション</a></h2>
@@ -3691,6 +3846,8 @@ repository = "https://github.com/veryl-lang/veryl"
 <p><code>[test]</code> セクションはRTLシミュレータによるテストの設定です。詳細は<a href="06_development_environment/./01_project_configuration/04_test.html">こちら</a>。</p>
 <h2 id="the-publish-section"><a class="header" href="#the-publish-section"><code>[publish]</code> セクション</a></h2>
 <p><code>[publish]</code> セクションはプロジェクト公開の設定です。詳細は<a href="06_development_environment/./01_project_configuration/05_publish.html">こちら</a>。</p>
+<h2 id="the-synth-section"><a class="header" href="#the-synth-section"><code>[synth]</code> セクション</a></h2>
+<p><code>[synth]</code> セクションはシンセサイザの設定です。詳細は<a href="06_development_environment/./01_project_configuration/06_synth.html">こちら</a>。</p>
 <h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section"><code>[dependencies]</code> セクション</a></h2>
 <p><code>[dependencies]</code> セクションはライブラリの依存関係です。詳細は<a href="06_development_environment/./02_dependencies.html">こちら</a>。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="build"><a class="header" href="#build">Build</a></h1>
@@ -3863,8 +4020,17 @@ indent_width = 4
 <div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr></thead><tbody>
 <tr><td>indent_width</td><td>整数</td><td>4</td><td>インデントのスペース幅</td></tr>
 <tr><td>vertical_align</td><td>ブーリアン</td><td>true</td><td>垂直方向の調整を有効にする</td></tr>
+<tr><td>newline_style</td><td><code>auto</code> / <code>native</code> / <code>unix</code> / <code>windows</code></td><td><code>auto</code></td><td>改行コードのスタイル</td></tr>
 </tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="lint"><a class="header" href="#lint">Lint</a></h1>
+</div>
+<p><code>newline_style</code> はフォーマッタ、ビルドのエミッタ、マイグレータが出力する改行コードを制御します。利用可能な値は以下のとおりです。</p>
+<ul>
+<li><code>auto</code> — 入力ファイルから検出します。改行が存在しない場合は実行プラットフォームのネイティブスタイルが使用されます。</li>
+<li><code>native</code> — 実行プラットフォームのネイティブスタイル（Windows では <code>\r\n</code>、それ以外では <code>\n</code>）を使用します。</li>
+<li><code>unix</code> — 常に <code>\n</code> を使用します。</li>
+<li><code>windows</code> — 常に <code>\r\n</code> を使用します。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="lint"><a class="header" href="#lint">Lint</a></h1>
 <p><code>[lint]</code> セクションはリンターの設定です。</p>
 <pre><code class="language-toml">[lint.naming]
 case_enum = "snake"
@@ -4071,7 +4237,35 @@ bump_commit_message = "Bump"
 <tr><td>bump_commit_message</td><td>文字列</td><td>“chore: Bump version”</td><td>バージョンアップ後のコミットメッセージ</td></tr>
 <tr><td>publish_commit_message</td><td>文字列</td><td>“chore: Publish”</td><td>公開後のコミットメッセージ</td></tr>
 </tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="synth"><a class="header" href="#synth">Synth</a></h1>
+<p><code>[synth]</code> セクションは、簡易的な論理合成を行って面積・タイミング・電力を見積もる <code>veryl synth</code> コマンドの設定を指定します。</p>
+<pre><code class="language-toml">[synth]
+top          = "TopModule"
+library      = "sky130"
+clock_freq   = 100.0
+activity     = 0.1
+timing_paths = 1
+</code></pre>
+<h2 id="設定-4"><a class="header" href="#設定-4">設定</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr></thead><tbody>
+<tr><td>top</td><td>文字列</td><td>(自動)</td><td>デフォルトのトップモジュール名。CLI の <code>--top</code> が指定されると上書きされます。未指定の場合、最初に見つかったユーザーモジュールが使用されます。</td></tr>
+<tr><td>library</td><td><code>sky130</code> / <code>asap7</code> / <code>gf180mcu</code> / <code>ihp-sg13g2</code></td><td><code>sky130</code></td><td>使用する組み込みセルライブラリ／PDK。</td></tr>
+<tr><td>clock_freq</td><td>浮動小数</td><td>100.0</td><td>動的消費電力見積もりで仮定するクロック周波数（MHz）。</td></tr>
+<tr><td>activity</td><td>浮動小数（0.0–1.0）</td><td>0.1</td><td>組み合わせネットで仮定するサイクルあたりのトグル率。</td></tr>
+<tr><td>timing_paths</td><td>整数</td><td>1</td><td>タイミングダンプで報告する最悪遅延エンドポイントの数。</td></tr>
+</tbody></table>
+</div>
+<h2 id="組み込みライブラリ"><a class="header" href="#組み込みライブラリ">組み込みライブラリ</a></h2>
+<p><code>library</code> フィールドは面積・タイミング・電力の見積もりに使われる組み込みセルライブラリを指定します。値はすべて公開されている Liberty 特性化データから抽出または派生させたもので、サインオフ精度ではなく自己整合的な「相対コスト」として校正されています。すべてドライブ強度1のセルを用いています。</p>
+<div class="table-wrapper"><table><thead><tr><th><code>library</code></th><th>プロセス</th><th>セルライブラリ／コーナー</th><th>電源電圧</th><th>ソース（ライセンス）</th></tr></thead><tbody>
+<tr><td><code>sky130</code></td><td>SkyWater 130nm プレーナ CMOS</td><td><code>sky130_fd_sc_hd</code> / <code>tt_025C_1v80</code></td><td>1.8 V</td><td><a href="https://github.com/google/skywater-pdk">skywater-pdk</a>（Apache 2.0）</td></tr>
+<tr><td><code>asap7</code></td><td>ASU 7nm 予測 FinFET</td><td><code>asap7sc7p5t</code> RVT / <code>tt_0p7V</code></td><td>0.7 V</td><td><a href="https://github.com/The-OpenROAD-Project/asap7">asap7</a>（BSD 3-Clause）</td></tr>
+<tr><td><code>gf180mcu</code></td><td>GlobalFoundries 180nm MCU プレーナ CMOS</td><td><code>gf180mcu_fd_sc_mcu7t5v0</code> / <code>tt_025C_1v80</code></td><td>1.8 V</td><td><a href="https://github.com/google/gf180mcu-pdk">gf180mcu-pdk</a>（Apache 2.0）</td></tr>
+<tr><td><code>ihp-sg13g2</code></td><td>IHP 130nm SiGe BiCMOS</td><td><code>sg13g2_stdcell</code> / <code>typ_1p20V_25C</code></td><td>1.2 V</td><td><a href="https://github.com/IHP-GmbH/IHP-Open-PDK">IHP-Open-PDK</a>（Apache 2.0）</td></tr>
+</tbody></table>
+</div>
+<p>Veryl はこれらの PDK の Liberty ソース、回路図、レイアウトを再配布していません。参考データとして、ごく少数のセル単位の面積・遅延・漏れ電力・エネルギーの値のみを利用しています。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h1>
 <p>他の Veryl プロジェクトへの依存関係をプロジェクトに追加したい場合、<code>Veryl.toml</code> に <code>[dependencies]</code> セクションを追加します。エントリの左辺は依存関係のプロジェクト名、右辺はソースパスとバージョンです。<code>github</code> はGitHub上のリポジトリを参照する糖衣構文です。代わりに <code>git</code> を用いてURL全体を指定することもできます。</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
@@ -4168,7 +4362,7 @@ $ git push
 [INFO ]      Writing metadata ([path to project]/Veryl.pub)
 [INFO ]   Committing metadata ([path to project]/Veryl.pub)
 </code></pre>
-<h3 id="設定-4"><a class="header" href="#設定-4">設定</a></h3>
+<h3 id="設定-5"><a class="header" href="#設定-5">設定</a></h3>
 <p>全設定の説明は<a href="06_development_environment/./01_project_configuration/05_publish.html">こちら</a>。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ディレクトリ構成"><a class="header" href="#ディレクトリ構成">ディレクトリ構成</a></h1>
 <p>Veryl は任意のディレクトリ構成をサポートしています。これは独立したプロジェクトと他のプロジェクトに組み込まれたプロジェクトでは最適なディレクトリ構成が異なるためです。</p>
@@ -4575,6 +4769,61 @@ fmt:
   script:
     - veryl fmt --check
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="トランスレータ"><a class="header" href="#トランスレータ">トランスレータ</a></h1>
+<p><code>veryl translate</code> は SystemVerilog のソースファイルを Veryl のソースに変換します。既存の SystemVerilog コードベースの移行を支援するベストエフォートのツールであり、結果が完全に置き換え可能であることは保証されず、手動でのレビューが必要になる場合があります。</p>
+<pre><code class="language-console">$ veryl translate foo.sv
+</code></pre>
+<p>入力された各 <code>.sv</code> ファイルに対して、同じディレクトリに同名の <code>.veryl</code> ファイルが生成されます。変換後の出力は Veryl のフォーマッタを通すため、標準的なフォーマットスタイルに従います。</p>
+<h2 id="オプション"><a class="header" href="#オプション">オプション</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>オプション</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>--stdout</code></td><td>ファイルに書き込まず、結果を標準出力へ書き出します。パイプ処理や、デフォルト以外のパスへリダイレクトしたい場合に便利です。</td></tr>
+<tr><td><code>--strict</code></td><td>未サポートの構文が見つかった場合、非ゼロのステータスで終了します。</td></tr>
+<tr><td><code>--no-format</code></td><td>Veryl フォーマッタの処理をスキップし、トランスレータの生の出力を出します。</td></tr>
+</tbody></table>
+</div>
+<h2 id="未サポートの構文"><a class="header" href="#未サポートの構文">未サポートの構文</a></h2>
+<p>SystemVerilog の中には Veryl で表現できないもの、あるいはトランスレータがまだ対応していないものがあります。そのような構文が現れた場合、構文の種別とソース行番号付きの警告が出力され、当該箇所は出力中にコメントやプレースホルダとして残されます。ファイルごとに未サポート構文の合計数も末尾にまとめて報告されます。</p>
+<p><code>--strict</code> モードでは、未サポートの構文が一つでもあれば <code>veryl translate</code> は非ゼロのステータスで終了します。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="シンセサイザ"><a class="header" href="#シンセサイザ">シンセサイザ</a></h1>
+<p><code>veryl synth</code> はプロジェクトに対して簡易的な論理合成を行い、概算の面積・タイミング・電力を報告します。これは設計検討中に素早くフィードバックを得るためのツールであり、本格的な合成フローの代替を意図したものではありません。設計は選択したライブラリ内の代表的なセル群へマッピングされますが、配置配線・負荷容量・駆動能力・Vth の選択は考慮されません。</p>
+<pre><code class="language-console">$ veryl synth
+</code></pre>
+<p>トップモジュールは以下の優先順位で選択されます。</p>
+<ol>
+<li>指定されている場合、CLI の <code>--top &lt;name&gt;</code></li>
+<li>設定されている場合、<code>Veryl.toml</code> の <code>synth.top</code></li>
+<li>プロジェクト内で最初に見つかったユーザーモジュール</li>
+</ol>
+<p>セルライブラリ、クロック周波数、トグル率といった設定項目については <a href="06_development_environment/./01_project_configuration/06_synth.html"><code>[synth]</code></a> を参照してください。</p>
+<h2 id="出力"><a class="header" href="#出力">出力</a></h2>
+<p>デフォルトでは、<code>veryl synth</code> は1行のサマリと、面積／タイミング／電力の詳細ブロックを出力します。</p>
+<pre><code class="language-text">synth: TopModule — 123 gates, 17 FFs
+library: sky130_fd_sc_hd ...
+
+summary:
+  area:        1234.56 um²  (comb 1100.00, seq 134.56)
+  timing:        2.345 ns      8 levels  in_dat → out_dat
+  power:        0.1234 mW   (leak 0.0123 mW, dyn 0.1111 mW)
+                            @ f_clk = 100 MHz, activity = 0.10
+
+area:
+  ...
+timing:
+  ...
+power:
+  ...
+</code></pre>
+<h2 id="オプション-1"><a class="header" href="#オプション-1">オプション</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>オプション</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>--top &lt;name&gt;</code></td><td>トップモジュール名。<code>Veryl.toml</code> の <code>synth.top</code> を上書きします。</td></tr>
+<tr><td><code>--timing-paths &lt;n&gt;</code></td><td>タイミングダンプで報告する最悪遅延エンドポイントの数。<code>synth.timing_paths</code> を上書きします。</td></tr>
+<tr><td><code>--dump-ir</code></td><td>ゲートレベル IR（ゲートとフリップフロップのネットリスト）をダンプします。</td></tr>
+<tr><td><code>--dump-area</code></td><td>セル種別ごとの面積内訳をダンプします。</td></tr>
+<tr><td><code>--dump-timing</code></td><td>クリティカルパスのトレースをダンプします。</td></tr>
+<tr><td><code>--dump-power</code></td><td>電力見積もり（漏れ電力＋動的電力の内訳）をダンプします。</td></tr>
+</tbody></table>
+</div>
+<p><code>--dump-*</code> フラグが何も指定されない場合、面積／タイミング／電力の3つすべてがダンプされます。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="補遺"><a class="header" href="#補遺">補遺</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="構文"><a class="header" href="#構文">構文</a></h1>
 <p>Veryl のパーサはパーサジェネレータ <a href="https://github.com/jsinger67/parol">parol</a>を使っています。以下の parol の構文定義が正式な構文です。</p>
@@ -4709,6 +4958,7 @@ FalseTerm             : &lt;INITIAL, Generic                                    
 FinalTerm             : &lt;INITIAL, Generic                                             &gt;'final'                                                                               : Token; // Keyword: Statement
 ForTerm               : &lt;INITIAL, Generic                                             &gt;'for'                                                                                 : Token; // Keyword: Repeat
 FunctionTerm          : &lt;INITIAL, Generic                                             &gt;'function'                                                                            : Token; // Keyword: Structure
+GenTerm               : &lt;INITIAL, Generic                                             &gt;'gen'                                                                                 : Token; // Keyword: Statement
 I8Term                : &lt;INITIAL, Generic                                             &gt;'i8'                                                                                  : Token; // Keyword: Type
 I16Term               : &lt;INITIAL, Generic                                             &gt;'i16'                                                                                 : Token; // Keyword: Type
 I32Term               : &lt;INITIAL, Generic                                             &gt;'i32'                                                                                 : Token; // Keyword: Type
@@ -4858,6 +5108,7 @@ FalseToken         : FalseTerm         : Token Comments;
 FinalToken         : FinalTerm         : Token Comments;
 ForToken           : ForTerm           : Token Comments;
 FunctionToken      : FunctionTerm      : Token Comments;
+GenToken           : GenTerm           : Token Comments;
 I8Token            : I8Term            : Token Comments;
 I16Token           : I16Term           : Token Comments;
 I32Token           : I32Term           : Token Comments;
@@ -5014,6 +5265,7 @@ False         : FalseToken         : VerylToken;
 Final         : FinalToken         : VerylToken;
 For           : ForToken           : VerylToken;
 Function      : FunctionToken      : VerylToken;
+Gen           : GenToken           : VerylToken;
 I8            : I8Token            : VerylToken;
 I16           : I16Token           : VerylToken;
 I32           : I32Token           : VerylToken;
@@ -5264,7 +5516,13 @@ StatementBlock: LBrace { StatementBlockGroup } RBrace;
 
 StatementBlockGroup: { Attribute } ( Block LBrace { StatementBlockGroup } RBrace | StatementBlockItem );
 
-StatementBlockItem: VarDeclaration | LetStatement | ConstDeclaration | Statement | ConcatenationAssignment;
+StatementBlockItem: VarDeclaration
+                  | LetStatement
+                  | ConstDeclaration
+                  | GenDeclaration
+                  | Statement
+                  | ConcatenationAssignment
+                  ;
 
 Statement: IdentifierStatement
          | IfStatement
@@ -5276,7 +5534,7 @@ Statement: IdentifierStatement
          | SwitchStatement
          ;
 
-LetStatement: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Semicolon;
+LetStatement: Let Identifier [ Colon [ ClockDomain ] ArrayType ] Equ Expression Semicolon;
 
 IdentifierStatement: ExpressionIdentifier ( FunctionCall | Assignment ) Semicolon;
 
@@ -5292,7 +5550,7 @@ ReturnStatement: Return Expression Semicolon;
 
 BreakStatement: Break Semicolon;
 
-ForStatement: For Identifier Colon ScalarType In [ Rev ] Range [ Step AssignmentOperator Expression ] StatementBlock;
+ForStatement: For Identifier In [ Rev ] Range [ Step AssignmentOperator Expression ] StatementBlock;
 
 CaseStatement: Case Expression LBrace { CaseItem } RBrace;
 
@@ -5322,11 +5580,13 @@ AttributeItem: Identifier
 // Declaration
 // ----------------------------------------------------------------------------
 
-LetDeclaration: Let Identifier Colon [ ClockDomain ] ArrayType Equ Expression Semicolon;
+LetDeclaration: Let Identifier [ Colon [ ClockDomain ] ArrayType ] Equ Expression Semicolon;
 
-VarDeclaration: Var Identifier Colon [ ClockDomain ] ArrayType Semicolon;
+VarDeclaration: Var Identifier [ Colon [ ClockDomain ] ArrayType ] Semicolon;
 
-ConstDeclaration: Const Identifier Colon ( ArrayType | Type ) Equ Expression Semicolon;
+ConstDeclaration: Const Identifier [ Colon ( ArrayType | Type ) ] Equ Expression Semicolon;
+
+GenDeclaration: Gen Identifier Colon ( GenericProtoBound | Type ) Equ Expression Semicolon;
 
 TypeDefDeclaration: Type Identifier Equ ArrayType Semicolon;
 
@@ -5532,6 +5792,7 @@ GenerateItem: LetDeclaration
             | InstDeclaration
             | BindDeclaration
             | ConstDeclaration
+            | GenDeclaration
             | AlwaysFfDeclaration
             | AlwaysCombDeclaration
             | AssignDeclaration
@@ -5560,6 +5821,7 @@ PackageDeclaration: Package Identifier [ WithGenericParameter ] [ For ScopedIden
 PackageGroup: { Attribute } ( LBrace { PackageGroup } RBrace | PackageItem );
 
 PackageItem: ConstDeclaration
+           | GenDeclaration
            | TypeDefDeclaration
            | EnumDeclaration
            | StructUnionDeclaration
@@ -5661,33 +5923,199 @@ PublicDescriptionItem: ModuleDeclaration
 Veryl: Start { DescriptionGroup };
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="セマンティックエラー"><a class="header" href="#セマンティックエラー">セマンティックエラー</a></h1>
-<h2 id="duplicated_identifier"><a class="header" href="#duplicated_identifier">duplicated_identifier</a></h2>
-<h2 id="invalid_allow"><a class="header" href="#invalid_allow">invalid_allow</a></h2>
-<h2 id="invalid_direction"><a class="header" href="#invalid_direction">invalid_direction</a></h2>
-<h2 id="invalid_identifier"><a class="header" href="#invalid_identifier">invalid_identifier</a></h2>
-<h2 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h2>
-<h2 id="invalid_msb"><a class="header" href="#invalid_msb">invalid_msb</a></h2>
-<h2 id="invalid_number_character"><a class="header" href="#invalid_number_character">invalid_number_character</a></h2>
-<h2 id="invalid_statement"><a class="header" href="#invalid_statement">invalid_statement</a></h2>
-<h2 id="invalid_system_function"><a class="header" href="#invalid_system_function">invalid_system_function</a></h2>
-<h2 id="invalid_type_declaration"><a class="header" href="#invalid_type_declaration">invalid_type_declaration</a></h2>
-<p>このエラーは <code>struct</code>、<code>enum</code>、<code>union</code>のデータ型がインターフェース宣言内で定義されたことを示します。</p>
-<h2 id="mismatch_arity"><a class="header" href="#mismatch_arity">mismatch_arity</a></h2>
-<h2 id="mismatch_attribute_args"><a class="header" href="#mismatch_attribute_args">mismatch_attribute_args</a></h2>
-<h2 id="mismatch_type"><a class="header" href="#mismatch_type">mismatch_type</a></h2>
-<h2 id="missing_if_reset"><a class="header" href="#missing_if_reset">missing_if_reset</a></h2>
-<h2 id="missing_port"><a class="header" href="#missing_port">missing_port</a></h2>
-<h2 id="missing_reset_signal"><a class="header" href="#missing_reset_signal">missing_reset_signal</a></h2>
-<h2 id="missing_reset_statement"><a class="header" href="#missing_reset_statement">missing_reset_statement</a></h2>
-<h2 id="too_large_enum_variant"><a class="header" href="#too_large_enum_variant">too_large_enum_variant</a></h2>
-<h2 id="too_large_number"><a class="header" href="#too_large_number">too_large_number</a></h2>
-<h2 id="too_much_enum_variant"><a class="header" href="#too_much_enum_variant">too_much_enum_variant</a></h2>
-<h2 id="undefined_identifier"><a class="header" href="#undefined_identifier">undefined_identifier</a></h2>
-<h2 id="unknown_attribute"><a class="header" href="#unknown_attribute">unknown_attribute</a></h2>
-<h2 id="unknown_member"><a class="header" href="#unknown_member">unknown_member</a></h2>
-<h2 id="unknown_msb"><a class="header" href="#unknown_msb">unknown_msb</a></h2>
-<h2 id="unknown_port"><a class="header" href="#unknown_port">unknown_port</a></h2>
-<h2 id="unused_variable"><a class="header" href="#unused_variable">unused_variable</a></h2>
+<p>この付録では、Veryl のセマンティック解析器が出力する診断を一覧します。診断は、コンパイルを停止させるエラーと、コンパイルの継続を許す警告に分けて記載します。</p>
+<h2 id="エラー"><a class="header" href="#エラー">エラー</a></h2>
+<h3 id="ambiguous_elsif"><a class="header" href="#ambiguous_elsif">ambiguous_elsif</a></h3>
+<p>このエラーは、<code>elsif</code> または <code>else</code> 属性を、先行する <code>if</code> 属性と一意に対応付けられない場合に報告されます。対応関係が明確になるよう周辺のコードを書き直してください。</p>
+<h3 id="anonymous_identifier_usage"><a class="header" href="#anonymous_identifier_usage">anonymous_identifier_usage</a></h3>
+<p>このエラーは、名前付きの識別子が必要な位置で匿名識別子（<code>_</code>）が使われた場合に報告されます。</p>
+<h3 id="call_non_function"><a class="header" href="#call_non_function">call_non_function</a></h3>
+<p>このエラーは、関数でないシンボルを関数として呼び出した場合に報告されます。呼び出しを削除するか、実際の関数シンボルに置き換えてください。</p>
+<h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
+<p>このエラーは、複数の型定義が循環的に互いを参照している場合に報告されます。参照のいずれかを削除または再構成して循環を断ち切ってください。</p>
+<h3 id="duplicated_identifier"><a class="header" href="#duplicated_identifier">duplicated_identifier</a></h3>
+<p>このエラーは、同じ識別子が同一スコープ内で複数回宣言された場合に報告されます。いずれかの宣言を別名にリネームしてください。</p>
+<h3 id="exceed_limit"><a class="header" href="#exceed_limit">exceed_limit</a></h3>
+<p>このエラーは、インスタンスの深さ、総インスタンス数、エラボレーション評価サイズなどの内部制限を超えた場合に報告されます。<code>Veryl.toml</code> の <code>[build]</code> セクションで該当する制限を引き上げるか、設計を簡略化してください。</p>
+<h3 id="fixed_type_with_signed_modifier"><a class="header" href="#fixed_type_with_signed_modifier">fixed_type_with_signed_modifier</a></h3>
+<p>このエラーは、固定幅の型（例：<code>u32</code>）に <code>signed</code> 修飾子を付けた場合に報告されます。<code>signed</code> 修飾子を削除してください。</p>
+<h3 id="generic_inference_failed"><a class="header" href="#generic_inference_failed">generic_inference_failed</a></h3>
+<p>このエラーは、関数呼び出しの実引数が省略されたが、コンパイラが呼び出し時の引数から推論できなかった場合に報告されます。<code>::&lt;&gt;</code> で明示的にジェネリック引数を指定するか、変数宣言から幅を決定できる引数を渡してください。</p>
+<h3 id="include_failure"><a class="header" href="#include_failure">include_failure</a></h3>
+<p>このエラーは、<code>include</code> 宣言が参照するファイルを読み込めない場合に報告されます。パスとファイルパーミッションを確認してください。</p>
+<h3 id="incompat_proto"><a class="header" href="#incompat_proto">incompat_proto</a></h3>
+<p>このエラーは、<code>for {proto}</code> を持つモジュール／インターフェース／パッケージがそのプロトタイプの契約を満たさない場合に報告されます。プロトタイプに合うように実装を調整してください。</p>
+<h3 id="infinite_recursion"><a class="header" href="#infinite_recursion">infinite_recursion</a></h3>
+<p>このエラーは、モジュールが直接的または間接的に自身をインスタンス化し、再帰を止める条件が無い場合に報告されます。再帰を終端させる条件を加える（例：ジェネリックパラメータと <code>if</code> による生成で打ち切る）か、モジュールが自身を参照しないように設計を組み直してください。</p>
+<h3 id="invalid_assignment"><a class="header" href="#invalid_assignment">invalid_assignment</a></h3>
+<p>このエラーは、定数・パラメータ・ジェネリックパラメータなど代入できない種類のシンボルが代入の対象になった場合に報告されます。代入を削除してください。</p>
+<h3 id="invalid_cast"><a class="header" href="#invalid_cast">invalid_cast</a></h3>
+<p>このエラーは、型キャストの元と先の型が互換でない場合に報告されます。互換性のある型を指定してください。</p>
+<h3 id="invalid_clock"><a class="header" href="#invalid_clock">invalid_clock</a></h3>
+<p>このエラーは、<code>clock</code> 型でも単一ビット信号でもない信号がクロックとして接続された場合に報告されます。<code>clock</code> 型の信号を使用してください。</p>
+<h3 id="invalid_clock_domain"><a class="header" href="#invalid_clock_domain">invalid_clock_domain</a></h3>
+<p>このエラーは、モジュールインスタンスにクロックドメインアノテーションが付与された場合に報告されます。アノテーションを削除してください。</p>
+<h3 id="invalid_connect_operand"><a class="header" href="#invalid_connect_operand">invalid_connect_operand</a></h3>
+<p>このエラーは、<code>&lt;&gt;</code> 接続演算子のオペランドとして有効なインターフェースオペランドが指定されていない場合に報告されます。</p>
+<h3 id="invalid_direction"><a class="header" href="#invalid_direction">invalid_direction</a></h3>
+<p>このエラーは、ポート方向指定（<code>input</code>、<code>output</code>、<code>inout</code> など）がそれを許可していない位置に書かれた場合に報告されます。方向修飾子を削除してください。</p>
+<h3 id="invalid_embed"><a class="header" href="#invalid_embed">invalid_embed</a></h3>
+<p>このエラーは、現在位置で許可されていない way／言語の組み合わせの <code>embed</code> 宣言が使われた場合に報告されます。</p>
+<h3 id="invalid_embed_identifier"><a class="header" href="#invalid_embed_identifier">invalid_embed_identifier</a></h3>
+<p>このエラーは、embed 識別子の参照が <code>(way: inline / lang: sv)</code> 以外の embed ブロックに現れた場合に報告されます。</p>
+<h3 id="invalid_enum_variant"><a class="header" href="#invalid_enum_variant">invalid_enum_variant</a></h3>
+<p>このエラーは、enum バリアントの値がその enum に指定されたエンコーディング（one-hot、gray など）と一致しない場合に報告されます。</p>
+<h3 id="invalid_factor"><a class="header" href="#invalid_factor">invalid_factor</a></h3>
+<p>このエラーは、値ではないシンボル（例：モジュール名）が式の因子として使われた場合に報告されます。</p>
+<h3 id="invalid_import"><a class="header" href="#invalid_import">invalid_import</a></h3>
+<p>このエラーは、参照先がインポート可能でない（private、またはインポート対象として無効）な場合に報告されます。</p>
+<h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
+<p>このエラーは、対応するビット幅を特定できない位置で <code>lsb</code> キーワードが使われた場合に報告されます。<code>lsb</code> を具体的なインデックスに置き換えてください。</p>
+<h3 id="invalid_modifier"><a class="header" href="#invalid_modifier">invalid_modifier</a></h3>
+<p>このエラーは、型修飾子が許可されていない位置で使われた場合に報告されます。修飾子を削除してください。</p>
+<h3 id="invalid_modport_item"><a class="header" href="#invalid_modport_item">invalid_modport_item</a></h3>
+<p>このエラーは、modport の項目が期待する種類でない識別子を参照している場合に報告されます。</p>
+<h3 id="invalid_msb"><a class="header" href="#invalid_msb">invalid_msb</a></h3>
+<p>このエラーは、対応するビット幅を特定できない位置で <code>msb</code> キーワードが使われた場合に報告されます。<code>msb</code> を具体的なインデックスに置き換えてください。</p>
+<h3 id="invalid_number_character"><a class="header" href="#invalid_number_character">invalid_number_character</a></h3>
+<p>このエラーは、数値リテラルが基数に対して不正な文字を含む場合（例：2進リテラル中の16進数字）に報告されます。</p>
+<h3 id="invalid_operand"><a class="header" href="#invalid_operand">invalid_operand</a></h3>
+<p>このエラーは、演算子と互換性のない種類のオペランドが使われた場合に報告されます。</p>
+<h3 id="invalid_port_default_value"><a class="header" href="#invalid_port_default_value">invalid_port_default_value</a></h3>
+<p>このエラーは、ポートのデフォルト値がそのポートの型や方向に対して無効な場合に報告されます。</p>
+<h3 id="invalid_reset"><a class="header" href="#invalid_reset">invalid_reset</a></h3>
+<p>このエラーは、<code>reset</code> 型でも単一ビット信号でもない信号がリセットとして接続された場合に報告されます。<code>reset</code> 型の信号を使用してください。</p>
+<h3 id="invalid_statement"><a class="header" href="#invalid_statement">invalid_statement</a></h3>
+<p>このエラーは、文がそれを許可していない位置に書かれた場合（例：関数外の <code>return</code>）に報告されます。文を削除するか、適切な位置に移動してください。</p>
+<h3 id="invalid_tb_usage"><a class="header" href="#invalid_tb_usage">invalid_tb_usage</a></h3>
+<p>このエラーは、<code>$tb::*</code> のテストベンチコンポーネントが <code>#[test]</code> モジュールの外で使われた場合に報告されます。テストモジュール内に移動してください。</p>
+<h3 id="invalid_test"><a class="header" href="#invalid_test">invalid_test</a></h3>
+<p>このエラーは、<code>#[test]</code> 宣言が不正な形をしている場合に報告されます。</p>
+<h3 id="invalid_type_declaration"><a class="header" href="#invalid_type_declaration">invalid_type_declaration</a></h3>
+<p>このエラーは <code>struct</code>、<code>enum</code>、<code>union</code> のデータ型がインターフェース宣言内で定義された場合に報告されます。</p>
+<h3 id="invalid_wavedrom"><a class="header" href="#invalid_wavedrom">invalid_wavedrom</a></h3>
+<p>このエラーは、ドキュメンテーションコメント中の WaveDrom ブロックが不正な場合に報告されます。</p>
+<h3 id="invisible_identifier"><a class="header" href="#invisible_identifier">invisible_identifier</a></h3>
+<p>このエラーは、スコープ外（可視性境界をまたぐなど）から識別子を参照した場合に報告されます。</p>
+<h3 id="last_item_with_define"><a class="header" href="#last_item_with_define">last_item_with_define</a></h3>
+<p>このエラーは、カンマ区切りリストの最後の要素に <code>ifdef</code> / <code>ifndef</code> / <code>elsif</code> / <code>else</code> 属性が付与され、境界が曖昧になる場合に報告されます。</p>
+<h3 id="member_access_on_array"><a class="header" href="#member_access_on_array">member_access_on_array</a></h3>
+<p>このエラーは、配列に対して直接メンバーアクセスを行った場合に報告されます。先に配列をインデックスしてください。</p>
+<h3 id="mismatch_attribute_args"><a class="header" href="#mismatch_attribute_args">mismatch_attribute_args</a></h3>
+<p>このエラーは、属性に渡された引数が期待される形式と一致しない場合に報告されます。属性が期待するシグネチャに合うよう引数を調整してください。</p>
+<h3 id="mismatch_clock_domain"><a class="header" href="#mismatch_clock_domain">mismatch_clock_domain</a></h3>
+<p>このエラーは、明示的な <code>unsafe (cdc)</code> ブロックなしに信号がクロックドメイン境界を越えて使われた場合に報告されます。</p>
+<h3 id="mismatch_function_arity"><a class="header" href="#mismatch_function_arity">mismatch_function_arity</a></h3>
+<p>このエラーは、関数呼び出し時の引数の個数が関数の宣言と一致しない場合に報告されます。</p>
+<h3 id="mismatch_generics_arity"><a class="header" href="#mismatch_generics_arity">mismatch_generics_arity</a></h3>
+<p>このエラーは、呼び出し時のジェネリック引数の個数が宣言と一致しない場合に報告されます。</p>
+<h3 id="mismatch_type"><a class="header" href="#mismatch_type">mismatch_type</a></h3>
+<p>このエラーは、ある値が別の型を要求する位置で使われた場合に報告されます。代入の型不一致や、関数引数の型不一致などが含まれます。</p>
+<h3 id="missing_clock_domain"><a class="header" href="#missing_clock_domain">missing_clock_domain</a></h3>
+<p>このエラーは、モジュールが複数のクロックを持つのに、ポートにクロックドメインアノテーションが付いていない場合に報告されます。アノテーションを追加してください。</p>
+<h3 id="missing_clock_signal"><a class="header" href="#missing_clock_signal">missing_clock_signal</a></h3>
+<p>このエラーは、囲っているモジュールにクロック信号が無いまま <code>always_ff</code> ブロックが使われた場合に報告されます。<code>clock</code> ポートを追加してください。</p>
+<h3 id="missing_default_argument"><a class="header" href="#missing_default_argument">missing_default_argument</a></h3>
+<p>このエラーは、デフォルト値を持つジェネリックパラメータの後に続くパラメータがデフォルト値を持たない場合に報告されます。デフォルトパラメータはリストの末尾に置く必要があります。</p>
+<h3 id="missing_if_reset"><a class="header" href="#missing_if_reset">missing_if_reset</a></h3>
+<p>このエラーは、<code>always_ff</code> ブロックがリセット信号を持つにもかかわらず <code>if_reset</code> 文が無い場合に報告されます。リセット動作を記述する <code>if_reset</code> ブロックを追加してください。</p>
+<h3 id="missing_reset_signal"><a class="header" href="#missing_reset_signal">missing_reset_signal</a></h3>
+<p>このエラーは、<code>always_ff</code> ブロックで <code>if_reset</code> を使用しているにもかかわらず、囲っているモジュールにリセット信号が無い場合に報告されます。<code>reset</code> ポートを追加するか、リセット信号を接続してください。</p>
+<h3 id="missing_tb_port"><a class="header" href="#missing_tb_port">missing_tb_port</a></h3>
+<p>このエラーは、<code>$tb::*</code> のテストベンチコンポーネントが必要なポート（例：<code>$tb::reset_gen</code> の <code>clk</code> ポート）を接続せずにインスタンス化された場合に報告されます。インスタンス化時に必要なポート接続を追加してください。</p>
+<h3 id="missing_tri"><a class="header" href="#missing_tri">missing_tri</a></h3>
+<p>このエラーは、<code>inout</code> ポートが <code>tri</code> 型修飾子なしで宣言された場合に報告されます。<code>tri</code> 修飾子を追加してください。</p>
+<h3 id="mixed_function_argument"><a class="header" href="#mixed_function_argument">mixed_function_argument</a></h3>
+<p>このエラーは、同じ関数呼び出しの中で位置引数と名前付き引数が混在している場合に報告されます。どちらか一方に統一してください。</p>
+<h3 id="multiple_assignment"><a class="header" href="#multiple_assignment">multiple_assignment</a></h3>
+<p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。</p>
+<h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
+<p>このエラーは、同じモジュール内でデフォルトのクロックまたはリセットが複数回指定された場合に報告されます。</p>
+<h3 id="non_positive_value"><a class="header" href="#non_positive_value">non_positive_value</a></h3>
+<p>このエラーは、正の型（<code>p8</code> / <code>p16</code> / <code>p32</code> / <code>p64</code>）にゼロ以下の値を代入した場合に報告されます。0 より大きい値を使用してください。</p>
+<h3 id="private_member"><a class="header" href="#private_member">private_member</a></h3>
+<p>このエラーは、private として宣言されたメンバーが、その宣言スコープの外からアクセスされた場合に報告されます。</p>
+<h3 id="private_namespace"><a class="header" href="#private_namespace">private_namespace</a></h3>
+<p>このエラーは、private として宣言された名前空間が、その宣言スコープの外から参照された場合に報告されます。</p>
+<h3 id="referring_before_definition"><a class="header" href="#referring_before_definition">referring_before_definition</a></h3>
+<p>このエラーは、前方宣言が必要な位置で識別子が宣言前に使われた場合に報告されます。定義を参照位置より前に移動してください。</p>
+<h3 id="reserved_identifier"><a class="header" href="#reserved_identifier">reserved_identifier</a></h3>
+<p>このエラーは、予約された <code>__</code> 接頭辞を持つ識別子が使われた場合に報告されます。別の名前を選んでください。</p>
+<h3 id="sv_keyword_usage"><a class="header" href="#sv_keyword_usage">sv_keyword_usage</a></h3>
+<p>このエラーは、SystemVerilog のキーワードが Veryl の識別子として使われた場合に報告されます。生成された SystemVerilog で衝突しないようにリネームしてください。</p>
+<h3 id="sv_with_implicit_reset"><a class="header" href="#sv_with_implicit_reset">sv_with_implicit_reset</a></h3>
+<p>このエラーは、同期性と極性が暗黙の <code>reset</code> 型ポートが SystemVerilog モジュールのポートに接続された場合に報告されます。<code>reset_async_low</code> や <code>reset_sync_high</code> のような明示的な型を使用してください。</p>
+<h3 id="too_large_enum_variant"><a class="header" href="#too_large_enum_variant">too_large_enum_variant</a></h3>
+<p>このエラーは、enum バリアントに与えられた明示的な値が enum のビット幅で表現できない場合に報告されます。値を小さくするか、enum のビット幅を広げてください。</p>
+<h3 id="too_large_number"><a class="header" href="#too_large_number">too_large_number</a></h3>
+<p>このエラーは、数値リテラルが指定されたビット幅で表現可能な最大値を超えている場合に報告されます。ビット幅を広げるか、値を小さくしてください。</p>
+<h3 id="too_much_enum_variant"><a class="header" href="#too_much_enum_variant">too_much_enum_variant</a></h3>
+<p>このエラーは、enum のバリアント数がそのビット幅で符号化可能な数を超える場合に報告されます。enum のビット幅を広げるか、バリアント数を減らしてください。</p>
+<h3 id="type_inference_conflict"><a class="header" href="#type_inference_conflict">type_inference_conflict</a></h3>
+<p>このエラーは、型を持たない <code>var</code> への複数の代入で推論される型が一致しない場合に報告されます。型を持たない変数へのすべての代入で型が一致する必要があるか、または明示的な型を付けて変数を宣言する必要があります。</p>
+<h3 id="type_inference_not_supported"><a class="header" href="#type_inference_not_supported">type_inference_not_supported</a></h3>
+<p>このエラーは、型を持たない <code>let</code> または <code>const</code> 宣言の右辺式が型推論をサポートしていない場合に報告されます。演算子を含む式、ビット幅なしリテラル、連結、<code>if</code> / <code>case</code> 式は推論できません。明示的な型注釈を付けることでこのエラーを解消できます。</p>
+<h3 id="unassignable_output"><a class="header" href="#unassignable_output">unassignable_output</a></h3>
+<p>このエラーは、読み取り専用などで代入できない式が出力ポートに接続された場合に報告されます。</p>
+<h3 id="undefined_identifier"><a class="header" href="#undefined_identifier">undefined_identifier</a></h3>
+<p>このエラーは、宣言される前の識別子を参照した場合に報告されます。識別子を宣言するか、綴りを修正してください。</p>
+<h3 id="unevaluatable_value"><a class="header" href="#unevaluatable_value">unevaluatable_value</a></h3>
+<p>このエラーは、エラボレーション時に解決できない値が、定数を必要とする位置（配列サイズなど）で使われた場合に報告されます。</p>
+<h3 id="unexpandable_modport"><a class="header" href="#unexpandable_modport">unexpandable_modport</a></h3>
+<p>このエラーは、modport 参照を個別のポート群に展開できない場合に報告されます。</p>
+<h3 id="unknown_attribute"><a class="header" href="#unknown_attribute">unknown_attribute</a></h3>
+<p>このエラーは、属性名がコンパイラに認識されない場合に報告されます。属性を削除するか、属性名を修正してください。</p>
+<h3 id="unknown_embed_lang"><a class="header" href="#unknown_embed_lang">unknown_embed_lang</a></h3>
+<p>このエラーは、<code>embed</code> 宣言で未サポートの言語識別子が使われた場合に報告されます。</p>
+<h3 id="unknown_embed_way"><a class="header" href="#unknown_embed_way">unknown_embed_way</a></h3>
+<p>このエラーは、<code>embed</code> 宣言で未サポートの way 識別子が使われた場合に報告されます。</p>
+<h3 id="unknown_include_way"><a class="header" href="#unknown_include_way">unknown_include_way</a></h3>
+<p>このエラーは、<code>include</code> 宣言で未サポートの way 識別子が使われた場合に報告されます。</p>
+<h3 id="unknown_member"><a class="header" href="#unknown_member">unknown_member</a></h3>
+<p>このエラーは、struct、union、interface が宣言していないメンバーへのアクセスが行われた場合に報告されます。メンバー名を修正してください。</p>
+<h3 id="unknown_msb"><a class="header" href="#unknown_msb">unknown_msb</a></h3>
+<p>このエラーは、<code>msb</code> が参照するビット幅をコンパイラが解決できない場合に報告されます。代わりに具体的なインデックスを指定してください。</p>
+<h3 id="unknown_param"><a class="header" href="#unknown_param">unknown_param</a></h3>
+<p>このエラーは、モジュールが宣言していないパラメータをインスタンス化時に上書きしようとした場合に報告されます。上書きを削除するか、パラメータ名を修正してください。</p>
+<h3 id="unknown_port"><a class="header" href="#unknown_port">unknown_port</a></h3>
+<p>このエラーは、モジュールが宣言していないポート名で接続が指定された場合に報告されます。接続を削除するか、ポート名を修正してください。</p>
+<h3 id="unknown_tb_port"><a class="header" href="#unknown_tb_port">unknown_tb_port</a></h3>
+<p>このエラーは、<code>$tb::*</code> のテストベンチコンポーネントに存在しないポート名で接続が指定された場合に報告されます。未知の接続を削除するか、ポート名を修正してください。</p>
+<h3 id="unknown_unsafe"><a class="header" href="#unknown_unsafe">unknown_unsafe</a></h3>
+<p>このエラーは、<code>unsafe(...)</code> ブロックで有効な unsafe カテゴリでない識別子が使われた場合に報告されます。</p>
+<h3 id="unresolvable_generic_expression"><a class="header" href="#unresolvable_generic_expression">unresolvable_generic_expression</a></h3>
+<p>このエラーは、ジェネリック定義位置からジェネリックパラメータ中の式を解決できない場合に報告されます。</p>
+<h3 id="wrong_seperator"><a class="header" href="#wrong_seperator">wrong_seperator</a></h3>
+<p>このエラーは、識別子間で誤った区切り文字（<code>::</code> と <code>.</code>）が使われた場合に報告されます。正しい区切り文字に置き換えてください。</p>
+<h2 id="警告"><a class="header" href="#警告">警告</a></h2>
+<h3 id="invalid_identifier"><a class="header" href="#invalid_identifier">invalid_identifier</a></h3>
+<p>この警告は、識別子が設定された命名規則（<a href="07_appendix/../06_development_environment/01_project_configuration/03_lint.html">Lint</a> を参照）に違反している場合に報告されます。規則に従うように識別子をリネームしてください。</p>
+<h3 id="invalid_logical_operand"><a class="header" href="#invalid_logical_operand">invalid_logical_operand</a></h3>
+<p>この警告は、複数ビット値が論理演算子のオペランドとして使われた場合に報告されます。<code>==</code> などで 1 ビットに縮約してください。</p>
+<h3 id="invalid_select"><a class="header" href="#invalid_select">invalid_select</a></h3>
+<p>この警告は、ビット選択や範囲選択が無効（範囲外など）な場合に報告されます。</p>
+<h3 id="mismatch_assignment"><a class="header" href="#mismatch_assignment">mismatch_assignment</a></h3>
+<p>この警告は、代入の元と先の型が一致しない場合に報告されます。</p>
+<h3 id="mismatch_function_arg"><a class="header" href="#mismatch_function_arg">mismatch_function_arg</a></h3>
+<p>この警告は、引数の型が関数のパラメータ型と一致しない場合に報告されます。</p>
+<h3 id="missing_port"><a class="header" href="#missing_port">missing_port</a></h3>
+<p>この警告は、モジュールが宣言されたポートのいずれかを接続せずにインスタンス化された場合に報告されます。不足しているポート接続を追加してください。</p>
+<h3 id="missing_reset_statement"><a class="header" href="#missing_reset_statement">missing_reset_statement</a></h3>
+<p>この警告は、<code>if_reset</code> を伴う <code>always_ff</code> ブロック内で宣言されたレジスタに <code>if_reset</code> 分岐内での代入が無い場合に報告されます。リセット値を定義するため、そのレジスタへの代入を追加してください。</p>
+<h3 id="mixed_struct_union_member"><a class="header" href="#mixed_struct_union_member">mixed_struct_union_member</a></h3>
+<p>この警告は、struct または union 内で 2-state メンバーと 4-state メンバーが混在している場合に報告されます。メンバーをいずれか一方に統一してください。</p>
+<h3 id="unassign_variable"><a class="header" href="#unassign_variable">unassign_variable</a></h3>
+<p>この警告は、宣言された変数に一度も値が代入されない場合に報告されます。</p>
+<h3 id="uncovered_branch"><a class="header" href="#uncovered_branch">uncovered_branch</a></h3>
+<p>この警告は、信号が一部の分岐でしか代入されず、ラッチが推論される場合に報告されます。デフォルトの代入を加えるか、すべての分岐で代入してください。</p>
+<h3 id="unenclosed_inner_if_expression"><a class="header" href="#unenclosed_inner_if_expression">unenclosed_inner_if_expression</a></h3>
+<p>この警告は、入れ子になった <code>if</code> 式が括弧で囲まれていない場合に報告されます。優先順位を明示するため括弧を追加してください。</p>
+<h3 id="unsigned_arith_shift"><a class="header" href="#unsigned_arith_shift">unsigned_arith_shift</a></h3>
+<p>この警告は、符号なしオペランドに算術シフトを適用した場合に報告されます。論理シフトと結果が同じになるため、意図を明確にするには論理シフトを使用してください。</p>
+<h3 id="unused_return"><a class="header" href="#unused_return">unused_return</a></h3>
+<p>この警告は、関数呼び出しの戻り値が破棄された場合に報告されます。結果を変数に代入するか、戻り値を無視する設計の関数を使用してください。</p>
+<h3 id="unused_variable"><a class="header" href="#unused_variable">unused_variable</a></h3>
+<p>この警告は、宣言された変数が一度も参照されない場合に報告されます。意図的に未使用であることを示すには変数名の先頭に <code>_</code> を付けるか、宣言を削除してください。</p>
 
                     </main>
 

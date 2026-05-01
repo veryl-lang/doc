@@ -221,10 +221,12 @@
 #[ignore]
 module test_ignored {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         $finish   ();
     }
 }
@@ -238,7 +240,8 @@ module test_ignored {
 </ul>
 <p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
 <ul>
-<li><code>$assert(condition)</code> または <code>$assert(condition, message)</code> — シミュレーション中にアサーションを検証</li>
+<li><code>$assert(condition)</code>、<code>$assert(condition, format, args...)</code> — シミュレーション中にアサーションを検査します。失敗するとシミュレーションは即座に停止し、テストは失敗として報告されます。<code>format</code> は <code>$display</code> と同じ書式のフォーマット文字列で、<code>args</code> がそこへ埋め込む値を与えます。</li>
+<li><code>$assert_continue(condition)</code>、<code>$assert_continue(condition, format, args...)</code> — <code>$assert</code> と同じですが、失敗後もシミュレーションが続行されるため、1回の実行で複数の失敗をまとめて収集できます。テストは引き続き失敗として報告されます。</li>
 <li><code>$finish()</code> — シミュレーションを終了</li>
 </ul>
 <h3 id="基本的な例"><a class="header" href="#基本的な例">基本的な例</a></h3>
@@ -259,7 +262,9 @@ module test_ignored {
 #[test(test_counter)]
 module test_counter {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     var cnt: logic&lt;32&gt;;
 
@@ -270,7 +275,7 @@ module test_counter {
     );
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         clk.next  (10);
         $assert   (cnt == 32'd10);
         $finish   ();
@@ -285,19 +290,23 @@ module test_counter {
 </ul>
 <p><code>reset_gen</code> はリセットをアサートする <code>assert</code> メソッドを提供します。</p>
 <ul>
-<li><code>rst.assert(clk)</code> — クロックに同期してリセットをアサート</li>
-<li><code>rst.assert(clk, duration)</code> — 指定された期間リセットをアサート</li>
+<li><code>rst.assert()</code> — クロックに同期してリセットをアサート</li>
+<li><code>rst.assert(duration)</code> — 指定された期間リセットをアサート</li>
 </ul>
 <p>リセット期間はインスタンス化時にも設定できます。</p>
 <pre><code class="language-veryl playground">#[test(test_reset_cycles_param)]
 module test_reset_cycles_param {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen #( cycles: 5 );
+    inst rst: $tb::reset_gen #(
+        cycles: 5,
+    ) (
+        clk  ,
+    );
 
     // ...
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         // ...
     }
 }
@@ -307,7 +316,9 @@ module test_reset_cycles_param {
 <pre><code class="language-veryl playground">#[test(test_function_call)]
 module test_function_call {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen;
+    inst rst: $tb::reset_gen (
+        clk  ,
+    );
 
     var cnt: logic&lt;32&gt;;
 
@@ -320,7 +331,7 @@ module test_function_call {
     }
 
     initial {
-        rst.assert(clk);
+        rst.assert();
         step_n    (5);
         step_n    (5);
         $assert   (cnt == 32'd10);

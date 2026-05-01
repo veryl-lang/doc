@@ -3,7 +3,7 @@
     <head prefix="og: http://ogp.me/ns#">
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Project Configuration - The Veryl Hardware Description Language</title>
+        <title>Synthesizer - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
@@ -27,9 +27,9 @@
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
                     if (lang == "en") {
-                        canonical_href = `${base}/06_development_environment/01_project_configuration.md`;
+                        canonical_href = `${base}/06_development_environment/17_synthesizer.md`;
                     } else {
-                        canonical_href = `${base}/${lang}/06_development_environment/01_project_configuration.md`;
+                        canonical_href = `${base}/${lang}/06_development_environment/17_synthesizer.md`;
                     }
                     canonical_href = canonical_href.slice(0, -"md".length) + "html";
                     if (canonical_href.endsWith("/index.html")) {
@@ -207,93 +207,63 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="project-configuration"><a class="header" href="#project-configuration">Project Configuration</a></h1>
-<ul>
-<li><a href="01_project_configuration.html#the-project-section"><code>[project]</code></a> — Defines a project.
-<ul>
-<li><a href="01_project_configuration.html#the-name-field"><code>name</code></a> — The name of the project.</li>
-<li><a href="01_project_configuration.html#the-version-field"><code>version</code></a> — The version of the project.</li>
-<li><a href="01_project_configuration.html#the-authors-field"><code>authors</code></a> — The authors of the project.</li>
-<li><a href="01_project_configuration.html#the-description-field"><code>description</code></a> — A description of the project.</li>
-<li><a href="01_project_configuration.html#the-license-field"><code>license</code></a> — The project license.</li>
-<li><a href="01_project_configuration.html#the-repository-field"><code>repository</code></a> — URL of the project source repository.</li>
-</ul>
-</li>
-<li><a href="01_project_configuration.html#the-build-section"><code>[build]</code></a> — Build settings.</li>
-<li><a href="01_project_configuration.html#the-format-section"><code>[format]</code></a> — Format settings.</li>
-<li><a href="01_project_configuration.html#the-lint-section"><code>[lint]</code></a> — Lint settings.</li>
-<li><a href="01_project_configuration.html#the-test-section"><code>[test]</code></a> — Test settings.</li>
-<li><a href="01_project_configuration.html#the-publish-section"><code>[publish]</code></a> — Publish settings.</li>
-<li><a href="01_project_configuration.html#the-synth-section"><code>[synth]</code></a> — Synthesis settings.</li>
-<li><a href="01_project_configuration.html#the-dependencies-section"><code>[dependencies]</code></a> — Library dependencies.</li>
-</ul>
-<h2 id="the-project-section"><a class="header" href="#the-project-section">The <code>[project]</code> section</a></h2>
-<p>The first section of <code>Veryl.toml</code> is <code>[project]</code>.
-The mandatory fields are <code>name</code> and <code>version</code>.</p>
-<h3 id="the-name-field"><a class="header" href="#the-name-field">The <code>name</code> field</a></h3>
-<p>The project name is used as prefix in the generated codes.
-So the name must start with alphabet or <code>_</code>, and use only alphanumeric characters or <code>_</code>.</p>
-<h3 id="the-version-field"><a class="header" href="#the-version-field">The <code>version</code> field</a></h3>
-<p>The project version should follow <a href="https://semver.org/">Semantic Versioning</a>.
-The version is constructed by the following three numbers.</p>
-<ul>
-<li>Major – increment at incompatible changes</li>
-<li>Minor – increment at adding features with backward compatibility</li>
-<li>Patch – increment at bug fixes with backward compatibility</li>
-</ul>
-<pre><code class="language-toml">[project]
-version = "0.1.0"
+                        <h1 id="synthesizer"><a class="header" href="#synthesizer">Synthesizer</a></h1>
+<p><code>veryl synth</code> performs lightweight logic synthesis on the project and reports
+approximate area, timing and power. It is intended as a quick feedback tool
+during design exploration, not a replacement for a production synthesis flow.
+The design is mapped to a representative subset of cells in the selected
+library, but place-and-route, load capacitance, drive strength and Vth selection
+are not considered.</p>
+<pre><code class="language-console">$ veryl synth
 </code></pre>
-<h3 id="the-authors-field"><a class="header" href="#the-authors-field">The <code>authors</code> field</a></h3>
-<p>The optional <code>authors</code> field lists in an array the people or organizations that are considered the “authors” of the project.
-The format of each string in the list is free. Name only, e-mail address only, and name with e-mail address included within angled brackets are commonly used.</p>
-<pre><code class="language-toml">[project]
-authors = ["Fnu Lnu", "anonymous@example.com", "Fnu Lnu &lt;anonymous@example.com&gt;"]
+<p>The top module is selected as follows, in order of priority:</p>
+<ol>
+<li>CLI <code>--top &lt;name&gt;</code> if supplied</li>
+<li><code>synth.top</code> in <code>Veryl.toml</code> if set</li>
+<li>The first user module discovered in the project</li>
+</ol>
+<p>The available configurations such as the cell library, clock frequency and
+toggle activity are described in <a href="./01_project_configuration/06_synth.html"><code>[synth]</code></a>.</p>
+<h2 id="output"><a class="header" href="#output">Output</a></h2>
+<p>By default, <code>veryl synth</code> prints a one-line summary plus area / timing / power
+detail blocks:</p>
+<pre><code class="language-text">synth: TopModule — 123 gates, 17 FFs
+library: sky130_fd_sc_hd ...
+
+summary:
+  area:        1234.56 um²  (comb 1100.00, seq 134.56)
+  timing:        2.345 ns      8 levels  in_dat → out_dat
+  power:        0.1234 mW   (leak 0.0123 mW, dyn 0.1111 mW)
+                            @ f_clk = 100 MHz, activity = 0.10
+
+area:
+  ...
+timing:
+  ...
+power:
+  ...
 </code></pre>
-<h3 id="the-description-field"><a class="header" href="#the-description-field">The <code>description</code> field</a></h3>
-<p>The <code>description</code> is a short blurb about the project. This should be plane text (not Markdown).</p>
-<h3 id="the-license-field"><a class="header" href="#the-license-field">The <code>license</code> field</a></h3>
-<p>The <code>license</code> field contains the name of license that the project is released under.
-The string should be follow <a href="https://spdx.github.io/spdx-spec/v2.3/SPDX-license-expressions">SPDX 2.3 license expression</a>.</p>
-<pre><code class="language-toml">[project]
-license = "MIT OR Apache-2.0"
-</code></pre>
-<h3 id="the-repository-field"><a class="header" href="#the-repository-field">The <code>repository</code> field</a></h3>
-<p>The <code>repository</code> field should be a URL to the source repository for the project.</p>
-<pre><code class="language-toml">[project]
-repository = "https://github.com/veryl-lang/veryl"
-</code></pre>
-<h2 id="the-build-section"><a class="header" href="#the-build-section">The <code>[build]</code> section</a></h2>
-<p>The <code>[build]</code> section contains the configurations of code generation.
-Available configurations is <a href="./01_project_configuration/01_build.html">here</a>.</p>
-<h2 id="the-format-section"><a class="header" href="#the-format-section">The <code>[format]</code> section</a></h2>
-<p>The <code>[format]</code> section contains the configurations of code formatter.
-Available configurations is <a href="./01_project_configuration/02_format.html">here</a>.</p>
-<h2 id="the-lint-section"><a class="header" href="#the-lint-section">The <code>[lint]</code> section</a></h2>
-<p>The <code>[lint]</code> section contains the configurations of linter.
-Available configurations is <a href="./01_project_configuration/03_lint.html">here</a>.</p>
-<h2 id="the-test-section"><a class="header" href="#the-test-section">The <code>[test]</code> section</a></h2>
-<p>The <code>[test]</code> section contains the configurations of test by RTL simulator.
-Available configurations is <a href="./01_project_configuration/04_test.html">here</a>.</p>
-<h2 id="the-publish-section"><a class="header" href="#the-publish-section">The <code>[publish]</code> section</a></h2>
-<p>The <code>[publish]</code> section contains the configurations of publishing.
-Available configurations is <a href="./01_project_configuration/05_publish.html">here</a>.</p>
-<h2 id="the-synth-section"><a class="header" href="#the-synth-section">The <code>[synth]</code> section</a></h2>
-<p>The <code>[synth]</code> section contains the configurations of the synthesizer.
-Available configurations is <a href="./01_project_configuration/06_synth.html">here</a>.</p>
-<h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section">The <code>[dependencies]</code> section</a></h2>
-<p>The <code>[dependencies]</code> section contains library dependencies.
-Available configurations is <a href="./02_dependencies.html">here</a>.</p>
+<h2 id="options"><a class="header" href="#options">Options</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>--top &lt;name&gt;</code></td><td>Top module name. Overrides <code>synth.top</code> in <code>Veryl.toml</code>.</td></tr>
+<tr><td><code>--timing-paths &lt;n&gt;</code></td><td>Number of worst-delay endpoints to report when dumping timing. Overrides <code>synth.timing_paths</code>.</td></tr>
+<tr><td><code>--dump-ir</code></td><td>Dump the gate-level IR (netlist of gates and flip-flops).</td></tr>
+<tr><td><code>--dump-area</code></td><td>Dump the per-cell-kind area breakdown.</td></tr>
+<tr><td><code>--dump-timing</code></td><td>Dump the critical path trace.</td></tr>
+<tr><td><code>--dump-power</code></td><td>Dump the power estimate (leakage + dynamic breakdown).</td></tr>
+</tbody></table>
+</div>
+<p>If no <code>--dump-*</code> flag is given, all three of area / timing / power are dumped.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../06_development_environment.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../06_development_environment/16_translator.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../06_development_environment/01_project_configuration/01_build.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../07_appendix.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -303,11 +273,11 @@ Available configurations is <a href="./02_dependencies.html">here</a>.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../06_development_environment.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../06_development_environment/16_translator.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../06_development_environment/01_project_configuration/01_build.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../07_appendix.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

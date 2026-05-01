@@ -1,6 +1,5 @@
 export class Result {
     static __wrap(ptr) {
-        ptr = ptr >>> 0;
         const obj = Object.create(Result.prototype);
         obj.__wbg_ptr = ptr;
         ResultFinalization.register(obj, obj.__wbg_ptr, obj);
@@ -66,7 +65,6 @@ if (Symbol.dispose) Result.prototype[Symbol.dispose] = Result.prototype.free;
 
 export class SimResult {
     static __wrap(ptr) {
-        ptr = ptr >>> 0;
         const obj = Object.create(SimResult.prototype);
         obj.__wbg_ptr = ptr;
         SimResultFinalization.register(obj, obj.__wbg_ptr, obj);
@@ -215,11 +213,10 @@ export function simulate(source) {
     const ret = wasm.simulate(ptr0, len0);
     return SimResult.__wrap(ret);
 }
-
 function __wbg_get_imports() {
     const import0 = {
         __proto__: null,
-        __wbg___wbindgen_throw_81fc77679af83bc6: function(arg0, arg1) {
+        __wbg___wbindgen_throw_9c75d47bf9e7731e: function(arg0, arg1) {
             throw new Error(getStringFromWasm0(arg0, arg1));
         },
         __wbg_error_a6fa202b58aa1cd3: function(arg0, arg1) {
@@ -256,10 +253,10 @@ function __wbg_get_imports() {
 
 const ResultFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
-    : new FinalizationRegistry(ptr => wasm.__wbg_result_free(ptr >>> 0, 1));
+    : new FinalizationRegistry(ptr => wasm.__wbg_result_free(ptr, 1));
 const SimResultFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
-    : new FinalizationRegistry(ptr => wasm.__wbg_simresult_free(ptr >>> 0, 1));
+    : new FinalizationRegistry(ptr => wasm.__wbg_simresult_free(ptr, 1));
 
 function addHeapObject(obj) {
     if (heap_next === heap.length) heap.push(heap.length + 1);
@@ -285,8 +282,7 @@ function getDataViewMemory0() {
 }
 
 function getStringFromWasm0(ptr, len) {
-    ptr = ptr >>> 0;
-    return decodeText(ptr, len);
+    return decodeText(ptr >>> 0, len);
 }
 
 let cachedUint8ArrayMemory0 = null;
@@ -376,8 +372,9 @@ if (!('encodeInto' in cachedTextEncoder)) {
 
 let WASM_VECTOR_LEN = 0;
 
-let wasmModule, wasm;
+let wasmModule, wasmInstance, wasm;
 function __wbg_finalize_init(instance, module) {
+    wasmInstance = instance;
     wasm = instance.exports;
     wasmModule = module;
     cachedDataViewMemory0 = null;
