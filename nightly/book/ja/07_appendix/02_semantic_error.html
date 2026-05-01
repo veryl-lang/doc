@@ -1,0 +1,462 @@
+<!DOCTYPE HTML>
+<html lang="ja" class="light sidebar-visible" dir="ltr">
+    <head prefix="og: http://ogp.me/ns#">
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>セマンティックエラー - The Veryl Hardware Description Language</title>
+
+
+        <!-- Custom HTML head -->
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NXW2P6CCF3"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+        
+            gtag('config', 'G-NXW2P6CCF3');
+        </script>
+        
+        <script>
+            (function () {
+                // See these pages for details:
+                // https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
+                // https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics
+        
+                function gen_canonical_href(lang) {
+                    let base = "https://doc.veryl-lang.org/book";
+                    let canonical_href;
+                    if (lang == "en") {
+                        canonical_href = `${base}/07_appendix/02_semantic_error.md`;
+                    } else {
+                        canonical_href = `${base}/${lang}/07_appendix/02_semantic_error.md`;
+                    }
+                    canonical_href = canonical_href.slice(0, -"md".length) + "html";
+                    if (canonical_href.endsWith("/index.html")) {
+                        canonical_href = canonical_href.slice(0, -"index.html".length);
+                    }
+                    return canonical_href;
+                }
+        
+                const canonical_href = gen_canonical_href("ja");
+
+                let link = document.createElement("link");
+                link.rel = "canonical";
+                link.href = canonical_href;
+                document.head.appendChild(link);
+        
+                const langs = ["en", "ja"];
+                for (const lang of langs) {
+                    const canonical_href = gen_canonical_href(lang);
+        
+                    let link = document.createElement("link");
+                    link.rel = "alternate";
+                    link.hreflang = lang;
+                    link.href = canonical_href;
+                    document.head.appendChild(link);
+                }
+            })()
+        </script>
+        
+        <meta property="og:url" content="https://github.com/veryl-lang/veryl" />
+        <meta property="og:title" content="Veryl: A Modern Hardware Description Language" />
+        <meta property="og:description" content="Veryl is a hardware description language which is designed as a SystemVerilog alternative." />
+        <meta property="og:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/css/language-picker.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Veryl Hardware Description Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="セマンティックエラー"><a class="header" href="#セマンティックエラー">セマンティックエラー</a></h1>
+<p>この付録では、Veryl のセマンティック解析器が出力する診断を一覧します。診断は、コンパイルを停止させるエラーと、コンパイルの継続を許す警告に分けて記載します。</p>
+<h2 id="エラー"><a class="header" href="#エラー">エラー</a></h2>
+<h3 id="ambiguous_elsif"><a class="header" href="#ambiguous_elsif">ambiguous_elsif</a></h3>
+<p>このエラーは、<code>elsif</code> または <code>else</code> 属性を、先行する <code>if</code> 属性と一意に対応付けられない場合に報告されます。対応関係が明確になるよう周辺のコードを書き直してください。</p>
+<h3 id="anonymous_identifier_usage"><a class="header" href="#anonymous_identifier_usage">anonymous_identifier_usage</a></h3>
+<p>このエラーは、名前付きの識別子が必要な位置で匿名識別子（<code>_</code>）が使われた場合に報告されます。</p>
+<h3 id="call_non_function"><a class="header" href="#call_non_function">call_non_function</a></h3>
+<p>このエラーは、関数でないシンボルを関数として呼び出した場合に報告されます。呼び出しを削除するか、実際の関数シンボルに置き換えてください。</p>
+<h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
+<p>このエラーは、複数の型定義が循環的に互いを参照している場合に報告されます。参照のいずれかを削除または再構成して循環を断ち切ってください。</p>
+<h3 id="duplicated_identifier"><a class="header" href="#duplicated_identifier">duplicated_identifier</a></h3>
+<p>このエラーは、同じ識別子が同一スコープ内で複数回宣言された場合に報告されます。いずれかの宣言を別名にリネームしてください。</p>
+<h3 id="exceed_limit"><a class="header" href="#exceed_limit">exceed_limit</a></h3>
+<p>このエラーは、インスタンスの深さ、総インスタンス数、エラボレーション評価サイズなどの内部制限を超えた場合に報告されます。<code>Veryl.toml</code> の <code>[build]</code> セクションで該当する制限を引き上げるか、設計を簡略化してください。</p>
+<h3 id="fixed_type_with_signed_modifier"><a class="header" href="#fixed_type_with_signed_modifier">fixed_type_with_signed_modifier</a></h3>
+<p>このエラーは、固定幅の型（例：<code>u32</code>）に <code>signed</code> 修飾子を付けた場合に報告されます。<code>signed</code> 修飾子を削除してください。</p>
+<h3 id="generic_inference_failed"><a class="header" href="#generic_inference_failed">generic_inference_failed</a></h3>
+<p>このエラーは、関数呼び出しの実引数が省略されたが、コンパイラが呼び出し時の引数から推論できなかった場合に報告されます。<code>::&lt;&gt;</code> で明示的にジェネリック引数を指定するか、変数宣言から幅を決定できる引数を渡してください。</p>
+<h3 id="include_failure"><a class="header" href="#include_failure">include_failure</a></h3>
+<p>このエラーは、<code>include</code> 宣言が参照するファイルを読み込めない場合に報告されます。パスとファイルパーミッションを確認してください。</p>
+<h3 id="incompat_proto"><a class="header" href="#incompat_proto">incompat_proto</a></h3>
+<p>このエラーは、<code>for {proto}</code> を持つモジュール／インターフェース／パッケージがそのプロトタイプの契約を満たさない場合に報告されます。プロトタイプに合うように実装を調整してください。</p>
+<h3 id="infinite_recursion"><a class="header" href="#infinite_recursion">infinite_recursion</a></h3>
+<p>このエラーは、モジュールが直接的または間接的に自身をインスタンス化し、再帰を止める条件が無い場合に報告されます。再帰を終端させる条件を加える（例：ジェネリックパラメータと <code>if</code> による生成で打ち切る）か、モジュールが自身を参照しないように設計を組み直してください。</p>
+<h3 id="invalid_assignment"><a class="header" href="#invalid_assignment">invalid_assignment</a></h3>
+<p>このエラーは、定数・パラメータ・ジェネリックパラメータなど代入できない種類のシンボルが代入の対象になった場合に報告されます。代入を削除してください。</p>
+<h3 id="invalid_cast"><a class="header" href="#invalid_cast">invalid_cast</a></h3>
+<p>このエラーは、型キャストの元と先の型が互換でない場合に報告されます。互換性のある型を指定してください。</p>
+<h3 id="invalid_clock"><a class="header" href="#invalid_clock">invalid_clock</a></h3>
+<p>このエラーは、<code>clock</code> 型でも単一ビット信号でもない信号がクロックとして接続された場合に報告されます。<code>clock</code> 型の信号を使用してください。</p>
+<h3 id="invalid_clock_domain"><a class="header" href="#invalid_clock_domain">invalid_clock_domain</a></h3>
+<p>このエラーは、モジュールインスタンスにクロックドメインアノテーションが付与された場合に報告されます。アノテーションを削除してください。</p>
+<h3 id="invalid_connect_operand"><a class="header" href="#invalid_connect_operand">invalid_connect_operand</a></h3>
+<p>このエラーは、<code>&lt;&gt;</code> 接続演算子のオペランドとして有効なインターフェースオペランドが指定されていない場合に報告されます。</p>
+<h3 id="invalid_direction"><a class="header" href="#invalid_direction">invalid_direction</a></h3>
+<p>このエラーは、ポート方向指定（<code>input</code>、<code>output</code>、<code>inout</code> など）がそれを許可していない位置に書かれた場合に報告されます。方向修飾子を削除してください。</p>
+<h3 id="invalid_embed"><a class="header" href="#invalid_embed">invalid_embed</a></h3>
+<p>このエラーは、現在位置で許可されていない way／言語の組み合わせの <code>embed</code> 宣言が使われた場合に報告されます。</p>
+<h3 id="invalid_embed_identifier"><a class="header" href="#invalid_embed_identifier">invalid_embed_identifier</a></h3>
+<p>このエラーは、embed 識別子の参照が <code>(way: inline / lang: sv)</code> 以外の embed ブロックに現れた場合に報告されます。</p>
+<h3 id="invalid_enum_variant"><a class="header" href="#invalid_enum_variant">invalid_enum_variant</a></h3>
+<p>このエラーは、enum バリアントの値がその enum に指定されたエンコーディング（one-hot、gray など）と一致しない場合に報告されます。</p>
+<h3 id="invalid_factor"><a class="header" href="#invalid_factor">invalid_factor</a></h3>
+<p>このエラーは、値ではないシンボル（例：モジュール名）が式の因子として使われた場合に報告されます。</p>
+<h3 id="invalid_import"><a class="header" href="#invalid_import">invalid_import</a></h3>
+<p>このエラーは、参照先がインポート可能でない（private、またはインポート対象として無効）な場合に報告されます。</p>
+<h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
+<p>このエラーは、対応するビット幅を特定できない位置で <code>lsb</code> キーワードが使われた場合に報告されます。<code>lsb</code> を具体的なインデックスに置き換えてください。</p>
+<h3 id="invalid_modifier"><a class="header" href="#invalid_modifier">invalid_modifier</a></h3>
+<p>このエラーは、型修飾子が許可されていない位置で使われた場合に報告されます。修飾子を削除してください。</p>
+<h3 id="invalid_modport_item"><a class="header" href="#invalid_modport_item">invalid_modport_item</a></h3>
+<p>このエラーは、modport の項目が期待する種類でない識別子を参照している場合に報告されます。</p>
+<h3 id="invalid_msb"><a class="header" href="#invalid_msb">invalid_msb</a></h3>
+<p>このエラーは、対応するビット幅を特定できない位置で <code>msb</code> キーワードが使われた場合に報告されます。<code>msb</code> を具体的なインデックスに置き換えてください。</p>
+<h3 id="invalid_number_character"><a class="header" href="#invalid_number_character">invalid_number_character</a></h3>
+<p>このエラーは、数値リテラルが基数に対して不正な文字を含む場合（例：2進リテラル中の16進数字）に報告されます。</p>
+<h3 id="invalid_operand"><a class="header" href="#invalid_operand">invalid_operand</a></h3>
+<p>このエラーは、演算子と互換性のない種類のオペランドが使われた場合に報告されます。</p>
+<h3 id="invalid_port_default_value"><a class="header" href="#invalid_port_default_value">invalid_port_default_value</a></h3>
+<p>このエラーは、ポートのデフォルト値がそのポートの型や方向に対して無効な場合に報告されます。</p>
+<h3 id="invalid_reset"><a class="header" href="#invalid_reset">invalid_reset</a></h3>
+<p>このエラーは、<code>reset</code> 型でも単一ビット信号でもない信号がリセットとして接続された場合に報告されます。<code>reset</code> 型の信号を使用してください。</p>
+<h3 id="invalid_statement"><a class="header" href="#invalid_statement">invalid_statement</a></h3>
+<p>このエラーは、文がそれを許可していない位置に書かれた場合（例：関数外の <code>return</code>）に報告されます。文を削除するか、適切な位置に移動してください。</p>
+<h3 id="invalid_tb_usage"><a class="header" href="#invalid_tb_usage">invalid_tb_usage</a></h3>
+<p>このエラーは、<code>$tb::*</code> のテストベンチコンポーネントが <code>#[test]</code> モジュールの外で使われた場合に報告されます。テストモジュール内に移動してください。</p>
+<h3 id="invalid_test"><a class="header" href="#invalid_test">invalid_test</a></h3>
+<p>このエラーは、<code>#[test]</code> 宣言が不正な形をしている場合に報告されます。</p>
+<h3 id="invalid_type_declaration"><a class="header" href="#invalid_type_declaration">invalid_type_declaration</a></h3>
+<p>このエラーは <code>struct</code>、<code>enum</code>、<code>union</code> のデータ型がインターフェース宣言内で定義された場合に報告されます。</p>
+<h3 id="invalid_wavedrom"><a class="header" href="#invalid_wavedrom">invalid_wavedrom</a></h3>
+<p>このエラーは、ドキュメンテーションコメント中の WaveDrom ブロックが不正な場合に報告されます。</p>
+<h3 id="invisible_identifier"><a class="header" href="#invisible_identifier">invisible_identifier</a></h3>
+<p>このエラーは、スコープ外（可視性境界をまたぐなど）から識別子を参照した場合に報告されます。</p>
+<h3 id="last_item_with_define"><a class="header" href="#last_item_with_define">last_item_with_define</a></h3>
+<p>このエラーは、カンマ区切りリストの最後の要素に <code>ifdef</code> / <code>ifndef</code> / <code>elsif</code> / <code>else</code> 属性が付与され、境界が曖昧になる場合に報告されます。</p>
+<h3 id="member_access_on_array"><a class="header" href="#member_access_on_array">member_access_on_array</a></h3>
+<p>このエラーは、配列に対して直接メンバーアクセスを行った場合に報告されます。先に配列をインデックスしてください。</p>
+<h3 id="mismatch_attribute_args"><a class="header" href="#mismatch_attribute_args">mismatch_attribute_args</a></h3>
+<p>このエラーは、属性に渡された引数が期待される形式と一致しない場合に報告されます。属性が期待するシグネチャに合うよう引数を調整してください。</p>
+<h3 id="mismatch_clock_domain"><a class="header" href="#mismatch_clock_domain">mismatch_clock_domain</a></h3>
+<p>このエラーは、明示的な <code>unsafe (cdc)</code> ブロックなしに信号がクロックドメイン境界を越えて使われた場合に報告されます。</p>
+<h3 id="mismatch_function_arity"><a class="header" href="#mismatch_function_arity">mismatch_function_arity</a></h3>
+<p>このエラーは、関数呼び出し時の引数の個数が関数の宣言と一致しない場合に報告されます。</p>
+<h3 id="mismatch_generics_arity"><a class="header" href="#mismatch_generics_arity">mismatch_generics_arity</a></h3>
+<p>このエラーは、呼び出し時のジェネリック引数の個数が宣言と一致しない場合に報告されます。</p>
+<h3 id="mismatch_type"><a class="header" href="#mismatch_type">mismatch_type</a></h3>
+<p>このエラーは、ある値が別の型を要求する位置で使われた場合に報告されます。代入の型不一致や、関数引数の型不一致などが含まれます。</p>
+<h3 id="missing_clock_domain"><a class="header" href="#missing_clock_domain">missing_clock_domain</a></h3>
+<p>このエラーは、モジュールが複数のクロックを持つのに、ポートにクロックドメインアノテーションが付いていない場合に報告されます。アノテーションを追加してください。</p>
+<h3 id="missing_clock_signal"><a class="header" href="#missing_clock_signal">missing_clock_signal</a></h3>
+<p>このエラーは、囲っているモジュールにクロック信号が無いまま <code>always_ff</code> ブロックが使われた場合に報告されます。<code>clock</code> ポートを追加してください。</p>
+<h3 id="missing_default_argument"><a class="header" href="#missing_default_argument">missing_default_argument</a></h3>
+<p>このエラーは、デフォルト値を持つジェネリックパラメータの後に続くパラメータがデフォルト値を持たない場合に報告されます。デフォルトパラメータはリストの末尾に置く必要があります。</p>
+<h3 id="missing_if_reset"><a class="header" href="#missing_if_reset">missing_if_reset</a></h3>
+<p>このエラーは、<code>always_ff</code> ブロックがリセット信号を持つにもかかわらず <code>if_reset</code> 文が無い場合に報告されます。リセット動作を記述する <code>if_reset</code> ブロックを追加してください。</p>
+<h3 id="missing_reset_signal"><a class="header" href="#missing_reset_signal">missing_reset_signal</a></h3>
+<p>このエラーは、<code>always_ff</code> ブロックで <code>if_reset</code> を使用しているにもかかわらず、囲っているモジュールにリセット信号が無い場合に報告されます。<code>reset</code> ポートを追加するか、リセット信号を接続してください。</p>
+<h3 id="missing_tb_port"><a class="header" href="#missing_tb_port">missing_tb_port</a></h3>
+<p>このエラーは、<code>$tb::*</code> のテストベンチコンポーネントが必要なポート（例：<code>$tb::reset_gen</code> の <code>clk</code> ポート）を接続せずにインスタンス化された場合に報告されます。インスタンス化時に必要なポート接続を追加してください。</p>
+<h3 id="missing_tri"><a class="header" href="#missing_tri">missing_tri</a></h3>
+<p>このエラーは、<code>inout</code> ポートが <code>tri</code> 型修飾子なしで宣言された場合に報告されます。<code>tri</code> 修飾子を追加してください。</p>
+<h3 id="mixed_function_argument"><a class="header" href="#mixed_function_argument">mixed_function_argument</a></h3>
+<p>このエラーは、同じ関数呼び出しの中で位置引数と名前付き引数が混在している場合に報告されます。どちらか一方に統一してください。</p>
+<h3 id="multiple_assignment"><a class="header" href="#multiple_assignment">multiple_assignment</a></h3>
+<p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。</p>
+<h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
+<p>このエラーは、同じモジュール内でデフォルトのクロックまたはリセットが複数回指定された場合に報告されます。</p>
+<h3 id="non_positive_value"><a class="header" href="#non_positive_value">non_positive_value</a></h3>
+<p>このエラーは、正の型（<code>p8</code> / <code>p16</code> / <code>p32</code> / <code>p64</code>）にゼロ以下の値を代入した場合に報告されます。0 より大きい値を使用してください。</p>
+<h3 id="private_member"><a class="header" href="#private_member">private_member</a></h3>
+<p>このエラーは、private として宣言されたメンバーが、その宣言スコープの外からアクセスされた場合に報告されます。</p>
+<h3 id="private_namespace"><a class="header" href="#private_namespace">private_namespace</a></h3>
+<p>このエラーは、private として宣言された名前空間が、その宣言スコープの外から参照された場合に報告されます。</p>
+<h3 id="referring_before_definition"><a class="header" href="#referring_before_definition">referring_before_definition</a></h3>
+<p>このエラーは、前方宣言が必要な位置で識別子が宣言前に使われた場合に報告されます。定義を参照位置より前に移動してください。</p>
+<h3 id="reserved_identifier"><a class="header" href="#reserved_identifier">reserved_identifier</a></h3>
+<p>このエラーは、予約された <code>__</code> 接頭辞を持つ識別子が使われた場合に報告されます。別の名前を選んでください。</p>
+<h3 id="sv_keyword_usage"><a class="header" href="#sv_keyword_usage">sv_keyword_usage</a></h3>
+<p>このエラーは、SystemVerilog のキーワードが Veryl の識別子として使われた場合に報告されます。生成された SystemVerilog で衝突しないようにリネームしてください。</p>
+<h3 id="sv_with_implicit_reset"><a class="header" href="#sv_with_implicit_reset">sv_with_implicit_reset</a></h3>
+<p>このエラーは、同期性と極性が暗黙の <code>reset</code> 型ポートが SystemVerilog モジュールのポートに接続された場合に報告されます。<code>reset_async_low</code> や <code>reset_sync_high</code> のような明示的な型を使用してください。</p>
+<h3 id="too_large_enum_variant"><a class="header" href="#too_large_enum_variant">too_large_enum_variant</a></h3>
+<p>このエラーは、enum バリアントに与えられた明示的な値が enum のビット幅で表現できない場合に報告されます。値を小さくするか、enum のビット幅を広げてください。</p>
+<h3 id="too_large_number"><a class="header" href="#too_large_number">too_large_number</a></h3>
+<p>このエラーは、数値リテラルが指定されたビット幅で表現可能な最大値を超えている場合に報告されます。ビット幅を広げるか、値を小さくしてください。</p>
+<h3 id="too_much_enum_variant"><a class="header" href="#too_much_enum_variant">too_much_enum_variant</a></h3>
+<p>このエラーは、enum のバリアント数がそのビット幅で符号化可能な数を超える場合に報告されます。enum のビット幅を広げるか、バリアント数を減らしてください。</p>
+<h3 id="type_inference_conflict"><a class="header" href="#type_inference_conflict">type_inference_conflict</a></h3>
+<p>このエラーは、型を持たない <code>var</code> への複数の代入で推論される型が一致しない場合に報告されます。型を持たない変数へのすべての代入で型が一致する必要があるか、または明示的な型を付けて変数を宣言する必要があります。</p>
+<h3 id="type_inference_not_supported"><a class="header" href="#type_inference_not_supported">type_inference_not_supported</a></h3>
+<p>このエラーは、型を持たない <code>let</code> または <code>const</code> 宣言の右辺式が型推論をサポートしていない場合に報告されます。演算子を含む式、ビット幅なしリテラル、連結、<code>if</code> / <code>case</code> 式は推論できません。明示的な型注釈を付けることでこのエラーを解消できます。</p>
+<h3 id="unassignable_output"><a class="header" href="#unassignable_output">unassignable_output</a></h3>
+<p>このエラーは、読み取り専用などで代入できない式が出力ポートに接続された場合に報告されます。</p>
+<h3 id="undefined_identifier"><a class="header" href="#undefined_identifier">undefined_identifier</a></h3>
+<p>このエラーは、宣言される前の識別子を参照した場合に報告されます。識別子を宣言するか、綴りを修正してください。</p>
+<h3 id="unevaluatable_value"><a class="header" href="#unevaluatable_value">unevaluatable_value</a></h3>
+<p>このエラーは、エラボレーション時に解決できない値が、定数を必要とする位置（配列サイズなど）で使われた場合に報告されます。</p>
+<h3 id="unexpandable_modport"><a class="header" href="#unexpandable_modport">unexpandable_modport</a></h3>
+<p>このエラーは、modport 参照を個別のポート群に展開できない場合に報告されます。</p>
+<h3 id="unknown_attribute"><a class="header" href="#unknown_attribute">unknown_attribute</a></h3>
+<p>このエラーは、属性名がコンパイラに認識されない場合に報告されます。属性を削除するか、属性名を修正してください。</p>
+<h3 id="unknown_embed_lang"><a class="header" href="#unknown_embed_lang">unknown_embed_lang</a></h3>
+<p>このエラーは、<code>embed</code> 宣言で未サポートの言語識別子が使われた場合に報告されます。</p>
+<h3 id="unknown_embed_way"><a class="header" href="#unknown_embed_way">unknown_embed_way</a></h3>
+<p>このエラーは、<code>embed</code> 宣言で未サポートの way 識別子が使われた場合に報告されます。</p>
+<h3 id="unknown_include_way"><a class="header" href="#unknown_include_way">unknown_include_way</a></h3>
+<p>このエラーは、<code>include</code> 宣言で未サポートの way 識別子が使われた場合に報告されます。</p>
+<h3 id="unknown_member"><a class="header" href="#unknown_member">unknown_member</a></h3>
+<p>このエラーは、struct、union、interface が宣言していないメンバーへのアクセスが行われた場合に報告されます。メンバー名を修正してください。</p>
+<h3 id="unknown_msb"><a class="header" href="#unknown_msb">unknown_msb</a></h3>
+<p>このエラーは、<code>msb</code> が参照するビット幅をコンパイラが解決できない場合に報告されます。代わりに具体的なインデックスを指定してください。</p>
+<h3 id="unknown_param"><a class="header" href="#unknown_param">unknown_param</a></h3>
+<p>このエラーは、モジュールが宣言していないパラメータをインスタンス化時に上書きしようとした場合に報告されます。上書きを削除するか、パラメータ名を修正してください。</p>
+<h3 id="unknown_port"><a class="header" href="#unknown_port">unknown_port</a></h3>
+<p>このエラーは、モジュールが宣言していないポート名で接続が指定された場合に報告されます。接続を削除するか、ポート名を修正してください。</p>
+<h3 id="unknown_tb_port"><a class="header" href="#unknown_tb_port">unknown_tb_port</a></h3>
+<p>このエラーは、<code>$tb::*</code> のテストベンチコンポーネントに存在しないポート名で接続が指定された場合に報告されます。未知の接続を削除するか、ポート名を修正してください。</p>
+<h3 id="unknown_unsafe"><a class="header" href="#unknown_unsafe">unknown_unsafe</a></h3>
+<p>このエラーは、<code>unsafe(...)</code> ブロックで有効な unsafe カテゴリでない識別子が使われた場合に報告されます。</p>
+<h3 id="unresolvable_generic_expression"><a class="header" href="#unresolvable_generic_expression">unresolvable_generic_expression</a></h3>
+<p>このエラーは、ジェネリック定義位置からジェネリックパラメータ中の式を解決できない場合に報告されます。</p>
+<h3 id="wrong_seperator"><a class="header" href="#wrong_seperator">wrong_seperator</a></h3>
+<p>このエラーは、識別子間で誤った区切り文字（<code>::</code> と <code>.</code>）が使われた場合に報告されます。正しい区切り文字に置き換えてください。</p>
+<h2 id="警告"><a class="header" href="#警告">警告</a></h2>
+<h3 id="invalid_identifier"><a class="header" href="#invalid_identifier">invalid_identifier</a></h3>
+<p>この警告は、識別子が設定された命名規則（<a href="../06_development_environment/01_project_configuration/03_lint.html">Lint</a> を参照）に違反している場合に報告されます。規則に従うように識別子をリネームしてください。</p>
+<h3 id="invalid_logical_operand"><a class="header" href="#invalid_logical_operand">invalid_logical_operand</a></h3>
+<p>この警告は、複数ビット値が論理演算子のオペランドとして使われた場合に報告されます。<code>==</code> などで 1 ビットに縮約してください。</p>
+<h3 id="invalid_select"><a class="header" href="#invalid_select">invalid_select</a></h3>
+<p>この警告は、ビット選択や範囲選択が無効（範囲外など）な場合に報告されます。</p>
+<h3 id="mismatch_assignment"><a class="header" href="#mismatch_assignment">mismatch_assignment</a></h3>
+<p>この警告は、代入の元と先の型が一致しない場合に報告されます。</p>
+<h3 id="mismatch_function_arg"><a class="header" href="#mismatch_function_arg">mismatch_function_arg</a></h3>
+<p>この警告は、引数の型が関数のパラメータ型と一致しない場合に報告されます。</p>
+<h3 id="missing_port"><a class="header" href="#missing_port">missing_port</a></h3>
+<p>この警告は、モジュールが宣言されたポートのいずれかを接続せずにインスタンス化された場合に報告されます。不足しているポート接続を追加してください。</p>
+<h3 id="missing_reset_statement"><a class="header" href="#missing_reset_statement">missing_reset_statement</a></h3>
+<p>この警告は、<code>if_reset</code> を伴う <code>always_ff</code> ブロック内で宣言されたレジスタに <code>if_reset</code> 分岐内での代入が無い場合に報告されます。リセット値を定義するため、そのレジスタへの代入を追加してください。</p>
+<h3 id="mixed_struct_union_member"><a class="header" href="#mixed_struct_union_member">mixed_struct_union_member</a></h3>
+<p>この警告は、struct または union 内で 2-state メンバーと 4-state メンバーが混在している場合に報告されます。メンバーをいずれか一方に統一してください。</p>
+<h3 id="unassign_variable"><a class="header" href="#unassign_variable">unassign_variable</a></h3>
+<p>この警告は、宣言された変数に一度も値が代入されない場合に報告されます。</p>
+<h3 id="uncovered_branch"><a class="header" href="#uncovered_branch">uncovered_branch</a></h3>
+<p>この警告は、信号が一部の分岐でしか代入されず、ラッチが推論される場合に報告されます。デフォルトの代入を加えるか、すべての分岐で代入してください。</p>
+<h3 id="unenclosed_inner_if_expression"><a class="header" href="#unenclosed_inner_if_expression">unenclosed_inner_if_expression</a></h3>
+<p>この警告は、入れ子になった <code>if</code> 式が括弧で囲まれていない場合に報告されます。優先順位を明示するため括弧を追加してください。</p>
+<h3 id="unsigned_arith_shift"><a class="header" href="#unsigned_arith_shift">unsigned_arith_shift</a></h3>
+<p>この警告は、符号なしオペランドに算術シフトを適用した場合に報告されます。論理シフトと結果が同じになるため、意図を明確にするには論理シフトを使用してください。</p>
+<h3 id="unused_return"><a class="header" href="#unused_return">unused_return</a></h3>
+<p>この警告は、関数呼び出しの戻り値が破棄された場合に報告されます。結果を変数に代入するか、戻り値を無視する設計の関数を使用してください。</p>
+<h3 id="unused_variable"><a class="header" href="#unused_variable">unused_variable</a></h3>
+<p>この警告は、宣言された変数が一度も参照されない場合に報告されます。意図的に未使用であることを示すには変数名の先頭に <code>_</code> を付けるか、宣言を削除してください。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../07_appendix/01_formal_syntax.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../07_appendix/01_formal_syntax.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../ace.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../mode-rust.js"></script>
+        <script src="../theme-dawn.js"></script>
+        <script src="../theme-tomorrow_night.js"></script>
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+        <script type="module">
+            import init, {build, format} from "https://doc.veryl-lang.org/nightly/playground/pkg/veryl_wasm.js";
+            init().then(() => {});
+            window.build = build;
+        </script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mode-veryl.js"></script>
+        <script src="../editor.js"></script>
+        <script src="../theme/language-picker.js"></script>
+
+
+    </div>
+    </body>
+</html>
