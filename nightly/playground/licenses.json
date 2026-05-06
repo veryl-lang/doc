@@ -641,7 +641,7 @@
     },
     {
       "name": "no_std_io2",
-      "version": "0.9.3",
+      "version": "0.9.4",
       "license": "Apache-2.0 OR MIT",
       "url": "https://github.com/wcampbell0x2a/no-std-io2",
       "category": "rust"
