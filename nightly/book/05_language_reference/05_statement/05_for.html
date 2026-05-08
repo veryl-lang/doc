@@ -217,7 +217,7 @@ and <a href="../04_expression/07_range.html">range</a> is placed after it.</p>
 
     always_comb {
         for i in 0..10 {
-            a += i;
+            a = i;
 
             if i == 5 {
                 break;
@@ -232,7 +232,7 @@ and <a href="../04_expression/07_range.html">range</a> is placed after it.</p>
 
     always_comb {
         for i in rev 0..10 {
-            a += i;
+            a = i;
 
             if i == 5 {
                 break;

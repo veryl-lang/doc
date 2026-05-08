@@ -1880,16 +1880,14 @@ There are other assignment operators:</p>
     var b: logic&lt;10&gt;;
     var c: logic&lt;10&gt;;
     var d: logic&lt;10&gt;;
-    var e: logic&lt;10&gt;;
 
     always_comb {
-        b =  a + 1;
-        c += a + 1;
+        b = a + 1;
     }
 
     always_ff (i_clk) {
-        d =  a + 1;
-        e -= a + 1;
+        c += a + 1;
+        d -= a + 1;
     }
 }
 </code></pre>
@@ -2016,7 +2014,7 @@ and <a href="05_language_reference/05_statement/../04_expression/07_range.html">
 
     always_comb {
         for i in 0..10 {
-            a += i;
+            a = i;
 
             if i == 5 {
                 break;
@@ -2031,7 +2029,7 @@ and <a href="05_language_reference/05_statement/../04_expression/07_range.html">
 
     always_comb {
         for i in rev 0..10 {
-            a += i;
+            a = i;
 
             if i == 5 {
                 break;
