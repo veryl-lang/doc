@@ -25,16 +25,14 @@ module ModuleA (
     var b: logic<10>;
     var c: logic<10>;
     var d: logic<10>;
-    var e: logic<10>;
 
     always_comb {
-        b =  a + 1;
-        c += a + 1;
+        b = a + 1;
     }
 
     always_ff (i_clk) {
-        d =  a + 1;
-        e -= a + 1;
+        c += a + 1;
+        d -= a + 1;
     }
 }
 ```

@@ -12,7 +12,7 @@ module ModuleA {
 
     always_comb {
         for i in 0..10 {
-            a += i;
+            a = i;
 
             if i == 5 {
                 break;
@@ -30,7 +30,7 @@ module ModuleA {
 
     always_comb {
         for i in rev 0..10 {
-            a += i;
+            a = i;
 
             if i == 5 {
                 break;
