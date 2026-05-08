@@ -135,6 +135,7 @@ pub fn build(source: &str) -> Result {
 
             let analyzer = Analyzer::new(&metadata);
             let mut context = Context::default();
+            let mut ir = Ir::default();
             let mut errors = Vec::new();
             errors.append(&mut analyzer.analyze_pass1("project", &parser.veryl));
             errors.append(&mut Analyzer::analyze_post_pass1());
@@ -142,9 +143,9 @@ pub fn build(source: &str) -> Result {
                 "project",
                 &parser.veryl,
                 &mut context,
-                None,
+                Some(&mut ir),
             ));
-            errors.append(&mut Analyzer::analyze_post_pass2());
+            errors.append(&mut Analyzer::analyze_post_pass2(&ir));
 
             let err = !errors.is_empty();
             let diagnostics = extract_diagnostics(&errors);
@@ -205,7 +206,7 @@ pub fn dump_ir(source: &str) -> Result {
                 &mut context,
                 Some(&mut ir),
             ));
-            errors.append(&mut Analyzer::analyze_post_pass2());
+            errors.append(&mut Analyzer::analyze_post_pass2(&ir));
 
             let err = !errors.is_empty();
             let diagnostics = extract_diagnostics(&errors);
@@ -295,7 +296,7 @@ pub fn simulate(source: &str) -> SimResult {
                 &mut context,
                 Some(&mut ir),
             ));
-            errors.append(&mut Analyzer::analyze_post_pass2());
+            errors.append(&mut Analyzer::analyze_post_pass2(&ir));
 
             if !errors.is_empty() {
                 let diagnostics = extract_diagnostics(&errors);
