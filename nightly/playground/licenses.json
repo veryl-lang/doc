@@ -704,7 +704,7 @@
     },
     {
       "name": "parol_runtime",
-      "version": "4.3.0",
+      "version": "4.4.0",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/jsinger67/parol/tree/main/crates/parol_runtime",
       "category": "rust"
