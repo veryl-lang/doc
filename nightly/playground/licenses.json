@@ -1341,7 +1341,7 @@
     },
     {
       "name": "zerofrom",
-      "version": "0.1.7",
+      "version": "0.1.8",
       "license": "Unicode-3.0",
       "url": "https://github.com/unicode-org/icu4x",
       "category": "rust"
