@@ -319,7 +319,7 @@
     },
     {
       "name": "either",
-      "version": "1.15.0",
+      "version": "1.16.0",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/rayon-rs/either",
       "category": "rust"
