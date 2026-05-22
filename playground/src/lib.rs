@@ -147,10 +147,15 @@ pub fn build(source: &str) -> Result {
             ));
             errors.append(&mut Analyzer::analyze_post_pass2(&ir));
 
-            let err = !errors.is_empty();
+            let has_error = errors.iter().any(|e| {
+                !matches!(
+                    e.severity(),
+                    Some(Severity::Warning) | Some(Severity::Advice)
+                )
+            });
             let diagnostics = extract_diagnostics(&errors);
 
-            let content = if err {
+            let content = if has_error {
                 let mut text = String::new();
                 for e in errors {
                     text.push_str(&render_err(e.into()));
@@ -168,7 +173,7 @@ pub fn build(source: &str) -> Result {
             };
 
             Result {
-                err,
+                err: has_error,
                 content,
                 diagnostics,
             }

@@ -8,7 +8,7 @@ title = "The Veryl Hardware Description Language"
 extra-watch-dirs = ["po"]
 
 [preprocessor.curl]
-command = "curl -OL https://raw.githubusercontent.com/veryl-lang/veryl/master/crates/parser/veryl.par"
+command = "./fetch-grammar.sh"
 
 [preprocessor.veryl]
 
@@ -16,13 +16,13 @@ command = "curl -OL https://raw.githubusercontent.com/veryl-lang/veryl/master/cr
 after = ["links"]
 
 [output.html]
-curly-quotes = true
 additional-css = [
   "theme/css/language-picker.css",
+  "theme/css/veryl.css",
 ]
 additional-js = [
   "mode-veryl.js",
-  "editor.js",
+  "veryl-init.js",
   "theme/language-picker.js",
 ]
 
@@ -30,7 +30,6 @@ additional-js = [
 enable = true
 level  = 1
 
-[output.html.playpen]
+[output.html.playground]
 editable = true
-editor = "ace"
 line-numbers = false
