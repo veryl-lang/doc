@@ -17,12 +17,13 @@
             gtag('config', 'G-NXW2P6CCF3');
         </script>
         
+        <!--
+        canonical and alternate links are injected at runtime because the current
+        page path is only available as a .md path in handlebars context.
+        See: https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
+        -->
         <script>
             (function () {
-                // See these pages for details:
-                // https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
-                // https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics
-        
                 function gen_canonical_href(lang) {
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
@@ -39,31 +40,72 @@
                 }
         
                 const canonical_href = gen_canonical_href("ja");
-
-                let link = document.createElement("link");
+        
+                const link = document.createElement("link");
                 link.rel = "canonical";
                 link.href = canonical_href;
                 document.head.appendChild(link);
         
+                const og_url = document.createElement("meta");
+                og_url.setAttribute("property", "og:url");
+                og_url.content = canonical_href;
+                document.head.appendChild(og_url);
+        
+                const tw_url = document.createElement("meta");
+                tw_url.name = "twitter:url";
+                tw_url.content = canonical_href;
+                document.head.appendChild(tw_url);
+        
                 const langs = ["en", "ja"];
                 for (const lang of langs) {
-                    const canonical_href = gen_canonical_href(lang);
+                    const href = gen_canonical_href(lang);
         
-                    let link = document.createElement("link");
-                    link.rel = "alternate";
-                    link.hreflang = lang;
-                    link.href = canonical_href;
-                    document.head.appendChild(link);
+                    const alt = document.createElement("link");
+                    alt.rel = "alternate";
+                    alt.hreflang = lang;
+                    alt.href = href;
+                    document.head.appendChild(alt);
                 }
+                const xdefault = document.createElement("link");
+                xdefault.rel = "alternate";
+                xdefault.hreflang = "x-default";
+                xdefault.href = gen_canonical_href("en");
+                document.head.appendChild(xdefault);
             })()
         </script>
         
-        <meta property="og:url" content="https://github.com/veryl-lang/veryl" />
-        <meta property="og:title" content="Veryl: A Modern Hardware Description Language" />
-        <meta property="og:description" content="Veryl is a hardware description language which is designed as a SystemVerilog alternative." />
+        <!-- Open Graph -->
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="The Veryl Hardware Description Language" />
+        <meta property="og:title" content="補遺 - The Veryl Hardware Description Language" />
+        <meta property="og:description" content="Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment." />
         <meta property="og:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
+        <meta property="og:locale" content="ja_JP" />
+        <meta property="og:locale:alternate" content="en_US" />
 
-        <meta name="description" content="">
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="補遺 - The Veryl Hardware Description Language" />
+        <meta name="twitter:description" content="Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment." />
+        <meta name="twitter:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
+        
+        <!-- JSON-LD structured data -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            "headline": "補遺 - The Veryl Hardware Description Language",
+            "description": "Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment.",
+            "inLanguage": "ja",
+            "isPartOf": {
+                "@type": "Book",
+                "name": "The Veryl Hardware Description Language",
+                "author": { "@type": "Organization", "name": "Veryl Lang" }
+            }
+        }
+        </script>
+
+        <meta name="description" content="Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
