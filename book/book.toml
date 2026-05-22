@@ -3,6 +3,7 @@ authors = ["dalance"]
 language = "en"
 src = "src"
 title = "The Veryl Hardware Description Language"
+description = "Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment."
 
 [build]
 extra-watch-dirs = ["po"]
