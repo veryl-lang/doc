@@ -123,10 +123,7 @@ module ModuleB {
     inst a_if: InterfaceA::<8> [4];
     inst b_if: InterfaceA::<8> [4];
 
-    inst u: ModuleA (
-        slave_if : a_if,
-        master_if: b_if,
-    );
+    inst u: ModuleA ( slave_if: a_if, master_if: b_if );
 }
 ```
 
@@ -143,16 +140,14 @@ module ModuleA {
     let aaa: logic<32> = 1;
 
     let _b: logic = {
-        a[0] repeat 1, a[0] repeat 1,
-        aa[1] repeat 8, aa[1] repeat 8,
-        aaa[2] repeat 16, aaa[2] repeat 16,
+        a[0] repeat 1, a[0] repeat 1, aa[1] repeat 8, aa[1] repeat 8, aaa[2] repeat 16, aaa[2] repeat 16, a[0] repeat 1,
+        aa[1] repeat 8, aaa[2] repeat 16, a[0] repeat 1,
     };
 
     #[align(number, identifier)]
     let _c : logic = {
-        a  [0 ] repeat 1 , a  [0 ] repeat 1 ,
-        aa [1 ] repeat 8 , aa [1 ] repeat 8 ,
-        aaa[2 ] repeat 16, aaa[2 ] repeat 16,
+        a  [0 ] repeat 1 , a  [0 ] repeat 1 , aa [1 ] repeat 8 , aa [1 ] repeat 8 , aaa[2 ] repeat 16,
+        aaa[2 ] repeat 16, a  [0 ] repeat 1 , aa [1 ] repeat 8 , aaa[2 ] repeat 16, a  [0 ] repeat 1 ,
     };
 }
 ```

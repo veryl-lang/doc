@@ -31,7 +31,7 @@ module ModuleA (
 ) {
     import PackageA::WIDTH;
 
-    let d  : logic<WIDTH> = i_d; // valid reference
+    let d: logic<WIDTH> = i_d; // valid reference
     assign o_d = d;
 }
 ```

@@ -123,10 +123,7 @@ module ModuleB::<A: u32, B: u32, C: u32> {
     var a: logic<W>;
     var b: T       ;
 
-    inst u: ModuleA::<W, T> (
-        a  ,
-        b  ,
-    );
+    inst u: ModuleA::<W, T> ( a, b );
 }
 module ModuleC {
     inst u: ModuleB::<1, 2, 3>;

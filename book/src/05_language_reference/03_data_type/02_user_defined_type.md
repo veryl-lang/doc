@@ -117,7 +117,7 @@ module A {
         variant_c: logic<4, 2>   ,
         variant_d: logic<2, 2, 2>,
     }
-    var a          : UnionA;
+    var a: UnionA;
     assign a.variant_a = 8'haa;
 }
 ```

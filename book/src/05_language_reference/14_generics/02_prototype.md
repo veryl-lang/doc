@@ -25,10 +25,7 @@ proto module ProtoA #(
 );
 
 module ModuleB::<T: ProtoA> {
-    inst u: T (
-        i_dat: 0,
-        o_dat: _,
-    );
+    inst u: T ( i_dat: 0, o_dat: _ );
 }
 
 module ModuleC for ProtoA #(
@@ -101,9 +98,7 @@ module ModuleA::<BUS_IF: ProtoA> (
 module ModuleB {
     inst bus_if: InterfaceA::<8>;
 
-    inst u: ModuleA::<InterfaceA::<8>> (
-        bus_if: bus_if,
-    );
+    inst u: ModuleA::<InterfaceA::<8>> ( bus_if: bus_if );
 }
 ```
 
@@ -219,7 +214,7 @@ package BarPkg for BarProtoPkg {
     type Foo = FooPkg::Foo;
 }
 module ModuleA::<PKG: BarProtoPkg> {
-    var _foo    : PKG::Foo;
+    var _foo: PKG::Foo;
     assign _foo.foo = 0;
 }
 module ModuleB {

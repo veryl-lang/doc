@@ -22,9 +22,7 @@ Ignored tests are not executed by default, but can be run with `--ignored` optio
 #[ignore]
 module test_ignored {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen (
-        clk  ,
-    );
+    inst rst: $tb::reset_gen ( clk );
 
     initial {
         rst.assert();
@@ -69,17 +67,11 @@ module Counter (
 #[test(test_counter)]
 module test_counter {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen (
-        clk  ,
-    );
+    inst rst: $tb::reset_gen ( clk );
 
     var cnt: logic<32>;
 
-    inst dut: Counter (
-        clk: clk,
-        rst: rst,
-        cnt: cnt,
-    );
+    inst dut: Counter ( clk: clk, rst: rst, cnt: cnt );
 
     initial {
         rst.assert();
@@ -108,11 +100,7 @@ The reset duration can also be configured at instantiation:
 #[test(test_reset_cycles_param)]
 module test_reset_cycles_param {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen #(
-        cycles: 5,
-    ) (
-        clk  ,
-    );
+    inst rst: $tb::reset_gen #( cycles: 5 ) ( clk );
 
     // ...
 
@@ -131,9 +119,7 @@ Testbench methods like `clk.next` can be called from user-defined functions:
 #[test(test_function_call)]
 module test_function_call {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen (
-        clk  ,
-    );
+    inst rst: $tb::reset_gen ( clk );
 
     var cnt: logic<32>;
 

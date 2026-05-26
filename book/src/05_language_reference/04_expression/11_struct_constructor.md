@@ -12,10 +12,7 @@ module ModuleA {
         b: bit<10>,
     }
 
-    const p: Param = Param'{
-        a: 10,
-        b: 10,
-    };
+    const p: Param = Param'{a: 10, b: 10,};
 
     const q: Param = Param'{
         a: 1,
