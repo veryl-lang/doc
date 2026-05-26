@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-9cffd465.js";
+            window.path_to_searchindex_js = "../searchindex-2c9cf7bf.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-d102f71b.js"></script>
@@ -287,19 +287,15 @@
     assign r_data1 = i_data + 1;
     assign o_data  = r_data2 + 2;
 
-    // インスタンス宣言
-    //   インスタンス宣言は `inst` キーワードではじまります
-    //   ポート接続は `()` 内で指定します
-    //   各ポートの接続は `[port_name]:[variable]` のような形式になります
-    //   `[port_name]` は `[port_name]:[port_name]` を意味します
-    inst u_module_b: ModuleB (
-        i_clk          ,
-        i_data: r_data1,
-        o_data: r_data2,
-    );
+    // instance declaration
+    //   `inst` keyword starts instance declaration
+    //   port connnection can be specified by `()`
+    //   each port connection is `[port_name]:[variable]`
+    //   `[port_name]` means `[port_name]:[port_name]`
+    inst u_module_b: ModuleB ( i_clk, i_data: r_data1, o_data: r_data2 );
 
-    // パラメータオーバーライド付きインスタンス宣言
-    //   パラメータの接続記法はポートと同様です
+    // instance declaration with parameter override
+    //   notation of parameter connection is the same as port
     inst u_module_c: ModuleC #( ParamA, ParamB: 10 );
 }
 

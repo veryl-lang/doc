@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-9cffd465.js";
+            window.path_to_searchindex_js = "../../searchindex-2c9cf7bf.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-d102f71b.js"></script>
@@ -281,14 +281,11 @@
         b: bit&lt;10&gt;,
     }
 
-    const p: Param = Param'{
-        a: 10,
-        b: 10,
-    };
+    const p: Param = Param'{a: 10, b: 10,};
 
     const q: Param = Param'{
         a: 1,
-        ..default(0) // すなわち `b: 0`
+        ..default(0) // means `b: 0`
     };
 }
 </code></pre>

@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-03058cbd.js";
+            window.path_to_searchindex_js = "searchindex-b800ec7e.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-92efcc39.js"></script>
@@ -1121,11 +1121,7 @@ module ModuleA #(
     //   port connnection can be specified by `()`
     //   each port connection is `[port_name]:[variable]`
     //   `[port_name]` means `[port_name]:[port_name]`
-    inst u_module_b: ModuleB (
-        i_clk          ,
-        i_data: r_data1,
-        o_data: r_data2,
-    );
+    inst u_module_b: ModuleB ( i_clk, i_data: r_data1, o_data: r_data2 );
 
     // instance declaration with parameter override
     //   notation of parameter connection is the same as port
@@ -1617,7 +1613,7 @@ Each  union variant should have the same packed width as each other union varian
         variant_c: logic&lt;4, 2&gt;   ,
         variant_d: logic&lt;2, 2, 2&gt;,
     }
-    var a          : UnionA;
+    var a: UnionA;
     assign a.variant_a = 8'haa;
 }
 </code></pre>
@@ -1996,10 +1992,7 @@ This is especially useful to initialize <code>const</code> because it can’t be
         b: bit&lt;10&gt;,
     }
 
-    const p: Param = Param'{
-        a: 10,
-        b: 10,
-    };
+    const p: Param = Param'{a: 10, b: 10,};
 
     const q: Param = Param'{
         a: 1,
@@ -2584,10 +2577,7 @@ module ModuleB {
     inst a_if: InterfaceA::&lt;8&gt; [4];
     inst b_if: InterfaceA::&lt;8&gt; [4];
 
-    inst u: ModuleA (
-        slave_if : a_if,
-        master_if: b_if,
-    );
+    inst u: ModuleA ( slave_if: a_if, master_if: b_if );
 }
 </code></pre>
 <h2 id="align-attribute"><a class="header" href="#align-attribute"><code>align</code> Attribute</a></h2>
@@ -2600,16 +2590,14 @@ If <code>number</code> is specified as an argument of <code>align</code> attribu
     let aaa: logic&lt;32&gt; = 1;
 
     let _b: logic = {
-        a[0] repeat 1, a[0] repeat 1,
-        aa[1] repeat 8, aa[1] repeat 8,
-        aaa[2] repeat 16, aaa[2] repeat 16,
+        a[0] repeat 1, a[0] repeat 1, aa[1] repeat 8, aa[1] repeat 8, aaa[2] repeat 16, aaa[2] repeat 16, a[0] repeat 1,
+        aa[1] repeat 8, aaa[2] repeat 16, a[0] repeat 1,
     };
 
     #[align(number, identifier)]
     let _c : logic = {
-        a  [0 ] repeat 1 , a  [0 ] repeat 1 ,
-        aa [1 ] repeat 8 , aa [1 ] repeat 8 ,
-        aaa[2 ] repeat 16, aaa[2 ] repeat 16,
+        a  [0 ] repeat 1 , a  [0 ] repeat 1 , aa [1 ] repeat 8 , aa [1 ] repeat 8 , aaa[2 ] repeat 16,
+        aaa[2 ] repeat 16, a  [0 ] repeat 1 , aa [1 ] repeat 8 , aaa[2 ] repeat 16, a  [0 ] repeat 1 ,
     };
 }
 </code></pre>
@@ -2731,18 +2719,10 @@ module ModuleB (
 ) {}
 
 module ModuleC {
-    bind ModuleA &lt;- u0: ModuleB (
-        i_clk  ,
-        i_rst  ,
-        a_if   ,
-    );
+    bind ModuleA &lt;- u0: ModuleB ( i_clk, i_rst, a_if );
 }
 
-bind ModuleA &lt;- u1: ModuleB (
-    i_clk: i_clk,
-    i_rst: i_rst,
-    a_if : a_if ,
-);
+bind ModuleA &lt;- u1: ModuleB ( i_clk: i_clk, i_rst: i_rst, a_if: a_if );
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="named-block-1"><a class="header" href="#named-block-1">Named Block</a></h1>
@@ -2786,7 +2766,7 @@ module ModuleA (
 ) {
     import PackageA::WIDTH;
 
-    let d  : logic&lt;WIDTH&gt; = i_d; // valid reference
+    let d: logic&lt;WIDTH&gt; = i_d; // valid reference
     assign o_d = d;
 }
 </code></pre>
@@ -3045,10 +3025,7 @@ module ModuleB (
     foo_if: modport InterfaceA::mp,
 ) {
     inst bar_if: InterfaceA;
-    inst u: ModuleA (
-        foo_if: foo_if,
-        bar_if: bar_if,
-    );
+    inst u     : ModuleA ( foo_if: foo_if, bar_if: bar_if );
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -3180,9 +3157,7 @@ Ignored tests are not executed by default, but can be run with <code>--ignored</
 #[ignore]
 module test_ignored {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen (
-        clk  ,
-    );
+    inst rst: $tb::reset_gen ( clk );
 
     initial {
         rst.assert();
@@ -3222,17 +3197,11 @@ A module with <code>#[test(test_name)]</code> attribute (without <code>embed</co
 #[test(test_counter)]
 module test_counter {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen (
-        clk  ,
-    );
+    inst rst: $tb::reset_gen ( clk );
 
     var cnt: logic&lt;32&gt;;
 
-    inst dut: Counter (
-        clk: clk,
-        rst: rst,
-        cnt: cnt,
-    );
+    inst dut: Counter ( clk: clk, rst: rst, cnt: cnt );
 
     initial {
         rst.assert();
@@ -3257,11 +3226,7 @@ module test_counter {
 <pre><code class="language-veryl playground">#[test(test_reset_cycles_param)]
 module test_reset_cycles_param {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen #(
-        cycles: 5,
-    ) (
-        clk  ,
-    );
+    inst rst: $tb::reset_gen #( cycles: 5 ) ( clk );
 
     // ...
 
@@ -3276,9 +3241,7 @@ module test_reset_cycles_param {
 <pre><code class="language-veryl playground">#[test(test_function_call)]
 module test_function_call {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen (
-        clk  ,
-    );
+    inst rst: $tb::reset_gen ( clk );
 
     var cnt: logic&lt;32&gt;;
 
@@ -3427,10 +3390,7 @@ module ModuleB::&lt;A: u32, B: u32, C: u32&gt; {
     var a: logic&lt;W&gt;;
     var b: T       ;
 
-    inst u: ModuleA::&lt;W, T&gt; (
-        a  ,
-        b  ,
-    );
+    inst u: ModuleA::&lt;W, T&gt; ( a, b );
 }
 module ModuleC {
     inst u: ModuleB::&lt;1, 2, 3&gt;;
@@ -3508,10 +3468,7 @@ proto module ProtoA #(
 );
 
 module ModuleB::&lt;T: ProtoA&gt; {
-    inst u: T (
-        i_dat: 0,
-        o_dat: _,
-    );
+    inst u: T ( i_dat: 0, o_dat: _ );
 }
 
 module ModuleC for ProtoA #(
@@ -3580,9 +3537,7 @@ module ModuleA::&lt;BUS_IF: ProtoA&gt; (
 module ModuleB {
     inst bus_if: InterfaceA::&lt;8&gt;;
 
-    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; (
-        bus_if: bus_if,
-    );
+    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; ( bus_if: bus_if );
 }
 </code></pre>
 <h2 id="package-prototype"><a class="header" href="#package-prototype">Package Prototype</a></h2>
@@ -3674,7 +3629,7 @@ package BarPkg for BarProtoPkg {
     type Foo = FooPkg::Foo;
 }
 module ModuleA::&lt;PKG: BarProtoPkg&gt; {
-    var _foo    : PKG::Foo;
+    var _foo: PKG::Foo;
     assign _foo.foo = 0;
 }
 module ModuleB {
@@ -3845,11 +3800,7 @@ In the block, clock domain crossing error is suppressed, so designer should chec
     o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
-        inst u_sync: $sv::SynchronizerCell (
-            i_clk: i_clk_b,
-            i_dat: i_dat_a,
-            o_dat: o_dat_b,
-        );
+        inst u_sync: $sv::SynchronizerCell ( i_clk: i_clk_b, i_dat: i_dat_a, o_dat: o_dat_b );
     }
 }
 </code></pre>

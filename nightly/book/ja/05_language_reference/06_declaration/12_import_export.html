@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-9cffd465.js";
+            window.path_to_searchindex_js = "../../searchindex-2c9cf7bf.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-d102f71b.js"></script>
@@ -292,12 +292,12 @@ module ModuleA {
 }
 
 module ModuleA (
-    i_d: input  logic&lt;WIDTH&gt;, // 有効な参照
-    o_d: output logic&lt;WIDTH&gt;, // 有効な参照
+    i_d: input  logic&lt;WIDTH&gt;, // valid reference
+    o_d: output logic&lt;WIDTH&gt;, // valid reference
 ) {
     import PackageA::WIDTH;
 
-    let d  : logic&lt;WIDTH&gt; = i_d; // 有効な参照
+    let d: logic&lt;WIDTH&gt; = i_d; // valid reference
     assign o_d = d;
 }
 </code></pre>

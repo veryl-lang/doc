@@ -137,7 +137,7 @@
     },
     {
       "name": "bumpalo",
-      "version": "3.20.2",
+      "version": "3.20.3",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/fitzgen/bumpalo",
       "category": "rust"
@@ -599,7 +599,7 @@
     },
     {
       "name": "log",
-      "version": "0.4.29",
+      "version": "0.4.30",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/rust-lang/log",
       "category": "rust"
@@ -935,7 +935,7 @@
     },
     {
       "name": "similar",
-      "version": "3.1.0",
+      "version": "3.1.1",
       "license": "Apache-2.0",
       "url": "https://github.com/mitsuhiko/similar",
       "category": "rust"
@@ -1228,6 +1228,13 @@
       "category": "rust"
     },
     {
+      "name": "veryl-pretty",
+      "version": "0.20.0",
+      "license": "MIT OR Apache-2.0",
+      "url": "https://github.com/veryl-lang/veryl",
+      "category": "rust"
+    },
+    {
       "name": "veryl-simulator",
       "version": "0.20.0",
       "license": "MIT OR Apache-2.0",
@@ -1271,28 +1278,28 @@
     },
     {
       "name": "wasm-bindgen",
-      "version": "0.2.121",
+      "version": "0.2.122",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/wasm-bindgen/wasm-bindgen",
       "category": "rust"
     },
     {
       "name": "wasm-bindgen-macro",
-      "version": "0.2.121",
+      "version": "0.2.122",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/wasm-bindgen/wasm-bindgen/tree/master/crates/macro",
       "category": "rust"
     },
     {
       "name": "wasm-bindgen-macro-support",
-      "version": "0.2.121",
+      "version": "0.2.122",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/wasm-bindgen/wasm-bindgen/tree/master/crates/macro-support",
       "category": "rust"
     },
     {
       "name": "wasm-bindgen-shared",
-      "version": "0.2.121",
+      "version": "0.2.122",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/wasm-bindgen/wasm-bindgen/tree/master/crates/shared",
       "category": "rust"

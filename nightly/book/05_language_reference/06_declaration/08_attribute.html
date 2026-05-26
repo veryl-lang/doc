@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-03058cbd.js";
+            window.path_to_searchindex_js = "../../searchindex-b800ec7e.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-92efcc39.js"></script>
@@ -386,10 +386,7 @@ module ModuleB {
     inst a_if: InterfaceA::&lt;8&gt; [4];
     inst b_if: InterfaceA::&lt;8&gt; [4];
 
-    inst u: ModuleA (
-        slave_if : a_if,
-        master_if: b_if,
-    );
+    inst u: ModuleA ( slave_if: a_if, master_if: b_if );
 }
 </code></pre>
 <h2 id="align-attribute"><a class="header" href="#align-attribute"><code>align</code> Attribute</a></h2>
@@ -402,16 +399,14 @@ If <code>number</code> is specified as an argument of <code>align</code> attribu
     let aaa: logic&lt;32&gt; = 1;
 
     let _b: logic = {
-        a[0] repeat 1, a[0] repeat 1,
-        aa[1] repeat 8, aa[1] repeat 8,
-        aaa[2] repeat 16, aaa[2] repeat 16,
+        a[0] repeat 1, a[0] repeat 1, aa[1] repeat 8, aa[1] repeat 8, aaa[2] repeat 16, aaa[2] repeat 16, a[0] repeat 1,
+        aa[1] repeat 8, aaa[2] repeat 16, a[0] repeat 1,
     };
 
     #[align(number, identifier)]
     let _c : logic = {
-        a  [0 ] repeat 1 , a  [0 ] repeat 1 ,
-        aa [1 ] repeat 8 , aa [1 ] repeat 8 ,
-        aaa[2 ] repeat 16, aaa[2 ] repeat 16,
+        a  [0 ] repeat 1 , a  [0 ] repeat 1 , aa [1 ] repeat 8 , aa [1 ] repeat 8 , aaa[2 ] repeat 16,
+        aaa[2 ] repeat 16, a  [0 ] repeat 1 , aa [1 ] repeat 8 , aaa[2 ] repeat 16, a  [0 ] repeat 1 ,
     };
 }
 </code></pre>

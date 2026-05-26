@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-03058cbd.js";
+            window.path_to_searchindex_js = "../../searchindex-b800ec7e.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-92efcc39.js"></script>
@@ -293,10 +293,7 @@ proto module ProtoA #(
 );
 
 module ModuleB::&lt;T: ProtoA&gt; {
-    inst u: T (
-        i_dat: 0,
-        o_dat: _,
-    );
+    inst u: T ( i_dat: 0, o_dat: _ );
 }
 
 module ModuleC for ProtoA #(
@@ -365,9 +362,7 @@ module ModuleA::&lt;BUS_IF: ProtoA&gt; (
 module ModuleB {
     inst bus_if: InterfaceA::&lt;8&gt;;
 
-    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; (
-        bus_if: bus_if,
-    );
+    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; ( bus_if: bus_if );
 }
 </code></pre>
 <h2 id="package-prototype"><a class="header" href="#package-prototype">Package Prototype</a></h2>
@@ -459,7 +454,7 @@ package BarPkg for BarProtoPkg {
     type Foo = FooPkg::Foo;
 }
 module ModuleA::&lt;PKG: BarProtoPkg&gt; {
-    var _foo    : PKG::Foo;
+    var _foo: PKG::Foo;
     assign _foo.foo = 0;
 }
 module ModuleB {
