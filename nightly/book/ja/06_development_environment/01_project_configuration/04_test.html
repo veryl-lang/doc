@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-2c9cf7bf.js";
+            window.path_to_searchindex_js = "../../searchindex-930c7e49.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-d102f71b.js"></script>
@@ -308,6 +308,12 @@ waveform_target = {type = "directory", path = "[dst dir]"}
 <li><code>vcd</code> – デフォルト値であり、多くのベンダーでサポートされていますが機能は限定的です。</li>
 <li><code>fst</code> – 整数の代わりにenum値を表示するなどいくつかの機能をサポートしています。<code>gtkwave</code> と <code>surfer</code> で扱うことができます。</li>
 </ul>
+<h3 id="defines-フィールド"><a class="header" href="#defines-フィールド"><code>defines</code> フィールド</a></h3>
+<p><code>defines</code> フィールドは、<code>veryl test</code> の実行中に定義済みとして扱われる名前のリストを指定します。これらの名前は <a href="../../05_language_reference/06_declaration/08_attribute.html"><code>#[ifdef]</code>/<code>#[ifndef]</code></a> 属性から参照でき、テスト専用のコードパスを有効化するために利用できます。SystemVerilog テストと cocotb テストでは、同じ名前が <code>+define+NAME</code> (Vivado の場合は <code>-d NAME</code>) として外部シミュレータにも渡されます。</p>
+<pre><code class="language-toml">[test]
+defines = ["DEBUG", "ENABLE_ASSERTIONS"]
+</code></pre>
+<p>追加の名前はコマンドラインから <code>veryl test --define NAME</code> (または <code>-D NAME</code>) で渡すこともできます。CLI で指定した値はこのフィールドの内容にマージされます。</p>
 <h2 id="testverilator-セクション"><a class="header" href="#testverilator-セクション"><code>[test.verilator]</code> セクション</a></h2>
 <p>このセクションはVerilatorによるテストの設定です。</p>
 <div class="table-wrapper">

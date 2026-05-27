@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-b800ec7e.js";
+            window.path_to_searchindex_js = "../../searchindex-b3055dba.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-92efcc39.js"></script>
@@ -285,11 +285,15 @@ indent_width = 4
 </thead>
 <tbody>
 <tr><td>indent_width</td><td>integer</td><td>4</td><td>indent width by space</td></tr>
+<tr><td>max_width</td><td>integer</td><td>120</td><td>preferred maximum line width before line breaking</td></tr>
 <tr><td>vertical_align</td><td>boolean</td><td>true</td><td>enable vertial align</td></tr>
 <tr><td>newline_style</td><td><code>auto</code> / <code>native</code> / <code>unix</code> / <code>windows</code></td><td><code>auto</code></td><td>line ending style</td></tr>
 </tbody>
 </table>
 </div>
+<p>The formatter tries to keep each line within <code>max_width</code> columns by inserting line
+breaks at acceptable positions. Lines that cannot be broken (for example, very long
+identifiers or comments) may still exceed this width.</p>
 <p><code>newline_style</code> controls the line ending used by the formatter, the build emitter and the
 migrator output. The available values are:</p>
 <ul>

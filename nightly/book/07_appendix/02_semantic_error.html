@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-b800ec7e.js";
+            window.path_to_searchindex_js = "../searchindex-b3055dba.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-92efcc39.js"></script>
@@ -287,6 +287,13 @@ requires a named identifier.</p>
 <h3 id="call_non_function"><a class="header" href="#call_non_function">call_non_function</a></h3>
 <p>This error is reported when a non-function symbol is called as if it were a function.
 Remove the call, or replace the symbol with an actual function.</p>
+<h3 id="combinational_loop"><a class="header" href="#combinational_loop">combinational_loop</a></h3>
+<p>This error is reported when a combinational loop is detected, where the value of a
+signal depends on itself through purely combinational logic without any sequential
+element in between. The loop can be formed by <code>assign</code> declarations, <code>always_comb</code>
+blocks, function calls, or instantiated modules and interfaces.
+Break the loop by inserting a register (<code>always_ff</code>) on at least one path, or by
+restructuring the design so that the dependency chain terminates.</p>
 <h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
 <p>This error is reported when two or more type definitions reference each other in a
 cycle. Break the cycle by removing or restructuring one of the references.</p>

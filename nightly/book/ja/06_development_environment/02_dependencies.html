@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-2c9cf7bf.js";
+            window.path_to_searchindex_js = "../searchindex-930c7e49.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-d102f71b.js"></script>
@@ -337,6 +337,25 @@ veryl_sample = {path = "../../veryl_sample"}
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = "../veryl_sample"}
 </code></pre>
 <p>これは <code>../veryl_sample</code> が存在する場合はそれを使い、そうでない場合は Git から取得する、という意味です。</p>
+<h2 id="git-バックエンド"><a class="header" href="#git-バックエンド">Git バックエンド</a></h2>
+<p>Veryl は 2 つの異なるバックエンドを通して git ベースの依存を取得できます。</p>
+<ul>
+<li><code>gitoxide</code> — 純粋な Rust 実装の git。外部の <code>git</code> バイナリを必要としません。</li>
+<li><code>command</code> — システムの <code>git</code> コマンドを実行します。<code>git</code> が <code>PATH</code> に存在する必要があります。</li>
+</ul>
+<p>既定では <code>gitoxide</code> を試し、失敗した場合 (たとえば gitoxide が対応していない認証方式が必要な場合など) に自動的に <code>command</code> へフォールバックします。バックエンドは <code>VERYL_GIT_BACKEND</code> 環境変数で明示的に選択できます。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定値</th><th>挙動</th></tr>
+</thead>
+<tbody>
+<tr><td><code>auto</code></td><td>既定値。<code>gitoxide</code> を試し、失敗時に <code>command</code> へフォールバックする。</td></tr>
+<tr><td><code>gitoxide</code></td><td><code>gitoxide</code> を強制する。フォールバックなし。</td></tr>
+<tr><td><code>command</code></td><td>システムの <code>git</code> コマンドを強制する。フォールバックなし。</td></tr>
+</tbody>
+</table>
+</div>
 
                     </main>
 

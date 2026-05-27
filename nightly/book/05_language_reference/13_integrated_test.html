@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-b800ec7e.js";
+            window.path_to_searchindex_js = "../searchindex-b3055dba.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-92efcc39.js"></script>
@@ -287,6 +287,9 @@ For all test types, if <code>--wave</code> option is specified, waveforms are ge
 <p>Tests can be skipped by adding <code>#[ignore]</code> attribute.
 Ignored tests are not executed by default, but can be run with <code>--ignored</code> option.
 <code>--include-ignored</code> option runs both normal and ignored tests.</p>
+<p>Test-only code paths can be enabled by combining the <a href="./06_declaration/08_attribute.html"><code>#[ifdef]</code>/<code>#[ifndef]</code></a> attribute with names defined for the test.
+Names can be defined through the <code>[test].defines</code> field of <code>Veryl.toml</code>, or by the <code>--define NAME</code> (<code>-D NAME</code>) option of <code>veryl test</code>.
+The two sources are merged, and for SystemVerilog and cocotb tests, the same names are also passed to the external simulator.</p>
 <pre><code class="language-veryl playground">#[test(test_ignored)]
 #[ignore]
 module test_ignored {

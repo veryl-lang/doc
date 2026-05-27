@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-2c9cf7bf.js";
+            window.path_to_searchindex_js = "../searchindex-930c7e49.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-d102f71b.js"></script>
@@ -282,6 +282,7 @@
 </ul>
 <p>ネイティブテストはVerylの組み込みシミュレータを使用し、SystemVerilogテストとcocotbテストは外部のRTLシミュレータを使用します。<code>veryl test</code> で使用される外部RTLシミュレータについては <a href="../06_development_environment/07_simulator.html">シミュレータ</a> を参照してください。すべてのテスト種別で、<code>--wave</code> オプションを指定すると波形を生成できます。</p>
 <p><code>#[ignore]</code> 属性を追加することでデフォルトでは無視するテストを指定できます。無視されたテストは <code>--ignored</code> オプションで実行できます。<code>--include-ignored</code> オプションを使うと通常のテストと無視されたテストの両方を実行します。</p>
+<p>テスト時のみ有効になるコードパスは、<a href="./06_declaration/08_attribute.html"><code>#[ifdef]</code>/<code>#[ifndef]</code></a> 属性と、テスト用に定義された名前を組み合わせることで有効化できます。名前は <code>Veryl.toml</code> の <code>[test].defines</code> フィールド、または <code>veryl test</code> の <code>--define NAME</code> (<code>-D NAME</code>) オプションで定義できます。両者はマージされ、SystemVerilog テストと cocotb テストでは同じ名前が外部シミュレータにも渡されます。</p>
 <pre><code class="language-veryl playground">#[test(test_ignored)]
 #[ignore]
 module test_ignored {

@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-b800ec7e.js";
+            window.path_to_searchindex_js = "../searchindex-b3055dba.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-92efcc39.js"></script>
@@ -276,6 +276,22 @@
 <p>Test is executed through <code>veryl test</code>.</p>
 <p>For <a href="../05_language_reference/13_integrated_test.html#native-test">native test</a>, Veryl’s built-in simulator is used.
 No external simulator installation is required.</p>
+<p>The native simulator selects its code-generation backend through <code>veryl test --backend</code>:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Backend</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cc</code></td><td>Default. Emits C, compiles with an external C compiler (<code>gcc</code> or <code>clang</code> with <code>-O3</code>), then loads the result.</td></tr>
+<tr><td><code>cranelift</code></td><td>In-process Cranelift JIT.</td></tr>
+<tr><td><code>interpret</code></td><td>Walks the IR each cycle without code generation.</td></tr>
+</tbody>
+</table>
+</div>
+<p>The <code>cc</code> backend requires <code>cc</code> (typically <code>gcc</code> or <code>clang</code>) to be available on <code>PATH</code>.
+If <code>cc</code> is missing, or a particular construct is not yet covered by the <code>cc</code> emitter, the simulator transparently falls back to Cranelift for that part.
+Use <code>veryl test --backend-validate</code> to dual-run the <code>cc</code> backend against Cranelift and abort on any divergence.</p>
 <p>For SystemVerilog test and cocotb test, an external RTL simulator is required.
 Supported simulators are below:</p>
 <ul>

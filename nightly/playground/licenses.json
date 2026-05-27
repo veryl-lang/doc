@@ -312,7 +312,7 @@
     },
     {
       "name": "displaydoc",
-      "version": "0.2.5",
+      "version": "0.2.6",
       "license": "MIT OR Apache-2.0",
       "url": "https://github.com/yaahc/displaydoc",
       "category": "rust"

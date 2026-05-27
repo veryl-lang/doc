@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-2c9cf7bf.js";
+            window.path_to_searchindex_js = "../searchindex-930c7e49.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-d102f71b.js"></script>
@@ -278,7 +278,10 @@
 <p>注: インターネットアクセスのない環境にインストールしたい場合は <a href="../06_development_environment/13_verylup.html#offline-installation">オフラインインストール</a> が利用できます。</p>
 </blockquote>
 <h2 id="要件"><a class="header" href="#要件">要件</a></h2>
-<p>Veryl は <code>git</code> コマンドを内部で使用します。 <code>git</code> が起動できることを確認しておいてください。</p>
+<h3 id="git"><a class="header" href="#git">git</a></h3>
+<p>Veryl は git ベースの依存を取得するために、既定で組み込みの <a href="https://github.com/GitoxideLabs/gitoxide"><code>gitoxide</code></a> バックエンドを使用するため、外部の <code>git</code> コマンドは必須ではありません。<code>gitoxide</code> が失敗した場合 (たとえば対応していない認証方式が必要なときなど) は、Veryl は自動的にシステムの <code>git</code> コマンドへフォールバックするため、<code>git</code> をインストールしておくことを推奨します。バックエンドの選択方法については <a href="../06_development_environment/02_dependencies.html#git-backend">Git バックエンド</a> を参照してください。</p>
+<h3 id="cc"><a class="header" href="#cc">cc</a></h3>
+<p><code>veryl test</code> の既定のネイティブシミュレータバックエンド (<code>--backend=cc</code>) は C を出力し、<code>PATH</code> 上の <code>cc</code> コマンドでコンパイルします。<code>cc</code> が利用できない場合、シミュレータは Cranelift JIT へ透過的にフォールバックするため、必須ではありませんが最高のパフォーマンスを得るためにインストールしておくことを推奨します。バックエンドの選択方法については <a href="../06_development_environment/07_simulator.html">シミュレータ</a> を参照してください。</p>
 <h2 id="verylup-のインストール"><a class="header" href="#verylup-のインストール">verylup のインストール</a></h2>
 <h3 id="バイナリのダウンロード"><a class="header" href="#バイナリのダウンロード">バイナリのダウンロード</a></h3>
 <p><a href="https://github.com/veryl-lang/verylup/releases/latest">リリースページ</a>からダウンロードして、パスの通ったところに展開してください。</p>

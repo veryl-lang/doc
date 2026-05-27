@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-b800ec7e.js";
+            window.path_to_searchindex_js = "../searchindex-b3055dba.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-92efcc39.js"></script>
@@ -279,7 +279,14 @@ We recommend to use <code>verylup</code> because it provides some usefule featur
 <p>Note: If you want install on an enviromnent without internet access, you can use <a href="../06_development_environment/13_verylup.html#offline-installation">offline installation</a>.</p>
 </blockquote>
 <h2 id="requirement"><a class="header" href="#requirement">Requirement</a></h2>
-<p>Veryl uses <code>git</code> command internally. Please confirm <code>git</code> can be launched.</p>
+<h3 id="git"><a class="header" href="#git">git</a></h3>
+<p>Veryl uses a built-in <a href="https://github.com/GitoxideLabs/gitoxide"><code>gitoxide</code></a> backend by default for fetching git-based dependencies, so an external <code>git</code> command is not required.
+If <code>gitoxide</code> fails (for example, when an authentication method it does not support is required), Veryl automatically falls back to the system <code>git</code> command, so installing <code>git</code> is recommended.
+See <a href="../06_development_environment/02_dependencies.html#git-backend">Git backend</a> for details on selecting the backend.</p>
+<h3 id="cc"><a class="header" href="#cc">cc</a></h3>
+<p>The default native-simulator backend used by <code>veryl test</code> (<code>--backend=cc</code>) emits C and compiles it with the <code>cc</code> command on <code>PATH</code>.
+If <code>cc</code> is not available, the simulator transparently falls back to the Cranelift JIT, so installing <code>cc</code> is recommended for best performance but not required.
+See <a href="../06_development_environment/07_simulator.html">Simulator</a> for details on selecting the backend.</p>
 <h2 id="install-verylup"><a class="header" href="#install-verylup">Install verylup</a></h2>
 <h3 id="download-binary"><a class="header" href="#download-binary">Download binary</a></h3>
 <p>Download from <a href="https://github.com/veryl-lang/verylup/releases/latest">release page</a>, and extract to the directory in <code>PATH</code>.</p>

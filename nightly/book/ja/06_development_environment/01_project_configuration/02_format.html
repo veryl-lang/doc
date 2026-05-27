@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-2c9cf7bf.js";
+            window.path_to_searchindex_js = "../../searchindex-930c7e49.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-d102f71b.js"></script>
@@ -285,11 +285,13 @@ indent_width = 4
 </thead>
 <tbody>
 <tr><td>indent_width</td><td>整数</td><td>4</td><td>インデントのスペース幅</td></tr>
+<tr><td>max_width</td><td>整数</td><td>120</td><td>改行挿入前に保とうとする 1 行の最大幅</td></tr>
 <tr><td>vertical_align</td><td>ブーリアン</td><td>true</td><td>垂直方向の調整を有効にする</td></tr>
 <tr><td>newline_style</td><td><code>auto</code> / <code>native</code> / <code>unix</code> / <code>windows</code></td><td><code>auto</code></td><td>改行コードのスタイル</td></tr>
 </tbody>
 </table>
 </div>
+<p>フォーマッタは、適切な位置に改行を挿入することで各行を <code>max_width</code> カラム以内に収めようとします。改行できない箇所 (非常に長い識別子やコメントなど) ではこの幅を超える可能性があります。</p>
 <p><code>newline_style</code> はフォーマッタ、ビルドのエミッタ、マイグレータが出力する改行コードを制御します。利用可能な値は以下のとおりです。</p>
 <ul>
 <li><code>auto</code> — 入力ファイルから検出します。改行が存在しない場合は実行プラットフォームのネイティブスタイルが使用されます。</li>

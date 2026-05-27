@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-2c9cf7bf.js";
+            window.path_to_searchindex_js = "../../searchindex-930c7e49.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-d102f71b.js"></script>
@@ -299,6 +299,26 @@ module ModuleA (
 
     let d: logic&lt;WIDTH&gt; = i_d; // valid reference
     assign o_d = d;
+}
+</code></pre>
+<p>enumのメンバーも、個別および wildcard により import できます。これはパッケージ内で定義された enum だけでなく、モジュールやインターフェース内でローカルに宣言された enum にも適用されます。</p>
+<pre><code class="language-veryl playground">package PackageB {
+    enum Color: logic&lt;2&gt; {
+        Red,
+        Green,
+        Blue,
+    }
+}
+
+module ModuleB {
+    // 単一の enum メンバーを import
+    import PackageB::Color::Red;
+    // enum の全メンバーを import
+    import PackageB::Color::*;
+
+    var c: PackageB::Color;
+    // 修飾なしでメンバーを参照可能
+    assign c = Green;
 }
 </code></pre>
 

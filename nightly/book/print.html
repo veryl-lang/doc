@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-b800ec7e.js";
+            window.path_to_searchindex_js = "searchindex-b3055dba.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-92efcc39.js"></script>
@@ -887,7 +887,14 @@ We recommend to use <code>verylup</code> because it provides some usefule featur
 <p>Note: If you want install on an enviromnent without internet access, you can use <a href="#offline-installation">offline installation</a>.</p>
 </blockquote>
 <h2 id="requirement"><a class="header" href="#requirement">Requirement</a></h2>
-<p>Veryl uses <code>git</code> command internally. Please confirm <code>git</code> can be launched.</p>
+<h3 id="git"><a class="header" href="#git">git</a></h3>
+<p>Veryl uses a built-in <a href="https://github.com/GitoxideLabs/gitoxide"><code>gitoxide</code></a> backend by default for fetching git-based dependencies, so an external <code>git</code> command is not required.
+If <code>gitoxide</code> fails (for example, when an authentication method it does not support is required), Veryl automatically falls back to the system <code>git</code> command, so installing <code>git</code> is recommended.
+See <a href="#git-backend">Git backend</a> for details on selecting the backend.</p>
+<h3 id="cc"><a class="header" href="#cc">cc</a></h3>
+<p>The default native-simulator backend used by <code>veryl test</code> (<code>--backend=cc</code>) emits C and compiles it with the <code>cc</code> command on <code>PATH</code>.
+If <code>cc</code> is not available, the simulator transparently falls back to the Cranelift JIT, so installing <code>cc</code> is recommended for best performance but not required.
+See <a href="#simulator">Simulator</a> for details on selecting the backend.</p>
 <h2 id="install-verylup"><a class="header" href="#install-verylup">Install verylup</a></h2>
 <h3 id="download-binary"><a class="header" href="#download-binary">Download binary</a></h3>
 <p>Download from <a href="https://github.com/veryl-lang/verylup/releases/latest">release page</a>, and extract to the directory in <code>PATH</code>.</p>
@@ -2770,6 +2777,27 @@ module ModuleA (
     assign o_d = d;
 }
 </code></pre>
+<p>Enum members can also be imported, both individually and via wildcard.
+This works for enums defined inside a package as well as enums declared locally inside a module or interface.</p>
+<pre><code class="language-veryl playground">package PackageB {
+    enum Color: logic&lt;2&gt; {
+        Red,
+        Green,
+        Blue,
+    }
+}
+
+module ModuleB {
+    // import a single enum member
+    import PackageB::Color::Red;
+    // import all members of the enum
+    import PackageB::Color::*;
+
+    var c: PackageB::Color;
+    // members can be referenced without qualification
+    assign c = Green;
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="connect"><a class="header" href="#connect">Connect</a></h1>
 <p>To assign from a interface to another interface, <code>connect</code> decleration can be used instead of each member assignment.
@@ -3153,6 +3181,9 @@ For all test types, if <code>--wave</code> option is specified, waveforms are ge
 <p>Tests can be skipped by adding <code>#[ignore]</code> attribute.
 Ignored tests are not executed by default, but can be run with <code>--ignored</code> option.
 <code>--include-ignored</code> option runs both normal and ignored tests.</p>
+<p>Test-only code paths can be enabled by combining the <a href="#attribute"><code>#[ifdef]</code>/<code>#[ifndef]</code></a> attribute with names defined for the test.
+Names can be defined through the <code>[test].defines</code> field of <code>Veryl.toml</code>, or by the <code>--define NAME</code> (<code>-D NAME</code>) option of <code>veryl test</code>.
+The two sources are merged, and for SystemVerilog and cocotb tests, the same names are also passed to the external simulator.</p>
 <pre><code class="language-veryl playground">#[test(test_ignored)]
 #[ignore]
 module test_ignored {
@@ -4488,11 +4519,15 @@ indent_width = 4
 </thead>
 <tbody>
 <tr><td>indent_width</td><td>integer</td><td>4</td><td>indent width by space</td></tr>
+<tr><td>max_width</td><td>integer</td><td>120</td><td>preferred maximum line width before line breaking</td></tr>
 <tr><td>vertical_align</td><td>boolean</td><td>true</td><td>enable vertial align</td></tr>
 <tr><td>newline_style</td><td><code>auto</code> / <code>native</code> / <code>unix</code> / <code>windows</code></td><td><code>auto</code></td><td>line ending style</td></tr>
 </tbody>
 </table>
 </div>
+<p>The formatter tries to keep each line within <code>max_width</code> columns by inserting line
+breaks at acceptable positions. Lines that cannot be broken (for example, very long
+identifiers or comments) may still exceed this width.</p>
 <p><code>newline_style</code> controls the line ending used by the formatter, the build emitter and the
 migrator output. The available values are:</p>
 <ul>
@@ -4680,6 +4715,15 @@ The available formats are:</p>
 <li><code>vcd</code> – The default value and most readable format across all vendors. But also not very feature rich</li>
 <li><code>fst</code> – This format has some more features, e.g. printing enum values instead of integers. <code>gtkwave</code> and <code>surfer</code> can read this format.</li>
 </ul>
+<h3 id="the-defines-field"><a class="header" href="#the-defines-field">The <code>defines</code> field</a></h3>
+<p>The <code>defines</code> field specifies a list of names that are treated as defined while running <code>veryl test</code>.
+These names are visible to the <a href="#attribute"><code>#[ifdef]</code>/<code>#[ifndef]</code></a> attribute, so they can be used to enable test-only code paths.
+For SystemVerilog and cocotb tests, the same names are also passed to the external simulator as <code>+define+NAME</code> (or <code>-d NAME</code> for Vivado).</p>
+<pre><code class="language-toml">[test]
+defines = ["DEBUG", "ENABLE_ASSERTIONS"]
+</code></pre>
+<p>Additional names can be appended from the command line via <code>veryl test --define NAME</code> (or <code>-D NAME</code>).
+CLI defines are merged with this field.</p>
 <h2 id="the-testverilator-section"><a class="header" href="#the-testverilator-section">The <code>[test.verilator]</code> section</a></h2>
 <p>This section contains configurations of test by Verilator.</p>
 <div class="table-wrapper">
@@ -4879,6 +4923,26 @@ In the case, overriding dependencies by local path can be used like below:</p>
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = "../veryl_sample"}
 </code></pre>
 <p>This means that if there is <code>../veryl_sample</code>, it is used, and if not, it is pulled from the Git repository.</p>
+<h2 id="git-backend"><a class="header" href="#git-backend">Git backend</a></h2>
+<p>Veryl can fetch git-based dependencies through two different backends:</p>
+<ul>
+<li><code>gitoxide</code> — a pure-Rust git implementation. It does not require an external <code>git</code> binary.</li>
+<li><code>command</code> — invokes the system <code>git</code> command. It requires <code>git</code> to be available on <code>PATH</code>.</li>
+</ul>
+<p>The default behavior is to try <code>gitoxide</code> first and automatically fall back to <code>command</code> when it fails (for example, when an authentication method that gitoxide does not support is required).
+The backend can be selected explicitly through the <code>VERYL_GIT_BACKEND</code> environment variable:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Value</th><th>Behavior</th></tr>
+</thead>
+<tbody>
+<tr><td><code>auto</code></td><td>Default. Try <code>gitoxide</code>, fall back to <code>command</code> on failure.</td></tr>
+<tr><td><code>gitoxide</code></td><td>Force <code>gitoxide</code>. No fallback.</td></tr>
+<tr><td><code>command</code></td><td>Force the system <code>git</code> command. No fallback.</td></tr>
+</tbody>
+</table>
+</div>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="publish-project"><a class="header" href="#publish-project">Publish Project</a></h1>
 <p>To publish your project, <code>veryl publish</code> can be used.
@@ -5032,6 +5096,22 @@ Alternatively, language server checks lint in real time.</p>
 <p>Test is executed through <code>veryl test</code>.</p>
 <p>For <a href="#native-test">native test</a>, Veryl’s built-in simulator is used.
 No external simulator installation is required.</p>
+<p>The native simulator selects its code-generation backend through <code>veryl test --backend</code>:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Backend</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cc</code></td><td>Default. Emits C, compiles with an external C compiler (<code>gcc</code> or <code>clang</code> with <code>-O3</code>), then loads the result.</td></tr>
+<tr><td><code>cranelift</code></td><td>In-process Cranelift JIT.</td></tr>
+<tr><td><code>interpret</code></td><td>Walks the IR each cycle without code generation.</td></tr>
+</tbody>
+</table>
+</div>
+<p>The <code>cc</code> backend requires <code>cc</code> (typically <code>gcc</code> or <code>clang</code>) to be available on <code>PATH</code>.
+If <code>cc</code> is missing, or a particular construct is not yet covered by the <code>cc</code> emitter, the simulator transparently falls back to Cranelift for that part.
+Use <code>veryl test --backend-validate</code> to dual-run the <code>cc</code> backend against Cranelift and abort on any divergence.</p>
 <p>For SystemVerilog test and cocotb test, an external RTL simulator is required.
 Supported simulators are below:</p>
 <ul>
@@ -6583,6 +6663,13 @@ requires a named identifier.</p>
 <h3 id="call_non_function"><a class="header" href="#call_non_function">call_non_function</a></h3>
 <p>This error is reported when a non-function symbol is called as if it were a function.
 Remove the call, or replace the symbol with an actual function.</p>
+<h3 id="combinational_loop"><a class="header" href="#combinational_loop">combinational_loop</a></h3>
+<p>This error is reported when a combinational loop is detected, where the value of a
+signal depends on itself through purely combinational logic without any sequential
+element in between. The loop can be formed by <code>assign</code> declarations, <code>always_comb</code>
+blocks, function calls, or instantiated modules and interfaces.
+Break the loop by inserting a register (<code>always_ff</code>) on at least one path, or by
+restructuring the design so that the dependency chain terminates.</p>
 <h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
 <p>This error is reported when two or more type definitions reference each other in a
 cycle. Break the cycle by removing or restructuring one of the references.</p>

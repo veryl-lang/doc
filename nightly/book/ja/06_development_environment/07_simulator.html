@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-2c9cf7bf.js";
+            window.path_to_searchindex_js = "../searchindex-930c7e49.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-d102f71b.js"></script>
@@ -275,6 +275,20 @@
                         <h1 id="シミュレータ"><a class="header" href="#シミュレータ">シミュレータ</a></h1>
 <p>テストは <code>veryl test</code> で実行することができます。</p>
 <p><a href="../05_language_reference/13_integrated_test.html#native-test">ネイティブテスト</a> ではVerylの組み込みシミュレータが使用されます。外部シミュレータのインストールは不要です。</p>
+<p>ネイティブシミュレータのコード生成バックエンドは <code>veryl test --backend</code> で選択します。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>バックエンド</th><th>説明</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cc</code></td><td>既定値。C を出力し、外部の C コンパイラ (<code>gcc</code> または <code>clang</code> の <code>-O3</code>) でコンパイルした結果をロードする。</td></tr>
+<tr><td><code>cranelift</code></td><td>インプロセスの Cranelift JIT。</td></tr>
+<tr><td><code>interpret</code></td><td>コード生成を行わず、サイクルごとに IR を歩く。</td></tr>
+</tbody>
+</table>
+</div>
+<p><code>cc</code> バックエンドは <code>cc</code> (通常は <code>gcc</code> または <code>clang</code>) が <code>PATH</code> に存在することを要求します。<code>cc</code> が無い場合や、特定の構文がまだ <code>cc</code> エミッタで対応されていない場合は、その部分について Cranelift へ透過的にフォールバックします。<code>veryl test --backend-validate</code> を使うと <code>cc</code> バックエンドを Cranelift と並行実行し、差異があれば中断します。</p>
 <p>SystemVerilogテストとcocotbテストでは、外部のRTLシミュレータが必要です。サポートされているシミュレータは以下の通りです。</p>
 <ul>
 <li><a href="https://www.veripool.org/verilator/">Verilator</a></li>

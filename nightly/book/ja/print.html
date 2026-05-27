@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-2c9cf7bf.js";
+            window.path_to_searchindex_js = "searchindex-930c7e49.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-d102f71b.js"></script>
@@ -858,7 +858,10 @@ module ModuleB {
 <p>注: インターネットアクセスのない環境にインストールしたい場合は <a href="#offline-installation">オフラインインストール</a> が利用できます。</p>
 </blockquote>
 <h2 id="要件"><a class="header" href="#要件">要件</a></h2>
-<p>Veryl は <code>git</code> コマンドを内部で使用します。 <code>git</code> が起動できることを確認しておいてください。</p>
+<h3 id="git"><a class="header" href="#git">git</a></h3>
+<p>Veryl は git ベースの依存を取得するために、既定で組み込みの <a href="https://github.com/GitoxideLabs/gitoxide"><code>gitoxide</code></a> バックエンドを使用するため、外部の <code>git</code> コマンドは必須ではありません。<code>gitoxide</code> が失敗した場合 (たとえば対応していない認証方式が必要なときなど) は、Veryl は自動的にシステムの <code>git</code> コマンドへフォールバックするため、<code>git</code> をインストールしておくことを推奨します。バックエンドの選択方法については <a href="#git-backend">Git バックエンド</a> を参照してください。</p>
+<h3 id="cc"><a class="header" href="#cc">cc</a></h3>
+<p><code>veryl test</code> の既定のネイティブシミュレータバックエンド (<code>--backend=cc</code>) は C を出力し、<code>PATH</code> 上の <code>cc</code> コマンドでコンパイルします。<code>cc</code> が利用できない場合、シミュレータは Cranelift JIT へ透過的にフォールバックするため、必須ではありませんが最高のパフォーマンスを得るためにインストールしておくことを推奨します。バックエンドの選択方法については <a href="#シミュレータ">シミュレータ</a> を参照してください。</p>
 <h2 id="verylup-のインストール"><a class="header" href="#verylup-のインストール">verylup のインストール</a></h2>
 <h3 id="バイナリのダウンロード"><a class="header" href="#バイナリのダウンロード">バイナリのダウンロード</a></h3>
 <p><a href="https://github.com/veryl-lang/verylup/releases/latest">リリースページ</a>からダウンロードして、パスの通ったところに展開してください。</p>
@@ -2606,6 +2609,26 @@ module ModuleA (
     assign o_d = d;
 }
 </code></pre>
+<p>enumのメンバーも、個別および wildcard により import できます。これはパッケージ内で定義された enum だけでなく、モジュールやインターフェース内でローカルに宣言された enum にも適用されます。</p>
+<pre><code class="language-veryl playground">package PackageB {
+    enum Color: logic&lt;2&gt; {
+        Red,
+        Green,
+        Blue,
+    }
+}
+
+module ModuleB {
+    // 単一の enum メンバーを import
+    import PackageB::Color::Red;
+    // enum の全メンバーを import
+    import PackageB::Color::*;
+
+    var c: PackageB::Color;
+    // 修飾なしでメンバーを参照可能
+    assign c = Green;
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="connect"><a class="header" href="#connect">Connect</a></h1>
 <p>あるインターフェースをほかのインターフェースに接続するために各メンバーを代入する代わりに <code>connect</code> 宣言を使用することができます。<code>connect</code> 宣言はインターフェースの全てのメンバーを自動的に接続します。</p>
@@ -2958,6 +2981,7 @@ module Module47C {
 </ul>
 <p>ネイティブテストはVerylの組み込みシミュレータを使用し、SystemVerilogテストとcocotbテストは外部のRTLシミュレータを使用します。<code>veryl test</code> で使用される外部RTLシミュレータについては <a href="#シミュレータ">シミュレータ</a> を参照してください。すべてのテスト種別で、<code>--wave</code> オプションを指定すると波形を生成できます。</p>
 <p><code>#[ignore]</code> 属性を追加することでデフォルトでは無視するテストを指定できます。無視されたテストは <code>--ignored</code> オプションで実行できます。<code>--include-ignored</code> オプションを使うと通常のテストと無視されたテストの両方を実行します。</p>
+<p>テスト時のみ有効になるコードパスは、<a href="#アトリビュート"><code>#[ifdef]</code>/<code>#[ifndef]</code></a> 属性と、テスト用に定義された名前を組み合わせることで有効化できます。名前は <code>Veryl.toml</code> の <code>[test].defines</code> フィールド、または <code>veryl test</code> の <code>--define NAME</code> (<code>-D NAME</code>) オプションで定義できます。両者はマージされ、SystemVerilog テストと cocotb テストでは同じ名前が外部シミュレータにも渡されます。</p>
 <pre><code class="language-veryl playground">#[test(test_ignored)]
 #[ignore]
 module test_ignored {
@@ -4198,11 +4222,13 @@ indent_width = 4
 </thead>
 <tbody>
 <tr><td>indent_width</td><td>整数</td><td>4</td><td>インデントのスペース幅</td></tr>
+<tr><td>max_width</td><td>整数</td><td>120</td><td>改行挿入前に保とうとする 1 行の最大幅</td></tr>
 <tr><td>vertical_align</td><td>ブーリアン</td><td>true</td><td>垂直方向の調整を有効にする</td></tr>
 <tr><td>newline_style</td><td><code>auto</code> / <code>native</code> / <code>unix</code> / <code>windows</code></td><td><code>auto</code></td><td>改行コードのスタイル</td></tr>
 </tbody>
 </table>
 </div>
+<p>フォーマッタは、適切な位置に改行を挿入することで各行を <code>max_width</code> カラム以内に収めようとします。改行できない箇所 (非常に長い識別子やコメントなど) ではこの幅を超える可能性があります。</p>
 <p><code>newline_style</code> はフォーマッタ、ビルドのエミッタ、マイグレータが出力する改行コードを制御します。利用可能な値は以下のとおりです。</p>
 <ul>
 <li><code>auto</code> — 入力ファイルから検出します。改行が存在しない場合は実行プラットフォームのネイティブスタイルが使用されます。</li>
@@ -4386,6 +4412,12 @@ waveform_target = {type = "directory", path = "[dst dir]"}
 <li><code>vcd</code> – デフォルト値であり、多くのベンダーでサポートされていますが機能は限定的です。</li>
 <li><code>fst</code> – 整数の代わりにenum値を表示するなどいくつかの機能をサポートしています。<code>gtkwave</code> と <code>surfer</code> で扱うことができます。</li>
 </ul>
+<h3 id="defines-フィールド"><a class="header" href="#defines-フィールド"><code>defines</code> フィールド</a></h3>
+<p><code>defines</code> フィールドは、<code>veryl test</code> の実行中に定義済みとして扱われる名前のリストを指定します。これらの名前は <a href="#アトリビュート"><code>#[ifdef]</code>/<code>#[ifndef]</code></a> 属性から参照でき、テスト専用のコードパスを有効化するために利用できます。SystemVerilog テストと cocotb テストでは、同じ名前が <code>+define+NAME</code> (Vivado の場合は <code>-d NAME</code>) として外部シミュレータにも渡されます。</p>
+<pre><code class="language-toml">[test]
+defines = ["DEBUG", "ENABLE_ASSERTIONS"]
+</code></pre>
+<p>追加の名前はコマンドラインから <code>veryl test --define NAME</code> (または <code>-D NAME</code>) で渡すこともできます。CLI で指定した値はこのフィールドの内容にマージされます。</p>
 <h2 id="testverilator-セクション"><a class="header" href="#testverilator-セクション"><code>[test.verilator]</code> セクション</a></h2>
 <p>このセクションはVerilatorによるテストの設定です。</p>
 <div class="table-wrapper">
@@ -4567,6 +4599,25 @@ veryl_sample = {path = "../../veryl_sample"}
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = "../veryl_sample"}
 </code></pre>
 <p>これは <code>../veryl_sample</code> が存在する場合はそれを使い、そうでない場合は Git から取得する、という意味です。</p>
+<h2 id="git-バックエンド"><a class="header" href="#git-バックエンド">Git バックエンド</a></h2>
+<p>Veryl は 2 つの異なるバックエンドを通して git ベースの依存を取得できます。</p>
+<ul>
+<li><code>gitoxide</code> — 純粋な Rust 実装の git。外部の <code>git</code> バイナリを必要としません。</li>
+<li><code>command</code> — システムの <code>git</code> コマンドを実行します。<code>git</code> が <code>PATH</code> に存在する必要があります。</li>
+</ul>
+<p>既定では <code>gitoxide</code> を試し、失敗した場合 (たとえば gitoxide が対応していない認証方式が必要な場合など) に自動的に <code>command</code> へフォールバックします。バックエンドは <code>VERYL_GIT_BACKEND</code> 環境変数で明示的に選択できます。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定値</th><th>挙動</th></tr>
+</thead>
+<tbody>
+<tr><td><code>auto</code></td><td>既定値。<code>gitoxide</code> を試し、失敗時に <code>command</code> へフォールバックする。</td></tr>
+<tr><td><code>gitoxide</code></td><td><code>gitoxide</code> を強制する。フォールバックなし。</td></tr>
+<tr><td><code>command</code></td><td>システムの <code>git</code> コマンドを強制する。フォールバックなし。</td></tr>
+</tbody>
+</table>
+</div>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="プロジェクトを公開する"><a class="header" href="#プロジェクトを公開する">プロジェクトを公開する</a></h1>
 <p>プロジェクトを公開するには <code>veryl publish</code> コマンドを使います。公開とはバージョン番号とgitのリビジョンを紐づけることです。</p>
@@ -4709,6 +4760,20 @@ target = {type = "directory", path = "target"}
 <h1 id="シミュレータ"><a class="header" href="#シミュレータ">シミュレータ</a></h1>
 <p>テストは <code>veryl test</code> で実行することができます。</p>
 <p><a href="#native-test">ネイティブテスト</a> ではVerylの組み込みシミュレータが使用されます。外部シミュレータのインストールは不要です。</p>
+<p>ネイティブシミュレータのコード生成バックエンドは <code>veryl test --backend</code> で選択します。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>バックエンド</th><th>説明</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cc</code></td><td>既定値。C を出力し、外部の C コンパイラ (<code>gcc</code> または <code>clang</code> の <code>-O3</code>) でコンパイルした結果をロードする。</td></tr>
+<tr><td><code>cranelift</code></td><td>インプロセスの Cranelift JIT。</td></tr>
+<tr><td><code>interpret</code></td><td>コード生成を行わず、サイクルごとに IR を歩く。</td></tr>
+</tbody>
+</table>
+</div>
+<p><code>cc</code> バックエンドは <code>cc</code> (通常は <code>gcc</code> または <code>clang</code>) が <code>PATH</code> に存在することを要求します。<code>cc</code> が無い場合や、特定の構文がまだ <code>cc</code> エミッタで対応されていない場合は、その部分について Cranelift へ透過的にフォールバックします。<code>veryl test --backend-validate</code> を使うと <code>cc</code> バックエンドを Cranelift と並行実行し、差異があれば中断します。</p>
 <p>SystemVerilogテストとcocotbテストでは、外部のRTLシミュレータが必要です。サポートされているシミュレータは以下の通りです。</p>
 <ul>
 <li><a href="https://www.veripool.org/verilator/">Verilator</a></li>
@@ -6211,6 +6276,8 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、名前付きの識別子が必要な位置で匿名識別子（<code>_</code>）が使われた場合に報告されます。</p>
 <h3 id="call_non_function"><a class="header" href="#call_non_function">call_non_function</a></h3>
 <p>このエラーは、関数でないシンボルを関数として呼び出した場合に報告されます。呼び出しを削除するか、実際の関数シンボルに置き換えてください。</p>
+<h3 id="combinational_loop"><a class="header" href="#combinational_loop">combinational_loop</a></h3>
+<p>このエラーは、シーケンシャル要素を介さず、信号の値が純粋な組み合わせ論理を通じて自分自身に依存している場合に報告されます。ループは <code>assign</code> 宣言、<code>always_comb</code> ブロック、関数呼び出し、またはインスタンス化されたモジュールやインターフェースによって形成され得ます。少なくとも 1 つのパス上にレジスタ (<code>always_ff</code>) を挿入するか、依存関係の連鎖が終了するように設計を再構成してループを解消してください。</p>
 <h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
 <p>このエラーは、複数の型定義が循環的に互いを参照している場合に報告されます。参照のいずれかを削除または再構成して循環を断ち切ってください。</p>
 <h3 id="duplicated_identifier"><a class="header" href="#duplicated_identifier">duplicated_identifier</a></h3>

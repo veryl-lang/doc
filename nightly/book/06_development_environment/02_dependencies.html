@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-b800ec7e.js";
+            window.path_to_searchindex_js = "../searchindex-b3055dba.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-92efcc39.js"></script>
@@ -349,6 +349,26 @@ In the case, overriding dependencies by local path can be used like below:</p>
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = "../veryl_sample"}
 </code></pre>
 <p>This means that if there is <code>../veryl_sample</code>, it is used, and if not, it is pulled from the Git repository.</p>
+<h2 id="git-backend"><a class="header" href="#git-backend">Git backend</a></h2>
+<p>Veryl can fetch git-based dependencies through two different backends:</p>
+<ul>
+<li><code>gitoxide</code> — a pure-Rust git implementation. It does not require an external <code>git</code> binary.</li>
+<li><code>command</code> — invokes the system <code>git</code> command. It requires <code>git</code> to be available on <code>PATH</code>.</li>
+</ul>
+<p>The default behavior is to try <code>gitoxide</code> first and automatically fall back to <code>command</code> when it fails (for example, when an authentication method that gitoxide does not support is required).
+The backend can be selected explicitly through the <code>VERYL_GIT_BACKEND</code> environment variable:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Value</th><th>Behavior</th></tr>
+</thead>
+<tbody>
+<tr><td><code>auto</code></td><td>Default. Try <code>gitoxide</code>, fall back to <code>command</code> on failure.</td></tr>
+<tr><td><code>gitoxide</code></td><td>Force <code>gitoxide</code>. No fallback.</td></tr>
+<tr><td><code>command</code></td><td>Force the system <code>git</code> command. No fallback.</td></tr>
+</tbody>
+</table>
+</div>
 
                     </main>
 

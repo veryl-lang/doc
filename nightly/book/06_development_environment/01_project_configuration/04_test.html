@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-b800ec7e.js";
+            window.path_to_searchindex_js = "../../searchindex-b3055dba.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-92efcc39.js"></script>
@@ -311,6 +311,15 @@ The available formats are:</p>
 <li><code>vcd</code> – The default value and most readable format across all vendors. But also not very feature rich</li>
 <li><code>fst</code> – This format has some more features, e.g. printing enum values instead of integers. <code>gtkwave</code> and <code>surfer</code> can read this format.</li>
 </ul>
+<h3 id="the-defines-field"><a class="header" href="#the-defines-field">The <code>defines</code> field</a></h3>
+<p>The <code>defines</code> field specifies a list of names that are treated as defined while running <code>veryl test</code>.
+These names are visible to the <a href="../../05_language_reference/06_declaration/08_attribute.html"><code>#[ifdef]</code>/<code>#[ifndef]</code></a> attribute, so they can be used to enable test-only code paths.
+For SystemVerilog and cocotb tests, the same names are also passed to the external simulator as <code>+define+NAME</code> (or <code>-d NAME</code> for Vivado).</p>
+<pre><code class="language-toml">[test]
+defines = ["DEBUG", "ENABLE_ASSERTIONS"]
+</code></pre>
+<p>Additional names can be appended from the command line via <code>veryl test --define NAME</code> (or <code>-D NAME</code>).
+CLI defines are merged with this field.</p>
 <h2 id="the-testverilator-section"><a class="header" href="#the-testverilator-section">The <code>[test.verilator]</code> section</a></h2>
 <p>This section contains configurations of test by Verilator.</p>
 <div class="table-wrapper">

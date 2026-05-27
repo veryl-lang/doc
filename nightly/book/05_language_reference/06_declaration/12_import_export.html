@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-b800ec7e.js";
+            window.path_to_searchindex_js = "../../searchindex-b3055dba.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-92efcc39.js"></script>
@@ -301,6 +301,27 @@ module ModuleA (
 
     let d: logic&lt;WIDTH&gt; = i_d; // valid reference
     assign o_d = d;
+}
+</code></pre>
+<p>Enum members can also be imported, both individually and via wildcard.
+This works for enums defined inside a package as well as enums declared locally inside a module or interface.</p>
+<pre><code class="language-veryl playground">package PackageB {
+    enum Color: logic&lt;2&gt; {
+        Red,
+        Green,
+        Blue,
+    }
+}
+
+module ModuleB {
+    // import a single enum member
+    import PackageB::Color::Red;
+    // import all members of the enum
+    import PackageB::Color::*;
+
+    var c: PackageB::Color;
+    // members can be referenced without qualification
+    assign c = Green;
 }
 </code></pre>
 
