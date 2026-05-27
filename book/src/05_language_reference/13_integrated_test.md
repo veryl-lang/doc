@@ -17,6 +17,10 @@ Tests can be skipped by adding `#[ignore]` attribute.
 Ignored tests are not executed by default, but can be run with `--ignored` option.
 `--include-ignored` option runs both normal and ignored tests.
 
+Test-only code paths can be enabled by combining the [`#[ifdef]`/`#[ifndef]`](./06_declaration/08_attribute.md) attribute with names defined for the test.
+Names can be defined through the `[test].defines` field of `Veryl.toml`, or by the `--define NAME` (`-D NAME`) option of `veryl test`.
+The two sources are merged, and for SystemVerilog and cocotb tests, the same names are also passed to the external simulator.
+
 ```veryl,playground
 #[test(test_ignored)]
 #[ignore]

@@ -5,6 +5,18 @@ Test is executed through `veryl test`.
 For [native test](../05_language_reference/13_integrated_test.md#native-test), Veryl's built-in simulator is used.
 No external simulator installation is required.
 
+The native simulator selects its code-generation backend through `veryl test --backend`:
+
+| Backend     | Description                                                                                                |
+|-------------|------------------------------------------------------------------------------------------------------------|
+| `cc`        | Default. Emits C, compiles with an external C compiler (`gcc` or `clang` with `-O3`), then loads the result. |
+| `cranelift` | In-process Cranelift JIT.                                                                                  |
+| `interpret` | Walks the IR each cycle without code generation.                                                           |
+
+The `cc` backend requires `cc` (typically `gcc` or `clang`) to be available on `PATH`.
+If `cc` is missing, or a particular construct is not yet covered by the `cc` emitter, the simulator transparently falls back to Cranelift for that part.
+Use `veryl test --backend-validate` to dual-run the `cc` backend against Cranelift and abort on any divergence.
+
 For SystemVerilog test and cocotb test, an external RTL simulator is required.
 Supported simulators are below:
 

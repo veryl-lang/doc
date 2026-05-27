@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Veryl Hardware Description Language\n"
-"POT-Creation-Date: 2026-04-28T18:34:31+09:00\n"
+"POT-Creation-Date: 2026-05-27T12:07:03+09:00\n"
 "PO-Revision-Date: 2023-12-28 23:02+0900\n"
 "Last-Translator: Naoya Hatta <dalance@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -41,7 +41,7 @@ msgstr "コード例"
 
 #: src/SUMMARY.md:9 src/SUMMARY.md:59 src/04_code_examples/01_module.md:1
 #: src/05_language_reference/07_module.md:1
-#: src/05_language_reference/14_generics/02_prototype.md:139
+#: src/05_language_reference/14_generics/02_prototype.md:134
 msgid "Module"
 msgstr "モジュール"
 
@@ -53,13 +53,13 @@ msgstr "インスタンス"
 
 #: src/SUMMARY.md:11 src/SUMMARY.md:60 src/04_code_examples/03_interface.md:1
 #: src/05_language_reference/08_interface.md:1
-#: src/05_language_reference/14_generics/02_prototype.md:140
+#: src/05_language_reference/14_generics/02_prototype.md:135
 msgid "Interface"
 msgstr "インターフェース"
 
 #: src/SUMMARY.md:12 src/SUMMARY.md:61 src/04_code_examples/04_package.md:1
 #: src/05_language_reference/09_package.md:1
-#: src/05_language_reference/14_generics/02_prototype.md:141
+#: src/05_language_reference/14_generics/02_prototype.md:136
 msgid "Package"
 msgstr "パッケージ"
 
@@ -196,14 +196,14 @@ msgid "Declaration"
 msgstr "宣言"
 
 #: src/SUMMARY.md:45 src/05_language_reference/06_declaration/01_variable.md:1
-#: src/05_language_reference/14_generics/02_prototype.md:137
-#: src/05_language_reference/14_generics/02_prototype.md:178
+#: src/05_language_reference/14_generics/02_prototype.md:132
+#: src/05_language_reference/14_generics/02_prototype.md:173
 msgid "Variable"
 msgstr "変数"
 
 #: src/SUMMARY.md:46 src/05_language_reference/06_declaration/02_parameter.md:1
-#: src/05_language_reference/14_generics/02_prototype.md:137
-#: src/05_language_reference/14_generics/02_prototype.md:143
+#: src/05_language_reference/14_generics/02_prototype.md:132
+#: src/05_language_reference/14_generics/02_prototype.md:138
 msgid "Parameter"
 msgstr "パラメータ"
 
@@ -221,8 +221,8 @@ msgid "Assign"
 msgstr "assign"
 
 #: src/SUMMARY.md:50 src/05_language_reference/06_declaration/06_function.md:1
-#: src/05_language_reference/14_generics/02_prototype.md:137
-#: src/05_language_reference/14_generics/02_prototype.md:253
+#: src/05_language_reference/14_generics/02_prototype.md:132
+#: src/05_language_reference/14_generics/02_prototype.md:248
 msgid "Function"
 msgstr "関数"
 
@@ -285,7 +285,7 @@ msgid "Default Parameter"
 msgstr "デフォルトパラメータ"
 
 #: src/SUMMARY.md:68 src/05_language_reference/14_generics/02_prototype.md:1
-#: src/05_language_reference/14_generics/02_prototype.md:137
+#: src/05_language_reference/14_generics/02_prototype.md:132
 msgid "Prototype"
 msgstr "プロトタイプ"
 
@@ -303,7 +303,7 @@ msgstr "Unsafe CDC"
 msgid "Standard Library"
 msgstr "標準ライブラリ"
 
-#: src/SUMMARY.md:72 src/05_language_reference/14_generics/02_prototype.md:137
+#: src/SUMMARY.md:72 src/05_language_reference/14_generics/02_prototype.md:132
 #: src/05_language_reference/17_alias.md:1
 msgid "Alias"
 msgstr "エイリアス"
@@ -1078,21 +1078,57 @@ msgid "Requirement"
 msgstr "要件"
 
 #: src/03_getting_started/01_installation.md:10
-msgid ""
-"Veryl uses `git` command internally. Please confirm `git` can be launched."
-msgstr ""
-"Veryl は `git` コマンドを内部で使用します。 `git` が起動できることを確認して"
-"おいてください。"
+msgid "git"
+msgstr "git"
 
 #: src/03_getting_started/01_installation.md:12
+msgid ""
+"Veryl uses a built-in [`gitoxide`](https://github.com/GitoxideLabs/gitoxide) "
+"backend by default for fetching git-based dependencies, so an external `git` "
+"command is not required. If `gitoxide` fails (for example, when an "
+"authentication method it does not support is required), Veryl automatically "
+"falls back to the system `git` command, so installing `git` is recommended. "
+"See [Git backend](../06_development_environment/02_dependencies.md#git-"
+"backend) for details on selecting the backend."
+msgstr ""
+"Veryl は git ベースの依存を取得するために、既定で組み込みの [`gitoxide`]"
+"(https://github.com/GitoxideLabs/gitoxide) バックエンドを使用するため、外部"
+"の `git` コマンドは必須ではありません。`gitoxide` が失敗した場合 (たとえば対"
+"応していない認証方式が必要なときなど) は、Veryl は自動的にシステムの `git` コ"
+"マンドへフォールバックするため、`git` をインストールしておくことを推奨しま"
+"す。バックエンドの選択方法については [Git バックエンド]"
+"(../06_development_environment/02_dependencies.md#git-backend) を参照してくだ"
+"さい。"
+
+#: src/03_getting_started/01_installation.md:16
+msgid "cc"
+msgstr "cc"
+
+#: src/03_getting_started/01_installation.md:18
+msgid ""
+"The default native-simulator backend used by `veryl test` (`--backend=cc`) "
+"emits C and compiles it with the `cc` command on `PATH`. If `cc` is not "
+"available, the simulator transparently falls back to the Cranelift JIT, so "
+"installing `cc` is recommended for best performance but not required. See "
+"[Simulator](../06_development_environment/07_simulator.md) for details on "
+"selecting the backend."
+msgstr ""
+"`veryl test` の既定のネイティブシミュレータバックエンド (`--backend=cc`) は "
+"C を出力し、`PATH` 上の `cc` コマンドでコンパイルします。`cc` が利用できない"
+"場合、シミュレータは Cranelift JIT へ透過的にフォールバックするため、必須で"
+"はありませんが最高のパフォーマンスを得るためにインストールしておくことを推奨"
+"します。バックエンドの選択方法については [シミュレータ]"
+"(../06_development_environment/07_simulator.md) を参照してください。"
+
+#: src/03_getting_started/01_installation.md:22
 msgid "Install verylup"
 msgstr "verylup のインストール"
 
-#: src/03_getting_started/01_installation.md:14
+#: src/03_getting_started/01_installation.md:24
 msgid "Download binary"
 msgstr "バイナリのダウンロード"
 
-#: src/03_getting_started/01_installation.md:16
+#: src/03_getting_started/01_installation.md:26
 msgid ""
 "Download from [release page](https://github.com/veryl-lang/verylup/releases/"
 "latest), and extract to the directory in `PATH`."
@@ -1100,21 +1136,21 @@ msgstr ""
 "[リリースページ](https://github.com/veryl-lang/verylup/releases/latest)からダ"
 "ウンロードして、パスの通ったところに展開してください。"
 
-#: src/03_getting_started/01_installation.md:18
+#: src/03_getting_started/01_installation.md:28
 msgid "Cargo"
 msgstr "Cargo"
 
-#: src/03_getting_started/01_installation.md:20
+#: src/03_getting_started/01_installation.md:30
 msgid "You can install with [cargo](https://crates.io/crates/verylup)."
 msgstr ""
 "[cargo](https://crates.io/crates/verylup) コマンドからインストールすることも"
 "できます。"
 
-#: src/03_getting_started/01_installation.md:26
+#: src/03_getting_started/01_installation.md:36
 msgid "Setup verylup"
 msgstr "verylup のセットアップ"
 
-#: src/03_getting_started/01_installation.md:28
+#: src/03_getting_started/01_installation.md:38
 msgid ""
 "After installing verylup, the following command is required once at first. "
 "It downloads the latest toolchain and creates `veryl` and `veryl-ls` command "
@@ -1124,15 +1160,15 @@ msgstr ""
 "ルチェーンをダウンロードし、`veryl` と `veryl-ls` コマンドをverylupと同じ場所"
 "に作成します。"
 
-#: src/03_getting_started/01_installation.md:35
+#: src/03_getting_started/01_installation.md:45
 msgid "Now `veryl` command can be used!"
 msgstr "これで `veryl` コマンドが使えるようになりました。"
 
-#: src/03_getting_started/01_installation.md:37
+#: src/03_getting_started/01_installation.md:47
 msgid "Editor integration"
 msgstr "エディタ設定"
 
-#: src/03_getting_started/01_installation.md:39
+#: src/03_getting_started/01_installation.md:49
 msgid ""
 "[Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-"
 "studio-code), [Vim](https://github.com/vim/vim) / [Neovim](https://neovim."
@@ -1142,11 +1178,11 @@ msgstr ""
 "visual-studio-code)、[Vim](https://github.com/vim/vim) / [Neovim](https://"
 "neovim.io)、[Zed](https://zed.dev) がサポートされています。"
 
-#: src/03_getting_started/01_installation.md:41
+#: src/03_getting_started/01_installation.md:51
 msgid "Visual Studio Code"
 msgstr "Visual Studio Code"
 
-#: src/03_getting_started/01_installation.md:43
+#: src/03_getting_started/01_installation.md:53
 msgid ""
 "For Visual Studio Code, Veryl extension is provided. The extension provides "
 "file type detection, syntex highlight and language server integration. You "
@@ -1157,7 +1193,7 @@ msgstr ""
 "の検出とシンタックスハイライト、言語サーバの組み込みを提供します。拡張パネル"
 "から \"Veryl\" で検索するか、以下の URL からインストールしてください。"
 
-#: src/03_getting_started/01_installation.md:47
+#: src/03_getting_started/01_installation.md:57
 msgid ""
 "[Veryl extension for Visual Studio Code](https://marketplace.visualstudio."
 "com/items?itemName=veryl-lang.veryl-vscode)"
@@ -1165,11 +1201,11 @@ msgstr ""
 "[Veryl extension for Visual Studio Code](https://marketplace.visualstudio."
 "com/items?itemName=veryl-lang.veryl-vscode)"
 
-#: src/03_getting_started/01_installation.md:49
+#: src/03_getting_started/01_installation.md:59
 msgid "Vim / Neovim"
 msgstr "Vim / Neovim"
 
-#: src/03_getting_started/01_installation.md:51
+#: src/03_getting_started/01_installation.md:61
 msgid ""
 "For Vim / Neovim, Veryl plugin is provided. The plugin provides file type "
 "detection, syntex highlight. There are some instructions for plugin "
@@ -1179,15 +1215,15 @@ msgstr ""
 "タイプの検出とシンタックスハイライトを提供します。プラグインのインストールと"
 "言語サーバの組み込みは以下の URL を参照してください。"
 
-#: src/03_getting_started/01_installation.md:55
+#: src/03_getting_started/01_installation.md:65
 msgid "[Vim / Neovim plugin](https://github.com/veryl-lang/veryl.vim)"
 msgstr "[Vim / Neovim plugin](https://github.com/veryl-lang/veryl.vim)"
 
-#: src/03_getting_started/01_installation.md:57
+#: src/03_getting_started/01_installation.md:67
 msgid "Zed"
 msgstr "Zed"
 
-#: src/03_getting_started/01_installation.md:59
+#: src/03_getting_started/01_installation.md:69
 msgid ""
 "For [Zed](https://zed.dev/), Veryl extension is provided. The extension "
 "provides file type detection, syntex highlight and language server "
@@ -1198,15 +1234,15 @@ msgstr ""
 "イプの検出とシンタックスハイライト、言語サーバの組み込みを提供します。拡張パ"
 "ネルから \"Veryl\" で検索するか、以下の URL からインストールしてください。"
 
-#: src/03_getting_started/01_installation.md:63
+#: src/03_getting_started/01_installation.md:73
 msgid "[Veryl extension for Zed](https://zed.dev/extensions/veryl)"
 msgstr "[Veryl extension for Zed](https://zed.dev/extensions/veryl)"
 
-#: src/03_getting_started/01_installation.md:65
+#: src/03_getting_started/01_installation.md:75
 msgid "Other Editors"
 msgstr "そのほかのエディタ"
 
-#: src/03_getting_started/01_installation.md:67
+#: src/03_getting_started/01_installation.md:77
 msgid ""
 "Veryl provides language server. So other editors supporting language server "
 "(ex. Emacs) can use it."
@@ -1214,11 +1250,11 @@ msgstr ""
 "Veryl は言語サーバを提供しているので、言語サーバをサポートしているエディタ"
 "（例えば Emacs）であれば利用できます。"
 
-#: src/03_getting_started/01_installation.md:69
+#: src/03_getting_started/01_installation.md:79
 msgid "Shell Completion"
 msgstr "シェル補完"
 
-#: src/03_getting_started/01_installation.md:71
+#: src/03_getting_started/01_installation.md:81
 msgid ""
 "Shell completion script for `veryl` and `verylup` is provided through "
 "`verylup completion`. For example, the following command generates "
@@ -1227,31 +1263,31 @@ msgstr ""
 "`veryl` と `verylup` のシェル補完スクリプトは `verylup completion` によって提"
 "供されます。例えば以下のコマンドはzsh向けの補完スクリプトを生成します。"
 
-#: src/03_getting_started/01_installation.md:79
+#: src/03_getting_started/01_installation.md:89
 msgid "Supported shells are below:"
 msgstr "サポートされているシェルは以下の通りです。"
 
-#: src/03_getting_started/01_installation.md:81
+#: src/03_getting_started/01_installation.md:91
 msgid "Bash"
 msgstr "Bash"
 
-#: src/03_getting_started/01_installation.md:82
+#: src/03_getting_started/01_installation.md:92
 msgid "Elvish"
 msgstr "Elvish"
 
-#: src/03_getting_started/01_installation.md:83
+#: src/03_getting_started/01_installation.md:93
 msgid "Fish"
 msgstr "Fish"
 
-#: src/03_getting_started/01_installation.md:84
+#: src/03_getting_started/01_installation.md:94
 msgid "PowerShell"
 msgstr "PowerShell"
 
-#: src/03_getting_started/01_installation.md:85
+#: src/03_getting_started/01_installation.md:95
 msgid "Zsh"
 msgstr "Zsh"
 
-#: src/03_getting_started/01_installation.md:87
+#: src/03_getting_started/01_installation.md:97
 msgid ""
 "Please refer the documentation of each shell for usage of generated scripts."
 msgstr ""
@@ -1619,6 +1655,7 @@ msgstr ""
 "```"
 
 #: src/04_code_examples/02_instantiation.md:3
+#, fuzzy
 msgid ""
 "```veryl,playground,editable\n"
 "module ModuleA #(\n"
@@ -1640,11 +1677,7 @@ msgid ""
 "    //   port connnection can be specified by `()`\n"
 "    //   each port connection is `[port_name]:[variable]`\n"
 "    //   `[port_name]` means `[port_name]:[port_name]`\n"
-"    inst u_module_b: ModuleB (\n"
-"        i_clk          ,\n"
-"        i_data: r_data1,\n"
-"        o_data: r_data2,\n"
-"    );\n"
+"    inst u_module_b: ModuleB ( i_clk, i_data: r_data1, o_data: r_data2 );\n"
 "\n"
 "    // instance declaration with parameter override\n"
 "    //   notation of parameter connection is the same as port\n"
@@ -2581,8 +2614,8 @@ msgstr ""
 "なりません。"
 
 #: src/05_language_reference/03_data_type/02_user_defined_type.md:129
-#: src/05_language_reference/14_generics/02_prototype.md:137
-#: src/05_language_reference/14_generics/02_prototype.md:193
+#: src/05_language_reference/14_generics/02_prototype.md:132
+#: src/05_language_reference/14_generics/02_prototype.md:188
 msgid "Typedef"
 msgstr "型定義"
 
@@ -3046,6 +3079,7 @@ msgstr ""
 "ます。"
 
 #: src/05_language_reference/04_expression/11_struct_constructor.md:8
+#, fuzzy
 msgid ""
 "```veryl,playground\n"
 "module ModuleA {\n"
@@ -3054,10 +3088,7 @@ msgid ""
 "        b: bit<10>,\n"
 "    }\n"
 "\n"
-"    const p: Param = Param'{\n"
-"        a: 10,\n"
-"        b: 10,\n"
-"    };\n"
+"    const p: Param = Param'{a: 10, b: 10,};\n"
 "\n"
 "    const q: Param = Param'{\n"
 "        a: 1,\n"
@@ -3150,7 +3181,7 @@ msgstr "`<<<=`：算術左シフト代入"
 msgid "`>>>=`: arithmetic right shift assignment"
 msgstr "`>>>=`：算術右シフト代入"
 
-#: src/05_language_reference/05_statement/01_assignment.md:42
+#: src/05_language_reference/05_statement/01_assignment.md:40
 msgid ""
 "For details on when assigned values become visible, see [Execution Model]"
 "(../18_execution_model.md)."
@@ -3778,11 +3809,11 @@ msgstr ""
 msgid "`modport`: Expand ports of which direction is `modport`"
 msgstr "`modport`: ポート方向が `modport` のポートを展開する"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:133
+#: src/05_language_reference/06_declaration/08_attribute.md:130
 msgid "`align` Attribute"
 msgstr "`align` アトリビュート"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:135
+#: src/05_language_reference/06_declaration/08_attribute.md:132
 msgid ""
 "`align` attribute is used to control vertical alignment by formatter. If "
 "`number` is specified as an argument of `align` attribute, all numbers are "
@@ -3792,11 +3823,11 @@ msgstr ""
 "す。`number` が `align` の引数として指定されたとき、全ての数値は整列されま"
 "す。`identifier` も使用可能です。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:160
+#: src/05_language_reference/06_declaration/08_attribute.md:155
 msgid "`fmt` Attribute"
 msgstr "`fmt` アトリビュート"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:162
+#: src/05_language_reference/06_declaration/08_attribute.md:157
 msgid ""
 "`fmt` attribute is used to control formatiing way. The following arguments "
 "are supported:"
@@ -3804,11 +3835,11 @@ msgstr ""
 "`fmt` アトリビュートはフォーマットの方法を制御することができます。以下の引数"
 "がサポートされています。"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:165
+#: src/05_language_reference/06_declaration/08_attribute.md:160
 msgid "`compact`: compact formatting without newlines"
 msgstr "`compact`: 改行なしのコンパクトなフォーマット"
 
-#: src/05_language_reference/06_declaration/08_attribute.md:179
+#: src/05_language_reference/06_declaration/08_attribute.md:174
 msgid ""
 "`skip`: `veryl fmt` does not format modules, interfaces and packages on "
 "which `fmt` attribute with `skip` argument is specified."
@@ -3996,6 +4027,7 @@ msgstr ""
 "空間内の任意の場所から参照できます。"
 
 #: src/05_language_reference/06_declaration/12_import_export.md:23
+#, fuzzy
 msgid ""
 "```veryl,playground\n"
 "package PackageA {\n"
@@ -4008,7 +4040,7 @@ msgid ""
 ") {\n"
 "    import PackageA::WIDTH;\n"
 "\n"
-"    let d  : logic<WIDTH> = i_d; // valid reference\n"
+"    let d: logic<WIDTH> = i_d; // valid reference\n"
 "    assign o_d = d;\n"
 "}\n"
 "```"
@@ -4026,6 +4058,60 @@ msgstr ""
 "\n"
 "    let d  : logic<WIDTH> = i_d; // 有効な参照\n"
 "    assign o_d = d;\n"
+"}\n"
+"```"
+
+#: src/05_language_reference/06_declaration/12_import_export.md:39
+msgid ""
+"Enum members can also be imported, both individually and via wildcard. This "
+"works for enums defined inside a package as well as enums declared locally "
+"inside a module or interface."
+msgstr ""
+"enumのメンバーも、個別および wildcard により import できます。これはパッケー"
+"ジ内で定義された enum だけでなく、モジュールやインターフェース内でローカルに"
+"宣言された enum にも適用されます。"
+
+#: src/05_language_reference/06_declaration/12_import_export.md:42
+msgid ""
+"```veryl,playground\n"
+"package PackageB {\n"
+"    enum Color: logic<2> {\n"
+"        Red,\n"
+"        Green,\n"
+"        Blue,\n"
+"    }\n"
+"}\n"
+"\n"
+"module ModuleB {\n"
+"    // import a single enum member\n"
+"    import PackageB::Color::Red;\n"
+"    // import all members of the enum\n"
+"    import PackageB::Color::*;\n"
+"\n"
+"    var c: PackageB::Color;\n"
+"    // members can be referenced without qualification\n"
+"    assign c = Green;\n"
+"}\n"
+"```"
+msgstr ""
+"```veryl,playground\n"
+"package PackageB {\n"
+"    enum Color: logic<2> {\n"
+"        Red,\n"
+"        Green,\n"
+"        Blue,\n"
+"    }\n"
+"}\n"
+"\n"
+"module ModuleB {\n"
+"    // 単一の enum メンバーを import\n"
+"    import PackageB::Color::Red;\n"
+"    // enum の全メンバーを import\n"
+"    import PackageB::Color::*;\n"
+"\n"
+"    var c: PackageB::Color;\n"
+"    // 修飾なしでメンバーを参照可能\n"
+"    assign c = Green;\n"
 "}\n"
 "```"
 
@@ -4466,12 +4552,12 @@ msgid "There are three ways to describe integrated test:"
 msgstr "組み込みテストの記述方法は3種類あります。"
 
 #: src/05_language_reference/13_integrated_test.md:8
-#: src/05_language_reference/13_integrated_test.md:36
+#: src/05_language_reference/13_integrated_test.md:38
 msgid "Native test"
 msgstr "ネイティブテスト"
 
 #: src/05_language_reference/13_integrated_test.md:9
-#: src/05_language_reference/13_integrated_test.md:158
+#: src/05_language_reference/13_integrated_test.md:148
 msgid "SystemVerilog test"
 msgstr "SystemVerilogテスト"
 
@@ -4503,7 +4589,23 @@ msgstr ""
 "無視されたテストは `--ignored` オプションで実行できます。`--include-ignored` "
 "オプションを使うと通常のテストと無視されたテストの両方を実行します。"
 
-#: src/05_language_reference/13_integrated_test.md:38
+#: src/05_language_reference/13_integrated_test.md:20
+msgid ""
+"Test-only code paths can be enabled by combining the [`#[ifdef]`/`#[ifndef]`]"
+"(./06_declaration/08_attribute.md) attribute with names defined for the "
+"test. Names can be defined through the `[test].defines` field of `Veryl."
+"toml`, or by the `--define NAME` (`-D NAME`) option of `veryl test`. The two "
+"sources are merged, and for SystemVerilog and cocotb tests, the same names "
+"are also passed to the external simulator."
+msgstr ""
+"テスト時のみ有効になるコードパスは、[`#[ifdef]`/`#[ifndef]`]"
+"(./06_declaration/08_attribute.md) 属性と、テスト用に定義された名前を組み合わ"
+"せることで有効化できます。名前は `Veryl.toml` の `[test].defines` フィール"
+"ド、または `veryl test` の `--define NAME` (`-D NAME`) オプションで定義できま"
+"す。両者はマージされ、SystemVerilog テストと cocotb テストでは同じ名前が外部"
+"シミュレータにも渡されます。"
+
+#: src/05_language_reference/13_integrated_test.md:40
 msgid ""
 "Native test allows writing testbenches directly in Veryl without embedding "
 "SystemVerilog or using external frameworks. A module with "
@@ -4514,11 +4616,11 @@ msgstr ""
 "Verylで直接テストベンチを記述できます。`#[test(test_name)]` 属性が付けられた"
 "モジュール（`embed` 宣言なし）がネイティブテストとして扱われます。"
 
-#: src/05_language_reference/13_integrated_test.md:41
+#: src/05_language_reference/13_integrated_test.md:43
 msgid "The following testbench components are available:"
 msgstr "以下のテストベンチコンポーネントが利用可能です。"
 
-#: src/05_language_reference/13_integrated_test.md:43
+#: src/05_language_reference/13_integrated_test.md:45
 msgid ""
 "`$tb::clock_gen` — clock signal generator (with optional `#(period: N)` "
 "parameter)"
@@ -4526,7 +4628,7 @@ msgstr ""
 "`$tb::clock_gen` — クロック信号生成器（オプションで `#(period: N)` パラメータ"
 "を指定可能）"
 
-#: src/05_language_reference/13_integrated_test.md:44
+#: src/05_language_reference/13_integrated_test.md:46
 msgid ""
 "`$tb::reset_gen` — reset signal generator (with optional `#(cycles: N)` "
 "parameter)"
@@ -4534,11 +4636,11 @@ msgstr ""
 "`$tb::reset_gen` — リセット信号生成器（オプションで `#(cycles: N)` パラメータ"
 "を指定可能）"
 
-#: src/05_language_reference/13_integrated_test.md:46
+#: src/05_language_reference/13_integrated_test.md:48
 msgid "And the following system functions can be used in `initial` blocks:"
 msgstr "また、以下のシステム関数が `initial` ブロック内で使用できます。"
 
-#: src/05_language_reference/13_integrated_test.md:48
+#: src/05_language_reference/13_integrated_test.md:50
 msgid ""
 "`$assert(condition)`, `$assert(condition, format, args...)` — check an "
 "assertion during simulation. On failure the simulation stops immediately and "
@@ -4550,7 +4652,7 @@ msgstr ""
 "ストは失敗として報告されます。`format` は `$display` と同じ書式のフォーマット"
 "文字列で、`args` がそこへ埋め込む値を与えます。"
 
-#: src/05_language_reference/13_integrated_test.md:49
+#: src/05_language_reference/13_integrated_test.md:51
 msgid ""
 "`$assert_continue(condition)`, `$assert_continue(condition, format, "
 "args...)` — same as `$assert` but the simulation continues after a failure, "
@@ -4562,57 +4664,53 @@ msgstr ""
 "め、1回の実行で複数の失敗をまとめて収集できます。テストは引き続き失敗として報"
 "告されます。"
 
-#: src/05_language_reference/13_integrated_test.md:50
+#: src/05_language_reference/13_integrated_test.md:52
 msgid "`$finish()` — terminate simulation"
 msgstr "`$finish()` — シミュレーションを終了"
 
-#: src/05_language_reference/13_integrated_test.md:52
+#: src/05_language_reference/13_integrated_test.md:54
 msgid "Basic example"
 msgstr "基本的な例"
 
-#: src/05_language_reference/13_integrated_test.md:93
+#: src/05_language_reference/13_integrated_test.md:89
 msgid "Testbench methods"
 msgstr "テストベンチメソッド"
 
-#: src/05_language_reference/13_integrated_test.md:95
+#: src/05_language_reference/13_integrated_test.md:91
 msgid "`clock_gen` provides the `next` method to advance clock cycles:"
 msgstr "`clock_gen` はクロックサイクルを進める `next` メソッドを提供します。"
 
-#: src/05_language_reference/13_integrated_test.md:97
+#: src/05_language_reference/13_integrated_test.md:93
 msgid "`clk.next()` — advance clock by 1 cycle"
 msgstr "`clk.next()` — クロックを1サイクル進める"
 
-#: src/05_language_reference/13_integrated_test.md:98
+#: src/05_language_reference/13_integrated_test.md:94
 msgid "`clk.next(N)` — advance clock by `N` cycles"
 msgstr "`clk.next(N)` — クロックを `N` サイクル進める"
 
-#: src/05_language_reference/13_integrated_test.md:100
+#: src/05_language_reference/13_integrated_test.md:96
 msgid "`reset_gen` provides the `assert` method to assert reset:"
 msgstr "`reset_gen` はリセットをアサートする `assert` メソッドを提供します。"
 
-#: src/05_language_reference/13_integrated_test.md:102
+#: src/05_language_reference/13_integrated_test.md:98
 msgid "`rst.assert()` — assert reset synchronized to clock"
 msgstr "`rst.assert()` — クロックに同期してリセットをアサート"
 
-#: src/05_language_reference/13_integrated_test.md:103
+#: src/05_language_reference/13_integrated_test.md:99
 msgid "`rst.assert(duration)` — assert reset for specified duration"
 msgstr "`rst.assert(duration)` — 指定された期間リセットをアサート"
 
-#: src/05_language_reference/13_integrated_test.md:105
+#: src/05_language_reference/13_integrated_test.md:101
 msgid "The reset duration can also be configured at instantiation:"
 msgstr "リセット期間はインスタンス化時にも設定できます。"
 
-#: src/05_language_reference/13_integrated_test.md:107
+#: src/05_language_reference/13_integrated_test.md:103
 msgid ""
 "```veryl,playground\n"
 "#[test(test_reset_cycles_param)]\n"
 "module test_reset_cycles_param {\n"
 "    inst clk: $tb::clock_gen;\n"
-"    inst rst: $tb::reset_gen #(\n"
-"        cycles: 5,\n"
-"    ) (\n"
-"        clk  ,\n"
-"    );\n"
+"    inst rst: $tb::reset_gen #( cycles: 5 ) ( clk );\n"
 "\n"
 "    // ...\n"
 "\n"
@@ -4624,26 +4722,24 @@ msgid ""
 "```"
 msgstr ""
 
-#: src/05_language_reference/13_integrated_test.md:126
+#: src/05_language_reference/13_integrated_test.md:118
 msgid "Function calls in testbench"
 msgstr "テストベンチ内の関数呼び出し"
 
-#: src/05_language_reference/13_integrated_test.md:128
+#: src/05_language_reference/13_integrated_test.md:120
 msgid ""
 "Testbench methods like `clk.next` can be called from user-defined functions:"
 msgstr ""
 "`clk.next` などのテストベンチメソッドはユーザー定義関数から呼び出すことができ"
 "ます。"
 
-#: src/05_language_reference/13_integrated_test.md:130
+#: src/05_language_reference/13_integrated_test.md:122
 msgid ""
 "```veryl,playground\n"
 "#[test(test_function_call)]\n"
 "module test_function_call {\n"
 "    inst clk: $tb::clock_gen;\n"
-"    inst rst: $tb::reset_gen (\n"
-"        clk  ,\n"
-"    );\n"
+"    inst rst: $tb::reset_gen ( clk );\n"
 "\n"
 "    var cnt: logic<32>;\n"
 "\n"
@@ -4666,7 +4762,7 @@ msgid ""
 "```"
 msgstr ""
 
-#: src/05_language_reference/13_integrated_test.md:160
+#: src/05_language_reference/13_integrated_test.md:150
 msgid ""
 "SystemVerilog test can be described with `inline` specifier. The top level "
 "module of the block must have the same name as the test name."
@@ -4674,7 +4770,7 @@ msgstr ""
 "SystemVerilog テストは `inline` 指定子で記述することができます。ブロックの"
 "トップレベルモジュールはテスト名と同じでなければなりません。"
 
-#: src/05_language_reference/13_integrated_test.md:163
+#: src/05_language_reference/13_integrated_test.md:153
 msgid ""
 "The messages through `$info`, `$warning`, `$error` and `$fatal` system "
 "function are handled by Veryl compiler, and shown as exectution log. The "
@@ -4684,7 +4780,7 @@ msgstr ""
 "コンパイラにより実行ログとして表示されます。`$error` と `$fatal` の呼び出しは"
 "テストの失敗として扱われます。"
 
-#: src/05_language_reference/13_integrated_test.md:166
+#: src/05_language_reference/13_integrated_test.md:156
 msgid ""
 "The following example, a SystemVerilog source code embedded by `embed` "
 "declaration are marked as test."
@@ -4692,7 +4788,7 @@ msgstr ""
 "以下の例では SystemVerilog のソースコードを `embed` 宣言で埋め込み、テストと"
 "してマークしています。"
 
-#: src/05_language_reference/13_integrated_test.md:168
+#: src/05_language_reference/13_integrated_test.md:158
 msgid ""
 "```veryl,playground\n"
 "#[test(test1)]\n"
@@ -4716,11 +4812,11 @@ msgstr ""
 "}}}\n"
 "```"
 
-#: src/05_language_reference/13_integrated_test.md:179
+#: src/05_language_reference/13_integrated_test.md:169
 msgid "cocotb test"
 msgstr "cocotb テスト"
 
-#: src/05_language_reference/13_integrated_test.md:181
+#: src/05_language_reference/13_integrated_test.md:171
 msgid ""
 "cocotb test can be described with `cocotb` specifier. The target module name "
 "for test should be specified by the second argument of `#[test]` attribute."
@@ -4902,7 +4998,7 @@ msgstr ""
 "`gen` 宣言はジェネリックパラメータから派生する定数や型を定義します。定義され"
 "た値はジェネリック引数として使用できます。"
 
-#: src/05_language_reference/14_generics.md:137
+#: src/05_language_reference/14_generics.md:134
 msgid ""
 "In `ModuleB::<1, 2, 3>`, W = 1 + 2 = 3 and T = logic\\<3> are derived, and "
 "`ModuleA::<3, logic<3>>` is instantiated."
@@ -4910,7 +5006,7 @@ msgstr ""
 "`ModuleB::<1, 2, 3>` では W = 1 + 2 = 3 と T = logic\\<3> が導出され、"
 "`ModuleA::<3, logic<3>>` がインスタンス化されます。"
 
-#: src/05_language_reference/14_generics.md:139
+#: src/05_language_reference/14_generics.md:136
 msgid ""
 "The right hand side expression of a `gen` declaration is subject to the same "
 "restrictions as actual generic arguments, because the resulting value is "
@@ -4920,28 +5016,28 @@ msgstr ""
 "実ジェネリック引数と同じ制約を受けます。式に使用できるのは以下のものだけで"
 "す。"
 
-#: src/05_language_reference/14_generics.md:143
+#: src/05_language_reference/14_generics.md:140
 msgid "literals"
 msgstr "リテラル"
 
-#: src/05_language_reference/14_generics.md:144
+#: src/05_language_reference/14_generics.md:141
 msgid "symbols defined in a package"
 msgstr "パッケージ内で定義されたシンボル"
 
-#: src/05_language_reference/14_generics.md:145
+#: src/05_language_reference/14_generics.md:142
 msgid "generic parameters"
 msgstr "ジェネリックパラメータ"
 
-#: src/05_language_reference/14_generics.md:146
+#: src/05_language_reference/14_generics.md:143
 msgid "other `gen` declarations"
 msgstr "他の `gen` 宣言"
 
-#: src/05_language_reference/14_generics.md:148
+#: src/05_language_reference/14_generics.md:145
 #: src/05_language_reference/19_type_inference.md:67
 msgid "Generic Argument Inference"
 msgstr "ジェネリック引数の推論"
 
-#: src/05_language_reference/14_generics.md:150
+#: src/05_language_reference/14_generics.md:147
 msgid ""
 "For generic functions, the actual generic arguments after `::<>` can be "
 "omitted when they can be inferred from the call arguments. See [Type "
@@ -5048,11 +5144,11 @@ msgstr ""
 "より、それらのモジュールは `ModuleB` の ジェネリックパラメータ `T` として使用"
 "できるようになります。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:53
+#: src/05_language_reference/14_generics/02_prototype.md:50
 msgid "Interface Protype"
 msgstr "インターフェースプロトタイプ"
 
-#: src/05_language_reference/14_generics/02_prototype.md:55
+#: src/05_language_reference/14_generics/02_prototype.md:52
 msgid ""
 "In the following exmaple, `ProtoA` is a interface prototype which has "
 "constant `A`, `raedy`/`valid`/`data` variables, function `ack` and mopdort "
@@ -5064,11 +5160,11 @@ msgstr ""
 "で制約されているので、それらのメンバーを持つことが保証されており、参照するこ"
 "とができます。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:110
+#: src/05_language_reference/14_generics/02_prototype.md:105
 msgid "Package Prototype"
 msgstr "パッケージプロトタイプ"
 
-#: src/05_language_reference/14_generics/02_prototype.md:112
+#: src/05_language_reference/14_generics/02_prototype.md:107
 msgid ""
 "In the following example, `ProtoA` is a package prototype which has type "
 "`data_a` and `data_b`. `PKG` restricted by `ProtoA` is guaranteed to have "
@@ -5078,11 +5174,11 @@ msgstr ""
 "プです。`PKG` は `ProtoA` で制約されているので、`data_a` と `data_b` を持つこ"
 "とが保証されており、それらを参照することができます。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:131
+#: src/05_language_reference/14_generics/02_prototype.md:126
 msgid "Prototype Items"
 msgstr "プロトタイプの要素"
 
-#: src/05_language_reference/14_generics/02_prototype.md:133
+#: src/05_language_reference/14_generics/02_prototype.md:128
 msgid ""
 "Following protoype items can be declaraed within module, interface and "
 "package protoype declarations."
@@ -5090,38 +5186,38 @@ msgstr ""
 "以下の要素はモジュール、インターフェース、パッケージのプロトタイプ内で宣言す"
 "ることができます。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:135
+#: src/05_language_reference/14_generics/02_prototype.md:130
 msgid ""
 "The following table shows which prototypes can have which prototype items."
 msgstr "テーブルにどのプロトタイプがどの要素を持てるかをまとめます。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:137
-#: src/05_language_reference/14_generics/02_prototype.md:154
+#: src/05_language_reference/14_generics/02_prototype.md:132
+#: src/05_language_reference/14_generics/02_prototype.md:149
 msgid "Port"
 msgstr "ポート"
 
-#: src/05_language_reference/14_generics/02_prototype.md:137
-#: src/05_language_reference/14_generics/02_prototype.md:165
+#: src/05_language_reference/14_generics/02_prototype.md:132
+#: src/05_language_reference/14_generics/02_prototype.md:160
 msgid "Const"
 msgstr "定数"
 
-#: src/05_language_reference/14_generics/02_prototype.md:137
-#: src/05_language_reference/14_generics/02_prototype.md:230
+#: src/05_language_reference/14_generics/02_prototype.md:132
+#: src/05_language_reference/14_generics/02_prototype.md:225
 msgid "Struct/Enum/Union"
 msgstr "構造体/列挙型/ユニオン"
 
-#: src/05_language_reference/14_generics/02_prototype.md:137
-#: src/05_language_reference/14_generics/02_prototype.md:285
+#: src/05_language_reference/14_generics/02_prototype.md:132
+#: src/05_language_reference/14_generics/02_prototype.md:280
 msgid "Modport"
 msgstr "modport"
 
-#: src/05_language_reference/14_generics/02_prototype.md:139
-#: src/05_language_reference/14_generics/02_prototype.md:140
-#: src/05_language_reference/14_generics/02_prototype.md:141
+#: src/05_language_reference/14_generics/02_prototype.md:134
+#: src/05_language_reference/14_generics/02_prototype.md:135
+#: src/05_language_reference/14_generics/02_prototype.md:136
 msgid "v"
 msgstr "v"
 
-#: src/05_language_reference/14_generics/02_prototype.md:145
+#: src/05_language_reference/14_generics/02_prototype.md:140
 msgid ""
 "Parameter prototype specifies identifier name and data type. Specification "
 "of default value is optional."
@@ -5129,12 +5225,12 @@ msgstr ""
 "パラメータプロトタイプは識別子とデータ型を指定します。デフォルト値の指定は省"
 "略できます。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:156
+#: src/05_language_reference/14_generics/02_prototype.md:151
 msgid ""
 "Port prototype specifies identifier name, direction and data type of a port."
 msgstr "ポートプロトタイプは識別子と方向、データ型を指定します。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:167
+#: src/05_language_reference/14_generics/02_prototype.md:162
 msgid ""
 "Const prototype specify identifier name and data type of a constant. It can "
 "be used as a placeholder of a generic parameter."
@@ -5142,7 +5238,7 @@ msgstr ""
 "定数プロトタイプは識別子とデータ型を指定します。ジェネリックなパラメータのプ"
 "レースホルダとして使用できます。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:180
+#: src/05_language_reference/14_generics/02_prototype.md:175
 msgid ""
 "Variable prototype specifies identifier name and data type of a variable. It "
 "can be used for both of `var` and `let` declarations."
@@ -5150,7 +5246,7 @@ msgstr ""
 "変数プロトタイプは識別子とデータ型を指定します。これらは `var` 及び `let` 宣"
 "言で使用することができます。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:195
+#: src/05_language_reference/14_generics/02_prototype.md:190
 msgid ""
 "Typedef prototype specifies identifier name of a type alias. It can be used "
 "as a placeholder for a generic parameter."
@@ -5158,7 +5254,7 @@ msgstr ""
 "Typedefプロトタイプは型エイリアスの識別子を指定します。ジェネリックなパラメー"
 "タのプレースホルダとして使用できます。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:206
+#: src/05_language_reference/14_generics/02_prototype.md:201
 msgid ""
 "Furthermore, a typedef prototype can specify its actual type on its RHS. "
 "This allows a type symbol defined in a different package to be imported into "
@@ -5168,7 +5264,7 @@ msgstr ""
 "り他のパッケージで定義された型をそのプロトタイプパッケージに導入し、他のコン"
 "ポーネントから参照することができます。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:232
+#: src/05_language_reference/14_generics/02_prototype.md:227
 msgid ""
 "Struct, Enum and Union prototypes specify identifier name of a struct/enum/"
 "union and identifier name and data type of each members."
@@ -5176,7 +5272,7 @@ msgstr ""
 "構造体、列挙型、ユニオンプロトタイプは型の識別子と各メンバーの識別子、データ"
 "型を指定します。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:255
+#: src/05_language_reference/14_generics/02_prototype.md:250
 msgid ""
 "Function prototype specifies identifier name and return data type of a "
 "function, and direction and data type of each arguments."
@@ -5184,11 +5280,11 @@ msgstr ""
 "関数プロトタイプは識別子と戻り値のデータ型、引数の方向とデータ型を指定しま"
 "す。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:263
+#: src/05_language_reference/14_generics/02_prototype.md:258
 msgid "Alias Module/Interface/Package"
 msgstr "モジュール/インターフェース/パッケージ エイリアス"
 
-#: src/05_language_reference/14_generics/02_prototype.md:265
+#: src/05_language_reference/14_generics/02_prototype.md:260
 msgid ""
 "Module alias prototype, interface alias prototype and package alias protoype "
 "specify identifier name and prototype of a module/interface/pacakge alias. "
@@ -5198,7 +5294,7 @@ msgstr ""
 "ジュール、インターフェース、パッケージのプロトタイプを指定します。そのエイリ"
 "アスの実際の型は与えられたプロトタイプに制約されます。"
 
-#: src/05_language_reference/14_generics/02_prototype.md:287
+#: src/05_language_reference/14_generics/02_prototype.md:282
 msgid ""
 "Modport prototype specifis identifier name of a modport, and identifier name "
 "and direction of each membres."
@@ -7507,10 +7603,10 @@ msgstr "設定"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:12
 #: src/06_development_environment/01_project_configuration/03_lint.md:16
-#: src/06_development_environment/01_project_configuration/04_test.md:60
-#: src/06_development_environment/01_project_configuration/04_test.md:69
-#: src/06_development_environment/01_project_configuration/04_test.md:78
-#: src/06_development_environment/01_project_configuration/04_test.md:87
+#: src/06_development_environment/01_project_configuration/04_test.md:74
+#: src/06_development_environment/01_project_configuration/04_test.md:83
+#: src/06_development_environment/01_project_configuration/04_test.md:92
+#: src/06_development_environment/01_project_configuration/04_test.md:101
 #: src/06_development_environment/01_project_configuration/05_publish.md:13
 #: src/06_development_environment/01_project_configuration/06_synth.md:17
 #: src/06_development_environment/03_publish_project.md:53
@@ -7521,12 +7617,13 @@ msgstr "設定"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:12
 #: src/06_development_environment/01_project_configuration/03_lint.md:16
-#: src/06_development_environment/01_project_configuration/04_test.md:60
-#: src/06_development_environment/01_project_configuration/04_test.md:69
-#: src/06_development_environment/01_project_configuration/04_test.md:78
-#: src/06_development_environment/01_project_configuration/04_test.md:87
+#: src/06_development_environment/01_project_configuration/04_test.md:74
+#: src/06_development_environment/01_project_configuration/04_test.md:83
+#: src/06_development_environment/01_project_configuration/04_test.md:92
+#: src/06_development_environment/01_project_configuration/04_test.md:101
 #: src/06_development_environment/01_project_configuration/05_publish.md:13
 #: src/06_development_environment/01_project_configuration/06_synth.md:17
+#: src/06_development_environment/02_dependencies.md:114
 #: src/06_development_environment/08_language_server.md:9
 #: src/06_development_environment/10_documentation.md:59
 msgid "Value"
@@ -7542,12 +7639,13 @@ msgstr "デフォルト"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:12
 #: src/06_development_environment/01_project_configuration/03_lint.md:16
-#: src/06_development_environment/01_project_configuration/04_test.md:60
-#: src/06_development_environment/01_project_configuration/04_test.md:69
-#: src/06_development_environment/01_project_configuration/04_test.md:78
-#: src/06_development_environment/01_project_configuration/04_test.md:87
+#: src/06_development_environment/01_project_configuration/04_test.md:74
+#: src/06_development_environment/01_project_configuration/04_test.md:83
+#: src/06_development_environment/01_project_configuration/04_test.md:92
+#: src/06_development_environment/01_project_configuration/04_test.md:101
 #: src/06_development_environment/01_project_configuration/05_publish.md:13
 #: src/06_development_environment/01_project_configuration/06_synth.md:17
+#: src/06_development_environment/07_simulator.md:10
 #: src/06_development_environment/08_language_server.md:9
 #: src/06_development_environment/10_documentation.md:59
 #: src/06_development_environment/16_translator.md:17
@@ -7560,6 +7658,7 @@ msgid "indent_width"
 msgstr "indent_width"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:14
+#: src/06_development_environment/01_project_configuration/02_format.md:15
 #: src/06_development_environment/01_project_configuration/06_synth.md:23
 msgid "integer"
 msgstr "整数"
@@ -7573,41 +7672,64 @@ msgid "indent width by space"
 msgstr "インデントのスペース幅"
 
 #: src/06_development_environment/01_project_configuration/02_format.md:15
+msgid "max_width"
+msgstr "max_width"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:15
+msgid "120"
+msgstr "120"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:15
+msgid "preferred maximum line width before line breaking"
+msgstr "改行挿入前に保とうとする 1 行の最大幅"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:16
 msgid "vertical_align"
 msgstr "vertical_align"
 
-#: src/06_development_environment/01_project_configuration/02_format.md:15
+#: src/06_development_environment/01_project_configuration/02_format.md:16
 #: src/06_development_environment/01_project_configuration/05_publish.md:15
 #: src/06_development_environment/01_project_configuration/05_publish.md:16
 #: src/06_development_environment/08_language_server.md:11
 msgid "boolean"
 msgstr "ブーリアン"
 
-#: src/06_development_environment/01_project_configuration/02_format.md:15
+#: src/06_development_environment/01_project_configuration/02_format.md:16
 msgid "true"
 msgstr "true"
 
-#: src/06_development_environment/01_project_configuration/02_format.md:15
+#: src/06_development_environment/01_project_configuration/02_format.md:16
 msgid "enable vertial align"
 msgstr "垂直方向の調整を有効にする"
 
-#: src/06_development_environment/01_project_configuration/02_format.md:16
+#: src/06_development_environment/01_project_configuration/02_format.md:17
 msgid "newline_style"
 msgstr "newline_style"
 
-#: src/06_development_environment/01_project_configuration/02_format.md:16
+#: src/06_development_environment/01_project_configuration/02_format.md:17
 msgid "`auto` / `native` / `unix` / `windows`"
 msgstr "`auto` / `native` / `unix` / `windows`"
 
-#: src/06_development_environment/01_project_configuration/02_format.md:16
+#: src/06_development_environment/01_project_configuration/02_format.md:17
+#: src/06_development_environment/02_dependencies.md:116
 msgid "`auto`"
 msgstr "`auto`"
 
-#: src/06_development_environment/01_project_configuration/02_format.md:16
+#: src/06_development_environment/01_project_configuration/02_format.md:17
 msgid "line ending style"
 msgstr "改行コードのスタイル"
 
-#: src/06_development_environment/01_project_configuration/02_format.md:18
+#: src/06_development_environment/01_project_configuration/02_format.md:19
+msgid ""
+"The formatter tries to keep each line within `max_width` columns by "
+"inserting line breaks at acceptable positions. Lines that cannot be broken "
+"(for example, very long identifiers or comments) may still exceed this width."
+msgstr ""
+"フォーマッタは、適切な位置に改行を挿入することで各行を `max_width` カラム以内"
+"に収めようとします。改行できない箇所 (非常に長い識別子やコメントなど) ではこ"
+"の幅を超える可能性があります。"
+
+#: src/06_development_environment/01_project_configuration/02_format.md:23
 msgid ""
 "`newline_style` controls the line ending used by the formatter, the build "
 "emitter and the migrator output. The available values are:"
@@ -7615,7 +7737,7 @@ msgstr ""
 "`newline_style` はフォーマッタ、ビルドのエミッタ、マイグレータが出力する改行"
 "コードを制御します。利用可能な値は以下のとおりです。"
 
-#: src/06_development_environment/01_project_configuration/02_format.md:21
+#: src/06_development_environment/01_project_configuration/02_format.md:26
 msgid ""
 "`auto` — detect from the input file. If no newline exists, the platform "
 "native style is used."
@@ -7623,7 +7745,7 @@ msgstr ""
 "`auto` — 入力ファイルから検出します。改行が存在しない場合は実行プラットフォー"
 "ムのネイティブスタイルが使用されます。"
 
-#: src/06_development_environment/01_project_configuration/02_format.md:22
+#: src/06_development_environment/01_project_configuration/02_format.md:27
 msgid ""
 "`native` — use the platform native style (`\\r\\n` on Windows, `\\n` "
 "elsewhere)."
@@ -7631,11 +7753,11 @@ msgstr ""
 "`native` — 実行プラットフォームのネイティブスタイル（Windows では `\\r\\n`、"
 "それ以外では `\\n`）を使用します。"
 
-#: src/06_development_environment/01_project_configuration/02_format.md:23
+#: src/06_development_environment/01_project_configuration/02_format.md:28
 msgid "`unix` — always use `\\n`."
 msgstr "`unix` — 常に `\\n` を使用します。"
 
-#: src/06_development_environment/01_project_configuration/02_format.md:24
+#: src/06_development_environment/01_project_configuration/02_format.md:29
 msgid "`windows` — always use `\\r\\n`."
 msgstr "`windows` — 常に `\\r\\n` を使用します。"
 
@@ -8740,97 +8862,138 @@ msgstr ""
 "す。`gtkwave` と `surfer` で扱うことができます。"
 
 #: src/06_development_environment/01_project_configuration/04_test.md:56
+msgid "The `defines` field"
+msgstr "`defines` フィールド"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:58
+msgid ""
+"The `defines` field specifies a list of names that are treated as defined "
+"while running `veryl test`. These names are visible to the [`#[ifdef]`/"
+"`#[ifndef]`](../../05_language_reference/06_declaration/08_attribute.md) "
+"attribute, so they can be used to enable test-only code paths. For "
+"SystemVerilog and cocotb tests, the same names are also passed to the "
+"external simulator as `+define+NAME` (or `-d NAME` for Vivado)."
+msgstr ""
+"`defines` フィールドは、`veryl test` の実行中に定義済みとして扱われる名前のリ"
+"ストを指定します。これらの名前は [`#[ifdef]`/`#[ifndef]`]"
+"(../../05_language_reference/06_declaration/08_attribute.md) 属性から参照で"
+"き、テスト専用のコードパスを有効化するために利用できます。SystemVerilog テス"
+"トと cocotb テストでは、同じ名前が `+define+NAME` (Vivado の場合は `-d "
+"NAME`) として外部シミュレータにも渡されます。"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:62
+msgid ""
+"```toml\n"
+"[test]\n"
+"defines = [\"DEBUG\", \"ENABLE_ASSERTIONS\"]\n"
+"```"
+msgstr ""
+"```toml\n"
+"[test]\n"
+"defines = [\"DEBUG\", \"ENABLE_ASSERTIONS\"]\n"
+"```"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:67
+msgid ""
+"Additional names can be appended from the command line via `veryl test --"
+"define NAME` (or `-D NAME`). CLI defines are merged with this field."
+msgstr ""
+"追加の名前はコマンドラインから `veryl test --define NAME` (または `-D NAME`) "
+"で渡すこともできます。CLI で指定した値はこのフィールドの内容にマージされま"
+"す。"
+
+#: src/06_development_environment/01_project_configuration/04_test.md:70
 msgid "The `[test.verilator]` section"
 msgstr "`[test.verilator]` セクション"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:58
+#: src/06_development_environment/01_project_configuration/04_test.md:72
 msgid "This section contains configurations of test by Verilator."
 msgstr "このセクションはVerilatorによるテストの設定です。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:62
-#: src/06_development_environment/01_project_configuration/04_test.md:71
-#: src/06_development_environment/01_project_configuration/04_test.md:80
-#: src/06_development_environment/01_project_configuration/04_test.md:89
+#: src/06_development_environment/01_project_configuration/04_test.md:76
+#: src/06_development_environment/01_project_configuration/04_test.md:85
+#: src/06_development_environment/01_project_configuration/04_test.md:94
+#: src/06_development_environment/01_project_configuration/04_test.md:103
 msgid "compile_args"
 msgstr "compile_args"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:62
-#: src/06_development_environment/01_project_configuration/04_test.md:63
-#: src/06_development_environment/01_project_configuration/04_test.md:71
-#: src/06_development_environment/01_project_configuration/04_test.md:72
-#: src/06_development_environment/01_project_configuration/04_test.md:80
-#: src/06_development_environment/01_project_configuration/04_test.md:81
-#: src/06_development_environment/01_project_configuration/04_test.md:89
-#: src/06_development_environment/01_project_configuration/04_test.md:90
-#: src/06_development_environment/01_project_configuration/04_test.md:91
+#: src/06_development_environment/01_project_configuration/04_test.md:76
+#: src/06_development_environment/01_project_configuration/04_test.md:77
+#: src/06_development_environment/01_project_configuration/04_test.md:85
+#: src/06_development_environment/01_project_configuration/04_test.md:86
+#: src/06_development_environment/01_project_configuration/04_test.md:94
+#: src/06_development_environment/01_project_configuration/04_test.md:95
+#: src/06_development_environment/01_project_configuration/04_test.md:103
+#: src/06_development_environment/01_project_configuration/04_test.md:104
+#: src/06_development_environment/01_project_configuration/04_test.md:105
 msgid "\\[string\\]"
 msgstr "\\[文字列\\]"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:62
+#: src/06_development_environment/01_project_configuration/04_test.md:76
 msgid "additional arguments to `verilator` command"
 msgstr "`verilator` コマンドへの追加の引数"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:63
-#: src/06_development_environment/01_project_configuration/04_test.md:72
-#: src/06_development_environment/01_project_configuration/04_test.md:81
-#: src/06_development_environment/01_project_configuration/04_test.md:91
+#: src/06_development_environment/01_project_configuration/04_test.md:77
+#: src/06_development_environment/01_project_configuration/04_test.md:86
+#: src/06_development_environment/01_project_configuration/04_test.md:95
+#: src/06_development_environment/01_project_configuration/04_test.md:105
 msgid "simulate_args"
 msgstr "simulate_args"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:63
-#: src/06_development_environment/01_project_configuration/04_test.md:72
+#: src/06_development_environment/01_project_configuration/04_test.md:77
+#: src/06_development_environment/01_project_configuration/04_test.md:86
 msgid "additional arguments to simulation binary"
 msgstr "シミュレーションバイナリへの追加の引数"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:65
+#: src/06_development_environment/01_project_configuration/04_test.md:79
 msgid "The `[test.vcs]` section"
 msgstr "`[test.vcs]` セクション"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:67
+#: src/06_development_environment/01_project_configuration/04_test.md:81
 msgid "This section contains configurations of test by VCS."
 msgstr "このセクションはVCSによるテストの設定です。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:71
+#: src/06_development_environment/01_project_configuration/04_test.md:85
 msgid "additional arguments to `vcs` command"
 msgstr "`vcs` コマンドへの追加の引数"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:74
+#: src/06_development_environment/01_project_configuration/04_test.md:88
 msgid "The `[test.dsim]` section"
 msgstr "`[test.dsim]` セクション"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:76
+#: src/06_development_environment/01_project_configuration/04_test.md:90
 msgid "This section contains configurations of test by DSim."
 msgstr "このセクションはDSimによるテストの設定です。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:80
+#: src/06_development_environment/01_project_configuration/04_test.md:94
 msgid "additional arguments to `dsim` command for compilation"
 msgstr "`dsim` コマンドへの追加の引数"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:81
+#: src/06_development_environment/01_project_configuration/04_test.md:95
 msgid "additional arguments to `dsim` command for simulation"
 msgstr "`dsim` コマンドへの追加の引数"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:83
+#: src/06_development_environment/01_project_configuration/04_test.md:97
 msgid "The `[test.vivado]` section"
 msgstr "`[test.vivado]` セクション"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:85
+#: src/06_development_environment/01_project_configuration/04_test.md:99
 msgid "This section contains configurations of test by Vivado."
 msgstr "このセクションはVivadoによるテストの設定です。"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:89
+#: src/06_development_environment/01_project_configuration/04_test.md:103
 msgid "additional arguments to `xvlog` command"
 msgstr "`xvlog` コマンドへの追加の引数"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:90
+#: src/06_development_environment/01_project_configuration/04_test.md:104
 msgid "elaborate_args"
 msgstr "elaborate_args"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:90
+#: src/06_development_environment/01_project_configuration/04_test.md:104
 msgid "additional arguments to `xelab` command"
 msgstr "`xelab` コマンドへの追加の引数"
 
-#: src/06_development_environment/01_project_configuration/04_test.md:91
+#: src/06_development_environment/01_project_configuration/04_test.md:105
 msgid "additional arguments to `xsim` command"
 msgstr "`xsim` コマンドへの追加の引数"
 
@@ -9368,6 +9531,65 @@ msgstr ""
 "これは `../veryl_sample` が存在する場合はそれを使い、そうでない場合は Git か"
 "ら取得する、という意味です。"
 
+#: src/06_development_environment/02_dependencies.md:104
+msgid "Git backend"
+msgstr "Git バックエンド"
+
+#: src/06_development_environment/02_dependencies.md:106
+msgid "Veryl can fetch git-based dependencies through two different backends:"
+msgstr ""
+"Veryl は 2 つの異なるバックエンドを通して git ベースの依存を取得できます。"
+
+#: src/06_development_environment/02_dependencies.md:108
+msgid ""
+"`gitoxide` — a pure-Rust git implementation. It does not require an external "
+"`git` binary."
+msgstr ""
+"`gitoxide` — 純粋な Rust 実装の git。外部の `git` バイナリを必要としません。"
+
+#: src/06_development_environment/02_dependencies.md:109
+msgid ""
+"`command` — invokes the system `git` command. It requires `git` to be "
+"available on `PATH`."
+msgstr ""
+"`command` — システムの `git` コマンドを実行します。`git` が `PATH` に存在する"
+"必要があります。"
+
+#: src/06_development_environment/02_dependencies.md:111
+msgid ""
+"The default behavior is to try `gitoxide` first and automatically fall back "
+"to `command` when it fails (for example, when an authentication method that "
+"gitoxide does not support is required). The backend can be selected "
+"explicitly through the `VERYL_GIT_BACKEND` environment variable:"
+msgstr ""
+"既定では `gitoxide` を試し、失敗した場合 (たとえば gitoxide が対応していない"
+"認証方式が必要な場合など) に自動的に `command` へフォールバックします。バック"
+"エンドは `VERYL_GIT_BACKEND` 環境変数で明示的に選択できます。"
+
+#: src/06_development_environment/02_dependencies.md:114
+msgid "Behavior"
+msgstr "挙動"
+
+#: src/06_development_environment/02_dependencies.md:116
+msgid "Default. Try `gitoxide`, fall back to `command` on failure."
+msgstr "既定値。`gitoxide` を試し、失敗時に `command` へフォールバックする。"
+
+#: src/06_development_environment/02_dependencies.md:117
+msgid "`gitoxide`"
+msgstr "`gitoxide`"
+
+#: src/06_development_environment/02_dependencies.md:117
+msgid "Force `gitoxide`. No fallback."
+msgstr "`gitoxide` を強制する。フォールバックなし。"
+
+#: src/06_development_environment/02_dependencies.md:118
+msgid "`command`"
+msgstr "`command`"
+
+#: src/06_development_environment/02_dependencies.md:118
+msgid "Force the system `git` command. No fallback."
+msgstr "システムの `git` コマンドを強制する。フォールバックなし。"
+
 #: src/06_development_environment/03_publish_project.md:3
 msgid ""
 "To publish your project, `veryl publish` can be used. Publishing means to "
@@ -9629,27 +9851,81 @@ msgstr ""
 
 #: src/06_development_environment/07_simulator.md:8
 msgid ""
+"The native simulator selects its code-generation backend through `veryl test "
+"--backend`:"
+msgstr ""
+"ネイティブシミュレータのコード生成バックエンドは `veryl test --backend` で選"
+"択します。"
+
+#: src/06_development_environment/07_simulator.md:10
+msgid "Backend"
+msgstr "バックエンド"
+
+#: src/06_development_environment/07_simulator.md:12
+msgid "`cc`"
+msgstr "`cc`"
+
+#: src/06_development_environment/07_simulator.md:12
+msgid ""
+"Default. Emits C, compiles with an external C compiler (`gcc` or `clang` "
+"with `-O3`), then loads the result."
+msgstr ""
+"既定値。C を出力し、外部の C コンパイラ (`gcc` または `clang` の `-O3`) でコ"
+"ンパイルした結果をロードする。"
+
+#: src/06_development_environment/07_simulator.md:13
+msgid "`cranelift`"
+msgstr "`cranelift`"
+
+#: src/06_development_environment/07_simulator.md:13
+msgid "In-process Cranelift JIT."
+msgstr "インプロセスの Cranelift JIT。"
+
+#: src/06_development_environment/07_simulator.md:14
+msgid "`interpret`"
+msgstr "`interpret`"
+
+#: src/06_development_environment/07_simulator.md:14
+msgid "Walks the IR each cycle without code generation."
+msgstr "コード生成を行わず、サイクルごとに IR を歩く。"
+
+#: src/06_development_environment/07_simulator.md:16
+msgid ""
+"The `cc` backend requires `cc` (typically `gcc` or `clang`) to be available "
+"on `PATH`. If `cc` is missing, or a particular construct is not yet covered "
+"by the `cc` emitter, the simulator transparently falls back to Cranelift for "
+"that part. Use `veryl test --backend-validate` to dual-run the `cc` backend "
+"against Cranelift and abort on any divergence."
+msgstr ""
+"`cc` バックエンドは `cc` (通常は `gcc` または `clang`) が `PATH` に存在するこ"
+"とを要求します。`cc` が無い場合や、特定の構文がまだ `cc` エミッタで対応されて"
+"いない場合は、その部分について Cranelift へ透過的にフォールバックします。"
+"`veryl test --backend-validate` を使うと `cc` バックエンドを Cranelift と並行"
+"実行し、差異があれば中断します。"
+
+#: src/06_development_environment/07_simulator.md:20
+msgid ""
 "For SystemVerilog test and cocotb test, an external RTL simulator is "
 "required. Supported simulators are below:"
 msgstr ""
 "SystemVerilogテストとcocotbテストでは、外部のRTLシミュレータが必要です。サ"
 "ポートされているシミュレータは以下の通りです。"
 
-#: src/06_development_environment/07_simulator.md:11
+#: src/06_development_environment/07_simulator.md:23
 msgid "[Verilator](https://www.veripool.org/verilator/)"
 msgstr "[Verilator](https://www.veripool.org/verilator/)"
 
-#: src/06_development_environment/07_simulator.md:12
+#: src/06_development_environment/07_simulator.md:24
 msgid ""
 "[Synopsys VCS](https://www.synopsys.com/verification/simulation/vcs.html)"
 msgstr ""
 "[Synopsys VCS](https://www.synopsys.com/verification/simulation/vcs.html)"
 
-#: src/06_development_environment/07_simulator.md:13
+#: src/06_development_environment/07_simulator.md:25
 msgid "[Altair DSim](https://altair.com/dsim)"
 msgstr "[Altair DSim](https://altair.com/dsim)"
 
-#: src/06_development_environment/07_simulator.md:14
+#: src/06_development_environment/07_simulator.md:26
 msgid ""
 "[AMD Vivado Simulator](https://www.xilinx.com/products/design-tools/vivado/"
 "verification.html)"
@@ -9657,7 +9933,7 @@ msgstr ""
 "[AMD Vivado Simulator](https://www.xilinx.com/products/design-tools/vivado/"
 "verification.html)"
 
-#: src/06_development_environment/07_simulator.md:16
+#: src/06_development_environment/07_simulator.md:28
 msgid ""
 "Verilator is the default simulator. If no simulator is specified through "
 "`Veryl.toml` and command-line option, it will be used."
@@ -9665,17 +9941,17 @@ msgstr ""
 "Verilatorはデフォルトのシミュレータです。`Veryl.toml`やコマンドラインオプショ"
 "ンでシミュレータが指定されていない場合に使用されます。"
 
-#: src/06_development_environment/07_simulator.md:19
+#: src/06_development_environment/07_simulator.md:31
 msgid ""
 "The available configurations are [here](./01_project_configuration/04_test."
 "md)."
 msgstr "全設定の説明は[こちら](./01_project_configuration/04_test.md)。"
 
-#: src/06_development_environment/07_simulator.md:21
+#: src/06_development_environment/07_simulator.md:33
 msgid "cocotb"
 msgstr "cocotb"
 
-#: src/06_development_environment/07_simulator.md:23
+#: src/06_development_environment/07_simulator.md:35
 msgid ""
 "`cocotb` tests require `python3` environment in which `cocotb` is installed. "
 "The supported version of `cocotb` is 1.9.x and 2.0.x."
@@ -9684,11 +9960,11 @@ msgstr ""
 "が必要です。サポートされている `cocotb` のバージョンは 1.9.x あるいは 2.0.x "
 "です。"
 
-#: src/06_development_environment/07_simulator.md:26
+#: src/06_development_environment/07_simulator.md:38
 msgid "For example, it can be installed by the following command."
 msgstr "例えば以下のコマンドでインストールすることができます。"
 
-#: src/06_development_environment/07_simulator.md:32
+#: src/06_development_environment/07_simulator.md:44
 msgid "As simulator backend, Verilator is only supported."
 msgstr "シミュレータバックエンドとしては Verilator のみサポートされています。"
 
@@ -12525,10 +12801,31 @@ msgstr ""
 "び出しを削除するか、実際の関数シンボルに置き換えてください。"
 
 #: src/07_appendix/02_semantic_error.md:25
+msgid "combinational_loop"
+msgstr "combinational_loop"
+
+#: src/07_appendix/02_semantic_error.md:27
+msgid ""
+"This error is reported when a combinational loop is detected, where the "
+"value of a signal depends on itself through purely combinational logic "
+"without any sequential element in between. The loop can be formed by "
+"`assign` declarations, `always_comb` blocks, function calls, or instantiated "
+"modules and interfaces. Break the loop by inserting a register (`always_ff`) "
+"on at least one path, or by restructuring the design so that the dependency "
+"chain terminates."
+msgstr ""
+"このエラーは、シーケンシャル要素を介さず、信号の値が純粋な組み合わせ論理を通"
+"じて自分自身に依存している場合に報告されます。ループは `assign` 宣言、"
+"`always_comb` ブロック、関数呼び出し、またはインスタンス化されたモジュールや"
+"インターフェースによって形成され得ます。少なくとも 1 つのパス上にレジスタ "
+"(`always_ff`) を挿入するか、依存関係の連鎖が終了するように設計を再構成して"
+"ループを解消してください。"
+
+#: src/07_appendix/02_semantic_error.md:34
 msgid "cyclic_type_dependency"
 msgstr "cyclic_type_dependency"
 
-#: src/07_appendix/02_semantic_error.md:27
+#: src/07_appendix/02_semantic_error.md:36
 msgid ""
 "This error is reported when two or more type definitions reference each "
 "other in a cycle. Break the cycle by removing or restructuring one of the "
@@ -12537,11 +12834,11 @@ msgstr ""
 "このエラーは、複数の型定義が循環的に互いを参照している場合に報告されます。参"
 "照のいずれかを削除または再構成して循環を断ち切ってください。"
 
-#: src/07_appendix/02_semantic_error.md:30
+#: src/07_appendix/02_semantic_error.md:39
 msgid "duplicated_identifier"
 msgstr "duplicated_identifier"
 
-#: src/07_appendix/02_semantic_error.md:32
+#: src/07_appendix/02_semantic_error.md:41
 msgid ""
 "This error is reported when the same identifier is declared more than once "
 "in the same scope. Rename one of the declarations."
@@ -12549,11 +12846,11 @@ msgstr ""
 "このエラーは、同じ識別子が同一スコープ内で複数回宣言された場合に報告されま"
 "す。いずれかの宣言を別名にリネームしてください。"
 
-#: src/07_appendix/02_semantic_error.md:35
+#: src/07_appendix/02_semantic_error.md:44
 msgid "exceed_limit"
 msgstr "exceed_limit"
 
-#: src/07_appendix/02_semantic_error.md:37
+#: src/07_appendix/02_semantic_error.md:46
 msgid ""
 "This error is reported when an internal limit such as instance depth, total "
 "instance count, or elaboration evaluation size is exceeded. Raise the "
@@ -12564,11 +12861,11 @@ msgstr ""
 "ズなどの内部制限を超えた場合に報告されます。`Veryl.toml` の `[build]` セク"
 "ションで該当する制限を引き上げるか、設計を簡略化してください。"
 
-#: src/07_appendix/02_semantic_error.md:41
+#: src/07_appendix/02_semantic_error.md:50
 msgid "fixed_type_with_signed_modifier"
 msgstr "fixed_type_with_signed_modifier"
 
-#: src/07_appendix/02_semantic_error.md:43
+#: src/07_appendix/02_semantic_error.md:52
 msgid ""
 "This error is reported when the `signed` modifier is applied to a fixed-"
 "width type (e.g. `u32`). Remove the `signed` modifier."
@@ -12576,11 +12873,11 @@ msgstr ""
 "このエラーは、固定幅の型（例：`u32`）に `signed` 修飾子を付けた場合に報告され"
 "ます。`signed` 修飾子を削除してください。"
 
-#: src/07_appendix/02_semantic_error.md:46
+#: src/07_appendix/02_semantic_error.md:55
 msgid "generic_inference_failed"
 msgstr "generic_inference_failed"
 
-#: src/07_appendix/02_semantic_error.md:48
+#: src/07_appendix/02_semantic_error.md:57
 msgid ""
 "This error is reported when the actual generic arguments of a function call "
 "are omitted but the compiler cannot infer them from the call arguments. "
@@ -12591,11 +12888,11 @@ msgstr ""
 "数から推論できなかった場合に報告されます。`::<>` で明示的にジェネリック引数を"
 "指定するか、変数宣言から幅を決定できる引数を渡してください。"
 
-#: src/07_appendix/02_semantic_error.md:53
+#: src/07_appendix/02_semantic_error.md:62
 msgid "include_failure"
 msgstr "include_failure"
 
-#: src/07_appendix/02_semantic_error.md:55
+#: src/07_appendix/02_semantic_error.md:64
 msgid ""
 "This error is reported when a file referenced by an `include` declaration "
 "cannot be read. Check the path and file permissions."
@@ -12603,11 +12900,11 @@ msgstr ""
 "このエラーは、`include` 宣言が参照するファイルを読み込めない場合に報告されま"
 "す。パスとファイルパーミッションを確認してください。"
 
-#: src/07_appendix/02_semantic_error.md:58
+#: src/07_appendix/02_semantic_error.md:67
 msgid "incompat_proto"
 msgstr "incompat_proto"
 
-#: src/07_appendix/02_semantic_error.md:60
+#: src/07_appendix/02_semantic_error.md:69
 msgid ""
 "This error is reported when a module / interface / package marked `for "
 "{proto}` does not satisfy the prototype's contract. Adjust the "
@@ -12617,11 +12914,11 @@ msgstr ""
 "そのプロトタイプの契約を満たさない場合に報告されます。プロトタイプに合うよう"
 "に実装を調整してください。"
 
-#: src/07_appendix/02_semantic_error.md:64
+#: src/07_appendix/02_semantic_error.md:73
 msgid "infinite_recursion"
 msgstr "infinite_recursion"
 
-#: src/07_appendix/02_semantic_error.md:66
+#: src/07_appendix/02_semantic_error.md:75
 msgid ""
 "This error is reported when a module instantiates itself, directly or "
 "transitively, with no condition that stops the recursion. Add a terminating "
@@ -12633,11 +12930,11 @@ msgstr ""
 "リックパラメータと `if` による生成で打ち切る）か、モジュールが自身を参照しな"
 "いように設計を組み直してください。"
 
-#: src/07_appendix/02_semantic_error.md:71
+#: src/07_appendix/02_semantic_error.md:80
 msgid "invalid_assignment"
 msgstr "invalid_assignment"
 
-#: src/07_appendix/02_semantic_error.md:73
+#: src/07_appendix/02_semantic_error.md:82
 msgid ""
 "This error is reported when an unassignable symbol kind (constants, "
 "parameters, generic parameters, etc.) is the target of an assignment. Remove "
@@ -12646,11 +12943,11 @@ msgstr ""
 "このエラーは、定数・パラメータ・ジェネリックパラメータなど代入できない種類の"
 "シンボルが代入の対象になった場合に報告されます。代入を削除してください。"
 
-#: src/07_appendix/02_semantic_error.md:76
+#: src/07_appendix/02_semantic_error.md:85
 msgid "invalid_cast"
 msgstr "invalid_cast"
 
-#: src/07_appendix/02_semantic_error.md:78
+#: src/07_appendix/02_semantic_error.md:87
 msgid ""
 "This error is reported when the source and target types of a type cast are "
 "not compatible. Choose a compatible target type."
@@ -12658,11 +12955,11 @@ msgstr ""
 "このエラーは、型キャストの元と先の型が互換でない場合に報告されます。互換性の"
 "ある型を指定してください。"
 
-#: src/07_appendix/02_semantic_error.md:81
+#: src/07_appendix/02_semantic_error.md:90
 msgid "invalid_clock"
 msgstr "invalid_clock"
 
-#: src/07_appendix/02_semantic_error.md:83
+#: src/07_appendix/02_semantic_error.md:92
 msgid ""
 "This error is reported when a signal that is neither typed as `clock` nor a "
 "single-bit signal is connected as a clock. Use a `clock`\\-typed signal."
@@ -12670,11 +12967,11 @@ msgstr ""
 "このエラーは、`clock` 型でも単一ビット信号でもない信号がクロックとして接続さ"
 "れた場合に報告されます。`clock` 型の信号を使用してください。"
 
-#: src/07_appendix/02_semantic_error.md:86
+#: src/07_appendix/02_semantic_error.md:95
 msgid "invalid_clock_domain"
 msgstr "invalid_clock_domain"
 
-#: src/07_appendix/02_semantic_error.md:88
+#: src/07_appendix/02_semantic_error.md:97
 msgid ""
 "This error is reported when a clock domain annotation is attached to a "
 "module instance, where it is not allowed. Remove the annotation."
@@ -12682,11 +12979,11 @@ msgstr ""
 "このエラーは、モジュールインスタンスにクロックドメインアノテーションが付与さ"
 "れた場合に報告されます。アノテーションを削除してください。"
 
-#: src/07_appendix/02_semantic_error.md:91
+#: src/07_appendix/02_semantic_error.md:100
 msgid "invalid_connect_operand"
 msgstr "invalid_connect_operand"
 
-#: src/07_appendix/02_semantic_error.md:93
+#: src/07_appendix/02_semantic_error.md:102
 msgid ""
 "This error is reported when an operand of the `<>` connect operator is not a "
 "valid interface operand."
@@ -12694,11 +12991,11 @@ msgstr ""
 "このエラーは、`<>` 接続演算子のオペランドとして有効なインターフェースオペラン"
 "ドが指定されていない場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:96
+#: src/07_appendix/02_semantic_error.md:105
 msgid "invalid_direction"
 msgstr "invalid_direction"
 
-#: src/07_appendix/02_semantic_error.md:98
+#: src/07_appendix/02_semantic_error.md:107
 msgid ""
 "This error is reported when a port direction (`input`, `output`, `inout`, "
 "etc.) is used in a context where the direction is not allowed. Remove the "
@@ -12707,11 +13004,11 @@ msgstr ""
 "このエラーは、ポート方向指定（`input`、`output`、`inout` など）がそれを許可し"
 "ていない位置に書かれた場合に報告されます。方向修飾子を削除してください。"
 
-#: src/07_appendix/02_semantic_error.md:102
+#: src/07_appendix/02_semantic_error.md:111
 msgid "invalid_embed"
 msgstr "invalid_embed"
 
-#: src/07_appendix/02_semantic_error.md:104
+#: src/07_appendix/02_semantic_error.md:113
 msgid ""
 "This error is reported when an `embed` declaration uses a way / language "
 "combination that is not allowed at the current position."
@@ -12719,11 +13016,11 @@ msgstr ""
 "このエラーは、現在位置で許可されていない way／言語の組み合わせの `embed` 宣言"
 "が使われた場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:107
+#: src/07_appendix/02_semantic_error.md:116
 msgid "invalid_embed_identifier"
 msgstr "invalid_embed_identifier"
 
-#: src/07_appendix/02_semantic_error.md:109
+#: src/07_appendix/02_semantic_error.md:118
 msgid ""
 "This error is reported when an embed identifier reference appears in an "
 "embed block other than `(way: inline / lang: sv)`."
@@ -12731,11 +13028,11 @@ msgstr ""
 "このエラーは、embed 識別子の参照が `(way: inline / lang: sv)` 以外の embed ブ"
 "ロックに現れた場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:112
+#: src/07_appendix/02_semantic_error.md:121
 msgid "invalid_enum_variant"
 msgstr "invalid_enum_variant"
 
-#: src/07_appendix/02_semantic_error.md:114
+#: src/07_appendix/02_semantic_error.md:123
 msgid ""
 "This error is reported when an enum variant's value does not match the "
 "encoding declared for the enum (e.g. one-hot, gray)."
@@ -12743,11 +13040,11 @@ msgstr ""
 "このエラーは、enum バリアントの値がその enum に指定されたエンコーディング"
 "（one-hot、gray など）と一致しない場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:117
+#: src/07_appendix/02_semantic_error.md:126
 msgid "invalid_factor"
 msgstr "invalid_factor"
 
-#: src/07_appendix/02_semantic_error.md:119
+#: src/07_appendix/02_semantic_error.md:128
 msgid ""
 "This error is reported when a non-value symbol (e.g. a module name) is used "
 "as a factor in an expression."
@@ -12755,11 +13052,11 @@ msgstr ""
 "このエラーは、値ではないシンボル（例：モジュール名）が式の因子として使われた"
 "場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:122
+#: src/07_appendix/02_semantic_error.md:131
 msgid "invalid_import"
 msgstr "invalid_import"
 
-#: src/07_appendix/02_semantic_error.md:124
+#: src/07_appendix/02_semantic_error.md:133
 msgid ""
 "This error is reported when the referenced item cannot be imported (e.g. it "
 "is private or not a valid import target)."
@@ -12767,11 +13064,11 @@ msgstr ""
 "このエラーは、参照先がインポート可能でない（private、またはインポート対象とし"
 "て無効）な場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:127
+#: src/07_appendix/02_semantic_error.md:136
 msgid "invalid_lsb"
 msgstr "invalid_lsb"
 
-#: src/07_appendix/02_semantic_error.md:129
+#: src/07_appendix/02_semantic_error.md:138
 msgid ""
 "This error is reported when the `lsb` keyword appears in a context where the "
 "corresponding bit width cannot be determined. Replace `lsb` with a concrete "
@@ -12780,11 +13077,11 @@ msgstr ""
 "このエラーは、対応するビット幅を特定できない位置で `lsb` キーワードが使われた"
 "場合に報告されます。`lsb` を具体的なインデックスに置き換えてください。"
 
-#: src/07_appendix/02_semantic_error.md:133
+#: src/07_appendix/02_semantic_error.md:142
 msgid "invalid_modifier"
 msgstr "invalid_modifier"
 
-#: src/07_appendix/02_semantic_error.md:135
+#: src/07_appendix/02_semantic_error.md:144
 msgid ""
 "This error is reported when a type modifier is used in a context that does "
 "not allow it. Remove the modifier."
@@ -12792,11 +13089,11 @@ msgstr ""
 "このエラーは、型修飾子が許可されていない位置で使われた場合に報告されます。修"
 "飾子を削除してください。"
 
-#: src/07_appendix/02_semantic_error.md:138
+#: src/07_appendix/02_semantic_error.md:147
 msgid "invalid_modport_item"
 msgstr "invalid_modport_item"
 
-#: src/07_appendix/02_semantic_error.md:140
+#: src/07_appendix/02_semantic_error.md:149
 msgid ""
 "This error is reported when a modport item refers to an identifier that is "
 "not of the expected kind."
@@ -12804,11 +13101,11 @@ msgstr ""
 "このエラーは、modport の項目が期待する種類でない識別子を参照している場合に報"
 "告されます。"
 
-#: src/07_appendix/02_semantic_error.md:143
+#: src/07_appendix/02_semantic_error.md:152
 msgid "invalid_msb"
 msgstr "invalid_msb"
 
-#: src/07_appendix/02_semantic_error.md:145
+#: src/07_appendix/02_semantic_error.md:154
 msgid ""
 "This error is reported when the `msb` keyword appears in a context where the "
 "corresponding bit width cannot be determined. Replace `msb` with a concrete "
@@ -12817,11 +13114,11 @@ msgstr ""
 "このエラーは、対応するビット幅を特定できない位置で `msb` キーワードが使われた"
 "場合に報告されます。`msb` を具体的なインデックスに置き換えてください。"
 
-#: src/07_appendix/02_semantic_error.md:149
+#: src/07_appendix/02_semantic_error.md:158
 msgid "invalid_number_character"
 msgstr "invalid_number_character"
 
-#: src/07_appendix/02_semantic_error.md:151
+#: src/07_appendix/02_semantic_error.md:160
 msgid ""
 "This error is reported when a numeric literal contains a character that is "
 "not valid for its base, such as a hexadecimal digit in a binary literal."
@@ -12829,11 +13126,11 @@ msgstr ""
 "このエラーは、数値リテラルが基数に対して不正な文字を含む場合（例：2進リテラル"
 "中の16進数字）に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:154
+#: src/07_appendix/02_semantic_error.md:163
 msgid "invalid_operand"
 msgstr "invalid_operand"
 
-#: src/07_appendix/02_semantic_error.md:156
+#: src/07_appendix/02_semantic_error.md:165
 msgid ""
 "This error is reported when an operand kind incompatible with the operator "
 "is used."
@@ -12841,11 +13138,11 @@ msgstr ""
 "このエラーは、演算子と互換性のない種類のオペランドが使われた場合に報告されま"
 "す。"
 
-#: src/07_appendix/02_semantic_error.md:158
+#: src/07_appendix/02_semantic_error.md:167
 msgid "invalid_port_default_value"
 msgstr "invalid_port_default_value"
 
-#: src/07_appendix/02_semantic_error.md:160
+#: src/07_appendix/02_semantic_error.md:169
 msgid ""
 "This error is reported when a port default value is invalid for the port's "
 "type or direction."
@@ -12853,11 +13150,11 @@ msgstr ""
 "このエラーは、ポートのデフォルト値がそのポートの型や方向に対して無効な場合に"
 "報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:163
+#: src/07_appendix/02_semantic_error.md:172
 msgid "invalid_reset"
 msgstr "invalid_reset"
 
-#: src/07_appendix/02_semantic_error.md:165
+#: src/07_appendix/02_semantic_error.md:174
 msgid ""
 "This error is reported when a signal that is neither typed as `reset` nor a "
 "single-bit signal is connected as a reset. Use a `reset`\\-typed signal."
@@ -12865,11 +13162,11 @@ msgstr ""
 "このエラーは、`reset` 型でも単一ビット信号でもない信号がリセットとして接続さ"
 "れた場合に報告されます。`reset` 型の信号を使用してください。"
 
-#: src/07_appendix/02_semantic_error.md:168
+#: src/07_appendix/02_semantic_error.md:177
 msgid "invalid_statement"
 msgstr "invalid_statement"
 
-#: src/07_appendix/02_semantic_error.md:170
+#: src/07_appendix/02_semantic_error.md:179
 msgid ""
 "This error is reported when a statement appears in a context where it is not "
 "allowed (for example, a `return` outside a function). Remove or relocate the "
@@ -12878,11 +13175,11 @@ msgstr ""
 "このエラーは、文がそれを許可していない位置に書かれた場合（例：関数外の "
 "`return`）に報告されます。文を削除するか、適切な位置に移動してください。"
 
-#: src/07_appendix/02_semantic_error.md:174
+#: src/07_appendix/02_semantic_error.md:183
 msgid "invalid_tb_usage"
 msgstr "invalid_tb_usage"
 
-#: src/07_appendix/02_semantic_error.md:176
+#: src/07_appendix/02_semantic_error.md:185
 msgid ""
 "This error is reported when a `$tb::*` testbench component is used outside a "
 "`#[test]` module. Move the usage inside a test module."
@@ -12890,19 +13187,19 @@ msgstr ""
 "このエラーは、`$tb::*` のテストベンチコンポーネントが `#[test]` モジュールの"
 "外で使われた場合に報告されます。テストモジュール内に移動してください。"
 
-#: src/07_appendix/02_semantic_error.md:179
+#: src/07_appendix/02_semantic_error.md:188
 msgid "invalid_test"
 msgstr "invalid_test"
 
-#: src/07_appendix/02_semantic_error.md:181
+#: src/07_appendix/02_semantic_error.md:190
 msgid "This error is reported when a `#[test]` declaration is malformed."
 msgstr "このエラーは、`#[test]` 宣言が不正な形をしている場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:183
+#: src/07_appendix/02_semantic_error.md:192
 msgid "invalid_type_declaration"
 msgstr "invalid_type_declaration"
 
-#: src/07_appendix/02_semantic_error.md:185
+#: src/07_appendix/02_semantic_error.md:194
 msgid ""
 "This error is reported when `struct`, `enum` or `union` data types are "
 "defined within interface declarations."
@@ -12910,11 +13207,11 @@ msgstr ""
 "このエラーは `struct`、`enum`、`union` のデータ型がインターフェース宣言内で定"
 "義された場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:188
+#: src/07_appendix/02_semantic_error.md:197
 msgid "invalid_wavedrom"
 msgstr "invalid_wavedrom"
 
-#: src/07_appendix/02_semantic_error.md:190
+#: src/07_appendix/02_semantic_error.md:199
 msgid ""
 "This error is reported when a WaveDrom block in a documentation comment is "
 "invalid."
@@ -12922,11 +13219,11 @@ msgstr ""
 "このエラーは、ドキュメンテーションコメント中の WaveDrom ブロックが不正な場合"
 "に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:192
+#: src/07_appendix/02_semantic_error.md:201
 msgid "invisible_identifier"
 msgstr "invisible_identifier"
 
-#: src/07_appendix/02_semantic_error.md:194
+#: src/07_appendix/02_semantic_error.md:203
 msgid ""
 "This error is reported when an identifier is referenced from a position "
 "where it is not in scope (e.g. across visibility boundaries)."
@@ -12934,11 +13231,11 @@ msgstr ""
 "このエラーは、スコープ外（可視性境界をまたぐなど）から識別子を参照した場合に"
 "報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:197
+#: src/07_appendix/02_semantic_error.md:206
 msgid "last_item_with_define"
 msgstr "last_item_with_define"
 
-#: src/07_appendix/02_semantic_error.md:199
+#: src/07_appendix/02_semantic_error.md:208
 msgid ""
 "This error is reported when an `ifdef` / `ifndef` / `elsif` / `else` "
 "attribute is attached to the last item in a comma-separated list, which "
@@ -12947,11 +13244,11 @@ msgstr ""
 "このエラーは、カンマ区切りリストの最後の要素に `ifdef` / `ifndef` / "
 "`elsif` / `else` 属性が付与され、境界が曖昧になる場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:202
+#: src/07_appendix/02_semantic_error.md:211
 msgid "member_access_on_array"
 msgstr "member_access_on_array"
 
-#: src/07_appendix/02_semantic_error.md:204
+#: src/07_appendix/02_semantic_error.md:213
 msgid ""
 "This error is reported when a member is accessed on an array directly. Index "
 "the array first."
@@ -12959,11 +13256,11 @@ msgstr ""
 "このエラーは、配列に対して直接メンバーアクセスを行った場合に報告されます。先"
 "に配列をインデックスしてください。"
 
-#: src/07_appendix/02_semantic_error.md:207
+#: src/07_appendix/02_semantic_error.md:216
 msgid "mismatch_attribute_args"
 msgstr "mismatch_attribute_args"
 
-#: src/07_appendix/02_semantic_error.md:209
+#: src/07_appendix/02_semantic_error.md:218
 msgid ""
 "This error is reported when an attribute is supplied with arguments that do "
 "not match the expected form. Adjust the arguments to the attribute's "
@@ -12972,11 +13269,11 @@ msgstr ""
 "このエラーは、属性に渡された引数が期待される形式と一致しない場合に報告されま"
 "す。属性が期待するシグネチャに合うよう引数を調整してください。"
 
-#: src/07_appendix/02_semantic_error.md:212
+#: src/07_appendix/02_semantic_error.md:221
 msgid "mismatch_clock_domain"
 msgstr "mismatch_clock_domain"
 
-#: src/07_appendix/02_semantic_error.md:214
+#: src/07_appendix/02_semantic_error.md:223
 msgid ""
 "This error is reported when a signal is used across clock domain boundaries "
 "without an explicit `unsafe (cdc)` block."
@@ -12984,11 +13281,11 @@ msgstr ""
 "このエラーは、明示的な `unsafe (cdc)` ブロックなしに信号がクロックドメイン境"
 "界を越えて使われた場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:217
+#: src/07_appendix/02_semantic_error.md:226
 msgid "mismatch_function_arity"
 msgstr "mismatch_function_arity"
 
-#: src/07_appendix/02_semantic_error.md:219
+#: src/07_appendix/02_semantic_error.md:228
 msgid ""
 "This error is reported when the number of arguments at a function call site "
 "does not match the function's declaration."
@@ -12996,11 +13293,11 @@ msgstr ""
 "このエラーは、関数呼び出し時の引数の個数が関数の宣言と一致しない場合に報告さ"
 "れます。"
 
-#: src/07_appendix/02_semantic_error.md:222
+#: src/07_appendix/02_semantic_error.md:231
 msgid "mismatch_generics_arity"
 msgstr "mismatch_generics_arity"
 
-#: src/07_appendix/02_semantic_error.md:224
+#: src/07_appendix/02_semantic_error.md:233
 msgid ""
 "This error is reported when the number of generic arguments at a call site "
 "does not match the declaration."
@@ -13008,11 +13305,11 @@ msgstr ""
 "このエラーは、呼び出し時のジェネリック引数の個数が宣言と一致しない場合に報告"
 "されます。"
 
-#: src/07_appendix/02_semantic_error.md:227
+#: src/07_appendix/02_semantic_error.md:236
 msgid "mismatch_type"
 msgstr "mismatch_type"
 
-#: src/07_appendix/02_semantic_error.md:229
+#: src/07_appendix/02_semantic_error.md:238
 msgid ""
 "This error is reported when a value is used in a position that requires a "
 "different type. Examples include incompatible assignments and function "
@@ -13021,11 +13318,11 @@ msgstr ""
 "このエラーは、ある値が別の型を要求する位置で使われた場合に報告されます。代入"
 "の型不一致や、関数引数の型不一致などが含まれます。"
 
-#: src/07_appendix/02_semantic_error.md:233
+#: src/07_appendix/02_semantic_error.md:242
 msgid "missing_clock_domain"
 msgstr "missing_clock_domain"
 
-#: src/07_appendix/02_semantic_error.md:235
+#: src/07_appendix/02_semantic_error.md:244
 msgid ""
 "This error is reported when a module has multiple clocks but lacks clock "
 "domain annotations on its ports. Add the annotations."
@@ -13034,11 +13331,11 @@ msgstr ""
 "アノテーションが付いていない場合に報告されます。アノテーションを追加してくだ"
 "さい。"
 
-#: src/07_appendix/02_semantic_error.md:238
+#: src/07_appendix/02_semantic_error.md:247
 msgid "missing_clock_signal"
 msgstr "missing_clock_signal"
 
-#: src/07_appendix/02_semantic_error.md:240
+#: src/07_appendix/02_semantic_error.md:249
 msgid ""
 "This error is reported when an `always_ff` block is used without a clock "
 "signal in the enclosing module. Add a `clock` port."
@@ -13046,11 +13343,11 @@ msgstr ""
 "このエラーは、囲っているモジュールにクロック信号が無いまま `always_ff` ブロッ"
 "クが使われた場合に報告されます。`clock` ポートを追加してください。"
 
-#: src/07_appendix/02_semantic_error.md:243
+#: src/07_appendix/02_semantic_error.md:252
 msgid "missing_default_argument"
 msgstr "missing_default_argument"
 
-#: src/07_appendix/02_semantic_error.md:245
+#: src/07_appendix/02_semantic_error.md:254
 msgid ""
 "This error is reported when a generic parameter following a parameter with a "
 "default itself lacks a default. Default parameters must be at the end of the "
@@ -13060,11 +13357,11 @@ msgstr ""
 "デフォルト値を持たない場合に報告されます。デフォルトパラメータはリストの末尾"
 "に置く必要があります。"
 
-#: src/07_appendix/02_semantic_error.md:248
+#: src/07_appendix/02_semantic_error.md:257
 msgid "missing_if_reset"
 msgstr "missing_if_reset"
 
-#: src/07_appendix/02_semantic_error.md:250
+#: src/07_appendix/02_semantic_error.md:259
 msgid ""
 "This error is reported when an `always_ff` block has a reset signal but no "
 "`if_reset` statement. Add an `if_reset` block to describe the reset behavior."
@@ -13073,11 +13370,11 @@ msgstr ""
 "`if_reset` 文が無い場合に報告されます。リセット動作を記述する `if_reset` ブ"
 "ロックを追加してください。"
 
-#: src/07_appendix/02_semantic_error.md:254
+#: src/07_appendix/02_semantic_error.md:263
 msgid "missing_reset_signal"
 msgstr "missing_reset_signal"
 
-#: src/07_appendix/02_semantic_error.md:256
+#: src/07_appendix/02_semantic_error.md:265
 msgid ""
 "This error is reported when an `always_ff` block uses `if_reset` but no "
 "reset signal is available in the enclosing module. Add a `reset` port or "
@@ -13087,11 +13384,11 @@ msgstr ""
 "ず、囲っているモジュールにリセット信号が無い場合に報告されます。`reset` ポー"
 "トを追加するか、リセット信号を接続してください。"
 
-#: src/07_appendix/02_semantic_error.md:260
+#: src/07_appendix/02_semantic_error.md:269
 msgid "missing_tb_port"
 msgstr "missing_tb_port"
 
-#: src/07_appendix/02_semantic_error.md:262
+#: src/07_appendix/02_semantic_error.md:271
 msgid ""
 "This error is reported when a `$tb::*` testbench component is instantiated "
 "without connecting one of its required ports (e.g. the `clk` port of `$tb::"
@@ -13101,11 +13398,11 @@ msgstr ""
 "reset_gen` の `clk` ポート）を接続せずにインスタンス化された場合に報告されま"
 "す。インスタンス化時に必要なポート接続を追加してください。"
 
-#: src/07_appendix/02_semantic_error.md:266
+#: src/07_appendix/02_semantic_error.md:275
 msgid "missing_tri"
 msgstr "missing_tri"
 
-#: src/07_appendix/02_semantic_error.md:268
+#: src/07_appendix/02_semantic_error.md:277
 msgid ""
 "This error is reported when an `inout` port is declared without the `tri` "
 "type modifier. Add the `tri` modifier."
@@ -13113,11 +13410,11 @@ msgstr ""
 "このエラーは、`inout` ポートが `tri` 型修飾子なしで宣言された場合に報告されま"
 "す。`tri` 修飾子を追加してください。"
 
-#: src/07_appendix/02_semantic_error.md:271
+#: src/07_appendix/02_semantic_error.md:280
 msgid "mixed_function_argument"
 msgstr "mixed_function_argument"
 
-#: src/07_appendix/02_semantic_error.md:273
+#: src/07_appendix/02_semantic_error.md:282
 msgid ""
 "This error is reported when both positional arguments and named arguments "
 "are used in the same function call. Use one style consistently."
@@ -13125,11 +13422,11 @@ msgstr ""
 "このエラーは、同じ関数呼び出しの中で位置引数と名前付き引数が混在している場合"
 "に報告されます。どちらか一方に統一してください。"
 
-#: src/07_appendix/02_semantic_error.md:276
+#: src/07_appendix/02_semantic_error.md:285
 msgid "multiple_assignment"
 msgstr "multiple_assignment"
 
-#: src/07_appendix/02_semantic_error.md:278
+#: src/07_appendix/02_semantic_error.md:287
 msgid ""
 "This error is reported when a single signal is assigned from more than one "
 "procedural block or `assign` statement. Drive each signal from a single "
@@ -13138,11 +13435,11 @@ msgstr ""
 "このエラーは、単一の信号が複数のプロシージャルブロックや `assign` 文から代入"
 "される場合に報告されます。各信号は単一の駆動元から駆動してください。"
 
-#: src/07_appendix/02_semantic_error.md:281
+#: src/07_appendix/02_semantic_error.md:290
 msgid "multiple_default"
 msgstr "multiple_default"
 
-#: src/07_appendix/02_semantic_error.md:283
+#: src/07_appendix/02_semantic_error.md:292
 msgid ""
 "This error is reported when a default clock or reset is specified more than "
 "once in the same module."
@@ -13150,11 +13447,11 @@ msgstr ""
 "このエラーは、同じモジュール内でデフォルトのクロックまたはリセットが複数回指"
 "定された場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:286
+#: src/07_appendix/02_semantic_error.md:295
 msgid "non_positive_value"
 msgstr "non_positive_value"
 
-#: src/07_appendix/02_semantic_error.md:288
+#: src/07_appendix/02_semantic_error.md:297
 msgid ""
 "This error is reported when a non-positive value is assigned to a positive "
 "type (`p8` / `p16` / `p32` / `p64`). Use a value greater than zero."
@@ -13162,11 +13459,11 @@ msgstr ""
 "このエラーは、正の型（`p8` / `p16` / `p32` / `p64`）にゼロ以下の値を代入した"
 "場合に報告されます。0 より大きい値を使用してください。"
 
-#: src/07_appendix/02_semantic_error.md:291
+#: src/07_appendix/02_semantic_error.md:300
 msgid "private_member"
 msgstr "private_member"
 
-#: src/07_appendix/02_semantic_error.md:293
+#: src/07_appendix/02_semantic_error.md:302
 msgid ""
 "This error is reported when a member declared as private is accessed from "
 "outside its declaring scope."
@@ -13174,11 +13471,11 @@ msgstr ""
 "このエラーは、private として宣言されたメンバーが、その宣言スコープの外からア"
 "クセスされた場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:296
+#: src/07_appendix/02_semantic_error.md:305
 msgid "private_namespace"
 msgstr "private_namespace"
 
-#: src/07_appendix/02_semantic_error.md:298
+#: src/07_appendix/02_semantic_error.md:307
 msgid ""
 "This error is reported when a namespace declared as private is referenced "
 "from outside its declaring scope."
@@ -13186,11 +13483,11 @@ msgstr ""
 "このエラーは、private として宣言された名前空間が、その宣言スコープの外から参"
 "照された場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:301
+#: src/07_appendix/02_semantic_error.md:310
 msgid "referring_before_definition"
 msgstr "referring_before_definition"
 
-#: src/07_appendix/02_semantic_error.md:303
+#: src/07_appendix/02_semantic_error.md:312
 msgid ""
 "This error is reported when an identifier is used before its declaration in "
 "a context that requires forward declaration. Move the definition before the "
@@ -13199,11 +13496,11 @@ msgstr ""
 "このエラーは、前方宣言が必要な位置で識別子が宣言前に使われた場合に報告されま"
 "す。定義を参照位置より前に移動してください。"
 
-#: src/07_appendix/02_semantic_error.md:306
+#: src/07_appendix/02_semantic_error.md:315
 msgid "reserved_identifier"
 msgstr "reserved_identifier"
 
-#: src/07_appendix/02_semantic_error.md:308
+#: src/07_appendix/02_semantic_error.md:317
 msgid ""
 "This error is reported when an identifier with the reserved `__` prefix is "
 "used. Choose a different name."
@@ -13211,11 +13508,11 @@ msgstr ""
 "このエラーは、予約された `__` 接頭辞を持つ識別子が使われた場合に報告されま"
 "す。別の名前を選んでください。"
 
-#: src/07_appendix/02_semantic_error.md:311
+#: src/07_appendix/02_semantic_error.md:320
 msgid "sv_keyword_usage"
 msgstr "sv_keyword_usage"
 
-#: src/07_appendix/02_semantic_error.md:313
+#: src/07_appendix/02_semantic_error.md:322
 msgid ""
 "This error is reported when a SystemVerilog keyword is used as a Veryl "
 "identifier. Rename so it does not conflict in the generated SystemVerilog."
@@ -13224,11 +13521,11 @@ msgstr ""
 "報告されます。生成された SystemVerilog で衝突しないようにリネームしてくださ"
 "い。"
 
-#: src/07_appendix/02_semantic_error.md:316
+#: src/07_appendix/02_semantic_error.md:325
 msgid "sv_with_implicit_reset"
 msgstr "sv_with_implicit_reset"
 
-#: src/07_appendix/02_semantic_error.md:318
+#: src/07_appendix/02_semantic_error.md:327
 msgid ""
 "This error is reported when a `reset`\\-typed port with implicit "
 "synchronicity and polarity is connected to a SystemVerilog module port. Use "
@@ -13238,11 +13535,11 @@ msgstr ""
 "ルのポートに接続された場合に報告されます。`reset_async_low` や "
 "`reset_sync_high` のような明示的な型を使用してください。"
 
-#: src/07_appendix/02_semantic_error.md:322
+#: src/07_appendix/02_semantic_error.md:331
 msgid "too_large_enum_variant"
 msgstr "too_large_enum_variant"
 
-#: src/07_appendix/02_semantic_error.md:324
+#: src/07_appendix/02_semantic_error.md:333
 msgid ""
 "This error is reported when the explicit value of an enum variant cannot be "
 "represented within the enum's bit width. Reduce the value or widen the enum."
@@ -13250,11 +13547,11 @@ msgstr ""
 "このエラーは、enum バリアントに与えられた明示的な値が enum のビット幅で表現で"
 "きない場合に報告されます。値を小さくするか、enum のビット幅を広げてください。"
 
-#: src/07_appendix/02_semantic_error.md:328
+#: src/07_appendix/02_semantic_error.md:337
 msgid "too_large_number"
 msgstr "too_large_number"
 
-#: src/07_appendix/02_semantic_error.md:330
+#: src/07_appendix/02_semantic_error.md:339
 msgid ""
 "This error is reported when a numeric literal exceeds the maximum value "
 "representable in its specified bit width. Increase the bit width or reduce "
@@ -13263,11 +13560,11 @@ msgstr ""
 "このエラーは、数値リテラルが指定されたビット幅で表現可能な最大値を超えている"
 "場合に報告されます。ビット幅を広げるか、値を小さくしてください。"
 
-#: src/07_appendix/02_semantic_error.md:334
+#: src/07_appendix/02_semantic_error.md:343
 msgid "too_much_enum_variant"
 msgstr "too_much_enum_variant"
 
-#: src/07_appendix/02_semantic_error.md:336
+#: src/07_appendix/02_semantic_error.md:345
 msgid ""
 "This error is reported when the number of variants in an enum exceeds what "
 "its bit width can encode. Widen the enum, or reduce the number of variants."
@@ -13275,11 +13572,11 @@ msgstr ""
 "このエラーは、enum のバリアント数がそのビット幅で符号化可能な数を超える場合に"
 "報告されます。enum のビット幅を広げるか、バリアント数を減らしてください。"
 
-#: src/07_appendix/02_semantic_error.md:340
+#: src/07_appendix/02_semantic_error.md:349
 msgid "type_inference_conflict"
 msgstr "type_inference_conflict"
 
-#: src/07_appendix/02_semantic_error.md:342
+#: src/07_appendix/02_semantic_error.md:351
 msgid ""
 "This error is reported when multiple assignments to an untyped `var` infer "
 "different types. All assignments to an untyped variable must agree on the "
@@ -13289,11 +13586,11 @@ msgstr ""
 "に報告されます。型を持たない変数へのすべての代入で型が一致する必要があるか、"
 "または明示的な型を付けて変数を宣言する必要があります。"
 
-#: src/07_appendix/02_semantic_error.md:346
+#: src/07_appendix/02_semantic_error.md:355
 msgid "type_inference_not_supported"
 msgstr "type_inference_not_supported"
 
-#: src/07_appendix/02_semantic_error.md:348
+#: src/07_appendix/02_semantic_error.md:357
 msgid ""
 "This error is reported when the right hand side expression of an untyped "
 "`let` or `const` declaration is not supported for type inference. Operator "
@@ -13305,11 +13602,11 @@ msgstr ""
 "`if` / `case` 式は推論できません。明示的な型注釈を付けることでこのエラーを解"
 "消できます。"
 
-#: src/07_appendix/02_semantic_error.md:353
+#: src/07_appendix/02_semantic_error.md:362
 msgid "unassignable_output"
 msgstr "unassignable_output"
 
-#: src/07_appendix/02_semantic_error.md:355
+#: src/07_appendix/02_semantic_error.md:364
 msgid ""
 "This error is reported when a read-only or otherwise unassignable expression "
 "is connected to an output port."
@@ -13317,11 +13614,11 @@ msgstr ""
 "このエラーは、読み取り専用などで代入できない式が出力ポートに接続された場合に"
 "報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:358
+#: src/07_appendix/02_semantic_error.md:367
 msgid "undefined_identifier"
 msgstr "undefined_identifier"
 
-#: src/07_appendix/02_semantic_error.md:360
+#: src/07_appendix/02_semantic_error.md:369
 msgid ""
 "This error is reported when an identifier is referenced before it has been "
 "declared. Declare the identifier, or correct the spelling."
@@ -13329,11 +13626,11 @@ msgstr ""
 "このエラーは、宣言される前の識別子を参照した場合に報告されます。識別子を宣言"
 "するか、綴りを修正してください。"
 
-#: src/07_appendix/02_semantic_error.md:363
+#: src/07_appendix/02_semantic_error.md:372
 msgid "unevaluatable_value"
 msgstr "unevaluatable_value"
 
-#: src/07_appendix/02_semantic_error.md:365
+#: src/07_appendix/02_semantic_error.md:374
 msgid ""
 "This error is reported when a value that cannot be resolved at elaboration "
 "time is used where a constant is required (e.g. an array size)."
@@ -13341,22 +13638,22 @@ msgstr ""
 "このエラーは、エラボレーション時に解決できない値が、定数を必要とする位置（配"
 "列サイズなど）で使われた場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:368
+#: src/07_appendix/02_semantic_error.md:377
 msgid "unexpandable_modport"
 msgstr "unexpandable_modport"
 
-#: src/07_appendix/02_semantic_error.md:370
+#: src/07_appendix/02_semantic_error.md:379
 msgid ""
 "This error is reported when a modport reference cannot be expanded into "
 "individual ports."
 msgstr ""
 "このエラーは、modport 参照を個別のポート群に展開できない場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:373
+#: src/07_appendix/02_semantic_error.md:382
 msgid "unknown_attribute"
 msgstr "unknown_attribute"
 
-#: src/07_appendix/02_semantic_error.md:375
+#: src/07_appendix/02_semantic_error.md:384
 msgid ""
 "This error is reported when an attribute name is not recognized by the "
 "compiler. Remove the attribute or correct the name."
@@ -13364,11 +13661,11 @@ msgstr ""
 "このエラーは、属性名がコンパイラに認識されない場合に報告されます。属性を削除"
 "するか、属性名を修正してください。"
 
-#: src/07_appendix/02_semantic_error.md:378
+#: src/07_appendix/02_semantic_error.md:387
 msgid "unknown_embed_lang"
 msgstr "unknown_embed_lang"
 
-#: src/07_appendix/02_semantic_error.md:380
+#: src/07_appendix/02_semantic_error.md:389
 msgid ""
 "This error is reported when an `embed` declaration uses an unsupported "
 "language identifier."
@@ -13376,11 +13673,11 @@ msgstr ""
 "このエラーは、`embed` 宣言で未サポートの言語識別子が使われた場合に報告されま"
 "す。"
 
-#: src/07_appendix/02_semantic_error.md:383
+#: src/07_appendix/02_semantic_error.md:392
 msgid "unknown_embed_way"
 msgstr "unknown_embed_way"
 
-#: src/07_appendix/02_semantic_error.md:385
+#: src/07_appendix/02_semantic_error.md:394
 msgid ""
 "This error is reported when an `embed` declaration uses an unsupported way "
 "identifier."
@@ -13388,11 +13685,11 @@ msgstr ""
 "このエラーは、`embed` 宣言で未サポートの way 識別子が使われた場合に報告されま"
 "す。"
 
-#: src/07_appendix/02_semantic_error.md:387
+#: src/07_appendix/02_semantic_error.md:396
 msgid "unknown_include_way"
 msgstr "unknown_include_way"
 
-#: src/07_appendix/02_semantic_error.md:389
+#: src/07_appendix/02_semantic_error.md:398
 msgid ""
 "This error is reported when an `include` declaration uses an unsupported way "
 "identifier."
@@ -13400,11 +13697,11 @@ msgstr ""
 "このエラーは、`include` 宣言で未サポートの way 識別子が使われた場合に報告され"
 "ます。"
 
-#: src/07_appendix/02_semantic_error.md:391
+#: src/07_appendix/02_semantic_error.md:400
 msgid "unknown_member"
 msgstr "unknown_member"
 
-#: src/07_appendix/02_semantic_error.md:393
+#: src/07_appendix/02_semantic_error.md:402
 msgid ""
 "This error is reported when a member is accessed on a struct, union or "
 "interface that does not declare that member. Correct the member name."
@@ -13412,11 +13709,11 @@ msgstr ""
 "このエラーは、struct、union、interface が宣言していないメンバーへのアクセスが"
 "行われた場合に報告されます。メンバー名を修正してください。"
 
-#: src/07_appendix/02_semantic_error.md:396
+#: src/07_appendix/02_semantic_error.md:405
 msgid "unknown_msb"
 msgstr "unknown_msb"
 
-#: src/07_appendix/02_semantic_error.md:398
+#: src/07_appendix/02_semantic_error.md:407
 msgid ""
 "This error is reported when the compiler cannot resolve the bit width "
 "referenced by `msb`. Specify a concrete index instead."
@@ -13424,11 +13721,11 @@ msgstr ""
 "このエラーは、`msb` が参照するビット幅をコンパイラが解決できない場合に報告さ"
 "れます。代わりに具体的なインデックスを指定してください。"
 
-#: src/07_appendix/02_semantic_error.md:401
+#: src/07_appendix/02_semantic_error.md:410
 msgid "unknown_param"
 msgstr "unknown_param"
 
-#: src/07_appendix/02_semantic_error.md:403
+#: src/07_appendix/02_semantic_error.md:412
 msgid ""
 "This error is reported when an instantiation overrides a parameter that the "
 "module does not declare. Remove the override or correct the parameter name."
@@ -13437,11 +13734,11 @@ msgstr ""
 "しようとした場合に報告されます。上書きを削除するか、パラメータ名を修正してく"
 "ださい。"
 
-#: src/07_appendix/02_semantic_error.md:406
+#: src/07_appendix/02_semantic_error.md:415
 msgid "unknown_port"
 msgstr "unknown_port"
 
-#: src/07_appendix/02_semantic_error.md:408
+#: src/07_appendix/02_semantic_error.md:417
 msgid ""
 "This error is reported when a module is instantiated with a port name that "
 "the module does not declare. Remove the connection, or correct the port name."
@@ -13449,11 +13746,11 @@ msgstr ""
 "このエラーは、モジュールが宣言していないポート名で接続が指定された場合に報告"
 "されます。接続を削除するか、ポート名を修正してください。"
 
-#: src/07_appendix/02_semantic_error.md:412
+#: src/07_appendix/02_semantic_error.md:421
 msgid "unknown_tb_port"
 msgstr "unknown_tb_port"
 
-#: src/07_appendix/02_semantic_error.md:414
+#: src/07_appendix/02_semantic_error.md:423
 msgid ""
 "This error is reported when a `$tb::*` testbench component is instantiated "
 "with a port name that does not exist on that component. Remove the unknown "
@@ -13463,11 +13760,11 @@ msgstr ""
 "が指定された場合に報告されます。未知の接続を削除するか、ポート名を修正してく"
 "ださい。"
 
-#: src/07_appendix/02_semantic_error.md:418
+#: src/07_appendix/02_semantic_error.md:427
 msgid "unknown_unsafe"
 msgstr "unknown_unsafe"
 
-#: src/07_appendix/02_semantic_error.md:420
+#: src/07_appendix/02_semantic_error.md:429
 msgid ""
 "This error is reported when an `unsafe(...)` block uses an identifier that "
 "is not a valid unsafe category."
@@ -13475,11 +13772,11 @@ msgstr ""
 "このエラーは、`unsafe(...)` ブロックで有効な unsafe カテゴリでない識別子が使"
 "われた場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:423
+#: src/07_appendix/02_semantic_error.md:432
 msgid "unresolvable_generic_expression"
 msgstr "unresolvable_generic_expression"
 
-#: src/07_appendix/02_semantic_error.md:425
+#: src/07_appendix/02_semantic_error.md:434
 msgid ""
 "This error is reported when an expression in a generic parameter cannot be "
 "resolved from the position of the generic's definition."
@@ -13487,11 +13784,11 @@ msgstr ""
 "このエラーは、ジェネリック定義位置からジェネリックパラメータ中の式を解決でき"
 "ない場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:428
+#: src/07_appendix/02_semantic_error.md:437
 msgid "wrong_seperator"
 msgstr "wrong_seperator"
 
-#: src/07_appendix/02_semantic_error.md:430
+#: src/07_appendix/02_semantic_error.md:439
 msgid ""
 "This error is reported when an incorrect separator (`::` vs `.`) is used "
 "between identifiers. Replace it with the correct separator."
@@ -13499,15 +13796,15 @@ msgstr ""
 "このエラーは、識別子間で誤った区切り文字（`::` と `.`）が使われた場合に報告さ"
 "れます。正しい区切り文字に置き換えてください。"
 
-#: src/07_appendix/02_semantic_error.md:433
+#: src/07_appendix/02_semantic_error.md:442
 msgid "Warnings"
 msgstr "警告"
 
-#: src/07_appendix/02_semantic_error.md:435
+#: src/07_appendix/02_semantic_error.md:444
 msgid "invalid_identifier"
 msgstr "invalid_identifier"
 
-#: src/07_appendix/02_semantic_error.md:437
+#: src/07_appendix/02_semantic_error.md:446
 msgid ""
 "This warning is reported when an identifier violates the configured naming "
 "rule (see [Lint]"
@@ -13519,11 +13816,11 @@ msgstr ""
 "に違反している場合に報告されます。規則に従うように識別子をリネームしてくださ"
 "い。"
 
-#: src/07_appendix/02_semantic_error.md:441
+#: src/07_appendix/02_semantic_error.md:450
 msgid "invalid_logical_operand"
 msgstr "invalid_logical_operand"
 
-#: src/07_appendix/02_semantic_error.md:443
+#: src/07_appendix/02_semantic_error.md:452
 msgid ""
 "This warning is reported when a multi-bit value is used as the operand of a "
 "logical operator. Reduce the operand to a single bit (for example with `==`)."
@@ -13531,43 +13828,43 @@ msgstr ""
 "この警告は、複数ビット値が論理演算子のオペランドとして使われた場合に報告され"
 "ます。`==` などで 1 ビットに縮約してください。"
 
-#: src/07_appendix/02_semantic_error.md:446
+#: src/07_appendix/02_semantic_error.md:455
 msgid "invalid_select"
 msgstr "invalid_select"
 
-#: src/07_appendix/02_semantic_error.md:448
+#: src/07_appendix/02_semantic_error.md:457
 msgid ""
 "This warning is reported when a bit / range select is invalid (e.g. out of "
 "bounds)."
 msgstr ""
 "この警告は、ビット選択や範囲選択が無効（範囲外など）な場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:450
+#: src/07_appendix/02_semantic_error.md:459
 msgid "mismatch_assignment"
 msgstr "mismatch_assignment"
 
-#: src/07_appendix/02_semantic_error.md:452
+#: src/07_appendix/02_semantic_error.md:461
 msgid ""
 "This warning is reported when the source and destination types of an "
 "assignment do not match."
 msgstr "この警告は、代入の元と先の型が一致しない場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:455
+#: src/07_appendix/02_semantic_error.md:464
 msgid "mismatch_function_arg"
 msgstr "mismatch_function_arg"
 
-#: src/07_appendix/02_semantic_error.md:457
+#: src/07_appendix/02_semantic_error.md:466
 msgid ""
 "This warning is reported when an argument's type does not match the "
 "function's parameter type."
 msgstr ""
 "この警告は、引数の型が関数のパラメータ型と一致しない場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:460
+#: src/07_appendix/02_semantic_error.md:469
 msgid "missing_port"
 msgstr "missing_port"
 
-#: src/07_appendix/02_semantic_error.md:462
+#: src/07_appendix/02_semantic_error.md:471
 msgid ""
 "This warning is reported when a module is instantiated without connecting "
 "one of its declared ports. Add the missing port connection."
@@ -13575,11 +13872,11 @@ msgstr ""
 "この警告は、モジュールが宣言されたポートのいずれかを接続せずにインスタンス化"
 "された場合に報告されます。不足しているポート接続を追加してください。"
 
-#: src/07_appendix/02_semantic_error.md:465
+#: src/07_appendix/02_semantic_error.md:474
 msgid "missing_reset_statement"
 msgstr "missing_reset_statement"
 
-#: src/07_appendix/02_semantic_error.md:467
+#: src/07_appendix/02_semantic_error.md:476
 msgid ""
 "This warning is reported when a register declared in an `always_ff` block "
 "with `if_reset` has no assignment in the `if_reset` branch. Add an "
@@ -13589,11 +13886,11 @@ msgstr ""
 "`if_reset` 分岐内での代入が無い場合に報告されます。リセット値を定義するため、"
 "そのレジスタへの代入を追加してください。"
 
-#: src/07_appendix/02_semantic_error.md:471
+#: src/07_appendix/02_semantic_error.md:480
 msgid "mixed_struct_union_member"
 msgstr "mixed_struct_union_member"
 
-#: src/07_appendix/02_semantic_error.md:473
+#: src/07_appendix/02_semantic_error.md:482
 msgid ""
 "This warning is reported when a struct or union mixes 2-state and 4-state "
 "members. Unify the members to a single state."
@@ -13601,20 +13898,20 @@ msgstr ""
 "この警告は、struct または union 内で 2-state メンバーと 4-state メンバーが混"
 "在している場合に報告されます。メンバーをいずれか一方に統一してください。"
 
-#: src/07_appendix/02_semantic_error.md:476
+#: src/07_appendix/02_semantic_error.md:485
 msgid "unassign_variable"
 msgstr "unassign_variable"
 
-#: src/07_appendix/02_semantic_error.md:478
+#: src/07_appendix/02_semantic_error.md:487
 msgid ""
 "This warning is reported when a declared variable is never assigned a value."
 msgstr "この警告は、宣言された変数に一度も値が代入されない場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:480
+#: src/07_appendix/02_semantic_error.md:489
 msgid "uncovered_branch"
 msgstr "uncovered_branch"
 
-#: src/07_appendix/02_semantic_error.md:482
+#: src/07_appendix/02_semantic_error.md:491
 msgid ""
 "This warning is reported when a signal is conditionally assigned in some "
 "branches but not all, which infers a latch. Add a default assignment, or "
@@ -13623,11 +13920,11 @@ msgstr ""
 "この警告は、信号が一部の分岐でしか代入されず、ラッチが推論される場合に報告さ"
 "れます。デフォルトの代入を加えるか、すべての分岐で代入してください。"
 
-#: src/07_appendix/02_semantic_error.md:486
+#: src/07_appendix/02_semantic_error.md:495
 msgid "unenclosed_inner_if_expression"
 msgstr "unenclosed_inner_if_expression"
 
-#: src/07_appendix/02_semantic_error.md:488
+#: src/07_appendix/02_semantic_error.md:497
 msgid ""
 "This warning is reported when a nested `if` expression is not enclosed in "
 "parentheses. Add parentheses to make precedence explicit."
@@ -13635,11 +13932,11 @@ msgstr ""
 "この警告は、入れ子になった `if` 式が括弧で囲まれていない場合に報告されます。"
 "優先順位を明示するため括弧を追加してください。"
 
-#: src/07_appendix/02_semantic_error.md:491
+#: src/07_appendix/02_semantic_error.md:500
 msgid "unsigned_arith_shift"
 msgstr "unsigned_arith_shift"
 
-#: src/07_appendix/02_semantic_error.md:493
+#: src/07_appendix/02_semantic_error.md:502
 msgid ""
 "This warning is reported when an arithmetic shift is applied to an unsigned "
 "operand. The result is identical to a logical shift; use a logical shift to "
@@ -13649,11 +13946,11 @@ msgstr ""
 "シフトと結果が同じになるため、意図を明確にするには論理シフトを使用してくださ"
 "い。"
 
-#: src/07_appendix/02_semantic_error.md:496
+#: src/07_appendix/02_semantic_error.md:505
 msgid "unused_return"
 msgstr "unused_return"
 
-#: src/07_appendix/02_semantic_error.md:498
+#: src/07_appendix/02_semantic_error.md:507
 msgid ""
 "This warning is reported when a function call's return value is discarded. "
 "Assign the result to a variable, or use a function whose return value is "
@@ -13662,11 +13959,11 @@ msgstr ""
 "この警告は、関数呼び出しの戻り値が破棄された場合に報告されます。結果を変数に"
 "代入するか、戻り値を無視する設計の関数を使用してください。"
 
-#: src/07_appendix/02_semantic_error.md:502
+#: src/07_appendix/02_semantic_error.md:511
 msgid "unused_variable"
 msgstr "unused_variable"
 
-#: src/07_appendix/02_semantic_error.md:504
+#: src/07_appendix/02_semantic_error.md:513
 msgid ""
 "This warning is reported when a declared variable is never read. Add the `_` "
 "prefix to its name to mark it as intentionally unused, or remove the "
@@ -13675,6 +13972,12 @@ msgstr ""
 "この警告は、宣言された変数が一度も参照されない場合に報告されます。意図的に未"
 "使用であることを示すには変数名の先頭に `_` を付けるか、宣言を削除してくださ"
 "い。"
+
+#~ msgid ""
+#~ "Veryl uses `git` command internally. Please confirm `git` can be launched."
+#~ msgstr ""
+#~ "Veryl は `git` コマンドを内部で使用します。 `git` が起動できることを確認し"
+#~ "ておいてください。"
 
 #~ msgid ""
 #~ "This error is reported when a module instantiates itself directly or "

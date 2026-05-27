@@ -22,6 +22,15 @@ requires a named identifier.
 This error is reported when a non-function symbol is called as if it were a function.
 Remove the call, or replace the symbol with an actual function.
 
+### combinational_loop
+
+This error is reported when a combinational loop is detected, where the value of a
+signal depends on itself through purely combinational logic without any sequential
+element in between. The loop can be formed by `assign` declarations, `always_comb`
+blocks, function calls, or instantiated modules and interfaces.
+Break the loop by inserting a register (`always_ff`) on at least one path, or by
+restructuring the design so that the dependency chain terminates.
+
 ### cyclic_type_dependency
 
 This error is reported when two or more type definitions reference each other in a

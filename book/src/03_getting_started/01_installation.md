@@ -7,7 +7,17 @@ We recommend to use `verylup` because it provides some usefule features like too
 
 ## Requirement
 
-Veryl uses `git` command internally. Please confirm `git` can be launched.
+### git
+
+Veryl uses a built-in [`gitoxide`](https://github.com/GitoxideLabs/gitoxide) backend by default for fetching git-based dependencies, so an external `git` command is not required.
+If `gitoxide` fails (for example, when an authentication method it does not support is required), Veryl automatically falls back to the system `git` command, so installing `git` is recommended.
+See [Git backend](../06_development_environment/02_dependencies.md#git-backend) for details on selecting the backend.
+
+### cc
+
+The default native-simulator backend used by `veryl test` (`--backend=cc`) emits C and compiles it with the `cc` command on `PATH`.
+If `cc` is not available, the simulator transparently falls back to the Cranelift JIT, so installing `cc` is recommended for best performance but not required.
+See [Simulator](../06_development_environment/07_simulator.md) for details on selecting the backend.
 
 ## Install verylup
 

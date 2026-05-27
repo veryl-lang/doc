@@ -100,3 +100,19 @@ veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = ".
 ```
 
 This means that if there is `../veryl_sample`, it is used, and if not, it is pulled from the Git repository.
+
+## Git backend
+
+Veryl can fetch git-based dependencies through two different backends:
+
+* `gitoxide` — a pure-Rust git implementation. It does not require an external `git` binary.
+* `command` — invokes the system `git` command. It requires `git` to be available on `PATH`.
+
+The default behavior is to try `gitoxide` first and automatically fall back to `command` when it fails (for example, when an authentication method that gitoxide does not support is required).
+The backend can be selected explicitly through the `VERYL_GIT_BACKEND` environment variable:
+
+| Value      | Behavior                                                             |
+|------------|----------------------------------------------------------------------|
+| `auto`     | Default. Try `gitoxide`, fall back to `command` on failure.          |
+| `gitoxide` | Force `gitoxide`. No fallback.                                       |
+| `command`  | Force the system `git` command. No fallback.                         |

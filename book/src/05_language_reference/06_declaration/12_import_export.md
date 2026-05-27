@@ -35,3 +35,27 @@ module ModuleA (
     assign o_d = d;
 }
 ```
+
+Enum members can also be imported, both individually and via wildcard.
+This works for enums defined inside a package as well as enums declared locally inside a module or interface.
+
+```veryl,playground
+package PackageB {
+    enum Color: logic<2> {
+        Red,
+        Green,
+        Blue,
+    }
+}
+
+module ModuleB {
+    // import a single enum member
+    import PackageB::Color::Red;
+    // import all members of the enum
+    import PackageB::Color::*;
+
+    var c: PackageB::Color;
+    // members can be referenced without qualification
+    assign c = Green;
+}
+```

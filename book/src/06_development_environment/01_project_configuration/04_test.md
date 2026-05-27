@@ -53,6 +53,20 @@ The available formats are:
 * `vcd` -- The default value and most readable format across all vendors. But also not very feature rich
 * `fst` -- This format has some more features, e.g. printing enum values instead of integers. `gtkwave` and `surfer` can read this format.
 
+### The `defines` field
+
+The `defines` field specifies a list of names that are treated as defined while running `veryl test`.
+These names are visible to the [`#[ifdef]`/`#[ifndef]`](../../05_language_reference/06_declaration/08_attribute.md) attribute, so they can be used to enable test-only code paths.
+For SystemVerilog and cocotb tests, the same names are also passed to the external simulator as `+define+NAME` (or `-d NAME` for Vivado).
+
+```toml
+[test]
+defines = ["DEBUG", "ENABLE_ASSERTIONS"]
+```
+
+Additional names can be appended from the command line via `veryl test --define NAME` (or `-D NAME`).
+CLI defines are merged with this field.
+
 ## The `[test.verilator]` section
 
 This section contains configurations of test by Verilator.

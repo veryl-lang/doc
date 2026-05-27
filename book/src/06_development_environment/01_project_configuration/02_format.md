@@ -9,11 +9,16 @@ indent_width = 4
 
 ## Available configurations
 
-| Configuration  | Value                              | Default | Description           |
-|----------------|------------------------------------|---------|-----------------------|
-| indent_width   | integer                            | 4       | indent width by space |
-| vertical_align | boolean                            | true    | enable vertial align  |
-| newline_style  | `auto` / `native` / `unix` / `windows` | `auto`  | line ending style     |
+| Configuration  | Value                              | Default | Description                                       |
+|----------------|------------------------------------|---------|---------------------------------------------------|
+| indent_width   | integer                            | 4       | indent width by space                             |
+| max_width      | integer                            | 120     | preferred maximum line width before line breaking |
+| vertical_align | boolean                            | true    | enable vertial align                              |
+| newline_style  | `auto` / `native` / `unix` / `windows` | `auto`  | line ending style                                 |
+
+The formatter tries to keep each line within `max_width` columns by inserting line
+breaks at acceptable positions. Lines that cannot be broken (for example, very long
+identifiers or comments) may still exceed this width.
 
 `newline_style` controls the line ending used by the formatter, the build emitter and the
 migrator output. The available values are:
