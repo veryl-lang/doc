@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="ja" class="light sidebar-visible" dir="ltr">
-    <head prefix="og: http://ogp.me/ns#">
+    <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>The Veryl Hardware Description Language</title>
@@ -18,12 +18,13 @@
             gtag('config', 'G-NXW2P6CCF3');
         </script>
         
+        <!--
+        canonical and alternate links are injected at runtime because the current
+        page path is only available as a .md path in handlebars context.
+        See: https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
+        -->
         <script>
             (function () {
-                // See these pages for details:
-                // https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
-                // https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics
-        
                 function gen_canonical_href(lang) {
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
@@ -40,68 +41,122 @@
                 }
         
                 const canonical_href = gen_canonical_href("ja");
-
-                let link = document.createElement("link");
+        
+                const link = document.createElement("link");
                 link.rel = "canonical";
                 link.href = canonical_href;
                 document.head.appendChild(link);
         
+                const og_url = document.createElement("meta");
+                og_url.setAttribute("property", "og:url");
+                og_url.content = canonical_href;
+                document.head.appendChild(og_url);
+        
+                const tw_url = document.createElement("meta");
+                tw_url.name = "twitter:url";
+                tw_url.content = canonical_href;
+                document.head.appendChild(tw_url);
+        
                 const langs = ["en", "ja"];
                 for (const lang of langs) {
-                    const canonical_href = gen_canonical_href(lang);
+                    const href = gen_canonical_href(lang);
         
-                    let link = document.createElement("link");
-                    link.rel = "alternate";
-                    link.hreflang = lang;
-                    link.href = canonical_href;
-                    document.head.appendChild(link);
+                    const alt = document.createElement("link");
+                    alt.rel = "alternate";
+                    alt.hreflang = lang;
+                    alt.href = href;
+                    document.head.appendChild(alt);
                 }
+                const xdefault = document.createElement("link");
+                xdefault.rel = "alternate";
+                xdefault.hreflang = "x-default";
+                xdefault.href = gen_canonical_href("en");
+                document.head.appendChild(xdefault);
             })()
         </script>
         
-        <meta property="og:url" content="https://github.com/veryl-lang/veryl" />
-        <meta property="og:title" content="Veryl: A Modern Hardware Description Language" />
-        <meta property="og:description" content="Veryl is a hardware description language which is designed as a SystemVerilog alternative." />
+        <!-- Open Graph -->
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="The Veryl Hardware Description Language" />
+        <meta property="og:title" content="The Veryl Hardware Description Language" />
+        <meta property="og:description" content="Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment." />
         <meta property="og:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
+        <meta property="og:locale" content="ja_JP" />
+        <meta property="og:locale:alternate" content="en_US" />
 
-        <meta name="description" content="">
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="The Veryl Hardware Description Language" />
+        <meta name="twitter:description" content="Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment." />
+        <meta name="twitter:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
+        
+        <!-- JSON-LD structured data -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            "headline": "The Veryl Hardware Description Language",
+            "description": "Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment.",
+            "inLanguage": "ja",
+            "isPartOf": {
+                "@type": "Book",
+                "name": "The Veryl Hardware Description Language",
+                "author": { "@type": "Organization", "name": "Veryl Lang" }
+            }
+        }
+        </script>
+
+        <meta name="description" content="Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="shortcut icon" href="favicon-336eb873.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="theme/css/language-picker.css">
+        <link rel="stylesheet" href="theme/css/language-picker-2070e7fe.css">
+        <link rel="stylesheet" href="theme/css/veryl-a3686b0a.css">
 
 
-        <!-- Provide site root to javascript -->
+        <!-- Provide site root and default themes to javascript -->
         <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-930c7e49.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="toc-d102f71b.js"></script>
     </head>
     <body>
-    <div id="body-container">
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -115,7 +170,8 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -124,55 +180,59 @@
             html.classList.add("js");
         </script>
 
-        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
-        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
                 <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
             </noscript>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <div id="page-wrapper" class="page-wrapper">
+        <div id="mdbook-page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                            <i class="fa fa-bars"></i>
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
                         </label>
-                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                            <i class="fa fa-paint-brush"></i>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
                         </button>
-                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                            <i class="fa fa-search"></i>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
                         </button>
                     </div>
 
@@ -180,36 +240,41 @@
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
 
                     </div>
                 </div>
 
-                <div id="search-wrapper" class="hidden">
-                    <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
                     </form>
-                    <div id="searchresults-outer" class="searchresults-outer hidden">
-                        <div id="searchresults-header" class="searchresults-header"></div>
-                        <ul id="searchresults">
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
                         </ul>
                     </div>
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script>
-                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
-                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
-                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
                         link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
                     });
                 </script>
 
-                <div id="content" class="content">
+                <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="ハードウェア記述言語-veryl"><a class="header" href="#ハードウェア記述言語-veryl">ハードウェア記述言語 Veryl</a></h1>
-<p><img src="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_wide.png" alt="Veryl" /></p>
+<p><img src="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_wide.png" alt="Veryl"></p>
 <p>Veryl は SystemVerilog をベースに設計されたハードウェア記述言語であり、以下のような特徴があります。</p>
 <h2 id="最適化された構文"><a class="header" href="#最適化された構文">最適化された構文</a></h2>
 <p>Verylは、SystemVerilogの経験者にとって親しみやすい基本構文に基づきながら、論理設計に最適化された構文を採用しています。この最適化には、たとえば合成可能性の保証やシミュレーション結果の一致の保証、頻出する定型文を簡素化する多数の構文などの提供が含まれます。このアプローチにより、学習の容易さ、設計プロセスの信頼性と効率の向上、およびコードの記述の容易さが実現されます。</p>
@@ -218,37 +283,38 @@
 <h2 id="生産性"><a class="header" href="#生産性">生産性</a></h2>
 <p>Verylはパッケージマネージャ、ビルドツール、そしてVSCode、Vim、Emacsなどの主要なエディタに対応するリアルタイムチェッカー、自動補完機能、自動フォーマッタなど、豊富な開発支援ツールを備えています。これらのツールは、開発プロセスを加速し、生産性を大幅に向上させることができます。</p>
 <p>これらの特性により、Verylは設計者が高品質なハードウェア設計をより効率的かつ生産的に行うための強力なサポートを提供します。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="特徴"><a class="header" href="#特徴">特徴</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="特徴"><a class="header" href="#特徴">特徴</a></h1>
 <p>この章ではVerylの特徴的な機能をわかりやすい例とともに紹介します。</p>
 <ul>
-<li><a href="02_features.html#real-time-diagnostics">リアルタイム診断</a></li>
-<li><a href="02_features.html#auto-formatting">自動フォーマット</a></li>
-<li><a href="02_features.html#integrated-test">組み込みテスト</a></li>
-<li><a href="02_features.html#dependency-management">依存関係管理</a></li>
-<li><a href="02_features.html#generics">ジェネリクス</a></li>
-<li><a href="02_features.html#type-inference">型推論</a></li>
-<li><a href="02_features.html#clock-domain-annotation">クロックドメインアノテーション</a></li>
-<li><a href="02_features.html#trailing-comma">末尾カンマ</a></li>
-<li><a href="02_features.html#abstraction-of-clock-and-reset">クロックとリセットの抽象化</a></li>
-<li><a href="02_features.html#documentation-comment">ドキュメンテーションコメント</a></li>
-<li><a href="02_features.html#compound-assignment-operator-in-always_ff"><code>always_ff</code> での複合代入演算子</a></li>
-<li><a href="02_features.html#individual-namespace-of-enum-variant">独立した名前空間を持つenumバリアント</a></li>
-<li><a href="02_features.html#repeat-of-concatenation">ビット連結における <code>repeat</code></a></li>
-<li><a href="02_features.html#if--case-expression"><code>if</code> / <code>case</code> 式</a></li>
-<li><a href="02_features.html#range-based-for--inside--outside">範囲 <code>for</code> / <code>inside</code> / <code>outside</code></a></li>
-<li><a href="02_features.html#msb-notation"><code>msb</code> 記法</a></li>
-<li><a href="02_features.html#let-statement"><code>let</code> 文</a></li>
-<li><a href="02_features.html#connect-operator"><code>&lt;&gt;</code> 演算子</a></li>
-<li><a href="02_features.html#named-block">名前付きブロック</a></li>
-<li><a href="02_features.html#visibility-control">可視性制御</a></li>
+<li><a href="#real-time-diagnostics">リアルタイム診断</a></li>
+<li><a href="#auto-formatting">自動フォーマット</a></li>
+<li><a href="#integrated-test">組み込みテスト</a></li>
+<li><a href="#dependency-management">依存関係管理</a></li>
+<li><a href="#generics">ジェネリクス</a></li>
+<li><a href="#type-inference">型推論</a></li>
+<li><a href="#clock-domain-annotation">クロックドメインアノテーション</a></li>
+<li><a href="#trailing-comma">末尾カンマ</a></li>
+<li><a href="#abstraction-of-clock-and-reset">クロックとリセットの抽象化</a></li>
+<li><a href="#documentation-comment">ドキュメンテーションコメント</a></li>
+<li><a href="#compound-assignment-operator-in-always_ff"><code>always_ff</code> での複合代入演算子</a></li>
+<li><a href="#individual-namespace-of-enum-variant">独立した名前空間を持つenumバリアント</a></li>
+<li><a href="#repeat-of-concatenation">ビット連結における <code>repeat</code></a></li>
+<li><a href="#if--case-expression"><code>if</code> / <code>case</code> 式</a></li>
+<li><a href="#range-based-for--inside--outside">範囲 <code>for</code> / <code>inside</code> / <code>outside</code></a></li>
+<li><a href="#msb-notation"><code>msb</code> 記法</a></li>
+<li><a href="#let-statement"><code>let</code> 文</a></li>
+<li><a href="#connect-operator"><code>&lt;&gt;</code> 演算子</a></li>
+<li><a href="#named-block">名前付きブロック</a></li>
+<li><a href="#visibility-control">可視性制御</a></li>
 </ul>
 <h2 id="real-time-diagnostics"><a class="header" href="#real-time-diagnostics">リアルタイム診断</a></h2>
 <p>変数の未定義・未使用・未代入といった問題はエディタでの編集中にリアルタイムに通知されます。次の例では、未使用変数として通知された変数に <code>_</code> プレフィックスを付加することで未使用であることを明示し、警告を抑制しています。</p>
-<video src="./img/diagnostics.mp4" autoplay loop muted>
+<video src="./img/diagnostics.mp4" autoplay="" loop="" muted="">
 </video>
 <h2 id="auto-formatting"><a class="header" href="#auto-formatting">自動フォーマット</a></h2>
 <p>エディタと連携した自動フォーマット機能のほか、コマンドラインでのフォーマットやCIでのフォーマットチェックも可能です。</p>
-<video src="./img/format.mp4" autoplay loop muted>
+<video src="./img/format.mp4" autoplay="" loop="" muted="">
 </video>
 <h2 id="integrated-test"><a class="header" href="#integrated-test">組み込みテスト</a></h2>
 <p>SystemVerilogまたは<a href="https://www.cocotb.org">cocotb</a>で書かれたテストコードをVerylに埋め込み、<code>veryl test</code> コマンドで実行することができます。</p>
@@ -273,6 +339,7 @@ veryl_sample = {git = "https://github.com/veryl-lang/veryl_sample", version = "0
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">function automatic logic [20-1:0] FuncA_20 (
@@ -311,7 +378,9 @@ always_comb {
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="type-inference"><a class="header" href="#type-inference">型推論</a></h2>
 <p><code>var</code>、<code>let</code>、<code>const</code> の型注釈は、右辺や最初の代入から型が導出できる場合に省略できます。関数呼び出しのジェネリック引数も、実引数の宣言型から推論できます。ポートや関数のシグネチャはインターフェースの可読性を保つために、引き続き明示的な型指定が必要です。</p>
 <table>
@@ -319,6 +388,7 @@ always_comb {
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">logic [8-1:0] a;
@@ -341,7 +411,9 @@ always_comb {
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="clock-domain-annotation"><a class="header" href="#clock-domain-annotation">クロックドメインアノテーション</a></h2>
 <p>モジュール内に複数のクロックがある場合、明示的なクロックドメインアノテーションとクロックドメイン境界への <code>unsafe (cdc)</code> ブロックが必要です。Veryl コンパイラは意図しないクロックドメインクロッシングをエラーとして検出し、明示的な <code>unsafe (cdc)</code> ブロックによりレビューが容易になります。</p>
 <table>
@@ -349,6 +421,7 @@ always_comb {
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">module ModuleA (
@@ -381,7 +454,9 @@ endmodule
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="trailing-comma"><a class="header" href="#trailing-comma">末尾カンマ</a></h2>
 <p>末尾カンマは、リストの最後の要素の後ろにカンマが置かれる構文です。これにより、要素の追加や削除が容易になり、バージョン管理システムにおける不必要な差異を減らすことができます。</p>
 <table>
@@ -389,6 +464,7 @@ endmodule
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">module ModuleA (
@@ -409,7 +485,9 @@ endmodule
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="abstraction-of-clock-and-reset"><a class="header" href="#abstraction-of-clock-and-reset">クロックとリセットの抽象化</a></h2>
 <p>クロックの極性やリセットの極性と同期性を構文上指定する必要はなく、ビルド時の設定で指定することができます。これにより同じVerylのコードからASIC向けの負極性・非同期リセットとFPGA向けの正極性・同期リセットのそれぞれのコードを生成することができます。</p>
 <p>さらに、明示的な <code>clock</code> と <code>reset</code> 型により、レジスタへのクロック・リセット接続が正しく行われているかどうかを確認することができます。モジュール内にクロックとリセットが1つだけの場合、レジスタへの接続を省略することもできます。</p>
@@ -418,6 +496,7 @@ endmodule
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">module ModuleA (
@@ -448,7 +527,9 @@ endmodule
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="documentation-comment"><a class="header" href="#documentation-comment">ドキュメンテーションコメント</a></h2>
 <p>ドキュメンテーションコメントとしてモジュールの説明を書いておくとドキュメントを自動生成することができます。単なるテキストだけでなく、以下のフォーマットを使用することができます。</p>
 <ul>
@@ -461,6 +542,7 @@ endmodule
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">// コメント
@@ -482,7 +564,9 @@ module ModuleA {
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="compound-assignment-operator-in-always_ff"><a class="header" href="#compound-assignment-operator-in-always_ff"><code>always_ff</code> での複合代入演算子</a></h2>
 <p>ノンブロッキング専用の代入演算子はなく、<code>always_ff</code> 内ではノンブロッキング代入が、 <code>always_comb</code> 内ではブロッキング代入が推論されます。そのため <code>always_ff</code> 内でも <code>always_comb</code> 内と同様に様々な複合代入演算子を使用することができます。</p>
 <table>
@@ -490,6 +574,7 @@ module ModuleA {
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">always_ff @ (posedge i_clk) begin
@@ -508,7 +593,9 @@ end
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="individual-namespace-of-enum-variant"><a class="header" href="#individual-namespace-of-enum-variant">独立した名前空間を持つenumバリアント</a></h2>
 <p>enumのバリアントはenum毎に独立した名前空間を持っており意図しない名前の衝突を防ぐことができます。</p>
 <table>
@@ -516,6 +603,7 @@ end
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">typedef enum logic[1:0] {
@@ -538,7 +626,9 @@ assign a = EnumA::MemberA;
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="repeat-of-concatenation"><a class="header" href="#repeat-of-concatenation">ビット連結における <code>repeat</code></a></h2>
 <p>ビット連結における繰り返し記述として明示的な <code>repeat</code> 記法を採用し、 複雑な <code>{}</code> の組み合わせより可読性が向上しています。</p>
 <table>
@@ -546,6 +636,7 @@ assign a = EnumA::MemberA;
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">logic [31:0] a;
@@ -558,7 +649,9 @@ assign a = {X[9:0] repeat 2, Y repeat 12};
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="if--case-expression"><a class="header" href="#if--case-expression"><code>if</code> / <code>case</code> 式</a></h2>
 <p>三項演算子の代わりに if 式と case 式を採用することで、比較するアイテム数が多い場合の可読性が向上します。</p>
 <table>
@@ -566,6 +659,7 @@ assign a = {X[9:0] repeat 2, Y repeat 12};
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">logic a;
@@ -586,7 +680,9 @@ assign a = case X {
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="range-based-for--inside--outside"><a class="header" href="#range-based-for--inside--outside">範囲 <code>for</code> / <code>inside</code> / <code>outside</code></a></h2>
 <p>閉区間 <code>..=</code> と半開区間 <code>..</code> を表す記法を導入し、 <code>for</code> 、<code>inside</code> で範囲を統一的に記述できるようにしました。また、<code>inside</code> の逆を意味する <code>outside</code> も導入しました。</p>
 <table>
@@ -594,6 +690,7 @@ assign a = case X {
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">for (int i = 0; i &lt; 10; i++) begin
@@ -610,7 +707,9 @@ end
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="msb-notation"><a class="header" href="#msb-notation"><code>msb</code> 記法</a></h2>
 <p>最上位ビットを示す <code>msb</code> 記法により、パラメータから最上位ビットを計算する必要がなくなり、より意図を明確にすることができます。</p>
 <table>
@@ -618,6 +717,7 @@ end
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">logic a;
@@ -632,7 +732,9 @@ assign a = X[msb];
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="let-statement"><a class="header" href="#let-statement"><code>let</code> 文</a></h2>
 <p>変数宣言と同時に値を束縛する専用の <code>let</code> 文が用意されており、SystemVerilogではサポートされていなかった様々な場所で使用することができます。</p>
 <table>
@@ -640,6 +742,7 @@ assign a = X[msb];
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">logic tmp;
@@ -657,7 +760,9 @@ end
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="connect-operator"><a class="header" href="#connect-operator"><code>&lt;&gt;</code> 演算子</a></h2>
 <p><code>&lt;&gt;</code> 演算子は2つのインターフェースを接続します。SystemVerilogではインターフェースを接続するためにぞれぞれのメンバーを代入する必要がありましたが、簡単に接続することができるようになります。</p>
 <table>
@@ -665,6 +770,7 @@ end
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">always_comb begin
@@ -687,7 +793,9 @@ always_comb {
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="named-block"><a class="header" href="#named-block">名前付きブロック</a></h2>
 <p>変数のスコープを限定するための名前付きブロックを定義することができます。</p>
 <table>
@@ -695,6 +803,7 @@ always_comb {
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">if (1) begin: BlockA
@@ -707,7 +816,9 @@ end
 </code></pre>
 </td>
 </tr>
+
 </table>
+
 <h2 id="visibility-control"><a class="header" href="#visibility-control">可視性制御</a></h2>
 <p><code>pub</code> キーワードの付かないモジュールはプロジェクト外から参照できず、ドキュメントの自動生成にも含まれません。これによりプロジェクト外に公開したいものと内部実装とを区別することができます。</p>
 <table>
@@ -715,6 +826,7 @@ end
 <th>SystemVerilog</th>
 <th>Veryl</th>
 </tr>
+
 <tr>
 <td>
 <pre><code class="language-verilog">module ModuleA;
@@ -733,16 +845,23 @@ module ModuleB {
 </code></pre>
 </td>
 </tr>
+
 </table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="はじめに"><a class="header" href="#はじめに">はじめに</a></h1>
+
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="はじめに"><a class="header" href="#はじめに">はじめに</a></h1>
 <p>Veryl を使ってみましょう。この章では Veryl のインストール、サンプルプロジェクトの作成とビルドまでを行います。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="インストール"><a class="header" href="#インストール">インストール</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="インストール"><a class="header" href="#インストール">インストール</a></h1>
 <p>Veryl は公式のツールチェーンインストーラ <code>verylup</code> を使ってインストールできます。ツールチェーンのアップデートなど便利な機能があるので <code>verylup</code> の使用を推奨します。</p>
 <blockquote>
-<p>注: インターネットアクセスのない環境にインストールしたい場合は <a href="03_getting_started/../06_development_environment/13_verylup.html#offline-installation">オフラインインストール</a> が利用できます。</p>
+<p>注: インターネットアクセスのない環境にインストールしたい場合は <a href="#offline-installation">オフラインインストール</a> が利用できます。</p>
 </blockquote>
 <h2 id="要件"><a class="header" href="#要件">要件</a></h2>
-<p>Veryl は <code>git</code> コマンドを内部で使用します。 <code>git</code> が起動できることを確認しておいてください。</p>
+<h3 id="git"><a class="header" href="#git">git</a></h3>
+<p>Veryl は git ベースの依存を取得するために、既定で組み込みの <a href="https://github.com/GitoxideLabs/gitoxide"><code>gitoxide</code></a> バックエンドを使用するため、外部の <code>git</code> コマンドは必須ではありません。<code>gitoxide</code> が失敗した場合 (たとえば対応していない認証方式が必要なときなど) は、Veryl は自動的にシステムの <code>git</code> コマンドへフォールバックするため、<code>git</code> をインストールしておくことを推奨します。バックエンドの選択方法については <a href="#git-backend">Git バックエンド</a> を参照してください。</p>
+<h3 id="cc"><a class="header" href="#cc">cc</a></h3>
+<p><code>veryl test</code> の既定のネイティブシミュレータバックエンド (<code>--backend=cc</code>) は C を出力し、<code>PATH</code> 上の <code>cc</code> コマンドでコンパイルします。<code>cc</code> が利用できない場合、シミュレータは Cranelift JIT へ透過的にフォールバックするため、必須ではありませんが最高のパフォーマンスを得るためにインストールしておくことを推奨します。バックエンドの選択方法については <a href="#シミュレータ">シミュレータ</a> を参照してください。</p>
 <h2 id="verylup-のインストール"><a class="header" href="#verylup-のインストール">verylup のインストール</a></h2>
 <h3 id="バイナリのダウンロード"><a class="header" href="#バイナリのダウンロード">バイナリのダウンロード</a></h3>
 <p><a href="https://github.com/veryl-lang/verylup/releases/latest">リリースページ</a>からダウンロードして、パスの通ったところに展開してください。</p>
@@ -782,7 +901,8 @@ verylup completion zsh verylup &gt; _verylup
 <li>Zsh</li>
 </ul>
 <p>生成されたスクリプトの使い方は各シェルのドキュメントを参照してください。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="hello-world"><a class="header" href="#hello-world">Hello, World!</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="hello-world"><a class="header" href="#hello-world">Hello, World!</a></h1>
 <h2 id="プロジェクトを作る"><a class="header" href="#プロジェクトを作る">プロジェクトを作る</a></h2>
 <p>まず始めに、新しい Veryl プロジェクトを作りましょう。</p>
 <pre><code>veryl new hello
@@ -806,7 +926,7 @@ version = "0.1.0"
 source = "src"
 target = {type = "directory", path = "target"}
 </code></pre>
-<p>全設定の説明は<a href="03_getting_started/../06_development_environment/01_project_configuration.html">こちら</a>。</p>
+<p>全設定の説明は<a href="#プロジェクト設定">こちら</a>。</p>
 <h2 id="コードを書く"><a class="header" href="#コードを書く">コードを書く</a></h2>
 <p>ソースコードはプロジェクトディレクトリ内のどこに書いても構いません。これは Veryl プロジェクトが独立したプロジェクトである場合もあれば、他のSystemVerilog プロジェクトに組み込まれている場合もあるからです。Veryl のソースコードの拡張子は <code>.veryl</code> です。</p>
 <p>例えば以下のコードを <code>src/hello.veryl</code> に書いてみましょう。</p>
@@ -865,7 +985,8 @@ endmodule
 [INFO ]   Removing dir  ([path to hello]/dependencies)
 [INFO ]   Removing file ([path to hello]/hello.f)
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="コード例"><a class="header" href="#コード例">コード例</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="コード例"><a class="header" href="#コード例">コード例</a></h1>
 <p>Veryl は SystemVerilog とほとんど同じセマンティクスを持っています。もし SystemVerilog に慣れていれば、いくつかの例をみるだけで Veryl の構文をだいたい把握できるでしょう。</p>
 <p>この小さな例では、コメントに SystemVerilog 構文との違いが書かれています。</p>
 <pre><code class="language-veryl playground editable">module ModuleA (
@@ -881,7 +1002,8 @@ endmodule
 </code></pre>
 <p>さらに、この章のコードブロックは編集することもできます。それぞれのコードを編集して実行してみましょう。</p>
 <p>Veryl のソースコードは SystemVerilog と同様に、<code>module</code>、<code>interface</code>、<code>package</code> を持ちます。この章ではそれらの例を示します。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="モジュール"><a class="header" href="#モジュール">モジュール</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="モジュール"><a class="header" href="#モジュール">モジュール</a></h1>
 <pre><code class="language-veryl playground editable">// モジュール定義
 module ModuleA #(
     param ParamA: u32 = 10,
@@ -934,7 +1056,8 @@ module ModuleA #(
     assign o_data = r_data1;
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="インスタンス"><a class="header" href="#インスタンス">インスタンス</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="インスタンス"><a class="header" href="#インスタンス">インスタンス</a></h1>
 <pre><code class="language-veryl playground editable">module ModuleA #(
     param ParamA: u32 = 10,
 ) (
@@ -949,19 +1072,15 @@ module ModuleA #(
     assign r_data1 = i_data + 1;
     assign o_data  = r_data2 + 2;
 
-    // インスタンス宣言
-    //   インスタンス宣言は `inst` キーワードではじまります
-    //   ポート接続は `()` 内で指定します
-    //   各ポートの接続は `[port_name]:[variable]` のような形式になります
-    //   `[port_name]` は `[port_name]:[port_name]` を意味します
-    inst u_module_b: ModuleB (
-        i_clk          ,
-        i_data: r_data1,
-        o_data: r_data2,
-    );
+    // instance declaration
+    //   `inst` keyword starts instance declaration
+    //   port connnection can be specified by `()`
+    //   each port connection is `[port_name]:[variable]`
+    //   `[port_name]` means `[port_name]:[port_name]`
+    inst u_module_b: ModuleB ( i_clk, i_data: r_data1, o_data: r_data2 );
 
-    // パラメータオーバーライド付きインスタンス宣言
-    //   パラメータの接続記法はポートと同様です
+    // instance declaration with parameter override
+    //   notation of parameter connection is the same as port
     inst u_module_c: ModuleC #( ParamA, ParamB: 10 );
 }
 
@@ -980,7 +1099,8 @@ module ModuleC #(
     param ParamB: u32 = 10,
 ) () {}
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="インターフェース"><a class="header" href="#インターフェース">インターフェース</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="インターフェース"><a class="header" href="#インターフェース">インターフェース</a></h1>
 <pre><code class="language-veryl playground editable">// インターフェース定義
 interface InterfaceA #(
     param ParamA: u32 = 1,
@@ -1017,7 +1137,8 @@ module ModuleA (
     inst u_intf_a: InterfaceA [10];
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="パッケージ"><a class="header" href="#パッケージ">パッケージ</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="パッケージ"><a class="header" href="#パッケージ">パッケージ</a></h1>
 <pre><code class="language-veryl playground editable">// パッケージ定義
 package PackageA {
     const ParamA: u32 = 1;
@@ -1035,9 +1156,11 @@ module ModuleA {
     let _b: logic&lt;10&gt; = PackageA::FuncA(a);
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="言語リファレンス"><a class="header" href="#言語リファレンス">言語リファレンス</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="言語リファレンス"><a class="header" href="#言語リファレンス">言語リファレンス</a></h1>
 <p>この章では Veryl の言語仕様について説明します。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ソースコードの構造"><a class="header" href="#ソースコードの構造">ソースコードの構造</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ソースコードの構造"><a class="header" href="#ソースコードの構造">ソースコードの構造</a></h1>
 <p>Veryl のソースコードはいくつかの <code>module</code>、<code>interface</code>、<code>package</code> からなります。</p>
 <pre><code class="language-veryl playground">module ModuleA {}
 
@@ -1048,7 +1171,8 @@ interface InterfaceA {}
 package PackageA {}
 </code></pre>
 <p>トランスパイルされたコードにおける <code>module</code>、<code>interface</code>、<code>package</code> の名前には先頭にプロジェクト名が付きます。このサンプルコードでは <code>project_</code> が付きます。これはプロジェクト間で名前が衝突するのを防ぐためです。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="字句構造"><a class="header" href="#字句構造">字句構造</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="字句構造"><a class="header" href="#字句構造">字句構造</a></h1>
 <p>この章では Veryl の字句構造について説明します。まず始めに、全体的なことがらからです。</p>
 <h2 id="エンコーディング"><a class="header" href="#エンコーディング">エンコーディング</a></h2>
 <p>Veryl のソースコードは UTF-8 エンコーディングでなければなりません。</p>
@@ -1082,7 +1206,8 @@ package PackageA {}
 <p><code>"</code> で囲んだものが文字列になります。<code>\"</code> や <code>\n</code> のように <code>\</code> によるエスケープも可能です。</p>
 <pre><code>"Hello, World!"
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="演算子"><a class="header" href="#演算子">演算子</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="演算子"><a class="header" href="#演算子">演算子</a></h1>
 <p>ほとんどの演算子は SystemVerilog と同じです。いくつか違いがあるので注意してください。</p>
 <ul>
 <li><code>&lt;:</code> 小なり演算子です。SystemVerilog の <code>&lt;</code> と同じです。</li>
@@ -1138,7 +1263,8 @@ a = 1 | 1;
 a = 1 &amp;&amp; 1;
 a = 1 || 1;
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="数値"><a class="header" href="#数値">数値</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="数値"><a class="header" href="#数値">数値</a></h1>
 <h2 id="整数"><a class="header" href="#整数">整数</a></h2>
 <pre><code class="language-veryl">// 整数
 0123456789
@@ -1202,7 +1328,8 @@ a = 1 || 1;
 0123456789.0123456789e+0123456789
 01_23_45_67_89.01_23_45_67_89E-01_23_45_67_89
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="配列リテラル"><a class="header" href="#配列リテラル">配列リテラル</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="配列リテラル"><a class="header" href="#配列リテラル">配列リテラル</a></h1>
 <p><code>'{}</code> は配列リテラルを表します。リテラル内には式、<code>repeat</code> キーワード、<code>default</code> キーワードを配置することができます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let _a: logic [3] = '{1, 2, 3};
@@ -1210,9 +1337,11 @@ a = 1 || 1;
     let _c: logic [3] = '{default: 3}; // '{3, 3, 3}
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="データ型"><a class="header" href="#データ型">データ型</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="データ型"><a class="header" href="#データ型">データ型</a></h1>
 <p>この章ではデータ型について説明します。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="組み込み型"><a class="header" href="#組み込み型">組み込み型</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="組み込み型"><a class="header" href="#組み込み型">組み込み型</a></h1>
 <h2 id="幅指定可能な4値データ型"><a class="header" href="#幅指定可能な4値データ型">幅指定可能な4値データ型</a></h2>
 <p><code>logic</code> は4値（<code>0</code>、<code>1</code>、<code>x</code>、<code>z</code>）のデータ型です。幅は <code>logic</code> のあとの <code>&lt;&gt;</code> で指定できます。<code>&lt;X, Y, Z,,,&gt;</code> のように多次元指定も可能です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -1316,7 +1445,8 @@ a = 1 || 1;
     const D: lbool = false;
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ユーザ定義型"><a class="header" href="#ユーザ定義型">ユーザ定義型</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ユーザ定義型"><a class="header" href="#ユーザ定義型">ユーザ定義型</a></h1>
 <h2 id="構造体"><a class="header" href="#構造体">構造体</a></h2>
 <p><code>struct</code> は複合データ型です。いくつかのフィールドを持つことができ、<code>.</code> 演算子を通してアクセスできます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -1336,6 +1466,7 @@ a = 1 || 1;
 <div class="warning">
 You can define `struct` data types within module and package declarations but not interface declaration.
 </div>
+
 <h2 id="列挙型"><a class="header" href="#列挙型">列挙型</a></h2>
 <p><code>enum</code> は列挙型です。名前の付いたバリアントを複数持ち、<code>enum</code> 型の変数にはそのバリアントのうち1つだけをセットできます。バリアント名は <code>[enum name]::[variant name]</code> の形式で指定可能です。それぞれのバリアントは対応する整数値を持ち、<code>=</code> で指定することができます。指定されなかった場合は自動的に割り当てられます。</p>
 <pre><code class="language-veryl playground">module A {
@@ -1372,6 +1503,7 @@ You can define `struct` data types within module and package declarations but no
 <div class="warning">
 You can define `enum` data types within module and package declarations but not interface declarations.
 </div>
+
 <h3 id="列挙型エンコーディング"><a class="header" href="#列挙型エンコーディング">列挙型エンコーディング</a></h3>
 <p>デフォルトでは各バリアントの値が省略されたときは0から順に割り当てられます。この割り当てのエンコードを指定したい場合は、<code>#[enum_encoding]</code> アトリビュートを指定できます。使用できるエンコードは以下の通りです。</p>
 <ul>
@@ -1405,13 +1537,14 @@ You can define `enum` data types within module and package declarations but not 
         variant_c: logic&lt;4, 2&gt;   ,
         variant_d: logic&lt;2, 2, 2&gt;,
     }
-    var a          : UnionA;
+    var a: UnionA;
     assign a.variant_a = 8'haa;
 }
 </code></pre>
 <div class="warning">
 You can define `union` data types within module and package declarations but not interface declarations.
 </div>
+
 <h2 id="型定義"><a class="header" href="#型定義">型定義</a></h2>
 <p><code>type</code> キーワードを使って、スカラー型や配列型への型エイリアスを定義することができます。</p>
 <pre><code class="language-veryl playground">module A {
@@ -1420,7 +1553,8 @@ You can define `union` data types within module and package declarations but not
     type octbyte   = bit   &lt;8&gt;  [8] ;
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="配列"><a class="header" href="#配列">配列</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="配列"><a class="header" href="#配列">配列</a></h1>
 <p>任意のデータ型に対して <code>[]</code> と付与することで配列を定義することができます。配列の長さは <code>[]</code> 内の値で指定します。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     struct StructA {
@@ -1465,7 +1599,8 @@ You can define `union` data types within module and package declarations but not
     assign e[0][0][0] = 0;
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="クロックとリセット"><a class="header" href="#クロックとリセット">クロックとリセット</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="クロックとリセット"><a class="header" href="#クロックとリセット">クロックとリセット</a></h1>
 <p><code>clock</code> はクロック配線を表す特別な型です。クロックの極性を指定するため以下の3種類があります。</p>
 <ul>
 <li><code>clock</code>: ビルド時の設定で指定される極性を持つクロック型</li>
@@ -1535,11 +1670,18 @@ You can define `union` data types within module and package declarations but not
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="式"><a class="header" href="#式">式</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="式"><a class="header" href="#式">式</a></h1>
 <p>この章では式について説明します。式は変数や演算子、関数呼び出しなどを組み合わせたもので、評価して値を得ることができます。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="演算子の優先順位"><a class="header" href="#演算子の優先順位">演算子の優先順位</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="演算子の優先順位"><a class="header" href="#演算子の優先順位">演算子の優先順位</a></h1>
 <p>式内での演算子の優先順位は SystemVerilog とほとんど同じです。</p>
-<div class="table-wrapper"><table><thead><tr><th>演算子</th><th>結合性</th><th>優先順位</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>演算子</th><th>結合性</th><th>優先順位</th></tr>
+</thead>
+<tbody>
 <tr><td><code>()</code> <code>[]</code> <code>::</code> <code>.</code></td><td>左</td><td>高い</td></tr>
 <tr><td><code>+</code> <code>-</code> <code>!</code> <code>~</code> <code>&amp;</code> <code>~&amp;</code> <code>|</code> <code>~|</code> <code>^</code> <code>~^</code> (単項)</td><td>左</td><td></td></tr>
 <tr><td><code>**</code></td><td>左</td><td></td></tr>
@@ -1555,8 +1697,11 @@ You can define `union` data types within module and package declarations but not
 <tr><td><code>||</code></td><td>左</td><td></td></tr>
 <tr><td><code>=</code> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> <code>%=</code> <code>&amp;=</code> <code>^=</code> <code>|=</code> <br> <code>&lt;&lt;=</code> <code>&gt;&gt;=</code> <code>&lt;&lt;&lt;=</code> <code>&gt;&gt;&gt;=</code></td><td>なし</td><td></td></tr>
 <tr><td><code>{}</code> <code>inside</code> <code>outside</code> <code>if</code> <code>case</code> <code>switch</code></td><td>なし</td><td>低い</td></tr>
-</tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="関数呼び出し"><a class="header" href="#関数呼び出し">関数呼び出し</a></h1>
+</tbody>
+</table>
+</div>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="関数呼び出し"><a class="header" href="#関数呼び出し">関数呼び出し</a></h1>
 <p>関数は <code>function_name(argument)</code> の形式で呼び出すことができます。<code>$clog2</code> のような SystemVerilog のシステム関数も使えます。</p>
 <pre><code class="language-veryl playground">package PackageA {
     function FunctionA (
@@ -1596,7 +1741,8 @@ module ModuleA {
     //);
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="連結"><a class="header" href="#連結">連結</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="連結"><a class="header" href="#連結">連結</a></h1>
 <p><code>{}</code> はビット連結を表します。<code>{}</code> の中では <code>repeat</code> キーワードを使うことで指定されたオペランドを繰り返すこともできます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a : logic&lt;10&gt; = 1;
@@ -1605,7 +1751,8 @@ module ModuleA {
     let _d: logic     = {a[9:0] repeat 10, b repeat 4};
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="if"><a class="header" href="#if">if</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="if"><a class="header" href="#if">if</a></h1>
 <p><code>if</code> を用いた条件式を使えます。<code>if</code> キーワードの後に条件を示す節を置きますが、<code>()</code> で囲む必要はありません。<code>?</code> のあとに条件が真である場合の式を、<code>:</code> のあとに条件が偽である場合の式を書きます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
@@ -1614,7 +1761,8 @@ module ModuleA {
     assign b = if a == 0 ? 1 : if a &gt;: 1 ? 2 : 3;
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="case--switch"><a class="header" href="#case--switch">Case / Switch</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="case--switch"><a class="header" href="#case--switch">Case / Switch</a></h1>
 <p>もう一つの条件式が <code>case</code> です。<code>case</code> は <code>値: 式</code> という形式の条件を複数持ちます。もし <code>case</code> キーワードの後の式と条件の左側の値が一致すれば、その条件の右側の式が返されます。値としては <code>..=</code> のような範囲も指定できます。さらに x と z はワイルドカードとして扱われ、任意のビットにマッチします。<code>default</code> はそれ以外の条件が全て失敗したときに返される特別な条件です。case 式は常になんらかの値に評価される必要があるため <code>default</code> は必須です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
@@ -1642,7 +1790,8 @@ module ModuleA {
     };
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ビット選択"><a class="header" href="#ビット選択">ビット選択</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ビット選択"><a class="header" href="#ビット選択">ビット選択</a></h1>
 <p><code>[]</code> はビット選択演算子です。<code>[]</code> に式を指定すれば1ビットを選択できます。範囲選択する場合は <code>[式:式]</code> とします。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
@@ -1673,7 +1822,8 @@ module ModuleA {
     assign b = a[2 step 3];
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="範囲"><a class="header" href="#範囲">範囲</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="範囲"><a class="header" href="#範囲">範囲</a></h1>
 <p>範囲は範囲演算子で指定できます。範囲演算子には以下の2種類があります。</p>
 <ul>
 <li><code>..</code>：半開区間</li>
@@ -1688,7 +1838,8 @@ module ModuleA {
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="msb--lsb"><a class="header" href="#msb--lsb">msb / lsb</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="msb--lsb"><a class="header" href="#msb--lsb">msb / lsb</a></h1>
 <p><code>msb</code> と <code>lsb</code> は <code>[]</code> によるビット選択で使用できます。<code>msb</code> はオペランドの最上位ビットを意味します。<code>lsb</code> はオペランドの最下位ビットを意味し、0と同じです。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a : logic&lt;10&gt; = 1;
@@ -1696,8 +1847,9 @@ module ModuleA {
     let _c: logic&lt;10&gt; = a[msb - 1:lsb + 1];
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="inside--outside"><a class="header" href="#inside--outside">inside / outside</a></h1>
-<p><code>inside</code> は 指定された式が <code>{}</code> で与えられた条件内にあるかどうかを調べます。条件は単一の式または<a href="05_language_reference/04_expression/./07_range.html">範囲</a>を指定できます。条件を満たすとき <code>inside</code> は <code>1</code> を、そうでなければ <code>0</code> を返します。<code>outside</code> はその逆です。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="inside--outside"><a class="header" href="#inside--outside">inside / outside</a></h1>
+<p><code>inside</code> は 指定された式が <code>{}</code> で与えられた条件内にあるかどうかを調べます。条件は単一の式または<a href="#範囲">範囲</a>を指定できます。条件を満たすとき <code>inside</code> は <code>1</code> を、そうでなければ <code>0</code> を返します。<code>outside</code> はその逆です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     var a: logic;
     var b: logic;
@@ -1706,7 +1858,8 @@ module ModuleA {
     assign b = outside 1 * 2 - 1 {0, 0..10, 1..=10};
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="型キャスト"><a class="header" href="#型キャスト">型キャスト</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="型キャスト"><a class="header" href="#型キャスト">型キャスト</a></h1>
 <p><code>as</code> は型キャスト演算子です。基数付きあるいは基数なしの数値で指定するビット幅やユーザ定義型の型名をオペランドにとることができます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     var a: EnumA   ;
@@ -1722,7 +1875,8 @@ module ModuleA {
     assign b = x as 2;
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="構造体コンストラクタ"><a class="header" href="#構造体コンストラクタ">構造体コンストラクタ</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="構造体コンストラクタ"><a class="header" href="#構造体コンストラクタ">構造体コンストラクタ</a></h1>
 <p>構造体を初期化するために各メンバーにそれぞれ代入する代わりに構造体コンストラクタを使用することができます。特に <code>const</code> は各メンバーに代入することができないためコンストラクタによる初期化が必要です。</p>
 <p><code>..default</code> 指定子は未指定のメンバーのためのデフォルト値を指定することができます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -1731,20 +1885,19 @@ module ModuleA {
         b: bit&lt;10&gt;,
     }
 
-    const p: Param = Param'{
-        a: 10,
-        b: 10,
-    };
+    const p: Param = Param'{a: 10, b: 10,};
 
     const q: Param = Param'{
         a: 1,
-        ..default(0) // すなわち `b: 0`
+        ..default(0) // means `b: 0`
     };
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="文"><a class="header" href="#文">文</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="文"><a class="header" href="#文">文</a></h1>
 <p>この章では文について説明します。文は <code>always_ff</code> や <code>always_comb</code> などいくつかの宣言で使用することができます。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="代入"><a class="header" href="#代入">代入</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="代入"><a class="header" href="#代入">代入</a></h1>
 <p>代入文は <code>変数 = 式;</code> の形式です。SystemVerilog と異なり、<code>always_comb</code> でも <code>always_ff</code> でも代入演算子は <code>=</code> です。以下のような代入演算子もあります。</p>
 <ul>
 <li><code>+=</code>：加算代入</li>
@@ -1767,21 +1920,20 @@ module ModuleA {
     var b: logic&lt;10&gt;;
     var c: logic&lt;10&gt;;
     var d: logic&lt;10&gt;;
-    var e: logic&lt;10&gt;;
 
     always_comb {
-        b =  a + 1;
-        c += a + 1;
+        b = a + 1;
     }
 
     always_ff (i_clk) {
-        d =  a + 1;
-        e -= a + 1;
+        c += a + 1;
+        d -= a + 1;
     }
 }
 </code></pre>
-<p>代入された値がいつ参照可能になるかの詳細については、<a href="05_language_reference/05_statement/../18_execution_model.html">実行モデル</a>を参照してください。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="関数呼び出し-1"><a class="header" href="#関数呼び出し-1">関数呼び出し</a></h1>
+<p>代入された値がいつ参照可能になるかの詳細については、<a href="#実行モデル">実行モデル</a>を参照してください。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="関数呼び出し-1"><a class="header" href="#関数呼び出し-1">関数呼び出し</a></h1>
 <p>関数呼び出しは文として使うこともできます。この場合、関数の戻り値は無視されます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     initial {
@@ -1789,7 +1941,8 @@ module ModuleA {
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="if-1"><a class="header" href="#if-1">if</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="if-1"><a class="header" href="#if-1">if</a></h1>
 <p><code>if</code> は文として使うこともできます。<code>if</code> 式との違いは <code>{}</code> 内に文を書くことです。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
@@ -1806,8 +1959,9 @@ module ModuleA {
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="case--switch-1"><a class="header" href="#case--switch-1">Case / Switch</a></h1>
-<p><code>case</code> と <code>switch</code> は文として使うこともできます。各アームの右辺が文になる点を除けば <a href="05_language_reference/05_statement/../04_expression/05_case_switch.html">Case / Switch 式</a> と同じです。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="case--switch-1"><a class="header" href="#case--switch-1">Case / Switch</a></h1>
+<p><code>case</code> と <code>switch</code> は文として使うこともできます。各アームの右辺が文になる点を除けば <a href="#case--switch">Case / Switch 式</a> と同じです。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
@@ -1886,15 +2040,16 @@ emit_cond_type = true
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="for"><a class="header" href="#for">for</a></h1>
-<p><code>for</code> 文は繰り返しを表します。<code>in</code> キーワードの前にループ変数を、後に<a href="05_language_reference/05_statement/../04_expression/07_range.html">範囲</a>を書きます。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="for"><a class="header" href="#for">for</a></h1>
+<p><code>for</code> 文は繰り返しを表します。<code>in</code> キーワードの前にループ変数を、後に<a href="#範囲">範囲</a>を書きます。</p>
 <p><code>break</code> を使ってループを中断することもできます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     var a: logic&lt;10&gt;;
 
     always_comb {
         for i in 0..10 {
-            a += i;
+            a = i;
 
             if i == 5 {
                 break;
@@ -1909,7 +2064,7 @@ emit_cond_type = true
 
     always_comb {
         for i in rev 0..10 {
-            a += i;
+            a = i;
 
             if i == 5 {
                 break;
@@ -1918,7 +2073,8 @@ emit_cond_type = true
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="return"><a class="header" href="#return">return</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="return"><a class="header" href="#return">return</a></h1>
 <p><code>return</code> 文は関数からの戻りを示します。<code>return</code> キーワードの後の式は関数の戻り値です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     function FunctionA () -&gt; u32 {
@@ -1926,7 +2082,8 @@ emit_cond_type = true
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="let"><a class="header" href="#let">let</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="let"><a class="header" href="#let">let</a></h1>
 <p><code>let</code> 文はある名前に値を束縛します。これは <code>always_ff</code> 、 <code>always_comb</code> および関数宣言の中で使うことができます。</p>
 <p><code>let</code> 文はブロック中のどこにでも置くことができます。</p>
 <pre><code class="language-veryl playground">module ModuleA (
@@ -1950,10 +2107,12 @@ emit_cond_type = true
     }
 }
 </code></pre>
-<p>右辺から型が推論できる場合、型注釈は省略できます。推論可能なパターンについては <a href="05_language_reference/05_statement/../19_type_inference.html">型推論</a> を参照してください。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="宣言"><a class="header" href="#宣言">宣言</a></h1>
+<p>右辺から型が推論できる場合、型注釈は省略できます。推論可能なパターンについては <a href="#型推論">型推論</a> を参照してください。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="宣言"><a class="header" href="#宣言">宣言</a></h1>
 <p>この章では宣言について説明します。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="変数"><a class="header" href="#変数">変数</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="変数"><a class="header" href="#変数">変数</a></h1>
 <p>変数宣言は <code>var</code> キーワードで始まり、変数名、<code>:</code>、変数の型と続きます。</p>
 <p>未使用の変数は警告が発生します。<code>_</code> で始まる変数名は未使用変数を意味し、警告を抑制します。</p>
 <p>宣言時に名前に値を束縛する場合は <code>var</code> の代わりに <code>let</code> を使います。</p>
@@ -1970,8 +2129,9 @@ emit_cond_type = true
     assign _d = 1;
 }
 </code></pre>
-<p>右辺、またはそれ以降の代入から型が推論できる場合、型注釈は省略できます。サポートされるパターンについては <a href="05_language_reference/06_declaration/../19_type_inference.html">型推論</a> を参照してください。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="パラメータ"><a class="header" href="#パラメータ">パラメータ</a></h1>
+<p>右辺、またはそれ以降の代入から型が推論できる場合、型注釈は省略できます。サポートされるパターンについては <a href="#型推論">型推論</a> を参照してください。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="パラメータ"><a class="header" href="#パラメータ">パラメータ</a></h1>
 <p>パラメータは変数と同時に宣言できます。<code>param</code> キーワードはモジュールヘッダで使用することができ、インスタンス時に上書きできます。<code>const</code> キーワードはモジュール内で使用することができ、上書きできません。</p>
 <pre><code class="language-veryl playground">module ModuleA #(
     param ParamA: u32 = 1,
@@ -1979,8 +2139,9 @@ emit_cond_type = true
     const ParamB: u32 = 1;
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="レジスタ"><a class="header" href="#レジスタ">レジスタ</a></h1>
-<p>レジスタ変数とは <code>always_ff</code> で代入される変数です。合成フェーズでフリップフロップにマップされます。レジスタ変数はノンブロッキング代入セマンティクスを使用します。シミュレーションサイクルとコミットの動作については<a href="05_language_reference/06_declaration/../18_execution_model.html">実行モデル</a>を参照してください。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="レジスタ"><a class="header" href="#レジスタ">レジスタ</a></h1>
+<p>レジスタ変数とは <code>always_ff</code> で代入される変数です。合成フェーズでフリップフロップにマップされます。レジスタ変数はノンブロッキング代入セマンティクスを使用します。シミュレーションサイクルとコミットの動作については<a href="#実行モデル">実行モデル</a>を参照してください。</p>
 <p><code>always_ff</code> は必須のクロック変数、オプションのリセット変数、<code>{}</code> ブロックをとります。クロックとリセットは <code>()</code> に書きます。指定されたクロックとリセットは <code>clock</code> / <code>reset</code> 型を持ち、そのビット幅は1ビットでなければなりません。</p>
 <p><code>if_reset</code> は <code>always_ff</code> に書ける特別なキーワードで、そのレジスタ変数のリセット条件を示します。<code>if_reset</code> を使う場合は <code>always_ff</code> のリセット変数は必須です。これを使うことで、リセットの極性と同期性を隠ぺいすることができます。実際の極性と同期性は <code>Veryl.toml</code> の <code>[build]</code> セクションで設定できます。</p>
 <p>モジュール内にクロックとリセットが1つしかない場合、クロックとリセットの指定は省略できます。</p>
@@ -2025,8 +2186,9 @@ emit_cond_type = true
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="組み合わせ回路"><a class="header" href="#組み合わせ回路">組み合わせ回路</a></h1>
-<p><code>always_comb</code> 宣言で代入される変数は組み合わせ回路を表します。組み合わせ変数はブロッキング代入セマンティクスを使用し、入力が変化したときに再評価されます。評価の詳細については<a href="05_language_reference/06_declaration/../18_execution_model.html">実行モデル</a>を参照してください。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="組み合わせ回路"><a class="header" href="#組み合わせ回路">組み合わせ回路</a></h1>
+<p><code>always_comb</code> 宣言で代入される変数は組み合わせ回路を表します。組み合わせ変数はブロッキング代入セマンティクスを使用し、入力が変化したときに再評価されます。評価の詳細については<a href="#実行モデル">実行モデル</a>を参照してください。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let a: logic&lt;10&gt; = 1;
     var b: logic&lt;10&gt;;
@@ -2046,8 +2208,9 @@ emit_cond_type = true
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="assign"><a class="header" href="#assign">assign</a></h1>
-<p><code>assign</code> 宣言は変数に式を代入します。<code>assign</code> 宣言は組み合わせロジックとして扱われます。評価のセマンティクスについては<a href="05_language_reference/06_declaration/../18_execution_model.html">実行モデル</a>を参照してください。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="assign"><a class="header" href="#assign">assign</a></h1>
+<p><code>assign</code> 宣言は変数に式を代入します。<code>assign</code> 宣言は組み合わせロジックとして扱われます。評価のセマンティクスについては<a href="#実行モデル">実行モデル</a>を参照してください。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     var a: logic&lt;10&gt;;
 
@@ -2062,7 +2225,8 @@ emit_cond_type = true
     assign {a, b} = 1;
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="関数"><a class="header" href="#関数">関数</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="関数"><a class="header" href="#関数">関数</a></h1>
 <p>関数は <code>function</code> キーワードで宣言できます。引数は <code>()</code> 内に書き、戻り値の型を <code>-&gt;</code> の後に書きます。</p>
 <p>関数が戻り値を持たない場合、<code>-&gt;</code> は省略できます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -2139,7 +2303,8 @@ module ModuleA #(
     assign o_c = add::&lt;WIDTH&gt;(i_a, i_b);
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="initial--final"><a class="header" href="#initial--final">initial / final</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="initial--final"><a class="header" href="#initial--final">initial / final</a></h1>
 <p><code>initial</code> ブロック内の文はシミュレーション開始時に実行され、<code>final</code> は終了時です。どちらも論理合成では無視され、デバッグやアサーションに使うことができます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     initial {
@@ -2151,7 +2316,8 @@ module ModuleA #(
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="アトリビュート"><a class="header" href="#アトリビュート">アトリビュート</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="アトリビュート"><a class="header" href="#アトリビュート">アトリビュート</a></h1>
 <p>アトリビュートは変数宣言などいくつかの宣言に注釈を付けることができます。</p>
 <h2 id="sv-アトリビュート"><a class="header" href="#sv-アトリビュート"><code>sv</code> アトリビュート</a></h2>
 <p><code>sv</code> アトリビュートは SystemVerilog のアトリビュートを表し、<code>(*  *)</code> という形式の SystemVerilog アトリビュートに変換されます。</p>
@@ -2261,10 +2427,7 @@ module ModuleB {
     inst a_if: InterfaceA::&lt;8&gt; [4];
     inst b_if: InterfaceA::&lt;8&gt; [4];
 
-    inst u: ModuleA (
-        slave_if : a_if,
-        master_if: b_if,
-    );
+    inst u: ModuleA ( slave_if: a_if, master_if: b_if );
 }
 </code></pre>
 <h2 id="align-アトリビュート"><a class="header" href="#align-アトリビュート"><code>align</code> アトリビュート</a></h2>
@@ -2275,16 +2438,14 @@ module ModuleB {
     let aaa: logic&lt;32&gt; = 1;
 
     let _b: logic = {
-        a[0] repeat 1, a[0] repeat 1,
-        aa[1] repeat 8, aa[1] repeat 8,
-        aaa[2] repeat 16, aaa[2] repeat 16,
+        a[0] repeat 1, a[0] repeat 1, aa[1] repeat 8, aa[1] repeat 8, aaa[2] repeat 16, aaa[2] repeat 16, a[0] repeat 1,
+        aa[1] repeat 8, aaa[2] repeat 16, a[0] repeat 1,
     };
 
     #[align(number, identifier)]
     let _c : logic = {
-        a  [0 ] repeat 1 , a  [0 ] repeat 1 ,
-        aa [1 ] repeat 8 , aa [1 ] repeat 8 ,
-        aaa[2 ] repeat 16, aaa[2 ] repeat 16,
+        a  [0 ] repeat 1 , a  [0 ] repeat 1 , aa [1 ] repeat 8 , aa [1 ] repeat 8 , aaa[2 ] repeat 16,
+        aaa[2 ] repeat 16, a  [0 ] repeat 1 , aa [1 ] repeat 8 , aaa[2 ] repeat 16, a  [0 ] repeat 1 ,
     };
 }
 </code></pre>
@@ -2306,7 +2467,8 @@ module ModuleB {
 <ul>
 <li><code>skip</code>: <code>veryl fmt</code> はモジュール、インターフェース、パッケージをフォーマットしない</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="生成"><a class="header" href="#生成">生成</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="生成"><a class="header" href="#生成">生成</a></h1>
 <p>宣言や <code>for</code> や <code>if</code> を使って生成することができます。<code>:</code> で示すラベルは生成された複数の宣言を識別するのに必要です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     var a: logic&lt;10&gt;;
@@ -2351,7 +2513,8 @@ module ModuleB {
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="インスタンス-1"><a class="header" href="#インスタンス-1">インスタンス</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="インスタンス-1"><a class="header" href="#インスタンス-1">インスタンス</a></h1>
 <p><code>inst</code> キーワードはモジュールやインターフェースのインスタンス化を表します。インスタンスの名前は <code>inst</code> の後に、インスタンスの型は <code>:</code> の後に書きます。<code>#()</code> でパラメータオーバーライドを、<code>()</code> でポート接続を表します。</p>
 <pre><code class="language-veryl playground">module ModuleA #(
     param paramA: u32 = 1,
@@ -2398,20 +2561,13 @@ module ModuleB (
 ) {}
 
 module ModuleC {
-    bind ModuleA &lt;- u0: ModuleB (
-        i_clk  ,
-        i_rst  ,
-        a_if   ,
-    );
+    bind ModuleA &lt;- u0: ModuleB ( i_clk, i_rst, a_if );
 }
 
-bind ModuleA &lt;- u1: ModuleB (
-    i_clk: i_clk,
-    i_rst: i_rst,
-    a_if : a_if ,
-);
+bind ModuleA &lt;- u1: ModuleB ( i_clk: i_clk, i_rst: i_rst, a_if: a_if );
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="名前付きブロック"><a class="header" href="#名前付きブロック">名前付きブロック</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="名前付きブロック"><a class="header" href="#名前付きブロック">名前付きブロック</a></h1>
 <p><code>{}</code> ブロックにラベルを付けることができます。そのような名前付きブロックは独立した名前空間を持ちます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     :labelA {
@@ -2423,7 +2579,8 @@ bind ModuleA &lt;- u1: ModuleB (
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="インポート"><a class="header" href="#インポート">インポート</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="インポート"><a class="header" href="#インポート">インポート</a></h1>
 <p><code>import</code> 宣言は他のパッケージからシンボルをインポートします。モジュール、インターフェース、パッケージの要素としてだけでなくトップレベルにも配置することができます。<code>import</code> 宣言の引数には <code>package::*</code> のようなワイルドカードパターンを使用することができます。</p>
 <pre><code class="language-veryl playground">// ファイルスコープインポート
 import $sv::SvPackage::*;
@@ -2443,16 +2600,37 @@ module ModuleA {
 }
 
 module ModuleA (
-    i_d: input  logic&lt;WIDTH&gt;, // 有効な参照
-    o_d: output logic&lt;WIDTH&gt;, // 有効な参照
+    i_d: input  logic&lt;WIDTH&gt;, // valid reference
+    o_d: output logic&lt;WIDTH&gt;, // valid reference
 ) {
     import PackageA::WIDTH;
 
-    let d  : logic&lt;WIDTH&gt; = i_d; // 有効な参照
+    let d: logic&lt;WIDTH&gt; = i_d; // valid reference
     assign o_d = d;
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="connect"><a class="header" href="#connect">Connect</a></h1>
+<p>enumのメンバーも、個別および wildcard により import できます。これはパッケージ内で定義された enum だけでなく、モジュールやインターフェース内でローカルに宣言された enum にも適用されます。</p>
+<pre><code class="language-veryl playground">package PackageB {
+    enum Color: logic&lt;2&gt; {
+        Red,
+        Green,
+        Blue,
+    }
+}
+
+module ModuleB {
+    // 単一の enum メンバーを import
+    import PackageB::Color::Red;
+    // enum の全メンバーを import
+    import PackageB::Color::*;
+
+    var c: PackageB::Color;
+    // 修飾なしでメンバーを参照可能
+    assign c = Green;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="connect"><a class="header" href="#connect">Connect</a></h1>
 <p>あるインターフェースをほかのインターフェースに接続するために各メンバーを代入する代わりに <code>connect</code> 宣言を使用することができます。<code>connect</code> 宣言はインターフェースの全てのメンバーを自動的に接続します。</p>
 <p>代入の方向はmodportによって決まります。つまり <code>output</code> メンバーが <code>input</code> メンバーに代入されます。<code>connect</code> の引数がインターフェースインスタンスの場合、方向を決定するためにmodportの指定が必要です。</p>
 <p>接続演算子 <code>&lt;&gt;</code> は <code>always_comb</code> 中でも使用することができます。</p>
@@ -2490,7 +2668,8 @@ module ModuleA (
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ブロック"><a class="header" href="#ブロック">ブロック</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ブロック"><a class="header" href="#ブロック">ブロック</a></h1>
 <p><code>always_comb</code> と <code>always_ff</code> では、<code>block</code> キーワードによって複数の文をグループ化することができます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     var a: logic&lt;10&gt;;
@@ -2523,7 +2702,8 @@ module ModuleA (
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="モジュール-1"><a class="header" href="#モジュール-1">モジュール</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="モジュール-1"><a class="header" href="#モジュール-1">モジュール</a></h1>
 <p>モジュールはソースコードの最上位コンポーネントの1つです。モジュールはオーバーライド可能なパラメータ、接続ポート、内部ロジックを持ちます。</p>
 <p>オーバーライド可能なパラメータは <code>#()</code> 内で宣言できます。それぞれのパラメータ宣言は <code>param</code> キーワードで始まり、識別子、<code>:</code>、パラメータの型、デフォルト値で構成されます。</p>
 <p>接続ポートは <code>()</code> 内で宣言できます。それぞれのポート宣言は識別子、<code>:</code>、ポートの方向、ポートの型で構成されます。利用可能なポート方向は以下の通りです。</p>
@@ -2584,7 +2764,8 @@ module ModubeB {
     slave_if: interface::slave,
 ) {}
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="インターフェース-1"><a class="header" href="#インターフェース-1">インターフェース</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="インターフェース-1"><a class="header" href="#インターフェース-1">インターフェース</a></h1>
 <p>インターフェースはソースコードの最上位コンポーネントの1つです。インターフェースはオーバーライド可能なパラメータ、インターフェース定義を持ちます。</p>
 <p>オーバーライド可能なパラメータについてはモジュールと同じです。</p>
 <p>インターフェース定義では <code>modport</code> を宣言することができます。<code>modport</code> はモジュールのポート宣言で、ポートを束ねて接続するために使うことができます。</p>
@@ -2690,20 +2871,19 @@ module ModuleB (
     foo_if: modport InterfaceA::mp,
 ) {
     inst bar_if: InterfaceA;
-    inst u: ModuleA (
-        foo_if: foo_if,
-        bar_if: bar_if,
-    );
+    inst u     : ModuleA ( foo_if: foo_if, bar_if: bar_if );
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="パッケージ-1"><a class="header" href="#パッケージ-1">パッケージ</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="パッケージ-1"><a class="header" href="#パッケージ-1">パッケージ</a></h1>
 <p>パッケージはソースコードの最上位コンポーネントの1つです。パッケージはパラメータや関数などいくつかの宣言をまとめることができます。</p>
 <p>パッケージ内の要素にアクセスするには、<code>::</code> 記号を使って <code>PackageA::ParamA</code> のようにします。</p>
 <pre><code class="language-veryl playground">package PackageA {
     const ParamA: u32 = 0;
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="systemverilogとの相互運用"><a class="header" href="#systemverilogとの相互運用">SystemVerilogとの相互運用</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="systemverilogとの相互運用"><a class="header" href="#systemverilogとの相互運用">SystemVerilogとの相互運用</a></h1>
 <p>SystemVerilogの要素にアクセスする場合は <code>$sv</code> 名前空間を使えます。例えば、SystemVerilogソースコードの “ModuleA” は <code>$sv::ModuleA</code> です。Veryl はこれらの要素が実際に存在するかどうかは確認しません。</p>
 <p>Verylコンパイラは <code>$sv::</code> を除いたパス名をそのまま出力します。そのため Verilog や VHDL のような他のHDLのシンボルも参照できます。それぞれのシンボルが解決できるかどうかは実装（シミュレータや合成ツール）に依存します。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -2725,16 +2905,18 @@ module ModuleB (
     );
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="可視性"><a class="header" href="#可視性">可視性</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="可視性"><a class="header" href="#可視性">可視性</a></h1>
 <p>デフォルトではプロジェクトのトップレベルアイテム（モジュール、インターフェース、パッケージ）はプライベートです。プライベートとは他のプロジェクトから参照できないことを意味します。</p>
-<p><code>pub</code> キーワードによって他のプロジェクトから見えるように指定することができます。<code>veryl doc</code> コマンドはパブリックなアイテムの <a href="05_language_reference/../06_development_environment/10_documentation.html">ドキュメント</a> のみを生成します。</p>
+<p><code>pub</code> キーワードによって他のプロジェクトから見えるように指定することができます。<code>veryl doc</code> コマンドはパブリックなアイテムの <a href="#ドキュメンテーション">ドキュメント</a> のみを生成します。</p>
 <pre><code class="language-veryl playground">pub module ModuleA {}
 
 pub interface InterfaceA {}
 
 pub package PackageA {}
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="他言語組み込み"><a class="header" href="#他言語組み込み">他言語組み込み</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="他言語組み込み"><a class="header" href="#他言語組み込み">他言語組み込み</a></h1>
 <h2 id="embed-宣言"><a class="header" href="#embed-宣言"><code>embed</code> 宣言</a></h2>
 <p><code>embed</code> 宣言により他言語をコードに埋め込むことができます。<code>embed</code> 宣言の第一引数は埋め込み方法です。以下の方法がサポートされています。</p>
 <ul>
@@ -2788,7 +2970,8 @@ module Module47C {
 <p><code>include</code> 宣言により他言語のファイルを含めることができます。<code>include</code> 宣言の第一引数は <code>embed</code> 宣言と同じです。第二引数はソースコードからの相対ファイルパスです。</p>
 <pre><code class="language-veryl">include(inline, "module.sv");
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="組み込みテスト"><a class="header" href="#組み込みテスト">組み込みテスト</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="組み込みテスト"><a class="header" href="#組み込みテスト">組み込みテスト</a></h1>
 <p>組み込みテストは <code>#[test(test_name)]</code> アトリビュートでマークすることができます。マークされたブロックはテストとして認識され、 <code>veryl test</code> コマンドによって実行されます。</p>
 <p>組み込みテストの記述方法は3種類あります。</p>
 <ul>
@@ -2796,15 +2979,14 @@ module Module47C {
 <li>SystemVerilogテスト</li>
 <li><a href="https://www.cocotb.org">cocotb</a> テスト</li>
 </ul>
-<p>ネイティブテストはVerylの組み込みシミュレータを使用し、SystemVerilogテストとcocotbテストは外部のRTLシミュレータを使用します。<code>veryl test</code> で使用される外部RTLシミュレータについては <a href="05_language_reference/../06_development_environment/07_simulator.html">シミュレータ</a> を参照してください。すべてのテスト種別で、<code>--wave</code> オプションを指定すると波形を生成できます。</p>
+<p>ネイティブテストはVerylの組み込みシミュレータを使用し、SystemVerilogテストとcocotbテストは外部のRTLシミュレータを使用します。<code>veryl test</code> で使用される外部RTLシミュレータについては <a href="#シミュレータ">シミュレータ</a> を参照してください。すべてのテスト種別で、<code>--wave</code> オプションを指定すると波形を生成できます。</p>
 <p><code>#[ignore]</code> 属性を追加することでデフォルトでは無視するテストを指定できます。無視されたテストは <code>--ignored</code> オプションで実行できます。<code>--include-ignored</code> オプションを使うと通常のテストと無視されたテストの両方を実行します。</p>
+<p>テスト時のみ有効になるコードパスは、<a href="#アトリビュート"><code>#[ifdef]</code>/<code>#[ifndef]</code></a> 属性と、テスト用に定義された名前を組み合わせることで有効化できます。名前は <code>Veryl.toml</code> の <code>[test].defines</code> フィールド、または <code>veryl test</code> の <code>--define NAME</code> (<code>-D NAME</code>) オプションで定義できます。両者はマージされ、SystemVerilog テストと cocotb テストでは同じ名前が外部シミュレータにも渡されます。</p>
 <pre><code class="language-veryl playground">#[test(test_ignored)]
 #[ignore]
 module test_ignored {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen (
-        clk  ,
-    );
+    inst rst: $tb::reset_gen ( clk );
 
     initial {
         rst.assert();
@@ -2843,17 +3025,11 @@ module test_ignored {
 #[test(test_counter)]
 module test_counter {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen (
-        clk  ,
-    );
+    inst rst: $tb::reset_gen ( clk );
 
     var cnt: logic&lt;32&gt;;
 
-    inst dut: Counter (
-        clk: clk,
-        rst: rst,
-        cnt: cnt,
-    );
+    inst dut: Counter ( clk: clk, rst: rst, cnt: cnt );
 
     initial {
         rst.assert();
@@ -2878,11 +3054,7 @@ module test_counter {
 <pre><code class="language-veryl playground">#[test(test_reset_cycles_param)]
 module test_reset_cycles_param {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen #(
-        cycles: 5,
-    ) (
-        clk  ,
-    );
+    inst rst: $tb::reset_gen #( cycles: 5 ) ( clk );
 
     // ...
 
@@ -2897,9 +3069,7 @@ module test_reset_cycles_param {
 <pre><code class="language-veryl playground">#[test(test_function_call)]
 module test_function_call {
     inst clk: $tb::clock_gen;
-    inst rst: $tb::reset_gen (
-        clk  ,
-    );
+    inst rst: $tb::reset_gen ( clk );
 
     var cnt: logic&lt;32&gt;;
 
@@ -2940,7 +3110,8 @@ embed (cocotb) py{{{
     # cocotb code
 }}}
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ジェネリクス"><a class="header" href="#ジェネリクス">ジェネリクス</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ジェネリクス"><a class="header" href="#ジェネリクス">ジェネリクス</a></h1>
 <p>ジェネリクスはパラメータオーバーライドでは実現できないアイテムのパラメータ化を可能にします。以下のアイテムがジェネリクスをサポートしています。</p>
 <ul>
 <li>関数</li>
@@ -2957,7 +3128,7 @@ embed (cocotb) py{{{
 <li><code>inst: X</code> : <code>X</code> のインスタンス</li>
 <li>名前付きプロトタイプ、ユーザ定義型、組み込みのデータ型</li>
 </ul>
-<p>名前付きプロトタイプは特別なジェネリック境界です。詳細は <a href="05_language_reference/14_generics/02_prototype.html">プロトタイプ</a> を参照してください。</p>
+<p>名前付きプロトタイプは特別なジェネリック境界です。詳細は <a href="#プロトタイプ">プロトタイプ</a> を参照してください。</p>
 <p>ジェネリクスを使用するためには <code>::&lt;&gt;</code> を用いて実パラメータを与えます。実パラメータとしては数値リテラルと <code>::</code> で連結された識別子を使用することができます。</p>
 <p>さらに、実パラメータはジェネリクス定義位置から参照できなければなりません。例えば、モジュール名はプロジェクト全体から参照できるので、実パラメータとして使用できます。一方、ローカルパラメータは多くの場合、実パラメータとして使用できません。これはローカルパラメータがジェネリクス定義位置からは参照できない場合に発生します。</p>
 <h2 id="例"><a class="header" href="#例">例</a></h2>
@@ -3036,10 +3207,7 @@ module ModuleB::&lt;A: u32, B: u32, C: u32&gt; {
     var a: logic&lt;W&gt;;
     var b: T       ;
 
-    inst u: ModuleA::&lt;W, T&gt; (
-        a  ,
-        b  ,
-    );
+    inst u: ModuleA::&lt;W, T&gt; ( a, b );
 }
 module ModuleC {
     inst u: ModuleB::&lt;1, 2, 3&gt;;
@@ -3055,8 +3223,9 @@ module ModuleC {
 <li>他の <code>gen</code> 宣言</li>
 </ul>
 <h2 id="ジェネリック引数の推論"><a class="header" href="#ジェネリック引数の推論">ジェネリック引数の推論</a></h2>
-<p>ジェネリック関数では、呼び出し引数からジェネリック引数を推論できる場合、<code>::&lt;&gt;</code> 後の実引数を省略できます。詳細は <a href="05_language_reference/19_type_inference.html#generic-argument-inference">型推論</a> を参照してください。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="デフォルトパラメータ"><a class="header" href="#デフォルトパラメータ">デフォルトパラメータ</a></h1>
+<p>ジェネリック関数では、呼び出し引数からジェネリック引数を推論できる場合、<code>::&lt;&gt;</code> 後の実引数を省略できます。詳細は <a href="#generic-argument-inference">型推論</a> を参照してください。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="デフォルトパラメータ"><a class="header" href="#デフォルトパラメータ">デフォルトパラメータ</a></h1>
 <p>ジェネリックパラメータはその後に <code>=</code> を加えることでデフォルト値を指定することができます。呼び出し側でパラメータ指定が省略された場合にデフォルト値が使われます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     function FuncA::&lt;T: u32 = 10&gt; (
@@ -3088,7 +3257,8 @@ module ModuleC {
     let _b: logic&lt;20&gt; = FuncA::&lt;20, 2&gt;(1);
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="プロトタイプ"><a class="header" href="#プロトタイプ">プロトタイプ</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="プロトタイプ"><a class="header" href="#プロトタイプ">プロトタイプ</a></h1>
 <p>プロトタイプは特別なジェネリック境界で、ジェネリックパラメータに渡せるプロトタイプを示します。現在はモジュールプロトタイプ、インターフェースプロトタイプ、パッケージプロトタイプがサポートされています。</p>
 <h2 id="モジュールプロトタイプ"><a class="header" href="#モジュールプロトタイプ">モジュールプロトタイプ</a></h2>
 <p>以下の例では、<code>ProtoA</code> がパラメータ <code>A</code> とポート <code>i_dat</code> <code>o_dat</code> を持つモジュールプロトタイプです。<code>T: ProtoA</code> のように制約することで、ジェネリックパラメータ <code>T</code> がそれらのパラメータとポートを持つ必要があることが示されます。</p>
@@ -3106,10 +3276,7 @@ proto module ProtoA #(
 );
 
 module ModuleB::&lt;T: ProtoA&gt; {
-    inst u: T (
-        i_dat: 0,
-        o_dat: _,
-    );
+    inst u: T ( i_dat: 0, o_dat: _ );
 }
 
 module ModuleC for ProtoA #(
@@ -3177,9 +3344,7 @@ module ModuleA::&lt;BUS_IF: ProtoA&gt; (
 module ModuleB {
     inst bus_if: InterfaceA::&lt;8&gt;;
 
-    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; (
-        bus_if: bus_if,
-    );
+    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; ( bus_if: bus_if );
 }
 </code></pre>
 <h2 id="パッケージプロトタイプ"><a class="header" href="#パッケージプロトタイプ">パッケージプロトタイプ</a></h2>
@@ -3201,11 +3366,17 @@ module ModuleA::&lt;PKG: ProtoA&gt; {
 <h2 id="プロトタイプの要素"><a class="header" href="#プロトタイプの要素">プロトタイプの要素</a></h2>
 <p>以下の要素はモジュール、インターフェース、パッケージのプロトタイプ内で宣言することができます。</p>
 <p>テーブルにどのプロトタイプがどの要素を持てるかをまとめます。</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: left">プロトタイプ</th><th style="text-align: left">パラメータ</th><th style="text-align: left">ポート</th><th style="text-align: left">定数</th><th style="text-align: left">変数</th><th style="text-align: left">型定義</th><th style="text-align: left">構造体/列挙型/ユニオン</th><th style="text-align: left">関数</th><th style="text-align: left">エイリアス</th><th style="text-align: left">modport</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th style="text-align: left">プロトタイプ</th><th style="text-align: left">パラメータ</th><th style="text-align: left">ポート</th><th style="text-align: left">定数</th><th style="text-align: left">変数</th><th style="text-align: left">型定義</th><th style="text-align: left">構造体/列挙型/ユニオン</th><th style="text-align: left">関数</th><th style="text-align: left">エイリアス</th><th style="text-align: left">modport</th></tr>
+</thead>
+<tbody>
 <tr><td style="text-align: left">モジュール</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left">インターフェース</td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td></tr>
 <tr><td style="text-align: left">パッケージ</td><td style="text-align: left"></td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left"></td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left">v</td><td style="text-align: left"></td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <h3 id="パラメータ-1"><a class="header" href="#パラメータ-1">パラメータ</a></h3>
 <p>パラメータプロトタイプは識別子とデータ型を指定します。デフォルト値の指定は省略できます。</p>
@@ -3263,7 +3434,7 @@ package BarPkg for BarProtoPkg {
     type Foo = FooPkg::Foo;
 }
 module ModuleA::&lt;PKG: BarProtoPkg&gt; {
-    var _foo    : PKG::Foo;
+    var _foo: PKG::Foo;
     assign _foo.foo = 0;
 }
 module ModuleB {
@@ -3325,7 +3496,8 @@ module top {
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="クロックドメインアノテーション"><a class="header" href="#クロックドメインアノテーション">クロックドメインアノテーション</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="クロックドメインアノテーション"><a class="header" href="#クロックドメインアノテーション">クロックドメインアノテーション</a></h1>
 <p>モジュール内に複数のクロックがある場合、<code>'a</code> のような明示的なクロックドメインアノテーションが必要です。アノテーションはそれぞれの信号がどのクロックドメインに所属するかを示します。</p>
 <pre><code class="language-veryl playground">module ModuleA (
     // クロックドメイン 'a に所属
@@ -3401,7 +3573,8 @@ interface InterfaceA {}
     assign o_dat_b = y;
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="unsafe-cdc"><a class="header" href="#unsafe-cdc">Unsafe CDC</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="unsafe-cdc"><a class="header" href="#unsafe-cdc">Unsafe CDC</a></h1>
 <p>Veryl コンパイラはクロックドメインクロッシングをエラーとして検出します。そのためクロックドメインクロッシングを行う場所には明示的な <code>unsafe (cdc)</code> ブロックが必要です。ブロック内ではクロックドメインクロッシングのチェックが抑制されるため、設計者はそれが安全かどうか注意深く確認する必要があります。</p>
 <pre><code class="language-veryl playground">module ModuleA (
     i_clk_a: input  'a clock,
@@ -3425,19 +3598,17 @@ interface InterfaceA {}
     o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
-        inst u_sync: $sv::SynchronizerCell (
-            i_clk: i_clk_b,
-            i_dat: i_dat_a,
-            o_dat: o_dat_b,
-        );
+        inst u_sync: $sv::SynchronizerCell ( i_clk: i_clk_b, i_dat: i_dat_a, o_dat: o_dat_b );
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="標準ライブラリ"><a class="header" href="#標準ライブラリ">標準ライブラリ</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="標準ライブラリ"><a class="header" href="#標準ライブラリ">標準ライブラリ</a></h1>
 <p>Verylはいくつかの便利な汎用モジュールを標準ライブラリとして提供しています。標準ライブラリは <code>$std</code> 名前空間にあり、依存関係を追加することなく使用できます。</p>
 <div class="warning">
 <p>標準ライブラリの公開APIは Veryl 1.0 がリリースされるまでは変更される可能性があります。</p>
 </div>
+
 <pre><code class="language-veryl">module ModuleA {
     // $std::fifo は標準ライブラリの FIFO モジュール
     inst u: $std::fifo (
@@ -3456,19 +3627,22 @@ interface InterfaceA {}
 }
 </code></pre>
 <p>標準ライブラリの完全なリストとドキュメントは <a href="https://std.veryl-lang.org">https://std.veryl-lang.org</a> にあります。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="エイリアス"><a class="header" href="#エイリアス">エイリアス</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="エイリアス"><a class="header" href="#エイリアス">エイリアス</a></h1>
 <p>ジェネリック引数を持つモジュール、インターフェース、パッケージの名前は非常に長くなる場合があります。<code>alias</code> はそのような要素に短い名前をつけることができます。</p>
 <pre><code class="language-veryl playground">package PkgA::&lt;X: u32, Y: u32, Z: u32&gt; {}
 
 alias package PkgA123 = PkgA::&lt;1, 2, 3&gt;;
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="実行モデル"><a class="header" href="#実行モデル">実行モデル</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="実行モデル"><a class="header" href="#実行モデル">実行モデル</a></h1>
 <p>Verylの実行モデルはSystemVerilog (IEEE 1800) のスケジューリングセマンティクスに基づいています。Verylは言語レベルの制約により、標準で定義されている複雑なスケジューリング領域を設計者が理解する必要なく、決定論的なシミュレーションを保証するベストプラクティスを強制します。</p>
 <p>Verylの組み込みシミュレータはこのモデルに準拠しています。トランスパイルされたSystemVerilog出力もこれらのセマンティクスを保持するため、IEEE 1800準拠のシミュレータであれば同等の結果が得られます。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="変数の分類"><a class="header" href="#変数の分類">変数の分類</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="変数の分類"><a class="header" href="#変数の分類">変数の分類</a></h1>
 <p>変数は代入コンテキストによって分類され、これによりストレージと代入セマンティクスが決定されます。</p>
 <h2 id="ff変数レジスタ"><a class="header" href="#ff変数レジスタ">FF変数（レジスタ）</a></h2>
-<p>モジュールレベルの <code>var</code> が <code>always_ff</code> ブロック内で代入されると、<strong>フリップフロップ（FF）変数</strong>になります。FF変数は二重バッファモデルを使用します：すべてのブロックから読み取れる<strong>current</strong>値と、ノンブロッキング代入により書き込まれる<strong>next</strong>値です。next値はFFコミットフェーズの後にのみcurrent値になります（<a href="05_language_reference/18_execution_model/./02_simulation_cycle.html">シミュレーションサイクル</a>を参照）。</p>
+<p>モジュールレベルの <code>var</code> が <code>always_ff</code> ブロック内で代入されると、<strong>フリップフロップ（FF）変数</strong>になります。FF変数は二重バッファモデルを使用します：すべてのブロックから読み取れる<strong>current</strong>値と、ノンブロッキング代入により書き込まれる<strong>next</strong>値です。next値はFFコミットフェーズの後にのみcurrent値になります（<a href="#シミュレーションサイクル">シミュレーションサイクル</a>を参照）。</p>
 <h2 id="組み合わせ変数"><a class="header" href="#組み合わせ変数">組み合わせ変数</a></h2>
 <p>モジュールレベルの <code>var</code> が <code>always_comb</code> ブロック内または <code>assign</code> 宣言を通じて代入されると、<strong>組み合わせ変数</strong>になります。組み合わせ変数への書き込みは即座に反映され（ブロッキング代入セマンティクス）、評価順序における後続の読み取りから参照可能です。</p>
 <p>モジュールレベルの <code>let</code> 宣言は <code>var</code> + <code>assign</code> の省略形であるため、同様に組み合わせ変数を生成します。</p>
@@ -3507,7 +3681,8 @@ alias package PkgA123 = PkgA::&lt;1, 2, 3&gt;;
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="シミュレーションサイクル"><a class="header" href="#シミュレーションサイクル">シミュレーションサイクル</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="シミュレーションサイクル"><a class="header" href="#シミュレーションサイクル">シミュレーションサイクル</a></h1>
 <p>Verylのシミュレーションステップは、厳密な順序で実行される3つのフェーズで構成されます。このモデルはVerylの言語制約により実現された、SystemVerilogスケジューリング領域の簡略化されたビューに対応します。</p>
 <h2 id="3つのフェーズ"><a class="header" href="#3つのフェーズ">3つのフェーズ</a></h2>
 <pre><code class="language-text">    ┌──────────────────────────┐
@@ -3539,14 +3714,21 @@ alias package PkgA123 = PkgA::&lt;1, 2, 3&gt;;
 <p>フェーズ2からのすべてのノンブロッキング代入がアトミックに反映されます。すべてのFF変数の「next」値が新しい「current」値になります。コミット後、更新された値で組み合わせロジックが再評価されます（フェーズ1に戻る）。</p>
 <h2 id="systemverilogスケジューリング領域との対応"><a class="header" href="#systemverilogスケジューリング領域との対応">SystemVerilogスケジューリング領域との対応</a></h2>
 <p>Verylの言語制約により、SystemVerilogのスケジューリング領域のうち関連するのは2つだけです：</p>
-<div class="table-wrapper"><table><thead><tr><th>SV領域</th><th>Verylフェーズ</th><th>何が起こるか</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>SV領域</th><th>Verylフェーズ</th><th>何が起こるか</th></tr>
+</thead>
+<tbody>
 <tr><td>Active</td><td>組み合わせロジックの収束</td><td><code>always_comb</code> の評価と伝播</td></tr>
 <tr><td>Active</td><td>イベント評価（読み取り）</td><td><code>always_ff</code> がcurrent値を読む</td></tr>
 <tr><td>NBA更新</td><td>イベント評価（書き込み）+ FFコミット</td><td><code>always_ff</code> の書き込みが反映される</td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <p>Inactive、Observed、Reactive領域は不要です。Verylはこれらを必要とするコーディングパターン（例：<code>#0</code> ディレイ、programブロック、同一変数へのブロッキング代入とノンブロッキング代入の混在）を許可しないためです。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="代入のセマンティクス"><a class="header" href="#代入のセマンティクス">代入のセマンティクス</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="代入のセマンティクス"><a class="header" href="#代入のセマンティクス">代入のセマンティクス</a></h1>
 <p>Verylはすべての代入に単一の <code>=</code> 演算子を使用します。実際のセマンティクス — ブロッキングかノンブロッキングか — は代入コンテキストにより自動的に決定されます。これにより、設計者が手動で従うべきSystemVerilogのベストプラクティスが強制されます。</p>
 <h2 id="ブロッキング代入"><a class="header" href="#ブロッキング代入">ブロッキング代入</a></h2>
 <p><code>always_comb</code> ブロックと <code>assign</code> 宣言では、<code>=</code> は<strong>ブロッキング代入</strong>を行います。代入された値は同一評価パス内の後続の読み取りから即座に参照可能です。</p>
@@ -3594,14 +3776,22 @@ alias package PkgA123 = PkgA::&lt;1, 2, 3&gt;;
 }
 </code></pre>
 <h2 id="systemverilogへの対応"><a class="header" href="#systemverilogへの対応">SystemVerilogへの対応</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>Verylコンテキスト</th><th>Veryl構文</th><th>SystemVerilog相当</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Verylコンテキスト</th><th>Veryl構文</th><th>SystemVerilog相当</th></tr>
+</thead>
+<tbody>
 <tr><td><code>always_comb</code></td><td><code>x = expr;</code></td><td><code>x = expr;</code>（ブロッキング）</td></tr>
 <tr><td><code>assign</code></td><td><code>assign x = expr;</code></td><td><code>assign x = expr;</code>（continuous assignment）</td></tr>
 <tr><td><code>always_ff</code>、モジュールレベル変数</td><td><code>x = expr;</code></td><td><code>x &lt;= expr;</code>（ノンブロッキング）</td></tr>
 <tr><td><code>always_ff</code>、ローカル <code>let</code></td><td><code>let x: T = expr;</code></td><td><code>x = expr;</code>（ブロッキング）</td></tr>
 <tr><td><code>always_ff</code>、複合代入</td><td><code>x += expr;</code></td><td><code>x &lt;= x + expr;</code>（ノンブロッキング）</td></tr>
-</tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="組み合わせロジックの評価"><a class="header" href="#組み合わせロジックの評価">組み合わせロジックの評価</a></h1>
+</tbody>
+</table>
+</div>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="組み合わせロジックの評価"><a class="header" href="#組み合わせロジックの評価">組み合わせロジックの評価</a></h1>
 <p>Verylの組み合わせロジック（<code>always_comb</code> ブロックと <code>assign</code> 宣言）はSystemVerilogと同じ評価セマンティクスに従います：各ブロックは暗黙的にその入力信号に対してセンシティブであり、入力が変化するたびに再評価されます。</p>
 <p>ブロックが信号を更新すると、依存するブロックがすべての信号が安定するまで自動的に再トリガーされます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -3631,7 +3821,8 @@ always_comb {
 </code></pre>
 <h2 id="実装に関する注記"><a class="header" href="#実装に関する注記">実装に関する注記</a></h2>
 <p>Verylの組み込みシミュレータは、データ依存関係のトポロジカルソートを使用して効率的な評価順序を決定し、再評価パスの回数を最小化します。これはパフォーマンスの最適化であり、観測可能な結果は上述のイベント駆動再トリガーモデルと同等です。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="イベント評価"><a class="header" href="#イベント評価">イベント評価</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="イベント評価"><a class="header" href="#イベント評価">イベント評価</a></h1>
 <p>クロックエッジまたはリセットイベントが発生すると、そのイベントに対してセンシティブなすべての <code>always_ff</code> ブロックが実行されます。イベント評価中：</p>
 <ol>
 <li>FF変数からの<strong>読み取り</strong>は<strong>current</strong>（コミット前）の値を参照します。</li>
@@ -3661,14 +3852,15 @@ always_comb {
 <p>同一イベントに対する <code>always_ff</code> ブロックはソース順序で評価されます。</p>
 <h2 id="initialブロックとfinalブロック"><a class="header" href="#initialブロックとfinalブロック">initialブロックとfinalブロック</a></h2>
 <p><code>initial</code> ブロックはシミュレーション開始時に独立したイベントとして一度だけ評価されます。<code>final</code> ブロックはシミュレーション終了時に一度だけ評価されます。これらのブロックは合成不可であり、テストベンチやデバッグ目的で使用されます。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="マルチクロックドメイン"><a class="header" href="#マルチクロックドメイン">マルチクロックドメイン</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="マルチクロックドメイン"><a class="header" href="#マルチクロックドメイン">マルチクロックドメイン</a></h1>
 <p>Verylは複数のクロックドメインを持つデザインをサポートしています。各クロックドメインは対応するクロックイベントにより独立してトリガーされます。</p>
 <h2 id="独立したドメイン評価"><a class="header" href="#独立したドメイン評価">独立したドメイン評価</a></h2>
 <p>クロックエッジが発生すると、そのクロックに対してセンシティブな <code>always_ff</code> ブロックのみが評価されます。FFコミットフェーズはそれらのブロックにより書き込まれた変数にのみ適用されます。他のクロックドメインは影響を受けません。</p>
 <h2 id="同時クロックエッジ"><a class="header" href="#同時クロックエッジ">同時クロックエッジ</a></h2>
 <p>2つのクロックが同時にエッジを持つ場合、各ドメインのイベント評価とFFコミットは一度に1ドメインずつ順次実行されます。FFの二重バッファモデル（current/next分離）により、各ドメインは自身の変数の一貫したスナップショットを参照するため、ドメインの処理順序に関係なく単一ドメインの動作は決定論的です。</p>
 <h2 id="クロスドメイン信号"><a class="header" href="#クロスドメイン信号">クロスドメイン信号</a></h2>
-<p>異なるクロックドメインの信号へのアクセスはクロックドメインクロッシング（CDC）です。Verylはクロスドメイン信号アクセスに <code>unsafe (cdc)</code> による明示的なアノテーションを要求します（<a href="05_language_reference/18_execution_model/../15_clock_domain_annotation.html">クロックドメインアノテーション</a>を参照）。</p>
+<p>異なるクロックドメインの信号へのアクセスはクロックドメインクロッシング（CDC）です。Verylはクロスドメイン信号アクセスに <code>unsafe (cdc)</code> による明示的なアノテーションを要求します（<a href="#クロックドメインアノテーション">クロックドメインアノテーション</a>を参照）。</p>
 <p>同時エッジを持つドメイン間で <code>unsafe (cdc)</code> 信号が共有されている場合、ドメインの評価順序は共有信号値を通じて観測可能です。Verylはこの場合の特定の順序を保証しません。設計者は適切な同期回路（例：2段FFシンクロナイザ、ハンドシェイクプロトコル）により正確性を確保する必要があります。</p>
 <pre><code class="language-veryl playground">module ModuleA (
     i_clk_a: input  'a clock   ,
@@ -3693,7 +3885,8 @@ always_comb {
     }
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="決定性"><a class="header" href="#決定性">決定性</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="決定性"><a class="header" href="#決定性">決定性</a></h1>
 <p>Verylは決定論的シミュレーションを保証します：同一のソースコードと同一の刺激シーケンスが与えられた場合、準拠するシミュレータはすべてのシミュレーションステップで同一の信号値を生成します。</p>
 <h2 id="verylが決定性を実現する方法"><a class="header" href="#verylが決定性を実現する方法">Verylが決定性を実現する方法</a></h2>
 <p>Verylの言語制約はSystemVerilogにおける一般的な非決定性の原因を排除します：</p>
@@ -3712,11 +3905,12 @@ always_comb {
 <li>組み合わせロジックには <code>always_comb</code> と <code>=</code>（ブロッキング）</li>
 <li>同一変数へのブロッキング/ノンブロッキング代入の混在なし</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="型推論"><a class="header" href="#型推論">型推論</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="型推論"><a class="header" href="#型推論">型推論</a></h1>
 <p>型注釈やジェネリック引数は、周辺のコードから導出できる場合に省略できることがあります。この章ではサポートされるパターンをまとめます。</p>
 <p>モジュール／インターフェース／関数のポート宣言や関数の戻り値型は、型が推論可能であっても、インターフェースを明確に保つため引き続き型注釈が必要です。</p>
 <h2 id="変数の型推論"><a class="header" href="#変数の型推論">変数の型推論</a></h2>
-<p><a href="05_language_reference/06_declaration/01_variable.html"><code>var</code></a> や <a href="05_language_reference/05_statement/07_let.html"><code>let</code></a> 宣言、および <a href="05_language_reference/06_declaration/02_parameter.html"><code>const</code></a> 宣言の型注釈は、型が推論可能な場合に省略できます。</p>
+<p><a href="#変数"><code>var</code></a> や <a href="#let"><code>let</code></a> 宣言、および <a href="#パラメータ"><code>const</code></a> 宣言の型注釈は、型が推論可能な場合に省略できます。</p>
 <p>型を持たない <code>var</code> 宣言では、<code>assign</code>、<code>always_comb</code>、<code>always_ff</code> を通じた最初の代入から型が推論されます。<code>let</code> および <code>const</code> 宣言では、右辺の式から型が推論されます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     let _a: logic&lt;8&gt; = 0;
@@ -3755,7 +3949,7 @@ always_comb {
 <li>連結（例: <code>{_a, _a}</code>）</li>
 <li><code>if</code> / <code>case</code> 式</li>
 </ul>
-<p>同一の <code>var</code> に対する複数の代入で推論される型が一致しない場合、<a href="05_language_reference/../07_appendix/02_semantic_error.html#type_inference_conflict">type_inference_conflict</a> として報告されます。サポートされていない式の場合は <a href="05_language_reference/../07_appendix/02_semantic_error.html#type_inference_not_supported">type_inference_not_supported</a> が報告されます。いずれの場合も、明示的な型注釈を加えればエラーは解消されます。</p>
+<p>同一の <code>var</code> に対する複数の代入で推論される型が一致しない場合、<a href="#type_inference_conflict">type_inference_conflict</a> として報告されます。サポートされていない式の場合は <a href="#type_inference_not_supported">type_inference_not_supported</a> が報告されます。いずれの場合も、明示的な型注釈を加えればエラーは解消されます。</p>
 <h2 id="ジェネリック引数の推論-1"><a class="header" href="#ジェネリック引数の推論-1">ジェネリック引数の推論</a></h2>
 <p>ジェネリック関数では、関数の引数からジェネリック引数を推論できる場合、<code>::&lt;&gt;</code> 後の実引数を省略できます。推論は各実引数の宣言型を用いてジェネリックパラメータを解決します。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -3782,28 +3976,30 @@ always_comb {
     let _rw: logic&lt;9&gt; = FuncWide(_a);
 }
 </code></pre>
-<p>実引数の幅を変数宣言から決定できない場合（例: ビット幅付きリテラルを渡した場合）、推論は失敗します。その場合は明示的なジェネリック引数が必要です。詳細は <a href="05_language_reference/../07_appendix/02_semantic_error.html#generic_inference_failed">generic_inference_failed</a> を参照してください。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="開発環境"><a class="header" href="#開発環境">開発環境</a></h1>
+<p>実引数の幅を変数宣言から決定できない場合（例: ビット幅付きリテラルを渡した場合）、推論は失敗します。その場合は明示的なジェネリック引数が必要です。詳細は <a href="#generic_inference_failed">generic_inference_failed</a> を参照してください。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="開発環境"><a class="header" href="#開発環境">開発環境</a></h1>
 <p>この章ではプロジェクト設定や開発ツールなど開発環境について説明します。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="プロジェクト設定"><a class="header" href="#プロジェクト設定">プロジェクト設定</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="プロジェクト設定"><a class="header" href="#プロジェクト設定">プロジェクト設定</a></h1>
 <ul>
-<li><a href="06_development_environment/01_project_configuration.html#the-project-section"><code>[project]</code></a> — プロジェクト定義
+<li><a href="#the-project-section"><code>[project]</code></a> — プロジェクト定義
 <ul>
-<li><a href="06_development_environment/01_project_configuration.html#the-name-field"><code>name</code></a> — プロジェクトの名前</li>
-<li><a href="06_development_environment/01_project_configuration.html#the-version-field"><code>version</code></a> — プロジェクトのバージョン</li>
-<li><a href="06_development_environment/01_project_configuration.html#the-authors-field"><code>authors</code></a> — プロジェクトの作者</li>
-<li><a href="06_development_environment/01_project_configuration.html#the-description-field"><code>description</code></a> — プロジェクトの説明</li>
-<li><a href="06_development_environment/01_project_configuration.html#the-license-field"><code>license</code></a> — プロジェクトのライセンス</li>
-<li><a href="06_development_environment/01_project_configuration.html#the-repository-field"><code>repository</code></a> — プロジェクトのリポジトリの URL</li>
+<li><a href="#the-name-field"><code>name</code></a> — プロジェクトの名前</li>
+<li><a href="#the-version-field"><code>version</code></a> — プロジェクトのバージョン</li>
+<li><a href="#the-authors-field"><code>authors</code></a> — プロジェクトの作者</li>
+<li><a href="#the-description-field"><code>description</code></a> — プロジェクトの説明</li>
+<li><a href="#the-license-field"><code>license</code></a> — プロジェクトのライセンス</li>
+<li><a href="#the-repository-field"><code>repository</code></a> — プロジェクトのリポジトリの URL</li>
 </ul>
 </li>
-<li><a href="06_development_environment/01_project_configuration.html#the-build-section"><code>[build]</code></a> — ビルド設定</li>
-<li><a href="06_development_environment/01_project_configuration.html#the-format-section"><code>[format]</code></a> — フォーマット設定</li>
-<li><a href="06_development_environment/01_project_configuration.html#the-lint-section"><code>[lint]</code></a> — リント設定</li>
-<li><a href="06_development_environment/01_project_configuration.html#the-test-section"><code>[test]</code></a> — テスト設定</li>
-<li><a href="06_development_environment/01_project_configuration.html#the-publish-section"><code>[publish]</code></a> — 公開設定</li>
-<li><a href="06_development_environment/01_project_configuration.html#the-synth-section"><code>[synth]</code></a> — 論理合成設定</li>
-<li><a href="06_development_environment/01_project_configuration.html#the-dependencies-section"><code>[dependencies]</code></a> — ライブラリの依存関係</li>
+<li><a href="#the-build-section"><code>[build]</code></a> — ビルド設定</li>
+<li><a href="#the-format-section"><code>[format]</code></a> — フォーマット設定</li>
+<li><a href="#the-lint-section"><code>[lint]</code></a> — リント設定</li>
+<li><a href="#the-test-section"><code>[test]</code></a> — テスト設定</li>
+<li><a href="#the-publish-section"><code>[publish]</code></a> — 公開設定</li>
+<li><a href="#the-synth-section"><code>[synth]</code></a> — 論理合成設定</li>
+<li><a href="#the-dependencies-section"><code>[dependencies]</code></a> — ライブラリの依存関係</li>
 </ul>
 <h2 id="the-project-section"><a class="header" href="#the-project-section"><code>[project]</code> セクション</a></h2>
 <p><code>Veryl.toml</code> の最初のセクションは <code>[project]</code> です。<code>name</code> と <code>version</code> は必須です。</p>
@@ -3837,20 +4033,21 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/veryl-lang/veryl"
 </code></pre>
 <h2 id="the-build-section"><a class="header" href="#the-build-section"><code>[build]</code> セクション</a></h2>
-<p><code>[build]</code> セクションはコード生成の設定です。詳細は<a href="06_development_environment/./01_project_configuration/01_build.html">こちら</a>。</p>
+<p><code>[build]</code> セクションはコード生成の設定です。詳細は<a href="#build">こちら</a>。</p>
 <h2 id="the-format-section"><a class="header" href="#the-format-section"><code>[format]</code> セクション</a></h2>
-<p><code>[format]</code> セクションはコードフォーマッターの設定です。詳細は<a href="06_development_environment/./01_project_configuration/02_format.html">こちら</a>。</p>
+<p><code>[format]</code> セクションはコードフォーマッターの設定です。詳細は<a href="#format">こちら</a>。</p>
 <h2 id="the-lint-section"><a class="header" href="#the-lint-section"><code>[lint]</code> セクション</a></h2>
-<p><code>[lint]</code> セクションはリンタの設定です。詳細は<a href="06_development_environment/./01_project_configuration/03_lint.html">こちら</a>。</p>
+<p><code>[lint]</code> セクションはリンタの設定です。詳細は<a href="#lint">こちら</a>。</p>
 <h2 id="the-test-section"><a class="header" href="#the-test-section"><code>[test]</code> セクション</a></h2>
-<p><code>[test]</code> セクションはRTLシミュレータによるテストの設定です。詳細は<a href="06_development_environment/./01_project_configuration/04_test.html">こちら</a>。</p>
+<p><code>[test]</code> セクションはRTLシミュレータによるテストの設定です。詳細は<a href="#test">こちら</a>。</p>
 <h2 id="the-publish-section"><a class="header" href="#the-publish-section"><code>[publish]</code> セクション</a></h2>
-<p><code>[publish]</code> セクションはプロジェクト公開の設定です。詳細は<a href="06_development_environment/./01_project_configuration/05_publish.html">こちら</a>。</p>
+<p><code>[publish]</code> セクションはプロジェクト公開の設定です。詳細は<a href="#publish">こちら</a>。</p>
 <h2 id="the-synth-section"><a class="header" href="#the-synth-section"><code>[synth]</code> セクション</a></h2>
-<p><code>[synth]</code> セクションはシンセサイザの設定です。詳細は<a href="06_development_environment/./01_project_configuration/06_synth.html">こちら</a>。</p>
+<p><code>[synth]</code> セクションはシンセサイザの設定です。詳細は<a href="#synth">こちら</a>。</p>
 <h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section"><code>[dependencies]</code> セクション</a></h2>
-<p><code>[dependencies]</code> セクションはライブラリの依存関係です。詳細は<a href="06_development_environment/./02_dependencies.html">こちら</a>。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="build"><a class="header" href="#build">Build</a></h1>
+<p><code>[dependencies]</code> セクションはライブラリの依存関係です。詳細は<a href="#依存関係">こちら</a>。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="build"><a class="header" href="#build">Build</a></h1>
 <p><code>[build]</code> セクションはコード生成の設定です。</p>
 <h2 id="clock_type-フィールド"><a class="header" href="#clock_type-フィールド"><code>clock_type</code> フィールド</a></h2>
 <p><code>clock_type</code> フィールドはフリップフロップを駆動するクロックエッジを指定します。</p>
@@ -4011,18 +4208,27 @@ error_count_limit = 10
 <pre><code class="language-toml">[build]
 incremental = true
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="format"><a class="header" href="#format">Format</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="format"><a class="header" href="#format">Format</a></h1>
 <p><code>[format]</code> セクションはフォーマッタの設定です。</p>
 <pre><code class="language-toml">[format]
 indent_width = 4
 </code></pre>
 <h2 id="設定"><a class="header" href="#設定">設定</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr>
+</thead>
+<tbody>
 <tr><td>indent_width</td><td>整数</td><td>4</td><td>インデントのスペース幅</td></tr>
+<tr><td>max_width</td><td>整数</td><td>120</td><td>改行挿入前に保とうとする 1 行の最大幅</td></tr>
 <tr><td>vertical_align</td><td>ブーリアン</td><td>true</td><td>垂直方向の調整を有効にする</td></tr>
 <tr><td>newline_style</td><td><code>auto</code> / <code>native</code> / <code>unix</code> / <code>windows</code></td><td><code>auto</code></td><td>改行コードのスタイル</td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
+<p>フォーマッタは、適切な位置に改行を挿入することで各行を <code>max_width</code> カラム以内に収めようとします。改行できない箇所 (非常に長い識別子やコメントなど) ではこの幅を超える可能性があります。</p>
 <p><code>newline_style</code> はフォーマッタ、ビルドのエミッタ、マイグレータが出力する改行コードを制御します。利用可能な値は以下のとおりです。</p>
 <ul>
 <li><code>auto</code> — 入力ファイルから検出します。改行が存在しない場合は実行プラットフォームのネイティブスタイルが使用されます。</li>
@@ -4030,7 +4236,8 @@ indent_width = 4
 <li><code>unix</code> — 常に <code>\n</code> を使用します。</li>
 <li><code>windows</code> — 常に <code>\r\n</code> を使用します。</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="lint"><a class="header" href="#lint">Lint</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="lint"><a class="header" href="#lint">Lint</a></h1>
 <p><code>[lint]</code> セクションはリンターの設定です。</p>
 <pre><code class="language-toml">[lint.naming]
 case_enum = "snake"
@@ -4038,7 +4245,12 @@ case_enum = "snake"
 <h2 id="設定-1"><a class="header" href="#設定-1">設定</a></h2>
 <h3 id="lintnaming-セクション"><a class="header" href="#lintnaming-セクション"><code>[lint.naming]</code> セクション</a></h3>
 <p>このセクションは命名規則の設定です。</p>
-<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>説明</th></tr>
+</thead>
+<tbody>
 <tr><td>case_enum</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-1"><a href="#footnote-casetype">1</a></sup></td><td><code>enum</code> のケーススタイル</td></tr>
 <tr><td>case_function</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-2"><a href="#footnote-casetype">1</a></sup></td><td><code>function</code> のケーススタイル</td></tr>
 <tr><td>case_function_inout</td><td>ケースタイプ<sup class="footnote-reference" id="fr-casetype-3"><a href="#footnote-casetype">1</a></sup></td><td><code>inout</code> 引数のケーススタイル</td></tr>
@@ -4139,7 +4351,8 @@ case_enum = "snake"
 <tr><td>re_required_union</td><td>正規表現<sup class="footnote-reference" id="fr-regex-38"><a href="#footnote-regex">4</a></sup></td><td><code>union</code> の必須正規表現</td></tr>
 <tr><td>re_required_var</td><td>正規表現<sup class="footnote-reference" id="fr-regex-39"><a href="#footnote-regex">4</a></sup></td><td>変数の必須正規表現</td></tr>
 <tr><td>re_required_wire</td><td>正規表現<sup class="footnote-reference" id="fr-regex-40"><a href="#footnote-regex">4</a></sup></td><td>ワイヤ変数<sup class="footnote-reference" id="fr-wire-5"><a href="#footnote-wire">3</a></sup>の必須正規表現</td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <ul>
 <li><code>"snake"</code> – snake_case</li>
@@ -4148,7 +4361,8 @@ case_enum = "snake"
 <li><code>"upper_camel"</code> – UpperCamelCase</li>
 </ul>
 <hr>
-<ol class="footnote-definition"><li id="footnote-casetype">
+<ol class="footnote-definition">
+<li id="footnote-casetype">
 <p>設定可能な値は以下です。 <a href="#fr-casetype-1">↩</a> <a href="#fr-casetype-2">↩2</a> <a href="#fr-casetype-3">↩3</a> <a href="#fr-casetype-4">↩4</a> <a href="#fr-casetype-5">↩5</a> <a href="#fr-casetype-6">↩6</a> <a href="#fr-casetype-7">↩7</a> <a href="#fr-casetype-8">↩8</a> <a href="#fr-casetype-9">↩9</a> <a href="#fr-casetype-10">↩10</a> <a href="#fr-casetype-11">↩11</a> <a href="#fr-casetype-12">↩12</a> <a href="#fr-casetype-13">↩13</a> <a href="#fr-casetype-14">↩14</a> <a href="#fr-casetype-15">↩15</a> <a href="#fr-casetype-16">↩16</a> <a href="#fr-casetype-17">↩17</a> <a href="#fr-casetype-18">↩18</a> <a href="#fr-casetype-19">↩19</a> <a href="#fr-casetype-20">↩20</a></p>
 </li>
 <li id="footnote-reg">
@@ -4160,7 +4374,9 @@ case_enum = "snake"
 <li id="footnote-regex">
 <p><code>".*"</code>のような正規表現です。使用可能な構文は<a href="https://docs.rs/regex/latest/regex/#syntax">こちら</a>. <a href="#fr-regex-1">↩</a> <a href="#fr-regex-2">↩2</a> <a href="#fr-regex-3">↩3</a> <a href="#fr-regex-4">↩4</a> <a href="#fr-regex-5">↩5</a> <a href="#fr-regex-6">↩6</a> <a href="#fr-regex-7">↩7</a> <a href="#fr-regex-8">↩8</a> <a href="#fr-regex-9">↩9</a> <a href="#fr-regex-10">↩10</a> <a href="#fr-regex-11">↩11</a> <a href="#fr-regex-12">↩12</a> <a href="#fr-regex-13">↩13</a> <a href="#fr-regex-14">↩14</a> <a href="#fr-regex-15">↩15</a> <a href="#fr-regex-16">↩16</a> <a href="#fr-regex-17">↩17</a> <a href="#fr-regex-18">↩18</a> <a href="#fr-regex-19">↩19</a> <a href="#fr-regex-20">↩20</a> <a href="#fr-regex-21">↩21</a> <a href="#fr-regex-22">↩22</a> <a href="#fr-regex-23">↩23</a> <a href="#fr-regex-24">↩24</a> <a href="#fr-regex-25">↩25</a> <a href="#fr-regex-26">↩26</a> <a href="#fr-regex-27">↩27</a> <a href="#fr-regex-28">↩28</a> <a href="#fr-regex-29">↩29</a> <a href="#fr-regex-30">↩30</a> <a href="#fr-regex-31">↩31</a> <a href="#fr-regex-32">↩32</a> <a href="#fr-regex-33">↩33</a> <a href="#fr-regex-34">↩34</a> <a href="#fr-regex-35">↩35</a> <a href="#fr-regex-36">↩36</a> <a href="#fr-regex-37">↩37</a> <a href="#fr-regex-38">↩38</a> <a href="#fr-regex-39">↩39</a> <a href="#fr-regex-40">↩40</a></p>
 </li>
-</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="test"><a class="header" href="#test">Test</a></h1>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="test"><a class="header" href="#test">Test</a></h1>
 <p><code>[test]</code> セクションは以下のように組み込みユニットテストの設定を指定します。</p>
 <pre><code class="language-toml">[test]
 simulator = "vcs"
@@ -4196,48 +4412,88 @@ waveform_target = {type = "directory", path = "[dst dir]"}
 <li><code>vcd</code> – デフォルト値であり、多くのベンダーでサポートされていますが機能は限定的です。</li>
 <li><code>fst</code> – 整数の代わりにenum値を表示するなどいくつかの機能をサポートしています。<code>gtkwave</code> と <code>surfer</code> で扱うことができます。</li>
 </ul>
+<h3 id="defines-フィールド"><a class="header" href="#defines-フィールド"><code>defines</code> フィールド</a></h3>
+<p><code>defines</code> フィールドは、<code>veryl test</code> の実行中に定義済みとして扱われる名前のリストを指定します。これらの名前は <a href="#アトリビュート"><code>#[ifdef]</code>/<code>#[ifndef]</code></a> 属性から参照でき、テスト専用のコードパスを有効化するために利用できます。SystemVerilog テストと cocotb テストでは、同じ名前が <code>+define+NAME</code> (Vivado の場合は <code>-d NAME</code>) として外部シミュレータにも渡されます。</p>
+<pre><code class="language-toml">[test]
+defines = ["DEBUG", "ENABLE_ASSERTIONS"]
+</code></pre>
+<p>追加の名前はコマンドラインから <code>veryl test --define NAME</code> (または <code>-D NAME</code>) で渡すこともできます。CLI で指定した値はこのフィールドの内容にマージされます。</p>
 <h2 id="testverilator-セクション"><a class="header" href="#testverilator-セクション"><code>[test.verilator]</code> セクション</a></h2>
 <p>このセクションはVerilatorによるテストの設定です。</p>
-<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>説明</th></tr>
+</thead>
+<tbody>
 <tr><td>compile_args</td><td>[文字列]</td><td><code>verilator</code> コマンドへの追加の引数</td></tr>
 <tr><td>simulate_args</td><td>[文字列]</td><td>シミュレーションバイナリへの追加の引数</td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <h2 id="testvcs-セクション"><a class="header" href="#testvcs-セクション"><code>[test.vcs]</code> セクション</a></h2>
 <p>このセクションはVCSによるテストの設定です。</p>
-<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>説明</th></tr>
+</thead>
+<tbody>
 <tr><td>compile_args</td><td>[文字列]</td><td><code>vcs</code> コマンドへの追加の引数</td></tr>
 <tr><td>simulate_args</td><td>[文字列]</td><td>シミュレーションバイナリへの追加の引数</td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <h2 id="testdsim-セクション"><a class="header" href="#testdsim-セクション"><code>[test.dsim]</code> セクション</a></h2>
 <p>このセクションはDSimによるテストの設定です。</p>
-<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>説明</th></tr>
+</thead>
+<tbody>
 <tr><td>compile_args</td><td>[文字列]</td><td><code>dsim</code> コマンドへの追加の引数</td></tr>
 <tr><td>simulate_args</td><td>[文字列]</td><td><code>dsim</code> コマンドへの追加の引数</td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <h2 id="testvivado-セクション"><a class="header" href="#testvivado-セクション"><code>[test.vivado]</code> セクション</a></h2>
 <p>このセクションはVivadoによるテストの設定です。</p>
-<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>説明</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>説明</th></tr>
+</thead>
+<tbody>
 <tr><td>compile_args</td><td>[文字列]</td><td><code>xvlog</code> コマンドへの追加の引数</td></tr>
 <tr><td>elaborate_args</td><td>[文字列]</td><td><code>xelab</code> コマンドへの追加の引数</td></tr>
 <tr><td>simulate_args</td><td>[文字列]</td><td><code>xsim</code> コマンドへの追加の引数</td></tr>
-</tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="publish"><a class="header" href="#publish">Publish</a></h1>
+</tbody>
+</table>
+</div>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="publish"><a class="header" href="#publish">Publish</a></h1>
 <p><code>[publish]</code> セクションは以下のようにプロジェクト公開の設定を指定します。</p>
 <pre><code class="language-toml">[publish]
 bump_commit = true
 bump_commit_message = "Bump"
 </code></pre>
 <h3 id="設定-3"><a class="header" href="#設定-3">設定</a></h3>
-<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr>
+</thead>
+<tbody>
 <tr><td>bump_commit</td><td>ブーリアン</td><td>false</td><td>バージョンアップ後の自動コミット</td></tr>
 <tr><td>publish_commit</td><td>ブーリアン</td><td>false</td><td>公開後の自動コミット</td></tr>
 <tr><td>bump_commit_message</td><td>文字列</td><td>“chore: Bump version”</td><td>バージョンアップ後のコミットメッセージ</td></tr>
 <tr><td>publish_commit_message</td><td>文字列</td><td>“chore: Publish”</td><td>公開後のコミットメッセージ</td></tr>
-</tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="synth"><a class="header" href="#synth">Synth</a></h1>
+</tbody>
+</table>
+</div>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="synth"><a class="header" href="#synth">Synth</a></h1>
 <p><code>[synth]</code> セクションは、簡易的な論理合成を行って面積・タイミング・電力を見積もる <code>veryl synth</code> コマンドの設定を指定します。</p>
 <pre><code class="language-toml">[synth]
 top          = "TopModule"
@@ -4247,25 +4503,38 @@ activity     = 0.1
 timing_paths = 1
 </code></pre>
 <h2 id="設定-4"><a class="header" href="#設定-4">設定</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr>
+</thead>
+<tbody>
 <tr><td>top</td><td>文字列</td><td>(自動)</td><td>デフォルトのトップモジュール名。CLI の <code>--top</code> が指定されると上書きされます。未指定の場合、最初に見つかったユーザーモジュールが使用されます。</td></tr>
 <tr><td>library</td><td><code>sky130</code> / <code>asap7</code> / <code>gf180mcu</code> / <code>ihp-sg13g2</code></td><td><code>sky130</code></td><td>使用する組み込みセルライブラリ／PDK。</td></tr>
 <tr><td>clock_freq</td><td>浮動小数</td><td>100.0</td><td>動的消費電力見積もりで仮定するクロック周波数（MHz）。</td></tr>
 <tr><td>activity</td><td>浮動小数（0.0–1.0）</td><td>0.1</td><td>組み合わせネットで仮定するサイクルあたりのトグル率。</td></tr>
 <tr><td>timing_paths</td><td>整数</td><td>1</td><td>タイミングダンプで報告する最悪遅延エンドポイントの数。</td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <h2 id="組み込みライブラリ"><a class="header" href="#組み込みライブラリ">組み込みライブラリ</a></h2>
 <p><code>library</code> フィールドは面積・タイミング・電力の見積もりに使われる組み込みセルライブラリを指定します。値はすべて公開されている Liberty 特性化データから抽出または派生させたもので、サインオフ精度ではなく自己整合的な「相対コスト」として校正されています。すべてドライブ強度1のセルを用いています。</p>
-<div class="table-wrapper"><table><thead><tr><th><code>library</code></th><th>プロセス</th><th>セルライブラリ／コーナー</th><th>電源電圧</th><th>ソース（ライセンス）</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th><code>library</code></th><th>プロセス</th><th>セルライブラリ／コーナー</th><th>電源電圧</th><th>ソース（ライセンス）</th></tr>
+</thead>
+<tbody>
 <tr><td><code>sky130</code></td><td>SkyWater 130nm プレーナ CMOS</td><td><code>sky130_fd_sc_hd</code> / <code>tt_025C_1v80</code></td><td>1.8 V</td><td><a href="https://github.com/google/skywater-pdk">skywater-pdk</a>（Apache 2.0）</td></tr>
 <tr><td><code>asap7</code></td><td>ASU 7nm 予測 FinFET</td><td><code>asap7sc7p5t</code> RVT / <code>tt_0p7V</code></td><td>0.7 V</td><td><a href="https://github.com/The-OpenROAD-Project/asap7">asap7</a>（BSD 3-Clause）</td></tr>
 <tr><td><code>gf180mcu</code></td><td>GlobalFoundries 180nm MCU プレーナ CMOS</td><td><code>gf180mcu_fd_sc_mcu7t5v0</code> / <code>tt_025C_1v80</code></td><td>1.8 V</td><td><a href="https://github.com/google/gf180mcu-pdk">gf180mcu-pdk</a>（Apache 2.0）</td></tr>
 <tr><td><code>ihp-sg13g2</code></td><td>IHP 130nm SiGe BiCMOS</td><td><code>sg13g2_stdcell</code> / <code>typ_1p20V_25C</code></td><td>1.2 V</td><td><a href="https://github.com/IHP-GmbH/IHP-Open-PDK">IHP-Open-PDK</a>（Apache 2.0）</td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <p>Veryl はこれらの PDK の Liberty ソース、回路図、レイアウトを再配布していません。参考データとして、ごく少数のセル単位の面積・遅延・漏れ電力・エネルギーの値のみを利用しています。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h1>
 <p>他の Veryl プロジェクトへの依存関係をプロジェクトに追加したい場合、<code>Veryl.toml</code> に <code>[dependencies]</code> セクションを追加します。エントリの左辺は依存関係のプロジェクト名、右辺はソースパスとバージョンです。<code>github</code> はGitHub上のリポジトリを参照する糖衣構文です。代わりに <code>git</code> を用いてURL全体を指定することもできます。</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
@@ -4330,7 +4599,27 @@ veryl_sample = {path = "../../veryl_sample"}
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = "../veryl_sample"}
 </code></pre>
 <p>これは <code>../veryl_sample</code> が存在する場合はそれを使い、そうでない場合は Git から取得する、という意味です。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="プロジェクトを公開する"><a class="header" href="#プロジェクトを公開する">プロジェクトを公開する</a></h1>
+<h2 id="git-バックエンド"><a class="header" href="#git-バックエンド">Git バックエンド</a></h2>
+<p>Veryl は 2 つの異なるバックエンドを通して git ベースの依存を取得できます。</p>
+<ul>
+<li><code>gitoxide</code> — 純粋な Rust 実装の git。外部の <code>git</code> バイナリを必要としません。</li>
+<li><code>command</code> — システムの <code>git</code> コマンドを実行します。<code>git</code> が <code>PATH</code> に存在する必要があります。</li>
+</ul>
+<p>既定では <code>gitoxide</code> を試し、失敗した場合 (たとえば gitoxide が対応していない認証方式が必要な場合など) に自動的に <code>command</code> へフォールバックします。バックエンドは <code>VERYL_GIT_BACKEND</code> 環境変数で明示的に選択できます。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定値</th><th>挙動</th></tr>
+</thead>
+<tbody>
+<tr><td><code>auto</code></td><td>既定値。<code>gitoxide</code> を試し、失敗時に <code>command</code> へフォールバックする。</td></tr>
+<tr><td><code>gitoxide</code></td><td><code>gitoxide</code> を強制する。フォールバックなし。</td></tr>
+<tr><td><code>command</code></td><td>システムの <code>git</code> コマンドを強制する。フォールバックなし。</td></tr>
+</tbody>
+</table>
+</div>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="プロジェクトを公開する"><a class="header" href="#プロジェクトを公開する">プロジェクトを公開する</a></h1>
 <p>プロジェクトを公開するには <code>veryl publish</code> コマンドを使います。公開とはバージョン番号とgitのリビジョンを紐づけることです。</p>
 <pre><code>$ veryl publish
 [INFO ]   Publishing release (0.2.1 @ 297bc6b24c5ceca9e648c3ea5e01011c67d7efe7)
@@ -4363,8 +4652,9 @@ $ git push
 [INFO ]   Committing metadata ([path to project]/Veryl.pub)
 </code></pre>
 <h3 id="設定-5"><a class="header" href="#設定-5">設定</a></h3>
-<p>全設定の説明は<a href="06_development_environment/./01_project_configuration/05_publish.html">こちら</a>。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ディレクトリ構成"><a class="header" href="#ディレクトリ構成">ディレクトリ構成</a></h1>
+<p>全設定の説明は<a href="#publish">こちら</a>。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ディレクトリ構成"><a class="header" href="#ディレクトリ構成">ディレクトリ構成</a></h1>
 <p>Veryl は任意のディレクトリ構成をサポートしています。これは独立したプロジェクトと他のプロジェクトに組み込まれたプロジェクトでは最適なディレクトリ構成が異なるためです。</p>
 <p>この節ではいくつかのディレクトリ構成パターンを示します。</p>
 <h2 id="単一のソースディレクトリ"><a class="header" href="#単一のソースディレクトリ">単一のソースディレクトリ</a></h2>
@@ -4458,15 +4748,32 @@ target = {type = "directory", path = "target"}
 <li><code>*.sv</code></li>
 <li><code>*.f</code></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="フォーマッタ"><a class="header" href="#フォーマッタ">フォーマッタ</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="フォーマッタ"><a class="header" href="#フォーマッタ">フォーマッタ</a></h1>
 <p><code>veryl fmt</code> コマンドでソースコードをフォーマットできます。あるいは言語サーバの <code>textDocument/formatting</code> 要求によるフォーマットにも対応しています。</p>
-<p>全設定の説明は<a href="06_development_environment/./01_project_configuration/02_format.html">こちら</a>。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="リンタ"><a class="header" href="#リンタ">リンタ</a></h1>
+<p>全設定の説明は<a href="#format">こちら</a>。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="リンタ"><a class="header" href="#リンタ">リンタ</a></h1>
 <p><code>veryl check</code> あるいは <code>veryl build</code> でリントチェックができます。あるいは言語サーバはリアルタイムでのチェックを行います。</p>
-<p>全設定の説明は<a href="06_development_environment/./01_project_configuration/03_lint.html">こちら</a>。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="シミュレータ"><a class="header" href="#シミュレータ">シミュレータ</a></h1>
+<p>全設定の説明は<a href="#lint">こちら</a>。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="シミュレータ"><a class="header" href="#シミュレータ">シミュレータ</a></h1>
 <p>テストは <code>veryl test</code> で実行することができます。</p>
-<p><a href="06_development_environment/../05_language_reference/13_integrated_test.html#native-test">ネイティブテスト</a> ではVerylの組み込みシミュレータが使用されます。外部シミュレータのインストールは不要です。</p>
+<p><a href="#native-test">ネイティブテスト</a> ではVerylの組み込みシミュレータが使用されます。外部シミュレータのインストールは不要です。</p>
+<p>ネイティブシミュレータのコード生成バックエンドは <code>veryl test --backend</code> で選択します。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>バックエンド</th><th>説明</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cc</code></td><td>既定値。C を出力し、外部の C コンパイラ (<code>gcc</code> または <code>clang</code> の <code>-O3</code>) でコンパイルした結果をロードする。</td></tr>
+<tr><td><code>cranelift</code></td><td>インプロセスの Cranelift JIT。</td></tr>
+<tr><td><code>interpret</code></td><td>コード生成を行わず、サイクルごとに IR を歩く。</td></tr>
+</tbody>
+</table>
+</div>
+<p><code>cc</code> バックエンドは <code>cc</code> (通常は <code>gcc</code> または <code>clang</code>) が <code>PATH</code> に存在することを要求します。<code>cc</code> が無い場合や、特定の構文がまだ <code>cc</code> エミッタで対応されていない場合は、その部分について Cranelift へ透過的にフォールバックします。<code>veryl test --backend-validate</code> を使うと <code>cc</code> バックエンドを Cranelift と並行実行し、差異があれば中断します。</p>
 <p>SystemVerilogテストとcocotbテストでは、外部のRTLシミュレータが必要です。サポートされているシミュレータは以下の通りです。</p>
 <ul>
 <li><a href="https://www.veripool.org/verilator/">Verilator</a></li>
@@ -4475,20 +4782,29 @@ target = {type = "directory", path = "target"}
 <li><a href="https://www.xilinx.com/products/design-tools/vivado/verification.html">AMD Vivado Simulator</a></li>
 </ul>
 <p>Verilatorはデフォルトのシミュレータです。<code>Veryl.toml</code>やコマンドラインオプションでシミュレータが指定されていない場合に使用されます。</p>
-<p>全設定の説明は<a href="06_development_environment/./01_project_configuration/04_test.html">こちら</a>。</p>
+<p>全設定の説明は<a href="#test">こちら</a>。</p>
 <h2 id="cocotb"><a class="header" href="#cocotb">cocotb</a></h2>
 <p><code>cocotb</code> テストを実行するには <code>cocotb</code> がインストールされた <code>python3</code> の環境が必要です。サポートされている <code>cocotb</code> のバージョンは 1.9.x あるいは 2.0.x です。</p>
 <p>例えば以下のコマンドでインストールすることができます。</p>
 <pre><code class="language-console">$ pip3 install cocotb==2.0.0
 </code></pre>
 <p>シミュレータバックエンドとしては Verilator のみサポートされています。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="言語サーバ"><a class="header" href="#言語サーバ">言語サーバ</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="言語サーバ"><a class="header" href="#言語サーバ">言語サーバ</a></h1>
 <p><code>veryl-ls</code> は言語サーバのバイナリです。使用するにはエディタの設定やプラグインが必要です。</p>
 <p>設定可能な項目は以下の通りです。これは各エディタの設定から指定できます。</p>
-<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr>
+</thead>
+<tbody>
 <tr><td>useOperatorCompletion</td><td>ブーリアン</td><td>false</td><td>演算子（例 ‘&gt;:’, ‘&gt;&gt;’）の補完を有効にする</td></tr>
-</tbody></table>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="互換性"><a class="header" href="#互換性">互換性</a></h1>
+</tbody>
+</table>
+</div>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="互換性"><a class="header" href="#互換性">互換性</a></h1>
 <p>いくつかのツールはサポートしていない SystemVerilog 構文があります。これをサポートするために、 <code>Veryl.toml</code> の設定でコード生成をカスタマイズすることができます。</p>
 <h2 id="vivado"><a class="header" href="#vivado">Vivado</a></h2>
 <h3 id="文字列パラメータ"><a class="header" href="#文字列パラメータ">文字列パラメータ</a></h3>
@@ -4509,8 +4825,9 @@ implicit_parameter_types = ["string"]
 expand_inside_operation = true
 </code></pre>
 <p>設定すると、 <code>inside</code> 演算子を使った演算は <code>==?</code> 演算子を使った論理に展開されます。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ドキュメンテーション"><a class="header" href="#ドキュメンテーション">ドキュメンテーション</a></h1>
-<p>プロジェクトのドキュメントは <code>veryl doc</code> コマンドで生成することができます。全てのパブリックなモジュールとインターフェース、パッケージがリストアップされます。（参照 <a href="06_development_environment/../05_language_reference/11_visibility.html">可視性</a>）</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ドキュメンテーション"><a class="header" href="#ドキュメンテーション">ドキュメンテーション</a></h1>
+<p>プロジェクトのドキュメントは <code>veryl doc</code> コマンドで生成することができます。全てのパブリックなモジュールとインターフェース、パッケージがリストアップされます。（参照 <a href="#可視性">可視性</a>）</p>
 <p>詳細な説明を書きたい場合はドキュメンテーションコメントを追加することもできます。ドキュメンテーションコメントでは<a href="https://www.markdownguide.org">マークダウン</a>記法を使えます。</p>
 <p>以下のフォーマットもサポートされています。</p>
 <ul>
@@ -4555,9 +4872,15 @@ pub module ModuleA #(
 <pre><code class="language-toml">[doc]
 path = "document"
 </code></pre>
-<div class="table-wrapper"><table><thead><tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr>
+</thead>
+<tbody>
 <tr><td>path</td><td>文字列</td><td>“doc”</td><td>出力ディレクトリへのパス</td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <h2 id="ドキュメンテーションテスト"><a class="header" href="#ドキュメンテーションテスト">ドキュメンテーションテスト</a></h2>
 <p>WaveDromブロックは <code>wavedrom</code> の代わりに <code>wavedrom,test</code> コードブロックを使うことでドキュメンテーションテストとしても利用できます。波形の信号名はモジュールポートと名前で照合されます（<code>i_</code>/<code>o_</code> プレフィックスと <code>_n</code> サフィックスは自動的に除去されます）。クロックとリセット信号は適切に認識・処理されます。</p>
@@ -4599,7 +4922,8 @@ pub module ModuleB (
     assign o_dout = r_data;
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="github-action"><a class="header" href="#github-action">GitHub Action</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="github-action"><a class="header" href="#github-action">GitHub Action</a></h1>
 <p>ビルド済みのVerylバイナリをダウンロードするための公式GitHub actionが提供されています。</p>
 <p><a href="https://github.com/marketplace/actions/setup-veryl">https://github.com/marketplace/actions/setup-veryl</a></p>
 <p>GitHub actionスクリプトの例は以下の通りです。</p>
@@ -4649,9 +4973,10 @@ jobs:
     - uses: veryl-lang/setup-verilator@v1
     - run: veryl test --sim verilator
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ソースマップ"><a class="header" href="#ソースマップ">ソースマップ</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ソースマップ"><a class="header" href="#ソースマップ">ソースマップ</a></h1>
 <p>ソースマップはSystemVerilogからVerylへ位置情報を追跡するために使用されるファイルです。このファイルによって、SystemVerilogのファイルパス・行・列をVeryl上の位置に変換することができます。</p>
-<p>デフォルトではVerylは生成されたSystemVerilogと同じディレクトリに拡張子 <code>.sv.map</code> のソースマップを生成します。ソースマップの生成は <code>Veryl.toml</code> の <a href="06_development_environment/./01_project_configuration/01_build.html#sourcemap-target"><code>sourcemap_target</code> フィールド</a>で制御することができます。</p>
+<p>デフォルトではVerylは生成されたSystemVerilogと同じディレクトリに拡張子 <code>.sv.map</code> のソースマップを生成します。ソースマップの生成は <code>Veryl.toml</code> の <a href="#sourcemap-target"><code>sourcemap_target</code> フィールド</a>で制御することができます。</p>
 <p>ソースマップの形式は <a href="https://sourcemaps.info/spec.html">Source Map Revision 3</a> に従います。生成されたコードとマップのリンク方法はJavaScriptのものとほとんど同じですが、相対パスのみが使われます。</p>
 <pre><code class="language-verilog">//# sourceMappingURL=&lt;relative path&gt;
 </code></pre>
@@ -4665,7 +4990,8 @@ jobs:
 <pre><code>$ sourcemap-resolver test.log      # annotate the existing log
 $ [command] | sourcemap-resolver   # on-the-fly annotation by pipe
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="verylup"><a class="header" href="#verylup">verylup</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="verylup"><a class="header" href="#verylup">verylup</a></h1>
 <p><a href="https://github.com/veryl-lang/verylup">verylup</a> はVerylの公式ツールチェーンインストーラです。ツールチェーンの更新や切り替えを簡単に行うことができます。</p>
 <h2 id="ツールチェーンの更新"><a class="header" href="#ツールチェーンの更新">ツールチェーンの更新</a></h2>
 <p>以下のコマンドはVerylツールチェーンとverylupを最新版に更新します。</p>
@@ -4734,7 +5060,8 @@ veryl build
 // 最新のツールチェーンを使う
 veryl +latest build
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="新バージョンへの移行"><a class="header" href="#新バージョンへの移行">新バージョンへの移行</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="新バージョンへの移行"><a class="header" href="#新バージョンへの移行">新バージョンへの移行</a></h1>
 <p>Verylの新しいバージョンが破壊的な変更を伴うことがあります。<code>veryl migrate</code> は既存のプロジェクトを新バージョンに自動的に移行します。<code>--check</code> オプションによりどのような変更が適用されるか事前に確認することもできます。</p>
 <pre><code class="language-console">$ veryl migrate --check
 $ veryl migrate
@@ -4743,7 +5070,8 @@ $ veryl migrate
 <pre><code class="language-console">$ veryl +0.15.0 migrate  # from v0.14.0 to v0.15.0
 $ veryl +0.16.0 migrate  # from v0.15.0 to v0.16.0
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="docker-イメージ"><a class="header" href="#docker-イメージ">Docker イメージ</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="docker-イメージ"><a class="header" href="#docker-イメージ">Docker イメージ</a></h1>
 <p>公式のDockerイメージはDocker Hubを通して提供されています。</p>
 <p><a href="https://hub.docker.com/r/veryllang/veryl">https://hub.docker.com/r/veryllang/veryl</a></p>
 <p>イメージはカスタムイメージのベースや、GitLab CI/CDのために使うことができます。以下に使用例をいくつか示します。</p>
@@ -4769,22 +5097,30 @@ fmt:
   script:
     - veryl fmt --check
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="トランスレータ"><a class="header" href="#トランスレータ">トランスレータ</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="トランスレータ"><a class="header" href="#トランスレータ">トランスレータ</a></h1>
 <p><code>veryl translate</code> は SystemVerilog のソースファイルを Veryl のソースに変換します。既存の SystemVerilog コードベースの移行を支援するベストエフォートのツールであり、結果が完全に置き換え可能であることは保証されず、手動でのレビューが必要になる場合があります。</p>
 <pre><code class="language-console">$ veryl translate foo.sv
 </code></pre>
 <p>入力された各 <code>.sv</code> ファイルに対して、同じディレクトリに同名の <code>.veryl</code> ファイルが生成されます。変換後の出力は Veryl のフォーマッタを通すため、標準的なフォーマットスタイルに従います。</p>
 <h2 id="オプション"><a class="header" href="#オプション">オプション</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>オプション</th><th>説明</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>オプション</th><th>説明</th></tr>
+</thead>
+<tbody>
 <tr><td><code>--stdout</code></td><td>ファイルに書き込まず、結果を標準出力へ書き出します。パイプ処理や、デフォルト以外のパスへリダイレクトしたい場合に便利です。</td></tr>
 <tr><td><code>--strict</code></td><td>未サポートの構文が見つかった場合、非ゼロのステータスで終了します。</td></tr>
 <tr><td><code>--no-format</code></td><td>Veryl フォーマッタの処理をスキップし、トランスレータの生の出力を出します。</td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <h2 id="未サポートの構文"><a class="header" href="#未サポートの構文">未サポートの構文</a></h2>
 <p>SystemVerilog の中には Veryl で表現できないもの、あるいはトランスレータがまだ対応していないものがあります。そのような構文が現れた場合、構文の種別とソース行番号付きの警告が出力され、当該箇所は出力中にコメントやプレースホルダとして残されます。ファイルごとに未サポート構文の合計数も末尾にまとめて報告されます。</p>
 <p><code>--strict</code> モードでは、未サポートの構文が一つでもあれば <code>veryl translate</code> は非ゼロのステータスで終了します。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="シンセサイザ"><a class="header" href="#シンセサイザ">シンセサイザ</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="シンセサイザ"><a class="header" href="#シンセサイザ">シンセサイザ</a></h1>
 <p><code>veryl synth</code> はプロジェクトに対して簡易的な論理合成を行い、概算の面積・タイミング・電力を報告します。これは設計検討中に素早くフィードバックを得るためのツールであり、本格的な合成フローの代替を意図したものではありません。設計は選択したライブラリ内の代表的なセル群へマッピングされますが、配置配線・負荷容量・駆動能力・Vth の選択は考慮されません。</p>
 <pre><code class="language-console">$ veryl synth
 </code></pre>
@@ -4794,7 +5130,7 @@ fmt:
 <li>設定されている場合、<code>Veryl.toml</code> の <code>synth.top</code></li>
 <li>プロジェクト内で最初に見つかったユーザーモジュール</li>
 </ol>
-<p>セルライブラリ、クロック周波数、トグル率といった設定項目については <a href="06_development_environment/./01_project_configuration/06_synth.html"><code>[synth]</code></a> を参照してください。</p>
+<p>セルライブラリ、クロック周波数、トグル率といった設定項目については <a href="#synth"><code>[synth]</code></a> を参照してください。</p>
 <h2 id="出力"><a class="header" href="#出力">出力</a></h2>
 <p>デフォルトでは、<code>veryl synth</code> は1行のサマリと、面積／タイミング／電力の詳細ブロックを出力します。</p>
 <pre><code class="language-text">synth: TopModule — 123 gates, 17 FFs
@@ -4814,18 +5150,26 @@ power:
   ...
 </code></pre>
 <h2 id="オプション-1"><a class="header" href="#オプション-1">オプション</a></h2>
-<div class="table-wrapper"><table><thead><tr><th>オプション</th><th>説明</th></tr></thead><tbody>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>オプション</th><th>説明</th></tr>
+</thead>
+<tbody>
 <tr><td><code>--top &lt;name&gt;</code></td><td>トップモジュール名。<code>Veryl.toml</code> の <code>synth.top</code> を上書きします。</td></tr>
 <tr><td><code>--timing-paths &lt;n&gt;</code></td><td>タイミングダンプで報告する最悪遅延エンドポイントの数。<code>synth.timing_paths</code> を上書きします。</td></tr>
 <tr><td><code>--dump-ir</code></td><td>ゲートレベル IR（ゲートとフリップフロップのネットリスト）をダンプします。</td></tr>
 <tr><td><code>--dump-area</code></td><td>セル種別ごとの面積内訳をダンプします。</td></tr>
 <tr><td><code>--dump-timing</code></td><td>クリティカルパスのトレースをダンプします。</td></tr>
 <tr><td><code>--dump-power</code></td><td>電力見積もり（漏れ電力＋動的電力の内訳）をダンプします。</td></tr>
-</tbody></table>
+</tbody>
+</table>
 </div>
 <p><code>--dump-*</code> フラグが何も指定されない場合、面積／タイミング／電力の3つすべてがダンプされます。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="補遺"><a class="header" href="#補遺">補遺</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="構文"><a class="header" href="#構文">構文</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="補遺"><a class="header" href="#補遺">補遺</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="構文"><a class="header" href="#構文">構文</a></h1>
 <p>Veryl のパーサはパーサジェネレータ <a href="https://github.com/jsinger67/parol">parol</a>を使っています。以下の parol の構文定義が正式な構文です。</p>
 <pre><code>
 %start Veryl
@@ -5922,7 +6266,8 @@ PublicDescriptionItem: ModuleDeclaration
 
 Veryl: Start { DescriptionGroup };
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="セマンティックエラー"><a class="header" href="#セマンティックエラー">セマンティックエラー</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="セマンティックエラー"><a class="header" href="#セマンティックエラー">セマンティックエラー</a></h1>
 <p>この付録では、Veryl のセマンティック解析器が出力する診断を一覧します。診断は、コンパイルを停止させるエラーと、コンパイルの継続を許す警告に分けて記載します。</p>
 <h2 id="エラー"><a class="header" href="#エラー">エラー</a></h2>
 <h3 id="ambiguous_elsif"><a class="header" href="#ambiguous_elsif">ambiguous_elsif</a></h3>
@@ -5931,6 +6276,8 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、名前付きの識別子が必要な位置で匿名識別子（<code>_</code>）が使われた場合に報告されます。</p>
 <h3 id="call_non_function"><a class="header" href="#call_non_function">call_non_function</a></h3>
 <p>このエラーは、関数でないシンボルを関数として呼び出した場合に報告されます。呼び出しを削除するか、実際の関数シンボルに置き換えてください。</p>
+<h3 id="combinational_loop"><a class="header" href="#combinational_loop">combinational_loop</a></h3>
+<p>このエラーは、シーケンシャル要素を介さず、信号の値が純粋な組み合わせ論理を通じて自分自身に依存している場合に報告されます。ループは <code>assign</code> 宣言、<code>always_comb</code> ブロック、関数呼び出し、またはインスタンス化されたモジュールやインターフェースによって形成され得ます。少なくとも 1 つのパス上にレジスタ (<code>always_ff</code>) を挿入するか、依存関係の連鎖が終了するように設計を再構成してループを解消してください。</p>
 <h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
 <p>このエラーは、複数の型定義が循環的に互いを参照している場合に報告されます。参照のいずれかを削除または再構成して循環を断ち切ってください。</p>
 <h3 id="duplicated_identifier"><a class="header" href="#duplicated_identifier">duplicated_identifier</a></h3>
@@ -6089,7 +6436,7 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、識別子間で誤った区切り文字（<code>::</code> と <code>.</code>）が使われた場合に報告されます。正しい区切り文字に置き換えてください。</p>
 <h2 id="警告"><a class="header" href="#警告">警告</a></h2>
 <h3 id="invalid_identifier"><a class="header" href="#invalid_identifier">invalid_identifier</a></h3>
-<p>この警告は、識別子が設定された命名規則（<a href="07_appendix/../06_development_environment/01_project_configuration/03_lint.html">Lint</a> を参照）に違反している場合に報告されます。規則に従うように識別子をリネームしてください。</p>
+<p>この警告は、識別子が設定された命名規則（<a href="#lint">Lint</a> を参照）に違反している場合に報告されます。規則に従うように識別子をリネームしてください。</p>
 <h3 id="invalid_logical_operand"><a class="header" href="#invalid_logical_operand">invalid_logical_operand</a></h3>
 <p>この警告は、複数ビット値が論理演算子のオペランドとして使われた場合に報告されます。<code>==</code> などで 1 ビットに縮約してください。</p>
 <h3 id="invalid_select"><a class="header" href="#invalid_select">invalid_select</a></h3>
@@ -6134,6 +6481,11 @@ Veryl: Start { DescriptionGroup };
 
         </div>
 
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
 
 
 
@@ -6141,35 +6493,31 @@ Veryl: Start { DescriptionGroup };
             window.playground_copyable = true;
         </script>
 
-        <script src="ace.js"></script>
-        <script src="editor.js"></script>
-        <script src="mode-rust.js"></script>
-        <script src="theme-dawn.js"></script>
-        <script src="theme-tomorrow_night.js"></script>
+        <script src="ace-2a3cd908.js"></script>
+        <script src="mode-rust-2c9d5c9a.js"></script>
+        <script src="editor-16ca416c.js"></script>
+        <script src="theme-dawn-4493f9c8.js"></script>
+        <script src="theme-tomorrow_night-9dbe62a9.js"></script>
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
-        <script type="module">
-            import init, {build, format} from "https://doc.veryl-lang.org/playground/pkg/veryl_wasm.js";
-            init().then(() => {});
-            window.build = build;
-        </script>
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-e55bd6fc.js"></script>
+        <script src="book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="mode-veryl.js"></script>
-        <script src="editor.js"></script>
-        <script src="theme/language-picker.js"></script>
+        <script src="mode-veryl-1cf782d1.js"></script>
+        <script src="veryl-init-13e2a09c.js"></script>
+        <script src="theme/language-picker-32df9c32.js"></script>
 
         <script>
         window.addEventListener('load', function() {
             window.setTimeout(window.print, 100);
         });
         </script>
+
 
     </div>
     </body>
