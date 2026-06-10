@@ -115,6 +115,7 @@ fn metadata() -> Metadata {
         lockfile_path: "".into(),
         lockfile: Lockfile::default(),
         build_info: BuildInfo::default(),
+        output_dir_override: None,
     }
 }
 
