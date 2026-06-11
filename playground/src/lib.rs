@@ -125,6 +125,11 @@ pub fn set_hook() {
 }
 
 #[wasm_bindgen]
+pub fn revision() -> String {
+    env!("VERYL_REVISION").to_string()
+}
+
+#[wasm_bindgen]
 pub fn build(source: &str) -> Result {
     let metadata = metadata();
     match Parser::parse(source, &"") {
