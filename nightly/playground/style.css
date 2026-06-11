@@ -528,6 +528,30 @@ body {
   color: var(--text-muted);
 }
 
+.statusbar-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#revision {
+  color: var(--text-muted);
+}
+
+#revision a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#revision a:hover {
+  text-decoration: underline;
+}
+
+#revision code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+}
+
 .status-dot {
   display: inline-block;
   width: 8px;
