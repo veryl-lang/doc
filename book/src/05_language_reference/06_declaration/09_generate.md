@@ -35,7 +35,9 @@ module ModuleA (
     }
 
     for i in 0..4 :g_a {
-        assign a[i + 1] = a[i];
+        if i != 3 :g {
+            assign a[i + 1] = a[i];
+        }
     }
 
     always_comb {
