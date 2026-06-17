@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-9cf3f2c8.js";
+            window.path_to_searchindex_js = "searchindex-0fcd6774.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-d102f71b.js"></script>
@@ -2498,7 +2498,9 @@ module ModuleB {
     }
 
     for i in 0..4 :g_a {
-        assign a[i + 1] = a[i];
+        if i != 3 :g {
+            assign a[i + 1] = a[i];
+        }
     }
 
     always_comb {
@@ -5223,7 +5225,7 @@ power:
 // Longest match should be first
 
 CommentsTerm          : &lt;INITIAL, Generic, EmbedHeader,                            Attr&gt;"(?:(?:(?://.*(?:\r\n|\r|\n))|(?:(?ms)/\*/?([^/]|[^*]/)*\*/))\s*)+"                   : Token;
-StringLiteralTerm     : &lt;INITIAL         ,                                         Attr&gt;"\u{0022}(?:\\[\u{0022}\\/bfnrt]|[^\u{0022}\\\u0000-\u001F])*\u{0022}"                : Token;
+StringLiteralTerm     : &lt;INITIAL         ,                                         Attr&gt;"\u{0022}(?:\\[\u{0022}\\fnt]|[^\u{0022}\\\u0000-\u001F])*\u{0022}"                   : Token;
 ExponentTerm          : &lt;INITIAL, Generic                                              &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*[eE][+-]?[0-9]+(?:_[0-9]+)*/                   : Token;
 FixedPointTerm        : &lt;INITIAL, Generic                                              &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*/                                              : Token;
 BasedTerm             : &lt;INITIAL, Generic                                              &gt;/(?:[0-9]+(?:_[0-9]+)*)?'s?[bodh][0-9a-fA-FxzXZ]+(?:_[0-9a-fA-FxzXZ]+)*/              : Token;
