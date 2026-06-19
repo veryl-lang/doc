@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-0fcd6774.js";
+            window.path_to_searchindex_js = "../searchindex-33f321a5.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-d102f71b.js"></script>
@@ -378,7 +378,10 @@ module ModuleB (
     foo_if: modport InterfaceA::mp,
 ) {
     inst bar_if: InterfaceA;
-    inst u     : ModuleA ( foo_if: foo_if, bar_if: bar_if );
+    inst u: ModuleA (
+        foo_if: foo_if,
+        bar_if: bar_if,
+    );
 }
 </code></pre>
 

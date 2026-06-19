@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-3004cb07.js";
+            window.path_to_searchindex_js = "../../searchindex-70f1de54.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-92efcc39.js"></script>
@@ -299,7 +299,11 @@ In the block, clock domain crossing error is suppressed, so designer should chec
     o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
-        inst u_sync: $sv::SynchronizerCell ( i_clk: i_clk_b, i_dat: i_dat_a, o_dat: o_dat_b );
+        inst u_sync: $sv::SynchronizerCell (
+            i_clk: i_clk_b,
+            i_dat: i_dat_a,
+            o_dat: o_dat_b,
+        );
     }
 }
 </code></pre>

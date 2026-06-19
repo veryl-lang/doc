@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-0fcd6774.js";
+            window.path_to_searchindex_js = "searchindex-33f321a5.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-d102f71b.js"></script>
@@ -1077,7 +1077,11 @@ module ModuleA #(
     //   port connnection can be specified by `()`
     //   each port connection is `[port_name]:[variable]`
     //   `[port_name]` means `[port_name]:[port_name]`
-    inst u_module_b: ModuleB ( i_clk, i_data: r_data1, o_data: r_data2 );
+    inst u_module_b: ModuleB (
+        i_clk          ,
+        i_data: r_data1,
+        o_data: r_data2,
+    );
 
     // instance declaration with parameter override
     //   notation of parameter connection is the same as port
@@ -2427,7 +2431,10 @@ module ModuleB {
     inst a_if: InterfaceA::&lt;8&gt; [4];
     inst b_if: InterfaceA::&lt;8&gt; [4];
 
-    inst u: ModuleA ( slave_if: a_if, master_if: b_if );
+    inst u: ModuleA (
+        slave_if : a_if,
+        master_if: b_if,
+    );
 }
 </code></pre>
 <h2 id="align-アトリビュート"><a class="header" href="#align-アトリビュート"><code>align</code> アトリビュート</a></h2>
@@ -2566,7 +2573,11 @@ module ModuleC {
     bind ModuleA &lt;- u0: ModuleB ( i_clk, i_rst, a_if );
 }
 
-bind ModuleA &lt;- u1: ModuleB ( i_clk: i_clk, i_rst: i_rst, a_if: a_if );
+bind ModuleA &lt;- u1: ModuleB (
+    i_clk: i_clk,
+    i_rst: i_rst,
+    a_if : a_if ,
+);
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="名前付きブロック"><a class="header" href="#名前付きブロック">名前付きブロック</a></h1>
@@ -2873,7 +2884,10 @@ module ModuleB (
     foo_if: modport InterfaceA::mp,
 ) {
     inst bar_if: InterfaceA;
-    inst u     : ModuleA ( foo_if: foo_if, bar_if: bar_if );
+    inst u: ModuleA (
+        foo_if: foo_if,
+        bar_if: bar_if,
+    );
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -3031,7 +3045,11 @@ module test_counter {
 
     var cnt: logic&lt;32&gt;;
 
-    inst dut: Counter ( clk: clk, rst: rst, cnt: cnt );
+    inst dut: Counter (
+        clk: clk,
+        rst: rst,
+        cnt: cnt,
+    );
 
     initial {
         rst.assert();
@@ -3278,7 +3296,10 @@ proto module ProtoA #(
 );
 
 module ModuleB::&lt;T: ProtoA&gt; {
-    inst u: T ( i_dat: 0, o_dat: _ );
+    inst u: T (
+        i_dat: 0,
+        o_dat: _,
+    );
 }
 
 module ModuleC for ProtoA #(
@@ -3346,7 +3367,9 @@ module ModuleA::&lt;BUS_IF: ProtoA&gt; (
 module ModuleB {
     inst bus_if: InterfaceA::&lt;8&gt;;
 
-    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; ( bus_if: bus_if );
+    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; (
+        bus_if: bus_if,
+    );
 }
 </code></pre>
 <h2 id="パッケージプロトタイプ"><a class="header" href="#パッケージプロトタイプ">パッケージプロトタイプ</a></h2>
@@ -3600,7 +3623,11 @@ interface InterfaceA {}
     o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
-        inst u_sync: $sv::SynchronizerCell ( i_clk: i_clk_b, i_dat: i_dat_a, o_dat: o_dat_b );
+        inst u_sync: $sv::SynchronizerCell (
+            i_clk: i_clk_b,
+            i_dat: i_dat_a,
+            o_dat: o_dat_b,
+        );
     }
 }
 </code></pre>

@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-3004cb07.js";
+            window.path_to_searchindex_js = "../../searchindex-70f1de54.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-92efcc39.js"></script>
@@ -386,7 +386,10 @@ module ModuleB {
     inst a_if: InterfaceA::&lt;8&gt; [4];
     inst b_if: InterfaceA::&lt;8&gt; [4];
 
-    inst u: ModuleA ( slave_if: a_if, master_if: b_if );
+    inst u: ModuleA (
+        slave_if : a_if,
+        master_if: b_if,
+    );
 }
 </code></pre>
 <h2 id="align-attribute"><a class="header" href="#align-attribute"><code>align</code> Attribute</a></h2>
