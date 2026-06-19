@@ -122,6 +122,9 @@ module ModuleB (
     foo_if: modport InterfaceA::mp,
 ) {
     inst bar_if: InterfaceA;
-    inst u     : ModuleA ( foo_if: foo_if, bar_if: bar_if );
+    inst u: ModuleA (
+        foo_if: foo_if,
+        bar_if: bar_if,
+    );
 }
 ```

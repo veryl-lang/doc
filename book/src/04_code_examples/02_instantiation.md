@@ -20,7 +20,11 @@ module ModuleA #(
     //   port connnection can be specified by `()`
     //   each port connection is `[port_name]:[variable]`
     //   `[port_name]` means `[port_name]:[port_name]`
-    inst u_module_b: ModuleB ( i_clk, i_data: r_data1, o_data: r_data2 );
+    inst u_module_b: ModuleB (
+        i_clk          ,
+        i_data: r_data1,
+        o_data: r_data2,
+    );
 
     // instance declaration with parameter override
     //   notation of parameter connection is the same as port

@@ -31,7 +31,11 @@ module ModuleA (
     o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
-        inst u_sync: $sv::SynchronizerCell ( i_clk: i_clk_b, i_dat: i_dat_a, o_dat: o_dat_b );
+        inst u_sync: $sv::SynchronizerCell (
+            i_clk: i_clk_b,
+            i_dat: i_dat_a,
+            o_dat: o_dat_b,
+        );
     }
 }
 ```

@@ -123,7 +123,10 @@ module ModuleB {
     inst a_if: InterfaceA::<8> [4];
     inst b_if: InterfaceA::<8> [4];
 
-    inst u: ModuleA ( slave_if: a_if, master_if: b_if );
+    inst u: ModuleA (
+        slave_if : a_if,
+        master_if: b_if,
+    );
 }
 ```
 

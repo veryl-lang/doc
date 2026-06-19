@@ -25,7 +25,10 @@ proto module ProtoA #(
 );
 
 module ModuleB::<T: ProtoA> {
-    inst u: T ( i_dat: 0, o_dat: _ );
+    inst u: T (
+        i_dat: 0,
+        o_dat: _,
+    );
 }
 
 module ModuleC for ProtoA #(
@@ -98,7 +101,9 @@ module ModuleA::<BUS_IF: ProtoA> (
 module ModuleB {
     inst bus_if: InterfaceA::<8>;
 
-    inst u: ModuleA::<InterfaceA::<8>> ( bus_if: bus_if );
+    inst u: ModuleA::<InterfaceA::<8>> (
+        bus_if: bus_if,
+    );
 }
 ```
 

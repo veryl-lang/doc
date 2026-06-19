@@ -58,5 +58,9 @@ module ModuleC {
     bind ModuleA <- u0: ModuleB ( i_clk, i_rst, a_if );
 }
 
-bind ModuleA <- u1: ModuleB ( i_clk: i_clk, i_rst: i_rst, a_if: a_if );
+bind ModuleA <- u1: ModuleB (
+    i_clk: i_clk,
+    i_rst: i_rst,
+    a_if : a_if ,
+);
 ```
