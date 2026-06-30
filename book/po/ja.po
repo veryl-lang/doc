@@ -4636,6 +4636,10 @@ msgstr ""
 "`$tb::reset_gen` — リセット信号生成器（オプションで `#(cycles: N)` パラメータ"
 "を指定可能）"
 
+#: src/05_language_reference/13_integrated_test.md:47
+msgid "`$tb::file` — file handle for writing output files"
+msgstr "`$tb::file` — 出力ファイルを書き込むためのファイルハンドル"
+
 #: src/05_language_reference/13_integrated_test.md:48
 msgid "And the following system functions can be used in `initial` blocks:"
 msgstr "また、以下のシステム関数が `initial` ブロック内で使用できます。"
@@ -4761,6 +4765,56 @@ msgid ""
 "}\n"
 "```"
 msgstr ""
+
+#: src/05_language_reference/13_integrated_test.md:153
+msgid "File output"
+msgstr "ファイル出力"
+
+#: src/05_language_reference/13_integrated_test.md:155
+msgid ""
+"`$tb::file` is a file handle for writing output files during a native test. "
+"Unlike `clock_gen` and `reset_gen`, it is declared with `var`, then opened, "
+"written, and closed inside an `initial` block:"
+msgstr ""
+"`$tb::file` はネイティブテスト中に出力ファイルを書き込むためのファイルハン"
+"ドルです。`clock_gen` や `reset_gen` とは異なり `var` で宣言し、`initial` ブ"
+"ロック内で開いて書き込み、閉じます。"
+
+#: src/05_language_reference/13_integrated_test.md:158
+msgid ""
+"`f.open(name)` — open file `name` for writing, truncating any existing "
+"content"
+msgstr "`f.open(name)` — ファイル `name` を書き込み用に開く（既存の内容は切り詰める）"
+
+#: src/05_language_reference/13_integrated_test.md:159
+msgid ""
+"`f.append(name)` — open file `name` for writing, appending to any existing "
+"content"
+msgstr "`f.append(name)` — ファイル `name` を書き込み用に開く（既存の内容に追記する）"
+
+#: src/05_language_reference/13_integrated_test.md:160
+msgid ""
+"`f.write(format, args...)` — write formatted text, using the same format "
+"style as `$display`"
+msgstr ""
+"`f.write(format, args...)` — `$display` と同じ書式でフォーマットしたテキスト"
+"を書き込む"
+
+#: src/05_language_reference/13_integrated_test.md:161
+msgid "`f.flush()` — flush buffered output to disk"
+msgstr "`f.flush()` — バッファされた出力をディスクへフラッシュする"
+
+#: src/05_language_reference/13_integrated_test.md:162
+msgid "`f.close()` — close the file"
+msgstr "`f.close()` — ファイルを閉じる"
+
+#: src/05_language_reference/13_integrated_test.md:184
+msgid ""
+"Like other `$tb::*` components, `$tb::file` can only be used inside a "
+"`#[test]` module."
+msgstr ""
+"他の `$tb::*` コンポーネントと同様に、`$tb::file` は `#[test]` モジュール内で"
+"のみ使用できます。"
 
 #: src/05_language_reference/13_integrated_test.md:150
 msgid ""
@@ -9772,10 +9826,53 @@ msgstr ""
 "存の SystemVerilog ファイルリストと一緒に使うことができます。"
 
 #: src/06_development_environment/04_directory_layout.md:112
+msgid "Redirecting output with `--out-dir`"
+msgstr "`--out-dir` による出力先の変更"
+
+#: src/06_development_environment/04_directory_layout.md:114
+msgid ""
+"By default, `veryl build` writes all generated outputs (SystemVerilog files, "
+"source maps, the filelist, and `dependencies`) under the project path. The "
+"`--out-dir` option redirects these outputs to another directory while "
+"sources keep resolving against the project path. This is useful when "
+"integrating with external build systems (e.g. `xmake`, `build.rs`) that "
+"expect the generated files to be placed outside the source tree."
+msgstr ""
+"デフォルトでは `veryl build` は生成される全ての出力（SystemVerilog ファイル、"
+"ソースマップ、ファイルリスト、`dependencies`）をプロジェクトパス以下に書き出"
+"します。`--out-dir` オプションはソースをプロジェクトパス基準で解決したまま、"
+"これらの出力先を別のディレクトリに変更します。これは生成されたファイルをソー"
+"スツリーの外に配置することを期待する外部ビルドシステム（例: `xmake`、"
+"`build.rs`）と連携する場合に便利です。"
+
+#: src/06_development_environment/04_directory_layout.md:122
+msgid "A relative path is resolved against the current working directory."
+msgstr "相対パスはカレントディレクトリを基準に解決されます。"
+
+#: src/06_development_environment/04_directory_layout.md:128
+msgid ""
+"The directory structure under the output directory mirrors the normal "
+"layout. For example, with `target = {type = \"directory\", path = "
+"\"target\"}`, the output directory will become below:"
+msgstr ""
+"出力ディレクトリ以下の構成は通常の構成と同じになります。例えば `target = "
+"{type = \"directory\", path = \"target\"}` の場合、出力ディレクトリは以下のよ"
+"うになります。"
+
+#: src/06_development_environment/04_directory_layout.md:144
+msgid ""
+"The generated filelist references the redirected destinations, so it can be "
+"used directly by downstream tools. Without `--out-dir`, the build behavior "
+"is unchanged."
+msgstr ""
+"生成されるファイルリストは変更後の出力先を参照するため、後段のツールでそのま"
+"ま利用できます。`--out-dir` を指定しない場合のビルドの挙動は変わりません。"
+
+#: src/06_development_environment/04_directory_layout.md:147
 msgid "About `.gitignore`"
 msgstr "`.gitignore` について"
 
-#: src/06_development_environment/04_directory_layout.md:114
+#: src/06_development_environment/04_directory_layout.md:149
 msgid ""
 "Veryl provides the following `.gitignore` as the default value. `.build` is "
 "used to record build information by Veryl compiler."
@@ -9783,7 +9880,7 @@ msgstr ""
 "Verylは以下の `.gitignore` をデフォルト値として提供します。`.build` ディレク"
 "トリはVerylコンパイラがビルド情報を記録するために使用します。"
 
-#: src/06_development_environment/04_directory_layout.md:121
+#: src/06_development_environment/04_directory_layout.md:156
 msgid ""
 "Other patterns can be added by each projects. The candidates of `.gitignore` "
 "is below:"
@@ -9791,19 +9888,19 @@ msgstr ""
 "それ以外のパターンはプロジェクトに合わせて追加できます。`.gitignore` の候補と"
 "しては以下が考えられます。"
 
-#: src/06_development_environment/04_directory_layout.md:124
+#: src/06_development_environment/04_directory_layout.md:159
 msgid "`dependencies/`"
 msgstr "`dependencies/`"
 
-#: src/06_development_environment/04_directory_layout.md:125
+#: src/06_development_environment/04_directory_layout.md:160
 msgid "`target/`"
 msgstr "`target/`"
 
-#: src/06_development_environment/04_directory_layout.md:126
+#: src/06_development_environment/04_directory_layout.md:161
 msgid "`*.sv`"
 msgstr "`*.sv`"
 
-#: src/06_development_environment/04_directory_layout.md:127
+#: src/06_development_environment/04_directory_layout.md:162
 msgid "`*.f`"
 msgstr "`*.f`"
 
@@ -11045,6 +11142,69 @@ msgstr ""
 "デフォルトでは、`veryl synth` は1行のサマリと、面積／タイミング／電力の詳細ブ"
 "ロックを出力します。"
 
+#: src/06_development_environment/17_synthesizer.md:46
+msgid "RAM inference"
+msgstr "RAM 推論"
+
+#: src/06_development_environment/17_synthesizer.md:48
+msgid ""
+"A large array is mapped to an SRAM macro instead of `depth × width` "
+"flip-flops plus an address decode/mux tree. A bit-array macro is far denser "
+"and faster, so modelling it directly keeps the area, timing and power "
+"estimates realistic for memory-heavy designs such as caches and register "
+"files."
+msgstr ""
+"大きな配列は、`depth × width` 個のフリップフロップとアドレスデコード／マルチ"
+"プレクサツリーではなく、SRAM マクロにマッピングされます。ビット配列マクロは"
+"はるかに高密度かつ高速なため、直接モデル化することで、キャッシュやレジスタ"
+"ファイルといったメモリ主体の設計でも面積・タイミング・電力の見積もりが現実的"
+"に保たれます。"
+
+#: src/06_development_environment/17_synthesizer.md:53
+msgid "An array is inferred as a RAM block when all of the following hold:"
+msgstr "配列は、以下のすべてを満たす場合に RAM ブロックとして推論されます。"
+
+#: src/06_development_environment/17_synthesizer.md:55
+msgid "it has at least 1024 stored bits and a depth of 2 or more;"
+msgstr "ストアドビットが 1024 ビット以上で、depth が 2 以上である"
+
+#: src/06_development_environment/17_synthesizer.md:56
+msgid ""
+"it is written **without a reset**, through whole-word dynamic-address writes "
+"(`mem[addr] = data`), with at most 8 distinct write sites;"
+msgstr ""
+"**リセットなし**で、全ワードの動的アドレス書き込み（`mem[addr] = data`）によ"
+"り書き込まれ、書き込み箇所が最大 8 個である"
+
+#: src/06_development_environment/17_synthesizer.md:58
+msgid ""
+"it is read through whole-word dynamic addresses (`mem[addr]`), with at most "
+"16 distinct read addresses."
+msgstr ""
+"全ワードの動的アドレス（`mem[addr]`）で読み出され、読み出しアドレスが最大 16 "
+"個である"
+
+#: src/06_development_environment/17_synthesizer.md:61
+msgid ""
+"An array written under `if_reset` stays as flip-flops, because real SRAM has "
+"no reset — so an array intended to become SRAM is written reset-less in the "
+"RTL. Partial or sub-word writes also keep the array as flip-flops."
+msgstr ""
+"`if_reset` の下で書き込まれる配列はフリップフロップのまま残ります。実際の "
+"SRAM にはリセットがないため、SRAM にしたい配列は RTL 上でリセットなしで書きま"
+"す。部分書き込みやサブワード書き込みの場合も、配列はフリップフロップのまま残"
+"ります。"
+
+#: src/06_development_environment/17_synthesizer.md:65
+msgid ""
+"The inferred memory area is reported as the `mem` term of the area summary, "
+"and `--dump-area` lists each block grouped by shape (depth × width) and port "
+"count:"
+msgstr ""
+"推論されたメモリの面積は面積サマリの `mem` 項目として報告され、`--dump-area` "
+"は各ブロックを形状（depth × width）とポート数でグループ化して一覧表示しま"
+"す。"
+
 #: src/06_development_environment/17_synthesizer.md:50
 msgid "`--top <name>`"
 msgstr "`--top <name>`"
@@ -11078,9 +11238,9 @@ msgstr ""
 msgid "`--dump-area`"
 msgstr "`--dump-area`"
 
-#: src/06_development_environment/17_synthesizer.md:53
-msgid "Dump the per-cell-kind area breakdown."
-msgstr "セル種別ごとの面積内訳をダンプします。"
+#: src/06_development_environment/17_synthesizer.md:81
+msgid "Dump the per-cell-kind area breakdown, including inferred RAM blocks."
+msgstr "推論された RAM ブロックを含む、セル種別ごとの面積内訳をダンプします。"
 
 #: src/06_development_environment/17_synthesizer.md:54
 msgid "`--dump-timing`"

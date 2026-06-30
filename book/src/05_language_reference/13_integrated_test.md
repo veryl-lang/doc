@@ -44,6 +44,7 @@ The following testbench components are available:
 
 * `$tb::clock_gen` — clock signal generator (with optional `#(period: N)` parameter)
 * `$tb::reset_gen` — reset signal generator (with optional `#(cycles: N)` parameter)
+* `$tb::file` — file handle for writing output files
 
 And the following system functions can be used in `initial` blocks:
 
@@ -148,6 +149,39 @@ module test_function_call {
     }
 }
 ```
+
+### File output
+
+`$tb::file` is a file handle for writing output files during a native test.
+Unlike `clock_gen` and `reset_gen`, it is declared with `var`, then opened, written, and closed inside an `initial` block:
+
+* `f.open(name)` — open file `name` for writing, truncating any existing content
+* `f.append(name)` — open file `name` for writing, appending to any existing content
+* `f.write(format, args...)` — write formatted text, using the same format style as `$display`
+* `f.flush()` — flush buffered output to disk
+* `f.close()` — close the file
+
+```veryl,playground
+#[test(test_file)]
+module test_file {
+    var f: $tb::file;
+
+    initial {
+        f.open ("out.txt");
+        f.write("hex=%h dec=%d\n", 8'hAB, 8'd42);
+        f.close();
+
+        f.append("out.txt");
+        f.write ("appended\n");
+        f.flush ();
+        f.close ();
+
+        $finish();
+    }
+}
+```
+
+Like other `$tb::*` components, `$tb::file` can only be used inside a `#[test]` module.
 
 ## SystemVerilog test
 
