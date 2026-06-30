@@ -456,7 +456,11 @@ msgstr "トランスレータ"
 msgid "Synthesizer"
 msgstr "シンセサイザ"
 
-#: src/SUMMARY.md:106 src/07_appendix.md:1
+#: src/SUMMARY.md:106 src/06_development_environment/18_metadata.md:1
+msgid "Metadata"
+msgstr "メタデータ"
+
+#: src/SUMMARY.md:107 src/07_appendix.md:1
 msgid "Appendix"
 msgstr "補遺"
 
@@ -11265,6 +11269,113 @@ msgid ""
 msgstr ""
 "`--dump-*` フラグが何も指定されない場合、面積／タイミング／電力の3つすべてが"
 "ダンプされます。"
+
+#: src/06_development_environment/18_metadata.md:3
+msgid ""
+"`veryl metadata` prints the resolved metadata of the current project, "
+"including its dependency graph. It lets external tools reuse Veryl's "
+"dependency resolution result and dependency cache instead of reimplementing "
+"them."
+msgstr ""
+"`veryl metadata` は、現在のプロジェクトの解決済みメタデータを、依存グラフを含"
+"めて出力します。外部ツールが Veryl の依存解決結果と依存キャッシュを、独自に再"
+"実装することなく再利用できるようにするためのものです。"
+
+#: src/06_development_environment/18_metadata.md:15
+msgid "Output format: `pretty` (default, human-readable) or `json`."
+msgstr "出力形式。`pretty`（デフォルト、人間向け）または `json`。"
+
+#: src/06_development_environment/18_metadata.md:16
+msgid "JSON output schema version. Only valid with `--format json`."
+msgstr "JSON 出力スキーマのバージョン。`--format json` と一緒のときのみ有効です。"
+
+#: src/06_development_environment/18_metadata.md:18
+msgid "Output format versions"
+msgstr "出力フォーマットのバージョン"
+
+#: src/06_development_environment/18_metadata.md:20
+msgid "`--format-version` selects the schema of the JSON output:"
+msgstr "`--format-version` は JSON 出力のスキーマを選択します。"
+
+#: src/06_development_environment/18_metadata.md:22
+msgid ""
+"`1` (or unversioned) — the internal `Metadata` representation. This shape is "
+"not stable and may change between Veryl releases."
+msgstr ""
+"`1`（またはバージョン未指定）— 内部の `Metadata` 表現。この形式は安定してお"
+"らず、Veryl のリリース間で変更される可能性があります。"
+
+#: src/06_development_environment/18_metadata.md:23
+msgid "`2` — a stable, versioned schema intended for external tools."
+msgstr "`2` — 外部ツール向けの安定したバージョン付きスキーマ。"
+
+#: src/06_development_environment/18_metadata.md:25
+msgid "Use version 2 for any tool that consumes the output programmatically."
+msgstr "出力をプログラムで処理するツールでは、バージョン 2 を使用してください。"
+
+#: src/06_development_environment/18_metadata.md:31
+msgid "The version 2 output has the following shape:"
+msgstr "バージョン 2 の出力は次のような形になります。"
+
+#: src/06_development_environment/18_metadata.md:63
+msgid ""
+"`root` describes the current project, and `dependencies` lists every "
+"resolved dependency in the graph."
+msgstr ""
+"`root` は現在のプロジェクトを表し、`dependencies` はグラフ内の解決済みのすべ"
+"ての依存を列挙します。"
+
+#: src/06_development_environment/18_metadata.md:64
+msgid ""
+"`local_path` is the on-disk location (the project directory, or the "
+"dependency cache directory), so a tool can read the actual source files."
+msgstr ""
+"`local_path` はディスク上の場所（プロジェクトディレクトリ、または依存キャッ"
+"シュディレクトリ）であり、ツールが実際のソースファイルを読み取れます。"
+
+#: src/06_development_environment/18_metadata.md:65
+msgid ""
+"`source` identifies where a dependency came from. Its `kind` is either "
+"`path` (with a `path`) or `repository` (with `url`, `project`, `version`, "
+"`revision` and `path`)."
+msgstr ""
+"`source` は依存の取得元を示します。その `kind` は `path`（`path` を持つ）また"
+"は `repository`（`url`・`project`・`version`・`revision`・`path` を持つ）のい"
+"ずれかです。"
+
+#: src/06_development_environment/18_metadata.md:66
+msgid ""
+"The `dependencies` field of each entry lists the `id`s of that dependency's "
+"own dependencies, so the whole graph can be reconstructed."
+msgstr ""
+"各エントリの `dependencies` フィールドは、その依存自身の依存の `id` を列挙する"
+"ため、グラフ全体を再構築できます。"
+
+#: src/06_development_environment/18_metadata.md:68
+msgid "The `[metadata]` table"
+msgstr "`[metadata]` テーブル"
+
+#: src/06_development_environment/18_metadata.md:70
+msgid ""
+"`Veryl.toml` may contain a `[metadata]` table for arbitrary external-tool "
+"data. Veryl does not interpret its contents; it only preserves them and "
+"re-exposes them in the `metadata` field of the `veryl metadata` output, both "
+"for the root project and for dependencies."
+msgstr ""
+"`Veryl.toml` には、外部ツール用の任意のデータを格納する `[metadata]` テーブル"
+"を記述できます。Veryl はその内容を解釈せず、保持したうえで `veryl metadata` "
+"の出力の `metadata` フィールドに（ルートプロジェクトと依存の両方について）再"
+"公開するだけです。"
+
+#: src/06_development_environment/18_metadata.md:79
+msgid ""
+"This is the designated place for external integration data. Unknown keys at "
+"the top level of `Veryl.toml` are rejected, so tool-specific data must live "
+"under `[metadata]`."
+msgstr ""
+"これは外部連携データを置くための専用の場所です。`Veryl.toml` のトップレベルの"
+"不明なキーは拒否されるため、ツール固有のデータは `[metadata]` の下に置く必要が"
+"あります。"
 
 #: src/07_appendix/01_formal_syntax.md:3
 msgid ""
