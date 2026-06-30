@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-70f1de54.js";
+            window.path_to_searchindex_js = "searchindex-30bab01b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-92efcc39.js"></script>
@@ -3219,6 +3219,7 @@ A module with <code>#[test(test_name)]</code> attribute (without <code>embed</co
 <ul>
 <li><code>$tb::clock_gen</code> — clock signal generator (with optional <code>#(period: N)</code> parameter)</li>
 <li><code>$tb::reset_gen</code> — reset signal generator (with optional <code>#(cycles: N)</code> parameter)</li>
+<li><code>$tb::file</code> — file handle for writing output files</li>
 </ul>
 <p>And the following system functions can be used in <code>initial</code> blocks:</p>
 <ul>
@@ -3313,6 +3314,35 @@ module test_function_call {
     }
 }
 </code></pre>
+<h3 id="file-output"><a class="header" href="#file-output">File output</a></h3>
+<p><code>$tb::file</code> is a file handle for writing output files during a native test.
+Unlike <code>clock_gen</code> and <code>reset_gen</code>, it is declared with <code>var</code>, then opened, written, and closed inside an <code>initial</code> block:</p>
+<ul>
+<li><code>f.open(name)</code> — open file <code>name</code> for writing, truncating any existing content</li>
+<li><code>f.append(name)</code> — open file <code>name</code> for writing, appending to any existing content</li>
+<li><code>f.write(format, args...)</code> — write formatted text, using the same format style as <code>$display</code></li>
+<li><code>f.flush()</code> — flush buffered output to disk</li>
+<li><code>f.close()</code> — close the file</li>
+</ul>
+<pre><code class="language-veryl playground">#[test(test_file)]
+module test_file {
+    var f: $tb::file;
+
+    initial {
+        f.open ("out.txt");
+        f.write("hex=%h dec=%d\n", 8'hAB, 8'd42);
+        f.close();
+
+        f.append("out.txt");
+        f.write ("appended\n");
+        f.flush ();
+        f.close ();
+
+        $finish();
+    }
+}
+</code></pre>
+<p>Like other <code>$tb::*</code> components, <code>$tb::file</code> can only be used inside a <code>#[test]</code> module.</p>
 <h2 id="systemverilog-test"><a class="header" href="#systemverilog-test">SystemVerilog test</a></h2>
 <p>SystemVerilog test can be described with <code>inline</code> specifier.
 The top level module of the block must have the same name as the test name.</p>
@@ -5097,6 +5127,30 @@ target = {type = "directory", path = "target"}
 5 directories, 10 files
 </code></pre>
 <p>The generated <code>prj.f</code> lists all generated files. So you can use it along with the existing SystemVerilog filelists.</p>
+<h2 id="redirecting-output-with---out-dir"><a class="header" href="#redirecting-output-with---out-dir">Redirecting output with <code>--out-dir</code></a></h2>
+<p>By default, <code>veryl build</code> writes all generated outputs (SystemVerilog files, source maps, the filelist, and <code>dependencies</code>) under the project path.
+The <code>--out-dir</code> option redirects these outputs to another directory while sources keep resolving against the project path.
+This is useful when integrating with external build systems (e.g. <code>xmake</code>, <code>build.rs</code>) that expect the generated files to be placed outside the source tree.</p>
+<pre><code>$ veryl build --out-dir /path/to/output
+</code></pre>
+<p>A relative path is resolved against the current working directory.</p>
+<pre><code>$ veryl build --out-dir output
+</code></pre>
+<p>The directory structure under the output directory mirrors the normal layout.
+For example, with <code>target = {type = "directory", path = "target"}</code>, the output directory will become below:</p>
+<pre><code>$ tree /path/to/output
+/path/to/output
+|-- dependencies
+|-- prj.f
+`-- target
+    |-- module_a.sv
+    |-- module_b.sv
+    `-- module_c.sv
+
+2 directories, 5 files
+</code></pre>
+<p>The generated filelist references the redirected destinations, so it can be used directly by downstream tools.
+Without <code>--out-dir</code>, the build behavior is unchanged.</p>
 <h2 id="about-gitignore"><a class="header" href="#about-gitignore">About <code>.gitignore</code></a></h2>
 <p>Veryl provides the following <code>.gitignore</code> as the default value.
 <code>.build</code> is used to record build information by Veryl compiler.</p>
@@ -5546,7 +5600,7 @@ detail blocks:</p>
 library: sky130_fd_sc_hd ...
 
 summary:
-  area:        1234.56 um²  (comb 1100.00, seq 134.56)
+  area:        1234.56 um²  (comb 1000.00, seq 134.56, mem 100.00)
   timing:        2.345 ns      8 levels  in_dat → out_dat
   power:        0.1234 mW   (leak 0.0123 mW, dyn 0.1111 mW)
                             @ f_clk = 100 MHz, activity = 0.10
@@ -5558,6 +5612,28 @@ timing:
 power:
   ...
 </code></pre>
+<h2 id="ram-inference"><a class="header" href="#ram-inference">RAM inference</a></h2>
+<p>A large array is mapped to an SRAM macro instead of <code>depth × width</code> flip-flops
+plus an address decode/mux tree. A bit-array macro is far denser and faster, so
+modelling it directly keeps the area, timing and power estimates realistic for
+memory-heavy designs such as caches and register files.</p>
+<p>An array is inferred as a RAM block when all of the following hold:</p>
+<ul>
+<li>it has at least 1024 stored bits and a depth of 2 or more;</li>
+<li>it is written <strong>without a reset</strong>, through whole-word dynamic-address writes
+(<code>mem[addr] = data</code>), with at most 8 distinct write sites;</li>
+<li>it is read through whole-word dynamic addresses (<code>mem[addr]</code>), with at most 16
+distinct read addresses.</li>
+</ul>
+<p>An array written under <code>if_reset</code> stays as flip-flops, because real SRAM has no
+reset — so an array intended to become SRAM is written reset-less in the RTL.
+Partial or sub-word writes also keep the array as flip-flops.</p>
+<p>The inferred memory area is reported as the <code>mem</code> term of the area summary, and
+<code>--dump-area</code> lists each block grouped by shape (depth × width) and port count:</p>
+<pre><code class="language-text">ram: 2 blocks
+    1024×32   1R1W  ×1       32768 bits       189.40 um²
+     512×64   2R1W  ×1       32768 bits       189.40 um²
+</code></pre>
 <h2 id="options-1"><a class="header" href="#options-1">Options</a></h2>
 <div class="table-wrapper">
 <table>
@@ -5568,7 +5644,7 @@ power:
 <tr><td><code>--top &lt;name&gt;</code></td><td>Top module name. Overrides <code>synth.top</code> in <code>Veryl.toml</code>.</td></tr>
 <tr><td><code>--timing-paths &lt;n&gt;</code></td><td>Number of worst-delay endpoints to report when dumping timing. Overrides <code>synth.timing_paths</code>.</td></tr>
 <tr><td><code>--dump-ir</code></td><td>Dump the gate-level IR (netlist of gates and flip-flops).</td></tr>
-<tr><td><code>--dump-area</code></td><td>Dump the per-cell-kind area breakdown.</td></tr>
+<tr><td><code>--dump-area</code></td><td>Dump the per-cell-kind area breakdown, including inferred RAM blocks.</td></tr>
 <tr><td><code>--dump-timing</code></td><td>Dump the critical path trace.</td></tr>
 <tr><td><code>--dump-power</code></td><td>Dump the power estimate (leakage + dynamic breakdown).</td></tr>
 </tbody>

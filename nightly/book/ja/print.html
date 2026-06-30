@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-33f321a5.js";
+            window.path_to_searchindex_js = "searchindex-64699b81.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-d102f71b.js"></script>
@@ -3016,6 +3016,7 @@ module test_ignored {
 <ul>
 <li><code>$tb::clock_gen</code> — クロック信号生成器（オプションで <code>#(period: N)</code> パラメータを指定可能）</li>
 <li><code>$tb::reset_gen</code> — リセット信号生成器（オプションで <code>#(cycles: N)</code> パラメータを指定可能）</li>
+<li><code>$tb::file</code> — 出力ファイルを書き込むためのファイルハンドル</li>
 </ul>
 <p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
 <ul>
@@ -3110,6 +3111,34 @@ module test_function_call {
     }
 }
 </code></pre>
+<h3 id="ファイル出力"><a class="header" href="#ファイル出力">ファイル出力</a></h3>
+<p><code>$tb::file</code> はネイティブテスト中に出力ファイルを書き込むためのファイルハンドルです。<code>clock_gen</code> や <code>reset_gen</code> とは異なり <code>var</code> で宣言し、<code>initial</code> ブロック内で開いて書き込み、閉じます。</p>
+<ul>
+<li><code>f.open(name)</code> — ファイル <code>name</code> を書き込み用に開く（既存の内容は切り詰める）</li>
+<li><code>f.append(name)</code> — ファイル <code>name</code> を書き込み用に開く（既存の内容に追記する）</li>
+<li><code>f.write(format, args...)</code> — <code>$display</code> と同じ書式でフォーマットしたテキストを書き込む</li>
+<li><code>f.flush()</code> — バッファされた出力をディスクへフラッシュする</li>
+<li><code>f.close()</code> — ファイルを閉じる</li>
+</ul>
+<pre><code class="language-veryl playground">#[test(test_file)]
+module test_file {
+    var f: $tb::file;
+
+    initial {
+        f.open ("out.txt");
+        f.write("hex=%h dec=%d\n", 8'hAB, 8'd42);
+        f.close();
+
+        f.append("out.txt");
+        f.write ("appended\n");
+        f.flush ();
+        f.close ();
+
+        $finish();
+    }
+}
+</code></pre>
+<p>他の <code>$tb::*</code> コンポーネントと同様に、<code>$tb::file</code> は <code>#[test]</code> モジュール内でのみ使用できます。</p>
 <h2 id="systemverilogテスト"><a class="header" href="#systemverilogテスト">SystemVerilogテスト</a></h2>
 <p>SystemVerilog テストは <code>inline</code> 指定子で記述することができます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
 <p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>
@@ -4766,6 +4795,26 @@ target = {type = "directory", path = "target"}
 5 directories, 10 files
 </code></pre>
 <p>生成された <code>prj.f</code> は生成されたソースコードを全てリストアップしているので、既存の SystemVerilog ファイルリストと一緒に使うことができます。</p>
+<h2 id="--out-dir-による出力先の変更"><a class="header" href="#--out-dir-による出力先の変更"><code>--out-dir</code> による出力先の変更</a></h2>
+<p>デフォルトでは <code>veryl build</code> は生成される全ての出力（SystemVerilog ファイル、ソースマップ、ファイルリスト、<code>dependencies</code>）をプロジェクトパス以下に書き出します。<code>--out-dir</code> オプションはソースをプロジェクトパス基準で解決したまま、これらの出力先を別のディレクトリに変更します。これは生成されたファイルをソースツリーの外に配置することを期待する外部ビルドシステム（例: <code>xmake</code>、<code>build.rs</code>）と連携する場合に便利です。</p>
+<pre><code>$ veryl build --out-dir /path/to/output
+</code></pre>
+<p>相対パスはカレントディレクトリを基準に解決されます。</p>
+<pre><code>$ veryl build --out-dir output
+</code></pre>
+<p>出力ディレクトリ以下の構成は通常の構成と同じになります。例えば <code>target = {type = "directory", path = "target"}</code> の場合、出力ディレクトリは以下のようになります。</p>
+<pre><code>$ tree /path/to/output
+/path/to/output
+|-- dependencies
+|-- prj.f
+`-- target
+    |-- module_a.sv
+    |-- module_b.sv
+    `-- module_c.sv
+
+2 directories, 5 files
+</code></pre>
+<p>生成されるファイルリストは変更後の出力先を参照するため、後段のツールでそのまま利用できます。<code>--out-dir</code> を指定しない場合のビルドの挙動は変わりません。</p>
 <h2 id="gitignore-について"><a class="header" href="#gitignore-について"><code>.gitignore</code> について</a></h2>
 <p>Verylは以下の <code>.gitignore</code> をデフォルト値として提供します。<code>.build</code> ディレクトリはVerylコンパイラがビルド情報を記録するために使用します。</p>
 <pre><code>.build/
@@ -5166,7 +5215,7 @@ fmt:
 library: sky130_fd_sc_hd ...
 
 summary:
-  area:        1234.56 um²  (comb 1100.00, seq 134.56)
+  area:        1234.56 um²  (comb 1000.00, seq 134.56, mem 100.00)
   timing:        2.345 ns      8 levels  in_dat → out_dat
   power:        0.1234 mW   (leak 0.0123 mW, dyn 0.1111 mW)
                             @ f_clk = 100 MHz, activity = 0.10
@@ -5178,6 +5227,20 @@ timing:
 power:
   ...
 </code></pre>
+<h2 id="ram-推論"><a class="header" href="#ram-推論">RAM 推論</a></h2>
+<p>大きな配列は、<code>depth × width</code> 個のフリップフロップとアドレスデコード／マルチプレクサツリーではなく、SRAM マクロにマッピングされます。ビット配列マクロははるかに高密度かつ高速なため、直接モデル化することで、キャッシュやレジスタファイルといったメモリ主体の設計でも面積・タイミング・電力の見積もりが現実的に保たれます。</p>
+<p>配列は、以下のすべてを満たす場合に RAM ブロックとして推論されます。</p>
+<ul>
+<li>ストアドビットが 1024 ビット以上で、depth が 2 以上である</li>
+<li><strong>リセットなし</strong>で、全ワードの動的アドレス書き込み（<code>mem[addr] = data</code>）により書き込まれ、書き込み箇所が最大 8 個である</li>
+<li>全ワードの動的アドレス（<code>mem[addr]</code>）で読み出され、読み出しアドレスが最大 16 個である</li>
+</ul>
+<p><code>if_reset</code> の下で書き込まれる配列はフリップフロップのまま残ります。実際の SRAM にはリセットがないため、SRAM にしたい配列は RTL 上でリセットなしで書きます。部分書き込みやサブワード書き込みの場合も、配列はフリップフロップのまま残ります。</p>
+<p>推論されたメモリの面積は面積サマリの <code>mem</code> 項目として報告され、<code>--dump-area</code> は各ブロックを形状（depth × width）とポート数でグループ化して一覧表示します。</p>
+<pre><code class="language-text">ram: 2 blocks
+    1024×32   1R1W  ×1       32768 bits       189.40 um²
+     512×64   2R1W  ×1       32768 bits       189.40 um²
+</code></pre>
 <h2 id="オプション-1"><a class="header" href="#オプション-1">オプション</a></h2>
 <div class="table-wrapper">
 <table>
@@ -5188,7 +5251,7 @@ power:
 <tr><td><code>--top &lt;name&gt;</code></td><td>トップモジュール名。<code>Veryl.toml</code> の <code>synth.top</code> を上書きします。</td></tr>
 <tr><td><code>--timing-paths &lt;n&gt;</code></td><td>タイミングダンプで報告する最悪遅延エンドポイントの数。<code>synth.timing_paths</code> を上書きします。</td></tr>
 <tr><td><code>--dump-ir</code></td><td>ゲートレベル IR（ゲートとフリップフロップのネットリスト）をダンプします。</td></tr>
-<tr><td><code>--dump-area</code></td><td>セル種別ごとの面積内訳をダンプします。</td></tr>
+<tr><td><code>--dump-area</code></td><td>推論された RAM ブロックを含む、セル種別ごとの面積内訳をダンプします。</td></tr>
 <tr><td><code>--dump-timing</code></td><td>クリティカルパスのトレースをダンプします。</td></tr>
 <tr><td><code>--dump-power</code></td><td>電力見積もり（漏れ電力＋動的電力の内訳）をダンプします。</td></tr>
 </tbody>

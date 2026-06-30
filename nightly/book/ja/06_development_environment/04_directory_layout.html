@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-33f321a5.js";
+            window.path_to_searchindex_js = "../searchindex-64699b81.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-d102f71b.js"></script>
@@ -355,6 +355,26 @@ target = {type = "directory", path = "target"}
 5 directories, 10 files
 </code></pre>
 <p>生成された <code>prj.f</code> は生成されたソースコードを全てリストアップしているので、既存の SystemVerilog ファイルリストと一緒に使うことができます。</p>
+<h2 id="--out-dir-による出力先の変更"><a class="header" href="#--out-dir-による出力先の変更"><code>--out-dir</code> による出力先の変更</a></h2>
+<p>デフォルトでは <code>veryl build</code> は生成される全ての出力（SystemVerilog ファイル、ソースマップ、ファイルリスト、<code>dependencies</code>）をプロジェクトパス以下に書き出します。<code>--out-dir</code> オプションはソースをプロジェクトパス基準で解決したまま、これらの出力先を別のディレクトリに変更します。これは生成されたファイルをソースツリーの外に配置することを期待する外部ビルドシステム（例: <code>xmake</code>、<code>build.rs</code>）と連携する場合に便利です。</p>
+<pre><code>$ veryl build --out-dir /path/to/output
+</code></pre>
+<p>相対パスはカレントディレクトリを基準に解決されます。</p>
+<pre><code>$ veryl build --out-dir output
+</code></pre>
+<p>出力ディレクトリ以下の構成は通常の構成と同じになります。例えば <code>target = {type = "directory", path = "target"}</code> の場合、出力ディレクトリは以下のようになります。</p>
+<pre><code>$ tree /path/to/output
+/path/to/output
+|-- dependencies
+|-- prj.f
+`-- target
+    |-- module_a.sv
+    |-- module_b.sv
+    `-- module_c.sv
+
+2 directories, 5 files
+</code></pre>
+<p>生成されるファイルリストは変更後の出力先を参照するため、後段のツールでそのまま利用できます。<code>--out-dir</code> を指定しない場合のビルドの挙動は変わりません。</p>
 <h2 id="gitignore-について"><a class="header" href="#gitignore-について"><code>.gitignore</code> について</a></h2>
 <p>Verylは以下の <code>.gitignore</code> をデフォルト値として提供します。<code>.build</code> ディレクトリはVerylコンパイラがビルド情報を記録するために使用します。</p>
 <pre><code>.build/
