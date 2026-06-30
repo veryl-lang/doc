@@ -109,6 +109,7 @@ fn metadata() -> Metadata {
         test: Test::default(),
         synth: Synth::default(),
         dependencies: HashMap::new(),
+        metadata: HashMap::new(),
         metadata_path: "".into(),
         pubfile_path: "".into(),
         pubfile: Pubfile::default(),
