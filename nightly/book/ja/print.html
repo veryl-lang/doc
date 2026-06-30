@@ -134,10 +134,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-64699b81.js";
+            window.path_to_searchindex_js = "searchindex-0b50d0de.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-d102f71b.js"></script>
+        <script src="toc-2cd81d8e.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -5258,6 +5258,74 @@ power:
 </table>
 </div>
 <p><code>--dump-*</code> フラグが何も指定されない場合、面積／タイミング／電力の3つすべてがダンプされます。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="メタデータ"><a class="header" href="#メタデータ">メタデータ</a></h1>
+<p><code>veryl metadata</code> は、現在のプロジェクトの解決済みメタデータを、依存グラフを含めて出力します。外部ツールが Veryl の依存解決結果と依存キャッシュを、独自に再実装することなく再利用できるようにするためのものです。</p>
+<pre><code class="language-console">$ veryl metadata
+</code></pre>
+<h2 id="オプション-2"><a class="header" href="#オプション-2">オプション</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>オプション</th><th>説明</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--format &lt;format&gt;</code></td><td>出力形式。<code>pretty</code>（デフォルト、人間向け）または <code>json</code>。</td></tr>
+<tr><td><code>--format-version &lt;n&gt;</code></td><td>JSON 出力スキーマのバージョン。<code>--format json</code> と一緒のときのみ有効です。</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="出力フォーマットのバージョン"><a class="header" href="#出力フォーマットのバージョン">出力フォーマットのバージョン</a></h2>
+<p><code>--format-version</code> は JSON 出力のスキーマを選択します。</p>
+<ul>
+<li><code>1</code>（またはバージョン未指定）— 内部の <code>Metadata</code> 表現。この形式は安定しておらず、Veryl のリリース間で変更される可能性があります。</li>
+<li><code>2</code> — 外部ツール向けの安定したバージョン付きスキーマ。</li>
+</ul>
+<p>出力をプログラムで処理するツールでは、バージョン 2 を使用してください。</p>
+<pre><code class="language-console">$ veryl metadata --format json --format-version 2
+</code></pre>
+<p>バージョン 2 の出力は次のような形になります。</p>
+<pre><code class="language-text">{
+  "format_version": 2,
+  "root": {
+    "name": "my_project",
+    "version": "0.1.0",
+    "local_path": "/abs/path/to/my_project",
+    "metadata": {}
+  },
+  "dependencies": [
+    {
+      "id": "dep:foo",
+      "name": "foo",
+      "project": "foo",
+      "source": {
+        "kind": "repository",
+        "url": "https://github.com/example/foo",
+        "project": "foo",
+        "version": "1.2.0",
+        "revision": "0123456789abcdef",
+        "path": "."
+      },
+      "local_path": "/abs/path/to/dependency/cache/foo",
+      "metadata": {},
+      "dependencies": ["dep:bar"]
+    }
+  ]
+}
+</code></pre>
+<ul>
+<li><code>root</code> は現在のプロジェクトを表し、<code>dependencies</code> はグラフ内の解決済みのすべての依存を列挙します。</li>
+<li><code>local_path</code> はディスク上の場所（プロジェクトディレクトリ、または依存キャッシュディレクトリ）であり、ツールが実際のソースファイルを読み取れます。</li>
+<li><code>source</code> は依存の取得元を示します。その <code>kind</code> は <code>path</code>（<code>path</code> を持つ）または <code>repository</code>（<code>url</code>・<code>project</code>・<code>version</code>・<code>revision</code>・<code>path</code> を持つ）のいずれかです。</li>
+<li>各エントリの <code>dependencies</code> フィールドは、その依存自身の依存の <code>id</code> を列挙するため、グラフ全体を再構築できます。</li>
+</ul>
+<h2 id="metadata-テーブル"><a class="header" href="#metadata-テーブル"><code>[metadata]</code> テーブル</a></h2>
+<p><code>Veryl.toml</code> には、外部ツール用の任意のデータを格納する <code>[metadata]</code> テーブルを記述できます。Veryl はその内容を解釈せず、保持したうえで <code>veryl metadata</code> の出力の <code>metadata</code> フィールドに（ルートプロジェクトと依存の両方について）再公開するだけです。</p>
+<pre><code class="language-toml">[metadata.external_tool]
+files = ["src/**/*.v"]
+attrs = { role = "core" }
+</code></pre>
+<p>これは外部連携データを置くための専用の場所です。<code>Veryl.toml</code> のトップレベルの不明なキーは拒否されるため、ツール固有のデータは <code>[metadata]</code> の下に置く必要があります。</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="補遺"><a class="header" href="#補遺">補遺</a></h1>
 <div style="break-before: page; page-break-before: always;"></div>

@@ -134,10 +134,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-30bab01b.js";
+            window.path_to_searchindex_js = "searchindex-d5cb38a3.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-92efcc39.js"></script>
+        <script src="toc-28bcefd9.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -5651,6 +5651,78 @@ Partial or sub-word writes also keep the array as flip-flops.</p>
 </table>
 </div>
 <p>If no <code>--dump-*</code> flag is given, all three of area / timing / power are dumped.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="metadata"><a class="header" href="#metadata">Metadata</a></h1>
+<p><code>veryl metadata</code> prints the resolved metadata of the current project, including
+its dependency graph. It lets external tools reuse Veryl’s dependency resolution
+result and dependency cache instead of reimplementing them.</p>
+<pre><code class="language-console">$ veryl metadata
+</code></pre>
+<h2 id="options-2"><a class="header" href="#options-2">Options</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Option</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--format &lt;format&gt;</code></td><td>Output format: <code>pretty</code> (default, human-readable) or <code>json</code>.</td></tr>
+<tr><td><code>--format-version &lt;n&gt;</code></td><td>JSON output schema version. Only valid with <code>--format json</code>.</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="output-format-versions"><a class="header" href="#output-format-versions">Output format versions</a></h2>
+<p><code>--format-version</code> selects the schema of the JSON output:</p>
+<ul>
+<li><code>1</code> (or unversioned) — the internal <code>Metadata</code> representation. This shape is not stable and may change between Veryl releases.</li>
+<li><code>2</code> — a stable, versioned schema intended for external tools.</li>
+</ul>
+<p>Use version 2 for any tool that consumes the output programmatically.</p>
+<pre><code class="language-console">$ veryl metadata --format json --format-version 2
+</code></pre>
+<p>The version 2 output has the following shape:</p>
+<pre><code class="language-text">{
+  "format_version": 2,
+  "root": {
+    "name": "my_project",
+    "version": "0.1.0",
+    "local_path": "/abs/path/to/my_project",
+    "metadata": {}
+  },
+  "dependencies": [
+    {
+      "id": "dep:foo",
+      "name": "foo",
+      "project": "foo",
+      "source": {
+        "kind": "repository",
+        "url": "https://github.com/example/foo",
+        "project": "foo",
+        "version": "1.2.0",
+        "revision": "0123456789abcdef",
+        "path": "."
+      },
+      "local_path": "/abs/path/to/dependency/cache/foo",
+      "metadata": {},
+      "dependencies": ["dep:bar"]
+    }
+  ]
+}
+</code></pre>
+<ul>
+<li><code>root</code> describes the current project, and <code>dependencies</code> lists every resolved dependency in the graph.</li>
+<li><code>local_path</code> is the on-disk location (the project directory, or the dependency cache directory), so a tool can read the actual source files.</li>
+<li><code>source</code> identifies where a dependency came from. Its <code>kind</code> is either <code>path</code> (with a <code>path</code>) or <code>repository</code> (with <code>url</code>, <code>project</code>, <code>version</code>, <code>revision</code> and <code>path</code>).</li>
+<li>The <code>dependencies</code> field of each entry lists the <code>id</code>s of that dependency’s own dependencies, so the whole graph can be reconstructed.</li>
+</ul>
+<h2 id="the-metadata-table"><a class="header" href="#the-metadata-table">The <code>[metadata]</code> table</a></h2>
+<p><code>Veryl.toml</code> may contain a <code>[metadata]</code> table for arbitrary external-tool data.
+Veryl does not interpret its contents; it only preserves them and re-exposes them in the <code>metadata</code> field of the <code>veryl metadata</code> output, both for the root project and for dependencies.</p>
+<pre><code class="language-toml">[metadata.external_tool]
+files = ["src/**/*.v"]
+attrs = { role = "core" }
+</code></pre>
+<p>This is the designated place for external integration data.
+Unknown keys at the top level of <code>Veryl.toml</code> are rejected, so tool-specific data must live under <code>[metadata]</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
 <div style="break-before: page; page-break-before: always;"></div>
