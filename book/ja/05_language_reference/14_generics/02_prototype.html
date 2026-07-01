@@ -133,10 +133,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-930c7e49.js";
+            window.path_to_searchindex_js = "../../searchindex-0b50d0de.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-d102f71b.js"></script>
+        <script src="../../toc-2cd81d8e.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -290,7 +290,10 @@ proto module ProtoA #(
 );
 
 module ModuleB::&lt;T: ProtoA&gt; {
-    inst u: T ( i_dat: 0, o_dat: _ );
+    inst u: T (
+        i_dat: 0,
+        o_dat: _,
+    );
 }
 
 module ModuleC for ProtoA #(
@@ -358,7 +361,9 @@ module ModuleA::&lt;BUS_IF: ProtoA&gt; (
 module ModuleB {
     inst bus_if: InterfaceA::&lt;8&gt;;
 
-    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; ( bus_if: bus_if );
+    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; (
+        bus_if: bus_if,
+    );
 }
 </code></pre>
 <h2 id="パッケージプロトタイプ"><a class="header" href="#パッケージプロトタイプ">パッケージプロトタイプ</a></h2>

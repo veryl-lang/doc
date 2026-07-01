@@ -134,10 +134,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-930c7e49.js";
+            window.path_to_searchindex_js = "searchindex-0b50d0de.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-d102f71b.js"></script>
+        <script src="toc-2cd81d8e.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -1077,7 +1077,11 @@ module ModuleA #(
     //   port connnection can be specified by `()`
     //   each port connection is `[port_name]:[variable]`
     //   `[port_name]` means `[port_name]:[port_name]`
-    inst u_module_b: ModuleB ( i_clk, i_data: r_data1, o_data: r_data2 );
+    inst u_module_b: ModuleB (
+        i_clk          ,
+        i_data: r_data1,
+        o_data: r_data2,
+    );
 
     // instance declaration with parameter override
     //   notation of parameter connection is the same as port
@@ -2427,7 +2431,10 @@ module ModuleB {
     inst a_if: InterfaceA::&lt;8&gt; [4];
     inst b_if: InterfaceA::&lt;8&gt; [4];
 
-    inst u: ModuleA ( slave_if: a_if, master_if: b_if );
+    inst u: ModuleA (
+        slave_if : a_if,
+        master_if: b_if,
+    );
 }
 </code></pre>
 <h2 id="align-アトリビュート"><a class="header" href="#align-アトリビュート"><code>align</code> アトリビュート</a></h2>
@@ -2498,7 +2505,9 @@ module ModuleB {
     }
 
     for i in 0..4 :g_a {
-        assign a[i + 1] = a[i];
+        if i != 3 :g {
+            assign a[i + 1] = a[i];
+        }
     }
 
     always_comb {
@@ -2564,7 +2573,11 @@ module ModuleC {
     bind ModuleA &lt;- u0: ModuleB ( i_clk, i_rst, a_if );
 }
 
-bind ModuleA &lt;- u1: ModuleB ( i_clk: i_clk, i_rst: i_rst, a_if: a_if );
+bind ModuleA &lt;- u1: ModuleB (
+    i_clk: i_clk,
+    i_rst: i_rst,
+    a_if : a_if ,
+);
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="名前付きブロック"><a class="header" href="#名前付きブロック">名前付きブロック</a></h1>
@@ -2871,7 +2884,10 @@ module ModuleB (
     foo_if: modport InterfaceA::mp,
 ) {
     inst bar_if: InterfaceA;
-    inst u     : ModuleA ( foo_if: foo_if, bar_if: bar_if );
+    inst u: ModuleA (
+        foo_if: foo_if,
+        bar_if: bar_if,
+    );
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -3000,6 +3016,7 @@ module test_ignored {
 <ul>
 <li><code>$tb::clock_gen</code> — クロック信号生成器（オプションで <code>#(period: N)</code> パラメータを指定可能）</li>
 <li><code>$tb::reset_gen</code> — リセット信号生成器（オプションで <code>#(cycles: N)</code> パラメータを指定可能）</li>
+<li><code>$tb::file</code> — 出力ファイルを書き込むためのファイルハンドル</li>
 </ul>
 <p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
 <ul>
@@ -3029,7 +3046,11 @@ module test_counter {
 
     var cnt: logic&lt;32&gt;;
 
-    inst dut: Counter ( clk: clk, rst: rst, cnt: cnt );
+    inst dut: Counter (
+        clk: clk,
+        rst: rst,
+        cnt: cnt,
+    );
 
     initial {
         rst.assert();
@@ -3090,6 +3111,34 @@ module test_function_call {
     }
 }
 </code></pre>
+<h3 id="ファイル出力"><a class="header" href="#ファイル出力">ファイル出力</a></h3>
+<p><code>$tb::file</code> はネイティブテスト中に出力ファイルを書き込むためのファイルハンドルです。<code>clock_gen</code> や <code>reset_gen</code> とは異なり <code>var</code> で宣言し、<code>initial</code> ブロック内で開いて書き込み、閉じます。</p>
+<ul>
+<li><code>f.open(name)</code> — ファイル <code>name</code> を書き込み用に開く（既存の内容は切り詰める）</li>
+<li><code>f.append(name)</code> — ファイル <code>name</code> を書き込み用に開く（既存の内容に追記する）</li>
+<li><code>f.write(format, args...)</code> — <code>$display</code> と同じ書式でフォーマットしたテキストを書き込む</li>
+<li><code>f.flush()</code> — バッファされた出力をディスクへフラッシュする</li>
+<li><code>f.close()</code> — ファイルを閉じる</li>
+</ul>
+<pre><code class="language-veryl playground">#[test(test_file)]
+module test_file {
+    var f: $tb::file;
+
+    initial {
+        f.open ("out.txt");
+        f.write("hex=%h dec=%d\n", 8'hAB, 8'd42);
+        f.close();
+
+        f.append("out.txt");
+        f.write ("appended\n");
+        f.flush ();
+        f.close ();
+
+        $finish();
+    }
+}
+</code></pre>
+<p>他の <code>$tb::*</code> コンポーネントと同様に、<code>$tb::file</code> は <code>#[test]</code> モジュール内でのみ使用できます。</p>
 <h2 id="systemverilogテスト"><a class="header" href="#systemverilogテスト">SystemVerilogテスト</a></h2>
 <p>SystemVerilog テストは <code>inline</code> 指定子で記述することができます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
 <p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>
@@ -3276,7 +3325,10 @@ proto module ProtoA #(
 );
 
 module ModuleB::&lt;T: ProtoA&gt; {
-    inst u: T ( i_dat: 0, o_dat: _ );
+    inst u: T (
+        i_dat: 0,
+        o_dat: _,
+    );
 }
 
 module ModuleC for ProtoA #(
@@ -3344,7 +3396,9 @@ module ModuleA::&lt;BUS_IF: ProtoA&gt; (
 module ModuleB {
     inst bus_if: InterfaceA::&lt;8&gt;;
 
-    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; ( bus_if: bus_if );
+    inst u: ModuleA::&lt;InterfaceA::&lt;8&gt;&gt; (
+        bus_if: bus_if,
+    );
 }
 </code></pre>
 <h2 id="パッケージプロトタイプ"><a class="header" href="#パッケージプロトタイプ">パッケージプロトタイプ</a></h2>
@@ -3598,7 +3652,11 @@ interface InterfaceA {}
     o_dat_b: output 'b logic,
 ) {
     unsafe (cdc) {
-        inst u_sync: $sv::SynchronizerCell ( i_clk: i_clk_b, i_dat: i_dat_a, o_dat: o_dat_b );
+        inst u_sync: $sv::SynchronizerCell (
+            i_clk: i_clk_b,
+            i_dat: i_dat_a,
+            o_dat: o_dat_b,
+        );
     }
 }
 </code></pre>
@@ -4737,6 +4795,26 @@ target = {type = "directory", path = "target"}
 5 directories, 10 files
 </code></pre>
 <p>生成された <code>prj.f</code> は生成されたソースコードを全てリストアップしているので、既存の SystemVerilog ファイルリストと一緒に使うことができます。</p>
+<h2 id="--out-dir-による出力先の変更"><a class="header" href="#--out-dir-による出力先の変更"><code>--out-dir</code> による出力先の変更</a></h2>
+<p>デフォルトでは <code>veryl build</code> は生成される全ての出力（SystemVerilog ファイル、ソースマップ、ファイルリスト、<code>dependencies</code>）をプロジェクトパス以下に書き出します。<code>--out-dir</code> オプションはソースをプロジェクトパス基準で解決したまま、これらの出力先を別のディレクトリに変更します。これは生成されたファイルをソースツリーの外に配置することを期待する外部ビルドシステム（例: <code>xmake</code>、<code>build.rs</code>）と連携する場合に便利です。</p>
+<pre><code>$ veryl build --out-dir /path/to/output
+</code></pre>
+<p>相対パスはカレントディレクトリを基準に解決されます。</p>
+<pre><code>$ veryl build --out-dir output
+</code></pre>
+<p>出力ディレクトリ以下の構成は通常の構成と同じになります。例えば <code>target = {type = "directory", path = "target"}</code> の場合、出力ディレクトリは以下のようになります。</p>
+<pre><code>$ tree /path/to/output
+/path/to/output
+|-- dependencies
+|-- prj.f
+`-- target
+    |-- module_a.sv
+    |-- module_b.sv
+    `-- module_c.sv
+
+2 directories, 5 files
+</code></pre>
+<p>生成されるファイルリストは変更後の出力先を参照するため、後段のツールでそのまま利用できます。<code>--out-dir</code> を指定しない場合のビルドの挙動は変わりません。</p>
 <h2 id="gitignore-について"><a class="header" href="#gitignore-について"><code>.gitignore</code> について</a></h2>
 <p>Verylは以下の <code>.gitignore</code> をデフォルト値として提供します。<code>.build</code> ディレクトリはVerylコンパイラがビルド情報を記録するために使用します。</p>
 <pre><code>.build/
@@ -5137,7 +5215,7 @@ fmt:
 library: sky130_fd_sc_hd ...
 
 summary:
-  area:        1234.56 um²  (comb 1100.00, seq 134.56)
+  area:        1234.56 um²  (comb 1000.00, seq 134.56, mem 100.00)
   timing:        2.345 ns      8 levels  in_dat → out_dat
   power:        0.1234 mW   (leak 0.0123 mW, dyn 0.1111 mW)
                             @ f_clk = 100 MHz, activity = 0.10
@@ -5149,6 +5227,20 @@ timing:
 power:
   ...
 </code></pre>
+<h2 id="ram-推論"><a class="header" href="#ram-推論">RAM 推論</a></h2>
+<p>大きな配列は、<code>depth × width</code> 個のフリップフロップとアドレスデコード／マルチプレクサツリーではなく、SRAM マクロにマッピングされます。ビット配列マクロははるかに高密度かつ高速なため、直接モデル化することで、キャッシュやレジスタファイルといったメモリ主体の設計でも面積・タイミング・電力の見積もりが現実的に保たれます。</p>
+<p>配列は、以下のすべてを満たす場合に RAM ブロックとして推論されます。</p>
+<ul>
+<li>ストアドビットが 1024 ビット以上で、depth が 2 以上である</li>
+<li><strong>リセットなし</strong>で、全ワードの動的アドレス書き込み（<code>mem[addr] = data</code>）により書き込まれ、書き込み箇所が最大 8 個である</li>
+<li>全ワードの動的アドレス（<code>mem[addr]</code>）で読み出され、読み出しアドレスが最大 16 個である</li>
+</ul>
+<p><code>if_reset</code> の下で書き込まれる配列はフリップフロップのまま残ります。実際の SRAM にはリセットがないため、SRAM にしたい配列は RTL 上でリセットなしで書きます。部分書き込みやサブワード書き込みの場合も、配列はフリップフロップのまま残ります。</p>
+<p>推論されたメモリの面積は面積サマリの <code>mem</code> 項目として報告され、<code>--dump-area</code> は各ブロックを形状（depth × width）とポート数でグループ化して一覧表示します。</p>
+<pre><code class="language-text">ram: 2 blocks
+    1024×32   1R1W  ×1       32768 bits       189.40 um²
+     512×64   2R1W  ×1       32768 bits       189.40 um²
+</code></pre>
 <h2 id="オプション-1"><a class="header" href="#オプション-1">オプション</a></h2>
 <div class="table-wrapper">
 <table>
@@ -5159,13 +5251,81 @@ power:
 <tr><td><code>--top &lt;name&gt;</code></td><td>トップモジュール名。<code>Veryl.toml</code> の <code>synth.top</code> を上書きします。</td></tr>
 <tr><td><code>--timing-paths &lt;n&gt;</code></td><td>タイミングダンプで報告する最悪遅延エンドポイントの数。<code>synth.timing_paths</code> を上書きします。</td></tr>
 <tr><td><code>--dump-ir</code></td><td>ゲートレベル IR（ゲートとフリップフロップのネットリスト）をダンプします。</td></tr>
-<tr><td><code>--dump-area</code></td><td>セル種別ごとの面積内訳をダンプします。</td></tr>
+<tr><td><code>--dump-area</code></td><td>推論された RAM ブロックを含む、セル種別ごとの面積内訳をダンプします。</td></tr>
 <tr><td><code>--dump-timing</code></td><td>クリティカルパスのトレースをダンプします。</td></tr>
 <tr><td><code>--dump-power</code></td><td>電力見積もり（漏れ電力＋動的電力の内訳）をダンプします。</td></tr>
 </tbody>
 </table>
 </div>
 <p><code>--dump-*</code> フラグが何も指定されない場合、面積／タイミング／電力の3つすべてがダンプされます。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="メタデータ"><a class="header" href="#メタデータ">メタデータ</a></h1>
+<p><code>veryl metadata</code> は、現在のプロジェクトの解決済みメタデータを、依存グラフを含めて出力します。外部ツールが Veryl の依存解決結果と依存キャッシュを、独自に再実装することなく再利用できるようにするためのものです。</p>
+<pre><code class="language-console">$ veryl metadata
+</code></pre>
+<h2 id="オプション-2"><a class="header" href="#オプション-2">オプション</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>オプション</th><th>説明</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--format &lt;format&gt;</code></td><td>出力形式。<code>pretty</code>（デフォルト、人間向け）または <code>json</code>。</td></tr>
+<tr><td><code>--format-version &lt;n&gt;</code></td><td>JSON 出力スキーマのバージョン。<code>--format json</code> と一緒のときのみ有効です。</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="出力フォーマットのバージョン"><a class="header" href="#出力フォーマットのバージョン">出力フォーマットのバージョン</a></h2>
+<p><code>--format-version</code> は JSON 出力のスキーマを選択します。</p>
+<ul>
+<li><code>1</code>（またはバージョン未指定）— 内部の <code>Metadata</code> 表現。この形式は安定しておらず、Veryl のリリース間で変更される可能性があります。</li>
+<li><code>2</code> — 外部ツール向けの安定したバージョン付きスキーマ。</li>
+</ul>
+<p>出力をプログラムで処理するツールでは、バージョン 2 を使用してください。</p>
+<pre><code class="language-console">$ veryl metadata --format json --format-version 2
+</code></pre>
+<p>バージョン 2 の出力は次のような形になります。</p>
+<pre><code class="language-text">{
+  "format_version": 2,
+  "root": {
+    "name": "my_project",
+    "version": "0.1.0",
+    "local_path": "/abs/path/to/my_project",
+    "metadata": {}
+  },
+  "dependencies": [
+    {
+      "id": "dep:foo",
+      "name": "foo",
+      "project": "foo",
+      "source": {
+        "kind": "repository",
+        "url": "https://github.com/example/foo",
+        "project": "foo",
+        "version": "1.2.0",
+        "revision": "0123456789abcdef",
+        "path": "."
+      },
+      "local_path": "/abs/path/to/dependency/cache/foo",
+      "metadata": {},
+      "dependencies": ["dep:bar"]
+    }
+  ]
+}
+</code></pre>
+<ul>
+<li><code>root</code> は現在のプロジェクトを表し、<code>dependencies</code> はグラフ内の解決済みのすべての依存を列挙します。</li>
+<li><code>local_path</code> はディスク上の場所（プロジェクトディレクトリ、または依存キャッシュディレクトリ）であり、ツールが実際のソースファイルを読み取れます。</li>
+<li><code>source</code> は依存の取得元を示します。その <code>kind</code> は <code>path</code>（<code>path</code> を持つ）または <code>repository</code>（<code>url</code>・<code>project</code>・<code>version</code>・<code>revision</code>・<code>path</code> を持つ）のいずれかです。</li>
+<li>各エントリの <code>dependencies</code> フィールドは、その依存自身の依存の <code>id</code> を列挙するため、グラフ全体を再構築できます。</li>
+</ul>
+<h2 id="metadata-テーブル"><a class="header" href="#metadata-テーブル"><code>[metadata]</code> テーブル</a></h2>
+<p><code>Veryl.toml</code> には、外部ツール用の任意のデータを格納する <code>[metadata]</code> テーブルを記述できます。Veryl はその内容を解釈せず、保持したうえで <code>veryl metadata</code> の出力の <code>metadata</code> フィールドに（ルートプロジェクトと依存の両方について）再公開するだけです。</p>
+<pre><code class="language-toml">[metadata.external_tool]
+files = ["src/**/*.v"]
+attrs = { role = "core" }
+</code></pre>
+<p>これは外部連携データを置くための専用の場所です。<code>Veryl.toml</code> のトップレベルの不明なキーは拒否されるため、ツール固有のデータは <code>[metadata]</code> の下に置く必要があります。</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="補遺"><a class="header" href="#補遺">補遺</a></h1>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -5223,7 +5383,7 @@ power:
 // Longest match should be first
 
 CommentsTerm          : &lt;INITIAL, Generic, EmbedHeader,                            Attr&gt;"(?:(?:(?://.*(?:\r\n|\r|\n))|(?:(?ms)/\*/?([^/]|[^*]/)*\*/))\s*)+"                   : Token;
-StringLiteralTerm     : &lt;INITIAL         ,                                         Attr&gt;"\u{0022}(?:\\[\u{0022}\\/bfnrt]|u[0-9a-fA-F]{4}|[^\u{0022}\\\u0000-\u001F])*\u{0022}": Token;
+StringLiteralTerm     : &lt;INITIAL         ,                                         Attr&gt;"\u{0022}(?:\\[\u{0022}\\fnt]|[^\u{0022}\\\u0000-\u001F])*\u{0022}"                   : Token;
 ExponentTerm          : &lt;INITIAL, Generic                                              &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*[eE][+-]?[0-9]+(?:_[0-9]+)*/                   : Token;
 FixedPointTerm        : &lt;INITIAL, Generic                                              &gt;/[0-9]+(?:_[0-9]+)*\.[0-9]+(?:_[0-9]+)*/                                              : Token;
 BasedTerm             : &lt;INITIAL, Generic                                              &gt;/(?:[0-9]+(?:_[0-9]+)*)?'s?[bodh][0-9a-fA-FxzXZ]+(?:_[0-9a-fA-FxzXZ]+)*/              : Token;

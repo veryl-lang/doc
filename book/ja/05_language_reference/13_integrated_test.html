@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-930c7e49.js";
+            window.path_to_searchindex_js = "../searchindex-0b50d0de.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-d102f71b.js"></script>
+        <script src="../toc-2cd81d8e.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -301,6 +301,7 @@ module test_ignored {
 <ul>
 <li><code>$tb::clock_gen</code> — クロック信号生成器（オプションで <code>#(period: N)</code> パラメータを指定可能）</li>
 <li><code>$tb::reset_gen</code> — リセット信号生成器（オプションで <code>#(cycles: N)</code> パラメータを指定可能）</li>
+<li><code>$tb::file</code> — 出力ファイルを書き込むためのファイルハンドル</li>
 </ul>
 <p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
 <ul>
@@ -330,7 +331,11 @@ module test_counter {
 
     var cnt: logic&lt;32&gt;;
 
-    inst dut: Counter ( clk: clk, rst: rst, cnt: cnt );
+    inst dut: Counter (
+        clk: clk,
+        rst: rst,
+        cnt: cnt,
+    );
 
     initial {
         rst.assert();
@@ -391,6 +396,34 @@ module test_function_call {
     }
 }
 </code></pre>
+<h3 id="ファイル出力"><a class="header" href="#ファイル出力">ファイル出力</a></h3>
+<p><code>$tb::file</code> はネイティブテスト中に出力ファイルを書き込むためのファイルハンドルです。<code>clock_gen</code> や <code>reset_gen</code> とは異なり <code>var</code> で宣言し、<code>initial</code> ブロック内で開いて書き込み、閉じます。</p>
+<ul>
+<li><code>f.open(name)</code> — ファイル <code>name</code> を書き込み用に開く（既存の内容は切り詰める）</li>
+<li><code>f.append(name)</code> — ファイル <code>name</code> を書き込み用に開く（既存の内容に追記する）</li>
+<li><code>f.write(format, args...)</code> — <code>$display</code> と同じ書式でフォーマットしたテキストを書き込む</li>
+<li><code>f.flush()</code> — バッファされた出力をディスクへフラッシュする</li>
+<li><code>f.close()</code> — ファイルを閉じる</li>
+</ul>
+<pre><code class="language-veryl playground">#[test(test_file)]
+module test_file {
+    var f: $tb::file;
+
+    initial {
+        f.open ("out.txt");
+        f.write("hex=%h dec=%d\n", 8'hAB, 8'd42);
+        f.close();
+
+        f.append("out.txt");
+        f.write ("appended\n");
+        f.flush ();
+        f.close ();
+
+        $finish();
+    }
+}
+</code></pre>
+<p>他の <code>$tb::*</code> コンポーネントと同様に、<code>$tb::file</code> は <code>#[test]</code> モジュール内でのみ使用できます。</p>
 <h2 id="systemverilogテスト"><a class="header" href="#systemverilogテスト">SystemVerilogテスト</a></h2>
 <p>SystemVerilog テストは <code>inline</code> 指定子で記述することができます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
 <p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>

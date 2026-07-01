@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-b3055dba.js";
+            window.path_to_searchindex_js = "../searchindex-d5cb38a3.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-92efcc39.js"></script>
+        <script src="../toc-28bcefd9.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -358,6 +358,30 @@ target = {type = "directory", path = "target"}
 5 directories, 10 files
 </code></pre>
 <p>The generated <code>prj.f</code> lists all generated files. So you can use it along with the existing SystemVerilog filelists.</p>
+<h2 id="redirecting-output-with---out-dir"><a class="header" href="#redirecting-output-with---out-dir">Redirecting output with <code>--out-dir</code></a></h2>
+<p>By default, <code>veryl build</code> writes all generated outputs (SystemVerilog files, source maps, the filelist, and <code>dependencies</code>) under the project path.
+The <code>--out-dir</code> option redirects these outputs to another directory while sources keep resolving against the project path.
+This is useful when integrating with external build systems (e.g. <code>xmake</code>, <code>build.rs</code>) that expect the generated files to be placed outside the source tree.</p>
+<pre><code>$ veryl build --out-dir /path/to/output
+</code></pre>
+<p>A relative path is resolved against the current working directory.</p>
+<pre><code>$ veryl build --out-dir output
+</code></pre>
+<p>The directory structure under the output directory mirrors the normal layout.
+For example, with <code>target = {type = "directory", path = "target"}</code>, the output directory will become below:</p>
+<pre><code>$ tree /path/to/output
+/path/to/output
+|-- dependencies
+|-- prj.f
+`-- target
+    |-- module_a.sv
+    |-- module_b.sv
+    `-- module_c.sv
+
+2 directories, 5 files
+</code></pre>
+<p>The generated filelist references the redirected destinations, so it can be used directly by downstream tools.
+Without <code>--out-dir</code>, the build behavior is unchanged.</p>
 <h2 id="about-gitignore"><a class="header" href="#about-gitignore">About <code>.gitignore</code></a></h2>
 <p>Veryl provides the following <code>.gitignore</code> as the default value.
 <code>.build</code> is used to record build information by Veryl compiler.</p>

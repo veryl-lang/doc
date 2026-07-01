@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-930c7e49.js";
+            window.path_to_searchindex_js = "../searchindex-0b50d0de.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-d102f71b.js"></script>
+        <script src="../toc-2cd81d8e.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -289,7 +289,7 @@
 library: sky130_fd_sc_hd ...
 
 summary:
-  area:        1234.56 um²  (comb 1100.00, seq 134.56)
+  area:        1234.56 um²  (comb 1000.00, seq 134.56, mem 100.00)
   timing:        2.345 ns      8 levels  in_dat → out_dat
   power:        0.1234 mW   (leak 0.0123 mW, dyn 0.1111 mW)
                             @ f_clk = 100 MHz, activity = 0.10
@@ -301,6 +301,20 @@ timing:
 power:
   ...
 </code></pre>
+<h2 id="ram-推論"><a class="header" href="#ram-推論">RAM 推論</a></h2>
+<p>大きな配列は、<code>depth × width</code> 個のフリップフロップとアドレスデコード／マルチプレクサツリーではなく、SRAM マクロにマッピングされます。ビット配列マクロははるかに高密度かつ高速なため、直接モデル化することで、キャッシュやレジスタファイルといったメモリ主体の設計でも面積・タイミング・電力の見積もりが現実的に保たれます。</p>
+<p>配列は、以下のすべてを満たす場合に RAM ブロックとして推論されます。</p>
+<ul>
+<li>ストアドビットが 1024 ビット以上で、depth が 2 以上である</li>
+<li><strong>リセットなし</strong>で、全ワードの動的アドレス書き込み（<code>mem[addr] = data</code>）により書き込まれ、書き込み箇所が最大 8 個である</li>
+<li>全ワードの動的アドレス（<code>mem[addr]</code>）で読み出され、読み出しアドレスが最大 16 個である</li>
+</ul>
+<p><code>if_reset</code> の下で書き込まれる配列はフリップフロップのまま残ります。実際の SRAM にはリセットがないため、SRAM にしたい配列は RTL 上でリセットなしで書きます。部分書き込みやサブワード書き込みの場合も、配列はフリップフロップのまま残ります。</p>
+<p>推論されたメモリの面積は面積サマリの <code>mem</code> 項目として報告され、<code>--dump-area</code> は各ブロックを形状（depth × width）とポート数でグループ化して一覧表示します。</p>
+<pre><code class="language-text">ram: 2 blocks
+    1024×32   1R1W  ×1       32768 bits       189.40 um²
+     512×64   2R1W  ×1       32768 bits       189.40 um²
+</code></pre>
 <h2 id="オプション"><a class="header" href="#オプション">オプション</a></h2>
 <div class="table-wrapper">
 <table>
@@ -311,7 +325,7 @@ power:
 <tr><td><code>--top &lt;name&gt;</code></td><td>トップモジュール名。<code>Veryl.toml</code> の <code>synth.top</code> を上書きします。</td></tr>
 <tr><td><code>--timing-paths &lt;n&gt;</code></td><td>タイミングダンプで報告する最悪遅延エンドポイントの数。<code>synth.timing_paths</code> を上書きします。</td></tr>
 <tr><td><code>--dump-ir</code></td><td>ゲートレベル IR（ゲートとフリップフロップのネットリスト）をダンプします。</td></tr>
-<tr><td><code>--dump-area</code></td><td>セル種別ごとの面積内訳をダンプします。</td></tr>
+<tr><td><code>--dump-area</code></td><td>推論された RAM ブロックを含む、セル種別ごとの面積内訳をダンプします。</td></tr>
 <tr><td><code>--dump-timing</code></td><td>クリティカルパスのトレースをダンプします。</td></tr>
 <tr><td><code>--dump-power</code></td><td>電力見積もり（漏れ電力＋動的電力の内訳）をダンプします。</td></tr>
 </tbody>
@@ -327,7 +341,7 @@ power:
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../07_appendix.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../06_development_environment/18_metadata.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -341,7 +355,7 @@ power:
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../07_appendix.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../06_development_environment/18_metadata.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

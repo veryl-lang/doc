@@ -133,10 +133,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-b3055dba.js";
+            window.path_to_searchindex_js = "../../searchindex-d5cb38a3.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-92efcc39.js"></script>
+        <script src="../../toc-28bcefd9.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -303,7 +303,9 @@ Label which is shown by <code>:</code> is required to idenfity the generated dec
     }
 
     for i in 0..4 :g_a {
-        assign a[i + 1] = a[i];
+        if i != 3 :g {
+            assign a[i + 1] = a[i];
+        }
     }
 
     always_comb {

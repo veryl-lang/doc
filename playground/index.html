@@ -172,7 +172,10 @@ module ModuleA #(
 
     <footer class="statusbar">
       <span id="status-text"><span class="status-dot"></span> Ready</span>
-      <span id="build-time"></span>
+      <span class="statusbar-right">
+        <span id="build-time"></span>
+        <span id="revision"></span>
+      </span>
     </footer>
 
     <div class="toast" id="toast"></div>
@@ -202,7 +205,7 @@ module ModuleA #(
 
     <script type="module">
       // ===== WASM imports =====
-      import init, {set_hook, build as wasmBuild, dump_ir as wasmDumpIr, format as wasmFormat, simulate as wasmSimulate} from "./pkg/veryl_wasm.js";
+      import init, {set_hook, build as wasmBuild, dump_ir as wasmDumpIr, format as wasmFormat, simulate as wasmSimulate, revision as wasmRevision} from "./pkg/veryl_wasm.js";
 
       // ===== CodeMirror imports =====
       import {EditorView, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter} from "@codemirror/view";
@@ -512,6 +515,18 @@ module ModuleA #(
       // ===== WASM init =====
       await init();
       set_hook();
+
+      // ===== Show base revision on nightly =====
+      if (location.pathname.includes("/nightly/")) {
+        try {
+          const rev = wasmRevision();
+          if (rev && rev !== "unknown") {
+            const shortRev = rev.slice(0, 8);
+            const el = document.getElementById("revision");
+            el.innerHTML = `Built from <a href="https://github.com/veryl-lang/veryl/commit/${rev}" target="_blank" rel="noopener"><code>${shortRev}</code></a>`;
+          }
+        } catch (e) { /* ignore */ }
+      }
 
       // ===== Build =====
       window.build = () => {
