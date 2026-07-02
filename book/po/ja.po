@@ -9228,6 +9228,82 @@ msgstr "1"
 msgid "Number of worst-delay endpoints to report in the timing dump."
 msgstr "タイミングダンプで報告する最悪遅延エンドポイントの数。"
 
+#: src/06_development_environment/01_project_configuration/06_synth.md:27
+msgid ""
+"`veryl synth` infers a RAM macro for a large array written through a single "
+"dynamic address and read through dynamic addresses, instead of expanding it "
+"into `depth × width` flip-flops plus address decode/mux trees. The following "
+"thresholds control when this happens. An array that fails inference (for "
+"example, one with a reset — real SRAM has no reset) stays as flip-flops; if "
+"it is also larger than `ram_max_ff_bits`, synthesis reports an error rather "
+"than exhausting memory."
+msgstr ""
+"`veryl synth` は、単一の動的アドレスで書き込まれ、動的アドレスで読み出さ"
+"れる大きな配列を、`depth × width` 個のフリップフロップとアドレスデコード"
+"／マルチプレクサツリーへ展開する代わりに、RAM マクロとして推論します。以"
+"下の閾値によって、これが行われる条件が制御されます。推論に失敗した配列（"
+"例えばリセットを持つもの——実際の SRAM にはリセットがありません）はフリッ"
+"プフロップのまま残り、さらに `ram_max_ff_bits` を超える場合は、合成はメ"
+"モリを使い果たすのではなくエラーを報告します。"
+
+#: src/06_development_environment/01_project_configuration/06_synth.md:37
+msgid "ram_min_bits"
+msgstr "ram_min_bits"
+
+#: src/06_development_environment/01_project_configuration/06_synth.md:37
+msgid "1024"
+msgstr "1024"
+
+#: src/06_development_environment/01_project_configuration/06_synth.md:37
+msgid ""
+"Smallest array, in stored bits, worth inferring as a RAM instead of "
+"flip-flops."
+msgstr ""
+"フリップフロップではなく RAM として推論する価値がある最小の配列サイズ（"
+"ストアドビット単位）。"
+
+#: src/06_development_environment/01_project_configuration/06_synth.md:38
+msgid "ram_max_read_ports"
+msgstr "ram_max_read_ports"
+
+#: src/06_development_environment/01_project_configuration/06_synth.md:38
+msgid "16"
+msgstr "16"
+
+#: src/06_development_environment/01_project_configuration/06_synth.md:38
+msgid "Largest number of distinct read addresses a RAM-inferred array may have."
+msgstr "RAM として推論される配列が持ちうる、異なる読み出しアドレスの最大数。"
+
+#: src/06_development_environment/01_project_configuration/06_synth.md:39
+msgid "ram_max_write_ports"
+msgstr "ram_max_write_ports"
+
+#: src/06_development_environment/01_project_configuration/06_synth.md:39
+msgid "8"
+msgstr "8"
+
+#: src/06_development_environment/01_project_configuration/06_synth.md:39
+msgid "Largest number of distinct write sites a RAM-inferred array may have."
+msgstr "RAM として推論される配列が持ちうる、異なる書き込み箇所の最大数。"
+
+#: src/06_development_environment/01_project_configuration/06_synth.md:40
+msgid "ram_max_ff_bits"
+msgstr "ram_max_ff_bits"
+
+#: src/06_development_environment/01_project_configuration/06_synth.md:40
+msgid "65536"
+msgstr "65536"
+
+#: src/06_development_environment/01_project_configuration/06_synth.md:40
+msgid ""
+"Largest array, in stored bits, that a dynamically-indexed array which failed "
+"inference may expand into flip-flops. A larger array is rejected instead of "
+"exhausting memory."
+msgstr ""
+"推論に失敗した動的インデックス配列がフリップフロップへ展開されうる最大の"
+"配列サイズ（ストアドビット単位）。これを超える配列は、メモリを使い果たす"
+"のではなく拒否されます。"
+
 #: src/06_development_environment/01_project_configuration/06_synth.md:25
 msgid "Built-in libraries"
 msgstr "組み込みライブラリ"
@@ -11169,24 +11245,30 @@ msgid "An array is inferred as a RAM block when all of the following hold:"
 msgstr "配列は、以下のすべてを満たす場合に RAM ブロックとして推論されます。"
 
 #: src/06_development_environment/17_synthesizer.md:55
-msgid "it has at least 1024 stored bits and a depth of 2 or more;"
-msgstr "ストアドビットが 1024 ビット以上で、depth が 2 以上である"
+msgid ""
+"it has at least `ram_min_bits` (default 1024) stored bits and a depth of 2 "
+"or more;"
+msgstr ""
+"ストアドビットが `ram_min_bits`（デフォルト 1024）ビット以上で、depth が"
+" 2 以上である"
 
-#: src/06_development_environment/17_synthesizer.md:56
+#: src/06_development_environment/17_synthesizer.md:57
 msgid ""
 "it is written **without a reset**, through whole-word dynamic-address writes "
-"(`mem[addr] = data`), with at most 8 distinct write sites;"
+"(`mem[addr] = data`), with at most `ram_max_write_ports` (default 8) "
+"distinct write sites;"
 msgstr ""
-"**リセットなし**で、全ワードの動的アドレス書き込み（`mem[addr] = data`）によ"
-"り書き込まれ、書き込み箇所が最大 8 個である"
+"**リセットなし**で、全ワードの動的アドレス書き込み（`mem[addr] = data`）"
+"により書き込まれ、書き込み箇所が最大 `ram_max_write_ports`（デフォルト 8"
+"）個である"
 
-#: src/06_development_environment/17_synthesizer.md:58
+#: src/06_development_environment/17_synthesizer.md:60
 msgid ""
 "it is read through whole-word dynamic addresses (`mem[addr]`), with at most "
-"16 distinct read addresses."
+"`ram_max_read_ports` (default 16) distinct read addresses."
 msgstr ""
-"全ワードの動的アドレス（`mem[addr]`）で読み出され、読み出しアドレスが最大 16 "
-"個である"
+"全ワードの動的アドレス（`mem[addr]`）で読み出され、読み出しアドレスが最"
+"大 `ram_max_read_ports`（デフォルト 16）個である"
 
 #: src/06_development_environment/17_synthesizer.md:61
 msgid ""
@@ -11198,6 +11280,28 @@ msgstr ""
 "SRAM にはリセットがないため、SRAM にしたい配列は RTL 上でリセットなしで書きま"
 "す。部分書き込みやサブワード書き込みの場合も、配列はフリップフロップのまま残"
 "ります。"
+
+#: src/06_development_environment/17_synthesizer.md:67
+msgid ""
+"A dynamically-indexed array that fails inference but is larger than "
+"`ram_max_ff_bits` (default 65536 stored bits) cannot be expanded into "
+"flip-flops without exhausting memory, so synthesis reports an error instead. "
+"Write such an array reset-less so it is inferred as RAM, or raise "
+"`ram_max_ff_bits`."
+msgstr ""
+"推論に失敗したものの `ram_max_ff_bits`（デフォルト 65536 ストアドビット"
+"）を超える大きさの動的インデックス配列は、メモリを使い果たさずにフリップ"
+"フロップへ展開することができないため、代わりに合成がエラーを報告します。"
+"そのような配列を RAM として推論させるにはリセットなしで記述するか、`ram_"
+"max_ff_bits` を引き上げてください。"
+
+#: src/06_development_environment/17_synthesizer.md:72
+msgid ""
+"These thresholds are configurable in the "
+"[`[synth]`](./01_project_configuration/06_synth.md) section of `Veryl.toml`."
+msgstr ""
+"これらの閾値は `Veryl.toml` の [`[synth]`](./01_project_configuration/06"
+"_synth.md) セクションで設定できます。"
 
 #: src/06_development_environment/17_synthesizer.md:65
 msgid ""

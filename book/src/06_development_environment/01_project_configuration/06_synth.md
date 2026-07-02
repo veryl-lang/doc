@@ -22,6 +22,23 @@ timing_paths = 1
 | activity       | float (0.0–1.0)                             | 0.1     | Per-cycle toggle rate assumed for combinational nets.              |
 | timing_paths   | integer                                     | 1       | Number of worst-delay endpoints to report in the timing dump.      |
 
+## RAM inference
+
+`veryl synth` infers a RAM macro for a large array written through a single
+dynamic address and read through dynamic addresses, instead of expanding it into
+`depth × width` flip-flops plus address decode/mux trees. The following
+thresholds control when this happens. An array that fails inference (for
+example, one with a reset — real SRAM has no reset) stays as flip-flops; if it is
+also larger than `ram_max_ff_bits`, synthesis reports an error rather than
+exhausting memory.
+
+| Configuration        | Value   | Default | Description                                                                     |
+|----------------------|---------|---------|---------------------------------------------------------------------------------|
+| ram_min_bits         | integer | 1024    | Smallest array, in stored bits, worth inferring as a RAM instead of flip-flops. |
+| ram_max_read_ports   | integer | 16      | Largest number of distinct read addresses a RAM-inferred array may have.        |
+| ram_max_write_ports  | integer | 8       | Largest number of distinct write sites a RAM-inferred array may have.           |
+| ram_max_ff_bits      | integer | 65536   | Largest array, in stored bits, that a dynamically-indexed array which failed inference may expand into flip-flops. A larger array is rejected instead of exhausting memory. |
+
 ## Built-in libraries
 
 The `library` field selects the built-in cell library used for area, timing and

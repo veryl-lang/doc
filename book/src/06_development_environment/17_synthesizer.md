@@ -52,15 +52,25 @@ memory-heavy designs such as caches and register files.
 
 An array is inferred as a RAM block when all of the following hold:
 
-* it has at least 1024 stored bits and a depth of 2 or more;
+* it has at least `ram_min_bits` (default 1024) stored bits and a depth of 2 or
+  more;
 * it is written **without a reset**, through whole-word dynamic-address writes
-  (`mem[addr] = data`), with at most 8 distinct write sites;
-* it is read through whole-word dynamic addresses (`mem[addr]`), with at most 16
-  distinct read addresses.
+  (`mem[addr] = data`), with at most `ram_max_write_ports` (default 8) distinct
+  write sites;
+* it is read through whole-word dynamic addresses (`mem[addr]`), with at most
+  `ram_max_read_ports` (default 16) distinct read addresses.
 
 An array written under `if_reset` stays as flip-flops, because real SRAM has no
 reset — so an array intended to become SRAM is written reset-less in the RTL.
 Partial or sub-word writes also keep the array as flip-flops.
+
+A dynamically-indexed array that fails inference but is larger than
+`ram_max_ff_bits` (default 65536 stored bits) cannot be expanded into flip-flops
+without exhausting memory, so synthesis reports an error instead. Write such an
+array reset-less so it is inferred as RAM, or raise `ram_max_ff_bits`.
+
+These thresholds are configurable in the [`[synth]`](./01_project_configuration/06_synth.md)
+section of `Veryl.toml`.
 
 The inferred memory area is reported as the `mem` term of the area summary, and
 `--dump-area` lists each block grouped by shape (depth × width) and port count:
