@@ -573,6 +573,10 @@ msgid "[Integrated test](02_features.md#integrated-test)"
 msgstr "[組み込みテスト](02_features.md#integrated-test)"
 
 #: src/02_features.md:8
+msgid "[Logic synthesis](02_features.md#logic-synthesis)"
+msgstr "[論理合成](02_features.md#logic-synthesis)"
+
+#: src/02_features.md:8
 msgid "[Dependency management](02_features.md#dependency-management)"
 msgstr "[依存関係管理](02_features.md#dependency-management)"
 
@@ -688,13 +692,29 @@ msgstr ""
 msgid "Integrated test"
 msgstr "組み込みテスト"
 
-#: src/02_features.md:44
+#: src/02_features.md:45
 msgid ""
-"Test code written by SystemVerilog or [cocotb](https://www.cocotb.org) can "
-"be embedded in Veryl code, it can be executed through `veryl test` command."
+"Tests can be written directly in Veryl and executed through the `veryl test` "
+"command. The primary way is a _native test_: a testbench written in Veryl "
+"itself and run by the built-in simulator, without embedding SystemVerilog or "
+"relying on external frameworks. No external simulator installation is "
+"required."
 msgstr ""
-"SystemVerilogまたは[cocotb](https://www.cocotb.org)で書かれたテストコードを"
-"Verylに埋め込み、`veryl test` コマンドで実行することができます。"
+"テストは Veryl で直接記述し、`veryl test` コマンドで実行できます。基本と"
+"なるのは _ネイティブテスト_ で、Veryl 自体で記述したテストベンチを組み込"
+"みシミュレータで実行します。SystemVerilog を埋め込んだり外部フレームワー"
+"クに依存したりする必要はありません。外部シミュレータのインストールは不要"
+"です。"
+
+#: src/02_features.md:64
+msgid ""
+"When an external RTL simulator is needed, test code written in SystemVerilog "
+"or [cocotb](https://www.cocotb.org) can also be embedded in Veryl code and "
+"run through the same `veryl test` command."
+msgstr ""
+"外部の RTL シミュレータが必要な場合は、SystemVerilog や [cocotb](https:/"
+"/www.cocotb.org) で書いたテストコードを Veryl コードに埋め込み、同じ `ve"
+"ryl test` コマンドで実行することもできます。"
 
 #: src/02_features.md:47
 msgid ""
@@ -709,6 +729,28 @@ msgid ""
 "}}}\n"
 "```"
 msgstr ""
+
+#: src/02_features.md:79
+msgid "Logic synthesis"
+msgstr "論理合成"
+
+#: src/02_features.md:81
+msgid ""
+"Veryl can perform lightweight logic synthesis on the project and report "
+"approximate area, timing and power. It is intended as a quick feedback tool "
+"during design exploration, not a replacement for a production synthesis flow."
+msgstr ""
+"Veryl はプロジェクトに対して簡易的な論理合成を行い、概算の面積・タイミン"
+"グ・電力を報告できます。これは設計検討中に素早くフィードバックを得るため"
+"のツールであり、本格的な合成フローの代替を意図したものではありません。"
+
+#: src/02_features.md:86
+msgid ""
+"The report opens with a one-line summary followed by area, timing and power "
+"detail:"
+msgstr ""
+"レポートは1行のサマリで始まり、続いて面積・タイミング・電力の詳細が示さ"
+"れます。"
 
 #: src/02_features.md:58
 msgid "Dependency management"

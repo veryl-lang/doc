@@ -5,6 +5,7 @@ In this chapter, we introduce the features of Veryl along with clear examples.
 * [Real-time diagnostics](02_features.md#real-time-diagnostics)
 * [Auto formatting](02_features.md#auto-formatting)
 * [Integrated test](02_features.md#integrated-test)
+* [Logic synthesis](02_features.md#logic-synthesis)
 * [Dependency management](02_features.md#dependency-management)
 * [Generics](02_features.md#generics)
 * [Type inference](02_features.md#type-inference)
@@ -41,8 +42,28 @@ formatting through the command line and formatting checks in CI are also possibl
 
 ## Integrated test {#integrated-test}
 
-Test code written by SystemVerilog or [cocotb](https://www.cocotb.org) can be embedded in Veryl code,
-it can be executed through `veryl test` command.
+Tests can be written directly in Veryl and executed through the `veryl test` command.
+The primary way is a *native test*: a testbench written in Veryl itself and run by the
+built-in simulator, without embedding SystemVerilog or relying on external frameworks.
+No external simulator installation is required.
+
+```veryl
+#[test(test_example)]
+module test_example {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    initial {
+        rst.assert();
+        clk.next  (10);
+        $finish   ();
+    }
+}
+```
+
+When an external RTL simulator is needed, test code written in SystemVerilog or
+[cocotb](https://www.cocotb.org) can also be embedded in Veryl code and run through the
+same `veryl test` command.
 
 ```veryl
 #[test(test1)]
@@ -53,6 +74,26 @@ embed (inline) sv{{{
         end
     endmodule
 }}}
+```
+
+## Logic synthesis {#logic-synthesis}
+
+Veryl can perform lightweight logic synthesis on the project and report approximate
+area, timing and power.
+It is intended as a quick feedback tool during design exploration,
+not a replacement for a production synthesis flow.
+
+The report opens with a one-line summary followed by area, timing and power detail:
+
+```text
+synth: TopModule — 123 gates, 17 FFs
+library: sky130_fd_sc_hd ...
+
+summary:
+  area:        1234.56 um²  (comb 1000.00, seq 134.56, mem 100.00)
+  timing:        2.345 ns      8 levels  in_dat → out_dat
+  power:        0.1234 mW   (leak 0.0123 mW, dyn 0.1111 mW)
+                            @ f_clk = 100 MHz, activity = 0.10
 ```
 
 ## Dependency management {#dependency-management}
