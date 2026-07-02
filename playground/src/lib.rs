@@ -7,14 +7,17 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 use veryl_analyzer::ir as air;
-use veryl_analyzer::{Analyzer, Context, ir::Ir, namespace_table, symbol_table};
+use veryl_analyzer::{
+    Analyzer, Context, attribute_table, definition_table, ir::Ir, scope, symbol_table,
+    unsafe_table,
+};
 use veryl_emitter::Emitter;
 use veryl_formatter::Formatter;
 use veryl_metadata::{
     Build, BuildInfo, Doc, Format, Lint, Lockfile, Metadata, Project, Pubfile, Publish, Synth,
     Test,
 };
-use veryl_parser::{Parser, resource_table};
+use veryl_parser::{Parser, resource_table, text_table};
 use veryl_simulator::ir::{self as sim_ir, Event};
 use veryl_simulator::output_buffer;
 use veryl_simulator::testbench::{self, TestResult};
@@ -130,15 +133,25 @@ pub fn revision() -> String {
     env!("VERYL_REVISION").to_string()
 }
 
+/// Clear everything the previous build of the single playground source left in
+/// the global tables (same set as veryl's own per-file drop).
+fn drop_file_state() {
+    if let Some(path) = resource_table::get_path_id(PathBuf::from("")) {
+        symbol_table::drop(path);
+        scope::drop_tokens(path);
+        text_table::drop(path);
+        attribute_table::drop(path);
+        unsafe_table::drop(path);
+        definition_table::drop(path);
+    }
+}
+
 #[wasm_bindgen]
 pub fn build(source: &str) -> Result {
     let metadata = metadata();
     match Parser::parse(source, &"") {
         Ok(parser) => {
-            if let Some(path) = resource_table::get_path_id(PathBuf::from("")) {
-                symbol_table::drop(path);
-                namespace_table::drop(path);
-            }
+            drop_file_state();
 
             let analyzer = Analyzer::new(&metadata);
             let mut context = Context::default();
@@ -147,7 +160,6 @@ pub fn build(source: &str) -> Result {
             errors.append(&mut analyzer.analyze_pass1("project", &parser.veryl));
             errors.append(&mut Analyzer::analyze_post_pass1());
             errors.append(&mut analyzer.analyze_pass2(
-                "project",
                 &parser.veryl,
                 &mut context,
                 Some(&mut ir),
@@ -175,7 +187,7 @@ pub fn build(source: &str) -> Result {
                     &PathBuf::from("input.sv"),
                     &PathBuf::from("input.sv.map"),
                 );
-                emitter.emit("project", &parser.veryl, source);
+                emitter.emit(&parser.veryl, source);
                 emitter.as_str().to_owned()
             };
 
@@ -201,10 +213,7 @@ pub fn dump_ir(source: &str) -> Result {
     let metadata = metadata();
     match Parser::parse(source, &"") {
         Ok(parser) => {
-            if let Some(path) = resource_table::get_path_id(PathBuf::from("")) {
-                symbol_table::drop(path);
-                namespace_table::drop(path);
-            }
+            drop_file_state();
 
             let analyzer = Analyzer::new(&metadata);
             let mut context = Context::default();
@@ -213,7 +222,6 @@ pub fn dump_ir(source: &str) -> Result {
             errors.append(&mut analyzer.analyze_pass1("project", &parser.veryl));
             errors.append(&mut Analyzer::analyze_post_pass1());
             errors.append(&mut analyzer.analyze_pass2(
-                "project",
                 &parser.veryl,
                 &mut context,
                 Some(&mut ir),
@@ -291,10 +299,7 @@ pub fn simulate(source: &str) -> SimResult {
     let metadata = metadata();
     match Parser::parse(source, &"") {
         Ok(parser) => {
-            if let Some(path) = resource_table::get_path_id(PathBuf::from("")) {
-                symbol_table::drop(path);
-                namespace_table::drop(path);
-            }
+            drop_file_state();
 
             let analyzer = Analyzer::new(&metadata);
             let mut context = Context::default();
@@ -303,7 +308,6 @@ pub fn simulate(source: &str) -> SimResult {
             errors.append(&mut analyzer.analyze_pass1("project", &parser.veryl));
             errors.append(&mut Analyzer::analyze_post_pass1());
             errors.append(&mut analyzer.analyze_pass2(
-                "project",
                 &parser.veryl,
                 &mut context,
                 Some(&mut ir),
