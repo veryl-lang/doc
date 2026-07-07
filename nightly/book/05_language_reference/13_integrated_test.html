@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-ecc21fa4.js";
+            window.path_to_searchindex_js = "../searchindex-b90a8644.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-28bcefd9.js"></script>
@@ -298,7 +298,7 @@ module test_ignored {
 
     initial {
         rst.assert();
-        $finish   ();
+        $finish();
     }
 }
 </code></pre>
@@ -347,9 +347,9 @@ module test_counter {
 
     initial {
         rst.assert();
-        clk.next  (10);
-        $assert   (cnt == 32'd10);
-        $finish   ();
+        clk.next(10);
+        $assert(cnt == 32'd10);
+        $finish();
     }
 }
 </code></pre>
@@ -397,10 +397,10 @@ module test_function_call {
 
     initial {
         rst.assert();
-        step_n    (5);
-        step_n    (5);
-        $assert   (cnt == 32'd10);
-        $finish   ();
+        step_n(5);
+        step_n(5);
+        $assert(cnt == 32'd10);
+        $finish();
     }
 }
 </code></pre>
@@ -419,14 +419,14 @@ module test_file {
     var f: $tb::file;
 
     initial {
-        f.open ("out.txt");
+        f.open("out.txt");
         f.write("hex=%h dec=%d\n", 8'hAB, 8'd42);
         f.close();
 
         f.append("out.txt");
-        f.write ("appended\n");
-        f.flush ();
-        f.close ();
+        f.write("appended\n");
+        f.flush();
+        f.close();
 
         $finish();
     }
