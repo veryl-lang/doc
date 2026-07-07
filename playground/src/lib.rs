@@ -2,8 +2,6 @@ use miette::{
     Diagnostic, GraphicalReportHandler, GraphicalTheme, Report, Severity, ThemeCharacters,
     ThemeStyles,
 };
-use semver::Version;
-use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 use veryl_analyzer::ir as air;
@@ -13,10 +11,7 @@ use veryl_analyzer::{
 };
 use veryl_emitter::Emitter;
 use veryl_formatter::Formatter;
-use veryl_metadata::{
-    Build, BuildInfo, Doc, Format, Lint, Lockfile, Metadata, Project, Pubfile, Publish, Synth,
-    Test,
-};
+use veryl_metadata::Metadata;
 use veryl_parser::{Parser, resource_table, text_table};
 use veryl_simulator::ir::{self as sim_ir, Event};
 use veryl_simulator::output_buffer;
@@ -95,32 +90,7 @@ fn extract_diagnostics(errors: &[impl Diagnostic + std::fmt::Display]) -> String
 }
 
 fn metadata() -> Metadata {
-    Metadata {
-        project: Project {
-            name: "project".into(),
-            version: Some(Version::parse("0.0.0").unwrap()),
-            authors: vec![],
-            description: None,
-            license: None,
-            repository: None,
-        },
-        build: Build::default(),
-        format: Format::default(),
-        lint: Lint::default(),
-        publish: Publish::default(),
-        doc: Doc::default(),
-        test: Test::default(),
-        synth: Synth::default(),
-        dependencies: HashMap::new(),
-        metadata: HashMap::new(),
-        metadata_path: "".into(),
-        pubfile_path: "".into(),
-        pubfile: Pubfile::default(),
-        lockfile_path: "".into(),
-        lockfile: Lockfile::default(),
-        build_info: BuildInfo::default(),
-        output_dir_override: None,
-    }
+    Metadata::create_default("project").unwrap()
 }
 
 #[wasm_bindgen]
