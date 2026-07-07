@@ -30,7 +30,7 @@ module test_ignored {
 
     initial {
         rst.assert();
-        $finish   ();
+        $finish();
     }
 }
 ```
@@ -84,9 +84,9 @@ module test_counter {
 
     initial {
         rst.assert();
-        clk.next  (10);
-        $assert   (cnt == 32'd10);
-        $finish   ();
+        clk.next(10);
+        $assert(cnt == 32'd10);
+        $finish();
     }
 }
 ```
@@ -142,10 +142,10 @@ module test_function_call {
 
     initial {
         rst.assert();
-        step_n    (5);
-        step_n    (5);
-        $assert   (cnt == 32'd10);
-        $finish   ();
+        step_n(5);
+        step_n(5);
+        $assert(cnt == 32'd10);
+        $finish();
     }
 }
 ```
@@ -167,14 +167,14 @@ module test_file {
     var f: $tb::file;
 
     initial {
-        f.open ("out.txt");
+        f.open("out.txt");
         f.write("hex=%h dec=%d\n", 8'hAB, 8'd42);
         f.close();
 
         f.append("out.txt");
-        f.write ("appended\n");
-        f.flush ();
-        f.close ();
+        f.write("appended\n");
+        f.flush();
+        f.close();
 
         $finish();
     }
