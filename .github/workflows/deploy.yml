@@ -17,6 +17,12 @@ env:
 jobs:
   book:
     runs-on: ubuntu-latest
+    # sccache + rust-cache keep caches warm across un-pinned veryl git-dep bumps.
+    # main saves; PRs (Regression workflow) restore read-only.
+    env:
+      RUSTC_WRAPPER: sccache
+      CARGO_INCREMENTAL: "0"
+      SCCACHE_CACHE_SIZE: "3G"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,6 +32,18 @@ jobs:
         with:
           toolchain: stable
       - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: doc-book
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      - uses: mozilla-actions/sccache-action@v0.0.10
+        with:
+          disable_annotations: true
+      - uses: actions/cache/restore@v4
+        continue-on-error: true
+        with:
+          path: ~/.cache/sccache
+          key: sccache-doc-book-${{ github.sha }}
+          restore-keys: sccache-doc-book-
       - name: Setup mdBook
         uses: peaceiris/actions-mdbook@v1
         with:
@@ -36,7 +54,18 @@ jobs:
           cargo install mdbook-i18n-helpers --version 0.4.0
       - name: Install static-sitemap-cli
         run: npm install static-sitemap-cli
+      # Cache mdbook-veryl keyed on upstream HEAD; rebuild only when it changes.
+      - name: Resolve upstream veryl revision
+        id: veryl_rev
+        run: echo "sha=$(git ls-remote https://github.com/veryl-lang/veryl HEAD | cut -f1)" >> "$GITHUB_OUTPUT"
+      - name: Cache mdbook-veryl binary
+        id: cache_mdbook_veryl
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin/mdbook-veryl
+          key: mdbook-veryl-${{ runner.os }}-${{ steps.veryl_rev.outputs.sha }}
       - name: Build mdbook plugin
+        if: steps.cache_mdbook_veryl.outputs.cache-hit != 'true'
         run: cargo install --git https://github.com/veryl-lang/veryl mdbook-veryl
       - name: Replace wasm path for nightly
         if: ${{ ! startsWith(github.ref, 'refs/tags/v') }}
@@ -67,15 +96,40 @@ jobs:
         with:
           name: book
           path: book/book/
+      - name: sccache stats
+        if: always()
+        run: sccache --show-stats
+      - uses: actions/cache/save@v4
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        with:
+          path: ~/.cache/sccache
+          key: sccache-doc-book-${{ github.sha }}
 
   playground:
     runs-on: ubuntu-latest
+    env:
+      RUSTC_WRAPPER: sccache
+      CARGO_INCREMENTAL: "0"
+      SCCACHE_CACHE_SIZE: "3G"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
       - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: doc-playground
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      - uses: mozilla-actions/sccache-action@v0.0.10
+        with:
+          disable_annotations: true
+      - uses: actions/cache/restore@v4
+        continue-on-error: true
+        with:
+          path: ~/.cache/sccache
+          key: sccache-doc-playground-${{ github.sha }}
+          restore-keys: sccache-doc-playground-
       - name: Install wasm-pack
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
       - name: Test
@@ -111,6 +165,15 @@ jobs:
         with:
           name: playground
           path: playground/html/
+      - name: sccache stats
+        if: always()
+        run: sccache --show-stats
+      - uses: actions/cache/save@v4
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        with:
+          path: ~/.cache/sccache
+          key: sccache-doc-playground-${{ github.sha }}
 
   deploy:
     if: startsWith(github.ref, 'refs/tags/v')
