@@ -67,6 +67,25 @@ defines = ["DEBUG", "ENABLE_ASSERTIONS"]
 Additional names can be appended from the command line via `veryl test --define NAME` (or `-D NAME`).
 CLI defines are merged with this field.
 
+### The `seed` field
+
+The `seed` field sets the base seed for randomized verification-component tests.
+When unset, each `veryl test` run draws a fresh random seed and prints it; set it (or pass `--seed`) to reproduce a specific run.
+
+### The `four_state` field
+
+The `four_state` field runs native verification-component tests in four-state (X/Z) mode.
+It defaults to `false` and can also be enabled with the `--4state` command-line option.
+
+### The `component_backend` field
+
+The `component_backend` field pins how verification components are executed:
+
+* `"native"` -- built from source with cargo
+* `"wasm"` -- a committed prebuilt binary
+
+When unset, `veryl test` builds from source if cargo is available and falls back to a committed prebuilt wasm otherwise.
+
 ## The `[test.verilator]` section
 
 This section contains configurations of test by Verilator.

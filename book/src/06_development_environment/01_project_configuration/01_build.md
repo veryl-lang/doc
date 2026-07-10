@@ -41,6 +41,9 @@ sources = ["rtl/foo_module", "rtl/bar_module"]
 
 For the above exmaple, the Veryl compiler collect `*.veryl` files from `rtl/foo_module` and `rtl/bar_module`.
 
+`examples/` is reserved and cannot be specified in `sources`; it is analyzed automatically for the root project.
+See [Directory Layout](../04_directory_layout.md#the-examples-directory).
+
 ## The `target` field
 
 The `target` field specifies where the generated codes will be placed at.
