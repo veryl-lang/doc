@@ -97,6 +97,67 @@ interface InterfaceA {
 }
 ```
 
+## Interface inheritance
+
+An interface can inherit the members (variables, functions, and modports) of one or more parent interfaces with the `inherit` keyword.
+The parents' members are expanded into the child interface, so they can be used as if they were declared in the child directly.
+
+```veryl,playground
+interface InterfaceA {
+    var a: logic;
+
+    modport mp_a {
+        a: input,
+    }
+}
+
+interface InterfaceB {
+    var b: logic;
+
+    modport mp_b {
+        b: input,
+    }
+}
+
+// InterfaceC inherits the members and modports of InterfaceA and InterfaceB.
+interface InterfaceC inherit InterfaceA, InterfaceB {
+    var c: logic;
+
+    modport mp {
+        c: input,
+        ..same(mp_a, mp_b)
+    }
+}
+```
+
+Generic arguments can be passed to a parent interface:
+
+```veryl,playground
+interface InterfaceA::<W: u32> {
+    var a: logic<W>;
+
+    modport mp_a {
+        a: input,
+    }
+}
+
+interface InterfaceB::<W: u32> inherit InterfaceA::<W> {
+    var b: logic<W>;
+
+    modport mp_b {
+        b: input,
+        ..same(mp_a)
+    }
+}
+```
+
+A parent interface must satisfy all of the following conditions:
+
+* It must be an interface, not a `proto` interface.
+* It must not have parameters (generic parameters are allowed).
+* It must not inherit from other interfaces (nested inheritance is not supported yet).
+* Its member names must not conflict with the child's members or with the other parents' members.
+
 ## Connect interface instances/modport ports
 
 An interface instance and a modport port can be connected with a module port of which type is compatible with it or is the `generic` interface with the same manner of SystemVerilog.
