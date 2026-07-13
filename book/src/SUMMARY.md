@@ -63,6 +63,8 @@
     - [Visibility](./05_language_reference/11_visibility.md)
     - [Foreign Language Integration](./05_language_reference/12_foreign_language_integration.md)
     - [Integrated Test](./05_language_reference/13_integrated_test.md)
+        - [Using a Component](./05_language_reference/13_integrated_test/01_using_a_component.md)
+        - [Writing a Component](./05_language_reference/13_integrated_test/02_writing_a_component.md)
     - [Generics](./05_language_reference/14_generics.md)
         - [Default Parameter](./05_language_reference/14_generics/01_default_parameter.md)
         - [Prototype](./05_language_reference/14_generics/02_prototype.md)

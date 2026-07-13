@@ -46,6 +46,9 @@ The following testbench components are available:
 * `$tb::reset_gen` — reset signal generator (with optional `#(cycles: N)` parameter)
 * `$tb::file` — file handle for writing output files
 
+In addition to the built-in components, verification components written in Rust can be used through the `$comp` namespace.
+See [Using a Component](./13_integrated_test/01_using_a_component.md).
+
 And the following system functions can be used in `initial` blocks:
 
 * `$assert(condition)`, `$assert(condition, format, args...)` — check an assertion during simulation. On failure the simulation stops immediately and the test is reported as failed. `format` is a format string in the same style as `$display`, and `args` provides values formatted into it.

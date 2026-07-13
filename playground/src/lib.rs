@@ -153,6 +153,7 @@ pub fn build(source: &str) -> Result {
             } else {
                 let mut emitter = Emitter::new(
                     &metadata,
+                    &metadata.project.name,
                     &PathBuf::from("input.veryl"),
                     &PathBuf::from("input.sv"),
                     &PathBuf::from("input.sv.map"),

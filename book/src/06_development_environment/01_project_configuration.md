@@ -14,6 +14,7 @@
 * [`[publish]`](01_project_configuration.md#the-publish-section) --- Publish settings.
 * [`[synth]`](01_project_configuration.md#the-synth-section) --- Synthesis settings.
 * [`[dependencies]`](01_project_configuration.md#the-dependencies-section) --- Library dependencies.
+* [`[[components]]`](01_project_configuration.md#the-components-section) --- Verification component packages.
 
 ## The `[project]` section {#the-project-section}
 
@@ -106,3 +107,8 @@ Available configurations is [here](./01_project_configuration/06_synth.md).
 
 The `[dependencies]` section contains library dependencies.
 Available configurations is [here](./02_dependencies.md).
+
+## The `[[components]]` entries {#the-components-section}
+
+A `[[components]]` entry registers a cargo package of verification components written in Rust.
+Available configurations is [here](../05_language_reference/13_integrated_test/02_writing_a_component.md).

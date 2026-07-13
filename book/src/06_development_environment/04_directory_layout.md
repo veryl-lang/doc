@@ -144,6 +144,28 @@ $ tree /path/to/output
 The generated filelist references the redirected destinations, so it can be used directly by downstream tools.
 Without `--out-dir`, the build behavior is unchanged.
 
+## The `examples` directory {#the-examples-directory}
+
+The `examples` directory at the project root is reserved as a place for usage examples and testbenches:
+
+```
+$ tree
+.
+|-- examples
+|   `-- example_top.veryl
+|-- src
+|   `-- module_a.veryl
+`-- Veryl.toml
+
+2 directories, 3 files
+```
+
+Files under `examples` are analyzed and checked like ordinary sources, and `#[test]` modules in them are executed by `veryl test`.
+They share the project namespace with the other sources, but are excluded from code generation and the filelist.
+When the project is consumed as a dependency, its `examples` directory is ignored entirely.
+
+Because the directory is reserved, it cannot be specified in the `sources` field of the `[build]` section.
+
 ## About `.gitignore`
 
 Veryl provides the following `.gitignore` as the default value.
