@@ -133,10 +133,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-b90a8644.js";
+            window.path_to_searchindex_js = "../../searchindex-a01d1f7e.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-28bcefd9.js"></script>
+        <script src="../../toc-6600d52d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -320,6 +320,19 @@ defines = ["DEBUG", "ENABLE_ASSERTIONS"]
 </code></pre>
 <p>Additional names can be appended from the command line via <code>veryl test --define NAME</code> (or <code>-D NAME</code>).
 CLI defines are merged with this field.</p>
+<h3 id="the-seed-field"><a class="header" href="#the-seed-field">The <code>seed</code> field</a></h3>
+<p>The <code>seed</code> field sets the base seed for randomized verification-component tests.
+When unset, each <code>veryl test</code> run draws a fresh random seed and prints it; set it (or pass <code>--seed</code>) to reproduce a specific run.</p>
+<h3 id="the-four_state-field"><a class="header" href="#the-four_state-field">The <code>four_state</code> field</a></h3>
+<p>The <code>four_state</code> field runs native verification-component tests in four-state (X/Z) mode.
+It defaults to <code>false</code> and can also be enabled with the <code>--4state</code> command-line option.</p>
+<h3 id="the-component_backend-field"><a class="header" href="#the-component_backend-field">The <code>component_backend</code> field</a></h3>
+<p>The <code>component_backend</code> field pins how verification components are executed:</p>
+<ul>
+<li><code>"native"</code> – built from source with cargo</li>
+<li><code>"wasm"</code> – a committed prebuilt binary</li>
+</ul>
+<p>When unset, <code>veryl test</code> builds from source if cargo is available and falls back to a committed prebuilt wasm otherwise.</p>
 <h2 id="the-testverilator-section"><a class="header" href="#the-testverilator-section">The <code>[test.verilator]</code> section</a></h2>
 <p>This section contains configurations of test by Verilator.</p>
 <div class="table-wrapper">
@@ -426,7 +439,7 @@ CLI defines are merged with this field.</p>
         <script src="../../searcher-09f2665d.js"></script>
 
         <script src="../../clipboard-1626706a.min.js"></script>
-        <script src="../../highlight-bd3c1700.js"></script>
+        <script src="../../highlight-88633d6f.js"></script>
         <script src="../../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->

@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-7a1bdbc0.js";
+            window.path_to_searchindex_js = "../searchindex-b59c8aca.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-2cd81d8e.js"></script>
+        <script src="../toc-89abcafe.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -375,6 +375,20 @@ target = {type = "directory", path = "target"}
 2 directories, 5 files
 </code></pre>
 <p>生成されるファイルリストは変更後の出力先を参照するため、後段のツールでそのまま利用できます。<code>--out-dir</code> を指定しない場合のビルドの挙動は変わりません。</p>
+<h2 id="the-examples-directory"><a class="header" href="#the-examples-directory"><code>examples</code> ディレクトリ</a></h2>
+<p>プロジェクトルートの <code>examples</code> ディレクトリは、使用例やテストベンチを置く場所として予約されています。</p>
+<pre><code>$ tree
+.
+|-- examples
+|   `-- example_top.veryl
+|-- src
+|   `-- module_a.veryl
+`-- Veryl.toml
+
+2 directories, 3 files
+</code></pre>
+<p><code>examples</code> 以下のファイルは通常のソースと同様に解析・チェックされ、その中の <code>#[test]</code> モジュールは <code>veryl test</code> で実行されます。他のソースとプロジェクトの名前空間を共有しますが、コード生成とファイルリストからは除外されます。プロジェクトが依存として利用される場合、その <code>examples</code> ディレクトリは完全に無視されます。</p>
+<p>このディレクトリは予約されているため、<code>[build]</code> セクションの <code>sources</code> フィールドに指定することはできません。</p>
 <h2 id="gitignore-について"><a class="header" href="#gitignore-について"><code>.gitignore</code> について</a></h2>
 <p>Verylは以下の <code>.gitignore</code> をデフォルト値として提供します。<code>.build</code> ディレクトリはVerylコンパイラがビルド情報を記録するために使用します。</p>
 <pre><code>.build/
@@ -439,7 +453,7 @@ target = {type = "directory", path = "target"}
         <script src="../searcher-09f2665d.js"></script>
 
         <script src="../clipboard-1626706a.min.js"></script>
-        <script src="../highlight-bd3c1700.js"></script>
+        <script src="../highlight-88633d6f.js"></script>
         <script src="../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->

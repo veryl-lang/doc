@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-b90a8644.js";
+            window.path_to_searchindex_js = "../searchindex-a01d1f7e.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-28bcefd9.js"></script>
+        <script src="../toc-6600d52d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -311,6 +311,8 @@ A module with <code>#[test(test_name)]</code> attribute (without <code>embed</co
 <li><code>$tb::reset_gen</code> — reset signal generator (with optional <code>#(cycles: N)</code> parameter)</li>
 <li><code>$tb::file</code> — file handle for writing output files</li>
 </ul>
+<p>In addition to the built-in components, verification components written in Rust can be used through the <code>$comp</code> namespace.
+See <a href="./13_integrated_test/01_using_a_component.html">Using a Component</a>.</p>
 <p>And the following system functions can be used in <code>initial</code> blocks:</p>
 <ul>
 <li><code>$assert(condition)</code>, <code>$assert(condition, format, args...)</code> — check an assertion during simulation. On failure the simulation stops immediately and the test is reported as failed. <code>format</code> is a format string in the same style as <code>$display</code>, and <code>args</code> provides values formatted into it.</li>
@@ -465,7 +467,7 @@ embed (cocotb) py{{{
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../05_language_reference/14_generics.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../05_language_reference/13_integrated_test/01_using_a_component.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -479,7 +481,7 @@ embed (cocotb) py{{{
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../05_language_reference/14_generics.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../05_language_reference/13_integrated_test/01_using_a_component.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
@@ -509,7 +511,7 @@ embed (cocotb) py{{{
         <script src="../searcher-09f2665d.js"></script>
 
         <script src="../clipboard-1626706a.min.js"></script>
-        <script src="../highlight-bd3c1700.js"></script>
+        <script src="../highlight-88633d6f.js"></script>
         <script src="../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->

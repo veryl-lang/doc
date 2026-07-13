@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-b90a8644.js";
+            window.path_to_searchindex_js = "../searchindex-a01d1f7e.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-28bcefd9.js"></script>
+        <script src="../toc-6600d52d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -382,6 +382,22 @@ For example, with <code>target = {type = "directory", path = "target"}</code>, t
 </code></pre>
 <p>The generated filelist references the redirected destinations, so it can be used directly by downstream tools.
 Without <code>--out-dir</code>, the build behavior is unchanged.</p>
+<h2 id="the-examples-directory"><a class="header" href="#the-examples-directory">The <code>examples</code> directory</a></h2>
+<p>The <code>examples</code> directory at the project root is reserved as a place for usage examples and testbenches:</p>
+<pre><code>$ tree
+.
+|-- examples
+|   `-- example_top.veryl
+|-- src
+|   `-- module_a.veryl
+`-- Veryl.toml
+
+2 directories, 3 files
+</code></pre>
+<p>Files under <code>examples</code> are analyzed and checked like ordinary sources, and <code>#[test]</code> modules in them are executed by <code>veryl test</code>.
+They share the project namespace with the other sources, but are excluded from code generation and the filelist.
+When the project is consumed as a dependency, its <code>examples</code> directory is ignored entirely.</p>
+<p>Because the directory is reserved, it cannot be specified in the <code>sources</code> field of the <code>[build]</code> section.</p>
 <h2 id="about-gitignore"><a class="header" href="#about-gitignore">About <code>.gitignore</code></a></h2>
 <p>Veryl provides the following <code>.gitignore</code> as the default value.
 <code>.build</code> is used to record build information by Veryl compiler.</p>
@@ -448,7 +464,7 @@ The candidates of <code>.gitignore</code> is below:</p>
         <script src="../searcher-09f2665d.js"></script>
 
         <script src="../clipboard-1626706a.min.js"></script>
-        <script src="../highlight-bd3c1700.js"></script>
+        <script src="../highlight-88633d6f.js"></script>
         <script src="../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->

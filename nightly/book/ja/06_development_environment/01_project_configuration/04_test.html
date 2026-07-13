@@ -133,10 +133,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-7a1bdbc0.js";
+            window.path_to_searchindex_js = "../../searchindex-b59c8aca.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-2cd81d8e.js"></script>
+        <script src="../../toc-89abcafe.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -314,6 +314,17 @@ waveform_target = {type = "directory", path = "[dst dir]"}
 defines = ["DEBUG", "ENABLE_ASSERTIONS"]
 </code></pre>
 <p>追加の名前はコマンドラインから <code>veryl test --define NAME</code> (または <code>-D NAME</code>) で渡すこともできます。CLI で指定した値はこのフィールドの内容にマージされます。</p>
+<h3 id="seed-フィールド"><a class="header" href="#seed-フィールド"><code>seed</code> フィールド</a></h3>
+<p><code>seed</code> フィールドは、ランダム化された検証コンポーネントテストのベースシードを設定します。未設定の場合、<code>veryl test</code> の実行ごとに新しいランダムシードが引かれて表示されます。特定の実行を再現するには、値を設定する（または <code>--seed</code> を渡す）ようにします。</p>
+<h3 id="four_state-フィールド"><a class="header" href="#four_state-フィールド"><code>four_state</code> フィールド</a></h3>
+<p><code>four_state</code> フィールドは、ネイティブの検証コンポーネントテストを4値（X/Z）モードで実行します。既定値は <code>false</code> で、<code>--4state</code> コマンドラインオプションでも有効化できます。</p>
+<h3 id="component_backend-フィールド"><a class="header" href="#component_backend-フィールド"><code>component_backend</code> フィールド</a></h3>
+<p><code>component_backend</code> フィールドは、検証コンポーネントの実行方法を固定します。</p>
+<ul>
+<li><code>"native"</code> – cargo でソースからビルド</li>
+<li><code>"wasm"</code> – コミット済みのビルド済みバイナリ</li>
+</ul>
+<p>未設定の場合、<code>veryl test</code> は cargo が利用可能ならソースからビルドし、そうでなければコミット済みのビルド済み wasm にフォールバックします。</p>
 <h2 id="testverilator-セクション"><a class="header" href="#testverilator-セクション"><code>[test.verilator]</code> セクション</a></h2>
 <p>このセクションはVerilatorによるテストの設定です。</p>
 <div class="table-wrapper">
@@ -420,7 +431,7 @@ defines = ["DEBUG", "ENABLE_ASSERTIONS"]
         <script src="../../searcher-09f2665d.js"></script>
 
         <script src="../../clipboard-1626706a.min.js"></script>
-        <script src="../../highlight-bd3c1700.js"></script>
+        <script src="../../highlight-88633d6f.js"></script>
         <script src="../../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->

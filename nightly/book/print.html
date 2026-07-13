@@ -134,10 +134,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-b90a8644.js";
+            window.path_to_searchindex_js = "searchindex-a01d1f7e.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-28bcefd9.js"></script>
+        <script src="toc-6600d52d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -3254,6 +3254,8 @@ A module with <code>#[test(test_name)]</code> attribute (without <code>embed</co
 <li><code>$tb::reset_gen</code> — reset signal generator (with optional <code>#(cycles: N)</code> parameter)</li>
 <li><code>$tb::file</code> — file handle for writing output files</li>
 </ul>
+<p>In addition to the built-in components, verification components written in Rust can be used through the <code>$comp</code> namespace.
+See <a href="#using-a-component">Using a Component</a>.</p>
 <p>And the following system functions can be used in <code>initial</code> blocks:</p>
 <ul>
 <li><code>$assert(condition)</code>, <code>$assert(condition, format, args...)</code> — check an assertion during simulation. On failure the simulation stops immediately and the test is reported as failed. <code>format</code> is a format string in the same style as <code>$display</code>, and <code>args</code> provides values formatted into it.</li>
@@ -3399,6 +3401,398 @@ embed (cocotb) py{{{
     # cocotb code
 }}}
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="using-a-component"><a class="header" href="#using-a-component">Using a Component</a></h1>
+<p>In addition to the built-in <code>$tb</code> components, verification components written in Rust can be used in native tests.
+A component is a Rust type that acts as a bus functional model (BFM), a protocol checker or a golden model, run by Veryl’s built-in simulator.</p>
+<p>A component behaves like an <code>always_ff</code> process: it updates on clock edges, inputs observe pre-edge values, and outputs commit together with flip-flops.
+Components can also expose zero-time methods callable from <code>initial</code> blocks, such as loading a memory image or checking a value.</p>
+<p>You can use a component from a dependency in a testbench without writing any Rust yourself; this page covers that.
+To write your own component and register it, see <a href="#writing-a-component">Writing a Component</a>.</p>
+<h2 id="installing-rust"><a class="header" href="#installing-rust">Installing Rust</a></h2>
+<p>Components run as compiled Rust code, so installing a <a href="https://www.rust-lang.org/tools/install">Rust toolchain</a> is recommended.
+With one installed, components are built from source and run as native code — noticeably faster for heavier models.</p>
+<p>Without it, you can still use components that a dependency ships as a prebuilt wasm binary — typically the simpler checkers and models.
+<code>veryl test</code> uses the prebuilt automatically when cargo is not available.</p>
+<h2 id="adding-a-component"><a class="header" href="#adding-a-component">Adding a component</a></h2>
+<p>When a package declares verification components, they become available under <code>$comp::&lt;dependency name&gt;::&lt;component name&gt;</code> just by adding it as a dependency:</p>
+<pre><code class="language-toml">[dependencies]
+axi_vip = {github = "example/axi_vip", version = "1.0.0"}
+</code></pre>
+<pre><code class="language-veryl">#[test(test_axi)]
+module test_axi {
+    inst clk: $tb::clock_gen;
+    inst bus: AxiIf;
+
+    inst bfm: $comp::axi_vip::axi_master (
+        clk            ,
+        bus: bus.master,
+    );
+
+    // ...
+}
+</code></pre>
+<h2 id="instantiating-in-a-test"><a class="header" href="#instantiating-in-a-test">Instantiating in a test</a></h2>
+<p>Components can only be instantiated inside <code>#[test]</code> modules.</p>
+<h3 id="clocked-components"><a class="header" href="#clocked-components">Clocked components</a></h3>
+<p>A clocked component is instantiated with <code>inst</code>, taking parameters with <code>#()</code> (not generic arguments) and port connections like a module:</p>
+<pre><code class="language-veryl">#[test(test_req_ack)]
+module test_req_ack {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    var req: logic;
+    var ack: logic;
+
+    inst dut: Peripheral ( clk, rst, req, ack );
+
+    inst chk: $comp::my_checker #( LIMIT: 8 ) ( clk, req, ack );
+
+    initial {
+        rst.assert();
+        req = 1;
+        clk.next(16);
+        $finish();
+    }
+}
+</code></pre>
+<p>Port connections can also reference DUT-internal signals hierarchically (e.g. <code>val: dut.u_sub.internal_reg</code>), so internal signals do not have to be routed to the top level for observation.
+A modport of an interface instance can be connected to a component’s interface port as well (<code>bus: bus.master</code>).
+Every port the component declares must be connected; a missing connection is reported at analysis time.</p>
+<h3 id="method-only-components"><a class="header" href="#method-only-components">Method-only components</a></h3>
+<p>A method-only component has no ports and is declared with <code>var</code>:</p>
+<pre><code class="language-veryl">#[test(test_golden)]
+module test_golden {
+    var g: $comp::golden   ;
+    var x: logic        &lt;8&gt;;
+
+    initial {
+        g.set(42);
+        x = g.get();
+        g.check(x);
+        $finish();
+    }
+}
+</code></pre>
+<p>The <code>var</code> form takes parameters as generic arguments, positionally in the order the component declares them.
+Any constant expression is accepted:</p>
+<pre><code class="language-veryl">#[test(test_wide)]
+module test_wide {
+    const W: u32 = 96;
+
+    var w: $comp::wide_model::&lt;W&gt;    ;
+    var x: logic                 &lt;96&gt;;
+
+    initial {
+        w.put(96'h55);
+        x = w.get();
+        $finish();
+    }
+}
+</code></pre>
+<h3 id="method-calls"><a class="header" href="#method-calls">Method calls</a></h3>
+<p>Methods can be called in statement position and inside expressions:</p>
+<pre><code class="language-veryl">#[test(test_method_call)]
+module test_method_call {
+    var g: $comp::golden   ;
+    var x: logic        &lt;8&gt;;
+
+    initial {
+        g.set(42); // statement position
+        x = g.get();
+        $assert(g.get() + 1 == 43, "expression"); // expression position
+        $finish();
+    }
+}
+</code></pre>
+<p>An expression-position call runs just before its enclosing statement, as its own zero-time step.
+Method arguments are positional; named arguments are not supported.</p>
+<p>Methods are not limited to the <code>var</code> form: an <code>inst</code> component takes zero-time calls too (e.g. <code>iss.load("test.elf");</code>).</p>
+<h2 id="random-seed"><a class="header" href="#random-seed">Random seed</a></h2>
+<p>A component that uses randomization derives it from a deterministic per-instance seed, so a run can be reproduced from its base seed.
+By default <code>veryl test</code> draws a fresh random base seed each run and prints it (<code>Test seed: ...</code>); to reproduce a run, pass that value with <code>--seed</code>, or pin it with the <code>seed</code> field in the <code>[test]</code> section.</p>
+<pre><code class="language-toml">[test]
+seed = 42
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="writing-a-component"><a class="header" href="#writing-a-component">Writing a Component</a></h1>
+<p>When no existing component fits, you can write your own in Rust.
+A component is built by cargo and driven by Veryl’s built-in simulator; for how to use one in a testbench, see <a href="#using-a-component">Using a Component</a>.</p>
+<h2 id="creating-a-component"><a class="header" href="#creating-a-component">Creating a component</a></h2>
+<p><code>veryl new --component &lt;path&gt;</code> scaffolds a component, adapting to where you run it.</p>
+<p>Inside an existing Veryl project it drops a cargo package at <code>&lt;path&gt;</code> and registers it in the project’s <code>Veryl.toml</code>, so <code>$comp::&lt;name&gt;</code> resolves right away:</p>
+<pre><code>$ veryl new --component my_checker
+[INFO ]      Created "my_checker" component
+[INFO ]   Registered $comp::my_checker in Veryl.toml
+</code></pre>
+<p>Run on its own it scaffolds a self-contained project — at once a cargo package and a Veryl project — ready to <code>veryl test</code> and to publish as a dependency:</p>
+<pre><code>$ veryl new --component my_checker
+[INFO ]      Created "my_checker" component project
+[INFO ]   Run `veryl test` in my_checker to try it
+</code></pre>
+<pre><code class="language-text">my_checker/
+├── Veryl.toml            # registers the crate as a component
+├── component/            # the cargo package (crate-type = ["cdylib"])
+│   ├── Cargo.toml
+│   └── src/lib.rs
+└── examples/
+    └── my_checker.veryl  # a usage example, run by `veryl test`
+</code></pre>
+<h2 id="defining-the-component"><a class="header" href="#defining-the-component">Defining the component</a></h2>
+<p>The package is a cargo crate depending on the <code>veryl-component</code> crate, defined by three macros: <code>#[derive(Component)]</code> on a struct declares the interface, <code>#[component_impl]</code> on an inherent <code>impl</code> block declares the behavior, and <code>veryl_component_export!</code> exports it under its component name.</p>
+<pre><code class="language-rust noplayground">use veryl_component::*;
+
+/// Checks that `ack` follows `req` within `LIMIT` cycles.
+#[derive(Component)]
+pub struct ReqAckChecker {
+    /// Sampling clock.
+    clk: ClockPort,
+    req: InputPort,
+    ack: InputPort,
+    /// Cycle budget between request and acknowledge.
+    #[param(name = "LIMIT")]
+    limit: u64,
+    waiting: u64,
+}
+
+#[component_impl]
+impl ReqAckChecker {
+    fn on_clock(&amp;mut self, ctx: &amp;mut SimCtx) -&gt; Result&lt;()&gt; {
+        if ctx.read(self.ack).as_bool() {
+            self.waiting = 0;
+        } else if ctx.read(self.req).as_bool() {
+            self.waiting += 1;
+            if self.waiting &gt; self.limit {
+                ctx.fail(format!("no ack within {} cycles", self.limit));
+            }
+        }
+        Ok(())
+    }
+}
+
+veryl_component_export!("my_checker" =&gt; ReqAckChecker);</code></pre>
+<p><code>#[derive(Component)]</code> classifies the struct fields:</p>
+<ul>
+<li>Fields typed <code>InputPort</code> / <code>OutputPort</code> become data ports. Their width is taken from the connected signal — a component that constrains its widths checks them itself in <code>on_build</code> from <code>port.width()</code>. The port name defaults to the field name; <code>#[port(name = "...")]</code> overrides it.</li>
+<li>Fields typed <code>ClockPort</code> / <code>ResetPort</code> become clock and reset ports (always 1 bit). They must be connected with a <code>clock</code>/<code>reset</code> typed expression, and only they fire the <code>on_clock</code>/<code>on_reset</code> hooks.</li>
+<li>Fields with <code>#[param]</code> become elaboration-time parameters. Supported types are integers, <code>bool</code>, <code>String</code> and <code>Value</code>; an <code>Option</code> of those marks the parameter as omittable. <code>#[param(name = "LIMIT")]</code> overrides the Veryl-side name.</li>
+<li>All other fields are plain state, initialized with <code>Default</code>.</li>
+</ul>
+<p>Every declared port must be connected at the instantiation site; a missing connection is an analysis-time error.</p>
+<p>A component with a <code>ClockPort</code> field is a <code>clocked</code> component, instantiated with <code>inst</code>; <code>method_only</code> components are declared with <code>var</code>. The optional <code>#[component(kind = ...)]</code> attribute states the shape explicitly and must agree with the fields: a <code>clocked</code> declaration without a <code>ClockPort</code> field, or a clock/reset port on a <code>method_only</code> component, is a compile error.
+Doc comments on the struct, ports, parameters and methods surface in <code>veryl doc</code> and in editor hovers.</p>
+<p><code>#[component_impl]</code> turns the reserved function names <code>on_build</code>, <code>on_init</code>, <code>on_reset</code>, <code>on_clock</code> and <code>on_finish</code> into simulation hooks, and every other function into a testbench method.</p>
+<p><code>veryl_component_export!</code> exports the type under its component name.
+It generates the library’s ABI entry points, so it is invoked exactly once per crate — not once per struct.
+A library exporting several types lists them all in that single invocation:</p>
+<pre><code class="language-rust noplayground">veryl_component_export!(
+    "rv_iss"  =&gt; RvIss,
+    "monitor" =&gt; Monitor,
+);</code></pre>
+<h2 id="interface-ports"><a class="header" href="#interface-ports">Interface ports</a></h2>
+<p>To connect a whole modport of an interface, declare its ports once in a struct deriving <code>VerylInterface</code>, and embed it in the component as an <code>#[interface]</code> field:</p>
+<pre><code class="language-rust noplayground">#[derive(VerylInterface)]
+#[interface(path = "$std::axi4_if", modport = "monitor")]
+pub struct AxiMonitorPorts {
+    awvalid: InputPort, // binds to member `awvalid`
+    awready: InputPort,
+    // ... the remaining modport members ...
+}
+
+#[derive(Component)]
+#[component(kind = clocked)]
+pub struct AxiChecker {
+    clk: ClockPort,
+    rst: ResetPort,
+    #[interface]
+    axi: AxiMonitorPorts, // interface port `axi`: connect as `axi: bus.monitor`
+}</code></pre>
+<p>The struct names the interface (<code>path</code>) and one of its modports (<code>modport</code>); each field binds to the interface member of the same name, read hierarchically in the component (<code>self.axi.awvalid</code>). A member whose name is a Rust keyword is written as a raw identifier (<code>r#in: InputPort</code>).</p>
+<p>Each <code>#[interface]</code> field is one interface port of the component, named after the field — the name a testbench connects (<code>axi: bus.monitor</code>). A component may declare several — a bridge with an upstream <code>slave</code> and a downstream <code>master</code>, or a dual-bus monitor embedding the same struct twice (<code>axi0</code>, <code>axi1</code>) — and they coexist with clock, reset and ordinary ports.</p>
+<p>Every member the struct declares must exist in the connected interface — a missing member is an analysis-time error — while declaring only the members the component observes is fine.</p>
+<h2 id="naming"><a class="header" href="#naming">Naming</a></h2>
+<p>Several names appear around a component, but only one is part of the contract:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Name</th><th>Written in</th><th>Must match</th></tr>
+</thead>
+<tbody>
+<tr><td><code>$comp::foo</code></td><td>Veryl source</td><td>the export name <code>veryl_component_export!("foo" =&gt; ...)</code>; a dependency’s component is <code>$comp::vip::foo</code>, prefixed by the <code>[dependencies]</code> name <code>vip</code></td></tr>
+<tr><td>Rust type name (<code>ReqAckChecker</code>)</td><td>Rust source</td><td>nothing — only the export string is part of the contract</td></tr>
+<tr><td>cargo crate name</td><td>the component’s <code>Cargo.toml</code></td><td>nothing — the artifact is located through <code>path =</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="the-components-entry"><a class="header" href="#the-components-entry">The <code>[[components]]</code> entry</a></h2>
+<p><code>veryl new --component</code> has already added the <code>[[components]]</code> entry that makes every name the library exports available as <code>$comp::&lt;name&gt;</code>; you edit <code>Veryl.toml</code> by hand only to register a package created some other way, or to point at a committed prebuilt binary:</p>
+<pre><code class="language-toml">[[components]]
+path = "my_checker"
+# wasm = "prebuilt/my_checker.wasm"  # optional committed prebuilt binary
+</code></pre>
+<ul>
+<li><code>path</code> — path to the component’s cargo package, relative to the directory containing <code>Veryl.toml</code></li>
+<li><code>wasm</code> — optional committed prebuilt wasm binary, generated by <code>veryl publish</code></li>
+</ul>
+<p>Testbenches that exercise the package’s own components are best placed in the
+<a href="#the-examples-directory"><code>examples</code> directory</a>:
+they run with the package’s own <code>veryl test</code> but are never analyzed by consumers.
+Test modules kept in regular sources are also skipped when the package is consumed as a dependency.</p>
+<h2 id="hooks"><a class="header" href="#hooks">Hooks</a></h2>
+<p>All hooks are optional and take <code>&amp;mut self, ctx: &amp;mut SimCtx</code> (or <code>&amp;mut BuildCtx</code> for <code>on_build</code>):</p>
+<ul>
+<li><code>on_build</code> — called once per instance after ports and parameters are resolved</li>
+<li><code>on_init</code> — called once at time 0 before <code>initial</code> blocks run; output writes become initial values</li>
+<li><code>on_reset</code> — called on reset assertion of a connected <code>ResetPort</code></li>
+<li><code>on_clock</code> — called on each edge of a connected <code>ClockPort</code></li>
+<li><code>on_finish</code> — called when the test ends (normally or via <code>finish</code>/<code>fail</code>)</li>
+</ul>
+<p><code>SimCtx</code> provides the host services available inside hooks and methods:</p>
+<ul>
+<li><code>ctx.read(port)</code> / <code>ctx.write(port, value)</code> — read the pre-edge value of an input, write an output (committed with FFs)</li>
+<li><code>ctx.fail(msg)</code> / <code>ctx.finish()</code> — mark the test as failed / request normal termination at the end of the current cycle</li>
+<li><code>ctx.log(msg)</code> — write a message to the test output</li>
+<li><code>ctx.cycle()</code> / <code>ctx.time()</code> / <code>ctx.clock()</code> — cycle count, simulation time and the fired clock port</li>
+<li><code>ctx.fired(port)</code> — whether the given <code>ClockPort</code> fired the current hook, for components connected to several clocks</li>
+<li><code>ctx.open(path)</code> / <code>ctx.create(path)</code> / <code>ctx.append(path)</code> — file I/O; the returned handle implements <code>std::io::Read</code>/<code>Write</code>/<code>Seek</code>, so <code>BufReader</code>, <code>writeln!</code> and friends work on it</li>
+<li><code>ctx.trace(var, value)</code> — update a waveform trace variable</li>
+<li><code>ctx.is_4state()</code> — whether the simulation tracks four-state (X/Z) values</li>
+</ul>
+<p>By default a simulation is two-state; <code>veryl test --4state</code> (or <code>[test].four_state = true</code>) makes it four-state.
+Under a four-state run a port value carries an X/Z mask, inspected with <code>value.has_x()</code>, <code>value.has_z()</code> and <code>value.unknown_at(bit)</code>, and an output write drives the mask too.
+Gate X/Z checks on <code>ctx.is_4state()</code> — a two-state run has none to observe.
+Method arguments and return values are always two-state.</p>
+<p><code>BuildCtx</code> (available in <code>on_build</code>) additionally provides <code>ctx.param(name)</code>, <code>ctx.input(name)</code>, <code>ctx.output(name)</code>, <code>ctx.clock(name)</code>, <code>ctx.reset(name)</code>, <code>ctx.seed()</code> and <code>ctx.trace_var(name, width)</code>, which registers a component-internal signal for waveform dumping.</p>
+<p><code>ctx.seed()</code> returns a deterministic per-instance seed computed from the base test seed and the instance path; a component that randomizes should derive all of its randomness from it, so that pinning the base seed reproduces the run.
+The base seed is random per run by default (printed by <code>veryl test</code>, reproducible with <code>--seed</code>); pin it with the <code>seed</code> field in the <code>[test]</code> section.</p>
+<p>The <code>ctx</code> file I/O is the portable path: components using <code>std::fs</code> directly work only as native libraries, not as prebuilt wasm binaries.</p>
+<h2 id="testbench-methods-1"><a class="header" href="#testbench-methods-1">Testbench methods</a></h2>
+<p>Any non-hook function in the <code>#[component_impl]</code> block becomes a zero-time method callable from the testbench.
+Methods take <code>&amp;mut self, ctx: &amp;mut SimCtx</code> followed by their arguments, and return <code>Result&lt;T&gt;</code>:</p>
+<pre><code class="language-rust noplayground">#[derive(Component)]
+#[component(kind = method_only)]
+pub struct Golden {
+    stored: u64,
+}
+
+#[component_impl]
+impl Golden {
+    fn set(&amp;mut self, _ctx: &amp;mut SimCtx, value: u64) -&gt; Result&lt;()&gt; {
+        self.stored = value;
+        Ok(())
+    }
+
+    fn get(&amp;mut self, _ctx: &amp;mut SimCtx) -&gt; Result&lt;u64&gt; {
+        Ok(self.stored)
+    }
+
+    fn check(&amp;mut self, ctx: &amp;mut SimCtx, value: u64) -&gt; Result&lt;()&gt; {
+        if value != self.stored {
+            ctx.fail(format!("expected {}, got {value}", self.stored));
+        }
+        Ok(())
+    }
+}</code></pre>
+<p>Supported argument types are <code>&amp;str</code>, <code>String</code>, integers, <code>bool</code> and <code>Value</code>; supported return types are <code>()</code>, integers, <code>bool</code> and <code>Value</code>.</p>
+<p>A <code>Value</code> <strong>argument</strong> carries whatever width the call-site expression has, so it needs no declaration. A <code>Value</code> <strong>return</strong> value must declare its width with <code>#[ret_width(...)]</code> (integer return types imply their own width); the width expression may be an integer, a parameter name, an interface constant qualified by an interface port (<code>axi.DATA_WIDTH_BYTES</code>), or arithmetic over them:</p>
+<pre><code class="language-rust noplayground">#[derive(Component)]
+#[component(kind = method_only)]
+pub struct WideModel {
+    #[param(name = "WIDTH")]
+    width: u64,
+    stored: Option&lt;Value&gt;,
+}
+
+#[component_impl]
+impl WideModel {
+    fn put(&amp;mut self, _ctx: &amp;mut SimCtx, v: &amp;Value) -&gt; Result&lt;()&gt; {
+        self.stored = Some(v.clone());
+        Ok(())
+    }
+
+    #[ret_width(WIDTH)]
+    fn get(&amp;mut self, _ctx: &amp;mut SimCtx) -&gt; Result&lt;Value&gt; {
+        Ok(self.stored.clone().unwrap())
+    }
+}</code></pre>
+<p>A component <a href="#interface-ports">bound to an interface</a> can follow the connected bus width instead of taking a redundant parameter — <code>&lt;port&gt;.&lt;NAME&gt;</code> refers to a constant visible in the interface the port is connected to (a constant declared in the interface body, or a member of its generic package argument):</p>
+<pre><code class="language-rust noplayground">#[ret_width(axi.DATA_WIDTH_BYTES * 8)]
+fn pop_read(&amp;mut self, _ctx: &amp;mut SimCtx) -&gt; Result&lt;Value&gt; {
+    /* ... */
+}</code></pre>
+<p>The width resolves per instance, so the same component returns 32 bits on a 32-bit bus and 128 bits on a 128-bit one.</p>
+<h2 id="unit-testing-with-mocksim"><a class="header" href="#unit-testing-with-mocksim">Unit testing with MockSim</a></h2>
+<p>The <code>veryl_component::testing</code> module provides <code>MockSim</code>, an in-process stand-in for the simulator host.
+It drives a component through the same <code>SimCtx</code>/<code>BuildCtx</code> API, so components can be unit-tested with plain <code>cargo test</code> without the Veryl simulator:</p>
+<pre><code class="language-rust noplayground">#[cfg(test)]
+mod tests {
+    use super::*;
+    use veryl_component::testing::MockSim;
+
+    #[test]
+    fn fails_without_ack() {
+        let mut sim = MockSim::new()
+            .param("LIMIT", 2u64)
+            .input("clk", 1)
+            .input("req", 1)
+            .input("ack", 1);
+        let mut c = sim.build::&lt;ReqAckChecker&gt;().unwrap();
+        sim.set("req", 1u64);
+        for _ in 0..3 {
+            sim.clock(&amp;mut c).unwrap();
+        }
+        assert!(sim.failed());
+    }
+}</code></pre>
+<p><code>MockSim</code> declares parameters and ports with the builder methods, constructs the component with <code>build</code>, drives inputs with <code>set</code> and hooks with <code>clock</code>/<code>reset</code>/<code>init</code>/<code>finish</code>, calls methods with <code>call</code>, and exposes the results through <code>get</code>, <code>failed</code>, <code>failures</code>, <code>logs</code> and <code>finish_requested</code>.</p>
+<h2 id="committing-the-interface-manifest"><a class="header" href="#committing-the-interface-manifest">Committing the interface manifest</a></h2>
+<p>Type-checking a testbench needs a component’s <em>interface</em> — its ports, parameters and methods — not its behavior.
+<code>veryl publish</code> records that interface in a <code>veryl.manifest.json</code> file next to the component’s <code>Cargo.toml</code>, and regenerates it when the component sources change; commit it alongside the sources.</p>
+<p>Committing the manifest lets a consumer analyze <code>$comp::&lt;name&gt;</code> usages without building the component — in particular without a Rust toolchain, where a native component offers no other interface source (a prebuilt wasm binary embeds the same interface).</p>
+<h2 id="publishing-a-prebuilt-wasm"><a class="header" href="#publishing-a-prebuilt-wasm">Publishing a prebuilt wasm</a></h2>
+<p>By default, consumers build the component from source with cargo.
+Committing a prebuilt wasm binary lets consumers without a Rust toolchain use it; declaring <code>wasm =</code> on the <code>[[components]]</code> entry opts the package into this distribution:</p>
+<pre><code class="language-toml">[[components]]
+path = "my_checker"
+wasm = "prebuilt/my_checker.wasm"
+</code></pre>
+<p><code>veryl publish</code> builds the component for the <code>wasm32-unknown-unknown</code> target and writes the binary to the declared path.
+Building the prebuilt wasm requires that target to be installed; add it with <code>rustup target add wasm32-unknown-unknown</code>.
+When a prebuilt no longer matches its sources, <code>veryl publish</code> regenerates it, and <code>veryl test</code> reports a warning.</p>
+<h2 id="backend-selection"><a class="header" href="#backend-selection">Backend selection</a></h2>
+<p>Which form is used at test time is selected as follows:</p>
+<ul>
+<li>When cargo is available, the component is built from source.</li>
+<li>Otherwise the committed prebuilt wasm is used, if declared.</li>
+</ul>
+<p>The <code>component_backend</code> field in the <code>[test]</code> section pins the selection:</p>
+<pre><code class="language-toml">[test]
+component_backend = "wasm"  # or "native"
+</code></pre>
+<p>Pinning <code>wasm</code> is how a publisher verifies the prebuilt binary its consumers will run — the default never chooses it while cargo is available — and how an untrusted component is kept in the sandbox. Pinning <code>native</code> fails instead of silently falling back to wasm when cargo is missing.</p>
+<h3 id="native-and-wasm-compared"><a class="header" href="#native-and-wasm-compared">Native and wasm compared</a></h3>
+<p>The API and simulation semantics are identical on both backends; they differ in what the component can do and how it runs:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th></th><th>Built from source (native)</th><th>Prebuilt wasm</th></tr>
+</thead>
+<tbody>
+<tr><td>Consumer needs</td><td>a Rust toolchain</td><td>nothing — the committed binary</td></tr>
+<tr><td>Available APIs</td><td>any Rust crate (networking, native libraries, GUI, …)</td><td>compute plus the host services only</td></tr>
+<tr><td>Isolation</td><td>unsandboxed</td><td>sandboxed: 256 MiB memory cap, file access gated by <code>requires(file)</code>, runaway hooks trapped</td></tr>
+<tr><td>Speed</td><td>native code</td><td>slower for compute-heavy models such as a full ISS</td></tr>
+</tbody>
+</table>
+</div>
+<p>Host capabilities are declared in the <code>#[component]</code> attribute: <code>requires(file)</code> allows host-mediated file I/O, and <code>requires(native)</code> marks a component as native-only.
+Anything beyond compute and the host services — direct <code>std::fs</code>, networking, native libraries, or a GUI — makes a component native-only, and it cannot ship as wasm.</p>
+<h2 id="limitations"><a class="header" href="#limitations">Limitations</a></h2>
+<ul>
+<li>Method arguments and return values are two-state: X/Z is dropped (port values carry X/Z under a four-state run).</li>
+<li>Method return values are limited to 512 bits by the ABI.</li>
+<li>Instance arrays and unpacked-array connections to component ports are not supported.</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="generics-1"><a class="header" href="#generics-1">Generics</a></h1>
 <p>Generics can define parameterized items which can’t achieved by parameter override.
@@ -4357,6 +4751,7 @@ See <a href="#generic_inference_failed">generic_inference_failed</a> for details
 <li><a href="#the-publish-section"><code>[publish]</code></a> — Publish settings.</li>
 <li><a href="#the-synth-section"><code>[synth]</code></a> — Synthesis settings.</li>
 <li><a href="#the-dependencies-section"><code>[dependencies]</code></a> — Library dependencies.</li>
+<li><a href="#the-components-section"><code>[[components]]</code></a> — Verification component packages.</li>
 </ul>
 <h2 id="the-project-section"><a class="header" href="#the-project-section">The <code>[project]</code> section</a></h2>
 <p>The first section of <code>Veryl.toml</code> is <code>[project]</code>.
@@ -4415,6 +4810,9 @@ Available configurations is <a href="#synth">here</a>.</p>
 <h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section">The <code>[dependencies]</code> section</a></h2>
 <p>The <code>[dependencies]</code> section contains library dependencies.
 Available configurations is <a href="#dependencies">here</a>.</p>
+<h2 id="the-components-section"><a class="header" href="#the-components-section">The <code>[[components]]</code> entries</a></h2>
+<p>A <code>[[components]]</code> entry registers a cargo package of verification components written in Rust.
+Available configurations is <a href="#writing-a-component">here</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="build"><a class="header" href="#build">Build</a></h1>
 <p><code>[build]</code> section specifies the configuration for code generation.</p>
@@ -4449,6 +4847,8 @@ You can specify directories where the Veryl compiler collect files by using the 
 sources = ["rtl/foo_module", "rtl/bar_module"]
 </code></pre>
 <p>For the above exmaple, the Veryl compiler collect <code>*.veryl</code> files from <code>rtl/foo_module</code> and <code>rtl/bar_module</code>.</p>
+<p><code>examples/</code> is reserved and cannot be specified in <code>sources</code>; it is analyzed automatically for the root project.
+See <a href="#the-examples-directory">Directory Layout</a>.</p>
 <h2 id="the-target-field"><a class="header" href="#the-target-field">The <code>target</code> field</a></h2>
 <p>The <code>target</code> field specifies where the generated codes will be placed at.
 The available types are below:</p>
@@ -4816,6 +5216,19 @@ defines = ["DEBUG", "ENABLE_ASSERTIONS"]
 </code></pre>
 <p>Additional names can be appended from the command line via <code>veryl test --define NAME</code> (or <code>-D NAME</code>).
 CLI defines are merged with this field.</p>
+<h3 id="the-seed-field"><a class="header" href="#the-seed-field">The <code>seed</code> field</a></h3>
+<p>The <code>seed</code> field sets the base seed for randomized verification-component tests.
+When unset, each <code>veryl test</code> run draws a fresh random seed and prints it; set it (or pass <code>--seed</code>) to reproduce a specific run.</p>
+<h3 id="the-four_state-field"><a class="header" href="#the-four_state-field">The <code>four_state</code> field</a></h3>
+<p>The <code>four_state</code> field runs native verification-component tests in four-state (X/Z) mode.
+It defaults to <code>false</code> and can also be enabled with the <code>--4state</code> command-line option.</p>
+<h3 id="the-component_backend-field"><a class="header" href="#the-component_backend-field">The <code>component_backend</code> field</a></h3>
+<p>The <code>component_backend</code> field pins how verification components are executed:</p>
+<ul>
+<li><code>"native"</code> – built from source with cargo</li>
+<li><code>"wasm"</code> – a committed prebuilt binary</li>
+</ul>
+<p>When unset, <code>veryl test</code> builds from source if cargo is available and falls back to a committed prebuilt wasm otherwise.</p>
 <h2 id="the-testverilator-section"><a class="header" href="#the-testverilator-section">The <code>[test.verilator]</code> section</a></h2>
 <p>This section contains configurations of test by Verilator.</p>
 <div class="table-wrapper">
@@ -5205,6 +5618,22 @@ For example, with <code>target = {type = "directory", path = "target"}</code>, t
 </code></pre>
 <p>The generated filelist references the redirected destinations, so it can be used directly by downstream tools.
 Without <code>--out-dir</code>, the build behavior is unchanged.</p>
+<h2 id="the-examples-directory"><a class="header" href="#the-examples-directory">The <code>examples</code> directory</a></h2>
+<p>The <code>examples</code> directory at the project root is reserved as a place for usage examples and testbenches:</p>
+<pre><code>$ tree
+.
+|-- examples
+|   `-- example_top.veryl
+|-- src
+|   `-- module_a.veryl
+`-- Veryl.toml
+
+2 directories, 3 files
+</code></pre>
+<p>Files under <code>examples</code> are analyzed and checked like ordinary sources, and <code>#[test]</code> modules in them are executed by <code>veryl test</code>.
+They share the project namespace with the other sources, but are excluded from code generation and the filelist.
+When the project is consumed as a dependency, its <code>examples</code> directory is ignored entirely.</p>
+<p>Because the directory is reserved, it cannot be specified in the <code>sources</code> field of the <code>[build]</code> section.</p>
 <h2 id="about-gitignore"><a class="header" href="#about-gitignore">About <code>.gitignore</code></a></h2>
 <p>Veryl provides the following <code>.gitignore</code> as the default value.
 <code>.build</code> is used to record build information by Veryl compiler.</p>
@@ -7247,7 +7676,7 @@ Add the <code>_</code> prefix to its name to mark it as intentionally unused, or
         <script src="searcher-09f2665d.js"></script>
 
         <script src="clipboard-1626706a.min.js"></script>
-        <script src="highlight-bd3c1700.js"></script>
+        <script src="highlight-88633d6f.js"></script>
         <script src="book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->

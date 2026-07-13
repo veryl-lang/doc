@@ -134,10 +134,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-7a1bdbc0.js";
+            window.path_to_searchindex_js = "searchindex-b59c8aca.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-2cd81d8e.js"></script>
+        <script src="toc-89abcafe.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -1098,19 +1098,19 @@ module ModuleA #(
     assign r_data1 = i_data + 1;
     assign o_data  = r_data2 + 2;
 
-    // instance declaration
-    //   `inst` keyword starts instance declaration
-    //   port connnection can be specified by `()`
-    //   each port connection is `[port_name]:[variable]`
-    //   `[port_name]` means `[port_name]:[port_name]`
+    // インスタンス宣言
+    //   インスタンス宣言は `inst` キーワードではじまります
+    //   ポート接続は `()` 内で指定します
+    //   各ポートの接続は `[port_name]:[variable]` のような形式になります
+    //   `[port_name]` は `[port_name]:[port_name]` を意味します
     inst u_module_b: ModuleB (
         i_clk          ,
         i_data: r_data1,
         o_data: r_data2,
     );
 
-    // instance declaration with parameter override
-    //   notation of parameter connection is the same as port
+    // パラメータオーバーライド付きインスタンス宣言
+    //   パラメータの接続記法はポートと同様です
     inst u_module_c: ModuleC #( ParamA, ParamB: 10 );
 }
 
@@ -1919,7 +1919,7 @@ module ModuleA {
 
     const q: Param = Param'{
         a: 1,
-        ..default(0) // means `b: 0`
+        ..default(0) // すなわち `b: 0`
     };
 }
 </code></pre>
@@ -2639,12 +2639,12 @@ module ModuleA {
 }
 
 module ModuleA (
-    i_d: input  logic&lt;WIDTH&gt;, // valid reference
-    o_d: output logic&lt;WIDTH&gt;, // valid reference
+    i_d: input  logic&lt;WIDTH&gt;, // 有効な参照
+    o_d: output logic&lt;WIDTH&gt;, // 有効な参照
 ) {
     import PackageA::WIDTH;
 
-    let d: logic&lt;WIDTH&gt; = i_d; // valid reference
+    let d: logic&lt;WIDTH&gt; = i_d; // 有効な参照
     assign o_d = d;
 }
 </code></pre>
@@ -3044,6 +3044,7 @@ module test_ignored {
 <li><code>$tb::reset_gen</code> — リセット信号生成器（オプションで <code>#(cycles: N)</code> パラメータを指定可能）</li>
 <li><code>$tb::file</code> — 出力ファイルを書き込むためのファイルハンドル</li>
 </ul>
+<p>組み込みのコンポーネントに加えて、Rust で記述した検証コンポーネントを <code>$comp</code> 名前空間を通じて使用できます。<a href="#コンポーネントを使う">コンポーネントを使う</a> を参照してください。</p>
 <p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
 <ul>
 <li><code>$assert(condition)</code>、<code>$assert(condition, format, args...)</code> — シミュレーション中にアサーションを検査します。失敗するとシミュレーションは即座に停止し、テストは失敗として報告されます。<code>format</code> は <code>$display</code> と同じ書式のフォーマット文字列で、<code>args</code> がそこへ埋め込む値を与えます。</li>
@@ -3185,6 +3186,370 @@ embed (cocotb) py{{{
     # cocotb code
 }}}
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="コンポーネントを使う"><a class="header" href="#コンポーネントを使う">コンポーネントを使う</a></h1>
+<p>組み込みの <code>$tb</code> コンポーネントに加えて、Rust で書いた検証コンポーネントをネイティブテストで使えます。コンポーネントは、バスファンクショナルモデル（BFM）・プロトコルチェッカー・ゴールデンモデルなどとして振る舞う Rust の型で、Veryl の組み込みシミュレータが駆動します。</p>
+<p>コンポーネントは <code>always_ff</code> プロセスのように振る舞います。クロックエッジで更新され、入力はエッジ直前の値を観測し、出力はフリップフロップと同時にコミットされます。また、メモリイメージの読み込みや値のチェックといった、<code>initial</code> ブロックから呼び出せるゼロ時間メソッドを公開することもできます。</p>
+<p>依存パッケージのコンポーネントは、自分で Rust を書かずにテストベンチで使えます。このページではその使い方を説明します。自分でコンポーネントを書いて登録する方法は <a href="#コンポーネントを書く">コンポーネントを書く</a> を参照してください。</p>
+<h2 id="rust-のインストール"><a class="header" href="#rust-のインストール">Rust のインストール</a></h2>
+<p>コンポーネントはコンパイルされた Rust コードとして実行されるため、<a href="https://www.rust-lang.org/tools/install">Rust ツールチェイン</a> のインストールを推奨します。インストールしておけば、コンポーネントはソースからビルドされ、ネイティブコードとして実行されます（重いモデルほど明確に高速です）。</p>
+<p>Rust が無くても、依存でビルド済み wasm バイナリとして配布されているコンポーネント（多くは単純なチェッカやモデル）は使えます。cargo が利用できない場合、<code>veryl test</code> は自動的にビルド済みのものを使用します。</p>
+<h2 id="コンポーネントを追加する"><a class="header" href="#コンポーネントを追加する">コンポーネントを追加する</a></h2>
+<p>あるパッケージが検証コンポーネントを宣言していれば、それを依存に追加するだけで <code>$comp::&lt;依存名&gt;::&lt;コンポーネント名&gt;</code> として利用できます。</p>
+<pre><code class="language-toml">[dependencies]
+axi_vip = {github = "example/axi_vip", version = "1.0.0"}
+</code></pre>
+<pre><code class="language-veryl">#[test(test_axi)]
+module test_axi {
+    inst clk: $tb::clock_gen;
+    inst bus: AxiIf;
+
+    inst bfm: $comp::axi_vip::axi_master (
+        clk            ,
+        bus: bus.master,
+    );
+
+    // ...
+}
+</code></pre>
+<h2 id="テストでインスタンス化する"><a class="header" href="#テストでインスタンス化する">テストでインスタンス化する</a></h2>
+<p>コンポーネントは <code>#[test]</code> モジュール内でのみインスタンス化できます。</p>
+<h3 id="クロック駆動コンポーネント"><a class="header" href="#クロック駆動コンポーネント">クロック駆動コンポーネント</a></h3>
+<p>クロック駆動コンポーネントは <code>inst</code> でインスタンス化し、モジュールと同じようにパラメータを <code>#()</code>（ジェネリック引数ではなく）で受け取り、ポートを接続します。</p>
+<pre><code class="language-veryl">#[test(test_req_ack)]
+module test_req_ack {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    var req: logic;
+    var ack: logic;
+
+    inst dut: Peripheral ( clk, rst, req, ack );
+
+    inst chk: $comp::my_checker #( LIMIT: 8 ) ( clk, req, ack );
+
+    initial {
+        rst.assert();
+        req = 1;
+        clk.next(16);
+        $finish();
+    }
+}
+</code></pre>
+<p>ポート接続では DUT 内部の信号を階層的に参照することもできます（例: <code>val: dut.u_sub.internal_reg</code>）。そのため、観測のために内部信号をトップレベルまで引き出す必要はありません。インターフェースインスタンスの modport をコンポーネントのインターフェースポートに接続することもできます（<code>bus: bus.master</code>）。コンポーネントが宣言するすべてのポートは接続されている必要があり、接続漏れは解析時に報告されます。</p>
+<h3 id="メソッド専用コンポーネント"><a class="header" href="#メソッド専用コンポーネント">メソッド専用コンポーネント</a></h3>
+<p>メソッド専用コンポーネントはポートを持たず、<code>var</code> で宣言します。</p>
+<pre><code class="language-veryl">#[test(test_golden)]
+module test_golden {
+    var g: $comp::golden   ;
+    var x: logic        &lt;8&gt;;
+
+    initial {
+        g.set(42);
+        x = g.get();
+        g.check(x);
+        $finish();
+    }
+}
+</code></pre>
+<p><code>var</code> 形式では、パラメータをジェネリック引数として、コンポーネントが宣言した順に位置指定で受け取ります。任意の定数式を指定できます。</p>
+<pre><code class="language-veryl">#[test(test_wide)]
+module test_wide {
+    const W: u32 = 96;
+
+    var w: $comp::wide_model::&lt;W&gt;    ;
+    var x: logic                 &lt;96&gt;;
+
+    initial {
+        w.put(96'h55);
+        x = w.get();
+        $finish();
+    }
+}
+</code></pre>
+<h3 id="メソッド呼び出し"><a class="header" href="#メソッド呼び出し">メソッド呼び出し</a></h3>
+<p>メソッドは文の位置および式の中で呼び出せます。</p>
+<pre><code class="language-veryl">#[test(test_method_call)]
+module test_method_call {
+    var g: $comp::golden   ;
+    var x: logic        &lt;8&gt;;
+
+    initial {
+        g.set(42); // 文の位置
+        x = g.get();
+        $assert(g.get() + 1 == 43, "expression"); // 式の位置
+        $finish();
+    }
+}
+</code></pre>
+<p>式の位置での呼び出しは、それを含む文の直前に、独立したゼロ時間のステップとして実行されます。メソッドの引数は位置指定で、名前付き引数はサポートされません。</p>
+<p>メソッドは <code>var</code> 形式に限りません。<code>inst</code> したコンポーネントもゼロ時間の呼び出しを受け付けます（例: <code>iss.load("test.elf");</code>）。</p>
+<h2 id="乱数シード"><a class="header" href="#乱数シード">乱数シード</a></h2>
+<p>乱数を用いるコンポーネントは、インスタンスごとに決定的なシードから乱数を導出するため、実行はそのベースシードから再現できます。既定では <code>veryl test</code> は実行ごとに新しいランダムなベースシードを引き、それを表示します（<code>Test seed: ...</code>）。実行を再現するには、その値を <code>--seed</code> で渡すか、<code>[test]</code> セクションの <code>seed</code> フィールドで固定します。</p>
+<pre><code class="language-toml">[test]
+seed = 42
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="コンポーネントを書く"><a class="header" href="#コンポーネントを書く">コンポーネントを書く</a></h1>
+<p>要件に合う既存のコンポーネントがない場合は、Rust で独自のコンポーネントを作成できます。コンポーネントは cargo でビルドされ、Veryl の組み込みシミュレータで駆動されます。テストベンチでの使い方は <a href="#コンポーネントを使う">コンポーネントを使う</a> を参照してください。</p>
+<h2 id="コンポーネントの作成"><a class="header" href="#コンポーネントの作成">コンポーネントの作成</a></h2>
+<p><code>veryl new --component &lt;path&gt;</code> はコンポーネントの雛形を作成し、実行した場所に応じて振る舞いを変えます。</p>
+<p>既存の Veryl プロジェクトの中で実行すると、<code>&lt;path&gt;</code> に cargo パッケージを作成し、プロジェクトの <code>Veryl.toml</code> に登録するので、<code>$comp::&lt;name&gt;</code> が最初から解決できます:</p>
+<pre><code>$ veryl new --component my_checker
+[INFO ]      Created "my_checker" component
+[INFO ]   Registered $comp::my_checker in Veryl.toml
+</code></pre>
+<p>プロジェクトの外で実行すると、cargo パッケージであり Veryl プロジェクトでもある自己完結型のプロジェクトを作成します。すぐに <code>veryl test</code> でき、依存として publish もできます:</p>
+<pre><code>$ veryl new --component my_checker
+[INFO ]      Created "my_checker" component project
+[INFO ]   Run `veryl test` in my_checker to try it
+</code></pre>
+<pre><code class="language-text">my_checker/
+├── Veryl.toml            # クレートをコンポーネントとして登録
+├── component/            # cargo パッケージ（crate-type = ["cdylib"]）
+│   ├── Cargo.toml
+│   └── src/lib.rs
+└── examples/
+    └── my_checker.veryl  # 使用例。`veryl test` で実行される
+</code></pre>
+<h2 id="コンポーネントの定義"><a class="header" href="#コンポーネントの定義">コンポーネントの定義</a></h2>
+<p>パッケージは <code>veryl-component</code> クレートに依存する cargo クレートで、3 つのマクロで定義します。構造体に付ける <code>#[derive(Component)]</code> がインターフェースを、（トレイトを伴わない）<code>impl</code> ブロックに付ける <code>#[component_impl]</code> が振る舞いを宣言し、<code>veryl_component_export!</code> がコンポーネント名を付けて型をエクスポートします。</p>
+<pre><code class="language-rust noplayground">use veryl_component::*;
+
+/// `req` から `LIMIT` サイクル以内に `ack` が続くことを検査します。
+#[derive(Component)]
+pub struct ReqAckChecker {
+    /// サンプリングクロック。
+    clk: ClockPort,
+    req: InputPort,
+    ack: InputPort,
+    /// リクエストからアクノリッジまでに許容するサイクル数。
+    #[param(name = "LIMIT")]
+    limit: u64,
+    waiting: u64,
+}
+
+#[component_impl]
+impl ReqAckChecker {
+    fn on_clock(&amp;mut self, ctx: &amp;mut SimCtx) -&gt; Result&lt;()&gt; {
+        if ctx.read(self.ack).as_bool() {
+            self.waiting = 0;
+        } else if ctx.read(self.req).as_bool() {
+            self.waiting += 1;
+            if self.waiting &gt; self.limit {
+                ctx.fail(format!("no ack within {} cycles", self.limit));
+            }
+        }
+        Ok(())
+    }
+}
+
+veryl_component_export!("my_checker" =&gt; ReqAckChecker);</code></pre>
+<p><code>#[derive(Component)]</code> は構造体のフィールドを次のように分類します。</p>
+<ul>
+<li><code>InputPort</code> / <code>OutputPort</code> 型のフィールドはデータポートになります。その幅は接続された信号の幅に従います。幅に制約を課すコンポーネントは <code>on_build</code> の中で <code>port.width()</code> を使って自分で検査します。ポート名は既定でフィールド名になり、<code>#[port(name = "...")]</code> で上書きできます。</li>
+<li><code>ClockPort</code> / <code>ResetPort</code> 型のフィールドはクロック・リセットポートになります（常に 1 ビット）。これらは <code>clock</code>/<code>reset</code> 型の式で接続されなければならず、<code>on_clock</code>/<code>on_reset</code> フックを発火させるのはこれらのポートだけです。</li>
+<li><code>#[param]</code> が付いたフィールドはエラボレーション時のパラメータになります。サポートされる型は整数、<code>bool</code>、<code>String</code>、<code>Value</code> で、これらの <code>Option</code> にするとパラメータは省略可能になります。<code>#[param(name = "LIMIT")]</code> は Veryl 側の名前を上書きします。</li>
+<li>その他のフィールドは通常の状態変数で、<code>Default</code> で初期化されます。</li>
+</ul>
+<p>宣言されたすべてのポートはインスタンス化箇所で接続されている必要があり、接続漏れは解析時エラーになります。</p>
+<p><code>ClockPort</code> フィールドを持つコンポーネントは <code>clocked</code> コンポーネントで、<code>inst</code> でインスタンス化します。<code>method_only</code> コンポーネントは <code>var</code> で宣言します。任意の <code>#[component(kind = ...)]</code> 属性は種別を明示し、フィールドと一致していなければなりません。<code>ClockPort</code> フィールドのない <code>clocked</code> 宣言や、<code>method_only</code> コンポーネントのクロック／リセットポートはコンパイルエラーです。構造体・ポート・パラメータ・メソッドに付けた doc コメントは、<code>veryl doc</code> とエディタのホバーに表示されます。</p>
+<p><code>#[component_impl]</code> は、予約された関数名 <code>on_build</code>、<code>on_init</code>、<code>on_reset</code>、<code>on_clock</code>、<code>on_finish</code> をシミュレーションのフックに、それ以外のすべての関数をテストベンチメソッドにします。</p>
+<p><code>veryl_component_export!</code> はコンポーネント名を付けて型をエクスポートします。このマクロはライブラリの ABI エントリポイントを生成するため、呼び出すのは crate ごとに 1 回だけです（struct ごとではありません）。複数の型をエクスポートするライブラリは、その 1 回の呼び出しにすべてを列挙します。</p>
+<pre><code class="language-rust noplayground">veryl_component_export!(
+    "rv_iss"  =&gt; RvIss,
+    "monitor" =&gt; Monitor,
+);</code></pre>
+<h2 id="インターフェースポート"><a class="header" href="#インターフェースポート">インターフェースポート</a></h2>
+<p>インターフェースの modport 全体を接続するには、そのポート群を <code>VerylInterface</code> を derive した struct として一度だけ宣言し、コンポーネントに <code>#[interface]</code> フィールドとして埋め込みます。</p>
+<pre><code class="language-rust noplayground">#[derive(VerylInterface)]
+#[interface(path = "$std::axi4_if", modport = "monitor")]
+pub struct AxiMonitorPorts {
+    awvalid: InputPort, // メンバ `awvalid` に束縛される
+    awready: InputPort,
+    // ... 残りの modport メンバ ...
+}
+
+#[derive(Component)]
+#[component(kind = clocked)]
+pub struct AxiChecker {
+    clk: ClockPort,
+    rst: ResetPort,
+    #[interface]
+    axi: AxiMonitorPorts, // インターフェースポート `axi`: `axi: bus.monitor` と接続する
+}</code></pre>
+<p>この struct はインターフェース（<code>path</code>）とその modport の1つ（<code>modport</code>）を指定し、各フィールドは同名のインターフェースメンバに束縛されて、コンポーネントからは階層的に読めます（<code>self.axi.awvalid</code>）。名前が Rust の予約語であるメンバは raw identifier（<code>r#in: InputPort</code>）と書きます。</p>
+<p>各 <code>#[interface]</code> フィールドはコンポーネントの 1 つのインターフェースポートになり、その名前はフィールド名——テストベンチが接続する名前——です（<code>axi: bus.monitor</code>）。複数宣言することもできます（例えば上流の <code>slave</code> と下流の <code>master</code> を持つブリッジや、同じ struct を 2 回埋め込むデュアルバスのモニタ <code>axi0</code>, <code>axi1</code>）。クロック・リセット・通常のポートとも共存できます。</p>
+<p>struct が宣言したメンバはすべて、接続されたインターフェースに存在しなければなりません（欠けていれば解析時エラー）。一方で、コンポーネントが観測するメンバだけを宣言するのは問題ありません。</p>
+<h2 id="名前の対応"><a class="header" href="#名前の対応">名前の対応</a></h2>
+<p>コンポーネントの周辺にはいくつもの名前が登場しますが、契約に含まれるのは 1 つだけです。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>名前</th><th>記述する場所</th><th>一致すべき相手</th></tr>
+</thead>
+<tbody>
+<tr><td><code>$comp::foo</code></td><td>Veryl ソース</td><td>export 名 <code>veryl_component_export!("foo" =&gt; ...)</code>。依存のコンポーネントは <code>[dependencies]</code> の名前 <code>vip</code> を前置した <code>$comp::vip::foo</code></td></tr>
+<tr><td>Rust の型名（<code>ReqAckChecker</code>）</td><td>Rust ソース</td><td>なし — 契約になるのはエクスポート名の文字列だけ</td></tr>
+<tr><td>cargo のクレート名</td><td>コンポーネントの <code>Cargo.toml</code></td><td>なし — 成果物は <code>path =</code> から特定される</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="components-エントリ"><a class="header" href="#components-エントリ"><code>[[components]]</code> エントリ</a></h2>
+<p><code>veryl new --component</code> が <code>[[components]]</code> エントリをすでに追加しており、これによりライブラリが export するすべての名前が <code>$comp::&lt;name&gt;</code> として利用可能になります。手で <code>Veryl.toml</code> を編集するのは、別の方法で作成したパッケージを登録する場合や、コミット済みのプリビルドバイナリを指す場合だけです:</p>
+<pre><code class="language-toml">[[components]]
+path = "my_checker"
+# wasm = "prebuilt/my_checker.wasm"  # 任意: コミットするビルド済みバイナリ
+</code></pre>
+<ul>
+<li><code>path</code> — コンポーネントの cargo パッケージへのパス。<code>Veryl.toml</code> のあるディレクトリからの相対パス</li>
+<li><code>wasm</code> — コミットしておくビルド済み wasm バイナリ（オプション）。<code>veryl publish</code> で生成される</li>
+</ul>
+<p>パッケージ自身のコンポーネントを動かすテストベンチは、<a href="#the-examples-directory"><code>examples</code> ディレクトリ</a> に置くのが最適です。パッケージ自身の <code>veryl test</code> では実行されますが、利用側で解析されることはありません。通常のソースに置かれたテストモジュールも、パッケージが依存として利用される際にはスキップされます。</p>
+<h2 id="フック"><a class="header" href="#フック">フック</a></h2>
+<p>フックはすべてオプションで、引数として <code>&amp;mut self, ctx: &amp;mut SimCtx</code>（<code>on_build</code> では <code>&amp;mut BuildCtx</code>）を取ります。</p>
+<ul>
+<li><code>on_build</code> — ポートとパラメータの解決後、インスタンスごとに1回呼ばれる</li>
+<li><code>on_init</code> — <code>initial</code> ブロックの実行前、時刻0に1回呼ばれる。出力への書き込みは初期値になる</li>
+<li><code>on_reset</code> — 接続された <code>ResetPort</code> のリセットアサート時に呼ばれる</li>
+<li><code>on_clock</code> — 接続された <code>ClockPort</code> の各エッジで呼ばれる</li>
+<li><code>on_finish</code> — テスト終了時（正常終了または <code>finish</code>/<code>fail</code> 経由）に呼ばれる</li>
+</ul>
+<p><code>SimCtx</code> は、フックとメソッドの中で利用できるホストのサービスを提供します。</p>
+<ul>
+<li><code>ctx.read(port)</code> / <code>ctx.write(port, value)</code> — 入力のエッジ直前の値を読む、出力へ書き込む（フリップフロップと同時にコミットされる）</li>
+<li><code>ctx.fail(msg)</code> / <code>ctx.finish()</code> — テストを失敗としてマークする / 現在のサイクル終了時の正常終了を要求する</li>
+<li><code>ctx.log(msg)</code> — テストの出力にメッセージを書き出します</li>
+<li><code>ctx.cycle()</code> / <code>ctx.time()</code> / <code>ctx.clock()</code> — サイクル数、シミュレーション時刻、起動したクロックポート</li>
+<li><code>ctx.fired(port)</code> — 指定した <code>ClockPort</code> が今回のフックを発火させたかどうか。複数のクロックに接続されたコンポーネント向け</li>
+<li><code>ctx.open(path)</code> / <code>ctx.create(path)</code> / <code>ctx.append(path)</code> — ファイル I/O。返されるハンドルは <code>std::io::Read</code>/<code>Write</code>/<code>Seek</code> を実装しているので、<code>BufReader</code> や <code>writeln!</code> などがそのまま使えます</li>
+<li><code>ctx.trace(var, value)</code> — 波形トレース変数を更新する</li>
+<li><code>ctx.is_4state()</code> — シミュレーションが4値（X/Z）を扱うかどうか</li>
+</ul>
+<p>シミュレーションは既定で2値です。<code>veryl test --4state</code>（または <code>[test].four_state = true</code>）で4値になります。4値実行ではポート値が X/Z マスクを持ち、<code>value.has_x()</code>・<code>value.has_z()</code>・<code>value.unknown_at(bit)</code> で検査でき、出力書き込みもマスクを駆動します。X/Z チェックは <code>ctx.is_4state()</code> でガードしてください（2値実行では観測すべき X/Z がありません）。メソッドの引数と戻り値は常に2値です。</p>
+<p><code>BuildCtx</code>（<code>on_build</code> で利用可能）は追加で <code>ctx.param(name)</code>、<code>ctx.input(name)</code>、<code>ctx.output(name)</code>、<code>ctx.clock(name)</code>、<code>ctx.reset(name)</code>、<code>ctx.seed()</code>、および波形ダンプ用にコンポーネント内部の信号を登録する <code>ctx.trace_var(name, width)</code> を提供します。</p>
+<p><code>ctx.seed()</code> は、ベースとなるテストシードとインスタンスパスから計算される、インスタンスごとに決定的なシードを返します。乱数を用いるコンポーネントは、そのすべての乱数をこの値から導出してください。そうすれば、ベースシードを固定することで実行を正確に再現できます。ベースシードは既定で実行ごとにランダムで（<code>veryl test</code> が表示し、<code>--seed</code> で再現可能）、<code>[test]</code> セクションの <code>seed</code> フィールドで固定できます。</p>
+<p><code>ctx</code> のファイル I/O は可搬な手段です。<code>std::fs</code> を直接使うコンポーネントは native ライブラリとしてのみ動作し、ビルド済み wasm バイナリでは動作しません。</p>
+<h2 id="テストベンチメソッド-1"><a class="header" href="#テストベンチメソッド-1">テストベンチメソッド</a></h2>
+<p><code>#[component_impl]</code> ブロック内のフック以外の関数は、テストベンチから呼び出せるゼロ時間のメソッドになります。メソッドは <code>&amp;mut self, ctx: &amp;mut SimCtx</code> に続けて引数を取り、<code>Result&lt;T&gt;</code> を返します。</p>
+<pre><code class="language-rust noplayground">#[derive(Component)]
+#[component(kind = method_only)]
+pub struct Golden {
+    stored: u64,
+}
+
+#[component_impl]
+impl Golden {
+    fn set(&amp;mut self, _ctx: &amp;mut SimCtx, value: u64) -&gt; Result&lt;()&gt; {
+        self.stored = value;
+        Ok(())
+    }
+
+    fn get(&amp;mut self, _ctx: &amp;mut SimCtx) -&gt; Result&lt;u64&gt; {
+        Ok(self.stored)
+    }
+
+    fn check(&amp;mut self, ctx: &amp;mut SimCtx, value: u64) -&gt; Result&lt;()&gt; {
+        if value != self.stored {
+            ctx.fail(format!("expected {}, got {value}", self.stored));
+        }
+        Ok(())
+    }
+}</code></pre>
+<p>サポートされる引数の型は <code>&amp;str</code>、<code>String</code>、整数、<code>bool</code>、<code>Value</code> で、サポートされる戻り値の型は <code>()</code>、整数、<code>bool</code>、<code>Value</code> です。</p>
+<p><code>Value</code> <strong>引数</strong>は呼び出し側の式の幅をそのまま持つため、宣言は不要です。<code>Value</code> <strong>返却値</strong>は <code>#[ret_width(...)]</code> で幅を宣言しなければなりません（整数の返却型は幅が自明です）。<code>#[ret_width(...)]</code> に指定する式には、整数・パラメータ名・インターフェースポートで修飾したインターフェース定数（<code>axi.DATA_WIDTH_BYTES</code>）・それらの算術式が使えます:</p>
+<pre><code class="language-rust noplayground">#[derive(Component)]
+#[component(kind = method_only)]
+pub struct WideModel {
+    #[param(name = "WIDTH")]
+    width: u64,
+    stored: Option&lt;Value&gt;,
+}
+
+#[component_impl]
+impl WideModel {
+    fn put(&amp;mut self, _ctx: &amp;mut SimCtx, v: &amp;Value) -&gt; Result&lt;()&gt; {
+        self.stored = Some(v.clone());
+        Ok(())
+    }
+
+    #[ret_width(WIDTH)]
+    fn get(&amp;mut self, _ctx: &amp;mut SimCtx) -&gt; Result&lt;Value&gt; {
+        Ok(self.stored.clone().unwrap())
+    }
+}</code></pre>
+<p><a href="#interface-ports">インターフェースに束縛された</a>コンポーネントは、冗長なパラメータを設ける代わりに接続先のバス幅に追従できます。<code>&lt;port&gt;.&lt;NAME&gt;</code> は、そのポートが接続されたインターフェースから見える定数（インターフェース本体で宣言された定数、またはジェネリックパッケージ引数のメンバ）を参照します:</p>
+<pre><code class="language-rust noplayground">#[ret_width(axi.DATA_WIDTH_BYTES * 8)]
+fn pop_read(&amp;mut self, _ctx: &amp;mut SimCtx) -&gt; Result&lt;Value&gt; {
+    /* ... */
+}</code></pre>
+<p>幅はインスタンスごとに解決されるので、同じコンポーネントが 32 ビットのバスでは 32 ビット、128 ビットのバスでは 128 ビットの値を返します。</p>
+<h2 id="mocksim-によるユニットテスト"><a class="header" href="#mocksim-によるユニットテスト">MockSim によるユニットテスト</a></h2>
+<p><code>veryl_component::testing</code> モジュールは、シミュレータホストのインプロセスな代替である <code>MockSim</code> を提供します。<code>MockSim</code> は同じ <code>SimCtx</code>/<code>BuildCtx</code> API を通じてコンポーネントを駆動するため、Veryl のシミュレータなしに、通常の <code>cargo test</code> でコンポーネントをユニットテストできます。</p>
+<pre><code class="language-rust noplayground">#[cfg(test)]
+mod tests {
+    use super::*;
+    use veryl_component::testing::MockSim;
+
+    #[test]
+    fn fails_without_ack() {
+        let mut sim = MockSim::new()
+            .param("LIMIT", 2u64)
+            .input("clk", 1)
+            .input("req", 1)
+            .input("ack", 1);
+        let mut c = sim.build::&lt;ReqAckChecker&gt;().unwrap();
+        sim.set("req", 1u64);
+        for _ in 0..3 {
+            sim.clock(&amp;mut c).unwrap();
+        }
+        assert!(sim.failed());
+    }
+}</code></pre>
+<p><code>MockSim</code> はビルダーメソッドでパラメータとポートを宣言し、<code>build</code> でコンポーネントを構築し、<code>set</code> で入力を、<code>clock</code>/<code>reset</code>/<code>init</code>/<code>finish</code> でフックを駆動し、<code>call</code> でメソッドを呼び出し、<code>get</code>、<code>failed</code>、<code>failures</code>、<code>logs</code>、<code>finish_requested</code> を通じて結果を公開します。</p>
+<h2 id="インターフェースマニフェストをコミットする"><a class="header" href="#インターフェースマニフェストをコミットする">インターフェースマニフェストをコミットする</a></h2>
+<p>テストベンチの型検査には、コンポーネントの<strong>インターフェース</strong>（ポート・パラメータ・メソッド）が必要で、その動作は必要ありません。<code>veryl publish</code> はそのインターフェースを、コンポーネントの <code>Cargo.toml</code> と同じ場所にある <code>veryl.manifest.json</code> ファイルに記録し、コンポーネントのソースが変わると再生成します。ソースと一緒にコミットしてください。</p>
+<p>マニフェストをコミットしておくと、利用者はコンポーネントをビルドせずに <code>$comp::&lt;name&gt;</code> の使用箇所を解析できます。特に Rust ツールチェインを持たない利用者にとっては、native コンポーネントの場合これが唯一のインターフェース源になります（ビルド済み wasm バイナリは同じインターフェースを埋め込んでいます）。</p>
+<h2 id="ビルド済み-wasm-を-publish-する"><a class="header" href="#ビルド済み-wasm-を-publish-する">ビルド済み wasm を publish する</a></h2>
+<p>既定では、利用者はコンポーネントを cargo でソースからビルドします。ビルド済み wasm バイナリをコミットしておくと、Rust ツールチェインを持たない利用者でも使えます。<code>[[components]]</code> エントリに <code>wasm =</code> を宣言すると、パッケージはこの配布形態を選択します。</p>
+<pre><code class="language-toml">[[components]]
+path = "my_checker"
+wasm = "prebuilt/my_checker.wasm"
+</code></pre>
+<p><code>veryl publish</code> はコンポーネントを <code>wasm32-unknown-unknown</code> ターゲット向けにビルドし、宣言されたパスにバイナリを書き出します。プリビルト wasm のビルドにはそのターゲットのインストールが必要で、<code>rustup target add wasm32-unknown-unknown</code> で追加します。プリビルトがソースと一致しなくなると、<code>veryl publish</code> が再生成し、<code>veryl test</code> は警告を報告します。</p>
+<h2 id="バックエンドの選択"><a class="header" href="#バックエンドの選択">バックエンドの選択</a></h2>
+<p>テスト時にどちらの形式が使われるかは、次のように選択されます。</p>
+<ul>
+<li>cargo が利用可能な場合、コンポーネントはソースからビルドされます。</li>
+<li>そうでない場合、宣言されていればコミット済みのビルド済み wasm が使われます。</li>
+</ul>
+<p><code>[test]</code> セクションの <code>component_backend</code> フィールドで選択を固定できます。</p>
+<pre><code class="language-toml">[test]
+component_backend = "wasm"  # または "native"
+</code></pre>
+<p><code>wasm</code> に固定するのは、publish する側が利用者の実行するビルド済みバイナリを検証する手段であり（既定則は cargo がある限り wasm を選びません）、信頼しないコンポーネントをサンドボックス内に留める手段でもあります。<code>native</code> に固定すると、cargo が見つからないときに黙って wasm へフォールバックせず、失敗します。</p>
+<h3 id="ネイティブと-wasm-の比較"><a class="header" href="#ネイティブと-wasm-の比較">ネイティブと wasm の比較</a></h3>
+<p>API とシミュレーションの意味論は両バックエンドで同一で、違いはコンポーネントに何ができるか、そしてどう実行されるかにあります。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th></th><th>ソースからビルド（ネイティブ）</th><th>ビルド済み wasm</th></tr>
+</thead>
+<tbody>
+<tr><td>利用者に必要なもの</td><td>Rust ツールチェイン</td><td>不要 — コミット済みバイナリ</td></tr>
+<tr><td>使える API</td><td>任意の Rust crate（ネットワーク、ネイティブライブラリ、GUI、…）</td><td>計算とホストサービスのみ</td></tr>
+<tr><td>隔離</td><td>サンドボックスなし</td><td>サンドボックスあり。256 MiB メモリ上限、ファイルアクセスは <code>requires(file)</code> でゲート、暴走したフックはトラップ</td></tr>
+<tr><td>速度</td><td>ネイティブコード</td><td>フル ISS のような計算量の多いモデルでは遅い</td></tr>
+</tbody>
+</table>
+</div>
+<p>ホストの capability は <code>#[component]</code> 属性で宣言します。<code>requires(file)</code> はホスト経由のファイル入出力を許可し、<code>requires(native)</code> はコンポーネントをネイティブ専用にします。計算とホストサービスを超えるもの — 直接の <code>std::fs</code>、ネットワーク、ネイティブライブラリ、GUI — はコンポーネントをネイティブ専用にし、wasm として配布できなくなります。</p>
+<h2 id="制限事項"><a class="header" href="#制限事項">制限事項</a></h2>
+<ul>
+<li>メソッドの引数と戻り値は2値で、X/Z は失われます（ポート値は4値実行では X/Z を運びます）。</li>
+<li>メソッドの戻り値は ABI により512ビットに制限されます。</li>
+<li>インスタンス配列、およびコンポーネントポートへの unpacked 配列の接続はサポートされません。</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="ジェネリクス"><a class="header" href="#ジェネリクス">ジェネリクス</a></h1>
 <p>ジェネリクスはパラメータオーバーライドでは実現できないアイテムのパラメータ化を可能にします。以下のアイテムがジェネリクスをサポートしています。</p>
@@ -4084,6 +4449,7 @@ always_comb {
 <li><a href="#the-publish-section"><code>[publish]</code></a> — 公開設定</li>
 <li><a href="#the-synth-section"><code>[synth]</code></a> — 論理合成設定</li>
 <li><a href="#the-dependencies-section"><code>[dependencies]</code></a> — ライブラリの依存関係</li>
+<li><a href="#the-components-section"><code>[[components]]</code></a> — 検証コンポーネントパッケージ</li>
 </ul>
 <h2 id="the-project-section"><a class="header" href="#the-project-section"><code>[project]</code> セクション</a></h2>
 <p><code>Veryl.toml</code> の最初のセクションは <code>[project]</code> です。<code>name</code> と <code>version</code> は必須です。</p>
@@ -4130,6 +4496,8 @@ repository = "https://github.com/veryl-lang/veryl"
 <p><code>[synth]</code> セクションはシンセサイザの設定です。詳細は<a href="#synth">こちら</a>。</p>
 <h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section"><code>[dependencies]</code> セクション</a></h2>
 <p><code>[dependencies]</code> セクションはライブラリの依存関係です。詳細は<a href="#依存関係">こちら</a>。</p>
+<h2 id="the-components-section"><a class="header" href="#the-components-section"><code>[[components]]</code> エントリ</a></h2>
+<p><code>[[components]]</code> エントリは Rust で書かれた検証コンポーネントの cargo パッケージを登録します。詳細は<a href="#コンポーネントを書く">こちら</a>。</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="build"><a class="header" href="#build">Build</a></h1>
 <p><code>[build]</code> セクションはコード生成の設定です。</p>
@@ -4160,6 +4528,7 @@ repository = "https://github.com/veryl-lang/veryl"
 sources = ["rtl/foo_module", "rtl/bar_module"]
 </code></pre>
 <p>上記の例では、Verylコンパイラは <code>rtl/foo_module</code> と <code>rtl/bar_module</code> の<code>*.veryl</code> ファイルを処理します。</p>
+<p><code>examples/</code> は予約されており、<code>sources</code> に指定することはできません。ルートプロジェクトでは自動的に解析されます。<a href="#the-examples-directory">ディレクトリ構成</a> を参照してください。</p>
 <h2 id="target-フィールド"><a class="header" href="#target-フィールド"><code>target</code> フィールド</a></h2>
 <p><code>target</code> フィールドはコードの生成先を指定します。</p>
 <ul>
@@ -4502,6 +4871,17 @@ waveform_target = {type = "directory", path = "[dst dir]"}
 defines = ["DEBUG", "ENABLE_ASSERTIONS"]
 </code></pre>
 <p>追加の名前はコマンドラインから <code>veryl test --define NAME</code> (または <code>-D NAME</code>) で渡すこともできます。CLI で指定した値はこのフィールドの内容にマージされます。</p>
+<h3 id="seed-フィールド"><a class="header" href="#seed-フィールド"><code>seed</code> フィールド</a></h3>
+<p><code>seed</code> フィールドは、ランダム化された検証コンポーネントテストのベースシードを設定します。未設定の場合、<code>veryl test</code> の実行ごとに新しいランダムシードが引かれて表示されます。特定の実行を再現するには、値を設定する（または <code>--seed</code> を渡す）ようにします。</p>
+<h3 id="four_state-フィールド"><a class="header" href="#four_state-フィールド"><code>four_state</code> フィールド</a></h3>
+<p><code>four_state</code> フィールドは、ネイティブの検証コンポーネントテストを4値（X/Z）モードで実行します。既定値は <code>false</code> で、<code>--4state</code> コマンドラインオプションでも有効化できます。</p>
+<h3 id="component_backend-フィールド"><a class="header" href="#component_backend-フィールド"><code>component_backend</code> フィールド</a></h3>
+<p><code>component_backend</code> フィールドは、検証コンポーネントの実行方法を固定します。</p>
+<ul>
+<li><code>"native"</code> – cargo でソースからビルド</li>
+<li><code>"wasm"</code> – コミット済みのビルド済みバイナリ</li>
+</ul>
+<p>未設定の場合、<code>veryl test</code> は cargo が利用可能ならソースからビルドし、そうでなければコミット済みのビルド済み wasm にフォールバックします。</p>
 <h2 id="testverilator-セクション"><a class="header" href="#testverilator-セクション"><code>[test.verilator]</code> セクション</a></h2>
 <p>このセクションはVerilatorによるテストの設定です。</p>
 <div class="table-wrapper">
@@ -4686,7 +5066,7 @@ inner_prj3 = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
 <li><code>0.1.1</code> は互換性のある最新バージョン</li>
 </ul>
 <p><code>version</code> フィールドは <code>=0.1.0</code> のような指定も可能です。詳細は Rust のバージョン要求についてのドキュメントを参照してください。<a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-cratesio">Specifying Dependencies</a>.</p>
-<h2 id="相対パス依存関係"><a class="header" href="#相対パス依存関係">相対パス依存関係</a></h2>
+<h2 id="relative-path-dependency"><a class="header" href="#relative-path-dependency">相対パス依存関係</a></h2>
 <p>手元の環境で開発しているとき、ローカルファイルパスへの依存関係が使えると便利なことがあります。相対パス依存関係は以下のように指定することができます。</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample = {path = "../../veryl_sample"}
@@ -4856,6 +5236,20 @@ target = {type = "directory", path = "target"}
 2 directories, 5 files
 </code></pre>
 <p>生成されるファイルリストは変更後の出力先を参照するため、後段のツールでそのまま利用できます。<code>--out-dir</code> を指定しない場合のビルドの挙動は変わりません。</p>
+<h2 id="the-examples-directory"><a class="header" href="#the-examples-directory"><code>examples</code> ディレクトリ</a></h2>
+<p>プロジェクトルートの <code>examples</code> ディレクトリは、使用例やテストベンチを置く場所として予約されています。</p>
+<pre><code>$ tree
+.
+|-- examples
+|   `-- example_top.veryl
+|-- src
+|   `-- module_a.veryl
+`-- Veryl.toml
+
+2 directories, 3 files
+</code></pre>
+<p><code>examples</code> 以下のファイルは通常のソースと同様に解析・チェックされ、その中の <code>#[test]</code> モジュールは <code>veryl test</code> で実行されます。他のソースとプロジェクトの名前空間を共有しますが、コード生成とファイルリストからは除外されます。プロジェクトが依存として利用される場合、その <code>examples</code> ディレクトリは完全に無視されます。</p>
+<p>このディレクトリは予約されているため、<code>[build]</code> セクションの <code>sources</code> フィールドに指定することはできません。</p>
 <h2 id="gitignore-について"><a class="header" href="#gitignore-について"><code>.gitignore</code> について</a></h2>
 <p>Verylは以下の <code>.gitignore</code> をデフォルト値として提供します。<code>.build</code> ディレクトリはVerylコンパイラがビルド情報を記録するために使用します。</p>
 <pre><code>.build/
@@ -6707,7 +7101,7 @@ Veryl: Start { DescriptionGroup };
         <script src="searcher-09f2665d.js"></script>
 
         <script src="clipboard-1626706a.min.js"></script>
-        <script src="highlight-bd3c1700.js"></script>
+        <script src="highlight-88633d6f.js"></script>
         <script src="book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
