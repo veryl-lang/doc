@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-7590f80e.js";
+            window.path_to_searchindex_js = "../searchindex-1775422e.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-6600d52d.js"></script>
@@ -425,6 +425,7 @@ InTerm                : &lt;INITIAL, Generic                                    
 LetTerm               : &lt;INITIAL, Generic                                             &gt;'let'                                                                                 : Token; // Keyword: Statement
 LogicTerm             : &lt;INITIAL, Generic                                             &gt;'logic'                                                                               : Token; // Keyword: Type
 LsbTerm               : &lt;INITIAL, Generic                                             &gt;'lsb'                                                                                 : Token; // Keyword: Literal
+MixinTerm             : &lt;INITIAL, Generic                                             &gt;'mixin'                                                                               : Token; // Keyword: Statement
 ModportTerm           : &lt;INITIAL, Generic                                             &gt;'modport'                                                                             : Token; // Keyword: Structure
 ModuleTerm            : &lt;INITIAL, Generic                                             &gt;'module'                                                                              : Token; // Keyword: Structure
 MsbTerm               : &lt;INITIAL, Generic                                             &gt;'msb'                                                                                 : Token; // Keyword: Literal
@@ -575,6 +576,7 @@ InToken            : InTerm            : Token Comments;
 LetToken           : LetTerm           : Token Comments;
 LogicToken         : LogicTerm         : Token Comments;
 LsbToken           : LsbTerm           : Token Comments;
+MixinToken         : MixinTerm         : Token Comments;
 ModportToken       : ModportTerm       : Token Comments;
 ModuleToken        : ModuleTerm        : Token Comments;
 MsbToken           : MsbTerm           : Token Comments;
@@ -732,6 +734,7 @@ Interface     : InterfaceToken     : VerylToken;
 Let           : LetToken           : VerylToken;
 Logic         : LogicToken         : VerylToken;
 Lsb           : LsbToken           : VerylToken;
+Mixin         : MixinToken         : VerylToken;
 Modport       : ModportToken       : VerylToken;
 Module        : ModuleToken        : VerylToken;
 Msb           : MsbToken           : VerylToken;
@@ -1202,6 +1205,12 @@ FunctionDeclaration: Function Identifier [ WithGenericParameter ] [ PortDeclarat
 ImportDeclaration: Import ScopedIdentifier [ ColonColon Star ] Semicolon;
 
 // ----------------------------------------------------------------------------
+// Mixin
+// ----------------------------------------------------------------------------
+
+MixinDeclaration: Mixin ScopedIdentifier Semicolon;
+
+// ----------------------------------------------------------------------------
 // Unsafe
 // ----------------------------------------------------------------------------
 
@@ -1221,7 +1230,7 @@ InterfaceDeclaration: Interface Identifier [ WithGenericParameter ] [ For Scoped
 
 InterfaceGroup: { Attribute } ( LBrace { InterfaceGroup } RBrace | InterfaceItem );
 
-InterfaceItem: GenerateItem | ModportDeclaration;
+InterfaceItem: GenerateItem | MixinDeclaration | ModportDeclaration;
 
 GenerateIfDeclaration: If Expression GenerateNamedBlock { Else If Expression GenerateOptionalNamedBlock } [ Else GenerateOptionalNamedBlock ];
 

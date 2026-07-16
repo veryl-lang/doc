@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-7590f80e.js";
+            window.path_to_searchindex_js = "searchindex-1775422e.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-6600d52d.js"></script>
@@ -3077,6 +3077,65 @@ module ModuleA (
     }
 }
 </code></pre>
+<h2 id="mixin"><a class="header" href="#mixin">Mixin</a></h2>
+<p>An interface can incorporate the members of other interfaces by using the <code>mixin</code> declaration.
+All members (variables, functions, and modports) of the mixed-in interface are expanded into the interface as if they were declared directly in it.
+This is useful to share common definitions among multiple interfaces.</p>
+<p>For example, a bus protocol is often composed of independent channels such as a command channel and a response channel.
+By defining each channel as a separate interface and mixing them in, the channels can be reused across multiple bus interfaces.
+A generic interface can be mixed in by giving its generic arguments in the <code>mixin</code> declaration.</p>
+<pre><code class="language-veryl playground">// Command channel: a master issues read/write commands to a slave
+interface Command::&lt;ADDR_WIDTH: u32, DATA_WIDTH: u32&gt; {
+    var cmd_ready: logic            ;
+    var cmd_valid: logic            ;
+    var cmd_write: logic            ;
+    var cmd_addr : logic&lt;ADDR_WIDTH&gt;;
+    var cmd_data : logic&lt;DATA_WIDTH&gt;;
+
+    modport mp_cmd {
+        cmd_ready: input ,
+        cmd_valid: output,
+        cmd_write: output,
+        cmd_addr : output,
+        cmd_data : output,
+    }
+}
+
+// Response channel: a slave returns read data to a master
+interface Response::&lt;DATA_WIDTH: u32&gt; {
+    var rsp_ready: logic            ;
+    var rsp_valid: logic            ;
+    var rsp_data : logic&lt;DATA_WIDTH&gt;;
+
+    modport mp_rsp {
+        rsp_ready: output,
+        rsp_valid: input ,
+        rsp_data : input ,
+    }
+}
+
+// A memory bus composed from the command and response channels
+interface MemoryBus::&lt;ADDR_WIDTH: u32, DATA_WIDTH: u32&gt; {
+    mixin Command::&lt;ADDR_WIDTH, DATA_WIDTH&gt;;
+    mixin Response::&lt;DATA_WIDTH&gt;;
+
+    modport master {
+        ..same(mp_cmd, mp_rsp)
+    }
+
+    modport slave {
+        ..converse(mp_cmd, mp_rsp)
+    }
+}
+</code></pre>
+<p>The following restrictions are applied to the mixed-in interface:</p>
+<ul>
+<li>The mixed-in target must be an interface. A module or a prototype can’t be mixed in.</li>
+<li>An interface can’t mix in itself.</li>
+<li>An interface that has overridable parameters (<code>param</code>/<code>const</code>) can’t be mixed in. (A generic interface can be mixed in by giving its generic arguments as shown above.)</li>
+<li>An interface that itself has <code>mixin</code> declarations can’t be mixed in. (<code>mixin</code> can’t be nested.)</li>
+<li>Member names must be unique across the interface and all mixed-in interfaces. A name collision is an error.</li>
+</ul>
 <h2 id="connect-interface-instancesmodport-ports"><a class="header" href="#connect-interface-instancesmodport-ports">Connect interface instances/modport ports</a></h2>
 <p>An interface instance and a modport port can be connected with a module port of which type is compatible with it or is the <code>generic</code> interface with the same manner of SystemVerilog.</p>
 <pre><code class="language-veryl playground">interface InterfaceA {
@@ -6370,6 +6429,7 @@ InTerm                : &lt;INITIAL, Generic                                    
 LetTerm               : &lt;INITIAL, Generic                                             &gt;'let'                                                                                 : Token; // Keyword: Statement
 LogicTerm             : &lt;INITIAL, Generic                                             &gt;'logic'                                                                               : Token; // Keyword: Type
 LsbTerm               : &lt;INITIAL, Generic                                             &gt;'lsb'                                                                                 : Token; // Keyword: Literal
+MixinTerm             : &lt;INITIAL, Generic                                             &gt;'mixin'                                                                               : Token; // Keyword: Statement
 ModportTerm           : &lt;INITIAL, Generic                                             &gt;'modport'                                                                             : Token; // Keyword: Structure
 ModuleTerm            : &lt;INITIAL, Generic                                             &gt;'module'                                                                              : Token; // Keyword: Structure
 MsbTerm               : &lt;INITIAL, Generic                                             &gt;'msb'                                                                                 : Token; // Keyword: Literal
@@ -6520,6 +6580,7 @@ InToken            : InTerm            : Token Comments;
 LetToken           : LetTerm           : Token Comments;
 LogicToken         : LogicTerm         : Token Comments;
 LsbToken           : LsbTerm           : Token Comments;
+MixinToken         : MixinTerm         : Token Comments;
 ModportToken       : ModportTerm       : Token Comments;
 ModuleToken        : ModuleTerm        : Token Comments;
 MsbToken           : MsbTerm           : Token Comments;
@@ -6677,6 +6738,7 @@ Interface     : InterfaceToken     : VerylToken;
 Let           : LetToken           : VerylToken;
 Logic         : LogicToken         : VerylToken;
 Lsb           : LsbToken           : VerylToken;
+Mixin         : MixinToken         : VerylToken;
 Modport       : ModportToken       : VerylToken;
 Module        : ModuleToken        : VerylToken;
 Msb           : MsbToken           : VerylToken;
@@ -7147,6 +7209,12 @@ FunctionDeclaration: Function Identifier [ WithGenericParameter ] [ PortDeclarat
 ImportDeclaration: Import ScopedIdentifier [ ColonColon Star ] Semicolon;
 
 // ----------------------------------------------------------------------------
+// Mixin
+// ----------------------------------------------------------------------------
+
+MixinDeclaration: Mixin ScopedIdentifier Semicolon;
+
+// ----------------------------------------------------------------------------
 // Unsafe
 // ----------------------------------------------------------------------------
 
@@ -7166,7 +7234,7 @@ InterfaceDeclaration: Interface Identifier [ WithGenericParameter ] [ For Scoped
 
 InterfaceGroup: { Attribute } ( LBrace { InterfaceGroup } RBrace | InterfaceItem );
 
-InterfaceItem: GenerateItem | ModportDeclaration;
+InterfaceItem: GenerateItem | MixinDeclaration | ModportDeclaration;
 
 GenerateIfDeclaration: If Expression GenerateNamedBlock { Else If Expression GenerateOptionalNamedBlock } [ Else GenerateOptionalNamedBlock ];
 
