@@ -18,6 +18,20 @@ module ModuleA {
 }
 ```
 
+Multiple symbols can be imported from a single package at once by listing them
+in braces like `package::{a, b}`.
+
+```veryl,playground
+package PackageA {
+    const paramA: u32 = 1;
+    const paramB: u32 = 2;
+}
+
+module ModuleA {
+    import PackageA::{paramA, paramB};
+}
+```
+
 Symbols imported via an import declaration can be referenced anywhere within the namespace where the import declaration is placed.
 
 ```veryl,playground
@@ -36,22 +50,26 @@ module ModuleA (
 }
 ```
 
-Enum members can also be imported, both individually and via wildcard.
+Enum members can also be imported, individually, as a brace list, or via wildcard.
 This works for enums defined inside a package as well as enums declared locally inside a module or interface.
 
 ```veryl,playground
 package PackageB {
-    enum Color: logic<2> {
+    enum Color: logic<3> {
         Red,
         Green,
         Blue,
+        White,
+        Black,
     }
 }
 
 module ModuleB {
     // import a single enum member
     import PackageB::Color::Red;
-    // import all members of the enum
+    // import multiple enum members
+    import PackageB::Color::{Green, Blue};
+    // import all remaining members of the enum
     import PackageB::Color::*;
 
     var c: PackageB::Color;
