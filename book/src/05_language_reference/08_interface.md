@@ -151,6 +151,8 @@ interface MemoryBus::<ADDR_WIDTH: u32, DATA_WIDTH: u32> {
         ..converse(mp_cmd, mp_rsp)
     }
 }
+
+alias interface MemoryBus32 = MemoryBus::<32, 32>;
 ```
 
 The following restrictions are applied to the mixed-in interface:
