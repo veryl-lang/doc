@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-1775422e.js";
+            window.path_to_searchindex_js = "searchindex-b03cf5dc.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-6600d52d.js"></script>
@@ -2808,6 +2808,17 @@ module ModuleA {
     import PackageA::paramA;
 }
 </code></pre>
+<p>Multiple symbols can be imported from a single package at once by listing them
+in braces like <code>package::{a, b}</code>.</p>
+<pre><code class="language-veryl playground">package PackageA {
+    const paramA: u32 = 1;
+    const paramB: u32 = 2;
+}
+
+module ModuleA {
+    import PackageA::{paramA, paramB};
+}
+</code></pre>
 <p>Symbols imported via an import declaration can be referenced anywhere within the namespace where the import declaration is placed.</p>
 <pre><code class="language-veryl playground">package PackageA {
     const WIDTH: u32 = 8;
@@ -2823,20 +2834,24 @@ module ModuleA (
     assign o_d = d;
 }
 </code></pre>
-<p>Enum members can also be imported, both individually and via wildcard.
+<p>Enum members can also be imported, individually, as a brace list, or via wildcard.
 This works for enums defined inside a package as well as enums declared locally inside a module or interface.</p>
 <pre><code class="language-veryl playground">package PackageB {
-    enum Color: logic&lt;2&gt; {
+    enum Color: logic&lt;3&gt; {
         Red,
         Green,
         Blue,
+        White,
+        Black,
     }
 }
 
 module ModuleB {
     // import a single enum member
     import PackageB::Color::Red;
-    // import all members of the enum
+    // import multiple enum members
+    import PackageB::Color::{Green, Blue};
+    // import all remaining members of the enum
     import PackageB::Color::*;
 
     var c: PackageB::Color;
@@ -7206,7 +7221,11 @@ FunctionDeclaration: Function Identifier [ WithGenericParameter ] [ PortDeclarat
 // Import
 // ----------------------------------------------------------------------------
 
-ImportDeclaration: Import ScopedIdentifier [ ColonColon Star ] Semicolon;
+ImportDeclaration: Import ScopedIdentifier [ ColonColon ( Star | MultipleImportList )] Semicolon;
+
+MultipleImportList: LBrace MultipleImportItem { Comma MultipleImportItem } [ Comma ] RBrace;
+
+MultipleImportItem: Identifier;
 
 // ----------------------------------------------------------------------------
 // Mixin

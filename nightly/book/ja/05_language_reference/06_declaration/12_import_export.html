@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-beb36f1b.js";
+            window.path_to_searchindex_js = "../../searchindex-2b09e32e.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-89abcafe.js"></script>
@@ -286,6 +286,16 @@ module ModuleA {
     import PackageA::paramA;
 }
 </code></pre>
+<p>Multiple symbols can be imported from a single package at once by listing them in braces like <code>package::{a, b}</code>.</p>
+<pre><code class="language-veryl playground">package PackageA {
+    const paramA: u32 = 1;
+    const paramB: u32 = 2;
+}
+
+module ModuleA {
+    import PackageA::{paramA, paramB};
+}
+</code></pre>
 <p>インポート宣言によるシンボルのインポートは、そのインポート宣言が置かれた名前空間内の任意の場所から参照できます。</p>
 <pre><code class="language-veryl playground">package PackageA {
     const WIDTH: u32 = 8;
@@ -301,23 +311,27 @@ module ModuleA (
     assign o_d = d;
 }
 </code></pre>
-<p>enumのメンバーも、個別および wildcard により import できます。これはパッケージ内で定義された enum だけでなく、モジュールやインターフェース内でローカルに宣言された enum にも適用されます。</p>
+<p>Enum members can also be imported, individually, as a brace list, or via wildcard. This works for enums defined inside a package as well as enums declared locally inside a module or interface.</p>
 <pre><code class="language-veryl playground">package PackageB {
-    enum Color: logic&lt;2&gt; {
+    enum Color: logic&lt;3&gt; {
         Red,
         Green,
         Blue,
+        White,
+        Black,
     }
 }
 
 module ModuleB {
-    // 単一の enum メンバーを import
+    // import a single enum member
     import PackageB::Color::Red;
-    // enum の全メンバーを import
+    // import multiple enum members
+    import PackageB::Color::{Green, Blue};
+    // import all remaining members of the enum
     import PackageB::Color::*;
 
     var c: PackageB::Color;
-    // 修飾なしでメンバーを参照可能
+    // members can be referenced without qualification
     assign c = Green;
 }
 </code></pre>

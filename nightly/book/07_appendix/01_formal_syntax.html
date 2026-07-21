@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-1775422e.js";
+            window.path_to_searchindex_js = "../searchindex-b03cf5dc.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-6600d52d.js"></script>
@@ -1202,7 +1202,11 @@ FunctionDeclaration: Function Identifier [ WithGenericParameter ] [ PortDeclarat
 // Import
 // ----------------------------------------------------------------------------
 
-ImportDeclaration: Import ScopedIdentifier [ ColonColon Star ] Semicolon;
+ImportDeclaration: Import ScopedIdentifier [ ColonColon ( Star | MultipleImportList )] Semicolon;
+
+MultipleImportList: LBrace MultipleImportItem { Comma MultipleImportItem } [ Comma ] RBrace;
+
+MultipleImportItem: Identifier;
 
 // ----------------------------------------------------------------------------
 // Mixin
