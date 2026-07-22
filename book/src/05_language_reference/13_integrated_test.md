@@ -45,6 +45,7 @@ The following testbench components are available:
 * `$tb::clock_gen` — clock signal generator (with optional `#(period: N)` parameter)
 * `$tb::reset_gen` — reset signal generator (with optional `#(cycles: N)` parameter)
 * `$tb::file` — file handle for writing output files
+* `$tb::random` — random-number generator (with the value type as a generic argument)
 
 In addition to the built-in components, verification components written in Rust can be used through the `$comp` namespace.
 See [Using a Component](./13_integrated_test/01_using_a_component.md).
@@ -185,6 +186,55 @@ module test_file {
 ```
 
 Like other `$tb::*` components, `$tb::file` can only be used inside a `#[test]` module.
+
+### Random number generation
+
+`$tb::random` is a random-number generator for native tests.
+The value type is given as a generic argument at declaration.
+It must be a 2-state integer type of at most 64 bits — for example `u8`–`u64`, `i8`–`i64`, `bbool`, or a `bit<N>` with `N` up to 64.
+4-state types (`logic` / `lbool`), floating-point types, and widths over 64 bits are rejected.
+
+It is declared with `var`, then used inside an `initial` block:
+
+* `r.seed(value)` — set the seed
+* `r.get()` — return a uniform random value over the full range of the element type
+* `r.get_range(min, max)` — return a uniform random value in the inclusive range `min..=max`
+* `r.get_seed()` — return the current seed
+
+```veryl,playground
+#[test(test_random)]
+module test_random {
+    var r: $tb::random::<u32>;
+    var x: u32               ;
+
+    initial {
+        r.seed(42);
+        x = r.get();
+        x = r.get_range(0, 99);
+        $finish();
+    }
+}
+```
+
+A specific bit width is used by binding it to a type first (a `bit<N>` cannot be written directly as a generic argument):
+
+```veryl,playground
+#[test(test_random_width)]
+module test_random_width {
+    gen my_t: type                = bit<12>;
+    var r   : $tb::random::<my_t>;
+    var x   : my_t               ;
+
+    initial {
+        x = r.get(); // 12-bit random
+        $finish();
+    }
+}
+```
+
+When neither `--seed` nor `[test].seed` is specified, each generator is seeded from a run-wide random base seed, so a run is not reproducible across invocations.
+Passing an explicit seed (via `--seed`, `[test].seed`, or `r.seed(...)`) makes the generated sequence reproducible.
+Like other `$tb::*` components, `$tb::random` can only be used inside a `#[test]` module.
 
 ## SystemVerilog test
 
