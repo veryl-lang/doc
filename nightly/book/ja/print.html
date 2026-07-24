@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-3e1516ac.js";
+            window.path_to_searchindex_js = "searchindex-012fc18e.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-89abcafe.js"></script>
@@ -3114,6 +3114,7 @@ module test_ignored {
 <li><code>$tb::clock_gen</code> — クロック信号生成器（オプションで <code>#(period: N)</code> パラメータを指定可能）</li>
 <li><code>$tb::reset_gen</code> — リセット信号生成器（オプションで <code>#(cycles: N)</code> パラメータを指定可能）</li>
 <li><code>$tb::file</code> — 出力ファイルを書き込むためのファイルハンドル</li>
+<li><code>$tb::random</code> — random-number generator (with the value type as a generic argument)</li>
 </ul>
 <p>組み込みのコンポーネントに加えて、Rust で記述した検証コンポーネントを <code>$comp</code> 名前空間を通じて使用できます。<a href="#コンポーネントを使う">コンポーネントを使う</a> を参照してください。</p>
 <p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
@@ -3237,6 +3238,42 @@ module test_file {
 }
 </code></pre>
 <p>他の <code>$tb::*</code> コンポーネントと同様に、<code>$tb::file</code> は <code>#[test]</code> モジュール内でのみ使用できます。</p>
+<h3 id="random-number-generation"><a class="header" href="#random-number-generation">Random number generation</a></h3>
+<p><code>$tb::random</code> is a random-number generator for native tests. The value type is given as a generic argument at declaration. It must be a 2-state integer type of at most 64 bits — for example <code>u8</code>–<code>u64</code>, <code>i8</code>–<code>i64</code>, <code>bbool</code>, or a <code>bit&lt;N&gt;</code> with <code>N</code> up to 64. 4-state types (<code>logic</code> / <code>lbool</code>), floating-point types, and widths over 64 bits are rejected.</p>
+<p>It is declared with <code>var</code>, then used inside an <code>initial</code> block:</p>
+<ul>
+<li><code>r.seed(value)</code> — set the seed</li>
+<li><code>r.get()</code> — return a uniform random value over the full range of the element type</li>
+<li><code>r.get_range(min, max)</code> — return a uniform random value in the inclusive range <code>min..=max</code></li>
+<li><code>r.get_seed()</code> — return the current seed</li>
+</ul>
+<pre><code class="language-veryl playground">#[test(test_random)]
+module test_random {
+    var r: $tb::random::&lt;u32&gt;;
+    var x: u32               ;
+
+    initial {
+        r.seed(42);
+        x = r.get();
+        x = r.get_range(0, 99);
+        $finish();
+    }
+}
+</code></pre>
+<p>A specific bit width is used by binding it to a type first (a <code>bit&lt;N&gt;</code> cannot be written directly as a generic argument):</p>
+<pre><code class="language-veryl playground">#[test(test_random_width)]
+module test_random_width {
+    gen my_t: type                = bit&lt;12&gt;;
+    var r   : $tb::random::&lt;my_t&gt;;
+    var x   : my_t               ;
+
+    initial {
+        x = r.get(); // 12-bit random
+        $finish();
+    }
+}
+</code></pre>
+<p>When neither <code>--seed</code> nor <code>[test].seed</code> is specified, each generator is seeded from a run-wide random base seed, so a run is not reproducible across invocations. Passing an explicit seed (via <code>--seed</code>, <code>[test].seed</code>, or <code>r.seed(...)</code>) makes the generated sequence reproducible. Like other <code>$tb::*</code> components, <code>$tb::random</code> can only be used inside a <code>#[test]</code> module.</p>
 <h2 id="systemverilogテスト"><a class="header" href="#systemverilogテスト">SystemVerilogテスト</a></h2>
 <p>SystemVerilog テストは <code>inline</code> 指定子で記述することができます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
 <p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>
