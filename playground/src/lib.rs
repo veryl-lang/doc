@@ -12,6 +12,7 @@ use veryl_analyzer::{
 use veryl_emitter::Emitter;
 use veryl_formatter::Formatter;
 use veryl_metadata::Metadata;
+use veryl_parser::resource_table::StrId;
 use veryl_parser::{Parser, resource_table, text_table};
 use veryl_simulator::ir::{self as sim_ir, Event};
 use veryl_simulator::output_buffer;
@@ -89,8 +90,10 @@ fn extract_diagnostics(errors: &[impl Diagnostic + std::fmt::Display]) -> String
     format!("[{}]", diags.join(","))
 }
 
+const PROJECT_NAME: &str = "project";
+
 fn metadata() -> Metadata {
-    Metadata::create_default("project").unwrap()
+    Metadata::create_default(PROJECT_NAME).unwrap()
 }
 
 #[wasm_bindgen]
@@ -107,12 +110,13 @@ pub fn revision() -> String {
 /// the global tables (same set as veryl's own per-file drop).
 fn drop_file_state() {
     if let Some(path) = resource_table::get_path_id(PathBuf::from("")) {
-        symbol_table::drop(path);
-        scope::drop_tokens(path);
+        let prj: Option<StrId> = Some(PROJECT_NAME.into());
+        symbol_table::drop(path, prj);
+        scope::drop_tokens(path, prj);
         text_table::drop(path);
         attribute_table::drop(path);
         unsafe_table::drop(path);
-        definition_table::drop(path);
+        definition_table::drop(path, prj);
     }
 }
 
@@ -127,7 +131,7 @@ pub fn build(source: &str) -> Result {
             let mut context = Context::default();
             let mut ir = Ir::default();
             let mut errors = Vec::new();
-            errors.append(&mut analyzer.analyze_pass1("project", &parser.veryl));
+            errors.append(&mut analyzer.analyze_pass1(PROJECT_NAME, &parser.veryl));
             errors.append(&mut Analyzer::analyze_post_pass1());
             errors.append(&mut analyzer.analyze_pass2(
                 &parser.veryl,
@@ -190,7 +194,7 @@ pub fn dump_ir(source: &str) -> Result {
             let mut context = Context::default();
             let mut ir = Ir::default();
             let mut errors = Vec::new();
-            errors.append(&mut analyzer.analyze_pass1("project", &parser.veryl));
+            errors.append(&mut analyzer.analyze_pass1(PROJECT_NAME, &parser.veryl));
             errors.append(&mut Analyzer::analyze_post_pass1());
             errors.append(&mut analyzer.analyze_pass2(
                 &parser.veryl,
@@ -276,7 +280,7 @@ pub fn simulate(source: &str) -> SimResult {
             let mut context = Context::default();
             let mut ir = Ir::default();
             let mut errors = Vec::new();
-            errors.append(&mut analyzer.analyze_pass1("project", &parser.veryl));
+            errors.append(&mut analyzer.analyze_pass1(PROJECT_NAME, &parser.veryl));
             errors.append(&mut Analyzer::analyze_post_pass1());
             errors.append(&mut analyzer.analyze_pass2(
                 &parser.veryl,
