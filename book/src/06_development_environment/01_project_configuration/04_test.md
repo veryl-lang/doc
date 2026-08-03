@@ -74,8 +74,15 @@ When unset, each `veryl test` run draws a fresh random seed and prints it; set i
 
 ### The `four_state` field
 
-The `four_state` field runs native verification-component tests in four-state (X/Z) mode.
-It defaults to `false` and can also be enabled with the `--4state` command-line option.
+The `four_state` field runs native tests in four-state (X/Z) mode.
+It defaults to `false`, so a value which is not assigned is read as `0`.
+Under a four-state run, such a value is read as `x` instead.
+It can also be enabled with the `--4state` command-line option.
+
+```toml
+[test]
+four_state = true
+```
 
 ### The `component_backend` field
 

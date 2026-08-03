@@ -107,6 +107,7 @@
     - [Translator](./06_development_environment/16_translator.md)
     - [Synthesizer](./06_development_environment/17_synthesizer.md)
     - [Metadata](./06_development_environment/18_metadata.md)
+    - [External Subcommand](./06_development_environment/19_external_subcommand.md)
 - [Appendix](./07_appendix.md)
     - [Formal Syntax](./07_appendix/01_formal_syntax.md)
     - [Semantic Error](./07_appendix/02_semantic_error.md)

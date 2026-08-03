@@ -16,3 +16,4 @@ bump_commit_message = "Bump"
 | publish_commit            | boolean              | false                 | automatic commit after publish                  |
 | bump_commit_message      | string               | "chore: Bump version" | commit message after bump                       |
 | publish_commit_message   | string               | "chore: Publish"      | commit message after publish                    |
+| register                  | boolean              | unset                 | [registration](../03_publish_project.md#registering-to-the-registry) after publish |

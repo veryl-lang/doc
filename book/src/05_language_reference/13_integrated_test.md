@@ -154,6 +154,69 @@ module test_function_call {
 }
 ```
 
+### Hierarchical reference
+
+Signals inside the DUT can be read from an `initial` block through a hierarchical path.
+The path starts at an instance of the test module, and goes through nested instances by `.`.
+Internal signals don't have to be routed to the top level for observation.
+
+```veryl,playground
+module Sub (
+    clk: input clock   ,
+    rst: input reset   ,
+    din: input logic<4>,
+) {
+    var internal_reg: logic<4>;
+    always_ff {
+        if_reset {
+            internal_reg = 0;
+        } else {
+            internal_reg = din + 1;
+        }
+    }
+}
+
+module Top (
+    clk: input clock   ,
+    rst: input reset   ,
+    din: input logic<4>,
+) {
+    inst u_sub: Sub ( clk, rst, din );
+}
+
+#[test(test_hier)]
+module test_hier {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    var din: logic<4>;
+
+    inst dut: Top ( clk, rst, din );
+
+    initial {
+        rst.assert();
+        din = 4'b0001;
+        clk.next();
+        $assert(dut.u_sub.internal_reg == 4'h2, "unexpected value");
+        $display("internal_reg = %h", dut.u_sub.internal_reg);
+        $finish();
+    }
+}
+```
+
+The referenced value can be used like any other expression, such as an argument of `$assert` and `$display`, a condition of `if`, and an operand with bit select.
+
+There are the following restrictions:
+
+* A hierarchical reference is available only in `initial` blocks of a test module.
+  Using it in RTL context like `always_comb`, or in a module which is not a test module, is reported as `invisible_identifier`.
+* It can't be used in a function because a function body is shared with RTL callers.
+* An instance array can't be a part of a hierarchical path.
+
+A hierarchical reference is not counted as a reference to the signal.
+So a signal which is read only through a hierarchical reference is reported as `unused_variable`.
+It can be suppressed by the [`#[allow(unused_variable)]`](./06_declaration/08_attribute.md) attribute.
+
 ### File output
 
 `$tb::file` is a file handle for writing output files during a native test.

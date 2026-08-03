@@ -91,5 +91,33 @@ ram: 2 blocks
 | `--dump-area` | Dump the per-cell-kind area breakdown, including inferred RAM blocks. |
 | `--dump-timing` | Dump the critical path trace. |
 | `--dump-power` | Dump the power estimate (leakage + dynamic breakdown). |
+| `--format <format>` | Output format: `pretty` (default, human-readable) or `json`. |
+| `--format-version <n>` | JSON report schema version. Only valid with `--format json`. Currently only `1`. |
 
 If no `--dump-*` flag is given, all three of area / timing / power are dumped.
+
+## JSON report
+
+`--format json` writes a machine-readable report to stdout instead of the human-readable summary.
+
+```console
+$ veryl synth --format json
+```
+
+```text
+{
+  "format_version": 1,
+  "top": "Counter",
+  "library": "sky130",
+  "status": "ok",
+  "cells": 19,
+  "ffs": 8,
+  "area": { "total": 302.5, "combinational": 122.5, "sequential": 180.0, "memory": 0.0 },
+  "timing": { "delay_ns": 0.38, "depth": 4, "from": "cnt[3]", "to": "cnt[6]" },
+  "power": { "total_mw": 0.0239, "leakage_mw": 0.0000271, "dynamic_mw": 0.0239, "clock_freq_mhz": 100.0, "activity": 0.1 }
+}
+```
+
+The `status` field is `ok` when synthesis succeeded.
+Otherwise it is `unsupported` for a construct which the synthesizer can't handle, `no_top` when the top module is not found, and `error` for the other failures.
+In these cases a `message` field describes the failure, and `area`, `timing` and `power` are `null`.

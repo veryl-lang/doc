@@ -30,6 +30,36 @@ If no simulator is specified through `Veryl.toml` and command-line option, it wi
 
 The available configurations are [here](./01_project_configuration/04_test.md).
 
+## JSON report
+
+`veryl test --format json` writes a machine-readable report of the test results to stdout instead of the human-readable summary.
+It is useful to consume the results from CI or other tools.
+
+```console
+$ veryl test --format json
+```
+
+```text
+{
+  "format_version": 1,
+  "backend": "cc",
+  "passed": 1,
+  "failed": 1,
+  "ignored": 1,
+  "tests": [
+    { "name": "test_a", "status": "pass", "runtime_s": 0.000405, "sim_s": 0.0000147 },
+    { "name": "test_b", "status": "fail", "message": "assertion failed", "runtime_s": 0.000559, "sim_s": 0.0000206 }
+  ]
+}
+```
+
+The `status` field of each test is `pass` or `fail`, and a failed test has a `message` field.
+If a test wrote something to the standard output, it is stored in an `output` field.
+Ignored tests are counted by `ignored`, but they are not listed in `tests`.
+
+The schema version of the report can be specified by `--format-version`, which is valid only with `--format json`.
+Currently only `1` is supported.
+
 ## cocotb
 
 `cocotb` tests require `python3` environment in which `cocotb` is installed.

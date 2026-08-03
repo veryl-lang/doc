@@ -50,6 +50,35 @@ $ veryl publish --bump patch
 [INFO ]   Committing metadata ([path to project]/Veryl.pub)
 ```
 
+### Registering to the registry
+
+[The Veryl registry](https://registry.veryl-lang.org) lists published projects.
+A project can be registered by `veryl register`.
+
+```
+$ veryl register
+```
+
+The registry identifies a project by its repository, so the [`repository`](./01_project_configuration.md#the-repository-field) field of the `[project]` section is required.
+The declared `repository` is used instead of the git `origin` remote, because `origin` varies with the checkout.
+
+`veryl register` asks for confirmation before registering.
+The `--yes` option skips the confirmation, and it is required when the command is not executed interactively.
+
+`veryl publish` can register the project too.
+The behavior is specified by `register` in `[publish]` section of `Veryl.toml`:
+
+* `true` --- register automatically after publish
+* `false` --- never register
+* unset --- ask once interactively
+
+Registration doesn't push the commit.
+A published version becomes visible after its revision is pushed and the registry crawls the repository.
+
+If a [category](./01_project_configuration.md#the-categories-field) which the registry doesn't recognize is specified, it is reported as a warning.
+
+The registry to be used can be changed by the `VERYL_REGISTRY_URL` environment variable.
+
 ### Configuration
 
 The available configurations are [here](./01_project_configuration/05_publish.md).

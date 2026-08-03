@@ -7,6 +7,7 @@
   * [`description`](01_project_configuration.md#the-description-field) --- A description of the project.
   * [`license`](01_project_configuration.md#the-license-field) --- The project license.
   * [`repository`](01_project_configuration.md#the-repository-field) --- URL of the project source repository.
+  * [`categories`](01_project_configuration.md#the-categories-field) --- The categories of the project.
 * [`[build]`](01_project_configuration.md#the-build-section) --- Build settings.
 * [`[format]`](01_project_configuration.md#the-format-section) --- Format settings.
 * [`[lint]`](01_project_configuration.md#the-lint-section) --- Lint settings.
@@ -73,6 +74,19 @@ The `repository` field should be a URL to the source repository for the project.
 [project]
 repository = "https://github.com/veryl-lang/veryl"
 ```
+
+### The `categories` field {#the-categories-field}
+
+The optional `categories` field lists the categories which the project belongs to.
+It is used by the [Veryl registry](https://registry.veryl-lang.org) to classify the project.
+
+```toml
+[project]
+categories = ["interconnect", "verification"]
+```
+
+The recognized categories are defined by the registry itself, not by the Veryl compiler.
+A category which the registry doesn't recognize is reported as a warning by `veryl register` and ignored.
 
 ## The `[build]` section {#the-build-section}
 

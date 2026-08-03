@@ -12,6 +12,12 @@ This error is reported when an `elsif` or `else` attribute cannot be unambiguous
 associated with a preceding `if` attribute.
 Restructure the surrounding code so that the relationship is clear.
 
+### ambiguous_identifier
+
+This error is reported when an identifier is imported from multiple packages, so which
+symbol it refers to can't be determined.
+Qualify the identifier with an explicit scope, or remove one of the imports.
+
 ### anonymous_identifier_usage
 
 This error is reported when an anonymous identifier (`_`) is used in a position that
@@ -31,10 +37,28 @@ blocks, function calls, or instantiated modules and interfaces.
 Break the loop by inserting a register (`always_ff`) on at least one path, or by
 restructuring the design so that the dependency chain terminates.
 
+### component_interface_mismatch
+
+This error is reported when the usage of a `$comp::*` verification component doesn't match
+the interface which the component declares. The checked items are the declaration form
+(`inst` for a clocked component, `var` for a method-only component), parameters, ports,
+interface ports, and method calls including the width of the return value.
+Correct the usage, or update the component so that its interface matches.
+
 ### cyclic_type_dependency
 
 This error is reported when two or more type definitions reference each other in a
 cycle. Break the cycle by removing or restructuring one of the references.
+
+### duplicate_argument
+
+This error is reported when the same named argument is connected more than once at an
+instantiation or a function call. Remove the duplicated connection.
+
+### duplicate_enum_variant
+
+This error is reported when an enum variant has the same value as another variant of the
+same enum. Give the variant a distinct value.
 
 ### duplicated_identifier
 
@@ -58,6 +82,13 @@ This error is reported when the actual generic arguments of a function call are 
 but the compiler cannot infer them from the call arguments.
 Provide explicit generic arguments through `::<>`, or pass an argument whose width can be
 determined from a variable declaration.
+
+### implicit_clock_conversion
+
+This error is reported when a value which is not clock/reset-typed is connected to a
+clock/reset port, or vice versa. Clock-ness and reset-ness are conferred only at a
+declaration, so the value should be bound to a clock/reset-typed signal in the parent
+(e.g. `let g: '_ clock = expr;`), and that signal should be connected.
 
 ### include_failure
 
@@ -91,6 +122,12 @@ compatible. Choose a compatible target type.
 
 This error is reported when a signal that is neither typed as `clock` nor a single-bit
 signal is connected as a clock. Use a `clock`-typed signal.
+
+### invalid_clock_assignment
+
+This error is reported when a clock/reset-typed signal is assigned in `always_ff`.
+Toggle a `logic` variable in `always_ff` instead, and bind it to a clock/reset-typed
+signal (e.g. `let d: '_ clock = t;`).
 
 ### invalid_clock_domain
 
@@ -128,6 +165,18 @@ for the enum (e.g. one-hot, gray).
 This error is reported when a non-value symbol (e.g. a module name) is used as a factor
 in an expression.
 
+### invalid_for_range
+
+This error is reported when the range of a `for` loop is invalid. The range must be
+written with `..` or `..=`; a bare expression is not a range. A range bound must not be
+negative either, because bounds are elaborated as unsigned.
+
+### invalid_for_step
+
+This error is reported when the step of a `for` loop never advances the induction
+variable toward the end of the range, so the loop doesn't terminate.
+Make the step strictly advance the induction variable.
+
 ### invalid_import
 
 This error is reported when the referenced item cannot be imported (e.g. it is private
@@ -138,6 +187,14 @@ or not a valid import target).
 This error is reported when the `lsb` keyword appears in a context where the corresponding
 bit width cannot be determined.
 Replace `lsb` with a concrete index.
+
+### invalid_mixin
+
+This error is reported when the target of a [`mixin`](../05_language_reference/08_interface.md#mixin)
+declaration can't be mixed in. The target must be an interface which is not a prototype,
+doesn't have overridable parameters, and doesn't have `mixin` declarations itself.
+The member names of the target must not conflict with the members which are already
+defined in the interface.
 
 ### invalid_modifier
 
@@ -169,6 +226,16 @@ This error is reported when an operand kind incompatible with the operator is us
 This error is reported when a port default value is invalid for the port's type or
 direction.
 
+### invalid_range
+
+This error is reported when a range is invalid, for example when the lower bound of an
+exclusive range is not less than the upper bound.
+
+### invalid_range_assign
+
+This error is reported when an array range select on the left-hand side of an assignment
+is not a constant, in-range, ascending slice.
+
 ### invalid_reset
 
 This error is reported when a signal that is neither typed as `reset` nor a single-bit
@@ -182,7 +249,7 @@ Remove or relocate the statement.
 
 ### invalid_tb_usage
 
-This error is reported when a `$tb::*` testbench component is used outside a `#[test]`
+This error is reported when a `$tb::*` or `$comp::*` component is used outside a `#[test]`
 module. Move the usage inside a test module.
 
 ### invalid_test
@@ -193,6 +260,12 @@ This error is reported when a `#[test]` declaration is malformed.
 
 This error is reported when `struct`, `enum` or `union` data types are defined within
 interface declarations.
+
+### invalid_unsized_literal
+
+This error is reported when an unsized literal is used in a self-determined context,
+where its width can't be determined from the surroundings.
+Give the literal an explicit width like `1'b0`.
 
 ### invalid_wavedrom
 
@@ -291,6 +364,11 @@ block or `assign` statement. Drive each signal from a single source.
 
 This error is reported when a default clock or reset is specified more than once in the
 same module.
+
+### non_constant_select_width
+
+This error is reported when the width of a `+:` / `-:` / `step` part select is not a
+constant. Use a constant expression for the width.
 
 ### non_positive_value
 
@@ -438,6 +516,10 @@ from the position of the generic's definition.
 
 This error is reported when an incorrect separator (`::` vs `.`) is used between
 identifiers. Replace it with the correct separator.
+
+### zero_width_number
+
+This error is reported when a number is declared with zero width.
 
 ## Warnings
 
