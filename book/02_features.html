@@ -133,10 +133,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-d5cb38a3.js";
+            window.path_to_searchindex_js = "searchindex-35ef2795.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-28bcefd9.js"></script>
+        <script src="toc-156e7647.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -278,6 +278,7 @@
 <li><a href="02_features.html#real-time-diagnostics">Real-time diagnostics</a></li>
 <li><a href="02_features.html#auto-formatting">Auto formatting</a></li>
 <li><a href="02_features.html#integrated-test">Integrated test</a></li>
+<li><a href="02_features.html#logic-synthesis">Logic synthesis</a></li>
 <li><a href="02_features.html#dependency-management">Dependency management</a></li>
 <li><a href="02_features.html#generics">Generics</a></li>
 <li><a href="02_features.html#type-inference">Type inference</a></li>
@@ -307,8 +308,25 @@ formatting through the command line and formatting checks in CI are also possibl
 <video src="./img/format.mp4" autoplay="" loop="" muted="">
 </video>
 <h2 id="integrated-test"><a class="header" href="#integrated-test">Integrated test</a></h2>
-<p>Test code written by SystemVerilog or <a href="https://www.cocotb.org">cocotb</a> can be embedded in Veryl code,
-it can be executed through <code>veryl test</code> command.</p>
+<p>Tests can be written directly in Veryl and executed through the <code>veryl test</code> command.
+The primary way is a <em>native test</em>: a testbench written in Veryl itself and run by the
+built-in simulator, without embedding SystemVerilog or relying on external frameworks.
+No external simulator installation is required.</p>
+<pre><code class="language-veryl">#[test(test_example)]
+module test_example {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    initial {
+        rst.assert();
+        clk.next  (10);
+        $finish   ();
+    }
+}
+</code></pre>
+<p>When an external RTL simulator is needed, test code written in SystemVerilog or
+<a href="https://www.cocotb.org">cocotb</a> can also be embedded in Veryl code and run through the
+same <code>veryl test</code> command.</p>
 <pre><code class="language-veryl">#[test(test1)]
 embed (inline) sv{{{
     module test1;
@@ -317,6 +335,21 @@ embed (inline) sv{{{
         end
     endmodule
 }}}
+</code></pre>
+<h2 id="logic-synthesis"><a class="header" href="#logic-synthesis">Logic synthesis</a></h2>
+<p>Veryl can perform lightweight logic synthesis on the project and report approximate
+area, timing and power.
+It is intended as a quick feedback tool during design exploration,
+not a replacement for a production synthesis flow.</p>
+<p>The report opens with a one-line summary followed by area, timing and power detail:</p>
+<pre><code class="language-text">synth: TopModule — 123 gates, 17 FFs
+library: sky130_fd_sc_hd ...
+
+summary:
+  area:        1234.56 um²  (comb 1000.00, seq 134.56, mem 100.00)
+  timing:        2.345 ns      8 levels  in_dat → out_dat
+  power:        0.1234 mW   (leak 0.0123 mW, dyn 0.1111 mW)
+                            @ f_clk = 100 MHz, activity = 0.10
 </code></pre>
 <h2 id="dependency-management"><a class="header" href="#dependency-management">Dependency management</a></h2>
 <p>Veryl includes a built-in dependency management feature,
@@ -913,11 +946,11 @@ module ModuleB {
         <script src="searcher-09f2665d.js"></script>
 
         <script src="clipboard-1626706a.min.js"></script>
-        <script src="highlight-e55bd6fc.js"></script>
+        <script src="highlight-88633d6f.js"></script>
         <script src="book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="mode-veryl-1cf782d1.js"></script>
+        <script src="mode-veryl-f5f6ed18.js"></script>
         <script src="veryl-init-13e2a09c.js"></script>
         <script src="theme/language-picker-32df9c32.js"></script>
 

@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-d5cb38a3.js";
+            window.path_to_searchindex_js = "../searchindex-35ef2795.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-28bcefd9.js"></script>
+        <script src="../toc-156e7647.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -349,6 +349,26 @@ In the case, overriding dependencies by local path can be used like below:</p>
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = "../veryl_sample"}
 </code></pre>
 <p>This means that if there is <code>../veryl_sample</code>, it is used, and if not, it is pulled from the Git repository.</p>
+<h2 id="project-property-override"><a class="header" href="#project-property-override">Project property override</a></h2>
+<p>If a dependency has <a href="../05_language_reference/20_project_property.html">project properties</a>, their values can be overridden through the <code>properties</code> field.</p>
+<pre><code class="language-toml">[dependencies]
+veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 8}}
+</code></pre>
+<p>The properties which are not specified here keep the default values defined in <code>Veryl.toml</code> of the dependency.
+The following restrictions are applied to the overriding.</p>
+<ul>
+<li>A property which is not defined in the dependency can’t be specified.</li>
+<li>The type of the given value must be the same as the type of the default value.</li>
+</ul>
+<p>The overriding is applied to the direct dependencies only.
+So the properties of the dependencies of a dependency are not affected, and they are controlled by <code>Veryl.toml</code> of the dependency.</p>
+<p>Dependencies which have the same source are distinguished by their property values.
+So the same project can be used as multiple dependencies with different property values.</p>
+<pre><code class="language-toml">[dependencies]
+veryl_sample_a = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 8}}
+veryl_sample_b = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 16}}
+</code></pre>
+<p>In the above example, <code>veryl_sample_a</code> and <code>veryl_sample_b</code> are generated as different projects.</p>
 <h2 id="git-backend"><a class="header" href="#git-backend">Git backend</a></h2>
 <p>Veryl can fetch git-based dependencies through two different backends:</p>
 <ul>
@@ -422,11 +442,11 @@ The backend can be selected explicitly through the <code>VERYL_GIT_BACKEND</code
         <script src="../searcher-09f2665d.js"></script>
 
         <script src="../clipboard-1626706a.min.js"></script>
-        <script src="../highlight-e55bd6fc.js"></script>
+        <script src="../highlight-88633d6f.js"></script>
         <script src="../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../mode-veryl-1cf782d1.js"></script>
+        <script src="../mode-veryl-f5f6ed18.js"></script>
         <script src="../veryl-init-13e2a09c.js"></script>
         <script src="../theme/language-picker-32df9c32.js"></script>
 

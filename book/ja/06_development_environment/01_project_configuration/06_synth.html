@@ -133,10 +133,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-0b50d0de.js";
+            window.path_to_searchindex_js = "../../searchindex-556f5f19.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-2cd81d8e.js"></script>
+        <script src="../../toc-f6fb0cb4.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -296,6 +296,21 @@ timing_paths = 1
 </tbody>
 </table>
 </div>
+<h2 id="ram-推論"><a class="header" href="#ram-推論">RAM 推論</a></h2>
+<p><code>veryl synth</code> は、単一の動的アドレスで書き込まれ、動的アドレスで読み出される大きな配列を、<code>depth × width</code> 個のフリップフロップとアドレスデコード／マルチプレクサツリーへ展開する代わりに、RAM マクロとして推論します。以下の閾値によって、これが行われる条件が制御されます。推論に失敗した配列（例えばリセットを持つもの——実際の SRAM にはリセットがありません）はフリップフロップのまま残り、さらに <code>ram_max_ff_bits</code> を超える場合は、合成はメモリを使い果たすのではなくエラーを報告します。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>デフォルト</th><th>説明</th></tr>
+</thead>
+<tbody>
+<tr><td>ram_min_bits</td><td>整数</td><td>1024</td><td>フリップフロップではなく RAM として推論する価値がある最小の配列サイズ（ストアドビット単位）。</td></tr>
+<tr><td>ram_max_read_ports</td><td>整数</td><td>16</td><td>RAM として推論される配列が持ちうる、異なる読み出しアドレスの最大数。</td></tr>
+<tr><td>ram_max_write_ports</td><td>整数</td><td>8</td><td>RAM として推論される配列が持ちうる、異なる書き込み箇所の最大数。</td></tr>
+<tr><td>ram_max_ff_bits</td><td>整数</td><td>65536</td><td>推論に失敗した動的インデックス配列がフリップフロップへ展開されうる最大の配列サイズ（ストアドビット単位）。これを超える配列は、メモリを使い果たすのではなく拒否されます。</td></tr>
+</tbody>
+</table>
+</div>
 <h2 id="組み込みライブラリ"><a class="header" href="#組み込みライブラリ">組み込みライブラリ</a></h2>
 <p><code>library</code> フィールドは面積・タイミング・電力の見積もりに使われる組み込みセルライブラリを指定します。値はすべて公開されている Liberty 特性化データから抽出または派生させたもので、サインオフ精度ではなく自己整合的な「相対コスト」として校正されています。すべてドライブ強度1のセルを用いています。</p>
 <div class="table-wrapper">
@@ -365,11 +380,11 @@ timing_paths = 1
         <script src="../../searcher-09f2665d.js"></script>
 
         <script src="../../clipboard-1626706a.min.js"></script>
-        <script src="../../highlight-e55bd6fc.js"></script>
+        <script src="../../highlight-88633d6f.js"></script>
         <script src="../../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../../mode-veryl-1cf782d1.js"></script>
+        <script src="../../mode-veryl-f5f6ed18.js"></script>
         <script src="../../veryl-init-13e2a09c.js"></script>
         <script src="../../theme/language-picker-32df9c32.js"></script>
 

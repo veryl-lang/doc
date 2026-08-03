@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-0b50d0de.js";
+            window.path_to_searchindex_js = "../searchindex-556f5f19.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-2cd81d8e.js"></script>
+        <script src="../toc-f6fb0cb4.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -282,6 +282,7 @@
 <li><a href="01_project_configuration.html#the-description-field"><code>description</code></a> — プロジェクトの説明</li>
 <li><a href="01_project_configuration.html#the-license-field"><code>license</code></a> — プロジェクトのライセンス</li>
 <li><a href="01_project_configuration.html#the-repository-field"><code>repository</code></a> — プロジェクトのリポジトリの URL</li>
+<li><a href="01_project_configuration.html#the-categories-field"><code>categories</code></a> — プロジェクトのカテゴリ</li>
 </ul>
 </li>
 <li><a href="01_project_configuration.html#the-build-section"><code>[build]</code></a> — ビルド設定</li>
@@ -290,7 +291,9 @@
 <li><a href="01_project_configuration.html#the-test-section"><code>[test]</code></a> — テスト設定</li>
 <li><a href="01_project_configuration.html#the-publish-section"><code>[publish]</code></a> — 公開設定</li>
 <li><a href="01_project_configuration.html#the-synth-section"><code>[synth]</code></a> — 論理合成設定</li>
+<li><a href="01_project_configuration.html#the-properties-section"><code>[properties]</code></a> — プロジェクトプロパティ</li>
 <li><a href="01_project_configuration.html#the-dependencies-section"><code>[dependencies]</code></a> — ライブラリの依存関係</li>
+<li><a href="01_project_configuration.html#the-components-section"><code>[[components]]</code></a> — 検証コンポーネントパッケージ</li>
 </ul>
 <h2 id="the-project-section"><a class="header" href="#the-project-section"><code>[project]</code> セクション</a></h2>
 <p><code>Veryl.toml</code> の最初のセクションは <code>[project]</code> です。<code>name</code> と <code>version</code> は必須です。</p>
@@ -323,6 +326,12 @@ license = "MIT OR Apache-2.0"
 <pre><code class="language-toml">[project]
 repository = "https://github.com/veryl-lang/veryl"
 </code></pre>
+<h3 id="the-categories-field"><a class="header" href="#the-categories-field"><code>categories</code> フィールド</a></h3>
+<p>任意の <code>categories</code> フィールドは、プロジェクトが属するカテゴリを列挙します。<a href="https://registry.veryl-lang.org">Veryl レジストリ</a>がプロジェクトを分類するために使われます。</p>
+<pre><code class="language-toml">[project]
+categories = ["interconnect", "verification"]
+</code></pre>
+<p>認識されるカテゴリは Veryl コンパイラではなくレジストリ自身が定義しています。レジストリが認識しないカテゴリは <code>veryl register</code> で警告として報告され、無視されます。</p>
 <h2 id="the-build-section"><a class="header" href="#the-build-section"><code>[build]</code> セクション</a></h2>
 <p><code>[build]</code> セクションはコード生成の設定です。詳細は<a href="./01_project_configuration/01_build.html">こちら</a>。</p>
 <h2 id="the-format-section"><a class="header" href="#the-format-section"><code>[format]</code> セクション</a></h2>
@@ -335,8 +344,18 @@ repository = "https://github.com/veryl-lang/veryl"
 <p><code>[publish]</code> セクションはプロジェクト公開の設定です。詳細は<a href="./01_project_configuration/05_publish.html">こちら</a>。</p>
 <h2 id="the-synth-section"><a class="header" href="#the-synth-section"><code>[synth]</code> セクション</a></h2>
 <p><code>[synth]</code> セクションはシンセサイザの設定です。詳細は<a href="./01_project_configuration/06_synth.html">こちら</a>。</p>
+<h2 id="the-properties-section"><a class="header" href="#the-properties-section"><code>[properties]</code> セクション</a></h2>
+<p><code>[properties]</code> セクションはプロジェクトプロパティを含みます。プロジェクトプロパティは、そのプロジェクトのソースコードから <code>$prop</code> 名前空間を通して参照できるコンパイル時定数です。</p>
+<p>プロパティ名はソースコード中で識別子として参照されるため、Veryl の有効な識別子である必要があります。プロパティの値は整数または真偽値です。プロパティの型は与えた値によって決まり、ソースコード中では整数のプロパティは <code>i64</code> 型、真偽値のプロパティは <code>bbool</code> 型になります。</p>
+<pre><code class="language-toml">[properties]
+DATA_WIDTH   = 32
+ENABLE_DEBUG = false
+</code></pre>
+<p>ここで定義した値はプロパティの既定値です。この値は、このプロジェクトに依存する側のプロジェクトから上書きできます。ソースコード中での使い方は<a href="../05_language_reference/20_project_property.html">プロジェクトプロパティ</a>を、上書きについては<a href="./02_dependencies.html#project-property-override">依存関係</a>を参照してください。</p>
 <h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section"><code>[dependencies]</code> セクション</a></h2>
 <p><code>[dependencies]</code> セクションはライブラリの依存関係です。詳細は<a href="./02_dependencies.html">こちら</a>。</p>
+<h2 id="the-components-section"><a class="header" href="#the-components-section"><code>[[components]]</code> エントリ</a></h2>
+<p><code>[[components]]</code> エントリは Rust で書かれた検証コンポーネントの cargo パッケージを登録します。詳細は<a href="../05_language_reference/13_integrated_test/02_writing_a_component.html">こちら</a>。</p>
 
                     </main>
 
@@ -390,11 +409,11 @@ repository = "https://github.com/veryl-lang/veryl"
         <script src="../searcher-09f2665d.js"></script>
 
         <script src="../clipboard-1626706a.min.js"></script>
-        <script src="../highlight-e55bd6fc.js"></script>
+        <script src="../highlight-88633d6f.js"></script>
         <script src="../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../mode-veryl-1cf782d1.js"></script>
+        <script src="../mode-veryl-f5f6ed18.js"></script>
         <script src="../veryl-init-13e2a09c.js"></script>
         <script src="../theme/language-picker-32df9c32.js"></script>
 

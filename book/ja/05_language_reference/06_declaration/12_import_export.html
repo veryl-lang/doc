@@ -133,10 +133,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-0b50d0de.js";
+            window.path_to_searchindex_js = "../../searchindex-556f5f19.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-2cd81d8e.js"></script>
+        <script src="../../toc-f6fb0cb4.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -286,38 +286,52 @@ module ModuleA {
     import PackageA::paramA;
 }
 </code></pre>
+<p><code>package::{a, b}</code> のように波括弧の中に列挙することで、1つのパッケージから複数のシンボルを一度に import できます。</p>
+<pre><code class="language-veryl playground">package PackageA {
+    const paramA: u32 = 1;
+    const paramB: u32 = 2;
+}
+
+module ModuleA {
+    import PackageA::{paramA, paramB};
+}
+</code></pre>
 <p>インポート宣言によるシンボルのインポートは、そのインポート宣言が置かれた名前空間内の任意の場所から参照できます。</p>
 <pre><code class="language-veryl playground">package PackageA {
     const WIDTH: u32 = 8;
 }
 
 module ModuleA (
-    i_d: input  logic&lt;WIDTH&gt;, // valid reference
-    o_d: output logic&lt;WIDTH&gt;, // valid reference
+    i_d: input  logic&lt;WIDTH&gt;, // 有効な参照
+    o_d: output logic&lt;WIDTH&gt;, // 有効な参照
 ) {
     import PackageA::WIDTH;
 
-    let d: logic&lt;WIDTH&gt; = i_d; // valid reference
+    let d: logic&lt;WIDTH&gt; = i_d; // 有効な参照
     assign o_d = d;
 }
 </code></pre>
-<p>enumのメンバーも、個別および wildcard により import できます。これはパッケージ内で定義された enum だけでなく、モジュールやインターフェース内でローカルに宣言された enum にも適用されます。</p>
+<p>enumのメンバーも、個別に、波括弧のリストとして、あるいは wildcard により import できます。これはパッケージ内で定義された enum だけでなく、モジュールやインターフェース内でローカルに宣言された enum にも適用されます。</p>
 <pre><code class="language-veryl playground">package PackageB {
-    enum Color: logic&lt;2&gt; {
+    enum Color: logic&lt;3&gt; {
         Red,
         Green,
         Blue,
+        White,
+        Black,
     }
 }
 
 module ModuleB {
-    // 単一の enum メンバーを import
+    // import a single enum member
     import PackageB::Color::Red;
-    // enum の全メンバーを import
+    // import multiple enum members
+    import PackageB::Color::{Green, Blue};
+    // import all remaining members of the enum
     import PackageB::Color::*;
 
     var c: PackageB::Color;
-    // 修飾なしでメンバーを参照可能
+    // members can be referenced without qualification
     assign c = Green;
 }
 </code></pre>
@@ -374,11 +388,11 @@ module ModuleB {
         <script src="../../searcher-09f2665d.js"></script>
 
         <script src="../../clipboard-1626706a.min.js"></script>
-        <script src="../../highlight-e55bd6fc.js"></script>
+        <script src="../../highlight-88633d6f.js"></script>
         <script src="../../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../../mode-veryl-1cf782d1.js"></script>
+        <script src="../../mode-veryl-f5f6ed18.js"></script>
         <script src="../../veryl-init-13e2a09c.js"></script>
         <script src="../../theme/language-picker-32df9c32.js"></script>
 

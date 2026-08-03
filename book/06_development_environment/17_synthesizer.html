@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-d5cb38a3.js";
+            window.path_to_searchindex_js = "../searchindex-35ef2795.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-28bcefd9.js"></script>
+        <script src="../toc-156e7647.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -315,15 +315,23 @@ modelling it directly keeps the area, timing and power estimates realistic for
 memory-heavy designs such as caches and register files.</p>
 <p>An array is inferred as a RAM block when all of the following hold:</p>
 <ul>
-<li>it has at least 1024 stored bits and a depth of 2 or more;</li>
+<li>it has at least <code>ram_min_bits</code> (default 1024) stored bits and a depth of 2 or
+more;</li>
 <li>it is written <strong>without a reset</strong>, through whole-word dynamic-address writes
-(<code>mem[addr] = data</code>), with at most 8 distinct write sites;</li>
-<li>it is read through whole-word dynamic addresses (<code>mem[addr]</code>), with at most 16
-distinct read addresses.</li>
+(<code>mem[addr] = data</code>), with at most <code>ram_max_write_ports</code> (default 8) distinct
+write sites;</li>
+<li>it is read through whole-word dynamic addresses (<code>mem[addr]</code>), with at most
+<code>ram_max_read_ports</code> (default 16) distinct read addresses.</li>
 </ul>
 <p>An array written under <code>if_reset</code> stays as flip-flops, because real SRAM has no
 reset — so an array intended to become SRAM is written reset-less in the RTL.
 Partial or sub-word writes also keep the array as flip-flops.</p>
+<p>A dynamically-indexed array that fails inference but is larger than
+<code>ram_max_ff_bits</code> (default 65536 stored bits) cannot be expanded into flip-flops
+without exhausting memory, so synthesis reports an error instead. Write such an
+array reset-less so it is inferred as RAM, or raise <code>ram_max_ff_bits</code>.</p>
+<p>These thresholds are configurable in the <a href="./01_project_configuration/06_synth.html"><code>[synth]</code></a>
+section of <code>Veryl.toml</code>.</p>
 <p>The inferred memory area is reported as the <code>mem</code> term of the area summary, and
 <code>--dump-area</code> lists each block grouped by shape (depth × width) and port count:</p>
 <pre><code class="language-text">ram: 2 blocks
@@ -343,10 +351,31 @@ Partial or sub-word writes also keep the array as flip-flops.</p>
 <tr><td><code>--dump-area</code></td><td>Dump the per-cell-kind area breakdown, including inferred RAM blocks.</td></tr>
 <tr><td><code>--dump-timing</code></td><td>Dump the critical path trace.</td></tr>
 <tr><td><code>--dump-power</code></td><td>Dump the power estimate (leakage + dynamic breakdown).</td></tr>
+<tr><td><code>--format &lt;format&gt;</code></td><td>Output format: <code>pretty</code> (default, human-readable) or <code>json</code>.</td></tr>
+<tr><td><code>--format-version &lt;n&gt;</code></td><td>JSON report schema version. Only valid with <code>--format json</code>. Currently only <code>1</code>.</td></tr>
 </tbody>
 </table>
 </div>
 <p>If no <code>--dump-*</code> flag is given, all three of area / timing / power are dumped.</p>
+<h2 id="json-report"><a class="header" href="#json-report">JSON report</a></h2>
+<p><code>--format json</code> writes a machine-readable report to stdout instead of the human-readable summary.</p>
+<pre><code class="language-console">$ veryl synth --format json
+</code></pre>
+<pre><code class="language-text">{
+  "format_version": 1,
+  "top": "Counter",
+  "library": "sky130",
+  "status": "ok",
+  "cells": 19,
+  "ffs": 8,
+  "area": { "total": 302.5, "combinational": 122.5, "sequential": 180.0, "memory": 0.0 },
+  "timing": { "delay_ns": 0.38, "depth": 4, "from": "cnt[3]", "to": "cnt[6]" },
+  "power": { "total_mw": 0.0239, "leakage_mw": 0.0000271, "dynamic_mw": 0.0239, "clock_freq_mhz": 100.0, "activity": 0.1 }
+}
+</code></pre>
+<p>The <code>status</code> field is <code>ok</code> when synthesis succeeded.
+Otherwise it is <code>unsupported</code> for a construct which the synthesizer can’t handle, <code>no_top</code> when the top module is not found, and <code>error</code> for the other failures.
+In these cases a <code>message</code> field describes the failure, and <code>area</code>, <code>timing</code> and <code>power</code> are <code>null</code>.</p>
 
                     </main>
 
@@ -400,11 +429,11 @@ Partial or sub-word writes also keep the array as flip-flops.</p>
         <script src="../searcher-09f2665d.js"></script>
 
         <script src="../clipboard-1626706a.min.js"></script>
-        <script src="../highlight-e55bd6fc.js"></script>
+        <script src="../highlight-88633d6f.js"></script>
         <script src="../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../mode-veryl-1cf782d1.js"></script>
+        <script src="../mode-veryl-f5f6ed18.js"></script>
         <script src="../veryl-init-13e2a09c.js"></script>
         <script src="../theme/language-picker-32df9c32.js"></script>
 

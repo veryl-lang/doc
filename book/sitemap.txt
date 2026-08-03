@@ -31,6 +31,7 @@ https://doc.veryl-lang.org/book/05_language_reference/16_standard_library.html
 https://doc.veryl-lang.org/book/05_language_reference/17_alias.html
 https://doc.veryl-lang.org/book/05_language_reference/18_execution_model.html
 https://doc.veryl-lang.org/book/05_language_reference/19_type_inference.html
+https://doc.veryl-lang.org/book/05_language_reference/20_project_property.html
 https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration.html
 https://doc.veryl-lang.org/book/06_development_environment/02_dependencies.html
 https://doc.veryl-lang.org/book/06_development_environment/03_publish_project.html
@@ -49,6 +50,7 @@ https://doc.veryl-lang.org/book/06_development_environment/15_docker_image.html
 https://doc.veryl-lang.org/book/06_development_environment/16_translator.html
 https://doc.veryl-lang.org/book/06_development_environment/17_synthesizer.html
 https://doc.veryl-lang.org/book/06_development_environment/18_metadata.html
+https://doc.veryl-lang.org/book/06_development_environment/19_external_subcommand.html
 https://doc.veryl-lang.org/book/07_appendix/01_formal_syntax.html
 https://doc.veryl-lang.org/book/07_appendix/02_semantic_error.html
 https://doc.veryl-lang.org/book/ja/01_introduction.html
@@ -99,6 +101,8 @@ https://doc.veryl-lang.org/book/05_language_reference/06_declaration/11_named_bl
 https://doc.veryl-lang.org/book/05_language_reference/06_declaration/12_import_export.html
 https://doc.veryl-lang.org/book/05_language_reference/06_declaration/13_connect.html
 https://doc.veryl-lang.org/book/05_language_reference/06_declaration/14_block.html
+https://doc.veryl-lang.org/book/05_language_reference/13_integrated_test/01_using_a_component.html
+https://doc.veryl-lang.org/book/05_language_reference/13_integrated_test/02_writing_a_component.html
 https://doc.veryl-lang.org/book/05_language_reference/14_generics/01_default_parameter.html
 https://doc.veryl-lang.org/book/05_language_reference/14_generics/02_prototype.html
 https://doc.veryl-lang.org/book/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.html
@@ -140,6 +144,7 @@ https://doc.veryl-lang.org/book/ja/05_language_reference/16_standard_library.htm
 https://doc.veryl-lang.org/book/ja/05_language_reference/17_alias.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/18_execution_model.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/19_type_inference.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/20_project_property.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/02_dependencies.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/03_publish_project.html
@@ -158,6 +163,7 @@ https://doc.veryl-lang.org/book/ja/06_development_environment/15_docker_image.ht
 https://doc.veryl-lang.org/book/ja/06_development_environment/16_translator.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/17_synthesizer.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/18_metadata.html
+https://doc.veryl-lang.org/book/ja/06_development_environment/19_external_subcommand.html
 https://doc.veryl-lang.org/book/ja/07_appendix/01_formal_syntax.html
 https://doc.veryl-lang.org/book/ja/07_appendix/02_semantic_error.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/02_lexical_structure/01_operator.html
@@ -199,6 +205,8 @@ https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/11_named
 https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/12_import_export.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/13_connect.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/06_declaration/14_block.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/13_integrated_test/01_using_a_component.html
+https://doc.veryl-lang.org/book/ja/05_language_reference/13_integrated_test/02_writing_a_component.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/14_generics/01_default_parameter.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/14_generics/02_prototype.html
 https://doc.veryl-lang.org/book/ja/05_language_reference/15_clock_domain_annotation/01_unsafe_cdc.html
