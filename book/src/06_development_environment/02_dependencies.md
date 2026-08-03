@@ -101,6 +101,35 @@ veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = ".
 
 This means that if there is `../veryl_sample`, it is used, and if not, it is pulled from the Git repository.
 
+## Project property override {#project-property-override}
+
+If a dependency has [project properties](../05_language_reference/20_project_property.md), their values can be overridden through the `properties` field.
+
+```toml
+[dependencies]
+veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 8}}
+```
+
+The properties which are not specified here keep the default values defined in `Veryl.toml` of the dependency.
+The following restrictions are applied to the overriding.
+
+* A property which is not defined in the dependency can't be specified.
+* The type of the given value must be the same as the type of the default value.
+
+The overriding is applied to the direct dependencies only.
+So the properties of the dependencies of a dependency are not affected, and they are controlled by `Veryl.toml` of the dependency.
+
+Dependencies which have the same source are distinguished by their property values.
+So the same project can be used as multiple dependencies with different property values.
+
+```toml
+[dependencies]
+veryl_sample_a = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 8}}
+veryl_sample_b = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 16}}
+```
+
+In the above example, `veryl_sample_a` and `veryl_sample_b` are generated as different projects.
+
 ## Git backend
 
 Veryl can fetch git-based dependencies through two different backends:

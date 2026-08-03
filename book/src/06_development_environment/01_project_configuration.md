@@ -13,6 +13,7 @@
 * [`[test]`](01_project_configuration.md#the-test-section) --- Test settings.
 * [`[publish]`](01_project_configuration.md#the-publish-section) --- Publish settings.
 * [`[synth]`](01_project_configuration.md#the-synth-section) --- Synthesis settings.
+* [`[properties]`](01_project_configuration.md#the-properties-section) --- Project properties.
 * [`[dependencies]`](01_project_configuration.md#the-dependencies-section) --- Library dependencies.
 * [`[[components]]`](01_project_configuration.md#the-components-section) --- Verification component packages.
 
@@ -102,6 +103,25 @@ Available configurations is [here](./01_project_configuration/05_publish.md).
 
 The `[synth]` section contains the configurations of the synthesizer.
 Available configurations is [here](./01_project_configuration/06_synth.md).
+
+## The `[properties]` section {#the-properties-section}
+
+The `[properties]` section contains project properties.
+A project property is a compile time constant which can be referenced from the source code of the project through the `$prop` namespace.
+
+The name of a property should be a valid identifier of Veryl because it is referenced as an identifier in the source code.
+The value of a property is an integer or a boolean.
+The type of a property is decided by the given value, and an integer property has `i64` type, and a boolean property has `bbool` type in the source code.
+
+```toml
+[properties]
+DATA_WIDTH   = 32
+ENABLE_DEBUG = false
+```
+
+The value defined here is the default value of the property.
+It can be overridden by the project which depends on this project.
+Please see [Project Property](../05_language_reference/20_project_property.md) for the usage in the source code, and [Dependencies](./02_dependencies.md#project-property-override) for overriding.
 
 ## The `[dependencies]` section {#the-dependencies-section}
 

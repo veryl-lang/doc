@@ -81,6 +81,7 @@
         - [Multi-Clock Domains](./05_language_reference/18_execution_model/06_multi_clock.md)
         - [Determinism](./05_language_reference/18_execution_model/07_determinism.md)
     - [Type Inference](./05_language_reference/19_type_inference.md)
+    - [Project Property](./05_language_reference/20_project_property.md)
 - [Development Environment](./06_development_environment.md)
     - [Project Configuration](./06_development_environment/01_project_configuration.md)
         - [Build](./06_development_environment/01_project_configuration/01_build.md)
