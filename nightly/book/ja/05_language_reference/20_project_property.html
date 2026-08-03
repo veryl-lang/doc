@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Project Property - The Veryl Hardware Description Language</title>
+        <title>プロジェクトプロパティ - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
@@ -77,7 +77,7 @@
         <!-- Open Graph -->
         <meta property="og:type" content="article" />
         <meta property="og:site_name" content="The Veryl Hardware Description Language" />
-        <meta property="og:title" content="Project Property - The Veryl Hardware Description Language" />
+        <meta property="og:title" content="プロジェクトプロパティ - The Veryl Hardware Description Language" />
         <meta property="og:description" content="Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment." />
         <meta property="og:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
         <meta property="og:locale" content="ja_JP" />
@@ -85,7 +85,7 @@
 
         <!-- Twitter Card -->
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Project Property - The Veryl Hardware Description Language" />
+        <meta name="twitter:title" content="プロジェクトプロパティ - The Veryl Hardware Description Language" />
         <meta name="twitter:description" content="Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment." />
         <meta name="twitter:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
         
@@ -94,7 +94,7 @@
         {
             "@context": "https://schema.org",
             "@type": "TechArticle",
-            "headline": "Project Property - The Veryl Hardware Description Language",
+            "headline": "プロジェクトプロパティ - The Veryl Hardware Description Language",
             "description": "Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment.",
             "inLanguage": "ja",
             "isPartOf": {
@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-0a90ffd2.js";
+            window.path_to_searchindex_js = "../searchindex-556f5f19.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-b5e7373f.js"></script>
+        <script src="../toc-f6fb0cb4.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -272,10 +272,10 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="project-property"><a class="header" href="#project-property">Project Property</a></h1>
-<p>A project property is a compile time constant which is given through <code>Veryl.toml</code> instead of source code. It is useful to configure a project from the outside of the source code. For example, a library can be built with a different data width for each project which depends on it.</p>
-<h2 id="definition"><a class="header" href="#definition">Definition</a></h2>
-<p>Project properties are defined in the <code>[properties]</code> section of <code>Veryl.toml</code>. The value of a property is an integer or a boolean.</p>
+                        <h1 id="プロジェクトプロパティ"><a class="header" href="#プロジェクトプロパティ">プロジェクトプロパティ</a></h1>
+<p>プロジェクトプロパティは、ソースコードではなく <code>Veryl.toml</code> から与えられるコンパイル時定数です。ソースコードの外側からプロジェクトを設定するのに便利です。例えば、ライブラリを依存するプロジェクトごとに異なるデータ幅でビルドできます。</p>
+<h2 id="定義"><a class="header" href="#定義">定義</a></h2>
+<p>プロジェクトプロパティは <code>Veryl.toml</code> の <code>[properties]</code> セクションで定義します。プロパティの値は整数または真偽値です。</p>
 <pre><code class="language-toml">[project]
 name    = "veryl_sample"
 version = "0.1.0"
@@ -284,16 +284,16 @@ version = "0.1.0"
 DATA_WIDTH   = 32
 ENABLE_DEBUG = false
 </code></pre>
-<p>See <a href="../06_development_environment/01_project_configuration.html#the-properties-section">Project Configuration</a> for detailed information.</p>
-<h2 id="reference"><a class="header" href="#reference">Reference</a></h2>
-<p>Defined properties can be referenced through the <code>$prop</code> namespace. An integer property has <code>i64</code> type, and a boolean property has <code>bbool</code> type.</p>
+<p>詳細は<a href="../06_development_environment/01_project_configuration.html#the-properties-section">プロジェクトの設定</a>を参照してください。</p>
+<h2 id="参照"><a class="header" href="#参照">参照</a></h2>
+<p>定義したプロパティは <code>$prop</code> 名前空間を通して参照できます。整数のプロパティは <code>i64</code> 型、真偽値のプロパティは <code>bbool</code> 型になります。</p>
 <pre><code class="language-veryl">package sample_pkg {
     const DATA_WIDTH  : i64   = $prop::DATA_WIDTH;
     const ENABLE_DEBUG: bbool = $prop::ENABLE_DEBUG;
 }
 </code></pre>
-<p><code>$prop</code> always refers to the properties of the project which the source code belongs to. So the properties of a dependency can’t be referenced from the project which depends on it.</p>
-<p>A project property is a compile time constant, so it can be used wherever a constant expression can be used. The value is resolved at compile time, and the resolved value appears in the generated code.</p>
+<p><code>$prop</code> は常に、そのソースコードが属するプロジェクトのプロパティを指します。したがって、依存プロジェクトのプロパティを、それに依存する側のプロジェクトから参照することはできません。</p>
+<p>プロジェクトプロパティはコンパイル時定数なので、定数式が使える場所であればどこでも使えます。値はコンパイル時に解決され、解決された値が生成コードに現れます。</p>
 <pre><code class="language-veryl">module ModuleA {
     var a: logic&lt;$prop::DATA_WIDTH&gt;;
 
@@ -302,13 +302,13 @@ ENABLE_DEBUG = false
     }
 }
 </code></pre>
-<h2 id="configuration-by-the-depending-project"><a class="header" href="#configuration-by-the-depending-project">Configuration by the depending project</a></h2>
-<p>The value of a project property can be overridden through the <code>properties</code> field of the <code>[dependencies]</code> section by the project which depends on it.</p>
+<h2 id="依存する側のプロジェクトからの設定"><a class="header" href="#依存する側のプロジェクトからの設定">依存する側のプロジェクトからの設定</a></h2>
+<p>プロジェクトプロパティの値は、それに依存する側のプロジェクトが <code>[dependencies]</code> セクションの <code>properties</code> フィールドで上書きできます。</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 8}}
 </code></pre>
-<p>In the above example, <code>$prop::DATA_WIDTH</code> in <code>veryl_sample</code> becomes <code>8</code>. The properties which are not specified here keep the default values defined in <code>Veryl.toml</code> of the dependency, so <code>$prop::ENABLE_DEBUG</code> keeps <code>false</code>.</p>
-<p>See <a href="../06_development_environment/02_dependencies.html#project-property-override">Dependencies</a> for detailed information.</p>
+<p>上の例では、<code>veryl_sample</code> の <code>$prop::DATA_WIDTH</code> は <code>8</code> になります。ここで指定しなかったプロパティは、依存プロジェクトの <code>Veryl.toml</code> で定義された既定値のままなので、<code>$prop::ENABLE_DEBUG</code> は <code>false</code> のままです。</p>
+<p>詳細は<a href="../06_development_environment/02_dependencies.html#project-property-override">依存関係</a>を参照してください。</p>
 
                     </main>
 

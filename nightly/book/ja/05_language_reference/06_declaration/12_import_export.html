@@ -133,10 +133,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-0a90ffd2.js";
+            window.path_to_searchindex_js = "../../searchindex-556f5f19.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-b5e7373f.js"></script>
+        <script src="../../toc-f6fb0cb4.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -286,7 +286,7 @@ module ModuleA {
     import PackageA::paramA;
 }
 </code></pre>
-<p>Multiple symbols can be imported from a single package at once by listing them in braces like <code>package::{a, b}</code>.</p>
+<p><code>package::{a, b}</code> のように波括弧の中に列挙することで、1つのパッケージから複数のシンボルを一度に import できます。</p>
 <pre><code class="language-veryl playground">package PackageA {
     const paramA: u32 = 1;
     const paramB: u32 = 2;
@@ -311,7 +311,7 @@ module ModuleA (
     assign o_d = d;
 }
 </code></pre>
-<p>Enum members can also be imported, individually, as a brace list, or via wildcard. This works for enums defined inside a package as well as enums declared locally inside a module or interface.</p>
+<p>enumのメンバーも、個別に、波括弧のリストとして、あるいは wildcard により import できます。これはパッケージ内で定義された enum だけでなく、モジュールやインターフェース内でローカルに宣言された enum にも適用されます。</p>
 <pre><code class="language-veryl playground">package PackageB {
     enum Color: logic&lt;3&gt; {
         Red,

@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-0a90ffd2.js";
+            window.path_to_searchindex_js = "../searchindex-556f5f19.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-b5e7373f.js"></script>
+        <script src="../toc-f6fb0cb4.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -304,6 +304,21 @@ $ git push
 [INFO ]      Writing metadata ([path to project]/Veryl.pub)
 [INFO ]   Committing metadata ([path to project]/Veryl.pub)
 </code></pre>
+<h3 id="レジストリへの登録"><a class="header" href="#レジストリへの登録">レジストリへの登録</a></h3>
+<p><a href="https://registry.veryl-lang.org">Veryl レジストリ</a>は公開されたプロジェクトの一覧を提供します。プロジェクトは <code>veryl register</code> で登録できます。</p>
+<pre><code>$ veryl register
+</code></pre>
+<p>レジストリはプロジェクトをリポジトリで識別するため、<code>[project]</code> セクションの <a href="./01_project_configuration.html#the-repository-field"><code>repository</code></a> フィールドが必要です。<code>origin</code> はチェックアウトによって変わるため、git の <code>origin</code> リモートではなく宣言された <code>repository</code> が使われます。</p>
+<p><code>veryl register</code> は登録前に確認を求めます。<code>--yes</code> オプションで確認を省略でき、コマンドを対話的に実行しない場合はこのオプションが必要です。</p>
+<p><code>veryl publish</code> でもプロジェクトを登録できます。その挙動は <code>Veryl.toml</code> の <code>[publish]</code> セクションの <code>register</code> で指定します。</p>
+<ul>
+<li><code>true</code> — publish 後に自動的に登録する</li>
+<li><code>false</code> — 登録しない</li>
+<li>未設定 — 対話的に一度だけ問い合わせる</li>
+</ul>
+<p>登録はコミットの push を行いません。公開されたバージョンは、そのリビジョンが push され、レジストリがリポジトリをクロールした後に見えるようになります。</p>
+<p>レジストリが認識しない<a href="./01_project_configuration.html#the-categories-field">カテゴリ</a>が指定されている場合、警告として報告されます。</p>
+<p>使用するレジストリは <code>VERYL_REGISTRY_URL</code> 環境変数で変更できます。</p>
 <h3 id="設定"><a class="header" href="#設定">設定</a></h3>
 <p>全設定の説明は<a href="./01_project_configuration/05_publish.html">こちら</a>。</p>
 

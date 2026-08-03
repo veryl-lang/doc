@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-0a90ffd2.js";
+            window.path_to_searchindex_js = "../searchindex-556f5f19.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-b5e7373f.js"></script>
+        <script src="../toc-f6fb0cb4.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -302,7 +302,7 @@ module test_ignored {
 <li><code>$tb::clock_gen</code> — クロック信号生成器（オプションで <code>#(period: N)</code> パラメータを指定可能）</li>
 <li><code>$tb::reset_gen</code> — リセット信号生成器（オプションで <code>#(cycles: N)</code> パラメータを指定可能）</li>
 <li><code>$tb::file</code> — 出力ファイルを書き込むためのファイルハンドル</li>
-<li><code>$tb::random</code> — random-number generator (with the value type as a generic argument)</li>
+<li><code>$tb::random</code> — 乱数生成器（値の型をジェネリック引数として指定）</li>
 </ul>
 <p>組み込みのコンポーネントに加えて、Rust で記述した検証コンポーネントを <code>$comp</code> 名前空間を通じて使用できます。<a href="./13_integrated_test/01_using_a_component.html">コンポーネントを使う</a> を参照してください。</p>
 <p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
@@ -398,6 +398,58 @@ module test_function_call {
     }
 }
 </code></pre>
+<h3 id="階層参照"><a class="header" href="#階層参照">階層参照</a></h3>
+<p>DUT 内部の信号は、階層パスを通して <code>initial</code> ブロックから読み出せます。パスはテストモジュールのインスタンスから始まり、<code>.</code> でネストしたインスタンスを辿ります。観測のために内部信号をトップレベルまで引き出す必要はありません。</p>
+<pre><code class="language-veryl playground">module Sub (
+    clk: input clock   ,
+    rst: input reset   ,
+    din: input logic&lt;4&gt;,
+) {
+    var internal_reg: logic&lt;4&gt;;
+    always_ff {
+        if_reset {
+            internal_reg = 0;
+        } else {
+            internal_reg = din + 1;
+        }
+    }
+}
+
+module Top (
+    clk: input clock   ,
+    rst: input reset   ,
+    din: input logic&lt;4&gt;,
+) {
+    inst u_sub: Sub ( clk, rst, din );
+}
+
+#[test(test_hier)]
+module test_hier {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    var din: logic&lt;4&gt;;
+
+    inst dut: Top ( clk, rst, din );
+
+    initial {
+        rst.assert();
+        din = 4'b0001;
+        clk.next();
+        $assert(dut.u_sub.internal_reg == 4'h2, "unexpected value");
+        $display("internal_reg = %h", dut.u_sub.internal_reg);
+        $finish();
+    }
+}
+</code></pre>
+<p>参照した値は他の式と同じように使えます。例えば <code>$assert</code> や <code>$display</code> の引数、<code>if</code> の条件、ビット選択の対象などです。</p>
+<p>以下の制限があります。</p>
+<ul>
+<li>階層参照はテストモジュールの <code>initial</code> ブロックの中でのみ使えます。<code>always_comb</code> のような RTL のコンテキストや、テストモジュールでないモジュールの中で使うと <code>invisible_identifier</code> になります。</li>
+<li>関数の本体は RTL からの呼び出しと共有されるため、関数の中では使えません。</li>
+<li>インスタンス配列は階層パスの一部にできません。</li>
+</ul>
+<p>階層参照はその信号への参照として数えられません。そのため、階層参照でしか読まれない信号は <code>unused_variable</code> として報告されます。これは <a href="./06_declaration/08_attribute.html"><code>#[allow(unused_variable)]</code></a> 属性で抑制できます。</p>
 <h3 id="ファイル出力"><a class="header" href="#ファイル出力">ファイル出力</a></h3>
 <p><code>$tb::file</code> はネイティブテスト中に出力ファイルを書き込むためのファイルハンドルです。<code>clock_gen</code> や <code>reset_gen</code> とは異なり <code>var</code> で宣言し、<code>initial</code> ブロック内で開いて書き込み、閉じます。</p>
 <ul>
@@ -426,14 +478,14 @@ module test_file {
 }
 </code></pre>
 <p>他の <code>$tb::*</code> コンポーネントと同様に、<code>$tb::file</code> は <code>#[test]</code> モジュール内でのみ使用できます。</p>
-<h3 id="random-number-generation"><a class="header" href="#random-number-generation">Random number generation</a></h3>
-<p><code>$tb::random</code> is a random-number generator for native tests. The value type is given as a generic argument at declaration. It must be a 2-state integer type of at most 64 bits — for example <code>u8</code>–<code>u64</code>, <code>i8</code>–<code>i64</code>, <code>bbool</code>, or a <code>bit&lt;N&gt;</code> with <code>N</code> up to 64. 4-state types (<code>logic</code> / <code>lbool</code>), floating-point types, and widths over 64 bits are rejected.</p>
-<p>It is declared with <code>var</code>, then used inside an <code>initial</code> block:</p>
+<h3 id="乱数の生成"><a class="header" href="#乱数の生成">乱数の生成</a></h3>
+<p><code>$tb::random</code> はネイティブテスト用の乱数生成器です。値の型は宣言時にジェネリック引数として与えます。型は64ビット以下の2値の整数型でなければなりません。例えば <code>u8</code>–<code>u64</code>、<code>i8</code>–<code>i64</code>、<code>bbool</code>、または <code>N</code> が64以下の <code>bit&lt;N&gt;</code> です。4値の型（<code>logic</code> / <code>lbool</code>）、浮動小数点型、64ビットを超える幅は拒否されます。</p>
+<p><code>var</code> で宣言し、<code>initial</code> ブロックの中で使います。</p>
 <ul>
-<li><code>r.seed(value)</code> — set the seed</li>
-<li><code>r.get()</code> — return a uniform random value over the full range of the element type</li>
-<li><code>r.get_range(min, max)</code> — return a uniform random value in the inclusive range <code>min..=max</code></li>
-<li><code>r.get_seed()</code> — return the current seed</li>
+<li><code>r.seed(value)</code> — シードを設定する</li>
+<li><code>r.get()</code> — 要素型の全範囲にわたる一様乱数を返す</li>
+<li><code>r.get_range(min, max)</code> — 両端を含む範囲 <code>min..=max</code> の一様乱数を返す</li>
+<li><code>r.get_seed()</code> — 現在のシードを返す</li>
 </ul>
 <pre><code class="language-veryl playground">#[test(test_random)]
 module test_random {
@@ -448,7 +500,7 @@ module test_random {
     }
 }
 </code></pre>
-<p>A specific bit width is used by binding it to a type first (a <code>bit&lt;N&gt;</code> cannot be written directly as a generic argument):</p>
+<p>特定のビット幅を使う場合は、先に型に束縛します（<code>bit&lt;N&gt;</code> をジェネリック引数として直接書くことはできません）。</p>
 <pre><code class="language-veryl playground">#[test(test_random_width)]
 module test_random_width {
     gen my_t: type                = bit&lt;12&gt;;
@@ -461,7 +513,7 @@ module test_random_width {
     }
 }
 </code></pre>
-<p>When neither <code>--seed</code> nor <code>[test].seed</code> is specified, each generator is seeded from a run-wide random base seed, so a run is not reproducible across invocations. Passing an explicit seed (via <code>--seed</code>, <code>[test].seed</code>, or <code>r.seed(...)</code>) makes the generated sequence reproducible. Like other <code>$tb::*</code> components, <code>$tb::random</code> can only be used inside a <code>#[test]</code> module.</p>
+<p><code>--seed</code> と <code>[test].seed</code> のどちらも指定しない場合、各生成器は実行ごとにランダムな基準シードから初期化されるため、実行を跨いだ再現性はありません。<code>--seed</code>、<code>[test].seed</code>、または <code>r.seed(...)</code> で明示的にシードを与えると、生成される系列が再現可能になります。他の <code>$tb::*</code> コンポーネントと同様に、<code>$tb::random</code> は <code>#[test]</code> モジュールの中でのみ使えます。</p>
 <h2 id="systemverilogテスト"><a class="header" href="#systemverilogテスト">SystemVerilogテスト</a></h2>
 <p>SystemVerilog テストは <code>inline</code> 指定子で記述することができます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
 <p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>

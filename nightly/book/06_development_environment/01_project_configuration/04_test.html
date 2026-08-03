@@ -133,10 +133,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-738d67e0.js";
+            window.path_to_searchindex_js = "../../searchindex-35ef2795.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-db43e088.js"></script>
+        <script src="../../toc-156e7647.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -324,8 +324,13 @@ CLI defines are merged with this field.</p>
 <p>The <code>seed</code> field sets the base seed for randomized verification-component tests.
 When unset, each <code>veryl test</code> run draws a fresh random seed and prints it; set it (or pass <code>--seed</code>) to reproduce a specific run.</p>
 <h3 id="the-four_state-field"><a class="header" href="#the-four_state-field">The <code>four_state</code> field</a></h3>
-<p>The <code>four_state</code> field runs native verification-component tests in four-state (X/Z) mode.
-It defaults to <code>false</code> and can also be enabled with the <code>--4state</code> command-line option.</p>
+<p>The <code>four_state</code> field runs native tests in four-state (X/Z) mode.
+It defaults to <code>false</code>, so a value which is not assigned is read as <code>0</code>.
+Under a four-state run, such a value is read as <code>x</code> instead.
+It can also be enabled with the <code>--4state</code> command-line option.</p>
+<pre><code class="language-toml">[test]
+four_state = true
+</code></pre>
 <h3 id="the-component_backend-field"><a class="header" href="#the-component_backend-field">The <code>component_backend</code> field</a></h3>
 <p>The <code>component_backend</code> field pins how verification components are executed:</p>
 <ul>

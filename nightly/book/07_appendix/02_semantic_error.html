@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-738d67e0.js";
+            window.path_to_searchindex_js = "../searchindex-35ef2795.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-db43e088.js"></script>
+        <script src="../toc-156e7647.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -281,6 +281,10 @@ warnings that allow compilation to continue.</p>
 <p>This error is reported when an <code>elsif</code> or <code>else</code> attribute cannot be unambiguously
 associated with a preceding <code>if</code> attribute.
 Restructure the surrounding code so that the relationship is clear.</p>
+<h3 id="ambiguous_identifier"><a class="header" href="#ambiguous_identifier">ambiguous_identifier</a></h3>
+<p>This error is reported when an identifier is imported from multiple packages, so which
+symbol it refers to can’t be determined.
+Qualify the identifier with an explicit scope, or remove one of the imports.</p>
 <h3 id="anonymous_identifier_usage"><a class="header" href="#anonymous_identifier_usage">anonymous_identifier_usage</a></h3>
 <p>This error is reported when an anonymous identifier (<code>_</code>) is used in a position that
 requires a named identifier.</p>
@@ -294,9 +298,21 @@ element in between. The loop can be formed by <code>assign</code> declarations, 
 blocks, function calls, or instantiated modules and interfaces.
 Break the loop by inserting a register (<code>always_ff</code>) on at least one path, or by
 restructuring the design so that the dependency chain terminates.</p>
+<h3 id="component_interface_mismatch"><a class="header" href="#component_interface_mismatch">component_interface_mismatch</a></h3>
+<p>This error is reported when the usage of a <code>$comp::*</code> verification component doesn’t match
+the interface which the component declares. The checked items are the declaration form
+(<code>inst</code> for a clocked component, <code>var</code> for a method-only component), parameters, ports,
+interface ports, and method calls including the width of the return value.
+Correct the usage, or update the component so that its interface matches.</p>
 <h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
 <p>This error is reported when two or more type definitions reference each other in a
 cycle. Break the cycle by removing or restructuring one of the references.</p>
+<h3 id="duplicate_argument"><a class="header" href="#duplicate_argument">duplicate_argument</a></h3>
+<p>This error is reported when the same named argument is connected more than once at an
+instantiation or a function call. Remove the duplicated connection.</p>
+<h3 id="duplicate_enum_variant"><a class="header" href="#duplicate_enum_variant">duplicate_enum_variant</a></h3>
+<p>This error is reported when an enum variant has the same value as another variant of the
+same enum. Give the variant a distinct value.</p>
 <h3 id="duplicated_identifier"><a class="header" href="#duplicated_identifier">duplicated_identifier</a></h3>
 <p>This error is reported when the same identifier is declared more than once in the same
 scope. Rename one of the declarations.</p>
@@ -312,6 +328,11 @@ count, or elaboration evaluation size is exceeded. Raise the corresponding limit
 but the compiler cannot infer them from the call arguments.
 Provide explicit generic arguments through <code>::&lt;&gt;</code>, or pass an argument whose width can be
 determined from a variable declaration.</p>
+<h3 id="implicit_clock_conversion"><a class="header" href="#implicit_clock_conversion">implicit_clock_conversion</a></h3>
+<p>This error is reported when a value which is not clock/reset-typed is connected to a
+clock/reset port, or vice versa. Clock-ness and reset-ness are conferred only at a
+declaration, so the value should be bound to a clock/reset-typed signal in the parent
+(e.g. <code>let g: '_ clock = expr;</code>), and that signal should be connected.</p>
 <h3 id="include_failure"><a class="header" href="#include_failure">include_failure</a></h3>
 <p>This error is reported when a file referenced by an <code>include</code> declaration cannot be read.
 Check the path and file permissions.</p>
@@ -333,6 +354,10 @@ compatible. Choose a compatible target type.</p>
 <h3 id="invalid_clock"><a class="header" href="#invalid_clock">invalid_clock</a></h3>
 <p>This error is reported when a signal that is neither typed as <code>clock</code> nor a single-bit
 signal is connected as a clock. Use a <code>clock</code>-typed signal.</p>
+<h3 id="invalid_clock_assignment"><a class="header" href="#invalid_clock_assignment">invalid_clock_assignment</a></h3>
+<p>This error is reported when a clock/reset-typed signal is assigned in <code>always_ff</code>.
+Toggle a <code>logic</code> variable in <code>always_ff</code> instead, and bind it to a clock/reset-typed
+signal (e.g. <code>let d: '_ clock = t;</code>).</p>
 <h3 id="invalid_clock_domain"><a class="header" href="#invalid_clock_domain">invalid_clock_domain</a></h3>
 <p>This error is reported when a clock domain annotation is attached to a module instance,
 where it is not allowed. Remove the annotation.</p>
@@ -355,6 +380,14 @@ for the enum (e.g. one-hot, gray).</p>
 <h3 id="invalid_factor"><a class="header" href="#invalid_factor">invalid_factor</a></h3>
 <p>This error is reported when a non-value symbol (e.g. a module name) is used as a factor
 in an expression.</p>
+<h3 id="invalid_for_range"><a class="header" href="#invalid_for_range">invalid_for_range</a></h3>
+<p>This error is reported when the range of a <code>for</code> loop is invalid. The range must be
+written with <code>..</code> or <code>..=</code>; a bare expression is not a range. A range bound must not be
+negative either, because bounds are elaborated as unsigned.</p>
+<h3 id="invalid_for_step"><a class="header" href="#invalid_for_step">invalid_for_step</a></h3>
+<p>This error is reported when the step of a <code>for</code> loop never advances the induction
+variable toward the end of the range, so the loop doesn’t terminate.
+Make the step strictly advance the induction variable.</p>
 <h3 id="invalid_import"><a class="header" href="#invalid_import">invalid_import</a></h3>
 <p>This error is reported when the referenced item cannot be imported (e.g. it is private
 or not a valid import target).</p>
@@ -362,6 +395,12 @@ or not a valid import target).</p>
 <p>This error is reported when the <code>lsb</code> keyword appears in a context where the corresponding
 bit width cannot be determined.
 Replace <code>lsb</code> with a concrete index.</p>
+<h3 id="invalid_mixin"><a class="header" href="#invalid_mixin">invalid_mixin</a></h3>
+<p>This error is reported when the target of a <a href="../05_language_reference/08_interface.html#mixin"><code>mixin</code></a>
+declaration can’t be mixed in. The target must be an interface which is not a prototype,
+doesn’t have overridable parameters, and doesn’t have <code>mixin</code> declarations itself.
+The member names of the target must not conflict with the members which are already
+defined in the interface.</p>
 <h3 id="invalid_modifier"><a class="header" href="#invalid_modifier">invalid_modifier</a></h3>
 <p>This error is reported when a type modifier is used in a context that does not allow it.
 Remove the modifier.</p>
@@ -380,6 +419,12 @@ its base, such as a hexadecimal digit in a binary literal.</p>
 <h3 id="invalid_port_default_value"><a class="header" href="#invalid_port_default_value">invalid_port_default_value</a></h3>
 <p>This error is reported when a port default value is invalid for the port’s type or
 direction.</p>
+<h3 id="invalid_range"><a class="header" href="#invalid_range">invalid_range</a></h3>
+<p>This error is reported when a range is invalid, for example when the lower bound of an
+exclusive range is not less than the upper bound.</p>
+<h3 id="invalid_range_assign"><a class="header" href="#invalid_range_assign">invalid_range_assign</a></h3>
+<p>This error is reported when an array range select on the left-hand side of an assignment
+is not a constant, in-range, ascending slice.</p>
 <h3 id="invalid_reset"><a class="header" href="#invalid_reset">invalid_reset</a></h3>
 <p>This error is reported when a signal that is neither typed as <code>reset</code> nor a single-bit
 signal is connected as a reset. Use a <code>reset</code>-typed signal.</p>
@@ -388,13 +433,17 @@ signal is connected as a reset. Use a <code>reset</code>-typed signal.</p>
 (for example, a <code>return</code> outside a function).
 Remove or relocate the statement.</p>
 <h3 id="invalid_tb_usage"><a class="header" href="#invalid_tb_usage">invalid_tb_usage</a></h3>
-<p>This error is reported when a <code>$tb::*</code> testbench component is used outside a <code>#[test]</code>
+<p>This error is reported when a <code>$tb::*</code> or <code>$comp::*</code> component is used outside a <code>#[test]</code>
 module. Move the usage inside a test module.</p>
 <h3 id="invalid_test"><a class="header" href="#invalid_test">invalid_test</a></h3>
 <p>This error is reported when a <code>#[test]</code> declaration is malformed.</p>
 <h3 id="invalid_type_declaration"><a class="header" href="#invalid_type_declaration">invalid_type_declaration</a></h3>
 <p>This error is reported when <code>struct</code>, <code>enum</code> or <code>union</code> data types are defined within
 interface declarations.</p>
+<h3 id="invalid_unsized_literal"><a class="header" href="#invalid_unsized_literal">invalid_unsized_literal</a></h3>
+<p>This error is reported when an unsized literal is used in a self-determined context,
+where its width can’t be determined from the surroundings.
+Give the literal an explicit width like <code>1'b0</code>.</p>
 <h3 id="invalid_wavedrom"><a class="header" href="#invalid_wavedrom">invalid_wavedrom</a></h3>
 <p>This error is reported when a WaveDrom block in a documentation comment is invalid.</p>
 <h3 id="invisible_identifier"><a class="header" href="#invisible_identifier">invisible_identifier</a></h3>
@@ -455,6 +504,9 @@ block or <code>assign</code> statement. Drive each signal from a single source.<
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>This error is reported when a default clock or reset is specified more than once in the
 same module.</p>
+<h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
+<p>This error is reported when the width of a <code>+:</code> / <code>-:</code> / <code>step</code> part select is not a
+constant. Use a constant expression for the width.</p>
 <h3 id="non_positive_value"><a class="header" href="#non_positive_value">non_positive_value</a></h3>
 <p>This error is reported when a non-positive value is assigned to a positive type
 (<code>p8</code> / <code>p16</code> / <code>p32</code> / <code>p64</code>). Use a value greater than zero.</p>
@@ -546,6 +598,8 @@ from the position of the generic’s definition.</p>
 <h3 id="wrong_seperator"><a class="header" href="#wrong_seperator">wrong_seperator</a></h3>
 <p>This error is reported when an incorrect separator (<code>::</code> vs <code>.</code>) is used between
 identifiers. Replace it with the correct separator.</p>
+<h3 id="zero_width_number"><a class="header" href="#zero_width_number">zero_width_number</a></h3>
+<p>This error is reported when a number is declared with zero width.</p>
 <h2 id="warnings"><a class="header" href="#warnings">Warnings</a></h2>
 <h3 id="invalid_identifier"><a class="header" href="#invalid_identifier">invalid_identifier</a></h3>
 <p>This warning is reported when an identifier violates the configured naming rule

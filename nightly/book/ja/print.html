@@ -134,10 +134,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-0a90ffd2.js";
+            window.path_to_searchindex_js = "searchindex-556f5f19.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-b5e7373f.js"></script>
+        <script src="toc-f6fb0cb4.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -2633,7 +2633,7 @@ module ModuleA {
     import PackageA::paramA;
 }
 </code></pre>
-<p>Multiple symbols can be imported from a single package at once by listing them in braces like <code>package::{a, b}</code>.</p>
+<p><code>package::{a, b}</code> のように波括弧の中に列挙することで、1つのパッケージから複数のシンボルを一度に import できます。</p>
 <pre><code class="language-veryl playground">package PackageA {
     const paramA: u32 = 1;
     const paramB: u32 = 2;
@@ -2658,7 +2658,7 @@ module ModuleA (
     assign o_d = d;
 }
 </code></pre>
-<p>Enum members can also be imported, individually, as a brace list, or via wildcard. This works for enums defined inside a package as well as enums declared locally inside a module or interface.</p>
+<p>enumのメンバーも、個別に、波括弧のリストとして、あるいは wildcard により import できます。これはパッケージ内で定義された enum だけでなく、モジュールやインターフェース内でローカルに宣言された enum にも適用されます。</p>
 <pre><code class="language-veryl playground">package PackageB {
     enum Color: logic&lt;3&gt; {
         Red,
@@ -2902,9 +2902,9 @@ module ModuleA (
     }
 }
 </code></pre>
-<h2 id="mixin"><a class="header" href="#mixin">Mixin</a></h2>
-<p>An interface can incorporate the members of other interfaces by using the <code>mixin</code> declaration. All members (variables, functions, and modports) of the mixed-in interface are expanded into the interface as if they were declared directly in it. This is useful to share common definitions among multiple interfaces.</p>
-<p>For example, a bus protocol is often composed of independent channels such as a command channel and a response channel. By defining each channel as a separate interface and mixing them in, the channels can be reused across multiple bus interfaces. A generic interface can be mixed in by giving its generic arguments in the <code>mixin</code> declaration.</p>
+<h2 id="ミックスイン"><a class="header" href="#ミックスイン">ミックスイン</a></h2>
+<p>インターフェースは <code>mixin</code> 宣言によって、他のインターフェースのメンバを取り込めます。ミックスインされたインターフェースの全メンバ（変数、関数、modport）は、そのインターフェースで直接宣言されたかのように展開されます。これは複数のインターフェースで共通の定義を共有するのに便利です。</p>
+<p>例えばバスプロトコルは、コマンドチャネルとレスポンスチャネルのような独立したチャネルから構成されることがよくあります。各チャネルを別々のインターフェースとして定義してミックスインすることで、それらのチャネルを複数のバスインターフェースで再利用できます。ジェネリックなインターフェースは、<code>mixin</code> 宣言でジェネリック引数を与えることでミックスインできます。</p>
 <pre><code class="language-veryl playground">// Command channel: a master issues read/write commands to a slave
 interface Command::&lt;ADDR_WIDTH: u32, DATA_WIDTH: u32&gt; {
     var cmd_ready: logic            ;
@@ -2951,13 +2951,13 @@ interface MemoryBus::&lt;ADDR_WIDTH: u32, DATA_WIDTH: u32&gt; {
 
 alias interface MemoryBus32 = MemoryBus::&lt;32, 32&gt;;
 </code></pre>
-<p>The following restrictions are applied to the mixed-in interface:</p>
+<p>ミックスインされるインターフェースには以下の制限があります。</p>
 <ul>
-<li>The mixed-in target must be an interface. A module or a prototype can’t be mixed in.</li>
-<li>An interface can’t mix in itself.</li>
-<li>An interface that has overridable parameters (<code>param</code>/<code>const</code>) can’t be mixed in. (A generic interface can be mixed in by giving its generic arguments as shown above.)</li>
-<li>An interface that itself has <code>mixin</code> declarations can’t be mixed in. (<code>mixin</code> can’t be nested.)</li>
-<li>Member names must be unique across the interface and all mixed-in interfaces. A name collision is an error.</li>
+<li>ミックスインの対象はインターフェースでなければなりません。モジュールやプロトタイプはミックスインできません。</li>
+<li>インターフェースは自分自身をミックスインできません。</li>
+<li>上書き可能なパラメータ（<code>param</code>/<code>const</code>）を持つインターフェースはミックスインできません。（ジェネリックなインターフェースは、上記のようにジェネリック引数を与えることでミックスインできます。）</li>
+<li>自身が <code>mixin</code> 宣言を持つインターフェースはミックスインできません。（<code>mixin</code> はネストできません。）</li>
+<li>メンバ名は、そのインターフェースとミックスインされる全インターフェースを通じて一意でなければなりません。名前の衝突はエラーになります。</li>
 </ul>
 <h2 id="インターフェースインスタンスとmodportポートの接続"><a class="header" href="#インターフェースインスタンスとmodportポートの接続">インターフェースインスタンスとmodportポートの接続</a></h2>
 <p>インターフェースインスタンスとmodportポートは、SystemVerilogと同様に、互換性のあるモジュールポートあるいは <code>generic</code> インターフェースに接続することができます。</p>
@@ -3114,7 +3114,7 @@ module test_ignored {
 <li><code>$tb::clock_gen</code> — クロック信号生成器（オプションで <code>#(period: N)</code> パラメータを指定可能）</li>
 <li><code>$tb::reset_gen</code> — リセット信号生成器（オプションで <code>#(cycles: N)</code> パラメータを指定可能）</li>
 <li><code>$tb::file</code> — 出力ファイルを書き込むためのファイルハンドル</li>
-<li><code>$tb::random</code> — random-number generator (with the value type as a generic argument)</li>
+<li><code>$tb::random</code> — 乱数生成器（値の型をジェネリック引数として指定）</li>
 </ul>
 <p>組み込みのコンポーネントに加えて、Rust で記述した検証コンポーネントを <code>$comp</code> 名前空間を通じて使用できます。<a href="#コンポーネントを使う">コンポーネントを使う</a> を参照してください。</p>
 <p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
@@ -3210,6 +3210,58 @@ module test_function_call {
     }
 }
 </code></pre>
+<h3 id="階層参照"><a class="header" href="#階層参照">階層参照</a></h3>
+<p>DUT 内部の信号は、階層パスを通して <code>initial</code> ブロックから読み出せます。パスはテストモジュールのインスタンスから始まり、<code>.</code> でネストしたインスタンスを辿ります。観測のために内部信号をトップレベルまで引き出す必要はありません。</p>
+<pre><code class="language-veryl playground">module Sub (
+    clk: input clock   ,
+    rst: input reset   ,
+    din: input logic&lt;4&gt;,
+) {
+    var internal_reg: logic&lt;4&gt;;
+    always_ff {
+        if_reset {
+            internal_reg = 0;
+        } else {
+            internal_reg = din + 1;
+        }
+    }
+}
+
+module Top (
+    clk: input clock   ,
+    rst: input reset   ,
+    din: input logic&lt;4&gt;,
+) {
+    inst u_sub: Sub ( clk, rst, din );
+}
+
+#[test(test_hier)]
+module test_hier {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    var din: logic&lt;4&gt;;
+
+    inst dut: Top ( clk, rst, din );
+
+    initial {
+        rst.assert();
+        din = 4'b0001;
+        clk.next();
+        $assert(dut.u_sub.internal_reg == 4'h2, "unexpected value");
+        $display("internal_reg = %h", dut.u_sub.internal_reg);
+        $finish();
+    }
+}
+</code></pre>
+<p>参照した値は他の式と同じように使えます。例えば <code>$assert</code> や <code>$display</code> の引数、<code>if</code> の条件、ビット選択の対象などです。</p>
+<p>以下の制限があります。</p>
+<ul>
+<li>階層参照はテストモジュールの <code>initial</code> ブロックの中でのみ使えます。<code>always_comb</code> のような RTL のコンテキストや、テストモジュールでないモジュールの中で使うと <code>invisible_identifier</code> になります。</li>
+<li>関数の本体は RTL からの呼び出しと共有されるため、関数の中では使えません。</li>
+<li>インスタンス配列は階層パスの一部にできません。</li>
+</ul>
+<p>階層参照はその信号への参照として数えられません。そのため、階層参照でしか読まれない信号は <code>unused_variable</code> として報告されます。これは <a href="#アトリビュート"><code>#[allow(unused_variable)]</code></a> 属性で抑制できます。</p>
 <h3 id="ファイル出力"><a class="header" href="#ファイル出力">ファイル出力</a></h3>
 <p><code>$tb::file</code> はネイティブテスト中に出力ファイルを書き込むためのファイルハンドルです。<code>clock_gen</code> や <code>reset_gen</code> とは異なり <code>var</code> で宣言し、<code>initial</code> ブロック内で開いて書き込み、閉じます。</p>
 <ul>
@@ -3238,14 +3290,14 @@ module test_file {
 }
 </code></pre>
 <p>他の <code>$tb::*</code> コンポーネントと同様に、<code>$tb::file</code> は <code>#[test]</code> モジュール内でのみ使用できます。</p>
-<h3 id="random-number-generation"><a class="header" href="#random-number-generation">Random number generation</a></h3>
-<p><code>$tb::random</code> is a random-number generator for native tests. The value type is given as a generic argument at declaration. It must be a 2-state integer type of at most 64 bits — for example <code>u8</code>–<code>u64</code>, <code>i8</code>–<code>i64</code>, <code>bbool</code>, or a <code>bit&lt;N&gt;</code> with <code>N</code> up to 64. 4-state types (<code>logic</code> / <code>lbool</code>), floating-point types, and widths over 64 bits are rejected.</p>
-<p>It is declared with <code>var</code>, then used inside an <code>initial</code> block:</p>
+<h3 id="乱数の生成"><a class="header" href="#乱数の生成">乱数の生成</a></h3>
+<p><code>$tb::random</code> はネイティブテスト用の乱数生成器です。値の型は宣言時にジェネリック引数として与えます。型は64ビット以下の2値の整数型でなければなりません。例えば <code>u8</code>–<code>u64</code>、<code>i8</code>–<code>i64</code>、<code>bbool</code>、または <code>N</code> が64以下の <code>bit&lt;N&gt;</code> です。4値の型（<code>logic</code> / <code>lbool</code>）、浮動小数点型、64ビットを超える幅は拒否されます。</p>
+<p><code>var</code> で宣言し、<code>initial</code> ブロックの中で使います。</p>
 <ul>
-<li><code>r.seed(value)</code> — set the seed</li>
-<li><code>r.get()</code> — return a uniform random value over the full range of the element type</li>
-<li><code>r.get_range(min, max)</code> — return a uniform random value in the inclusive range <code>min..=max</code></li>
-<li><code>r.get_seed()</code> — return the current seed</li>
+<li><code>r.seed(value)</code> — シードを設定する</li>
+<li><code>r.get()</code> — 要素型の全範囲にわたる一様乱数を返す</li>
+<li><code>r.get_range(min, max)</code> — 両端を含む範囲 <code>min..=max</code> の一様乱数を返す</li>
+<li><code>r.get_seed()</code> — 現在のシードを返す</li>
 </ul>
 <pre><code class="language-veryl playground">#[test(test_random)]
 module test_random {
@@ -3260,7 +3312,7 @@ module test_random {
     }
 }
 </code></pre>
-<p>A specific bit width is used by binding it to a type first (a <code>bit&lt;N&gt;</code> cannot be written directly as a generic argument):</p>
+<p>特定のビット幅を使う場合は、先に型に束縛します（<code>bit&lt;N&gt;</code> をジェネリック引数として直接書くことはできません）。</p>
 <pre><code class="language-veryl playground">#[test(test_random_width)]
 module test_random_width {
     gen my_t: type                = bit&lt;12&gt;;
@@ -3273,7 +3325,7 @@ module test_random_width {
     }
 }
 </code></pre>
-<p>When neither <code>--seed</code> nor <code>[test].seed</code> is specified, each generator is seeded from a run-wide random base seed, so a run is not reproducible across invocations. Passing an explicit seed (via <code>--seed</code>, <code>[test].seed</code>, or <code>r.seed(...)</code>) makes the generated sequence reproducible. Like other <code>$tb::*</code> components, <code>$tb::random</code> can only be used inside a <code>#[test]</code> module.</p>
+<p><code>--seed</code> と <code>[test].seed</code> のどちらも指定しない場合、各生成器は実行ごとにランダムな基準シードから初期化されるため、実行を跨いだ再現性はありません。<code>--seed</code>、<code>[test].seed</code>、または <code>r.seed(...)</code> で明示的にシードを与えると、生成される系列が再現可能になります。他の <code>$tb::*</code> コンポーネントと同様に、<code>$tb::random</code> は <code>#[test]</code> モジュールの中でのみ使えます。</p>
 <h2 id="systemverilogテスト"><a class="header" href="#systemverilogテスト">SystemVerilogテスト</a></h2>
 <p>SystemVerilog テストは <code>inline</code> 指定子で記述することができます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
 <p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>
@@ -4535,10 +4587,10 @@ always_comb {
 </code></pre>
 <p>実引数の幅を変数宣言から決定できない場合（例: ビット幅付きリテラルを渡した場合）、推論は失敗します。その場合は明示的なジェネリック引数が必要です。詳細は <a href="#generic_inference_failed">generic_inference_failed</a> を参照してください。</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="project-property"><a class="header" href="#project-property">Project Property</a></h1>
-<p>A project property is a compile time constant which is given through <code>Veryl.toml</code> instead of source code. It is useful to configure a project from the outside of the source code. For example, a library can be built with a different data width for each project which depends on it.</p>
-<h2 id="definition"><a class="header" href="#definition">Definition</a></h2>
-<p>Project properties are defined in the <code>[properties]</code> section of <code>Veryl.toml</code>. The value of a property is an integer or a boolean.</p>
+<h1 id="プロジェクトプロパティ"><a class="header" href="#プロジェクトプロパティ">プロジェクトプロパティ</a></h1>
+<p>プロジェクトプロパティは、ソースコードではなく <code>Veryl.toml</code> から与えられるコンパイル時定数です。ソースコードの外側からプロジェクトを設定するのに便利です。例えば、ライブラリを依存するプロジェクトごとに異なるデータ幅でビルドできます。</p>
+<h2 id="定義"><a class="header" href="#定義">定義</a></h2>
+<p>プロジェクトプロパティは <code>Veryl.toml</code> の <code>[properties]</code> セクションで定義します。プロパティの値は整数または真偽値です。</p>
 <pre><code class="language-toml">[project]
 name    = "veryl_sample"
 version = "0.1.0"
@@ -4547,16 +4599,16 @@ version = "0.1.0"
 DATA_WIDTH   = 32
 ENABLE_DEBUG = false
 </code></pre>
-<p>See <a href="#the-properties-section">Project Configuration</a> for detailed information.</p>
-<h2 id="reference"><a class="header" href="#reference">Reference</a></h2>
-<p>Defined properties can be referenced through the <code>$prop</code> namespace. An integer property has <code>i64</code> type, and a boolean property has <code>bbool</code> type.</p>
+<p>詳細は<a href="#the-properties-section">プロジェクトの設定</a>を参照してください。</p>
+<h2 id="参照"><a class="header" href="#参照">参照</a></h2>
+<p>定義したプロパティは <code>$prop</code> 名前空間を通して参照できます。整数のプロパティは <code>i64</code> 型、真偽値のプロパティは <code>bbool</code> 型になります。</p>
 <pre><code class="language-veryl">package sample_pkg {
     const DATA_WIDTH  : i64   = $prop::DATA_WIDTH;
     const ENABLE_DEBUG: bbool = $prop::ENABLE_DEBUG;
 }
 </code></pre>
-<p><code>$prop</code> always refers to the properties of the project which the source code belongs to. So the properties of a dependency can’t be referenced from the project which depends on it.</p>
-<p>A project property is a compile time constant, so it can be used wherever a constant expression can be used. The value is resolved at compile time, and the resolved value appears in the generated code.</p>
+<p><code>$prop</code> は常に、そのソースコードが属するプロジェクトのプロパティを指します。したがって、依存プロジェクトのプロパティを、それに依存する側のプロジェクトから参照することはできません。</p>
+<p>プロジェクトプロパティはコンパイル時定数なので、定数式が使える場所であればどこでも使えます。値はコンパイル時に解決され、解決された値が生成コードに現れます。</p>
 <pre><code class="language-veryl">module ModuleA {
     var a: logic&lt;$prop::DATA_WIDTH&gt;;
 
@@ -4565,13 +4617,13 @@ ENABLE_DEBUG = false
     }
 }
 </code></pre>
-<h2 id="configuration-by-the-depending-project"><a class="header" href="#configuration-by-the-depending-project">Configuration by the depending project</a></h2>
-<p>The value of a project property can be overridden through the <code>properties</code> field of the <code>[dependencies]</code> section by the project which depends on it.</p>
+<h2 id="依存する側のプロジェクトからの設定"><a class="header" href="#依存する側のプロジェクトからの設定">依存する側のプロジェクトからの設定</a></h2>
+<p>プロジェクトプロパティの値は、それに依存する側のプロジェクトが <code>[dependencies]</code> セクションの <code>properties</code> フィールドで上書きできます。</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 8}}
 </code></pre>
-<p>In the above example, <code>$prop::DATA_WIDTH</code> in <code>veryl_sample</code> becomes <code>8</code>. The properties which are not specified here keep the default values defined in <code>Veryl.toml</code> of the dependency, so <code>$prop::ENABLE_DEBUG</code> keeps <code>false</code>.</p>
-<p>See <a href="#project-property-override">Dependencies</a> for detailed information.</p>
+<p>上の例では、<code>veryl_sample</code> の <code>$prop::DATA_WIDTH</code> は <code>8</code> になります。ここで指定しなかったプロパティは、依存プロジェクトの <code>Veryl.toml</code> で定義された既定値のままなので、<code>$prop::ENABLE_DEBUG</code> は <code>false</code> のままです。</p>
+<p>詳細は<a href="#project-property-override">依存関係</a>を参照してください。</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="開発環境"><a class="header" href="#開発環境">開発環境</a></h1>
 <p>この章ではプロジェクト設定や開発ツールなど開発環境について説明します。</p>
@@ -4586,6 +4638,7 @@ veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", propertie
 <li><a href="#the-description-field"><code>description</code></a> — プロジェクトの説明</li>
 <li><a href="#the-license-field"><code>license</code></a> — プロジェクトのライセンス</li>
 <li><a href="#the-repository-field"><code>repository</code></a> — プロジェクトのリポジトリの URL</li>
+<li><a href="#the-categories-field"><code>categories</code></a> — プロジェクトのカテゴリ</li>
 </ul>
 </li>
 <li><a href="#the-build-section"><code>[build]</code></a> — ビルド設定</li>
@@ -4594,7 +4647,7 @@ veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", propertie
 <li><a href="#the-test-section"><code>[test]</code></a> — テスト設定</li>
 <li><a href="#the-publish-section"><code>[publish]</code></a> — 公開設定</li>
 <li><a href="#the-synth-section"><code>[synth]</code></a> — 論理合成設定</li>
-<li><a href="#the-properties-section"><code>[properties]</code></a> — Project properties.</li>
+<li><a href="#the-properties-section"><code>[properties]</code></a> — プロジェクトプロパティ</li>
 <li><a href="#the-dependencies-section"><code>[dependencies]</code></a> — ライブラリの依存関係</li>
 <li><a href="#the-components-section"><code>[[components]]</code></a> — 検証コンポーネントパッケージ</li>
 </ul>
@@ -4629,6 +4682,12 @@ license = "MIT OR Apache-2.0"
 <pre><code class="language-toml">[project]
 repository = "https://github.com/veryl-lang/veryl"
 </code></pre>
+<h3 id="the-categories-field"><a class="header" href="#the-categories-field"><code>categories</code> フィールド</a></h3>
+<p>任意の <code>categories</code> フィールドは、プロジェクトが属するカテゴリを列挙します。<a href="https://registry.veryl-lang.org">Veryl レジストリ</a>がプロジェクトを分類するために使われます。</p>
+<pre><code class="language-toml">[project]
+categories = ["interconnect", "verification"]
+</code></pre>
+<p>認識されるカテゴリは Veryl コンパイラではなくレジストリ自身が定義しています。レジストリが認識しないカテゴリは <code>veryl register</code> で警告として報告され、無視されます。</p>
 <h2 id="the-build-section"><a class="header" href="#the-build-section"><code>[build]</code> セクション</a></h2>
 <p><code>[build]</code> セクションはコード生成の設定です。詳細は<a href="#build">こちら</a>。</p>
 <h2 id="the-format-section"><a class="header" href="#the-format-section"><code>[format]</code> セクション</a></h2>
@@ -4641,14 +4700,14 @@ repository = "https://github.com/veryl-lang/veryl"
 <p><code>[publish]</code> セクションはプロジェクト公開の設定です。詳細は<a href="#publish">こちら</a>。</p>
 <h2 id="the-synth-section"><a class="header" href="#the-synth-section"><code>[synth]</code> セクション</a></h2>
 <p><code>[synth]</code> セクションはシンセサイザの設定です。詳細は<a href="#synth">こちら</a>。</p>
-<h2 id="the-properties-section"><a class="header" href="#the-properties-section">The <code>[properties]</code> section</a></h2>
-<p>The <code>[properties]</code> section contains project properties. A project property is a compile time constant which can be referenced from the source code of the project through the <code>$prop</code> namespace.</p>
-<p>The name of a property should be a valid identifier of Veryl because it is referenced as an identifier in the source code. The value of a property is an integer or a boolean. The type of a property is decided by the given value, and an integer property has <code>i64</code> type, and a boolean property has <code>bbool</code> type in the source code.</p>
+<h2 id="the-properties-section"><a class="header" href="#the-properties-section"><code>[properties]</code> セクション</a></h2>
+<p><code>[properties]</code> セクションはプロジェクトプロパティを含みます。プロジェクトプロパティは、そのプロジェクトのソースコードから <code>$prop</code> 名前空間を通して参照できるコンパイル時定数です。</p>
+<p>プロパティ名はソースコード中で識別子として参照されるため、Veryl の有効な識別子である必要があります。プロパティの値は整数または真偽値です。プロパティの型は与えた値によって決まり、ソースコード中では整数のプロパティは <code>i64</code> 型、真偽値のプロパティは <code>bbool</code> 型になります。</p>
 <pre><code class="language-toml">[properties]
 DATA_WIDTH   = 32
 ENABLE_DEBUG = false
 </code></pre>
-<p>The value defined here is the default value of the property. It can be overridden by the project which depends on this project. Please see <a href="#project-property">Project Property</a> for the usage in the source code, and <a href="#project-property-override">Dependencies</a> for overriding.</p>
+<p>ここで定義した値はプロパティの既定値です。この値は、このプロジェクトに依存する側のプロジェクトから上書きできます。ソースコード中での使い方は<a href="#プロジェクトプロパティ">プロジェクトプロパティ</a>を、上書きについては<a href="#project-property-override">依存関係</a>を参照してください。</p>
 <h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section"><code>[dependencies]</code> セクション</a></h2>
 <p><code>[dependencies]</code> セクションはライブラリの依存関係です。詳細は<a href="#依存関係">こちら</a>。</p>
 <h2 id="the-components-section"><a class="header" href="#the-components-section"><code>[[components]]</code> エントリ</a></h2>
@@ -5029,7 +5088,10 @@ defines = ["DEBUG", "ENABLE_ASSERTIONS"]
 <h3 id="seed-フィールド"><a class="header" href="#seed-フィールド"><code>seed</code> フィールド</a></h3>
 <p><code>seed</code> フィールドは、ランダム化された検証コンポーネントテストのベースシードを設定します。未設定の場合、<code>veryl test</code> の実行ごとに新しいランダムシードが引かれて表示されます。特定の実行を再現するには、値を設定する（または <code>--seed</code> を渡す）ようにします。</p>
 <h3 id="four_state-フィールド"><a class="header" href="#four_state-フィールド"><code>four_state</code> フィールド</a></h3>
-<p><code>four_state</code> フィールドは、ネイティブの検証コンポーネントテストを4値（X/Z）モードで実行します。既定値は <code>false</code> で、<code>--4state</code> コマンドラインオプションでも有効化できます。</p>
+<p><code>four_state</code> フィールドは、ネイティブテストを4値（X/Z）モードで実行します。既定値は <code>false</code> で、この場合、代入されていない値は <code>0</code> として読み出されます。4値実行では、そのような値は代わりに <code>x</code> として読み出されます。<code>--4state</code> コマンドラインオプションでも有効化できます。</p>
+<pre><code class="language-toml">[test]
+four_state = true
+</code></pre>
 <h3 id="component_backend-フィールド"><a class="header" href="#component_backend-フィールド"><code>component_backend</code> フィールド</a></h3>
 <p><code>component_backend</code> フィールドは、検証コンポーネントの実行方法を固定します。</p>
 <ul>
@@ -5108,6 +5170,7 @@ bump_commit_message = "Bump"
 <tr><td>publish_commit</td><td>ブーリアン</td><td>false</td><td>公開後の自動コミット</td></tr>
 <tr><td>bump_commit_message</td><td>文字列</td><td>“chore: Bump version”</td><td>バージョンアップ後のコミットメッセージ</td></tr>
 <tr><td>publish_commit_message</td><td>文字列</td><td>“chore: Publish”</td><td>公開後のコミットメッセージ</td></tr>
+<tr><td>register</td><td>ブーリアン</td><td>未設定</td><td>publish 後の<a href="#registering-to-the-registry">レジストリ登録</a></td></tr>
 </tbody>
 </table>
 </div>
@@ -5233,23 +5296,23 @@ veryl_sample = {path = "../../veryl_sample"}
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = "../veryl_sample"}
 </code></pre>
 <p>これは <code>../veryl_sample</code> が存在する場合はそれを使い、そうでない場合は Git から取得する、という意味です。</p>
-<h2 id="project-property-override"><a class="header" href="#project-property-override">Project property override</a></h2>
-<p>If a dependency has <a href="#project-property">project properties</a>, their values can be overridden through the <code>properties</code> field.</p>
+<h2 id="project-property-override"><a class="header" href="#project-property-override">プロジェクトプロパティの上書き</a></h2>
+<p>依存プロジェクトが<a href="#プロジェクトプロパティ">プロジェクトプロパティ</a>を持つ場合、その値は <code>properties</code> フィールドで上書きできます。</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 8}}
 </code></pre>
-<p>The properties which are not specified here keep the default values defined in <code>Veryl.toml</code> of the dependency. The following restrictions are applied to the overriding.</p>
+<p>ここで指定しなかったプロパティは、依存プロジェクトの <code>Veryl.toml</code> で定義された既定値のままになります。上書きには以下の制限があります。</p>
 <ul>
-<li>A property which is not defined in the dependency can’t be specified.</li>
-<li>The type of the given value must be the same as the type of the default value.</li>
+<li>依存プロジェクトで定義されていないプロパティは指定できません。</li>
+<li>与える値の型は既定値の型と同じでなければなりません。</li>
 </ul>
-<p>The overriding is applied to the direct dependencies only. So the properties of the dependencies of a dependency are not affected, and they are controlled by <code>Veryl.toml</code> of the dependency.</p>
-<p>Dependencies which have the same source are distinguished by their property values. So the same project can be used as multiple dependencies with different property values.</p>
+<p>上書きは直接の依存プロジェクトにのみ適用されます。したがって、依存プロジェクトのさらに依存先のプロパティは影響を受けず、それらは各依存プロジェクトの <code>Veryl.toml</code> によって制御されます。</p>
+<p>同じソースを持つ依存プロジェクトは、そのプロパティ値によって区別されます。したがって、同じプロジェクトを異なるプロパティ値の複数の依存として使えます。</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample_a = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 8}}
 veryl_sample_b = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 16}}
 </code></pre>
-<p>In the above example, <code>veryl_sample_a</code> and <code>veryl_sample_b</code> are generated as different projects.</p>
+<p>上の例では、<code>veryl_sample_a</code> と <code>veryl_sample_b</code> は別々のプロジェクトとして生成されます。</p>
 <h2 id="git-バックエンド"><a class="header" href="#git-バックエンド">Git バックエンド</a></h2>
 <p>Veryl は 2 つの異なるバックエンドを通して git ベースの依存を取得できます。</p>
 <ul>
@@ -5302,6 +5365,21 @@ $ git push
 [INFO ]      Writing metadata ([path to project]/Veryl.pub)
 [INFO ]   Committing metadata ([path to project]/Veryl.pub)
 </code></pre>
+<h3 id="レジストリへの登録"><a class="header" href="#レジストリへの登録">レジストリへの登録</a></h3>
+<p><a href="https://registry.veryl-lang.org">Veryl レジストリ</a>は公開されたプロジェクトの一覧を提供します。プロジェクトは <code>veryl register</code> で登録できます。</p>
+<pre><code>$ veryl register
+</code></pre>
+<p>レジストリはプロジェクトをリポジトリで識別するため、<code>[project]</code> セクションの <a href="#the-repository-field"><code>repository</code></a> フィールドが必要です。<code>origin</code> はチェックアウトによって変わるため、git の <code>origin</code> リモートではなく宣言された <code>repository</code> が使われます。</p>
+<p><code>veryl register</code> は登録前に確認を求めます。<code>--yes</code> オプションで確認を省略でき、コマンドを対話的に実行しない場合はこのオプションが必要です。</p>
+<p><code>veryl publish</code> でもプロジェクトを登録できます。その挙動は <code>Veryl.toml</code> の <code>[publish]</code> セクションの <code>register</code> で指定します。</p>
+<ul>
+<li><code>true</code> — publish 後に自動的に登録する</li>
+<li><code>false</code> — 登録しない</li>
+<li>未設定 — 対話的に一度だけ問い合わせる</li>
+</ul>
+<p>登録はコミットの push を行いません。公開されたバージョンは、そのリビジョンが push され、レジストリがリポジトリをクロールした後に見えるようになります。</p>
+<p>レジストリが認識しない<a href="#the-categories-field">カテゴリ</a>が指定されている場合、警告として報告されます。</p>
+<p>使用するレジストリは <code>VERYL_REGISTRY_URL</code> 環境変数で変更できます。</p>
 <h3 id="設定-5"><a class="header" href="#設定-5">設定</a></h3>
 <p>全設定の説明は<a href="#publish">こちら</a>。</p>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -5420,7 +5498,7 @@ target = {type = "directory", path = "target"}
 
 2 directories, 3 files
 </code></pre>
-<p><code>examples</code> 以下のファイルは通常のソースと同様に解析・チェックされ、その中の <code>#[test]</code> モジュールは <code>veryl test</code> で実行されます。他のソースとプロジェクトの名前空間を共有しますが、コード生成とファイルリストからは除外されます。プロジェクトが依存として利用される場合、その <code>examples</code> ディレクトリは完全に無視されます。</p>
+<p><code>examples</code> 以下のファイルは通常のソースと同様に解析・チェックされ、その中の <code>#[test]</code> モジュールは <code>veryl test</code> で実行されます。他のソースとプロジェクトの名前空間を共有しますが、コード生成、ファイルリスト、および <code>veryl doc</code> が生成するドキュメントからは除外されます。プロジェクトが依存として利用される場合、その <code>examples</code> ディレクトリは完全に無視されます。</p>
 <p>このディレクトリは予約されているため、<code>[build]</code> セクションの <code>sources</code> フィールドに指定することはできません。</p>
 <h2 id="gitignore-について"><a class="header" href="#gitignore-について"><code>.gitignore</code> について</a></h2>
 <p>Verylは以下の <code>.gitignore</code> をデフォルト値として提供します。<code>.build</code> ディレクトリはVerylコンパイラがビルド情報を記録するために使用します。</p>
@@ -5468,6 +5546,24 @@ target = {type = "directory", path = "target"}
 </ul>
 <p>Verilatorはデフォルトのシミュレータです。<code>Veryl.toml</code>やコマンドラインオプションでシミュレータが指定されていない場合に使用されます。</p>
 <p>全設定の説明は<a href="#test">こちら</a>。</p>
+<h2 id="json-レポート"><a class="header" href="#json-レポート">JSON レポート</a></h2>
+<p><code>veryl test --format json</code> は、人間向けのサマリの代わりに、テスト結果の機械可読なレポートを標準出力に書き出します。CI やその他のツールから結果を利用するのに便利です。</p>
+<pre><code class="language-console">$ veryl test --format json
+</code></pre>
+<pre><code class="language-text">{
+  "format_version": 1,
+  "backend": "cc",
+  "passed": 1,
+  "failed": 1,
+  "ignored": 1,
+  "tests": [
+    { "name": "test_a", "status": "pass", "runtime_s": 0.000405, "sim_s": 0.0000147 },
+    { "name": "test_b", "status": "fail", "message": "assertion failed", "runtime_s": 0.000559, "sim_s": 0.0000206 }
+  ]
+}
+</code></pre>
+<p>各テストの <code>status</code> フィールドは <code>pass</code> または <code>fail</code> で、失敗したテストには <code>message</code> フィールドが付きます。テストが標準出力に何かを書き出した場合は <code>output</code> フィールドに格納されます。無視されたテストは <code>ignored</code> で数えられますが、<code>tests</code> には列挙されません。</p>
+<p>レポートのスキーマバージョンは <code>--format-version</code> で指定できます。これは <code>--format json</code> と併用する場合のみ有効です。現在は <code>1</code> のみサポートされています。</p>
 <h2 id="cocotb"><a class="header" href="#cocotb">cocotb</a></h2>
 <p><code>cocotb</code> テストを実行するには <code>cocotb</code> がインストールされた <code>python3</code> の環境が必要です。サポートされている <code>cocotb</code> のバージョンは 1.9.x あるいは 2.0.x です。</p>
 <p>例えば以下のコマンドでインストールすることができます。</p>
@@ -5863,10 +5959,29 @@ power:
 <tr><td><code>--dump-area</code></td><td>推論された RAM ブロックを含む、セル種別ごとの面積内訳をダンプします。</td></tr>
 <tr><td><code>--dump-timing</code></td><td>クリティカルパスのトレースをダンプします。</td></tr>
 <tr><td><code>--dump-power</code></td><td>電力見積もり（漏れ電力＋動的電力の内訳）をダンプします。</td></tr>
+<tr><td><code>--format &lt;format&gt;</code></td><td>出力形式。<code>pretty</code>（デフォルト、人間向け）または <code>json</code>。</td></tr>
+<tr><td><code>--format-version &lt;n&gt;</code></td><td>JSON レポートのスキーマバージョン。<code>--format json</code> と併用する場合のみ有効。現在は <code>1</code> のみ。</td></tr>
 </tbody>
 </table>
 </div>
 <p><code>--dump-*</code> フラグが何も指定されない場合、面積／タイミング／電力の3つすべてがダンプされます。</p>
+<h2 id="json-レポート-1"><a class="header" href="#json-レポート-1">JSON レポート</a></h2>
+<p><code>--format json</code> は、人間向けのサマリの代わりに、機械可読なレポートを標準出力に書き出します。</p>
+<pre><code class="language-console">$ veryl synth --format json
+</code></pre>
+<pre><code class="language-text">{
+  "format_version": 1,
+  "top": "Counter",
+  "library": "sky130",
+  "status": "ok",
+  "cells": 19,
+  "ffs": 8,
+  "area": { "total": 302.5, "combinational": 122.5, "sequential": 180.0, "memory": 0.0 },
+  "timing": { "delay_ns": 0.38, "depth": 4, "from": "cnt[3]", "to": "cnt[6]" },
+  "power": { "total_mw": 0.0239, "leakage_mw": 0.0000271, "dynamic_mw": 0.0239, "clock_freq_mhz": 100.0, "activity": 0.1 }
+}
+</code></pre>
+<p>合成に成功した場合、<code>status</code> フィールドは <code>ok</code> になります。そうでない場合は、シンセサイザが扱えない構文なら <code>unsupported</code>、トップモジュールが見つからないなら <code>no_top</code>、その他の失敗なら <code>error</code> になります。これらの場合は <code>message</code> フィールドが失敗の内容を示し、<code>area</code>・<code>timing</code>・<code>power</code> は <code>null</code> になります。</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="メタデータ"><a class="header" href="#メタデータ">メタデータ</a></h1>
 <p><code>veryl metadata</code> は、現在のプロジェクトの解決済みメタデータを、依存グラフを含めて出力します。外部ツールが Veryl の依存解決結果と依存キャッシュを、独自に再実装することなく再利用できるようにするためのものです。</p>
@@ -5935,6 +6050,34 @@ files = ["src/**/*.v"]
 attrs = { role = "core" }
 </code></pre>
 <p>これは外部連携データを置くための専用の場所です。<code>Veryl.toml</code> のトップレベルの不明なキーは拒否されるため、ツール固有のデータは <code>[metadata]</code> の下に置く必要があります。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="外部サブコマンド"><a class="header" href="#外部サブコマンド">外部サブコマンド</a></h1>
+<p>外部サブコマンドを使うと、Veryl とは別に配布されるツールで <code>veryl</code> コマンドを拡張できます。指定されたサブコマンドが組み込みのものでない場合、<code>veryl</code> は <code>veryl-&lt;subcommand&gt;</code> という名前の実行ファイルを <code>PATH</code> から探して実行します。これにより、そのようなツールを組み込みのサブコマンドと同じように使えます。</p>
+<pre><code class="language-console">$ veryl import foo.sv
+</code></pre>
+<p>上のコマンドは、<code>veryl-import</code> が <code>PATH</code> 上に見つかった場合に <code>veryl-import foo.sv</code> を実行します。サブコマンド名より後ろの引数はそのまま渡され、外部コマンドの終了ステータスがそのまま <code>veryl</code> の終了ステータスになります。</p>
+<p>対応する実行ファイルが見つからない場合はエラーになります。</p>
+<h2 id="コマンドの一覧表示"><a class="header" href="#コマンドの一覧表示">コマンドの一覧表示</a></h2>
+<p><code>veryl --help</code> は組み込みのサブコマンドのみを表示します。<code>PATH</code> 上で見つかった外部サブコマンドも含めて利用可能なすべてのコマンドを表示するには、<code>veryl --list</code> を使います。</p>
+<pre><code class="language-console">$ veryl --list
+Available Commands:
+  build        Build the target codes corresponding to the current project
+  check        Analyze the current project
+  ...
+  import       Import SystemVerilog files as a Veryl dependency
+  ...
+</code></pre>
+<h2 id="サブコマンドの説明"><a class="header" href="#サブコマンドの説明">サブコマンドの説明</a></h2>
+<p>デフォルトでは、外部サブコマンドは <code>External Veryl subcommand from PATH (veryl-import)</code> のようなフォールバックの説明とともに一覧表示されます。実行ファイルが <code>--info</code> オプションをサポートしている場合は、代わりにその出力が説明として使われます。<code>veryl-&lt;subcommand&gt; --info</code> は1行の説明を標準出力に出力することが期待されており、以下の条件をすべて満たす必要があります。</p>
+<ul>
+<li>終了ステータスが <code>0</code> であること</li>
+<li>出力が制御文字を含まない1行であること</li>
+<li>行の長さが160文字以下であること</li>
+<li>コマンドが500ms以内に終了すること</li>
+</ul>
+<p>いずれかを満たさない場合は、フォールバックの説明が使われます。</p>
+<h2 id="予約された名前"><a class="header" href="#予約された名前">予約された名前</a></h2>
+<p><code>veryl-ls</code> は<a href="#言語サーバ">公式の言語サーバのバイナリ</a>であるため、<code>ls</code> は外部サブコマンドとしてディスパッチされません。パス区切り文字を含むサブコマンド名も拒否されます。</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="補遺"><a class="header" href="#補遺">補遺</a></h1>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -7054,14 +7197,22 @@ Veryl: Start { DescriptionGroup };
 <h2 id="エラー"><a class="header" href="#エラー">エラー</a></h2>
 <h3 id="ambiguous_elsif"><a class="header" href="#ambiguous_elsif">ambiguous_elsif</a></h3>
 <p>このエラーは、<code>elsif</code> または <code>else</code> 属性を、先行する <code>if</code> 属性と一意に対応付けられない場合に報告されます。対応関係が明確になるよう周辺のコードを書き直してください。</p>
+<h3 id="ambiguous_identifier"><a class="header" href="#ambiguous_identifier">ambiguous_identifier</a></h3>
+<p>このエラーは、識別子が複数のパッケージからインポートされていて、どのシンボルを指すのか決定できない場合に報告されます。識別子を明示的なスコープで修飾するか、インポートのいずれかを削除してください。</p>
 <h3 id="anonymous_identifier_usage"><a class="header" href="#anonymous_identifier_usage">anonymous_identifier_usage</a></h3>
 <p>このエラーは、名前付きの識別子が必要な位置で匿名識別子（<code>_</code>）が使われた場合に報告されます。</p>
 <h3 id="call_non_function"><a class="header" href="#call_non_function">call_non_function</a></h3>
 <p>このエラーは、関数でないシンボルを関数として呼び出した場合に報告されます。呼び出しを削除するか、実際の関数シンボルに置き換えてください。</p>
 <h3 id="combinational_loop"><a class="header" href="#combinational_loop">combinational_loop</a></h3>
 <p>このエラーは、シーケンシャル要素を介さず、信号の値が純粋な組み合わせ論理を通じて自分自身に依存している場合に報告されます。ループは <code>assign</code> 宣言、<code>always_comb</code> ブロック、関数呼び出し、またはインスタンス化されたモジュールやインターフェースによって形成され得ます。少なくとも 1 つのパス上にレジスタ (<code>always_ff</code>) を挿入するか、依存関係の連鎖が終了するように設計を再構成してループを解消してください。</p>
+<h3 id="component_interface_mismatch"><a class="header" href="#component_interface_mismatch">component_interface_mismatch</a></h3>
+<p>このエラーは、<code>$comp::*</code> の検証コンポーネントの使い方が、そのコンポーネントが宣言しているインターフェースと一致しない場合に報告されます。チェックされるのは、宣言の形式（クロック付きコンポーネントは <code>inst</code>、メソッドのみのコンポーネントは <code>var</code>）、パラメータ、ポート、インターフェースポート、および戻り値の幅を含むメソッド呼び出しです。使い方を修正するか、インターフェースが一致するようコンポーネントを更新してください。</p>
 <h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
 <p>このエラーは、複数の型定義が循環的に互いを参照している場合に報告されます。参照のいずれかを削除または再構成して循環を断ち切ってください。</p>
+<h3 id="duplicate_argument"><a class="header" href="#duplicate_argument">duplicate_argument</a></h3>
+<p>このエラーは、インスタンス化や関数呼び出しで同じ名前付き引数が複数回接続された場合に報告されます。重複した接続を削除してください。</p>
+<h3 id="duplicate_enum_variant"><a class="header" href="#duplicate_enum_variant">duplicate_enum_variant</a></h3>
+<p>このエラーは、enum のバリアントが同じ enum の別のバリアントと同じ値を持つ場合に報告されます。そのバリアントに他と異なる値を与えてください。</p>
 <h3 id="duplicated_identifier"><a class="header" href="#duplicated_identifier">duplicated_identifier</a></h3>
 <p>このエラーは、同じ識別子が同一スコープ内で複数回宣言された場合に報告されます。いずれかの宣言を別名にリネームしてください。</p>
 <h3 id="exceed_limit"><a class="header" href="#exceed_limit">exceed_limit</a></h3>
@@ -7070,6 +7221,8 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、固定幅の型（例：<code>u32</code>）に <code>signed</code> 修飾子を付けた場合に報告されます。<code>signed</code> 修飾子を削除してください。</p>
 <h3 id="generic_inference_failed"><a class="header" href="#generic_inference_failed">generic_inference_failed</a></h3>
 <p>このエラーは、関数呼び出しの実引数が省略されたが、コンパイラが呼び出し時の引数から推論できなかった場合に報告されます。<code>::&lt;&gt;</code> で明示的にジェネリック引数を指定するか、変数宣言から幅を決定できる引数を渡してください。</p>
+<h3 id="implicit_clock_conversion"><a class="header" href="#implicit_clock_conversion">implicit_clock_conversion</a></h3>
+<p>このエラーは、clock/reset 型でない値が clock/reset ポートに接続された場合、またはその逆の場合に報告されます。clock 性・reset 性は宣言でのみ与えられるため、その値を親側で clock/reset 型の信号に束縛し（例: <code>let g: '_ clock = expr;</code>）、その信号を接続してください。</p>
 <h3 id="include_failure"><a class="header" href="#include_failure">include_failure</a></h3>
 <p>このエラーは、<code>include</code> 宣言が参照するファイルを読み込めない場合に報告されます。パスとファイルパーミッションを確認してください。</p>
 <h3 id="incompat_proto"><a class="header" href="#incompat_proto">incompat_proto</a></h3>
@@ -7082,6 +7235,8 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、型キャストの元と先の型が互換でない場合に報告されます。互換性のある型を指定してください。</p>
 <h3 id="invalid_clock"><a class="header" href="#invalid_clock">invalid_clock</a></h3>
 <p>このエラーは、<code>clock</code> 型でも単一ビット信号でもない信号がクロックとして接続された場合に報告されます。<code>clock</code> 型の信号を使用してください。</p>
+<h3 id="invalid_clock_assignment"><a class="header" href="#invalid_clock_assignment">invalid_clock_assignment</a></h3>
+<p>このエラーは、clock/reset 型の信号が <code>always_ff</code> の中で代入された場合に報告されます。代わりに <code>always_ff</code> では <code>logic</code> の変数をトグルし、それを clock/reset 型の信号に束縛してください（例: <code>let d: '_ clock = t;</code>）。</p>
 <h3 id="invalid_clock_domain"><a class="header" href="#invalid_clock_domain">invalid_clock_domain</a></h3>
 <p>このエラーは、モジュールインスタンスにクロックドメインアノテーションが付与された場合に報告されます。アノテーションを削除してください。</p>
 <h3 id="invalid_connect_operand"><a class="header" href="#invalid_connect_operand">invalid_connect_operand</a></h3>
@@ -7096,10 +7251,16 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、enum バリアントの値がその enum に指定されたエンコーディング（one-hot、gray など）と一致しない場合に報告されます。</p>
 <h3 id="invalid_factor"><a class="header" href="#invalid_factor">invalid_factor</a></h3>
 <p>このエラーは、値ではないシンボル（例：モジュール名）が式の因子として使われた場合に報告されます。</p>
+<h3 id="invalid_for_range"><a class="header" href="#invalid_for_range">invalid_for_range</a></h3>
+<p>このエラーは、<code>for</code> ループの範囲が不正な場合に報告されます。範囲は <code>..</code> または <code>..=</code> で書く必要があり、単なる式は範囲になりません。また範囲の境界は符号なしとして評価されるため、負の値にはできません。</p>
+<h3 id="invalid_for_step"><a class="header" href="#invalid_for_step">invalid_for_step</a></h3>
+<p>このエラーは、<code>for</code> ループのステップが誘導変数を範囲の終端に向けて進めず、ループが終了しない場合に報告されます。誘導変数が確実に進むようにステップを修正してください。</p>
 <h3 id="invalid_import"><a class="header" href="#invalid_import">invalid_import</a></h3>
 <p>このエラーは、参照先がインポート可能でない（private、またはインポート対象として無効）な場合に報告されます。</p>
 <h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
 <p>このエラーは、対応するビット幅を特定できない位置で <code>lsb</code> キーワードが使われた場合に報告されます。<code>lsb</code> を具体的なインデックスに置き換えてください。</p>
+<h3 id="invalid_mixin"><a class="header" href="#invalid_mixin">invalid_mixin</a></h3>
+<p>このエラーは、<a href="#mixin"><code>mixin</code></a> 宣言の対象をミックスインできない場合に報告されます。対象は、プロトタイプでなく、上書き可能なパラメータを持たず、自身が <code>mixin</code> 宣言を持たないインターフェースでなければなりません。また対象のメンバ名は、そのインターフェースに既に定義されているメンバと衝突してはいけません。</p>
 <h3 id="invalid_modifier"><a class="header" href="#invalid_modifier">invalid_modifier</a></h3>
 <p>このエラーは、型修飾子が許可されていない位置で使われた場合に報告されます。修飾子を削除してください。</p>
 <h3 id="invalid_modport_item"><a class="header" href="#invalid_modport_item">invalid_modport_item</a></h3>
@@ -7112,16 +7273,22 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、演算子と互換性のない種類のオペランドが使われた場合に報告されます。</p>
 <h3 id="invalid_port_default_value"><a class="header" href="#invalid_port_default_value">invalid_port_default_value</a></h3>
 <p>このエラーは、ポートのデフォルト値がそのポートの型や方向に対して無効な場合に報告されます。</p>
+<h3 id="invalid_range"><a class="header" href="#invalid_range">invalid_range</a></h3>
+<p>このエラーは、範囲が不正な場合に報告されます。例えば、終端を含まない範囲の下限が上限より小さくない場合です。</p>
+<h3 id="invalid_range_assign"><a class="header" href="#invalid_range_assign">invalid_range_assign</a></h3>
+<p>このエラーは、代入の左辺の配列範囲選択が、定数で・範囲内で・昇順のスライスになっていない場合に報告されます。</p>
 <h3 id="invalid_reset"><a class="header" href="#invalid_reset">invalid_reset</a></h3>
 <p>このエラーは、<code>reset</code> 型でも単一ビット信号でもない信号がリセットとして接続された場合に報告されます。<code>reset</code> 型の信号を使用してください。</p>
 <h3 id="invalid_statement"><a class="header" href="#invalid_statement">invalid_statement</a></h3>
 <p>このエラーは、文がそれを許可していない位置に書かれた場合（例：関数外の <code>return</code>）に報告されます。文を削除するか、適切な位置に移動してください。</p>
 <h3 id="invalid_tb_usage"><a class="header" href="#invalid_tb_usage">invalid_tb_usage</a></h3>
-<p>このエラーは、<code>$tb::*</code> のテストベンチコンポーネントが <code>#[test]</code> モジュールの外で使われた場合に報告されます。テストモジュール内に移動してください。</p>
+<p>このエラーは、<code>$tb::*</code> または <code>$comp::*</code> のコンポーネントが <code>#[test]</code> モジュールの外で使われた場合に報告されます。テストモジュール内に移動してください。</p>
 <h3 id="invalid_test"><a class="header" href="#invalid_test">invalid_test</a></h3>
 <p>このエラーは、<code>#[test]</code> 宣言が不正な形をしている場合に報告されます。</p>
 <h3 id="invalid_type_declaration"><a class="header" href="#invalid_type_declaration">invalid_type_declaration</a></h3>
 <p>このエラーは <code>struct</code>、<code>enum</code>、<code>union</code> のデータ型がインターフェース宣言内で定義された場合に報告されます。</p>
+<h3 id="invalid_unsized_literal"><a class="header" href="#invalid_unsized_literal">invalid_unsized_literal</a></h3>
+<p>このエラーは、幅指定のないリテラルが自己決定のコンテキストで使われ、周囲から幅を決定できない場合に報告されます。<code>1'b0</code> のようにリテラルへ明示的な幅を与えてください。</p>
 <h3 id="invalid_wavedrom"><a class="header" href="#invalid_wavedrom">invalid_wavedrom</a></h3>
 <p>このエラーは、ドキュメンテーションコメント中の WaveDrom ブロックが不正な場合に報告されます。</p>
 <h3 id="invisible_identifier"><a class="header" href="#invisible_identifier">invisible_identifier</a></h3>
@@ -7160,6 +7327,8 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。</p>
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>このエラーは、同じモジュール内でデフォルトのクロックまたはリセットが複数回指定された場合に報告されます。</p>
+<h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
+<p>このエラーは、<code>+:</code> / <code>-:</code> / <code>step</code> の部分選択の幅が定数でない場合に報告されます。幅には定数式を使ってください。</p>
 <h3 id="non_positive_value"><a class="header" href="#non_positive_value">non_positive_value</a></h3>
 <p>このエラーは、正の型（<code>p8</code> / <code>p16</code> / <code>p32</code> / <code>p64</code>）にゼロ以下の値を代入した場合に報告されます。0 より大きい値を使用してください。</p>
 <h3 id="private_member"><a class="header" href="#private_member">private_member</a></h3>
@@ -7216,6 +7385,8 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、ジェネリック定義位置からジェネリックパラメータ中の式を解決できない場合に報告されます。</p>
 <h3 id="wrong_seperator"><a class="header" href="#wrong_seperator">wrong_seperator</a></h3>
 <p>このエラーは、識別子間で誤った区切り文字（<code>::</code> と <code>.</code>）が使われた場合に報告されます。正しい区切り文字に置き換えてください。</p>
+<h3 id="zero_width_number"><a class="header" href="#zero_width_number">zero_width_number</a></h3>
+<p>このエラーは、数値の幅が0として宣言された場合に報告されます。</p>
 <h2 id="警告"><a class="header" href="#警告">警告</a></h2>
 <h3 id="invalid_identifier"><a class="header" href="#invalid_identifier">invalid_identifier</a></h3>
 <p>この警告は、識別子が設定された命名規則（<a href="#lint">Lint</a> を参照）に違反している場合に報告されます。規則に従うように識別子をリネームしてください。</p>

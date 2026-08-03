@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-738d67e0.js";
+            window.path_to_searchindex_js = "../searchindex-35ef2795.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-db43e088.js"></script>
+        <script src="../toc-156e7647.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -282,6 +282,7 @@
 <li><a href="01_project_configuration.html#the-description-field"><code>description</code></a> — A description of the project.</li>
 <li><a href="01_project_configuration.html#the-license-field"><code>license</code></a> — The project license.</li>
 <li><a href="01_project_configuration.html#the-repository-field"><code>repository</code></a> — URL of the project source repository.</li>
+<li><a href="01_project_configuration.html#the-categories-field"><code>categories</code></a> — The categories of the project.</li>
 </ul>
 </li>
 <li><a href="01_project_configuration.html#the-build-section"><code>[build]</code></a> — Build settings.</li>
@@ -330,6 +331,14 @@ license = "MIT OR Apache-2.0"
 <pre><code class="language-toml">[project]
 repository = "https://github.com/veryl-lang/veryl"
 </code></pre>
+<h3 id="the-categories-field"><a class="header" href="#the-categories-field">The <code>categories</code> field</a></h3>
+<p>The optional <code>categories</code> field lists the categories which the project belongs to.
+It is used by the <a href="https://registry.veryl-lang.org">Veryl registry</a> to classify the project.</p>
+<pre><code class="language-toml">[project]
+categories = ["interconnect", "verification"]
+</code></pre>
+<p>The recognized categories are defined by the registry itself, not by the Veryl compiler.
+A category which the registry doesn’t recognize is reported as a warning by <code>veryl register</code> and ignored.</p>
 <h2 id="the-build-section"><a class="header" href="#the-build-section">The <code>[build]</code> section</a></h2>
 <p>The <code>[build]</code> section contains the configurations of code generation.
 Available configurations is <a href="./01_project_configuration/01_build.html">here</a>.</p>

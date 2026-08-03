@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-0a90ffd2.js";
+            window.path_to_searchindex_js = "../searchindex-556f5f19.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-b5e7373f.js"></script>
+        <script src="../toc-f6fb0cb4.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -356,9 +356,9 @@ module ModuleA (
     }
 }
 </code></pre>
-<h2 id="mixin"><a class="header" href="#mixin">Mixin</a></h2>
-<p>An interface can incorporate the members of other interfaces by using the <code>mixin</code> declaration. All members (variables, functions, and modports) of the mixed-in interface are expanded into the interface as if they were declared directly in it. This is useful to share common definitions among multiple interfaces.</p>
-<p>For example, a bus protocol is often composed of independent channels such as a command channel and a response channel. By defining each channel as a separate interface and mixing them in, the channels can be reused across multiple bus interfaces. A generic interface can be mixed in by giving its generic arguments in the <code>mixin</code> declaration.</p>
+<h2 id="ミックスイン"><a class="header" href="#ミックスイン">ミックスイン</a></h2>
+<p>インターフェースは <code>mixin</code> 宣言によって、他のインターフェースのメンバを取り込めます。ミックスインされたインターフェースの全メンバ（変数、関数、modport）は、そのインターフェースで直接宣言されたかのように展開されます。これは複数のインターフェースで共通の定義を共有するのに便利です。</p>
+<p>例えばバスプロトコルは、コマンドチャネルとレスポンスチャネルのような独立したチャネルから構成されることがよくあります。各チャネルを別々のインターフェースとして定義してミックスインすることで、それらのチャネルを複数のバスインターフェースで再利用できます。ジェネリックなインターフェースは、<code>mixin</code> 宣言でジェネリック引数を与えることでミックスインできます。</p>
 <pre><code class="language-veryl playground">// Command channel: a master issues read/write commands to a slave
 interface Command::&lt;ADDR_WIDTH: u32, DATA_WIDTH: u32&gt; {
     var cmd_ready: logic            ;
@@ -405,13 +405,13 @@ interface MemoryBus::&lt;ADDR_WIDTH: u32, DATA_WIDTH: u32&gt; {
 
 alias interface MemoryBus32 = MemoryBus::&lt;32, 32&gt;;
 </code></pre>
-<p>The following restrictions are applied to the mixed-in interface:</p>
+<p>ミックスインされるインターフェースには以下の制限があります。</p>
 <ul>
-<li>The mixed-in target must be an interface. A module or a prototype can’t be mixed in.</li>
-<li>An interface can’t mix in itself.</li>
-<li>An interface that has overridable parameters (<code>param</code>/<code>const</code>) can’t be mixed in. (A generic interface can be mixed in by giving its generic arguments as shown above.)</li>
-<li>An interface that itself has <code>mixin</code> declarations can’t be mixed in. (<code>mixin</code> can’t be nested.)</li>
-<li>Member names must be unique across the interface and all mixed-in interfaces. A name collision is an error.</li>
+<li>ミックスインの対象はインターフェースでなければなりません。モジュールやプロトタイプはミックスインできません。</li>
+<li>インターフェースは自分自身をミックスインできません。</li>
+<li>上書き可能なパラメータ（<code>param</code>/<code>const</code>）を持つインターフェースはミックスインできません。（ジェネリックなインターフェースは、上記のようにジェネリック引数を与えることでミックスインできます。）</li>
+<li>自身が <code>mixin</code> 宣言を持つインターフェースはミックスインできません。（<code>mixin</code> はネストできません。）</li>
+<li>メンバ名は、そのインターフェースとミックスインされる全インターフェースを通じて一意でなければなりません。名前の衝突はエラーになります。</li>
 </ul>
 <h2 id="インターフェースインスタンスとmodportポートの接続"><a class="header" href="#インターフェースインスタンスとmodportポートの接続">インターフェースインスタンスとmodportポートの接続</a></h2>
 <p>インターフェースインスタンスとmodportポートは、SystemVerilogと同様に、互換性のあるモジュールポートあるいは <code>generic</code> インターフェースに接続することができます。</p>

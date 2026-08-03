@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-0a90ffd2.js";
+            window.path_to_searchindex_js = "../searchindex-556f5f19.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-b5e7373f.js"></script>
+        <script src="../toc-f6fb0cb4.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -337,23 +337,23 @@ veryl_sample = {path = "../../veryl_sample"}
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = "../veryl_sample"}
 </code></pre>
 <p>これは <code>../veryl_sample</code> が存在する場合はそれを使い、そうでない場合は Git から取得する、という意味です。</p>
-<h2 id="project-property-override"><a class="header" href="#project-property-override">Project property override</a></h2>
-<p>If a dependency has <a href="../05_language_reference/20_project_property.html">project properties</a>, their values can be overridden through the <code>properties</code> field.</p>
+<h2 id="project-property-override"><a class="header" href="#project-property-override">プロジェクトプロパティの上書き</a></h2>
+<p>依存プロジェクトが<a href="../05_language_reference/20_project_property.html">プロジェクトプロパティ</a>を持つ場合、その値は <code>properties</code> フィールドで上書きできます。</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 8}}
 </code></pre>
-<p>The properties which are not specified here keep the default values defined in <code>Veryl.toml</code> of the dependency. The following restrictions are applied to the overriding.</p>
+<p>ここで指定しなかったプロパティは、依存プロジェクトの <code>Veryl.toml</code> で定義された既定値のままになります。上書きには以下の制限があります。</p>
 <ul>
-<li>A property which is not defined in the dependency can’t be specified.</li>
-<li>The type of the given value must be the same as the type of the default value.</li>
+<li>依存プロジェクトで定義されていないプロパティは指定できません。</li>
+<li>与える値の型は既定値の型と同じでなければなりません。</li>
 </ul>
-<p>The overriding is applied to the direct dependencies only. So the properties of the dependencies of a dependency are not affected, and they are controlled by <code>Veryl.toml</code> of the dependency.</p>
-<p>Dependencies which have the same source are distinguished by their property values. So the same project can be used as multiple dependencies with different property values.</p>
+<p>上書きは直接の依存プロジェクトにのみ適用されます。したがって、依存プロジェクトのさらに依存先のプロパティは影響を受けず、それらは各依存プロジェクトの <code>Veryl.toml</code> によって制御されます。</p>
+<p>同じソースを持つ依存プロジェクトは、そのプロパティ値によって区別されます。したがって、同じプロジェクトを異なるプロパティ値の複数の依存として使えます。</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample_a = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 8}}
 veryl_sample_b = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 16}}
 </code></pre>
-<p>In the above example, <code>veryl_sample_a</code> and <code>veryl_sample_b</code> are generated as different projects.</p>
+<p>上の例では、<code>veryl_sample_a</code> と <code>veryl_sample_b</code> は別々のプロジェクトとして生成されます。</p>
 <h2 id="git-バックエンド"><a class="header" href="#git-バックエンド">Git バックエンド</a></h2>
 <p>Veryl は 2 つの異なるバックエンドを通して git ベースの依存を取得できます。</p>
 <ul>

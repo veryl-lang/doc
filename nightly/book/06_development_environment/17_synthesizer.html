@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-738d67e0.js";
+            window.path_to_searchindex_js = "../searchindex-35ef2795.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-db43e088.js"></script>
+        <script src="../toc-156e7647.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -351,10 +351,31 @@ section of <code>Veryl.toml</code>.</p>
 <tr><td><code>--dump-area</code></td><td>Dump the per-cell-kind area breakdown, including inferred RAM blocks.</td></tr>
 <tr><td><code>--dump-timing</code></td><td>Dump the critical path trace.</td></tr>
 <tr><td><code>--dump-power</code></td><td>Dump the power estimate (leakage + dynamic breakdown).</td></tr>
+<tr><td><code>--format &lt;format&gt;</code></td><td>Output format: <code>pretty</code> (default, human-readable) or <code>json</code>.</td></tr>
+<tr><td><code>--format-version &lt;n&gt;</code></td><td>JSON report schema version. Only valid with <code>--format json</code>. Currently only <code>1</code>.</td></tr>
 </tbody>
 </table>
 </div>
 <p>If no <code>--dump-*</code> flag is given, all three of area / timing / power are dumped.</p>
+<h2 id="json-report"><a class="header" href="#json-report">JSON report</a></h2>
+<p><code>--format json</code> writes a machine-readable report to stdout instead of the human-readable summary.</p>
+<pre><code class="language-console">$ veryl synth --format json
+</code></pre>
+<pre><code class="language-text">{
+  "format_version": 1,
+  "top": "Counter",
+  "library": "sky130",
+  "status": "ok",
+  "cells": 19,
+  "ffs": 8,
+  "area": { "total": 302.5, "combinational": 122.5, "sequential": 180.0, "memory": 0.0 },
+  "timing": { "delay_ns": 0.38, "depth": 4, "from": "cnt[3]", "to": "cnt[6]" },
+  "power": { "total_mw": 0.0239, "leakage_mw": 0.0000271, "dynamic_mw": 0.0239, "clock_freq_mhz": 100.0, "activity": 0.1 }
+}
+</code></pre>
+<p>The <code>status</code> field is <code>ok</code> when synthesis succeeded.
+Otherwise it is <code>unsupported</code> for a construct which the synthesizer can’t handle, <code>no_top</code> when the top module is not found, and <code>error</code> for the other failures.
+In these cases a <code>message</code> field describes the failure, and <code>area</code>, <code>timing</code> and <code>power</code> are <code>null</code>.</p>
 
                     </main>
 

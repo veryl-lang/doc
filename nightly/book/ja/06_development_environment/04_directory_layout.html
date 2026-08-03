@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-0a90ffd2.js";
+            window.path_to_searchindex_js = "../searchindex-556f5f19.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-b5e7373f.js"></script>
+        <script src="../toc-f6fb0cb4.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -387,7 +387,7 @@ target = {type = "directory", path = "target"}
 
 2 directories, 3 files
 </code></pre>
-<p><code>examples</code> 以下のファイルは通常のソースと同様に解析・チェックされ、その中の <code>#[test]</code> モジュールは <code>veryl test</code> で実行されます。他のソースとプロジェクトの名前空間を共有しますが、コード生成とファイルリストからは除外されます。プロジェクトが依存として利用される場合、その <code>examples</code> ディレクトリは完全に無視されます。</p>
+<p><code>examples</code> 以下のファイルは通常のソースと同様に解析・チェックされ、その中の <code>#[test]</code> モジュールは <code>veryl test</code> で実行されます。他のソースとプロジェクトの名前空間を共有しますが、コード生成、ファイルリスト、および <code>veryl doc</code> が生成するドキュメントからは除外されます。プロジェクトが依存として利用される場合、その <code>examples</code> ディレクトリは完全に無視されます。</p>
 <p>このディレクトリは予約されているため、<code>[build]</code> セクションの <code>sources</code> フィールドに指定することはできません。</p>
 <h2 id="gitignore-について"><a class="header" href="#gitignore-について"><code>.gitignore</code> について</a></h2>
 <p>Verylは以下の <code>.gitignore</code> をデフォルト値として提供します。<code>.build</code> ディレクトリはVerylコンパイラがビルド情報を記録するために使用します。</p>

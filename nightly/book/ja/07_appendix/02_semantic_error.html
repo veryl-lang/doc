@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-0a90ffd2.js";
+            window.path_to_searchindex_js = "../searchindex-556f5f19.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-b5e7373f.js"></script>
+        <script src="../toc-f6fb0cb4.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -277,14 +277,22 @@
 <h2 id="エラー"><a class="header" href="#エラー">エラー</a></h2>
 <h3 id="ambiguous_elsif"><a class="header" href="#ambiguous_elsif">ambiguous_elsif</a></h3>
 <p>このエラーは、<code>elsif</code> または <code>else</code> 属性を、先行する <code>if</code> 属性と一意に対応付けられない場合に報告されます。対応関係が明確になるよう周辺のコードを書き直してください。</p>
+<h3 id="ambiguous_identifier"><a class="header" href="#ambiguous_identifier">ambiguous_identifier</a></h3>
+<p>このエラーは、識別子が複数のパッケージからインポートされていて、どのシンボルを指すのか決定できない場合に報告されます。識別子を明示的なスコープで修飾するか、インポートのいずれかを削除してください。</p>
 <h3 id="anonymous_identifier_usage"><a class="header" href="#anonymous_identifier_usage">anonymous_identifier_usage</a></h3>
 <p>このエラーは、名前付きの識別子が必要な位置で匿名識別子（<code>_</code>）が使われた場合に報告されます。</p>
 <h3 id="call_non_function"><a class="header" href="#call_non_function">call_non_function</a></h3>
 <p>このエラーは、関数でないシンボルを関数として呼び出した場合に報告されます。呼び出しを削除するか、実際の関数シンボルに置き換えてください。</p>
 <h3 id="combinational_loop"><a class="header" href="#combinational_loop">combinational_loop</a></h3>
 <p>このエラーは、シーケンシャル要素を介さず、信号の値が純粋な組み合わせ論理を通じて自分自身に依存している場合に報告されます。ループは <code>assign</code> 宣言、<code>always_comb</code> ブロック、関数呼び出し、またはインスタンス化されたモジュールやインターフェースによって形成され得ます。少なくとも 1 つのパス上にレジスタ (<code>always_ff</code>) を挿入するか、依存関係の連鎖が終了するように設計を再構成してループを解消してください。</p>
+<h3 id="component_interface_mismatch"><a class="header" href="#component_interface_mismatch">component_interface_mismatch</a></h3>
+<p>このエラーは、<code>$comp::*</code> の検証コンポーネントの使い方が、そのコンポーネントが宣言しているインターフェースと一致しない場合に報告されます。チェックされるのは、宣言の形式（クロック付きコンポーネントは <code>inst</code>、メソッドのみのコンポーネントは <code>var</code>）、パラメータ、ポート、インターフェースポート、および戻り値の幅を含むメソッド呼び出しです。使い方を修正するか、インターフェースが一致するようコンポーネントを更新してください。</p>
 <h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
 <p>このエラーは、複数の型定義が循環的に互いを参照している場合に報告されます。参照のいずれかを削除または再構成して循環を断ち切ってください。</p>
+<h3 id="duplicate_argument"><a class="header" href="#duplicate_argument">duplicate_argument</a></h3>
+<p>このエラーは、インスタンス化や関数呼び出しで同じ名前付き引数が複数回接続された場合に報告されます。重複した接続を削除してください。</p>
+<h3 id="duplicate_enum_variant"><a class="header" href="#duplicate_enum_variant">duplicate_enum_variant</a></h3>
+<p>このエラーは、enum のバリアントが同じ enum の別のバリアントと同じ値を持つ場合に報告されます。そのバリアントに他と異なる値を与えてください。</p>
 <h3 id="duplicated_identifier"><a class="header" href="#duplicated_identifier">duplicated_identifier</a></h3>
 <p>このエラーは、同じ識別子が同一スコープ内で複数回宣言された場合に報告されます。いずれかの宣言を別名にリネームしてください。</p>
 <h3 id="exceed_limit"><a class="header" href="#exceed_limit">exceed_limit</a></h3>
@@ -293,6 +301,8 @@
 <p>このエラーは、固定幅の型（例：<code>u32</code>）に <code>signed</code> 修飾子を付けた場合に報告されます。<code>signed</code> 修飾子を削除してください。</p>
 <h3 id="generic_inference_failed"><a class="header" href="#generic_inference_failed">generic_inference_failed</a></h3>
 <p>このエラーは、関数呼び出しの実引数が省略されたが、コンパイラが呼び出し時の引数から推論できなかった場合に報告されます。<code>::&lt;&gt;</code> で明示的にジェネリック引数を指定するか、変数宣言から幅を決定できる引数を渡してください。</p>
+<h3 id="implicit_clock_conversion"><a class="header" href="#implicit_clock_conversion">implicit_clock_conversion</a></h3>
+<p>このエラーは、clock/reset 型でない値が clock/reset ポートに接続された場合、またはその逆の場合に報告されます。clock 性・reset 性は宣言でのみ与えられるため、その値を親側で clock/reset 型の信号に束縛し（例: <code>let g: '_ clock = expr;</code>）、その信号を接続してください。</p>
 <h3 id="include_failure"><a class="header" href="#include_failure">include_failure</a></h3>
 <p>このエラーは、<code>include</code> 宣言が参照するファイルを読み込めない場合に報告されます。パスとファイルパーミッションを確認してください。</p>
 <h3 id="incompat_proto"><a class="header" href="#incompat_proto">incompat_proto</a></h3>
@@ -305,6 +315,8 @@
 <p>このエラーは、型キャストの元と先の型が互換でない場合に報告されます。互換性のある型を指定してください。</p>
 <h3 id="invalid_clock"><a class="header" href="#invalid_clock">invalid_clock</a></h3>
 <p>このエラーは、<code>clock</code> 型でも単一ビット信号でもない信号がクロックとして接続された場合に報告されます。<code>clock</code> 型の信号を使用してください。</p>
+<h3 id="invalid_clock_assignment"><a class="header" href="#invalid_clock_assignment">invalid_clock_assignment</a></h3>
+<p>このエラーは、clock/reset 型の信号が <code>always_ff</code> の中で代入された場合に報告されます。代わりに <code>always_ff</code> では <code>logic</code> の変数をトグルし、それを clock/reset 型の信号に束縛してください（例: <code>let d: '_ clock = t;</code>）。</p>
 <h3 id="invalid_clock_domain"><a class="header" href="#invalid_clock_domain">invalid_clock_domain</a></h3>
 <p>このエラーは、モジュールインスタンスにクロックドメインアノテーションが付与された場合に報告されます。アノテーションを削除してください。</p>
 <h3 id="invalid_connect_operand"><a class="header" href="#invalid_connect_operand">invalid_connect_operand</a></h3>
@@ -319,10 +331,16 @@
 <p>このエラーは、enum バリアントの値がその enum に指定されたエンコーディング（one-hot、gray など）と一致しない場合に報告されます。</p>
 <h3 id="invalid_factor"><a class="header" href="#invalid_factor">invalid_factor</a></h3>
 <p>このエラーは、値ではないシンボル（例：モジュール名）が式の因子として使われた場合に報告されます。</p>
+<h3 id="invalid_for_range"><a class="header" href="#invalid_for_range">invalid_for_range</a></h3>
+<p>このエラーは、<code>for</code> ループの範囲が不正な場合に報告されます。範囲は <code>..</code> または <code>..=</code> で書く必要があり、単なる式は範囲になりません。また範囲の境界は符号なしとして評価されるため、負の値にはできません。</p>
+<h3 id="invalid_for_step"><a class="header" href="#invalid_for_step">invalid_for_step</a></h3>
+<p>このエラーは、<code>for</code> ループのステップが誘導変数を範囲の終端に向けて進めず、ループが終了しない場合に報告されます。誘導変数が確実に進むようにステップを修正してください。</p>
 <h3 id="invalid_import"><a class="header" href="#invalid_import">invalid_import</a></h3>
 <p>このエラーは、参照先がインポート可能でない（private、またはインポート対象として無効）な場合に報告されます。</p>
 <h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
 <p>このエラーは、対応するビット幅を特定できない位置で <code>lsb</code> キーワードが使われた場合に報告されます。<code>lsb</code> を具体的なインデックスに置き換えてください。</p>
+<h3 id="invalid_mixin"><a class="header" href="#invalid_mixin">invalid_mixin</a></h3>
+<p>このエラーは、<a href="../05_language_reference/08_interface.html#mixin"><code>mixin</code></a> 宣言の対象をミックスインできない場合に報告されます。対象は、プロトタイプでなく、上書き可能なパラメータを持たず、自身が <code>mixin</code> 宣言を持たないインターフェースでなければなりません。また対象のメンバ名は、そのインターフェースに既に定義されているメンバと衝突してはいけません。</p>
 <h3 id="invalid_modifier"><a class="header" href="#invalid_modifier">invalid_modifier</a></h3>
 <p>このエラーは、型修飾子が許可されていない位置で使われた場合に報告されます。修飾子を削除してください。</p>
 <h3 id="invalid_modport_item"><a class="header" href="#invalid_modport_item">invalid_modport_item</a></h3>
@@ -335,16 +353,22 @@
 <p>このエラーは、演算子と互換性のない種類のオペランドが使われた場合に報告されます。</p>
 <h3 id="invalid_port_default_value"><a class="header" href="#invalid_port_default_value">invalid_port_default_value</a></h3>
 <p>このエラーは、ポートのデフォルト値がそのポートの型や方向に対して無効な場合に報告されます。</p>
+<h3 id="invalid_range"><a class="header" href="#invalid_range">invalid_range</a></h3>
+<p>このエラーは、範囲が不正な場合に報告されます。例えば、終端を含まない範囲の下限が上限より小さくない場合です。</p>
+<h3 id="invalid_range_assign"><a class="header" href="#invalid_range_assign">invalid_range_assign</a></h3>
+<p>このエラーは、代入の左辺の配列範囲選択が、定数で・範囲内で・昇順のスライスになっていない場合に報告されます。</p>
 <h3 id="invalid_reset"><a class="header" href="#invalid_reset">invalid_reset</a></h3>
 <p>このエラーは、<code>reset</code> 型でも単一ビット信号でもない信号がリセットとして接続された場合に報告されます。<code>reset</code> 型の信号を使用してください。</p>
 <h3 id="invalid_statement"><a class="header" href="#invalid_statement">invalid_statement</a></h3>
 <p>このエラーは、文がそれを許可していない位置に書かれた場合（例：関数外の <code>return</code>）に報告されます。文を削除するか、適切な位置に移動してください。</p>
 <h3 id="invalid_tb_usage"><a class="header" href="#invalid_tb_usage">invalid_tb_usage</a></h3>
-<p>このエラーは、<code>$tb::*</code> のテストベンチコンポーネントが <code>#[test]</code> モジュールの外で使われた場合に報告されます。テストモジュール内に移動してください。</p>
+<p>このエラーは、<code>$tb::*</code> または <code>$comp::*</code> のコンポーネントが <code>#[test]</code> モジュールの外で使われた場合に報告されます。テストモジュール内に移動してください。</p>
 <h3 id="invalid_test"><a class="header" href="#invalid_test">invalid_test</a></h3>
 <p>このエラーは、<code>#[test]</code> 宣言が不正な形をしている場合に報告されます。</p>
 <h3 id="invalid_type_declaration"><a class="header" href="#invalid_type_declaration">invalid_type_declaration</a></h3>
 <p>このエラーは <code>struct</code>、<code>enum</code>、<code>union</code> のデータ型がインターフェース宣言内で定義された場合に報告されます。</p>
+<h3 id="invalid_unsized_literal"><a class="header" href="#invalid_unsized_literal">invalid_unsized_literal</a></h3>
+<p>このエラーは、幅指定のないリテラルが自己決定のコンテキストで使われ、周囲から幅を決定できない場合に報告されます。<code>1'b0</code> のようにリテラルへ明示的な幅を与えてください。</p>
 <h3 id="invalid_wavedrom"><a class="header" href="#invalid_wavedrom">invalid_wavedrom</a></h3>
 <p>このエラーは、ドキュメンテーションコメント中の WaveDrom ブロックが不正な場合に報告されます。</p>
 <h3 id="invisible_identifier"><a class="header" href="#invisible_identifier">invisible_identifier</a></h3>
@@ -383,6 +407,8 @@
 <p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。</p>
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>このエラーは、同じモジュール内でデフォルトのクロックまたはリセットが複数回指定された場合に報告されます。</p>
+<h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
+<p>このエラーは、<code>+:</code> / <code>-:</code> / <code>step</code> の部分選択の幅が定数でない場合に報告されます。幅には定数式を使ってください。</p>
 <h3 id="non_positive_value"><a class="header" href="#non_positive_value">non_positive_value</a></h3>
 <p>このエラーは、正の型（<code>p8</code> / <code>p16</code> / <code>p32</code> / <code>p64</code>）にゼロ以下の値を代入した場合に報告されます。0 より大きい値を使用してください。</p>
 <h3 id="private_member"><a class="header" href="#private_member">private_member</a></h3>
@@ -439,6 +465,8 @@
 <p>このエラーは、ジェネリック定義位置からジェネリックパラメータ中の式を解決できない場合に報告されます。</p>
 <h3 id="wrong_seperator"><a class="header" href="#wrong_seperator">wrong_seperator</a></h3>
 <p>このエラーは、識別子間で誤った区切り文字（<code>::</code> と <code>.</code>）が使われた場合に報告されます。正しい区切り文字に置き換えてください。</p>
+<h3 id="zero_width_number"><a class="header" href="#zero_width_number">zero_width_number</a></h3>
+<p>このエラーは、数値の幅が0として宣言された場合に報告されます。</p>
 <h2 id="警告"><a class="header" href="#警告">警告</a></h2>
 <h3 id="invalid_identifier"><a class="header" href="#invalid_identifier">invalid_identifier</a></h3>
 <p>この警告は、識別子が設定された命名規則（<a href="../06_development_environment/01_project_configuration/03_lint.html">Lint</a> を参照）に違反している場合に報告されます。規則に従うように識別子をリネームしてください。</p>

@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-0a90ffd2.js";
+            window.path_to_searchindex_js = "../searchindex-556f5f19.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-b5e7373f.js"></script>
+        <script src="../toc-f6fb0cb4.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -330,10 +330,29 @@ power:
 <tr><td><code>--dump-area</code></td><td>推論された RAM ブロックを含む、セル種別ごとの面積内訳をダンプします。</td></tr>
 <tr><td><code>--dump-timing</code></td><td>クリティカルパスのトレースをダンプします。</td></tr>
 <tr><td><code>--dump-power</code></td><td>電力見積もり（漏れ電力＋動的電力の内訳）をダンプします。</td></tr>
+<tr><td><code>--format &lt;format&gt;</code></td><td>出力形式。<code>pretty</code>（デフォルト、人間向け）または <code>json</code>。</td></tr>
+<tr><td><code>--format-version &lt;n&gt;</code></td><td>JSON レポートのスキーマバージョン。<code>--format json</code> と併用する場合のみ有効。現在は <code>1</code> のみ。</td></tr>
 </tbody>
 </table>
 </div>
 <p><code>--dump-*</code> フラグが何も指定されない場合、面積／タイミング／電力の3つすべてがダンプされます。</p>
+<h2 id="json-レポート"><a class="header" href="#json-レポート">JSON レポート</a></h2>
+<p><code>--format json</code> は、人間向けのサマリの代わりに、機械可読なレポートを標準出力に書き出します。</p>
+<pre><code class="language-console">$ veryl synth --format json
+</code></pre>
+<pre><code class="language-text">{
+  "format_version": 1,
+  "top": "Counter",
+  "library": "sky130",
+  "status": "ok",
+  "cells": 19,
+  "ffs": 8,
+  "area": { "total": 302.5, "combinational": 122.5, "sequential": 180.0, "memory": 0.0 },
+  "timing": { "delay_ns": 0.38, "depth": 4, "from": "cnt[3]", "to": "cnt[6]" },
+  "power": { "total_mw": 0.0239, "leakage_mw": 0.0000271, "dynamic_mw": 0.0239, "clock_freq_mhz": 100.0, "activity": 0.1 }
+}
+</code></pre>
+<p>合成に成功した場合、<code>status</code> フィールドは <code>ok</code> になります。そうでない場合は、シンセサイザが扱えない構文なら <code>unsupported</code>、トップモジュールが見つからないなら <code>no_top</code>、その他の失敗なら <code>error</code> になります。これらの場合は <code>message</code> フィールドが失敗の内容を示し、<code>area</code>・<code>timing</code>・<code>power</code> は <code>null</code> になります。</p>
 
                     </main>
 

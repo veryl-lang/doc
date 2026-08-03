@@ -134,10 +134,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-738d67e0.js";
+            window.path_to_searchindex_js = "searchindex-35ef2795.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-db43e088.js"></script>
+        <script src="toc-156e7647.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -3426,6 +3426,63 @@ module test_function_call {
     }
 }
 </code></pre>
+<h3 id="hierarchical-reference"><a class="header" href="#hierarchical-reference">Hierarchical reference</a></h3>
+<p>Signals inside the DUT can be read from an <code>initial</code> block through a hierarchical path.
+The path starts at an instance of the test module, and goes through nested instances by <code>.</code>.
+Internal signals don’t have to be routed to the top level for observation.</p>
+<pre><code class="language-veryl playground">module Sub (
+    clk: input clock   ,
+    rst: input reset   ,
+    din: input logic&lt;4&gt;,
+) {
+    var internal_reg: logic&lt;4&gt;;
+    always_ff {
+        if_reset {
+            internal_reg = 0;
+        } else {
+            internal_reg = din + 1;
+        }
+    }
+}
+
+module Top (
+    clk: input clock   ,
+    rst: input reset   ,
+    din: input logic&lt;4&gt;,
+) {
+    inst u_sub: Sub ( clk, rst, din );
+}
+
+#[test(test_hier)]
+module test_hier {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    var din: logic&lt;4&gt;;
+
+    inst dut: Top ( clk, rst, din );
+
+    initial {
+        rst.assert();
+        din = 4'b0001;
+        clk.next();
+        $assert(dut.u_sub.internal_reg == 4'h2, "unexpected value");
+        $display("internal_reg = %h", dut.u_sub.internal_reg);
+        $finish();
+    }
+}
+</code></pre>
+<p>The referenced value can be used like any other expression, such as an argument of <code>$assert</code> and <code>$display</code>, a condition of <code>if</code>, and an operand with bit select.</p>
+<p>There are the following restrictions:</p>
+<ul>
+<li>A hierarchical reference is available only in <code>initial</code> blocks of a test module.
+Using it in RTL context like <code>always_comb</code>, or in a module which is not a test module, is reported as <code>invisible_identifier</code>.</li>
+<li>It can’t be used in a function because a function body is shared with RTL callers.</li>
+<li>An instance array can’t be a part of a hierarchical path.</li>
+</ul>
+<p>A hierarchical reference is not counted as a reference to the signal.
+So a signal which is read only through a hierarchical reference is reported as <code>unused_variable</code>.
+It can be suppressed by the <a href="#attribute"><code>#[allow(unused_variable)]</code></a> attribute.</p>
 <h3 id="file-output"><a class="header" href="#file-output">File output</a></h3>
 <p><code>$tb::file</code> is a file handle for writing output files during a native test.
 Unlike <code>clock_gen</code> and <code>reset_gen</code>, it is declared with <code>var</code>, then opened, written, and closed inside an <code>initial</code> block:</p>
@@ -4905,6 +4962,7 @@ The properties which are not specified here keep the default values defined in <
 <li><a href="#the-description-field"><code>description</code></a> — A description of the project.</li>
 <li><a href="#the-license-field"><code>license</code></a> — The project license.</li>
 <li><a href="#the-repository-field"><code>repository</code></a> — URL of the project source repository.</li>
+<li><a href="#the-categories-field"><code>categories</code></a> — The categories of the project.</li>
 </ul>
 </li>
 <li><a href="#the-build-section"><code>[build]</code></a> — Build settings.</li>
@@ -4953,6 +5011,14 @@ license = "MIT OR Apache-2.0"
 <pre><code class="language-toml">[project]
 repository = "https://github.com/veryl-lang/veryl"
 </code></pre>
+<h3 id="the-categories-field"><a class="header" href="#the-categories-field">The <code>categories</code> field</a></h3>
+<p>The optional <code>categories</code> field lists the categories which the project belongs to.
+It is used by the <a href="https://registry.veryl-lang.org">Veryl registry</a> to classify the project.</p>
+<pre><code class="language-toml">[project]
+categories = ["interconnect", "verification"]
+</code></pre>
+<p>The recognized categories are defined by the registry itself, not by the Veryl compiler.
+A category which the registry doesn’t recognize is reported as a warning by <code>veryl register</code> and ignored.</p>
 <h2 id="the-build-section"><a class="header" href="#the-build-section">The <code>[build]</code> section</a></h2>
 <p>The <code>[build]</code> section contains the configurations of code generation.
 Available configurations is <a href="#build">here</a>.</p>
@@ -5397,8 +5463,13 @@ CLI defines are merged with this field.</p>
 <p>The <code>seed</code> field sets the base seed for randomized verification-component tests.
 When unset, each <code>veryl test</code> run draws a fresh random seed and prints it; set it (or pass <code>--seed</code>) to reproduce a specific run.</p>
 <h3 id="the-four_state-field"><a class="header" href="#the-four_state-field">The <code>four_state</code> field</a></h3>
-<p>The <code>four_state</code> field runs native verification-component tests in four-state (X/Z) mode.
-It defaults to <code>false</code> and can also be enabled with the <code>--4state</code> command-line option.</p>
+<p>The <code>four_state</code> field runs native tests in four-state (X/Z) mode.
+It defaults to <code>false</code>, so a value which is not assigned is read as <code>0</code>.
+Under a four-state run, such a value is read as <code>x</code> instead.
+It can also be enabled with the <code>--4state</code> command-line option.</p>
+<pre><code class="language-toml">[test]
+four_state = true
+</code></pre>
 <h3 id="the-component_backend-field"><a class="header" href="#the-component_backend-field">The <code>component_backend</code> field</a></h3>
 <p>The <code>component_backend</code> field pins how verification components are executed:</p>
 <ul>
@@ -5477,6 +5548,7 @@ bump_commit_message = "Bump"
 <tr><td>publish_commit</td><td>boolean</td><td>false</td><td>automatic commit after publish</td></tr>
 <tr><td>bump_commit_message</td><td>string</td><td>“chore: Bump version”</td><td>commit message after bump</td></tr>
 <tr><td>publish_commit_message</td><td>string</td><td>“chore: Publish”</td><td>commit message after publish</td></tr>
+<tr><td>register</td><td>boolean</td><td>unset</td><td><a href="#registering-to-the-registry">registration</a> after publish</td></tr>
 </tbody>
 </table>
 </div>
@@ -5702,6 +5774,26 @@ As the same as publish, <code>bump_commit</code> in <code>[publish]</code> secti
 [INFO ]      Writing metadata ([path to project]/Veryl.pub)
 [INFO ]   Committing metadata ([path to project]/Veryl.pub)
 </code></pre>
+<h3 id="registering-to-the-registry"><a class="header" href="#registering-to-the-registry">Registering to the registry</a></h3>
+<p><a href="https://registry.veryl-lang.org">The Veryl registry</a> lists published projects.
+A project can be registered by <code>veryl register</code>.</p>
+<pre><code>$ veryl register
+</code></pre>
+<p>The registry identifies a project by its repository, so the <a href="#the-repository-field"><code>repository</code></a> field of the <code>[project]</code> section is required.
+The declared <code>repository</code> is used instead of the git <code>origin</code> remote, because <code>origin</code> varies with the checkout.</p>
+<p><code>veryl register</code> asks for confirmation before registering.
+The <code>--yes</code> option skips the confirmation, and it is required when the command is not executed interactively.</p>
+<p><code>veryl publish</code> can register the project too.
+The behavior is specified by <code>register</code> in <code>[publish]</code> section of <code>Veryl.toml</code>:</p>
+<ul>
+<li><code>true</code> — register automatically after publish</li>
+<li><code>false</code> — never register</li>
+<li>unset — ask once interactively</li>
+</ul>
+<p>Registration doesn’t push the commit.
+A published version becomes visible after its revision is pushed and the registry crawls the repository.</p>
+<p>If a <a href="#the-categories-field">category</a> which the registry doesn’t recognize is specified, it is reported as a warning.</p>
+<p>The registry to be used can be changed by the <code>VERYL_REGISTRY_URL</code> environment variable.</p>
 <h3 id="configuration"><a class="header" href="#configuration">Configuration</a></h3>
 <p>The available configurations are <a href="#publish">here</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -5828,7 +5920,7 @@ Without <code>--out-dir</code>, the build behavior is unchanged.</p>
 2 directories, 3 files
 </code></pre>
 <p>Files under <code>examples</code> are analyzed and checked like ordinary sources, and <code>#[test]</code> modules in them are executed by <code>veryl test</code>.
-They share the project namespace with the other sources, but are excluded from code generation and the filelist.
+They share the project namespace with the other sources, but are excluded from code generation, the filelist, and the document generated by <code>veryl doc</code>.
 When the project is consumed as a dependency, its <code>examples</code> directory is ignored entirely.</p>
 <p>Because the directory is reserved, it cannot be specified in the <code>sources</code> field of the <code>[build]</code> section.</p>
 <h2 id="about-gitignore"><a class="header" href="#about-gitignore">About <code>.gitignore</code></a></h2>
@@ -5886,6 +5978,28 @@ Supported simulators are below:</p>
 <p>Verilator is the default simulator.
 If no simulator is specified through <code>Veryl.toml</code> and command-line option, it will be used.</p>
 <p>The available configurations are <a href="#test">here</a>.</p>
+<h2 id="json-report"><a class="header" href="#json-report">JSON report</a></h2>
+<p><code>veryl test --format json</code> writes a machine-readable report of the test results to stdout instead of the human-readable summary.
+It is useful to consume the results from CI or other tools.</p>
+<pre><code class="language-console">$ veryl test --format json
+</code></pre>
+<pre><code class="language-text">{
+  "format_version": 1,
+  "backend": "cc",
+  "passed": 1,
+  "failed": 1,
+  "ignored": 1,
+  "tests": [
+    { "name": "test_a", "status": "pass", "runtime_s": 0.000405, "sim_s": 0.0000147 },
+    { "name": "test_b", "status": "fail", "message": "assertion failed", "runtime_s": 0.000559, "sim_s": 0.0000206 }
+  ]
+}
+</code></pre>
+<p>The <code>status</code> field of each test is <code>pass</code> or <code>fail</code>, and a failed test has a <code>message</code> field.
+If a test wrote something to the standard output, it is stored in an <code>output</code> field.
+Ignored tests are counted by <code>ignored</code>, but they are not listed in <code>tests</code>.</p>
+<p>The schema version of the report can be specified by <code>--format-version</code>, which is valid only with <code>--format json</code>.
+Currently only <code>1</code> is supported.</p>
 <h2 id="cocotb"><a class="header" href="#cocotb">cocotb</a></h2>
 <p><code>cocotb</code> tests require <code>python3</code> environment in which <code>cocotb</code> is installed.
 The supported version of <code>cocotb</code> is 1.9.x and 2.0.x.</p>
@@ -6335,10 +6449,31 @@ section of <code>Veryl.toml</code>.</p>
 <tr><td><code>--dump-area</code></td><td>Dump the per-cell-kind area breakdown, including inferred RAM blocks.</td></tr>
 <tr><td><code>--dump-timing</code></td><td>Dump the critical path trace.</td></tr>
 <tr><td><code>--dump-power</code></td><td>Dump the power estimate (leakage + dynamic breakdown).</td></tr>
+<tr><td><code>--format &lt;format&gt;</code></td><td>Output format: <code>pretty</code> (default, human-readable) or <code>json</code>.</td></tr>
+<tr><td><code>--format-version &lt;n&gt;</code></td><td>JSON report schema version. Only valid with <code>--format json</code>. Currently only <code>1</code>.</td></tr>
 </tbody>
 </table>
 </div>
 <p>If no <code>--dump-*</code> flag is given, all three of area / timing / power are dumped.</p>
+<h2 id="json-report-1"><a class="header" href="#json-report-1">JSON report</a></h2>
+<p><code>--format json</code> writes a machine-readable report to stdout instead of the human-readable summary.</p>
+<pre><code class="language-console">$ veryl synth --format json
+</code></pre>
+<pre><code class="language-text">{
+  "format_version": 1,
+  "top": "Counter",
+  "library": "sky130",
+  "status": "ok",
+  "cells": 19,
+  "ffs": 8,
+  "area": { "total": 302.5, "combinational": 122.5, "sequential": 180.0, "memory": 0.0 },
+  "timing": { "delay_ns": 0.38, "depth": 4, "from": "cnt[3]", "to": "cnt[6]" },
+  "power": { "total_mw": 0.0239, "leakage_mw": 0.0000271, "dynamic_mw": 0.0239, "clock_freq_mhz": 100.0, "activity": 0.1 }
+}
+</code></pre>
+<p>The <code>status</code> field is <code>ok</code> when synthesis succeeded.
+Otherwise it is <code>unsupported</code> for a construct which the synthesizer can’t handle, <code>no_top</code> when the top module is not found, and <code>error</code> for the other failures.
+In these cases a <code>message</code> field describes the failure, and <code>area</code>, <code>timing</code> and <code>power</code> are <code>null</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="metadata"><a class="header" href="#metadata">Metadata</a></h1>
 <p><code>veryl metadata</code> prints the resolved metadata of the current project, including
@@ -6411,6 +6546,49 @@ attrs = { role = "core" }
 </code></pre>
 <p>This is the designated place for external integration data.
 Unknown keys at the top level of <code>Veryl.toml</code> are rejected, so tool-specific data must live under <code>[metadata]</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="external-subcommand"><a class="header" href="#external-subcommand">External Subcommand</a></h1>
+<p>External subcommands allow the <code>veryl</code> command to be extended by tools which are
+distributed separately from Veryl.
+If the given subcommand is not a built-in one, <code>veryl</code> searches <code>PATH</code> for an executable
+named <code>veryl-&lt;subcommand&gt;</code>, and executes it.
+As a result, such a tool can be used as if it was a built-in subcommand.</p>
+<pre><code class="language-console">$ veryl import foo.sv
+</code></pre>
+<p>The command above executes <code>veryl-import foo.sv</code> if <code>veryl-import</code> is found on <code>PATH</code>.
+All arguments following the subcommand name are forwarded as-is, and the exit status of
+the external command becomes the exit status of <code>veryl</code>.</p>
+<p>If a matching executable is not found, an error is reported.</p>
+<h2 id="listing-commands"><a class="header" href="#listing-commands">Listing commands</a></h2>
+<p><code>veryl --help</code> shows built-in subcommands only.
+To show all available commands including external subcommands found on <code>PATH</code>,
+<code>veryl --list</code> can be used.</p>
+<pre><code class="language-console">$ veryl --list
+Available Commands:
+  build        Build the target codes corresponding to the current project
+  check        Analyze the current project
+  ...
+  import       Import SystemVerilog files as a Veryl dependency
+  ...
+</code></pre>
+<h2 id="subcommand-description"><a class="header" href="#subcommand-description">Subcommand description</a></h2>
+<p>By default, an external subcommand is listed with a fallback description like
+<code>External Veryl subcommand from PATH (veryl-import)</code>.
+If the executable supports the <code>--info</code> option, its output is used as the description
+instead.
+<code>veryl-&lt;subcommand&gt; --info</code> is expected to print a one-line description to stdout, and
+all of the following conditions must be satisfied:</p>
+<ul>
+<li>The exit status is <code>0</code></li>
+<li>The output is a single line without control characters</li>
+<li>The length of the line is 160 characters or less</li>
+<li>The command finishes within 500ms</li>
+</ul>
+<p>If any of them is not satisfied, the fallback description is used.</p>
+<h2 id="reserved-names"><a class="header" href="#reserved-names">Reserved names</a></h2>
+<p><code>ls</code> is not dispatched as an external subcommand because <code>veryl-ls</code> is
+<a href="#language-server">the official language server binary</a>.
+A subcommand name containing a path separator is rejected too.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -7535,6 +7713,10 @@ warnings that allow compilation to continue.</p>
 <p>This error is reported when an <code>elsif</code> or <code>else</code> attribute cannot be unambiguously
 associated with a preceding <code>if</code> attribute.
 Restructure the surrounding code so that the relationship is clear.</p>
+<h3 id="ambiguous_identifier"><a class="header" href="#ambiguous_identifier">ambiguous_identifier</a></h3>
+<p>This error is reported when an identifier is imported from multiple packages, so which
+symbol it refers to can’t be determined.
+Qualify the identifier with an explicit scope, or remove one of the imports.</p>
 <h3 id="anonymous_identifier_usage"><a class="header" href="#anonymous_identifier_usage">anonymous_identifier_usage</a></h3>
 <p>This error is reported when an anonymous identifier (<code>_</code>) is used in a position that
 requires a named identifier.</p>
@@ -7548,9 +7730,21 @@ element in between. The loop can be formed by <code>assign</code> declarations, 
 blocks, function calls, or instantiated modules and interfaces.
 Break the loop by inserting a register (<code>always_ff</code>) on at least one path, or by
 restructuring the design so that the dependency chain terminates.</p>
+<h3 id="component_interface_mismatch"><a class="header" href="#component_interface_mismatch">component_interface_mismatch</a></h3>
+<p>This error is reported when the usage of a <code>$comp::*</code> verification component doesn’t match
+the interface which the component declares. The checked items are the declaration form
+(<code>inst</code> for a clocked component, <code>var</code> for a method-only component), parameters, ports,
+interface ports, and method calls including the width of the return value.
+Correct the usage, or update the component so that its interface matches.</p>
 <h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
 <p>This error is reported when two or more type definitions reference each other in a
 cycle. Break the cycle by removing or restructuring one of the references.</p>
+<h3 id="duplicate_argument"><a class="header" href="#duplicate_argument">duplicate_argument</a></h3>
+<p>This error is reported when the same named argument is connected more than once at an
+instantiation or a function call. Remove the duplicated connection.</p>
+<h3 id="duplicate_enum_variant"><a class="header" href="#duplicate_enum_variant">duplicate_enum_variant</a></h3>
+<p>This error is reported when an enum variant has the same value as another variant of the
+same enum. Give the variant a distinct value.</p>
 <h3 id="duplicated_identifier"><a class="header" href="#duplicated_identifier">duplicated_identifier</a></h3>
 <p>This error is reported when the same identifier is declared more than once in the same
 scope. Rename one of the declarations.</p>
@@ -7566,6 +7760,11 @@ count, or elaboration evaluation size is exceeded. Raise the corresponding limit
 but the compiler cannot infer them from the call arguments.
 Provide explicit generic arguments through <code>::&lt;&gt;</code>, or pass an argument whose width can be
 determined from a variable declaration.</p>
+<h3 id="implicit_clock_conversion"><a class="header" href="#implicit_clock_conversion">implicit_clock_conversion</a></h3>
+<p>This error is reported when a value which is not clock/reset-typed is connected to a
+clock/reset port, or vice versa. Clock-ness and reset-ness are conferred only at a
+declaration, so the value should be bound to a clock/reset-typed signal in the parent
+(e.g. <code>let g: '_ clock = expr;</code>), and that signal should be connected.</p>
 <h3 id="include_failure"><a class="header" href="#include_failure">include_failure</a></h3>
 <p>This error is reported when a file referenced by an <code>include</code> declaration cannot be read.
 Check the path and file permissions.</p>
@@ -7587,6 +7786,10 @@ compatible. Choose a compatible target type.</p>
 <h3 id="invalid_clock"><a class="header" href="#invalid_clock">invalid_clock</a></h3>
 <p>This error is reported when a signal that is neither typed as <code>clock</code> nor a single-bit
 signal is connected as a clock. Use a <code>clock</code>-typed signal.</p>
+<h3 id="invalid_clock_assignment"><a class="header" href="#invalid_clock_assignment">invalid_clock_assignment</a></h3>
+<p>This error is reported when a clock/reset-typed signal is assigned in <code>always_ff</code>.
+Toggle a <code>logic</code> variable in <code>always_ff</code> instead, and bind it to a clock/reset-typed
+signal (e.g. <code>let d: '_ clock = t;</code>).</p>
 <h3 id="invalid_clock_domain"><a class="header" href="#invalid_clock_domain">invalid_clock_domain</a></h3>
 <p>This error is reported when a clock domain annotation is attached to a module instance,
 where it is not allowed. Remove the annotation.</p>
@@ -7609,6 +7812,14 @@ for the enum (e.g. one-hot, gray).</p>
 <h3 id="invalid_factor"><a class="header" href="#invalid_factor">invalid_factor</a></h3>
 <p>This error is reported when a non-value symbol (e.g. a module name) is used as a factor
 in an expression.</p>
+<h3 id="invalid_for_range"><a class="header" href="#invalid_for_range">invalid_for_range</a></h3>
+<p>This error is reported when the range of a <code>for</code> loop is invalid. The range must be
+written with <code>..</code> or <code>..=</code>; a bare expression is not a range. A range bound must not be
+negative either, because bounds are elaborated as unsigned.</p>
+<h3 id="invalid_for_step"><a class="header" href="#invalid_for_step">invalid_for_step</a></h3>
+<p>This error is reported when the step of a <code>for</code> loop never advances the induction
+variable toward the end of the range, so the loop doesn’t terminate.
+Make the step strictly advance the induction variable.</p>
 <h3 id="invalid_import"><a class="header" href="#invalid_import">invalid_import</a></h3>
 <p>This error is reported when the referenced item cannot be imported (e.g. it is private
 or not a valid import target).</p>
@@ -7616,6 +7827,12 @@ or not a valid import target).</p>
 <p>This error is reported when the <code>lsb</code> keyword appears in a context where the corresponding
 bit width cannot be determined.
 Replace <code>lsb</code> with a concrete index.</p>
+<h3 id="invalid_mixin"><a class="header" href="#invalid_mixin">invalid_mixin</a></h3>
+<p>This error is reported when the target of a <a href="#mixin"><code>mixin</code></a>
+declaration can’t be mixed in. The target must be an interface which is not a prototype,
+doesn’t have overridable parameters, and doesn’t have <code>mixin</code> declarations itself.
+The member names of the target must not conflict with the members which are already
+defined in the interface.</p>
 <h3 id="invalid_modifier"><a class="header" href="#invalid_modifier">invalid_modifier</a></h3>
 <p>This error is reported when a type modifier is used in a context that does not allow it.
 Remove the modifier.</p>
@@ -7634,6 +7851,12 @@ its base, such as a hexadecimal digit in a binary literal.</p>
 <h3 id="invalid_port_default_value"><a class="header" href="#invalid_port_default_value">invalid_port_default_value</a></h3>
 <p>This error is reported when a port default value is invalid for the port’s type or
 direction.</p>
+<h3 id="invalid_range"><a class="header" href="#invalid_range">invalid_range</a></h3>
+<p>This error is reported when a range is invalid, for example when the lower bound of an
+exclusive range is not less than the upper bound.</p>
+<h3 id="invalid_range_assign"><a class="header" href="#invalid_range_assign">invalid_range_assign</a></h3>
+<p>This error is reported when an array range select on the left-hand side of an assignment
+is not a constant, in-range, ascending slice.</p>
 <h3 id="invalid_reset"><a class="header" href="#invalid_reset">invalid_reset</a></h3>
 <p>This error is reported when a signal that is neither typed as <code>reset</code> nor a single-bit
 signal is connected as a reset. Use a <code>reset</code>-typed signal.</p>
@@ -7642,13 +7865,17 @@ signal is connected as a reset. Use a <code>reset</code>-typed signal.</p>
 (for example, a <code>return</code> outside a function).
 Remove or relocate the statement.</p>
 <h3 id="invalid_tb_usage"><a class="header" href="#invalid_tb_usage">invalid_tb_usage</a></h3>
-<p>This error is reported when a <code>$tb::*</code> testbench component is used outside a <code>#[test]</code>
+<p>This error is reported when a <code>$tb::*</code> or <code>$comp::*</code> component is used outside a <code>#[test]</code>
 module. Move the usage inside a test module.</p>
 <h3 id="invalid_test"><a class="header" href="#invalid_test">invalid_test</a></h3>
 <p>This error is reported when a <code>#[test]</code> declaration is malformed.</p>
 <h3 id="invalid_type_declaration"><a class="header" href="#invalid_type_declaration">invalid_type_declaration</a></h3>
 <p>This error is reported when <code>struct</code>, <code>enum</code> or <code>union</code> data types are defined within
 interface declarations.</p>
+<h3 id="invalid_unsized_literal"><a class="header" href="#invalid_unsized_literal">invalid_unsized_literal</a></h3>
+<p>This error is reported when an unsized literal is used in a self-determined context,
+where its width can’t be determined from the surroundings.
+Give the literal an explicit width like <code>1'b0</code>.</p>
 <h3 id="invalid_wavedrom"><a class="header" href="#invalid_wavedrom">invalid_wavedrom</a></h3>
 <p>This error is reported when a WaveDrom block in a documentation comment is invalid.</p>
 <h3 id="invisible_identifier"><a class="header" href="#invisible_identifier">invisible_identifier</a></h3>
@@ -7709,6 +7936,9 @@ block or <code>assign</code> statement. Drive each signal from a single source.<
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>This error is reported when a default clock or reset is specified more than once in the
 same module.</p>
+<h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
+<p>This error is reported when the width of a <code>+:</code> / <code>-:</code> / <code>step</code> part select is not a
+constant. Use a constant expression for the width.</p>
 <h3 id="non_positive_value"><a class="header" href="#non_positive_value">non_positive_value</a></h3>
 <p>This error is reported when a non-positive value is assigned to a positive type
 (<code>p8</code> / <code>p16</code> / <code>p32</code> / <code>p64</code>). Use a value greater than zero.</p>
@@ -7800,6 +8030,8 @@ from the position of the generic’s definition.</p>
 <h3 id="wrong_seperator"><a class="header" href="#wrong_seperator">wrong_seperator</a></h3>
 <p>This error is reported when an incorrect separator (<code>::</code> vs <code>.</code>) is used between
 identifiers. Replace it with the correct separator.</p>
+<h3 id="zero_width_number"><a class="header" href="#zero_width_number">zero_width_number</a></h3>
+<p>This error is reported when a number is declared with zero width.</p>
 <h2 id="warnings"><a class="header" href="#warnings">Warnings</a></h2>
 <h3 id="invalid_identifier"><a class="header" href="#invalid_identifier">invalid_identifier</a></h3>
 <p>This warning is reported when an identifier violates the configured naming rule
