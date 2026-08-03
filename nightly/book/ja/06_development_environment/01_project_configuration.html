@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-012fc18e.js";
+            window.path_to_searchindex_js = "../searchindex-0a90ffd2.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-89abcafe.js"></script>
+        <script src="../toc-b5e7373f.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -290,6 +290,7 @@
 <li><a href="01_project_configuration.html#the-test-section"><code>[test]</code></a> — テスト設定</li>
 <li><a href="01_project_configuration.html#the-publish-section"><code>[publish]</code></a> — 公開設定</li>
 <li><a href="01_project_configuration.html#the-synth-section"><code>[synth]</code></a> — 論理合成設定</li>
+<li><a href="01_project_configuration.html#the-properties-section"><code>[properties]</code></a> — Project properties.</li>
 <li><a href="01_project_configuration.html#the-dependencies-section"><code>[dependencies]</code></a> — ライブラリの依存関係</li>
 <li><a href="01_project_configuration.html#the-components-section"><code>[[components]]</code></a> — 検証コンポーネントパッケージ</li>
 </ul>
@@ -336,6 +337,14 @@ repository = "https://github.com/veryl-lang/veryl"
 <p><code>[publish]</code> セクションはプロジェクト公開の設定です。詳細は<a href="./01_project_configuration/05_publish.html">こちら</a>。</p>
 <h2 id="the-synth-section"><a class="header" href="#the-synth-section"><code>[synth]</code> セクション</a></h2>
 <p><code>[synth]</code> セクションはシンセサイザの設定です。詳細は<a href="./01_project_configuration/06_synth.html">こちら</a>。</p>
+<h2 id="the-properties-section"><a class="header" href="#the-properties-section">The <code>[properties]</code> section</a></h2>
+<p>The <code>[properties]</code> section contains project properties. A project property is a compile time constant which can be referenced from the source code of the project through the <code>$prop</code> namespace.</p>
+<p>The name of a property should be a valid identifier of Veryl because it is referenced as an identifier in the source code. The value of a property is an integer or a boolean. The type of a property is decided by the given value, and an integer property has <code>i64</code> type, and a boolean property has <code>bbool</code> type in the source code.</p>
+<pre><code class="language-toml">[properties]
+DATA_WIDTH   = 32
+ENABLE_DEBUG = false
+</code></pre>
+<p>The value defined here is the default value of the property. It can be overridden by the project which depends on this project. Please see <a href="../05_language_reference/20_project_property.html">Project Property</a> for the usage in the source code, and <a href="./02_dependencies.html#project-property-override">Dependencies</a> for overriding.</p>
 <h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section"><code>[dependencies]</code> セクション</a></h2>
 <p><code>[dependencies]</code> セクションはライブラリの依存関係です。詳細は<a href="./02_dependencies.html">こちら</a>。</p>
 <h2 id="the-components-section"><a class="header" href="#the-components-section"><code>[[components]]</code> エントリ</a></h2>

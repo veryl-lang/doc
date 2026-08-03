@@ -134,10 +134,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-6c012c92.js";
+            window.path_to_searchindex_js = "searchindex-738d67e0.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-6600d52d.js"></script>
+        <script src="toc-db43e088.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -4847,6 +4847,51 @@ The inference uses the declared type of each call argument to solve the generic 
 (for example a sized literal is passed). In that case, explicit generic arguments are required.
 See <a href="#generic_inference_failed">generic_inference_failed</a> for details.</p>
 <div style="break-before: page; page-break-before: always;"></div>
+<h1 id="project-property"><a class="header" href="#project-property">Project Property</a></h1>
+<p>A project property is a compile time constant which is given through <code>Veryl.toml</code> instead of source code.
+It is useful to configure a project from the outside of the source code.
+For example, a library can be built with a different data width for each project which depends on it.</p>
+<h2 id="definition"><a class="header" href="#definition">Definition</a></h2>
+<p>Project properties are defined in the <code>[properties]</code> section of <code>Veryl.toml</code>.
+The value of a property is an integer or a boolean.</p>
+<pre><code class="language-toml">[project]
+name    = "veryl_sample"
+version = "0.1.0"
+
+[properties]
+DATA_WIDTH   = 32
+ENABLE_DEBUG = false
+</code></pre>
+<p>See <a href="#the-properties-section">Project Configuration</a> for detailed information.</p>
+<h2 id="reference"><a class="header" href="#reference">Reference</a></h2>
+<p>Defined properties can be referenced through the <code>$prop</code> namespace.
+An integer property has <code>i64</code> type, and a boolean property has <code>bbool</code> type.</p>
+<pre><code class="language-veryl">package sample_pkg {
+    const DATA_WIDTH  : i64   = $prop::DATA_WIDTH;
+    const ENABLE_DEBUG: bbool = $prop::ENABLE_DEBUG;
+}
+</code></pre>
+<p><code>$prop</code> always refers to the properties of the project which the source code belongs to.
+So the properties of a dependency can’t be referenced from the project which depends on it.</p>
+<p>A project property is a compile time constant, so it can be used wherever a constant expression can be used.
+The value is resolved at compile time, and the resolved value appears in the generated code.</p>
+<pre><code class="language-veryl">module ModuleA {
+    var a: logic&lt;$prop::DATA_WIDTH&gt;;
+
+    if $prop::ENABLE_DEBUG :g_debug {
+        // debug logic
+    }
+}
+</code></pre>
+<h2 id="configuration-by-the-depending-project"><a class="header" href="#configuration-by-the-depending-project">Configuration by the depending project</a></h2>
+<p>The value of a project property can be overridden through the <code>properties</code> field of the <code>[dependencies]</code> section by the project which depends on it.</p>
+<pre><code class="language-toml">[dependencies]
+veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 8}}
+</code></pre>
+<p>In the above example, <code>$prop::DATA_WIDTH</code> in <code>veryl_sample</code> becomes <code>8</code>.
+The properties which are not specified here keep the default values defined in <code>Veryl.toml</code> of the dependency, so <code>$prop::ENABLE_DEBUG</code> keeps <code>false</code>.</p>
+<p>See <a href="#project-property-override">Dependencies</a> for detailed information.</p>
+<div style="break-before: page; page-break-before: always;"></div>
 <h1 id="development-environment"><a class="header" href="#development-environment">Development Environment</a></h1>
 <p>In this chapter, we’ll discuss about development environment including project configuration and development tools.</p>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -4868,6 +4913,7 @@ See <a href="#generic_inference_failed">generic_inference_failed</a> for details
 <li><a href="#the-test-section"><code>[test]</code></a> — Test settings.</li>
 <li><a href="#the-publish-section"><code>[publish]</code></a> — Publish settings.</li>
 <li><a href="#the-synth-section"><code>[synth]</code></a> — Synthesis settings.</li>
+<li><a href="#the-properties-section"><code>[properties]</code></a> — Project properties.</li>
 <li><a href="#the-dependencies-section"><code>[dependencies]</code></a> — Library dependencies.</li>
 <li><a href="#the-components-section"><code>[[components]]</code></a> — Verification component packages.</li>
 </ul>
@@ -4925,6 +4971,19 @@ Available configurations is <a href="#publish">here</a>.</p>
 <h2 id="the-synth-section"><a class="header" href="#the-synth-section">The <code>[synth]</code> section</a></h2>
 <p>The <code>[synth]</code> section contains the configurations of the synthesizer.
 Available configurations is <a href="#synth">here</a>.</p>
+<h2 id="the-properties-section"><a class="header" href="#the-properties-section">The <code>[properties]</code> section</a></h2>
+<p>The <code>[properties]</code> section contains project properties.
+A project property is a compile time constant which can be referenced from the source code of the project through the <code>$prop</code> namespace.</p>
+<p>The name of a property should be a valid identifier of Veryl because it is referenced as an identifier in the source code.
+The value of a property is an integer or a boolean.
+The type of a property is decided by the given value, and an integer property has <code>i64</code> type, and a boolean property has <code>bbool</code> type in the source code.</p>
+<pre><code class="language-toml">[properties]
+DATA_WIDTH   = 32
+ENABLE_DEBUG = false
+</code></pre>
+<p>The value defined here is the default value of the property.
+It can be overridden by the project which depends on this project.
+Please see <a href="#project-property">Project Property</a> for the usage in the source code, and <a href="#project-property-override">Dependencies</a> for overriding.</p>
 <h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section">The <code>[dependencies]</code> section</a></h2>
 <p>The <code>[dependencies]</code> section contains library dependencies.
 Available configurations is <a href="#dependencies">here</a>.</p>
@@ -5567,6 +5626,26 @@ In the case, overriding dependencies by local path can be used like below:</p>
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", path = "../veryl_sample"}
 </code></pre>
 <p>This means that if there is <code>../veryl_sample</code>, it is used, and if not, it is pulled from the Git repository.</p>
+<h2 id="project-property-override"><a class="header" href="#project-property-override">Project property override</a></h2>
+<p>If a dependency has <a href="#project-property">project properties</a>, their values can be overridden through the <code>properties</code> field.</p>
+<pre><code class="language-toml">[dependencies]
+veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 8}}
+</code></pre>
+<p>The properties which are not specified here keep the default values defined in <code>Veryl.toml</code> of the dependency.
+The following restrictions are applied to the overriding.</p>
+<ul>
+<li>A property which is not defined in the dependency can’t be specified.</li>
+<li>The type of the given value must be the same as the type of the default value.</li>
+</ul>
+<p>The overriding is applied to the direct dependencies only.
+So the properties of the dependencies of a dependency are not affected, and they are controlled by <code>Veryl.toml</code> of the dependency.</p>
+<p>Dependencies which have the same source are distinguished by their property values.
+So the same project can be used as multiple dependencies with different property values.</p>
+<pre><code class="language-toml">[dependencies]
+veryl_sample_a = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 8}}
+veryl_sample_b = {github = "veryl-lang/veryl_sample", project = "veryl_sample", version = "0.1.0", properties = {DATA_WIDTH = 16}}
+</code></pre>
+<p>In the above example, <code>veryl_sample_a</code> and <code>veryl_sample_b</code> are generated as different projects.</p>
 <h2 id="git-backend"><a class="header" href="#git-backend">Git backend</a></h2>
 <p>Veryl can fetch git-based dependencies through two different backends:</p>
 <ul>
