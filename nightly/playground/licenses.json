@@ -1,0 +1,123 @@
+{
+  "licenses": [
+    {
+      "id": "EUPL-1.2",
+      "name": "European Union Public License 1.2",
+      "text": "EUROPEAN UNION PUBLIC LICENCE v. 1.2\nEUPL © the European Union 2007, 2016\n\nThis European Union Public Licence (the 'EUPL') applies to the Work (as defined below) which is provided under the terms of this Licence. Any use of the Work, other than as authorised under this Licence is prohibited (to the extent such use is covered by a right of the copyright holder of the Work).\n\nThe Work is provided under the terms of this Licence when the Licensor (as defined below) has placed the following notice immediately following the copyright notice for the Work: Licensed under the EUPL\n\nor has expressed by any other means his willingness to license under the EUPL."
+    }
+  ],
+  "crates": [
+    {
+      "name": "Surfer",
+      "version": "",
+      "license": "EUPL-1.2",
+      "url": "https://gitlab.com/surfer-project/surfer",
+      "category": "waveform"
+    },
+    {
+      "name": "@codemirror/state",
+      "version": "6.5.2",
+      "license": "MIT",
+      "url": "https://github.com/codemirror/state",
+      "category": "frontend"
+    },
+    {
+      "name": "@codemirror/view",
+      "version": "6.36.5",
+      "license": "MIT",
+      "url": "https://github.com/codemirror/view",
+      "category": "frontend"
+    },
+    {
+      "name": "@codemirror/language",
+      "version": "6.11.0",
+      "license": "MIT",
+      "url": "https://github.com/codemirror/language",
+      "category": "frontend"
+    },
+    {
+      "name": "@codemirror/commands",
+      "version": "6.8.1",
+      "license": "MIT",
+      "url": "https://github.com/codemirror/commands",
+      "category": "frontend"
+    },
+    {
+      "name": "@codemirror/search",
+      "version": "6.5.10",
+      "license": "MIT",
+      "url": "https://github.com/codemirror/search",
+      "category": "frontend"
+    },
+    {
+      "name": "@codemirror/autocomplete",
+      "version": "6.18.6",
+      "license": "MIT",
+      "url": "https://github.com/codemirror/autocomplete",
+      "category": "frontend"
+    },
+    {
+      "name": "@codemirror/lint",
+      "version": "6.8.5",
+      "license": "MIT",
+      "url": "https://github.com/codemirror/lint",
+      "category": "frontend"
+    },
+    {
+      "name": "@codemirror/legacy-modes",
+      "version": "6.5.1",
+      "license": "MIT",
+      "url": "https://github.com/codemirror/legacy-modes",
+      "category": "frontend"
+    },
+    {
+      "name": "@lezer/common",
+      "version": "1.2.3",
+      "license": "MIT",
+      "url": "https://github.com/lezer-parser/common",
+      "category": "frontend"
+    },
+    {
+      "name": "@lezer/highlight",
+      "version": "1.2.1",
+      "license": "MIT",
+      "url": "https://github.com/lezer-parser/highlight",
+      "category": "frontend"
+    },
+    {
+      "name": "@lezer/lr",
+      "version": "1.4.2",
+      "license": "MIT",
+      "url": "https://github.com/lezer-parser/lr",
+      "category": "frontend"
+    },
+    {
+      "name": "style-mod",
+      "version": "4.1.2",
+      "license": "MIT",
+      "url": "https://github.com/marijnh/style-mod",
+      "category": "frontend"
+    },
+    {
+      "name": "w3c-keyname",
+      "version": "2.2.8",
+      "license": "MIT",
+      "url": "https://github.com/marijnh/w3c-keyname",
+      "category": "frontend"
+    },
+    {
+      "name": "crelt",
+      "version": "1.0.6",
+      "license": "MIT",
+      "url": "https://github.com/marijnh/crelt",
+      "category": "frontend"
+    },
+    {
+      "name": "@marijn/find-cluster-break",
+      "version": "1.0.2",
+      "license": "MIT",
+      "url": "https://github.com/nicolo-ribaudo/find-cluster-break",
+      "category": "frontend"
+    }
+  ]
+}
