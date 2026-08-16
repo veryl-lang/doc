@@ -7871,6 +7871,37 @@ msgstr ""
 "```"
 
 #: src/05_language_reference/18_execution_model/03_assignment_semantics.md:63
+msgid "Function Calls in `always_ff`"
+msgstr "`always_ff` 内の関数呼び出し"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:65
+msgid ""
+"A function called from `always_ff` can't write an HDL object outside the "
+"function. An output parameter which is written by the function must be "
+"connected to a variable declared inside the `always_ff` process. The result "
+"can then be assigned explicitly using the non-blocking semantics of the "
+"process."
+msgstr ""
+"`always_ff` から呼び出される関数は、関数外の HDL オブジェクトへ書き込むことは"
+"できません。関数によって書き込まれる `output` 引数は、`always_ff` プロセス内で"
+"宣言された変数に接続する必要があります。その結果は、プロセスのノンブロッキン"
+"グ代入セマンティクスに従って明示的に代入できます。"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:91
+msgid ""
+"This restriction keeps all writes to HDL objects that participate in the "
+"simulation cycle visible in the `always_ff` process. A function may still "
+"modify its local variables and written output parameters as shown above. "
+"System functions such as `$display` and `$assert` don't write such HDL "
+"objects and aren't affected by this restriction."
+msgstr ""
+"この制限により、シミュレーションサイクルに参加する HDL オブジェクトへのすべ"
+"ての書き込みが `always_ff` プロセス内に明示されます。関数は上記のように、ロー"
+"カル変数と書き込み対象の `output` 引数を変更できます。`$display` や `$assert` "
+"などのシステム関数は、このような HDL オブジェクトを書き込まないため、この制"
+"限の対象外です。"
+
+#: src/05_language_reference/18_execution_model/03_assignment_semantics.md:63
 msgid "Mapping to SystemVerilog"
 msgstr "SystemVerilogへの対応"
 
@@ -14304,6 +14335,22 @@ msgstr ""
 "ます。`signed` 修飾子を削除してください。"
 
 #: src/07_appendix/02_semantic_error.md:79
+msgid "function_output_in_always_ff"
+msgstr "function_output_in_always_ff"
+
+#: src/07_appendix/02_semantic_error.md:81
+msgid ""
+"This error is reported when an output parameter written by a function called "
+"from `always_ff` is connected to an object outside the process. Connect the "
+"output to a process-local variable, then assign that variable to the "
+"intended HDL object explicitly."
+msgstr ""
+"このエラーは、`always_ff` から呼び出された関数が書き込む `output` 引数を、プロ"
+"セス外のオブジェクトに接続した場合に報告されます。`output` を `always_ff` 内の"
+"ローカル変数に接続し、その変数を目的の HDL オブジェクトへ明示的に代入してく"
+"ださい。"
+
+#: src/07_appendix/02_semantic_error.md:79
 msgid "generic_inference_failed"
 msgstr "generic_inference_failed"
 
@@ -15067,6 +15114,22 @@ msgid ""
 msgstr ""
 "このエラーは、予約された `__` 接頭辞を持つ識別子が使われた場合に報告されま"
 "す。別の名前を選んでください。"
+
+#: src/07_appendix/02_semantic_error.md:404
+msgid "side_effect_function_call_in_always_ff"
+msgstr "side_effect_function_call_in_always_ff"
+
+#: src/07_appendix/02_semantic_error.md:406
+msgid ""
+"This error is reported when a function called from `always_ff` directly or "
+"transitively writes an HDL object outside the function. Move the write into "
+"`always_ff`, or expose the value through an output parameter connected to a "
+"process-local variable."
+msgstr ""
+"このエラーは、`always_ff` から呼び出された関数が、直接または推移的に関数外の "
+"HDL オブジェクトへ書き込む場合に報告されます。書き込みを `always_ff` 内へ移す"
+"か、値を `output` 引数で受け渡し、その引数を `always_ff` 内のローカル変数に接"
+"続してください。"
 
 #: src/07_appendix/02_semantic_error.md:398
 msgid "sv_keyword_usage"

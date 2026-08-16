@@ -60,6 +60,39 @@ module ModuleA (
 }
 ```
 
+## Function Calls in `always_ff`
+
+A function called from `always_ff` can't write an HDL object outside the function.
+An output parameter which is written by the function must be connected to a variable
+declared inside the `always_ff` process. The result can then be assigned explicitly using
+the non-blocking semantics of the process.
+
+```veryl,playground
+module ModuleA (
+    i_clk: input  clock,
+    a    : input  logic<8>,
+    result: output logic<8>,
+) {
+    function increment (
+        value: input  logic<8>,
+        next : output logic<8>,
+    ) {
+        next = value + 1;
+    }
+
+    always_ff {
+        var next: logic<8>;
+        increment(a, next);
+        result = next;
+    }
+}
+```
+
+This restriction keeps all writes to HDL objects that participate in the simulation cycle
+visible in the `always_ff` process. A function may still modify its local variables and
+written output parameters as shown above. System functions such as `$display` and
+`$assert` don't write such HDL objects and aren't affected by this restriction.
+
 ## Mapping to SystemVerilog
 
 | Veryl context | Veryl syntax | SystemVerilog equivalent |

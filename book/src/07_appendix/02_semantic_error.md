@@ -76,6 +76,12 @@ count, or elaboration evaluation size is exceeded. Raise the corresponding limit
 This error is reported when the `signed` modifier is applied to a fixed-width type
 (e.g. `u32`). Remove the `signed` modifier.
 
+### function_output_in_always_ff
+
+This error is reported when an output parameter written by a function called from
+`always_ff` is connected to an object outside the process. Connect the output to a
+process-local variable, then assign that variable to the intended HDL object explicitly.
+
 ### generic_inference_failed
 
 This error is reported when the actual generic arguments of a function call are omitted
@@ -394,6 +400,12 @@ that requires forward declaration. Move the definition before the reference.
 
 This error is reported when an identifier with the reserved `__` prefix is used. Choose
 a different name.
+
+### side_effect_function_call_in_always_ff
+
+This error is reported when a function called from `always_ff` directly or transitively
+writes an HDL object outside the function. Move the write into `always_ff`, or expose the
+value through an output parameter connected to a process-local variable.
 
 ### sv_keyword_usage
 
