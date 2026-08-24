@@ -182,6 +182,16 @@ Make the step strictly advance the induction variable.
 This error is reported when the referenced item cannot be imported (e.g. it is private
 or not a valid import target).
 
+### invalid_initial_assign
+
+This error is reported when a variable is assigned in an `initial` block, either by an
+assignment statement or through an output argument of a function call such as
+`$readmemh`. ASIC synthesizers ignore `initial` statements, so this is only valid where
+the target device initializes the variable at configuration time. Add
+`#[allow(initial_assign)]` to the declaration of the variable in that case, or
+initialize it by reset instead. A variable declared inside the `initial` block is a
+procedural local and is not reported.
+
 ### invalid_lsb
 
 This error is reported when the `lsb` keyword appears in a context where the corresponding
@@ -359,6 +369,8 @@ the same function call. Use one style consistently.
 
 This error is reported when a single signal is assigned from more than one procedural
 block or `assign` statement. Drive each signal from a single source.
+If it is intentional, such as for true dual port SRAM inference on FPGA, add
+`#[allow(multiple_assign)]` to the declaration of the signal.
 
 ### multiple_default
 
@@ -369,6 +381,13 @@ same module.
 
 This error is reported when the width of a `+:` / `-:` / `step` part select is not a
 constant. Use a constant expression for the width.
+
+### non_portable_dependency
+
+This error is reported when the code of a dependency opts in to a non-portable
+construct with `#[allow(initial_assign)]` or `#[allow(multiple_assign)]` and the
+project does not accept it. Add the item to `lint.portability.allow_in_dependencies`
+in `Veryl.toml` if the target device supports it, or stop depending on the project.
 
 ### non_positive_value
 
