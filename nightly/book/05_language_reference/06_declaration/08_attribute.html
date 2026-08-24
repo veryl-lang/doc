@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-a40263fc.js";
+            window.path_to_searchindex_js = "../../searchindex-20e6aeed.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-156e7647.js"></script>
@@ -297,7 +297,89 @@ It will be transpiled to SystemVerilog attribute <code>(*  *)</code>.</p>
 <li><code>unassign_variable</code></li>
 <li><code>missing_reset_statement</code></li>
 <li><code>missing_port</code></li>
+<li><code>initial_assign</code></li>
+<li><code>multiple_assign</code></li>
 </ul>
+<h3 id="non-portable-constructs"><a class="header" href="#non-portable-constructs">Non-portable constructs</a></h3>
+<p><code>initial_assign</code> and <code>multiple_assign</code> are different from the other lint names:
+they opt in to a construct which is not portable, that is, whether it works
+depends on the target device and the toolchain.
+They are written on the declaration of the variable they concern.</p>
+<p><code>initial_assign</code> allows assignment to the variable in an <code>initial</code> block.
+This relies on the target device initializing the variable at configuration
+time, which ASIC synthesizers ignore.
+Assignment through an output argument of a function call, such as <code>$readmemh</code>
+and <code>$readmemb</code>, requires the attribute as well.
+A variable declared inside the <code>initial</code> block is a procedural local rather
+than state of the design, so it needs no attribute.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    #[allow(initial_assign)]
+    var count: logic&lt;16&gt;;
+
+    #[allow(initial_assign)]
+    var rom: logic&lt;32&gt; [1024];
+
+    initial {
+        count = '0;
+        $readmemh("rom.hex", rom);
+    }
+
+    always_ff {
+        count = count + 1;
+    }
+
+    #[allow(unused_variable)]
+    let _a: logic&lt;32&gt; = rom[0];
+}
+</code></pre>
+<p>An <code>initial</code> block is not a driving process, so a variable with
+<code>initial_assign</code> can be driven by a process too, as <code>count</code> is above.
+<code>multiple_assign</code> is not required for it.</p>
+<p><code>multiple_assign</code> allows the variable to be assigned from more than one
+process, which true dual port SRAM inference on FPGA requires.</p>
+<pre><code class="language-veryl playground">module ModuleB (
+    i_clk0 : input  'a clock    ,
+    i_clk1 : input  'b clock    ,
+    i_en0  : input  'a logic    ,
+    i_en1  : input  'b logic    ,
+    i_addr0: input  'a logic&lt;5&gt; ,
+    i_addr1: input  'b logic&lt;5&gt; ,
+    i_data0: input  'a logic&lt;32&gt;,
+    i_data1: input  'b logic&lt;32&gt;,
+    o_data : output 'a logic&lt;32&gt;,
+) {
+    #[allow(multiple_assign)]
+    var ram: 'a logic&lt;32&gt; [32];
+
+    always_ff (i_clk0) {
+        if i_en0 {
+            ram[i_addr0] = i_data0;
+        }
+    }
+
+    unsafe (cdc) {
+        always_ff (i_clk1) {
+            if i_en1 {
+                ram[i_addr1] = i_data1;
+            }
+        }
+    }
+
+    assign o_data = ram[i_addr0];
+}
+</code></pre>
+<p>SystemVerilog forbids a variable written by an <code>always_ff</code> from being written
+by any other process. So an <code>always_ff</code> which writes a variable with either
+attribute is emitted as a plain <code>always</code>.
+<code>always_comb</code> has the same restriction and is not lowered, so driving one
+variable from several <code>always_comb</code>/<code>assign</code> declarations is accepted by Veryl
+but still rejected by SystemVerilog tools.</p>
+<p>To keep these constructs out of a project whose target does not support them,
+whether they are accepted from dependencies is decided by the consumer through
+<a href="../../06_development_environment/01_project_configuration/03_lint.html"><code>[lint.portability]</code></a>.
+In your own code the attribute is always honored.</p>
 <h2 id="ifdefifndefelsifelse-attribute"><a class="header" href="#ifdefifndefelsifelse-attribute"><code>ifdef</code>/<code>ifndef</code>/<code>elsif</code>/<code>else</code> Attribute</a></h2>
 <p><code>ifdef</code> and <code>ifndef</code> attributes are used to control whether the annotated code block is enabled by defined value.
 In addition, the code block with <code>elsif</code> or <code>else</code> attributes is optional and a code block with <code>ifdef</code> or <code>ifndef</code> attributes can be followed with that code block.</p>

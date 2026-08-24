@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-d07c883f.js";
+            window.path_to_searchindex_js = "searchindex-4aa4db1c.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-f6fb0cb4.js"></script>
@@ -2371,7 +2371,69 @@ module ModuleA #(
 <li><code>unassign_variable</code></li>
 <li><code>missing_reset_statement</code></li>
 <li><code>missing_port</code></li>
+<li><code>initial_assign</code></li>
+<li><code>multiple_assign</code></li>
 </ul>
+<h3 id="ポータブルでない構文"><a class="header" href="#ポータブルでない構文">ポータブルでない構文</a></h3>
+<p><code>initial_assign</code> と <code>multiple_assign</code> は他のリント名とは性質が異なり、ポータブルでない構文、すなわち動作するかどうかがターゲットデバイスやツールチェーンに依存する構文を明示的に許可するためのものです。これらは対象となる変数の宣言に記述します。</p>
+<p><code>initial_assign</code> は <code>initial</code> ブロックでその変数へ代入することを許可します。これはターゲットデバイスがコンフィギュレーション時に変数を初期化することに依存しており、ASIC の合成ツールはこれを無視します。<code>$readmemh</code> や <code>$readmemb</code> のような関数呼び出しの出力引数を介した代入にも同様にこのアトリビュートが必要です。<code>initial</code> ブロックの内部で宣言された変数は設計の状態ではなく手続き的なローカル変数であるため、アトリビュートは不要です。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    #[allow(initial_assign)]
+    var count: logic&lt;16&gt;;
+
+    #[allow(initial_assign)]
+    var rom: logic&lt;32&gt; [1024];
+
+    initial {
+        count = '0;
+        $readmemh("rom.hex", rom);
+    }
+
+    always_ff {
+        count = count + 1;
+    }
+
+    #[allow(unused_variable)]
+    let _a: logic&lt;32&gt; = rom[0];
+}
+</code></pre>
+<p><code>initial</code> ブロックは駆動プロセスではないため、<code>initial_assign</code> の付いた変数は上の <code>count</code> のようにプロセスから駆動することもできます。そのために <code>multiple_assign</code> は必要ありません。</p>
+<p><code>multiple_assign</code> は複数のプロセスからその変数へ代入することを許可します。これは FPGA における真のデュアルポート SRAM の推論に必要です。</p>
+<pre><code class="language-veryl playground">module ModuleB (
+    i_clk0 : input  'a clock    ,
+    i_clk1 : input  'b clock    ,
+    i_en0  : input  'a logic    ,
+    i_en1  : input  'b logic    ,
+    i_addr0: input  'a logic&lt;5&gt; ,
+    i_addr1: input  'b logic&lt;5&gt; ,
+    i_data0: input  'a logic&lt;32&gt;,
+    i_data1: input  'b logic&lt;32&gt;,
+    o_data : output 'a logic&lt;32&gt;,
+) {
+    #[allow(multiple_assign)]
+    var ram: 'a logic&lt;32&gt; [32];
+
+    always_ff (i_clk0) {
+        if i_en0 {
+            ram[i_addr0] = i_data0;
+        }
+    }
+
+    unsafe (cdc) {
+        always_ff (i_clk1) {
+            if i_en1 {
+                ram[i_addr1] = i_data1;
+            }
+        }
+    }
+
+    assign o_data = ram[i_addr0];
+}
+</code></pre>
+<p>SystemVerilog では <code>always_ff</code> で書き込まれる変数を他のプロセスから書き込むことは禁止されています。そのため、いずれかのアトリビュートが付いた変数に書き込む <code>always_ff</code> は通常の <code>always</code> として出力されます。<code>always_comb</code> にも同じ制限がありますが、こちらは変換されないため、複数の <code>always_comb</code>/<code>assign</code> 宣言から一つの変数を駆動するコードは Veryl では受理されても SystemVerilog のツールでは拒否されます。</p>
+<p>これらの構文をサポートしないターゲットのプロジェクトに紛れ込まないよう、依存プロジェクトのコードでこれらを受け入れるかどうかは利用側が <a href="#lint"><code>[lint.portability]</code></a> で決定します。自身のコードではアトリビュートは常に尊重されます。</p>
 <h2 id="ifdefifndefelsifelse-アトリビュート"><a class="header" href="#ifdefifndefelsifelse-アトリビュート"><code>ifdef</code>/<code>ifndef</code>/<code>elsif</code>/<code>else</code> アトリビュート</a></h2>
 <p><code>ifdef</code> と <code>ifndef</code> アトリビュートは定義された値によってコードブロックを有効にするかどうかを制御するために使用することができます。さらに、<code>ifdef</code> と <code>ifndef</code> のついたコードブロックに続けてオプションとして <code>elsif</code> と <code>else</code> アトリビュートの付いたブロックを書くこともできます。</p>
 <p>以下の例はこれらのアトリビュートの使用方法と、各コードブロックが定義された値によって有効になる様子を示しています。</p>
@@ -5021,6 +5083,26 @@ case_enum = "snake"
 </tbody>
 </table>
 </div>
+<h3 id="lintportability-セクション"><a class="header" href="#lintportability-セクション"><code>[lint.portability]</code> セクション</a></h3>
+<p>このセクションは依存プロジェクトから受け入れるポータブルでない構文の設定です。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>説明</th></tr>
+</thead>
+<tbody>
+<tr><td>allow_in_dependencies</td><td>項目の配列<sup class="footnote-reference" id="fr-portitem-1"><a href="#footnote-portitem">5</a></sup></td><td>依存プロジェクトから受け入れるポータブルでない構文</td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="#アトリビュート"><code>#[allow(initial_assign)]</code></a> と <code>#[allow(multiple_assign)]</code> は、ポータブルでない構文、すなわち動作するかどうかがターゲットデバイスやツールチェーンに依存する構文を明示的に許可するためのものです。自身のコードではこれらのアトリビュートは常に尊重されます。依存プロジェクトのコードでは、ここに列挙されていない限り拒否されます。これは、自身のターゲットがサポートしない構文に依存したライブラリを気付かないうちに取り込んでしまうことを防ぐためです。既定では何も受け入れません。</p>
+<pre><code class="language-toml">[lint.portability]
+allow_in_dependencies = ["initial_assign"]
+</code></pre>
+<ul>
+<li><code>"initial_assign"</code> – <code>initial</code> ブロックでの代入</li>
+<li><code>"multiple_assign"</code> – 複数のプロセスからの代入</li>
+</ul>
 <ul>
 <li><code>"snake"</code> – snake_case</li>
 <li><code>"screaming_snake"</code> – SCREAMING_SNAKE_CASE</li>
@@ -5040,6 +5122,9 @@ case_enum = "snake"
 </li>
 <li id="footnote-regex">
 <p><code>".*"</code>のような正規表現です。使用可能な構文は<a href="https://docs.rs/regex/latest/regex/#syntax">こちら</a>. <a href="#fr-regex-1">↩</a> <a href="#fr-regex-2">↩2</a> <a href="#fr-regex-3">↩3</a> <a href="#fr-regex-4">↩4</a> <a href="#fr-regex-5">↩5</a> <a href="#fr-regex-6">↩6</a> <a href="#fr-regex-7">↩7</a> <a href="#fr-regex-8">↩8</a> <a href="#fr-regex-9">↩9</a> <a href="#fr-regex-10">↩10</a> <a href="#fr-regex-11">↩11</a> <a href="#fr-regex-12">↩12</a> <a href="#fr-regex-13">↩13</a> <a href="#fr-regex-14">↩14</a> <a href="#fr-regex-15">↩15</a> <a href="#fr-regex-16">↩16</a> <a href="#fr-regex-17">↩17</a> <a href="#fr-regex-18">↩18</a> <a href="#fr-regex-19">↩19</a> <a href="#fr-regex-20">↩20</a> <a href="#fr-regex-21">↩21</a> <a href="#fr-regex-22">↩22</a> <a href="#fr-regex-23">↩23</a> <a href="#fr-regex-24">↩24</a> <a href="#fr-regex-25">↩25</a> <a href="#fr-regex-26">↩26</a> <a href="#fr-regex-27">↩27</a> <a href="#fr-regex-28">↩28</a> <a href="#fr-regex-29">↩29</a> <a href="#fr-regex-30">↩30</a> <a href="#fr-regex-31">↩31</a> <a href="#fr-regex-32">↩32</a> <a href="#fr-regex-33">↩33</a> <a href="#fr-regex-34">↩34</a> <a href="#fr-regex-35">↩35</a> <a href="#fr-regex-36">↩36</a> <a href="#fr-regex-37">↩37</a> <a href="#fr-regex-38">↩38</a> <a href="#fr-regex-39">↩39</a> <a href="#fr-regex-40">↩40</a></p>
+</li>
+<li id="footnote-portitem">
+<p>設定可能な値は以下です。 <a href="#fr-portitem-1">↩</a></p>
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -7257,6 +7342,8 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、<code>for</code> ループのステップが誘導変数を範囲の終端に向けて進めず、ループが終了しない場合に報告されます。誘導変数が確実に進むようにステップを修正してください。</p>
 <h3 id="invalid_import"><a class="header" href="#invalid_import">invalid_import</a></h3>
 <p>このエラーは、参照先がインポート可能でない（private、またはインポート対象として無効）な場合に報告されます。</p>
+<h3 id="invalid_initial_assign"><a class="header" href="#invalid_initial_assign">invalid_initial_assign</a></h3>
+<p>このエラーは、代入文または <code>$readmemh</code> のような関数呼び出しの出力引数を介して、<code>initial</code> ブロックで変数に代入された場合に報告されます。ASIC の合成ツールは <code>initial</code> 文を無視するため、これはターゲットデバイスがコンフィギュレーション時にその変数を初期化する場合にのみ有効です。その場合は変数の宣言に <code>#[allow(initial_assign)]</code> を付けるか、代わりにリセットで初期化してください。<code>initial</code> ブロックの内部で宣言された変数は手続き的なローカル変数であり、報告されません。</p>
 <h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
 <p>このエラーは、対応するビット幅を特定できない位置で <code>lsb</code> キーワードが使われた場合に報告されます。<code>lsb</code> を具体的なインデックスに置き換えてください。</p>
 <h3 id="invalid_mixin"><a class="header" href="#invalid_mixin">invalid_mixin</a></h3>
@@ -7324,11 +7411,13 @@ Veryl: Start { DescriptionGroup };
 <h3 id="mixed_function_argument"><a class="header" href="#mixed_function_argument">mixed_function_argument</a></h3>
 <p>このエラーは、同じ関数呼び出しの中で位置引数と名前付き引数が混在している場合に報告されます。どちらか一方に統一してください。</p>
 <h3 id="multiple_assignment"><a class="header" href="#multiple_assignment">multiple_assignment</a></h3>
-<p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。</p>
+<p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。FPGA における真のデュアルポート SRAM の推論など意図的な場合は、その信号の宣言に <code>#[allow(multiple_assign)]</code> を付けてください。</p>
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>このエラーは、同じモジュール内でデフォルトのクロックまたはリセットが複数回指定された場合に報告されます。</p>
 <h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
 <p>このエラーは、<code>+:</code> / <code>-:</code> / <code>step</code> の部分選択の幅が定数でない場合に報告されます。幅には定数式を使ってください。</p>
+<h3 id="non_portable_dependency"><a class="header" href="#non_portable_dependency">non_portable_dependency</a></h3>
+<p>このエラーは、依存プロジェクトのコードが <code>#[allow(initial_assign)]</code> または <code>#[allow(multiple_assign)]</code> でポータブルでない構文を明示的に許可しているが、このプロジェクトがそれを受け入れていない場合に報告されます。ターゲットデバイスがサポートしているのであれば <code>Veryl.toml</code> の <code>lint.portability.allow_in_dependencies</code> に項目を追加し、そうでなければそのプロジェクトへの依存をやめてください。</p>
 <h3 id="non_positive_value"><a class="header" href="#non_positive_value">non_positive_value</a></h3>
 <p>このエラーは、正の型（<code>p8</code> / <code>p16</code> / <code>p32</code> / <code>p64</code>）にゼロ以下の値を代入した場合に報告されます。0 より大きい値を使用してください。</p>
 <h3 id="private_member"><a class="header" href="#private_member">private_member</a></h3>

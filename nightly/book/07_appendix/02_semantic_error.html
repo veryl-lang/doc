@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-a40263fc.js";
+            window.path_to_searchindex_js = "../searchindex-20e6aeed.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-156e7647.js"></script>
@@ -391,6 +391,14 @@ Make the step strictly advance the induction variable.</p>
 <h3 id="invalid_import"><a class="header" href="#invalid_import">invalid_import</a></h3>
 <p>This error is reported when the referenced item cannot be imported (e.g. it is private
 or not a valid import target).</p>
+<h3 id="invalid_initial_assign"><a class="header" href="#invalid_initial_assign">invalid_initial_assign</a></h3>
+<p>This error is reported when a variable is assigned in an <code>initial</code> block, either by an
+assignment statement or through an output argument of a function call such as
+<code>$readmemh</code>. ASIC synthesizers ignore <code>initial</code> statements, so this is only valid where
+the target device initializes the variable at configuration time. Add
+<code>#[allow(initial_assign)]</code> to the declaration of the variable in that case, or
+initialize it by reset instead. A variable declared inside the <code>initial</code> block is a
+procedural local and is not reported.</p>
 <h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
 <p>This error is reported when the <code>lsb</code> keyword appears in a context where the corresponding
 bit width cannot be determined.
@@ -500,13 +508,20 @@ Add the <code>tri</code> modifier.</p>
 the same function call. Use one style consistently.</p>
 <h3 id="multiple_assignment"><a class="header" href="#multiple_assignment">multiple_assignment</a></h3>
 <p>This error is reported when a single signal is assigned from more than one procedural
-block or <code>assign</code> statement. Drive each signal from a single source.</p>
+block or <code>assign</code> statement. Drive each signal from a single source.
+If it is intentional, such as for true dual port SRAM inference on FPGA, add
+<code>#[allow(multiple_assign)]</code> to the declaration of the signal.</p>
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>This error is reported when a default clock or reset is specified more than once in the
 same module.</p>
 <h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
 <p>This error is reported when the width of a <code>+:</code> / <code>-:</code> / <code>step</code> part select is not a
 constant. Use a constant expression for the width.</p>
+<h3 id="non_portable_dependency"><a class="header" href="#non_portable_dependency">non_portable_dependency</a></h3>
+<p>This error is reported when the code of a dependency opts in to a non-portable
+construct with <code>#[allow(initial_assign)]</code> or <code>#[allow(multiple_assign)]</code> and the
+project does not accept it. Add the item to <code>lint.portability.allow_in_dependencies</code>
+in <code>Veryl.toml</code> if the target device supports it, or stop depending on the project.</p>
 <h3 id="non_positive_value"><a class="header" href="#non_positive_value">non_positive_value</a></h3>
 <p>This error is reported when a non-positive value is assigned to a positive type
 (<code>p8</code> / <code>p16</code> / <code>p32</code> / <code>p64</code>). Use a value greater than zero.</p>

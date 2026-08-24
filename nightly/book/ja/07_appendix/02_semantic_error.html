@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-d07c883f.js";
+            window.path_to_searchindex_js = "../searchindex-4aa4db1c.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-f6fb0cb4.js"></script>
@@ -337,6 +337,8 @@
 <p>このエラーは、<code>for</code> ループのステップが誘導変数を範囲の終端に向けて進めず、ループが終了しない場合に報告されます。誘導変数が確実に進むようにステップを修正してください。</p>
 <h3 id="invalid_import"><a class="header" href="#invalid_import">invalid_import</a></h3>
 <p>このエラーは、参照先がインポート可能でない（private、またはインポート対象として無効）な場合に報告されます。</p>
+<h3 id="invalid_initial_assign"><a class="header" href="#invalid_initial_assign">invalid_initial_assign</a></h3>
+<p>このエラーは、代入文または <code>$readmemh</code> のような関数呼び出しの出力引数を介して、<code>initial</code> ブロックで変数に代入された場合に報告されます。ASIC の合成ツールは <code>initial</code> 文を無視するため、これはターゲットデバイスがコンフィギュレーション時にその変数を初期化する場合にのみ有効です。その場合は変数の宣言に <code>#[allow(initial_assign)]</code> を付けるか、代わりにリセットで初期化してください。<code>initial</code> ブロックの内部で宣言された変数は手続き的なローカル変数であり、報告されません。</p>
 <h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
 <p>このエラーは、対応するビット幅を特定できない位置で <code>lsb</code> キーワードが使われた場合に報告されます。<code>lsb</code> を具体的なインデックスに置き換えてください。</p>
 <h3 id="invalid_mixin"><a class="header" href="#invalid_mixin">invalid_mixin</a></h3>
@@ -404,11 +406,13 @@
 <h3 id="mixed_function_argument"><a class="header" href="#mixed_function_argument">mixed_function_argument</a></h3>
 <p>このエラーは、同じ関数呼び出しの中で位置引数と名前付き引数が混在している場合に報告されます。どちらか一方に統一してください。</p>
 <h3 id="multiple_assignment"><a class="header" href="#multiple_assignment">multiple_assignment</a></h3>
-<p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。</p>
+<p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。FPGA における真のデュアルポート SRAM の推論など意図的な場合は、その信号の宣言に <code>#[allow(multiple_assign)]</code> を付けてください。</p>
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>このエラーは、同じモジュール内でデフォルトのクロックまたはリセットが複数回指定された場合に報告されます。</p>
 <h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
 <p>このエラーは、<code>+:</code> / <code>-:</code> / <code>step</code> の部分選択の幅が定数でない場合に報告されます。幅には定数式を使ってください。</p>
+<h3 id="non_portable_dependency"><a class="header" href="#non_portable_dependency">non_portable_dependency</a></h3>
+<p>このエラーは、依存プロジェクトのコードが <code>#[allow(initial_assign)]</code> または <code>#[allow(multiple_assign)]</code> でポータブルでない構文を明示的に許可しているが、このプロジェクトがそれを受け入れていない場合に報告されます。ターゲットデバイスがサポートしているのであれば <code>Veryl.toml</code> の <code>lint.portability.allow_in_dependencies</code> に項目を追加し、そうでなければそのプロジェクトへの依存をやめてください。</p>
 <h3 id="non_positive_value"><a class="header" href="#non_positive_value">non_positive_value</a></h3>
 <p>このエラーは、正の型（<code>p8</code> / <code>p16</code> / <code>p32</code> / <code>p64</code>）にゼロ以下の値を代入した場合に報告されます。0 より大きい値を使用してください。</p>
 <h3 id="private_member"><a class="header" href="#private_member">private_member</a></h3>

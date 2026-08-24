@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-d07c883f.js";
+            window.path_to_searchindex_js = "../../searchindex-4aa4db1c.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-f6fb0cb4.js"></script>
@@ -389,6 +389,26 @@ case_enum = "snake"
 </tbody>
 </table>
 </div>
+<h3 id="lintportability-セクション"><a class="header" href="#lintportability-セクション"><code>[lint.portability]</code> セクション</a></h3>
+<p>このセクションは依存プロジェクトから受け入れるポータブルでない構文の設定です。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>説明</th></tr>
+</thead>
+<tbody>
+<tr><td>allow_in_dependencies</td><td>項目の配列<sup class="footnote-reference" id="fr-portitem-1"><a href="#footnote-portitem">5</a></sup></td><td>依存プロジェクトから受け入れるポータブルでない構文</td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="../../05_language_reference/06_declaration/08_attribute.html"><code>#[allow(initial_assign)]</code></a> と <code>#[allow(multiple_assign)]</code> は、ポータブルでない構文、すなわち動作するかどうかがターゲットデバイスやツールチェーンに依存する構文を明示的に許可するためのものです。自身のコードではこれらのアトリビュートは常に尊重されます。依存プロジェクトのコードでは、ここに列挙されていない限り拒否されます。これは、自身のターゲットがサポートしない構文に依存したライブラリを気付かないうちに取り込んでしまうことを防ぐためです。既定では何も受け入れません。</p>
+<pre><code class="language-toml">[lint.portability]
+allow_in_dependencies = ["initial_assign"]
+</code></pre>
+<ul>
+<li><code>"initial_assign"</code> – <code>initial</code> ブロックでの代入</li>
+<li><code>"multiple_assign"</code> – 複数のプロセスからの代入</li>
+</ul>
 <ul>
 <li><code>"snake"</code> – snake_case</li>
 <li><code>"screaming_snake"</code> – SCREAMING_SNAKE_CASE</li>
@@ -408,6 +428,9 @@ case_enum = "snake"
 </li>
 <li id="footnote-regex">
 <p><code>".*"</code>のような正規表現です。使用可能な構文は<a href="https://docs.rs/regex/latest/regex/#syntax">こちら</a>. <a href="#fr-regex-1">↩</a> <a href="#fr-regex-2">↩2</a> <a href="#fr-regex-3">↩3</a> <a href="#fr-regex-4">↩4</a> <a href="#fr-regex-5">↩5</a> <a href="#fr-regex-6">↩6</a> <a href="#fr-regex-7">↩7</a> <a href="#fr-regex-8">↩8</a> <a href="#fr-regex-9">↩9</a> <a href="#fr-regex-10">↩10</a> <a href="#fr-regex-11">↩11</a> <a href="#fr-regex-12">↩12</a> <a href="#fr-regex-13">↩13</a> <a href="#fr-regex-14">↩14</a> <a href="#fr-regex-15">↩15</a> <a href="#fr-regex-16">↩16</a> <a href="#fr-regex-17">↩17</a> <a href="#fr-regex-18">↩18</a> <a href="#fr-regex-19">↩19</a> <a href="#fr-regex-20">↩20</a> <a href="#fr-regex-21">↩21</a> <a href="#fr-regex-22">↩22</a> <a href="#fr-regex-23">↩23</a> <a href="#fr-regex-24">↩24</a> <a href="#fr-regex-25">↩25</a> <a href="#fr-regex-26">↩26</a> <a href="#fr-regex-27">↩27</a> <a href="#fr-regex-28">↩28</a> <a href="#fr-regex-29">↩29</a> <a href="#fr-regex-30">↩30</a> <a href="#fr-regex-31">↩31</a> <a href="#fr-regex-32">↩32</a> <a href="#fr-regex-33">↩33</a> <a href="#fr-regex-34">↩34</a> <a href="#fr-regex-35">↩35</a> <a href="#fr-regex-36">↩36</a> <a href="#fr-regex-37">↩37</a> <a href="#fr-regex-38">↩38</a> <a href="#fr-regex-39">↩39</a> <a href="#fr-regex-40">↩40</a></p>
+</li>
+<li id="footnote-portitem">
+<p>設定可能な値は以下です。 <a href="#fr-portitem-1">↩</a></p>
 </li>
 </ol>
 
