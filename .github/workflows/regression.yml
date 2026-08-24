@@ -53,7 +53,7 @@ jobs:
           key: mdbook-veryl-${{ runner.os }}-${{ steps.veryl_rev.outputs.sha }}
       - name: Build mdbook plugin
         if: steps.cache_mdbook_veryl.outputs.cache-hit != 'true'
-        run: cargo install --git https://github.com/veryl-lang/veryl mdbook-veryl
+        run: cargo install --force --git https://github.com/veryl-lang/veryl mdbook-veryl
       - name: Build mdbook
         run: mdbook build
         working-directory: book
