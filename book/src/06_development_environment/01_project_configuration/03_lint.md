@@ -116,6 +116,33 @@ This section contains configurations of naming conventions.
 | re_required_var              | regex[^regex]        | regex required of variable                      |
 | re_required_wire             | regex[^regex]        | regex required of wire type variable[^wire]     |
 
+### The `[lint.portability]` section
+
+This section decides which non-portable constructs are accepted from
+dependencies.
+
+| Configuration          | Value                        | Description                                          |
+|------------------------|------------------------------|------------------------------------------------------|
+| allow_in_dependencies  | array of item[^portitem]     | non-portable constructs accepted from dependencies   |
+
+[`#[allow(initial_assign)]`](../../05_language_reference/06_declaration/08_attribute.md)
+and `#[allow(multiple_assign)]` opt in to a construct which is not portable, that
+is, whether it works depends on the target device and the toolchain. In your own
+code the attribute is always honored. In the code of a dependency it is rejected
+unless it is listed here, so that a project can't absorb a library which relies
+on a construct its own target does not support without noticing. The default is
+to accept nothing.
+
+```toml
+[lint.portability]
+allow_in_dependencies = ["initial_assign"]
+```
+
+[^portitem]: The available values are
+
+* `"initial_assign"` -- assignment in an `initial` block
+* `"multiple_assign"` -- assignment from more than one process
+
 [^casetype]: The available values are 
 
 * `"snake"` -- snake_case
