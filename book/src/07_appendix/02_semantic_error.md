@@ -37,6 +37,12 @@ blocks, function calls, or instantiated modules and interfaces.
 Break the loop by inserting a register (`always_ff`) on at least one path, or by
 restructuring the design so that the dependency chain terminates.
 
+### combinational_loop_position_overflow
+
+This error is reported when a flattened signal width, unpacked array size, or
+positional offset tracked by combinational-loop analysis exceeds the supported
+range. Reduce the signal width or array dimensions of the affected module.
+
 ### component_interface_mismatch
 
 This error is reported when the usage of a `$comp::*` verification component doesn't match
