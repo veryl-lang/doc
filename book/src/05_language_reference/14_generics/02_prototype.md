@@ -186,7 +186,7 @@ proto interface ProtoA {
 }
 interface InterfaceA for ProtoA {
     var a: logic;
-    let b: lgoic = 0;
+    let b: logic = 0;
 }
 ```
 

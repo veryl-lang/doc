@@ -33,6 +33,99 @@ Available lint names are below:
 * `unassign_variable`
 * `missing_reset_statement`
 * `missing_port`
+* `initial_assign`
+* `multiple_assign`
+
+### Non-portable constructs
+
+`initial_assign` and `multiple_assign` are different from the other lint names:
+they opt in to a construct which is not portable, that is, whether it works
+depends on the target device and the toolchain.
+They are written on the declaration of the variable they concern.
+
+`initial_assign` allows assignment to the variable in an `initial` block.
+This relies on the target device initializing the variable at configuration
+time, which ASIC synthesizers ignore.
+Assignment through an output argument of a function call, such as `$readmemh`
+and `$readmemb`, requires the attribute as well.
+A variable declared inside the `initial` block is a procedural local rather
+than state of the design, so it needs no attribute.
+
+```veryl,playground
+module ModuleA (
+    i_clk: input clock,
+) {
+    #[allow(initial_assign)]
+    var count: logic<16>;
+
+    #[allow(initial_assign)]
+    var rom: logic<32> [1024];
+
+    initial {
+        count = '0;
+        $readmemh("rom.hex", rom);
+    }
+
+    always_ff {
+        count = count + 1;
+    }
+
+    #[allow(unused_variable)]
+    let _a: logic<32> = rom[0];
+}
+```
+
+An `initial` block is not a driving process, so a variable with
+`initial_assign` can be driven by a process too, as `count` is above.
+`multiple_assign` is not required for it.
+
+`multiple_assign` allows the variable to be assigned from more than one
+process, which true dual port SRAM inference on FPGA requires.
+
+```veryl,playground
+module ModuleB (
+    i_clk0 : input  'a clock    ,
+    i_clk1 : input  'b clock    ,
+    i_en0  : input  'a logic    ,
+    i_en1  : input  'b logic    ,
+    i_addr0: input  'a logic<5> ,
+    i_addr1: input  'b logic<5> ,
+    i_data0: input  'a logic<32>,
+    i_data1: input  'b logic<32>,
+    o_data : output 'a logic<32>,
+) {
+    #[allow(multiple_assign)]
+    var ram: 'a logic<32> [32];
+
+    always_ff (i_clk0) {
+        if i_en0 {
+            ram[i_addr0] = i_data0;
+        }
+    }
+
+    unsafe (cdc) {
+        always_ff (i_clk1) {
+            if i_en1 {
+                ram[i_addr1] = i_data1;
+            }
+        }
+    }
+
+    assign o_data = ram[i_addr0];
+}
+```
+
+SystemVerilog forbids a variable written by an `always_ff` from being written
+by any other process. So an `always_ff` which writes a variable with either
+attribute is emitted as a plain `always`.
+`always_comb` has the same restriction and is not lowered, so driving one
+variable from several `always_comb`/`assign` declarations is accepted by Veryl
+but still rejected by SystemVerilog tools.
+
+To keep these constructs out of a project whose target does not support them,
+whether they are accepted from dependencies is decided by the consumer through
+[`[lint.portability]`](../../06_development_environment/01_project_configuration/03_lint.md).
+In your own code the attribute is always honored.
 
 ## `ifdef`/`ifndef`/`elsif`/`else` Attribute
 
