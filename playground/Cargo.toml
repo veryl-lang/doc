@@ -31,6 +31,9 @@ wasm-bindgen-test = "0.3.53"
 # Workaround for reference type
 # https://github.com/rustwasm/wasm-bindgen/issues/4211
 strip = true
+# Stripped away anyway, and slows down the wasm backend
+# https://00f.net/2026/08/19/why-compiling-rust-to-webassembly-is-slow/
+debug = 0
 
 [profile.release]
 # for wasm-pack
