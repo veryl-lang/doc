@@ -69,8 +69,8 @@ the non-blocking semantics of the process.
 
 ```veryl,playground
 module ModuleA (
-    i_clk: input  clock,
-    a    : input  logic<8>,
+    i_clk : input  clock   ,
+    a     : input  logic<8>,
     result: output logic<8>,
 ) {
     function increment (
