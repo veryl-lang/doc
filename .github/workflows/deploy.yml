@@ -119,6 +119,7 @@ jobs:
           toolchain: stable
       - uses: Swatinem/rust-cache@v2
         with:
+          workspaces: playground
           shared-key: doc-playground
           save-if: ${{ github.ref == 'refs/heads/main' }}
       - uses: mozilla-actions/sccache-action@v0.0.10
