@@ -45,6 +45,11 @@ the interface which the component declares. The checked items are the declaratio
 interface ports, and method calls including the width of the return value.
 Correct the usage, or update the component so that its interface matches.
 
+### cyclic_file_dependency
+
+This error is reported when two or more files depend on each other in a cycle.
+Break the cycle by moving the declarations so that the files form a one-way dependency.
+
 ### cyclic_type_dependency
 
 This error is reported when two or more type definitions reference each other in a
