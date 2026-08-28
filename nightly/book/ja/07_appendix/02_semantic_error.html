@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-4aa4db1c.js";
+            window.path_to_searchindex_js = "../searchindex-7da5477d.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-f6fb0cb4.js"></script>
@@ -285,8 +285,12 @@
 <p>このエラーは、関数でないシンボルを関数として呼び出した場合に報告されます。呼び出しを削除するか、実際の関数シンボルに置き換えてください。</p>
 <h3 id="combinational_loop"><a class="header" href="#combinational_loop">combinational_loop</a></h3>
 <p>このエラーは、シーケンシャル要素を介さず、信号の値が純粋な組み合わせ論理を通じて自分自身に依存している場合に報告されます。ループは <code>assign</code> 宣言、<code>always_comb</code> ブロック、関数呼び出し、またはインスタンス化されたモジュールやインターフェースによって形成され得ます。少なくとも 1 つのパス上にレジスタ (<code>always_ff</code>) を挿入するか、依存関係の連鎖が終了するように設計を再構成してループを解消してください。</p>
+<h3 id="combinational_loop_position_overflow"><a class="header" href="#combinational_loop_position_overflow">combinational_loop_position_overflow</a></h3>
+<p>このエラーは、組み合わせループ解析で追跡する信号の展開後のビット幅、非パック配列の要素数、または位置オフセットがサポート範囲を超えた場合に報告されます。対象モジュールの信号幅または配列次元を小さくしてください。</p>
 <h3 id="component_interface_mismatch"><a class="header" href="#component_interface_mismatch">component_interface_mismatch</a></h3>
 <p>このエラーは、<code>$comp::*</code> の検証コンポーネントの使い方が、そのコンポーネントが宣言しているインターフェースと一致しない場合に報告されます。チェックされるのは、宣言の形式（クロック付きコンポーネントは <code>inst</code>、メソッドのみのコンポーネントは <code>var</code>）、パラメータ、ポート、インターフェースポート、および戻り値の幅を含むメソッド呼び出しです。使い方を修正するか、インターフェースが一致するようコンポーネントを更新してください。</p>
+<h3 id="cyclic_file_dependency"><a class="header" href="#cyclic_file_dependency">cyclic_file_dependency</a></h3>
+<p>This error is reported when two or more files depend on each other in a cycle. Break the cycle by moving the declarations so that the files form a one-way dependency.</p>
 <h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
 <p>このエラーは、複数の型定義が循環的に互いを参照している場合に報告されます。参照のいずれかを削除または再構成して循環を断ち切ってください。</p>
 <h3 id="duplicate_argument"><a class="header" href="#duplicate_argument">duplicate_argument</a></h3>
@@ -299,6 +303,8 @@
 <p>このエラーは、インスタンスの深さ、総インスタンス数、エラボレーション評価サイズなどの内部制限を超えた場合に報告されます。<code>Veryl.toml</code> の <code>[build]</code> セクションで該当する制限を引き上げるか、設計を簡略化してください。</p>
 <h3 id="fixed_type_with_signed_modifier"><a class="header" href="#fixed_type_with_signed_modifier">fixed_type_with_signed_modifier</a></h3>
 <p>このエラーは、固定幅の型（例：<code>u32</code>）に <code>signed</code> 修飾子を付けた場合に報告されます。<code>signed</code> 修飾子を削除してください。</p>
+<h3 id="function_output_in_always_ff"><a class="header" href="#function_output_in_always_ff">function_output_in_always_ff</a></h3>
+<p>このエラーは、<code>always_ff</code> から呼び出された関数の <code>output</code> 引数が、関数復帰時のコピーアウト先としてプロセス外のオブジェクトに接続されている場合に報告されます。<code>output</code> を <code>always_ff</code> 内のローカル変数に接続し、その変数を目的の HDL オブジェクトへ明示的に代入してください。</p>
 <h3 id="generic_inference_failed"><a class="header" href="#generic_inference_failed">generic_inference_failed</a></h3>
 <p>このエラーは、関数呼び出しの実引数が省略されたが、コンパイラが呼び出し時の引数から推論できなかった場合に報告されます。<code>::&lt;&gt;</code> で明示的にジェネリック引数を指定するか、変数宣言から幅を決定できる引数を渡してください。</p>
 <h3 id="implicit_clock_conversion"><a class="header" href="#implicit_clock_conversion">implicit_clock_conversion</a></h3>
@@ -423,6 +429,8 @@
 <p>このエラーは、前方宣言が必要な位置で識別子が宣言前に使われた場合に報告されます。定義を参照位置より前に移動してください。</p>
 <h3 id="reserved_identifier"><a class="header" href="#reserved_identifier">reserved_identifier</a></h3>
 <p>このエラーは、予約された <code>__</code> 接頭辞を持つ識別子が使われた場合に報告されます。別の名前を選んでください。</p>
+<h3 id="side_effect_function_call_in_always_ff"><a class="header" href="#side_effect_function_call_in_always_ff">side_effect_function_call_in_always_ff</a></h3>
+<p>このエラーは、<code>always_ff</code> から呼び出された関数が、直接または推移的に関数外の HDL オブジェクトへ書き込む場合に報告されます。書き込みを <code>always_ff</code> 内へ移すか、値を <code>output</code> 引数で受け渡し、その引数を <code>always_ff</code> 内のローカル変数に接続してください。</p>
 <h3 id="sv_keyword_usage"><a class="header" href="#sv_keyword_usage">sv_keyword_usage</a></h3>
 <p>このエラーは、SystemVerilog のキーワードが Veryl の識別子として使われた場合に報告されます。生成された SystemVerilog で衝突しないようにリネームしてください。</p>
 <h3 id="sv_with_implicit_reset"><a class="header" href="#sv_with_implicit_reset">sv_with_implicit_reset</a></h3>

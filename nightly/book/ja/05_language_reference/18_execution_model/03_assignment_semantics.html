@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-4aa4db1c.js";
+            window.path_to_searchindex_js = "../../searchindex-7da5477d.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-f6fb0cb4.js"></script>
@@ -319,6 +319,28 @@
     }
 }
 </code></pre>
+<h2 id="always_ff-内の関数呼び出し"><a class="header" href="#always_ff-内の関数呼び出し"><code>always_ff</code> 内の関数呼び出し</a></h2>
+<p><code>always_ff</code> から呼び出される関数は、関数外の HDL オブジェクトへ書き込むことはできません。関数によって書き込まれる <code>output</code> 引数は、<code>always_ff</code> プロセス内で宣言された変数に接続する必要があります。その結果は、プロセスのノンブロッキング代入セマンティクスに従って明示的に代入できます。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk : input  clock   ,
+    a     : input  logic&lt;8&gt;,
+    result: output logic&lt;8&gt;,
+) {
+    function increment (
+        value: input  logic&lt;8&gt;,
+        next : output logic&lt;8&gt;,
+    ) {
+        next = value + 1;
+    }
+
+    always_ff {
+        var next: logic&lt;8&gt;;
+        increment(a, next);
+        result = next;
+    }
+}
+</code></pre>
+<p>この制限により、シミュレーションサイクルに参加する HDL オブジェクトへのすべての書き込みが <code>always_ff</code> プロセス内に明示されます。関数は上記のように、ローカル変数と書き込み対象の <code>output</code> 引数を変更できます。<code>$display</code> や <code>$assert</code> などのシステム関数は、このような HDL オブジェクトを書き込まないため、この制限の対象外です。</p>
 <h2 id="systemverilogへの対応"><a class="header" href="#systemverilogへの対応">SystemVerilogへの対応</a></h2>
 <div class="table-wrapper">
 <table>
