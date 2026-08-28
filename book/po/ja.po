@@ -17750,6 +17750,21 @@ msgid "component_interface_mismatch"
 msgstr "component_interface_mismatch"
 
 #: src/07_appendix/02_semantic_error.md:42
+msgid "combinational_loop_position_overflow"
+msgstr "combinational_loop_position_overflow"
+
+#: src/07_appendix/02_semantic_error.md:44
+msgid ""
+"This error is reported when a flattened signal width, unpacked array size, "
+"or positional offset tracked by combinational-loop analysis exceeds the "
+"supported range. Reduce the signal width or array dimensions of the affected "
+"module."
+msgstr ""
+"このエラーは、組み合わせループ解析で追跡する信号の展開後のビット幅、非パック"
+"配列の要素数、または位置オフセットがサポート範囲を超えた場合に報告されます。"
+"対象モジュールの信号幅または配列次元を小さくしてください。"
+
+#: src/07_appendix/02_semantic_error.md:42
 msgid ""
 "This error is reported when the usage of a `$comp::*` verification component "
 "doesn't match the interface which the component declares. The checked items "
