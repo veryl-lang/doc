@@ -69,6 +69,7 @@ is reported. In both cases, an explicit type annotation resolves the error.
 For generic functions, the actual generic arguments after `::<>` can be omitted when they
 can be inferred from the function arguments.
 The inference uses the declared type of each call argument to solve the generic parameters.
+The declared type can come from a variable, a module port or a parameter.
 
 ```veryl,playground
 module ModuleA {
@@ -96,6 +97,24 @@ module ModuleA {
 }
 ```
 
-Inference fails when the argument's width cannot be determined from a variable declaration
-(for example a sized literal is passed). In that case, explicit generic arguments are required.
+A module port drives the inference in the same way as a local variable.
+
+```veryl,playground
+module ModuleB (
+    i_d: input logic<8>,
+) {
+    function FuncId::<T: u32> (
+        x: input logic<T>,
+    ) -> logic<T> {
+        return x;
+    }
+
+    // T is inferred to be 8 from the port's declared width.
+    let _r: logic<8> = FuncId(i_d);
+}
+```
+
+Inference fails when the argument's width cannot be determined from a variable, port or
+parameter declaration (for example a sized literal is passed).
+In that case, explicit generic arguments are required.
 See [generic_inference_failed](../07_appendix/02_semantic_error.md#generic_inference_failed) for details.

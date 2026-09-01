@@ -77,3 +77,58 @@ module ModuleB {
     assign c = Green;
 }
 ```
+
+## Component namespace import
+
+A component itself, which is a package, module or interface, can be imported under its own name.
+The imported name can be used as a qualifier at the use site, so a component of a dependency can be referenced without repeating the project name.
+
+```veryl
+import veryl_sample::sample_pkg;
+import veryl_sample::sample_if;
+import veryl_sample::sample_module;
+
+module ModuleC {
+    const A: u32 = sample_pkg::PARAM_A;
+
+    inst u_if: sample_if;
+    inst u: sample_module (
+        o_a: u_if.a,
+    );
+
+    let _a: logic = u_if.a;
+}
+```
+
+A generic component is imported as its definition, and the generic arguments are given at the use site.
+
+```veryl
+import veryl_sample::generic_pkg;
+
+module ModuleD {
+    const B: u32 = generic_pkg::<32>::PARAM_B;
+}
+```
+
+A `proto package` can be imported in the same way, and the imported name can be used as a generic bound.
+The other prototypes like `proto module` and `proto interface` can't be imported.
+
+```veryl
+import veryl_sample::sample_proto_pkg;
+
+module ModuleE::<PKG: sample_proto_pkg> {
+    let _a: logic<PKG::WIDTH> = 0;
+}
+```
+
+A function declared at the project scope, which means outside any module, interface and package, can be imported through the project name too.
+
+```veryl
+import veryl_sample::sample_func;
+
+module ModuleF {
+    let _a: logic<8> = sample_func::<8>(8'd1);
+}
+```
+
+> Note: The result of play button in the above codes is not exact because it doesn't use dependency resolution.

@@ -87,6 +87,12 @@ count, or elaboration evaluation size is exceeded. Raise the corresponding limit
 This error is reported when the `signed` modifier is applied to a fixed-width type
 (e.g. `u32`). Remove the `signed` modifier.
 
+### for_loop_overflow
+
+This error is reported when the step of a `for` loop makes the loop variable go outside
+the 32-bit signed range.
+Keep the loop variable within the range, or narrow the range or the step.
+
 ### function_output_in_always_ff
 
 This error is reported when an `output` parameter of a function called from `always_ff`
@@ -98,7 +104,7 @@ process-local variable, then assign that variable to the intended HDL object exp
 This error is reported when the actual generic arguments of a function call are omitted
 but the compiler cannot infer them from the call arguments.
 Provide explicit generic arguments through `::<>`, or pass an argument whose width can be
-determined from a variable declaration.
+determined from a variable, port or parameter declaration.
 
 ### implicit_clock_conversion
 
@@ -267,6 +273,11 @@ is not a constant, in-range, ascending slice.
 
 This error is reported when a signal that is neither typed as `reset` nor a single-bit
 signal is connected as a reset. Use a `reset`-typed signal.
+
+### invalid_size_type
+
+This error is reported when a type is used where a width or an array size is required.
+Use `$bits` to get the bit width of a type (e.g. `logic<$bits(u32)>`).
 
 ### invalid_statement
 
