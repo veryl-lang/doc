@@ -4340,6 +4340,56 @@ msgstr ""
 "}\n"
 "```"
 
+#: src/05_language_reference/06_declaration/12_import_export.md:81
+msgid "Component namespace import"
+msgstr "コンポーネント名前空間のインポート"
+
+#: src/05_language_reference/06_declaration/12_import_export.md:83
+msgid ""
+"A component itself, which is a package, module or interface, can be "
+"imported under its own name. The imported name can be used as a qualifier "
+"at the use site, so a component of a dependency can be referenced without "
+"repeating the project name."
+msgstr ""
+"パッケージ、モジュール、インターフェースといったコンポーネント自体を、その"
+"名前でインポートすることもできます。インポートされた名前は使用箇所で修飾子"
+"として使えるので、依存プロジェクトのコンポーネントをプロジェクト名を繰り返"
+"すことなく参照できます。"
+
+#: src/05_language_reference/06_declaration/12_import_export.md:103
+msgid ""
+"A generic component is imported as its definition, and the generic "
+"arguments are given at the use site."
+msgstr ""
+"ジェネリックコンポーネントは定義のままインポートされ、ジェネリック引数は使"
+"用箇所で与えます。"
+
+#: src/05_language_reference/06_declaration/12_import_export.md:113
+msgid ""
+"A `proto package` can be imported in the same way, and the imported name "
+"can be used as a generic bound. The other prototypes like `proto module` "
+"and `proto interface` can't be imported."
+msgstr ""
+"`proto package` も同じようにインポートでき、インポートされた名前をジェネ"
+"リック境界として使用できます。`proto module` や `proto interface` などの他"
+"のプロトタイプはインポートできません。"
+
+#: src/05_language_reference/06_declaration/12_import_export.md:124
+msgid ""
+"A function declared at the project scope, which means outside any module, "
+"interface and package, can be imported through the project name too."
+msgstr ""
+"モジュール、インターフェース、パッケージのいずれの内部でもない、プロジェク"
+"トスコープで宣言された関数も、プロジェクト名を通じてインポートできます。"
+
+#: src/05_language_reference/06_declaration/12_import_export.md:134
+msgid ""
+"Note: The result of play button in the above codes is not exact because "
+"it doesn't use dependency resolution."
+msgstr ""
+"注：上記のコードのプレイボタンの結果は依存関係解決を行わないので正確ではあ"
+"りません。"
+
 #: src/05_language_reference/06_declaration/13_connect.md:3
 msgid ""
 "To assign from a interface to another interface, `connect` decleration can "
