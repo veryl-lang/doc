@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-7da5477d.js";
+            window.path_to_searchindex_js = "../searchindex-fe6ae273.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-f6fb0cb4.js"></script>
@@ -317,7 +317,7 @@
 </ul>
 <p>同一の <code>var</code> に対する複数の代入で推論される型が一致しない場合、<a href="../07_appendix/02_semantic_error.html#type_inference_conflict">type_inference_conflict</a> として報告されます。サポートされていない式の場合は <a href="../07_appendix/02_semantic_error.html#type_inference_not_supported">type_inference_not_supported</a> が報告されます。いずれの場合も、明示的な型注釈を加えればエラーは解消されます。</p>
 <h2 id="ジェネリック引数の推論"><a class="header" href="#ジェネリック引数の推論">ジェネリック引数の推論</a></h2>
-<p>ジェネリック関数では、関数の引数からジェネリック引数を推論できる場合、<code>::&lt;&gt;</code> 後の実引数を省略できます。推論は各実引数の宣言型を用いてジェネリックパラメータを解決します。</p>
+<p>ジェネリック関数では、関数の引数からジェネリック引数を推論できる場合、<code>::&lt;&gt;</code> 後の実引数を省略できます。推論は各実引数の宣言型を用いてジェネリックパラメータを解決します。宣言型は変数、モジュールポート、パラメータのいずれのものでも構いません。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     function FuncId::&lt;T: u32&gt; (
         x: input logic&lt;T&gt;,
@@ -342,7 +342,21 @@
     let _rw: logic&lt;9&gt; = FuncWide(_a);
 }
 </code></pre>
-<p>実引数の幅を変数宣言から決定できない場合（例: ビット幅付きリテラルを渡した場合）、推論は失敗します。その場合は明示的なジェネリック引数が必要です。詳細は <a href="../07_appendix/02_semantic_error.html#generic_inference_failed">generic_inference_failed</a> を参照してください。</p>
+<p>モジュールポートはローカル変数と同じように推論に利用されます。</p>
+<pre><code class="language-veryl playground">module ModuleB (
+    i_d: input logic&lt;8&gt;,
+) {
+    function FuncId::&lt;T: u32&gt; (
+        x: input logic&lt;T&gt;,
+    ) -&gt; logic&lt;T&gt; {
+        return x;
+    }
+
+    // ポートの宣言された幅から T が 8 に推論される。
+    let _r: logic&lt;8&gt; = FuncId(i_d);
+}
+</code></pre>
+<p>実引数の幅を変数、ポート、パラメータの宣言から決定できない場合（例: ビット幅付きリテラルを渡した場合）、推論は失敗します。その場合は明示的なジェネリック引数が必要です。詳細は <a href="../07_appendix/02_semantic_error.html#generic_inference_failed">generic_inference_failed</a> を参照してください。</p>
 
                     </main>
 

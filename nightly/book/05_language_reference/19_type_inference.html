@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-bd6f0451.js";
+            window.path_to_searchindex_js = "../searchindex-b1ef2cf3.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-156e7647.js"></script>
@@ -332,7 +332,8 @@ is reported. In both cases, an explicit type annotation resolves the error.</p>
 <h2 id="generic-argument-inference"><a class="header" href="#generic-argument-inference">Generic Argument Inference</a></h2>
 <p>For generic functions, the actual generic arguments after <code>::&lt;&gt;</code> can be omitted when they
 can be inferred from the function arguments.
-The inference uses the declared type of each call argument to solve the generic parameters.</p>
+The inference uses the declared type of each call argument to solve the generic parameters.
+The declared type can come from a variable, a module port or a parameter.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     function FuncId::&lt;T: u32&gt; (
         x: input logic&lt;T&gt;,
@@ -357,8 +358,23 @@ The inference uses the declared type of each call argument to solve the generic 
     let _rw: logic&lt;9&gt; = FuncWide(_a);
 }
 </code></pre>
-<p>Inference fails when the argument’s width cannot be determined from a variable declaration
-(for example a sized literal is passed). In that case, explicit generic arguments are required.
+<p>A module port drives the inference in the same way as a local variable.</p>
+<pre><code class="language-veryl playground">module ModuleB (
+    i_d: input logic&lt;8&gt;,
+) {
+    function FuncId::&lt;T: u32&gt; (
+        x: input logic&lt;T&gt;,
+    ) -&gt; logic&lt;T&gt; {
+        return x;
+    }
+
+    // T is inferred to be 8 from the port's declared width.
+    let _r: logic&lt;8&gt; = FuncId(i_d);
+}
+</code></pre>
+<p>Inference fails when the argument’s width cannot be determined from a variable, port or
+parameter declaration (for example a sized literal is passed).
+In that case, explicit generic arguments are required.
 See <a href="../07_appendix/02_semantic_error.html#generic_inference_failed">generic_inference_failed</a> for details.</p>
 
                     </main>

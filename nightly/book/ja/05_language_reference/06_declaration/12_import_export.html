@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-7da5477d.js";
+            window.path_to_searchindex_js = "../../searchindex-fe6ae273.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-f6fb0cb4.js"></script>
@@ -335,6 +335,47 @@ module ModuleB {
     assign c = Green;
 }
 </code></pre>
+<h2 id="コンポーネント名前空間のインポート"><a class="header" href="#コンポーネント名前空間のインポート">コンポーネント名前空間のインポート</a></h2>
+<p>パッケージ、モジュール、インターフェースといったコンポーネント自体を、その名前でインポートすることもできます。インポートされた名前は使用箇所で修飾子として使えるので、依存プロジェクトのコンポーネントをプロジェクト名を繰り返すことなく参照できます。</p>
+<pre><code class="language-veryl">import veryl_sample::sample_pkg;
+import veryl_sample::sample_if;
+import veryl_sample::sample_module;
+
+module ModuleC {
+    const A: u32 = sample_pkg::PARAM_A;
+
+    inst u_if: sample_if;
+    inst u: sample_module (
+        o_a: u_if.a,
+    );
+
+    let _a: logic = u_if.a;
+}
+</code></pre>
+<p>ジェネリックコンポーネントは定義のままインポートされ、ジェネリック引数は使用箇所で与えます。</p>
+<pre><code class="language-veryl">import veryl_sample::generic_pkg;
+
+module ModuleD {
+    const B: u32 = generic_pkg::&lt;32&gt;::PARAM_B;
+}
+</code></pre>
+<p><code>proto package</code> も同じようにインポートでき、インポートされた名前をジェネリック境界として使用できます。<code>proto module</code> や <code>proto interface</code> などの他のプロトタイプはインポートできません。</p>
+<pre><code class="language-veryl">import veryl_sample::sample_proto_pkg;
+
+module ModuleE::&lt;PKG: sample_proto_pkg&gt; {
+    let _a: logic&lt;PKG::WIDTH&gt; = 0;
+}
+</code></pre>
+<p>モジュール、インターフェース、パッケージのいずれの内部でもない、プロジェクトスコープで宣言された関数も、プロジェクト名を通じてインポートできます。</p>
+<pre><code class="language-veryl">import veryl_sample::sample_func;
+
+module ModuleF {
+    let _a: logic&lt;8&gt; = sample_func::&lt;8&gt;(8'd1);
+}
+</code></pre>
+<blockquote>
+<p>注：上記のコードのプレイボタンの結果は依存関係解決を行わないので正確ではありません。</p>
+</blockquote>
 
                     </main>
 
