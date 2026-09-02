@@ -1,0 +1,13 @@
+pre.playground > .buttons {
+    visibility: visible;
+    opacity: 1;
+}
+
+pre.veryl-result {
+    margin-top: 0.25em;
+    border-left: 4px solid var(--quote-border);
+}
+
+pre.veryl-result > code {
+    white-space: pre-wrap;
+}
