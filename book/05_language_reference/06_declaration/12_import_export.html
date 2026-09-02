@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-35ef2795.js";
+            window.path_to_searchindex_js = "../../searchindex-b1ef2cf3.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-156e7647.js"></script>
@@ -339,6 +339,49 @@ module ModuleB {
     assign c = Green;
 }
 </code></pre>
+<h2 id="component-namespace-import"><a class="header" href="#component-namespace-import">Component namespace import</a></h2>
+<p>A component itself, which is a package, module or interface, can be imported under its own name.
+The imported name can be used as a qualifier at the use site, so a component of a dependency can be referenced without repeating the project name.</p>
+<pre><code class="language-veryl">import veryl_sample::sample_pkg;
+import veryl_sample::sample_if;
+import veryl_sample::sample_module;
+
+module ModuleC {
+    const A: u32 = sample_pkg::PARAM_A;
+
+    inst u_if: sample_if;
+    inst u: sample_module (
+        o_a: u_if.a,
+    );
+
+    let _a: logic = u_if.a;
+}
+</code></pre>
+<p>A generic component is imported as its definition, and the generic arguments are given at the use site.</p>
+<pre><code class="language-veryl">import veryl_sample::generic_pkg;
+
+module ModuleD {
+    const B: u32 = generic_pkg::&lt;32&gt;::PARAM_B;
+}
+</code></pre>
+<p>A <code>proto package</code> can be imported in the same way, and the imported name can be used as a generic bound.
+The other prototypes like <code>proto module</code> and <code>proto interface</code> can’t be imported.</p>
+<pre><code class="language-veryl">import veryl_sample::sample_proto_pkg;
+
+module ModuleE::&lt;PKG: sample_proto_pkg&gt; {
+    let _a: logic&lt;PKG::WIDTH&gt; = 0;
+}
+</code></pre>
+<p>A function declared at the project scope, which means outside any module, interface and package, can be imported through the project name too.</p>
+<pre><code class="language-veryl">import veryl_sample::sample_func;
+
+module ModuleF {
+    let _a: logic&lt;8&gt; = sample_func::&lt;8&gt;(8'd1);
+}
+</code></pre>
+<blockquote>
+<p>Note: The result of play button in the above codes is not exact because it doesn’t use dependency resolution.</p>
+</blockquote>
 
                     </main>
 

@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-556f5f19.js";
+            window.path_to_searchindex_js = "../searchindex-fe6ae273.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-f6fb0cb4.js"></script>
@@ -285,8 +285,12 @@
 <p>このエラーは、関数でないシンボルを関数として呼び出した場合に報告されます。呼び出しを削除するか、実際の関数シンボルに置き換えてください。</p>
 <h3 id="combinational_loop"><a class="header" href="#combinational_loop">combinational_loop</a></h3>
 <p>このエラーは、シーケンシャル要素を介さず、信号の値が純粋な組み合わせ論理を通じて自分自身に依存している場合に報告されます。ループは <code>assign</code> 宣言、<code>always_comb</code> ブロック、関数呼び出し、またはインスタンス化されたモジュールやインターフェースによって形成され得ます。少なくとも 1 つのパス上にレジスタ (<code>always_ff</code>) を挿入するか、依存関係の連鎖が終了するように設計を再構成してループを解消してください。</p>
+<h3 id="combinational_loop_position_overflow"><a class="header" href="#combinational_loop_position_overflow">combinational_loop_position_overflow</a></h3>
+<p>このエラーは、組み合わせループ解析で追跡する信号の展開後のビット幅、非パック配列の要素数、または位置オフセットがサポート範囲を超えた場合に報告されます。対象モジュールの信号幅または配列次元を小さくしてください。</p>
 <h3 id="component_interface_mismatch"><a class="header" href="#component_interface_mismatch">component_interface_mismatch</a></h3>
 <p>このエラーは、<code>$comp::*</code> の検証コンポーネントの使い方が、そのコンポーネントが宣言しているインターフェースと一致しない場合に報告されます。チェックされるのは、宣言の形式（クロック付きコンポーネントは <code>inst</code>、メソッドのみのコンポーネントは <code>var</code>）、パラメータ、ポート、インターフェースポート、および戻り値の幅を含むメソッド呼び出しです。使い方を修正するか、インターフェースが一致するようコンポーネントを更新してください。</p>
+<h3 id="cyclic_file_dependency"><a class="header" href="#cyclic_file_dependency">cyclic_file_dependency</a></h3>
+<p>このエラーは、2つ以上のファイルが循環的に依存している場合に報告されます。ファイル間の依存が一方向になるように宣言を移動して、循環を解消してください。</p>
 <h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
 <p>このエラーは、複数の型定義が循環的に互いを参照している場合に報告されます。参照のいずれかを削除または再構成して循環を断ち切ってください。</p>
 <h3 id="duplicate_argument"><a class="header" href="#duplicate_argument">duplicate_argument</a></h3>
@@ -299,8 +303,12 @@
 <p>このエラーは、インスタンスの深さ、総インスタンス数、エラボレーション評価サイズなどの内部制限を超えた場合に報告されます。<code>Veryl.toml</code> の <code>[build]</code> セクションで該当する制限を引き上げるか、設計を簡略化してください。</p>
 <h3 id="fixed_type_with_signed_modifier"><a class="header" href="#fixed_type_with_signed_modifier">fixed_type_with_signed_modifier</a></h3>
 <p>このエラーは、固定幅の型（例：<code>u32</code>）に <code>signed</code> 修飾子を付けた場合に報告されます。<code>signed</code> 修飾子を削除してください。</p>
+<h3 id="for_loop_overflow"><a class="header" href="#for_loop_overflow">for_loop_overflow</a></h3>
+<p>このエラーは、<code>for</code> ループのステップによってループ変数が32ビット符号付き整数の範囲を超える場合に報告されます。ループ変数がこの範囲に収まるようにするか、範囲かステップを小さくしてください。</p>
+<h3 id="function_output_in_always_ff"><a class="header" href="#function_output_in_always_ff">function_output_in_always_ff</a></h3>
+<p>このエラーは、<code>always_ff</code> から呼び出された関数の <code>output</code> 引数が、関数復帰時のコピーアウト先としてプロセス外のオブジェクトに接続されている場合に報告されます。<code>output</code> を <code>always_ff</code> 内のローカル変数に接続し、その変数を目的の HDL オブジェクトへ明示的に代入してください。</p>
 <h3 id="generic_inference_failed"><a class="header" href="#generic_inference_failed">generic_inference_failed</a></h3>
-<p>このエラーは、関数呼び出しの実引数が省略されたが、コンパイラが呼び出し時の引数から推論できなかった場合に報告されます。<code>::&lt;&gt;</code> で明示的にジェネリック引数を指定するか、変数宣言から幅を決定できる引数を渡してください。</p>
+<p>このエラーは、関数呼び出しのジェネリック実引数が省略されているものの、コンパイラが実引数からそれらを推論できない場合に報告されます。<code>::&lt;&gt;</code> により明示的にジェネリック引数を与えるか、変数、ポート、パラメータの宣言から幅を決定できる実引数を渡してください。</p>
 <h3 id="implicit_clock_conversion"><a class="header" href="#implicit_clock_conversion">implicit_clock_conversion</a></h3>
 <p>このエラーは、clock/reset 型でない値が clock/reset ポートに接続された場合、またはその逆の場合に報告されます。clock 性・reset 性は宣言でのみ与えられるため、その値を親側で clock/reset 型の信号に束縛し（例: <code>let g: '_ clock = expr;</code>）、その信号を接続してください。</p>
 <h3 id="include_failure"><a class="header" href="#include_failure">include_failure</a></h3>
@@ -337,6 +345,8 @@
 <p>このエラーは、<code>for</code> ループのステップが誘導変数を範囲の終端に向けて進めず、ループが終了しない場合に報告されます。誘導変数が確実に進むようにステップを修正してください。</p>
 <h3 id="invalid_import"><a class="header" href="#invalid_import">invalid_import</a></h3>
 <p>このエラーは、参照先がインポート可能でない（private、またはインポート対象として無効）な場合に報告されます。</p>
+<h3 id="invalid_initial_assign"><a class="header" href="#invalid_initial_assign">invalid_initial_assign</a></h3>
+<p>このエラーは、代入文または <code>$readmemh</code> のような関数呼び出しの出力引数を介して、<code>initial</code> ブロックで変数に代入された場合に報告されます。ASIC の合成ツールは <code>initial</code> 文を無視するため、これはターゲットデバイスがコンフィギュレーション時にその変数を初期化する場合にのみ有効です。その場合は変数の宣言に <code>#[allow(initial_assign)]</code> を付けるか、代わりにリセットで初期化してください。<code>initial</code> ブロックの内部で宣言された変数は手続き的なローカル変数であり、報告されません。</p>
 <h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
 <p>このエラーは、対応するビット幅を特定できない位置で <code>lsb</code> キーワードが使われた場合に報告されます。<code>lsb</code> を具体的なインデックスに置き換えてください。</p>
 <h3 id="invalid_mixin"><a class="header" href="#invalid_mixin">invalid_mixin</a></h3>
@@ -359,6 +369,8 @@
 <p>このエラーは、代入の左辺の配列範囲選択が、定数で・範囲内で・昇順のスライスになっていない場合に報告されます。</p>
 <h3 id="invalid_reset"><a class="header" href="#invalid_reset">invalid_reset</a></h3>
 <p>このエラーは、<code>reset</code> 型でも単一ビット信号でもない信号がリセットとして接続された場合に報告されます。<code>reset</code> 型の信号を使用してください。</p>
+<h3 id="invalid_size_type"><a class="header" href="#invalid_size_type">invalid_size_type</a></h3>
+<p>このエラーは、幅か配列サイズが必要な位置で型が使用されている場合に報告されます。型のビット幅を得るには <code>$bits</code> を使用してください（例: <code>logic&lt;$bits(u32)&gt;</code>）。</p>
 <h3 id="invalid_statement"><a class="header" href="#invalid_statement">invalid_statement</a></h3>
 <p>このエラーは、文がそれを許可していない位置に書かれた場合（例：関数外の <code>return</code>）に報告されます。文を削除するか、適切な位置に移動してください。</p>
 <h3 id="invalid_tb_usage"><a class="header" href="#invalid_tb_usage">invalid_tb_usage</a></h3>
@@ -404,11 +416,13 @@
 <h3 id="mixed_function_argument"><a class="header" href="#mixed_function_argument">mixed_function_argument</a></h3>
 <p>このエラーは、同じ関数呼び出しの中で位置引数と名前付き引数が混在している場合に報告されます。どちらか一方に統一してください。</p>
 <h3 id="multiple_assignment"><a class="header" href="#multiple_assignment">multiple_assignment</a></h3>
-<p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。</p>
+<p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。FPGA における真のデュアルポート SRAM の推論など意図的な場合は、その信号の宣言に <code>#[allow(multiple_assign)]</code> を付けてください。</p>
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>このエラーは、同じモジュール内でデフォルトのクロックまたはリセットが複数回指定された場合に報告されます。</p>
 <h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
 <p>このエラーは、<code>+:</code> / <code>-:</code> / <code>step</code> の部分選択の幅が定数でない場合に報告されます。幅には定数式を使ってください。</p>
+<h3 id="non_portable_dependency"><a class="header" href="#non_portable_dependency">non_portable_dependency</a></h3>
+<p>このエラーは、依存プロジェクトのコードが <code>#[allow(initial_assign)]</code> または <code>#[allow(multiple_assign)]</code> でポータブルでない構文を明示的に許可しているが、このプロジェクトがそれを受け入れていない場合に報告されます。ターゲットデバイスがサポートしているのであれば <code>Veryl.toml</code> の <code>lint.portability.allow_in_dependencies</code> に項目を追加し、そうでなければそのプロジェクトへの依存をやめてください。</p>
 <h3 id="non_positive_value"><a class="header" href="#non_positive_value">non_positive_value</a></h3>
 <p>このエラーは、正の型（<code>p8</code> / <code>p16</code> / <code>p32</code> / <code>p64</code>）にゼロ以下の値を代入した場合に報告されます。0 より大きい値を使用してください。</p>
 <h3 id="private_member"><a class="header" href="#private_member">private_member</a></h3>
@@ -419,6 +433,8 @@
 <p>このエラーは、前方宣言が必要な位置で識別子が宣言前に使われた場合に報告されます。定義を参照位置より前に移動してください。</p>
 <h3 id="reserved_identifier"><a class="header" href="#reserved_identifier">reserved_identifier</a></h3>
 <p>このエラーは、予約された <code>__</code> 接頭辞を持つ識別子が使われた場合に報告されます。別の名前を選んでください。</p>
+<h3 id="side_effect_function_call_in_always_ff"><a class="header" href="#side_effect_function_call_in_always_ff">side_effect_function_call_in_always_ff</a></h3>
+<p>このエラーは、<code>always_ff</code> から呼び出された関数が、直接または推移的に関数外の HDL オブジェクトへ書き込む場合に報告されます。書き込みを <code>always_ff</code> 内へ移すか、値を <code>output</code> 引数で受け渡し、その引数を <code>always_ff</code> 内のローカル変数に接続してください。</p>
 <h3 id="sv_keyword_usage"><a class="header" href="#sv_keyword_usage">sv_keyword_usage</a></h3>
 <p>このエラーは、SystemVerilog のキーワードが Veryl の識別子として使われた場合に報告されます。生成された SystemVerilog で衝突しないようにリネームしてください。</p>
 <h3 id="sv_with_implicit_reset"><a class="header" href="#sv_with_implicit_reset">sv_with_implicit_reset</a></h3>

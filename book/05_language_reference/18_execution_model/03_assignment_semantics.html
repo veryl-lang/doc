@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-35ef2795.js";
+            window.path_to_searchindex_js = "../../searchindex-b1ef2cf3.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-156e7647.js"></script>
@@ -320,6 +320,34 @@ The semantics — blocking or non-blocking — are automatically determined by c
     }
 }
 </code></pre>
+<h2 id="function-calls-in-always_ff"><a class="header" href="#function-calls-in-always_ff">Function Calls in <code>always_ff</code></a></h2>
+<p>A function called from <code>always_ff</code> can’t write an HDL object outside the function.
+An output parameter which is written by the function must be connected to a variable
+declared inside the <code>always_ff</code> process. The result can then be assigned explicitly using
+the non-blocking semantics of the process.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk : input  clock   ,
+    a     : input  logic&lt;8&gt;,
+    result: output logic&lt;8&gt;,
+) {
+    function increment (
+        value: input  logic&lt;8&gt;,
+        next : output logic&lt;8&gt;,
+    ) {
+        next = value + 1;
+    }
+
+    always_ff {
+        var next: logic&lt;8&gt;;
+        increment(a, next);
+        result = next;
+    }
+}
+</code></pre>
+<p>This restriction keeps all writes to HDL objects that participate in the simulation cycle
+visible in the <code>always_ff</code> process. A function may still modify its local variables and
+written output parameters as shown above. System functions such as <code>$display</code> and
+<code>$assert</code> don’t write such HDL objects and aren’t affected by this restriction.</p>
 <h2 id="mapping-to-systemverilog"><a class="header" href="#mapping-to-systemverilog">Mapping to SystemVerilog</a></h2>
 <div class="table-wrapper">
 <table>

@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-556f5f19.js";
+            window.path_to_searchindex_js = "searchindex-fe6ae273.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-f6fb0cb4.js"></script>
@@ -2371,7 +2371,69 @@ module ModuleA #(
 <li><code>unassign_variable</code></li>
 <li><code>missing_reset_statement</code></li>
 <li><code>missing_port</code></li>
+<li><code>initial_assign</code></li>
+<li><code>multiple_assign</code></li>
 </ul>
+<h3 id="ポータブルでない構文"><a class="header" href="#ポータブルでない構文">ポータブルでない構文</a></h3>
+<p><code>initial_assign</code> と <code>multiple_assign</code> は他のリント名とは性質が異なり、ポータブルでない構文、すなわち動作するかどうかがターゲットデバイスやツールチェーンに依存する構文を明示的に許可するためのものです。これらは対象となる変数の宣言に記述します。</p>
+<p><code>initial_assign</code> は <code>initial</code> ブロックでその変数へ代入することを許可します。これはターゲットデバイスがコンフィギュレーション時に変数を初期化することに依存しており、ASIC の合成ツールはこれを無視します。<code>$readmemh</code> や <code>$readmemb</code> のような関数呼び出しの出力引数を介した代入にも同様にこのアトリビュートが必要です。<code>initial</code> ブロックの内部で宣言された変数は設計の状態ではなく手続き的なローカル変数であるため、アトリビュートは不要です。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    #[allow(initial_assign)]
+    var count: logic&lt;16&gt;;
+
+    #[allow(initial_assign)]
+    var rom: logic&lt;32&gt; [1024];
+
+    initial {
+        count = '0;
+        $readmemh("rom.hex", rom);
+    }
+
+    always_ff {
+        count = count + 1;
+    }
+
+    #[allow(unused_variable)]
+    let _a: logic&lt;32&gt; = rom[0];
+}
+</code></pre>
+<p><code>initial</code> ブロックは駆動プロセスではないため、<code>initial_assign</code> の付いた変数は上の <code>count</code> のようにプロセスから駆動することもできます。そのために <code>multiple_assign</code> は必要ありません。</p>
+<p><code>multiple_assign</code> は複数のプロセスからその変数へ代入することを許可します。これは FPGA における真のデュアルポート SRAM の推論に必要です。</p>
+<pre><code class="language-veryl playground">module ModuleB (
+    i_clk0 : input  'a clock    ,
+    i_clk1 : input  'b clock    ,
+    i_en0  : input  'a logic    ,
+    i_en1  : input  'b logic    ,
+    i_addr0: input  'a logic&lt;5&gt; ,
+    i_addr1: input  'b logic&lt;5&gt; ,
+    i_data0: input  'a logic&lt;32&gt;,
+    i_data1: input  'b logic&lt;32&gt;,
+    o_data : output 'a logic&lt;32&gt;,
+) {
+    #[allow(multiple_assign)]
+    var ram: 'a logic&lt;32&gt; [32];
+
+    always_ff (i_clk0) {
+        if i_en0 {
+            ram[i_addr0] = i_data0;
+        }
+    }
+
+    unsafe (cdc) {
+        always_ff (i_clk1) {
+            if i_en1 {
+                ram[i_addr1] = i_data1;
+            }
+        }
+    }
+
+    assign o_data = ram[i_addr0];
+}
+</code></pre>
+<p>SystemVerilog では <code>always_ff</code> で書き込まれる変数を他のプロセスから書き込むことは禁止されています。そのため、いずれかのアトリビュートが付いた変数に書き込む <code>always_ff</code> は通常の <code>always</code> として出力されます。<code>always_comb</code> にも同じ制限がありますが、こちらは変換されないため、複数の <code>always_comb</code>/<code>assign</code> 宣言から一つの変数を駆動するコードは Veryl では受理されても SystemVerilog のツールでは拒否されます。</p>
+<p>これらの構文をサポートしないターゲットのプロジェクトに紛れ込まないよう、依存プロジェクトのコードでこれらを受け入れるかどうかは利用側が <a href="#lint"><code>[lint.portability]</code></a> で決定します。自身のコードではアトリビュートは常に尊重されます。</p>
 <h2 id="ifdefifndefelsifelse-アトリビュート"><a class="header" href="#ifdefifndefelsifelse-アトリビュート"><code>ifdef</code>/<code>ifndef</code>/<code>elsif</code>/<code>else</code> アトリビュート</a></h2>
 <p><code>ifdef</code> と <code>ifndef</code> アトリビュートは定義された値によってコードブロックを有効にするかどうかを制御するために使用することができます。さらに、<code>ifdef</code> と <code>ifndef</code> のついたコードブロックに続けてオプションとして <code>elsif</code> と <code>else</code> アトリビュートの付いたブロックを書くこともできます。</p>
 <p>以下の例はこれらのアトリビュートの使用方法と、各コードブロックが定義された値によって有効になる様子を示しています。</p>
@@ -2682,6 +2744,47 @@ module ModuleB {
     assign c = Green;
 }
 </code></pre>
+<h2 id="コンポーネント名前空間のインポート"><a class="header" href="#コンポーネント名前空間のインポート">コンポーネント名前空間のインポート</a></h2>
+<p>パッケージ、モジュール、インターフェースといったコンポーネント自体を、その名前でインポートすることもできます。インポートされた名前は使用箇所で修飾子として使えるので、依存プロジェクトのコンポーネントをプロジェクト名を繰り返すことなく参照できます。</p>
+<pre><code class="language-veryl">import veryl_sample::sample_pkg;
+import veryl_sample::sample_if;
+import veryl_sample::sample_module;
+
+module ModuleC {
+    const A: u32 = sample_pkg::PARAM_A;
+
+    inst u_if: sample_if;
+    inst u: sample_module (
+        o_a: u_if.a,
+    );
+
+    let _a: logic = u_if.a;
+}
+</code></pre>
+<p>ジェネリックコンポーネントは定義のままインポートされ、ジェネリック引数は使用箇所で与えます。</p>
+<pre><code class="language-veryl">import veryl_sample::generic_pkg;
+
+module ModuleD {
+    const B: u32 = generic_pkg::&lt;32&gt;::PARAM_B;
+}
+</code></pre>
+<p><code>proto package</code> も同じようにインポートでき、インポートされた名前をジェネリック境界として使用できます。<code>proto module</code> や <code>proto interface</code> などの他のプロトタイプはインポートできません。</p>
+<pre><code class="language-veryl">import veryl_sample::sample_proto_pkg;
+
+module ModuleE::&lt;PKG: sample_proto_pkg&gt; {
+    let _a: logic&lt;PKG::WIDTH&gt; = 0;
+}
+</code></pre>
+<p>モジュール、インターフェース、パッケージのいずれの内部でもない、プロジェクトスコープで宣言された関数も、プロジェクト名を通じてインポートできます。</p>
+<pre><code class="language-veryl">import veryl_sample::sample_func;
+
+module ModuleF {
+    let _a: logic&lt;8&gt; = sample_func::&lt;8&gt;(8'd1);
+}
+</code></pre>
+<blockquote>
+<p>注：上記のコードのプレイボタンの結果は依存関係解決を行わないので正確ではありません。</p>
+</blockquote>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="connect"><a class="header" href="#connect">Connect</a></h1>
 <p>あるインターフェースをほかのインターフェースに接続するために各メンバーを代入する代わりに <code>connect</code> 宣言を使用することができます。<code>connect</code> 宣言はインターフェースの全てのメンバーを自動的に接続します。</p>
@@ -3782,7 +3885,7 @@ module ModuleA {
         A: T,
     }
 
-    // ローカルに定位された型が使用できています
+    // ローカルに定義された型が使用できています
     // これは `TypeA` が `StructA` の定義位置から参照できるためです
     var _a: StructA::&lt;TypeA&gt;          ;
     var _b: StructA::&lt;PackageA::TypeB&gt;;
@@ -4014,7 +4117,7 @@ package PkgA::&lt;W: u32&gt; for ProtoPkg {
 }
 interface InterfaceA for ProtoA {
     var a: logic;
-    let b: lgoic = 0;
+    let b: logic = 0;
 }
 </code></pre>
 <h3 id="型定義-1"><a class="header" href="#型定義-1">型定義</a></h3>
@@ -4384,6 +4487,28 @@ alias package PkgA123 = PkgA::&lt;1, 2, 3&gt;;
     }
 }
 </code></pre>
+<h2 id="always_ff-内の関数呼び出し"><a class="header" href="#always_ff-内の関数呼び出し"><code>always_ff</code> 内の関数呼び出し</a></h2>
+<p><code>always_ff</code> から呼び出される関数は、関数外の HDL オブジェクトへ書き込むことはできません。関数によって書き込まれる <code>output</code> 引数は、<code>always_ff</code> プロセス内で宣言された変数に接続する必要があります。その結果は、プロセスのノンブロッキング代入セマンティクスに従って明示的に代入できます。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk : input  clock   ,
+    a     : input  logic&lt;8&gt;,
+    result: output logic&lt;8&gt;,
+) {
+    function increment (
+        value: input  logic&lt;8&gt;,
+        next : output logic&lt;8&gt;,
+    ) {
+        next = value + 1;
+    }
+
+    always_ff {
+        var next: logic&lt;8&gt;;
+        increment(a, next);
+        result = next;
+    }
+}
+</code></pre>
+<p>この制限により、シミュレーションサイクルに参加する HDL オブジェクトへのすべての書き込みが <code>always_ff</code> プロセス内に明示されます。関数は上記のように、ローカル変数と書き込み対象の <code>output</code> 引数を変更できます。<code>$display</code> や <code>$assert</code> などのシステム関数は、このような HDL オブジェクトを書き込まないため、この制限の対象外です。</p>
 <h2 id="systemverilogへの対応"><a class="header" href="#systemverilogへの対応">SystemVerilogへの対応</a></h2>
 <div class="table-wrapper">
 <table>
@@ -4560,7 +4685,7 @@ always_comb {
 </ul>
 <p>同一の <code>var</code> に対する複数の代入で推論される型が一致しない場合、<a href="#type_inference_conflict">type_inference_conflict</a> として報告されます。サポートされていない式の場合は <a href="#type_inference_not_supported">type_inference_not_supported</a> が報告されます。いずれの場合も、明示的な型注釈を加えればエラーは解消されます。</p>
 <h2 id="ジェネリック引数の推論-1"><a class="header" href="#ジェネリック引数の推論-1">ジェネリック引数の推論</a></h2>
-<p>ジェネリック関数では、関数の引数からジェネリック引数を推論できる場合、<code>::&lt;&gt;</code> 後の実引数を省略できます。推論は各実引数の宣言型を用いてジェネリックパラメータを解決します。</p>
+<p>ジェネリック関数では、関数の引数からジェネリック引数を推論できる場合、<code>::&lt;&gt;</code> 後の実引数を省略できます。推論は各実引数の宣言型を用いてジェネリックパラメータを解決します。宣言型は変数、モジュールポート、パラメータのいずれのものでも構いません。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     function FuncId::&lt;T: u32&gt; (
         x: input logic&lt;T&gt;,
@@ -4585,7 +4710,21 @@ always_comb {
     let _rw: logic&lt;9&gt; = FuncWide(_a);
 }
 </code></pre>
-<p>実引数の幅を変数宣言から決定できない場合（例: ビット幅付きリテラルを渡した場合）、推論は失敗します。その場合は明示的なジェネリック引数が必要です。詳細は <a href="#generic_inference_failed">generic_inference_failed</a> を参照してください。</p>
+<p>モジュールポートはローカル変数と同じように推論に利用されます。</p>
+<pre><code class="language-veryl playground">module ModuleB (
+    i_d: input logic&lt;8&gt;,
+) {
+    function FuncId::&lt;T: u32&gt; (
+        x: input logic&lt;T&gt;,
+    ) -&gt; logic&lt;T&gt; {
+        return x;
+    }
+
+    // ポートの宣言された幅から T が 8 に推論される。
+    let _r: logic&lt;8&gt; = FuncId(i_d);
+}
+</code></pre>
+<p>実引数の幅を変数、ポート、パラメータの宣言から決定できない場合（例: ビット幅付きリテラルを渡した場合）、推論は失敗します。その場合は明示的なジェネリック引数が必要です。詳細は <a href="#generic_inference_failed">generic_inference_failed</a> を参照してください。</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="プロジェクトプロパティ"><a class="header" href="#プロジェクトプロパティ">プロジェクトプロパティ</a></h1>
 <p>プロジェクトプロパティは、ソースコードではなく <code>Veryl.toml</code> から与えられるコンパイル時定数です。ソースコードの外側からプロジェクトを設定するのに便利です。例えば、ライブラリを依存するプロジェクトごとに異なるデータ幅でビルドできます。</p>
@@ -5021,6 +5160,26 @@ case_enum = "snake"
 </tbody>
 </table>
 </div>
+<h3 id="lintportability-セクション"><a class="header" href="#lintportability-セクション"><code>[lint.portability]</code> セクション</a></h3>
+<p>このセクションは依存プロジェクトから受け入れるポータブルでない構文の設定です。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>説明</th></tr>
+</thead>
+<tbody>
+<tr><td>allow_in_dependencies</td><td>項目の配列<sup class="footnote-reference" id="fr-portitem-1"><a href="#footnote-portitem">5</a></sup></td><td>依存プロジェクトから受け入れるポータブルでない構文</td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="#アトリビュート"><code>#[allow(initial_assign)]</code></a> と <code>#[allow(multiple_assign)]</code> は、ポータブルでない構文、すなわち動作するかどうかがターゲットデバイスやツールチェーンに依存する構文を明示的に許可するためのものです。自身のコードではこれらのアトリビュートは常に尊重されます。依存プロジェクトのコードでは、ここに列挙されていない限り拒否されます。これは、自身のターゲットがサポートしない構文に依存したライブラリを気付かないうちに取り込んでしまうことを防ぐためです。既定では何も受け入れません。</p>
+<pre><code class="language-toml">[lint.portability]
+allow_in_dependencies = ["initial_assign"]
+</code></pre>
+<ul>
+<li><code>"initial_assign"</code> – <code>initial</code> ブロックでの代入</li>
+<li><code>"multiple_assign"</code> – 複数のプロセスからの代入</li>
+</ul>
 <ul>
 <li><code>"snake"</code> – snake_case</li>
 <li><code>"screaming_snake"</code> – SCREAMING_SNAKE_CASE</li>
@@ -5040,6 +5199,9 @@ case_enum = "snake"
 </li>
 <li id="footnote-regex">
 <p><code>".*"</code>のような正規表現です。使用可能な構文は<a href="https://docs.rs/regex/latest/regex/#syntax">こちら</a>. <a href="#fr-regex-1">↩</a> <a href="#fr-regex-2">↩2</a> <a href="#fr-regex-3">↩3</a> <a href="#fr-regex-4">↩4</a> <a href="#fr-regex-5">↩5</a> <a href="#fr-regex-6">↩6</a> <a href="#fr-regex-7">↩7</a> <a href="#fr-regex-8">↩8</a> <a href="#fr-regex-9">↩9</a> <a href="#fr-regex-10">↩10</a> <a href="#fr-regex-11">↩11</a> <a href="#fr-regex-12">↩12</a> <a href="#fr-regex-13">↩13</a> <a href="#fr-regex-14">↩14</a> <a href="#fr-regex-15">↩15</a> <a href="#fr-regex-16">↩16</a> <a href="#fr-regex-17">↩17</a> <a href="#fr-regex-18">↩18</a> <a href="#fr-regex-19">↩19</a> <a href="#fr-regex-20">↩20</a> <a href="#fr-regex-21">↩21</a> <a href="#fr-regex-22">↩22</a> <a href="#fr-regex-23">↩23</a> <a href="#fr-regex-24">↩24</a> <a href="#fr-regex-25">↩25</a> <a href="#fr-regex-26">↩26</a> <a href="#fr-regex-27">↩27</a> <a href="#fr-regex-28">↩28</a> <a href="#fr-regex-29">↩29</a> <a href="#fr-regex-30">↩30</a> <a href="#fr-regex-31">↩31</a> <a href="#fr-regex-32">↩32</a> <a href="#fr-regex-33">↩33</a> <a href="#fr-regex-34">↩34</a> <a href="#fr-regex-35">↩35</a> <a href="#fr-regex-36">↩36</a> <a href="#fr-regex-37">↩37</a> <a href="#fr-regex-38">↩38</a> <a href="#fr-regex-39">↩39</a> <a href="#fr-regex-40">↩40</a></p>
+</li>
+<li id="footnote-portitem">
+<p>設定可能な値は以下です。 <a href="#fr-portitem-1">↩</a></p>
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -7205,8 +7367,12 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、関数でないシンボルを関数として呼び出した場合に報告されます。呼び出しを削除するか、実際の関数シンボルに置き換えてください。</p>
 <h3 id="combinational_loop"><a class="header" href="#combinational_loop">combinational_loop</a></h3>
 <p>このエラーは、シーケンシャル要素を介さず、信号の値が純粋な組み合わせ論理を通じて自分自身に依存している場合に報告されます。ループは <code>assign</code> 宣言、<code>always_comb</code> ブロック、関数呼び出し、またはインスタンス化されたモジュールやインターフェースによって形成され得ます。少なくとも 1 つのパス上にレジスタ (<code>always_ff</code>) を挿入するか、依存関係の連鎖が終了するように設計を再構成してループを解消してください。</p>
+<h3 id="combinational_loop_position_overflow"><a class="header" href="#combinational_loop_position_overflow">combinational_loop_position_overflow</a></h3>
+<p>このエラーは、組み合わせループ解析で追跡する信号の展開後のビット幅、非パック配列の要素数、または位置オフセットがサポート範囲を超えた場合に報告されます。対象モジュールの信号幅または配列次元を小さくしてください。</p>
 <h3 id="component_interface_mismatch"><a class="header" href="#component_interface_mismatch">component_interface_mismatch</a></h3>
 <p>このエラーは、<code>$comp::*</code> の検証コンポーネントの使い方が、そのコンポーネントが宣言しているインターフェースと一致しない場合に報告されます。チェックされるのは、宣言の形式（クロック付きコンポーネントは <code>inst</code>、メソッドのみのコンポーネントは <code>var</code>）、パラメータ、ポート、インターフェースポート、および戻り値の幅を含むメソッド呼び出しです。使い方を修正するか、インターフェースが一致するようコンポーネントを更新してください。</p>
+<h3 id="cyclic_file_dependency"><a class="header" href="#cyclic_file_dependency">cyclic_file_dependency</a></h3>
+<p>このエラーは、2つ以上のファイルが循環的に依存している場合に報告されます。ファイル間の依存が一方向になるように宣言を移動して、循環を解消してください。</p>
 <h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
 <p>このエラーは、複数の型定義が循環的に互いを参照している場合に報告されます。参照のいずれかを削除または再構成して循環を断ち切ってください。</p>
 <h3 id="duplicate_argument"><a class="header" href="#duplicate_argument">duplicate_argument</a></h3>
@@ -7219,8 +7385,12 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、インスタンスの深さ、総インスタンス数、エラボレーション評価サイズなどの内部制限を超えた場合に報告されます。<code>Veryl.toml</code> の <code>[build]</code> セクションで該当する制限を引き上げるか、設計を簡略化してください。</p>
 <h3 id="fixed_type_with_signed_modifier"><a class="header" href="#fixed_type_with_signed_modifier">fixed_type_with_signed_modifier</a></h3>
 <p>このエラーは、固定幅の型（例：<code>u32</code>）に <code>signed</code> 修飾子を付けた場合に報告されます。<code>signed</code> 修飾子を削除してください。</p>
+<h3 id="for_loop_overflow"><a class="header" href="#for_loop_overflow">for_loop_overflow</a></h3>
+<p>このエラーは、<code>for</code> ループのステップによってループ変数が32ビット符号付き整数の範囲を超える場合に報告されます。ループ変数がこの範囲に収まるようにするか、範囲かステップを小さくしてください。</p>
+<h3 id="function_output_in_always_ff"><a class="header" href="#function_output_in_always_ff">function_output_in_always_ff</a></h3>
+<p>このエラーは、<code>always_ff</code> から呼び出された関数の <code>output</code> 引数が、関数復帰時のコピーアウト先としてプロセス外のオブジェクトに接続されている場合に報告されます。<code>output</code> を <code>always_ff</code> 内のローカル変数に接続し、その変数を目的の HDL オブジェクトへ明示的に代入してください。</p>
 <h3 id="generic_inference_failed"><a class="header" href="#generic_inference_failed">generic_inference_failed</a></h3>
-<p>このエラーは、関数呼び出しの実引数が省略されたが、コンパイラが呼び出し時の引数から推論できなかった場合に報告されます。<code>::&lt;&gt;</code> で明示的にジェネリック引数を指定するか、変数宣言から幅を決定できる引数を渡してください。</p>
+<p>このエラーは、関数呼び出しのジェネリック実引数が省略されているものの、コンパイラが実引数からそれらを推論できない場合に報告されます。<code>::&lt;&gt;</code> により明示的にジェネリック引数を与えるか、変数、ポート、パラメータの宣言から幅を決定できる実引数を渡してください。</p>
 <h3 id="implicit_clock_conversion"><a class="header" href="#implicit_clock_conversion">implicit_clock_conversion</a></h3>
 <p>このエラーは、clock/reset 型でない値が clock/reset ポートに接続された場合、またはその逆の場合に報告されます。clock 性・reset 性は宣言でのみ与えられるため、その値を親側で clock/reset 型の信号に束縛し（例: <code>let g: '_ clock = expr;</code>）、その信号を接続してください。</p>
 <h3 id="include_failure"><a class="header" href="#include_failure">include_failure</a></h3>
@@ -7257,6 +7427,8 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、<code>for</code> ループのステップが誘導変数を範囲の終端に向けて進めず、ループが終了しない場合に報告されます。誘導変数が確実に進むようにステップを修正してください。</p>
 <h3 id="invalid_import"><a class="header" href="#invalid_import">invalid_import</a></h3>
 <p>このエラーは、参照先がインポート可能でない（private、またはインポート対象として無効）な場合に報告されます。</p>
+<h3 id="invalid_initial_assign"><a class="header" href="#invalid_initial_assign">invalid_initial_assign</a></h3>
+<p>このエラーは、代入文または <code>$readmemh</code> のような関数呼び出しの出力引数を介して、<code>initial</code> ブロックで変数に代入された場合に報告されます。ASIC の合成ツールは <code>initial</code> 文を無視するため、これはターゲットデバイスがコンフィギュレーション時にその変数を初期化する場合にのみ有効です。その場合は変数の宣言に <code>#[allow(initial_assign)]</code> を付けるか、代わりにリセットで初期化してください。<code>initial</code> ブロックの内部で宣言された変数は手続き的なローカル変数であり、報告されません。</p>
 <h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
 <p>このエラーは、対応するビット幅を特定できない位置で <code>lsb</code> キーワードが使われた場合に報告されます。<code>lsb</code> を具体的なインデックスに置き換えてください。</p>
 <h3 id="invalid_mixin"><a class="header" href="#invalid_mixin">invalid_mixin</a></h3>
@@ -7279,6 +7451,8 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、代入の左辺の配列範囲選択が、定数で・範囲内で・昇順のスライスになっていない場合に報告されます。</p>
 <h3 id="invalid_reset"><a class="header" href="#invalid_reset">invalid_reset</a></h3>
 <p>このエラーは、<code>reset</code> 型でも単一ビット信号でもない信号がリセットとして接続された場合に報告されます。<code>reset</code> 型の信号を使用してください。</p>
+<h3 id="invalid_size_type"><a class="header" href="#invalid_size_type">invalid_size_type</a></h3>
+<p>このエラーは、幅か配列サイズが必要な位置で型が使用されている場合に報告されます。型のビット幅を得るには <code>$bits</code> を使用してください（例: <code>logic&lt;$bits(u32)&gt;</code>）。</p>
 <h3 id="invalid_statement"><a class="header" href="#invalid_statement">invalid_statement</a></h3>
 <p>このエラーは、文がそれを許可していない位置に書かれた場合（例：関数外の <code>return</code>）に報告されます。文を削除するか、適切な位置に移動してください。</p>
 <h3 id="invalid_tb_usage"><a class="header" href="#invalid_tb_usage">invalid_tb_usage</a></h3>
@@ -7324,11 +7498,13 @@ Veryl: Start { DescriptionGroup };
 <h3 id="mixed_function_argument"><a class="header" href="#mixed_function_argument">mixed_function_argument</a></h3>
 <p>このエラーは、同じ関数呼び出しの中で位置引数と名前付き引数が混在している場合に報告されます。どちらか一方に統一してください。</p>
 <h3 id="multiple_assignment"><a class="header" href="#multiple_assignment">multiple_assignment</a></h3>
-<p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。</p>
+<p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。FPGA における真のデュアルポート SRAM の推論など意図的な場合は、その信号の宣言に <code>#[allow(multiple_assign)]</code> を付けてください。</p>
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>このエラーは、同じモジュール内でデフォルトのクロックまたはリセットが複数回指定された場合に報告されます。</p>
 <h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
 <p>このエラーは、<code>+:</code> / <code>-:</code> / <code>step</code> の部分選択の幅が定数でない場合に報告されます。幅には定数式を使ってください。</p>
+<h3 id="non_portable_dependency"><a class="header" href="#non_portable_dependency">non_portable_dependency</a></h3>
+<p>このエラーは、依存プロジェクトのコードが <code>#[allow(initial_assign)]</code> または <code>#[allow(multiple_assign)]</code> でポータブルでない構文を明示的に許可しているが、このプロジェクトがそれを受け入れていない場合に報告されます。ターゲットデバイスがサポートしているのであれば <code>Veryl.toml</code> の <code>lint.portability.allow_in_dependencies</code> に項目を追加し、そうでなければそのプロジェクトへの依存をやめてください。</p>
 <h3 id="non_positive_value"><a class="header" href="#non_positive_value">non_positive_value</a></h3>
 <p>このエラーは、正の型（<code>p8</code> / <code>p16</code> / <code>p32</code> / <code>p64</code>）にゼロ以下の値を代入した場合に報告されます。0 より大きい値を使用してください。</p>
 <h3 id="private_member"><a class="header" href="#private_member">private_member</a></h3>
@@ -7339,6 +7515,8 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、前方宣言が必要な位置で識別子が宣言前に使われた場合に報告されます。定義を参照位置より前に移動してください。</p>
 <h3 id="reserved_identifier"><a class="header" href="#reserved_identifier">reserved_identifier</a></h3>
 <p>このエラーは、予約された <code>__</code> 接頭辞を持つ識別子が使われた場合に報告されます。別の名前を選んでください。</p>
+<h3 id="side_effect_function_call_in_always_ff"><a class="header" href="#side_effect_function_call_in_always_ff">side_effect_function_call_in_always_ff</a></h3>
+<p>このエラーは、<code>always_ff</code> から呼び出された関数が、直接または推移的に関数外の HDL オブジェクトへ書き込む場合に報告されます。書き込みを <code>always_ff</code> 内へ移すか、値を <code>output</code> 引数で受け渡し、その引数を <code>always_ff</code> 内のローカル変数に接続してください。</p>
 <h3 id="sv_keyword_usage"><a class="header" href="#sv_keyword_usage">sv_keyword_usage</a></h3>
 <p>このエラーは、SystemVerilog のキーワードが Veryl の識別子として使われた場合に報告されます。生成された SystemVerilog で衝突しないようにリネームしてください。</p>
 <h3 id="sv_with_implicit_reset"><a class="header" href="#sv_with_implicit_reset">sv_with_implicit_reset</a></h3>

@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-35ef2795.js";
+            window.path_to_searchindex_js = "searchindex-b1ef2cf3.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-156e7647.js"></script>
@@ -2532,7 +2532,89 @@ It will be transpiled to SystemVerilog attribute <code>(*  *)</code>.</p>
 <li><code>unassign_variable</code></li>
 <li><code>missing_reset_statement</code></li>
 <li><code>missing_port</code></li>
+<li><code>initial_assign</code></li>
+<li><code>multiple_assign</code></li>
 </ul>
+<h3 id="non-portable-constructs"><a class="header" href="#non-portable-constructs">Non-portable constructs</a></h3>
+<p><code>initial_assign</code> and <code>multiple_assign</code> are different from the other lint names:
+they opt in to a construct which is not portable, that is, whether it works
+depends on the target device and the toolchain.
+They are written on the declaration of the variable they concern.</p>
+<p><code>initial_assign</code> allows assignment to the variable in an <code>initial</code> block.
+This relies on the target device initializing the variable at configuration
+time, which ASIC synthesizers ignore.
+Assignment through an output argument of a function call, such as <code>$readmemh</code>
+and <code>$readmemb</code>, requires the attribute as well.
+A variable declared inside the <code>initial</code> block is a procedural local rather
+than state of the design, so it needs no attribute.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    #[allow(initial_assign)]
+    var count: logic&lt;16&gt;;
+
+    #[allow(initial_assign)]
+    var rom: logic&lt;32&gt; [1024];
+
+    initial {
+        count = '0;
+        $readmemh("rom.hex", rom);
+    }
+
+    always_ff {
+        count = count + 1;
+    }
+
+    #[allow(unused_variable)]
+    let _a: logic&lt;32&gt; = rom[0];
+}
+</code></pre>
+<p>An <code>initial</code> block is not a driving process, so a variable with
+<code>initial_assign</code> can be driven by a process too, as <code>count</code> is above.
+<code>multiple_assign</code> is not required for it.</p>
+<p><code>multiple_assign</code> allows the variable to be assigned from more than one
+process, which true dual port SRAM inference on FPGA requires.</p>
+<pre><code class="language-veryl playground">module ModuleB (
+    i_clk0 : input  'a clock    ,
+    i_clk1 : input  'b clock    ,
+    i_en0  : input  'a logic    ,
+    i_en1  : input  'b logic    ,
+    i_addr0: input  'a logic&lt;5&gt; ,
+    i_addr1: input  'b logic&lt;5&gt; ,
+    i_data0: input  'a logic&lt;32&gt;,
+    i_data1: input  'b logic&lt;32&gt;,
+    o_data : output 'a logic&lt;32&gt;,
+) {
+    #[allow(multiple_assign)]
+    var ram: 'a logic&lt;32&gt; [32];
+
+    always_ff (i_clk0) {
+        if i_en0 {
+            ram[i_addr0] = i_data0;
+        }
+    }
+
+    unsafe (cdc) {
+        always_ff (i_clk1) {
+            if i_en1 {
+                ram[i_addr1] = i_data1;
+            }
+        }
+    }
+
+    assign o_data = ram[i_addr0];
+}
+</code></pre>
+<p>SystemVerilog forbids a variable written by an <code>always_ff</code> from being written
+by any other process. So an <code>always_ff</code> which writes a variable with either
+attribute is emitted as a plain <code>always</code>.
+<code>always_comb</code> has the same restriction and is not lowered, so driving one
+variable from several <code>always_comb</code>/<code>assign</code> declarations is accepted by Veryl
+but still rejected by SystemVerilog tools.</p>
+<p>To keep these constructs out of a project whose target does not support them,
+whether they are accepted from dependencies is decided by the consumer through
+<a href="#lint"><code>[lint.portability]</code></a>.
+In your own code the attribute is always honored.</p>
 <h2 id="ifdefifndefelsifelse-attribute"><a class="header" href="#ifdefifndefelsifelse-attribute"><code>ifdef</code>/<code>ifndef</code>/<code>elsif</code>/<code>else</code> Attribute</a></h2>
 <p><code>ifdef</code> and <code>ifndef</code> attributes are used to control whether the annotated code block is enabled by defined value.
 In addition, the code block with <code>elsif</code> or <code>else</code> attributes is optional and a code block with <code>ifdef</code> or <code>ifndef</code> attributes can be followed with that code block.</p>
@@ -2859,6 +2941,49 @@ module ModuleB {
     assign c = Green;
 }
 </code></pre>
+<h2 id="component-namespace-import"><a class="header" href="#component-namespace-import">Component namespace import</a></h2>
+<p>A component itself, which is a package, module or interface, can be imported under its own name.
+The imported name can be used as a qualifier at the use site, so a component of a dependency can be referenced without repeating the project name.</p>
+<pre><code class="language-veryl">import veryl_sample::sample_pkg;
+import veryl_sample::sample_if;
+import veryl_sample::sample_module;
+
+module ModuleC {
+    const A: u32 = sample_pkg::PARAM_A;
+
+    inst u_if: sample_if;
+    inst u: sample_module (
+        o_a: u_if.a,
+    );
+
+    let _a: logic = u_if.a;
+}
+</code></pre>
+<p>A generic component is imported as its definition, and the generic arguments are given at the use site.</p>
+<pre><code class="language-veryl">import veryl_sample::generic_pkg;
+
+module ModuleD {
+    const B: u32 = generic_pkg::&lt;32&gt;::PARAM_B;
+}
+</code></pre>
+<p>A <code>proto package</code> can be imported in the same way, and the imported name can be used as a generic bound.
+The other prototypes like <code>proto module</code> and <code>proto interface</code> can’t be imported.</p>
+<pre><code class="language-veryl">import veryl_sample::sample_proto_pkg;
+
+module ModuleE::&lt;PKG: sample_proto_pkg&gt; {
+    let _a: logic&lt;PKG::WIDTH&gt; = 0;
+}
+</code></pre>
+<p>A function declared at the project scope, which means outside any module, interface and package, can be imported through the project name too.</p>
+<pre><code class="language-veryl">import veryl_sample::sample_func;
+
+module ModuleF {
+    let _a: logic&lt;8&gt; = sample_func::&lt;8&gt;(8'd1);
+}
+</code></pre>
+<blockquote>
+<p>Note: The result of play button in the above codes is not exact because it doesn’t use dependency resolution.</p>
+</blockquote>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="connect"><a class="header" href="#connect">Connect</a></h1>
 <p>To assign from a interface to another interface, <code>connect</code> decleration can be used instead of each member assignment.
@@ -4291,7 +4416,7 @@ package PkgA::&lt;W: u32&gt; for ProtoPkg {
 }
 interface InterfaceA for ProtoA {
     var a: logic;
-    let b: lgoic = 0;
+    let b: logic = 0;
 }
 </code></pre>
 <h3 id="typedef-1"><a class="header" href="#typedef-1">Typedef</a></h3>
@@ -4680,6 +4805,34 @@ The semantics — blocking or non-blocking — are automatically determined by c
     }
 }
 </code></pre>
+<h2 id="function-calls-in-always_ff"><a class="header" href="#function-calls-in-always_ff">Function Calls in <code>always_ff</code></a></h2>
+<p>A function called from <code>always_ff</code> can’t write an HDL object outside the function.
+An output parameter which is written by the function must be connected to a variable
+declared inside the <code>always_ff</code> process. The result can then be assigned explicitly using
+the non-blocking semantics of the process.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk : input  clock   ,
+    a     : input  logic&lt;8&gt;,
+    result: output logic&lt;8&gt;,
+) {
+    function increment (
+        value: input  logic&lt;8&gt;,
+        next : output logic&lt;8&gt;,
+    ) {
+        next = value + 1;
+    }
+
+    always_ff {
+        var next: logic&lt;8&gt;;
+        increment(a, next);
+        result = next;
+    }
+}
+</code></pre>
+<p>This restriction keeps all writes to HDL objects that participate in the simulation cycle
+visible in the <code>always_ff</code> process. A function may still modify its local variables and
+written output parameters as shown above. System functions such as <code>$display</code> and
+<code>$assert</code> don’t write such HDL objects and aren’t affected by this restriction.</p>
 <h2 id="mapping-to-systemverilog"><a class="header" href="#mapping-to-systemverilog">Mapping to SystemVerilog</a></h2>
 <div class="table-wrapper">
 <table>
@@ -4875,7 +5028,8 @@ is reported. In both cases, an explicit type annotation resolves the error.</p>
 <h2 id="generic-argument-inference-1"><a class="header" href="#generic-argument-inference-1">Generic Argument Inference</a></h2>
 <p>For generic functions, the actual generic arguments after <code>::&lt;&gt;</code> can be omitted when they
 can be inferred from the function arguments.
-The inference uses the declared type of each call argument to solve the generic parameters.</p>
+The inference uses the declared type of each call argument to solve the generic parameters.
+The declared type can come from a variable, a module port or a parameter.</p>
 <pre><code class="language-veryl playground">module ModuleA {
     function FuncId::&lt;T: u32&gt; (
         x: input logic&lt;T&gt;,
@@ -4900,8 +5054,23 @@ The inference uses the declared type of each call argument to solve the generic 
     let _rw: logic&lt;9&gt; = FuncWide(_a);
 }
 </code></pre>
-<p>Inference fails when the argument’s width cannot be determined from a variable declaration
-(for example a sized literal is passed). In that case, explicit generic arguments are required.
+<p>A module port drives the inference in the same way as a local variable.</p>
+<pre><code class="language-veryl playground">module ModuleB (
+    i_d: input logic&lt;8&gt;,
+) {
+    function FuncId::&lt;T: u32&gt; (
+        x: input logic&lt;T&gt;,
+    ) -&gt; logic&lt;T&gt; {
+        return x;
+    }
+
+    // T is inferred to be 8 from the port's declared width.
+    let _r: logic&lt;8&gt; = FuncId(i_d);
+}
+</code></pre>
+<p>Inference fails when the argument’s width cannot be determined from a variable, port or
+parameter declaration (for example a sized literal is passed).
+In that case, explicit generic arguments are required.
 See <a href="#generic_inference_failed">generic_inference_failed</a> for details.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="project-property"><a class="header" href="#project-property">Project Property</a></h1>
@@ -5389,6 +5558,33 @@ case_enum = "snake"
 </tbody>
 </table>
 </div>
+<h3 id="the-lintportability-section"><a class="header" href="#the-lintportability-section">The <code>[lint.portability]</code> section</a></h3>
+<p>This section decides which non-portable constructs are accepted from
+dependencies.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Configuration</th><th>Value</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>allow_in_dependencies</td><td>array of item<sup class="footnote-reference" id="fr-portitem-1"><a href="#footnote-portitem">5</a></sup></td><td>non-portable constructs accepted from dependencies</td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="#attribute"><code>#[allow(initial_assign)]</code></a>
+and <code>#[allow(multiple_assign)]</code> opt in to a construct which is not portable, that
+is, whether it works depends on the target device and the toolchain. In your own
+code the attribute is always honored. In the code of a dependency it is rejected
+unless it is listed here, so that a project can’t absorb a library which relies
+on a construct its own target does not support without noticing. The default is
+to accept nothing.</p>
+<pre><code class="language-toml">[lint.portability]
+allow_in_dependencies = ["initial_assign"]
+</code></pre>
+<ul>
+<li><code>"initial_assign"</code> – assignment in an <code>initial</code> block</li>
+<li><code>"multiple_assign"</code> – assignment from more than one process</li>
+</ul>
 <ul>
 <li><code>"snake"</code> – snake_case</li>
 <li><code>"screaming_snake"</code> – SCREAMING_SNAKE_CASE</li>
@@ -5408,6 +5604,9 @@ case_enum = "snake"
 </li>
 <li id="footnote-regex">
 <p>Regular expression string like <code>".*"</code>. The available syntax is <a href="https://docs.rs/regex/latest/regex/#syntax">here</a>. <a href="#fr-regex-1">↩</a> <a href="#fr-regex-2">↩2</a> <a href="#fr-regex-3">↩3</a> <a href="#fr-regex-4">↩4</a> <a href="#fr-regex-5">↩5</a> <a href="#fr-regex-6">↩6</a> <a href="#fr-regex-7">↩7</a> <a href="#fr-regex-8">↩8</a> <a href="#fr-regex-9">↩9</a> <a href="#fr-regex-10">↩10</a> <a href="#fr-regex-11">↩11</a> <a href="#fr-regex-12">↩12</a> <a href="#fr-regex-13">↩13</a> <a href="#fr-regex-14">↩14</a> <a href="#fr-regex-15">↩15</a> <a href="#fr-regex-16">↩16</a> <a href="#fr-regex-17">↩17</a> <a href="#fr-regex-18">↩18</a> <a href="#fr-regex-19">↩19</a> <a href="#fr-regex-20">↩20</a> <a href="#fr-regex-21">↩21</a> <a href="#fr-regex-22">↩22</a> <a href="#fr-regex-23">↩23</a> <a href="#fr-regex-24">↩24</a> <a href="#fr-regex-25">↩25</a> <a href="#fr-regex-26">↩26</a> <a href="#fr-regex-27">↩27</a> <a href="#fr-regex-28">↩28</a> <a href="#fr-regex-29">↩29</a> <a href="#fr-regex-30">↩30</a> <a href="#fr-regex-31">↩31</a> <a href="#fr-regex-32">↩32</a> <a href="#fr-regex-33">↩33</a> <a href="#fr-regex-34">↩34</a> <a href="#fr-regex-35">↩35</a> <a href="#fr-regex-36">↩36</a> <a href="#fr-regex-37">↩37</a> <a href="#fr-regex-38">↩38</a> <a href="#fr-regex-39">↩39</a> <a href="#fr-regex-40">↩40</a></p>
+</li>
+<li id="footnote-portitem">
+<p>The available values are <a href="#fr-portitem-1">↩</a></p>
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -7730,12 +7929,19 @@ element in between. The loop can be formed by <code>assign</code> declarations, 
 blocks, function calls, or instantiated modules and interfaces.
 Break the loop by inserting a register (<code>always_ff</code>) on at least one path, or by
 restructuring the design so that the dependency chain terminates.</p>
+<h3 id="combinational_loop_position_overflow"><a class="header" href="#combinational_loop_position_overflow">combinational_loop_position_overflow</a></h3>
+<p>This error is reported when a flattened signal width, unpacked array size, or
+positional offset tracked by combinational-loop analysis exceeds the supported
+range. Reduce the signal width or array dimensions of the affected module.</p>
 <h3 id="component_interface_mismatch"><a class="header" href="#component_interface_mismatch">component_interface_mismatch</a></h3>
 <p>This error is reported when the usage of a <code>$comp::*</code> verification component doesn’t match
 the interface which the component declares. The checked items are the declaration form
 (<code>inst</code> for a clocked component, <code>var</code> for a method-only component), parameters, ports,
 interface ports, and method calls including the width of the return value.
 Correct the usage, or update the component so that its interface matches.</p>
+<h3 id="cyclic_file_dependency"><a class="header" href="#cyclic_file_dependency">cyclic_file_dependency</a></h3>
+<p>This error is reported when two or more files depend on each other in a cycle.
+Break the cycle by moving the declarations so that the files form a one-way dependency.</p>
 <h3 id="cyclic_type_dependency"><a class="header" href="#cyclic_type_dependency">cyclic_type_dependency</a></h3>
 <p>This error is reported when two or more type definitions reference each other in a
 cycle. Break the cycle by removing or restructuring one of the references.</p>
@@ -7755,11 +7961,19 @@ count, or elaboration evaluation size is exceeded. Raise the corresponding limit
 <h3 id="fixed_type_with_signed_modifier"><a class="header" href="#fixed_type_with_signed_modifier">fixed_type_with_signed_modifier</a></h3>
 <p>This error is reported when the <code>signed</code> modifier is applied to a fixed-width type
 (e.g. <code>u32</code>). Remove the <code>signed</code> modifier.</p>
+<h3 id="for_loop_overflow"><a class="header" href="#for_loop_overflow">for_loop_overflow</a></h3>
+<p>This error is reported when the step of a <code>for</code> loop makes the loop variable go outside
+the 32-bit signed range.
+Keep the loop variable within the range, or narrow the range or the step.</p>
+<h3 id="function_output_in_always_ff"><a class="header" href="#function_output_in_always_ff">function_output_in_always_ff</a></h3>
+<p>This error is reported when an <code>output</code> parameter of a function called from <code>always_ff</code>
+is copied back on return to an object outside the process. Connect the output to a
+process-local variable, then assign that variable to the intended HDL object explicitly.</p>
 <h3 id="generic_inference_failed"><a class="header" href="#generic_inference_failed">generic_inference_failed</a></h3>
 <p>This error is reported when the actual generic arguments of a function call are omitted
 but the compiler cannot infer them from the call arguments.
 Provide explicit generic arguments through <code>::&lt;&gt;</code>, or pass an argument whose width can be
-determined from a variable declaration.</p>
+determined from a variable, port or parameter declaration.</p>
 <h3 id="implicit_clock_conversion"><a class="header" href="#implicit_clock_conversion">implicit_clock_conversion</a></h3>
 <p>This error is reported when a value which is not clock/reset-typed is connected to a
 clock/reset port, or vice versa. Clock-ness and reset-ness are conferred only at a
@@ -7823,6 +8037,14 @@ Make the step strictly advance the induction variable.</p>
 <h3 id="invalid_import"><a class="header" href="#invalid_import">invalid_import</a></h3>
 <p>This error is reported when the referenced item cannot be imported (e.g. it is private
 or not a valid import target).</p>
+<h3 id="invalid_initial_assign"><a class="header" href="#invalid_initial_assign">invalid_initial_assign</a></h3>
+<p>This error is reported when a variable is assigned in an <code>initial</code> block, either by an
+assignment statement or through an output argument of a function call such as
+<code>$readmemh</code>. ASIC synthesizers ignore <code>initial</code> statements, so this is only valid where
+the target device initializes the variable at configuration time. Add
+<code>#[allow(initial_assign)]</code> to the declaration of the variable in that case, or
+initialize it by reset instead. A variable declared inside the <code>initial</code> block is a
+procedural local and is not reported.</p>
 <h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
 <p>This error is reported when the <code>lsb</code> keyword appears in a context where the corresponding
 bit width cannot be determined.
@@ -7860,6 +8082,9 @@ is not a constant, in-range, ascending slice.</p>
 <h3 id="invalid_reset"><a class="header" href="#invalid_reset">invalid_reset</a></h3>
 <p>This error is reported when a signal that is neither typed as <code>reset</code> nor a single-bit
 signal is connected as a reset. Use a <code>reset</code>-typed signal.</p>
+<h3 id="invalid_size_type"><a class="header" href="#invalid_size_type">invalid_size_type</a></h3>
+<p>This error is reported when a type is used where a width or an array size is required.
+Use <code>$bits</code> to get the bit width of a type (e.g. <code>logic&lt;$bits(u32)&gt;</code>).</p>
 <h3 id="invalid_statement"><a class="header" href="#invalid_statement">invalid_statement</a></h3>
 <p>This error is reported when a statement appears in a context where it is not allowed
 (for example, a <code>return</code> outside a function).
@@ -7932,13 +8157,20 @@ Add the <code>tri</code> modifier.</p>
 the same function call. Use one style consistently.</p>
 <h3 id="multiple_assignment"><a class="header" href="#multiple_assignment">multiple_assignment</a></h3>
 <p>This error is reported when a single signal is assigned from more than one procedural
-block or <code>assign</code> statement. Drive each signal from a single source.</p>
+block or <code>assign</code> statement. Drive each signal from a single source.
+If it is intentional, such as for true dual port SRAM inference on FPGA, add
+<code>#[allow(multiple_assign)]</code> to the declaration of the signal.</p>
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>This error is reported when a default clock or reset is specified more than once in the
 same module.</p>
 <h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
 <p>This error is reported when the width of a <code>+:</code> / <code>-:</code> / <code>step</code> part select is not a
 constant. Use a constant expression for the width.</p>
+<h3 id="non_portable_dependency"><a class="header" href="#non_portable_dependency">non_portable_dependency</a></h3>
+<p>This error is reported when the code of a dependency opts in to a non-portable
+construct with <code>#[allow(initial_assign)]</code> or <code>#[allow(multiple_assign)]</code> and the
+project does not accept it. Add the item to <code>lint.portability.allow_in_dependencies</code>
+in <code>Veryl.toml</code> if the target device supports it, or stop depending on the project.</p>
 <h3 id="non_positive_value"><a class="header" href="#non_positive_value">non_positive_value</a></h3>
 <p>This error is reported when a non-positive value is assigned to a positive type
 (<code>p8</code> / <code>p16</code> / <code>p32</code> / <code>p64</code>). Use a value greater than zero.</p>
@@ -7954,6 +8186,10 @@ that requires forward declaration. Move the definition before the reference.</p>
 <h3 id="reserved_identifier"><a class="header" href="#reserved_identifier">reserved_identifier</a></h3>
 <p>This error is reported when an identifier with the reserved <code>__</code> prefix is used. Choose
 a different name.</p>
+<h3 id="side_effect_function_call_in_always_ff"><a class="header" href="#side_effect_function_call_in_always_ff">side_effect_function_call_in_always_ff</a></h3>
+<p>This error is reported when a function called from <code>always_ff</code> directly or transitively
+writes an HDL object outside the function. Move the write into <code>always_ff</code>, or expose the
+value through an output parameter connected to a process-local variable.</p>
 <h3 id="sv_keyword_usage"><a class="header" href="#sv_keyword_usage">sv_keyword_usage</a></h3>
 <p>This error is reported when a SystemVerilog keyword is used as a Veryl identifier.
 Rename so it does not conflict in the generated SystemVerilog.</p>

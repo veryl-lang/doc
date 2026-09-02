@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-35ef2795.js";
+            window.path_to_searchindex_js = "../../searchindex-b1ef2cf3.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-156e7647.js"></script>
@@ -389,6 +389,33 @@ case_enum = "snake"
 </tbody>
 </table>
 </div>
+<h3 id="the-lintportability-section"><a class="header" href="#the-lintportability-section">The <code>[lint.portability]</code> section</a></h3>
+<p>This section decides which non-portable constructs are accepted from
+dependencies.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Configuration</th><th>Value</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>allow_in_dependencies</td><td>array of item<sup class="footnote-reference" id="fr-portitem-1"><a href="#footnote-portitem">5</a></sup></td><td>non-portable constructs accepted from dependencies</td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="../../05_language_reference/06_declaration/08_attribute.html"><code>#[allow(initial_assign)]</code></a>
+and <code>#[allow(multiple_assign)]</code> opt in to a construct which is not portable, that
+is, whether it works depends on the target device and the toolchain. In your own
+code the attribute is always honored. In the code of a dependency it is rejected
+unless it is listed here, so that a project can’t absorb a library which relies
+on a construct its own target does not support without noticing. The default is
+to accept nothing.</p>
+<pre><code class="language-toml">[lint.portability]
+allow_in_dependencies = ["initial_assign"]
+</code></pre>
+<ul>
+<li><code>"initial_assign"</code> – assignment in an <code>initial</code> block</li>
+<li><code>"multiple_assign"</code> – assignment from more than one process</li>
+</ul>
 <ul>
 <li><code>"snake"</code> – snake_case</li>
 <li><code>"screaming_snake"</code> – SCREAMING_SNAKE_CASE</li>
@@ -408,6 +435,9 @@ case_enum = "snake"
 </li>
 <li id="footnote-regex">
 <p>Regular expression string like <code>".*"</code>. The available syntax is <a href="https://docs.rs/regex/latest/regex/#syntax">here</a>. <a href="#fr-regex-1">↩</a> <a href="#fr-regex-2">↩2</a> <a href="#fr-regex-3">↩3</a> <a href="#fr-regex-4">↩4</a> <a href="#fr-regex-5">↩5</a> <a href="#fr-regex-6">↩6</a> <a href="#fr-regex-7">↩7</a> <a href="#fr-regex-8">↩8</a> <a href="#fr-regex-9">↩9</a> <a href="#fr-regex-10">↩10</a> <a href="#fr-regex-11">↩11</a> <a href="#fr-regex-12">↩12</a> <a href="#fr-regex-13">↩13</a> <a href="#fr-regex-14">↩14</a> <a href="#fr-regex-15">↩15</a> <a href="#fr-regex-16">↩16</a> <a href="#fr-regex-17">↩17</a> <a href="#fr-regex-18">↩18</a> <a href="#fr-regex-19">↩19</a> <a href="#fr-regex-20">↩20</a> <a href="#fr-regex-21">↩21</a> <a href="#fr-regex-22">↩22</a> <a href="#fr-regex-23">↩23</a> <a href="#fr-regex-24">↩24</a> <a href="#fr-regex-25">↩25</a> <a href="#fr-regex-26">↩26</a> <a href="#fr-regex-27">↩27</a> <a href="#fr-regex-28">↩28</a> <a href="#fr-regex-29">↩29</a> <a href="#fr-regex-30">↩30</a> <a href="#fr-regex-31">↩31</a> <a href="#fr-regex-32">↩32</a> <a href="#fr-regex-33">↩33</a> <a href="#fr-regex-34">↩34</a> <a href="#fr-regex-35">↩35</a> <a href="#fr-regex-36">↩36</a> <a href="#fr-regex-37">↩37</a> <a href="#fr-regex-38">↩38</a> <a href="#fr-regex-39">↩39</a> <a href="#fr-regex-40">↩40</a></p>
+</li>
+<li id="footnote-portitem">
+<p>The available values are <a href="#fr-portitem-1">↩</a></p>
 </li>
 </ol>
 

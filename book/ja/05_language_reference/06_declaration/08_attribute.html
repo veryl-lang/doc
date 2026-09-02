@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-556f5f19.js";
+            window.path_to_searchindex_js = "../../searchindex-fe6ae273.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-f6fb0cb4.js"></script>
@@ -296,7 +296,69 @@
 <li><code>unassign_variable</code></li>
 <li><code>missing_reset_statement</code></li>
 <li><code>missing_port</code></li>
+<li><code>initial_assign</code></li>
+<li><code>multiple_assign</code></li>
 </ul>
+<h3 id="ポータブルでない構文"><a class="header" href="#ポータブルでない構文">ポータブルでない構文</a></h3>
+<p><code>initial_assign</code> と <code>multiple_assign</code> は他のリント名とは性質が異なり、ポータブルでない構文、すなわち動作するかどうかがターゲットデバイスやツールチェーンに依存する構文を明示的に許可するためのものです。これらは対象となる変数の宣言に記述します。</p>
+<p><code>initial_assign</code> は <code>initial</code> ブロックでその変数へ代入することを許可します。これはターゲットデバイスがコンフィギュレーション時に変数を初期化することに依存しており、ASIC の合成ツールはこれを無視します。<code>$readmemh</code> や <code>$readmemb</code> のような関数呼び出しの出力引数を介した代入にも同様にこのアトリビュートが必要です。<code>initial</code> ブロックの内部で宣言された変数は設計の状態ではなく手続き的なローカル変数であるため、アトリビュートは不要です。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_clk: input clock,
+) {
+    #[allow(initial_assign)]
+    var count: logic&lt;16&gt;;
+
+    #[allow(initial_assign)]
+    var rom: logic&lt;32&gt; [1024];
+
+    initial {
+        count = '0;
+        $readmemh("rom.hex", rom);
+    }
+
+    always_ff {
+        count = count + 1;
+    }
+
+    #[allow(unused_variable)]
+    let _a: logic&lt;32&gt; = rom[0];
+}
+</code></pre>
+<p><code>initial</code> ブロックは駆動プロセスではないため、<code>initial_assign</code> の付いた変数は上の <code>count</code> のようにプロセスから駆動することもできます。そのために <code>multiple_assign</code> は必要ありません。</p>
+<p><code>multiple_assign</code> は複数のプロセスからその変数へ代入することを許可します。これは FPGA における真のデュアルポート SRAM の推論に必要です。</p>
+<pre><code class="language-veryl playground">module ModuleB (
+    i_clk0 : input  'a clock    ,
+    i_clk1 : input  'b clock    ,
+    i_en0  : input  'a logic    ,
+    i_en1  : input  'b logic    ,
+    i_addr0: input  'a logic&lt;5&gt; ,
+    i_addr1: input  'b logic&lt;5&gt; ,
+    i_data0: input  'a logic&lt;32&gt;,
+    i_data1: input  'b logic&lt;32&gt;,
+    o_data : output 'a logic&lt;32&gt;,
+) {
+    #[allow(multiple_assign)]
+    var ram: 'a logic&lt;32&gt; [32];
+
+    always_ff (i_clk0) {
+        if i_en0 {
+            ram[i_addr0] = i_data0;
+        }
+    }
+
+    unsafe (cdc) {
+        always_ff (i_clk1) {
+            if i_en1 {
+                ram[i_addr1] = i_data1;
+            }
+        }
+    }
+
+    assign o_data = ram[i_addr0];
+}
+</code></pre>
+<p>SystemVerilog では <code>always_ff</code> で書き込まれる変数を他のプロセスから書き込むことは禁止されています。そのため、いずれかのアトリビュートが付いた変数に書き込む <code>always_ff</code> は通常の <code>always</code> として出力されます。<code>always_comb</code> にも同じ制限がありますが、こちらは変換されないため、複数の <code>always_comb</code>/<code>assign</code> 宣言から一つの変数を駆動するコードは Veryl では受理されても SystemVerilog のツールでは拒否されます。</p>
+<p>これらの構文をサポートしないターゲットのプロジェクトに紛れ込まないよう、依存プロジェクトのコードでこれらを受け入れるかどうかは利用側が <a href="../../06_development_environment/01_project_configuration/03_lint.html"><code>[lint.portability]</code></a> で決定します。自身のコードではアトリビュートは常に尊重されます。</p>
 <h2 id="ifdefifndefelsifelse-アトリビュート"><a class="header" href="#ifdefifndefelsifelse-アトリビュート"><code>ifdef</code>/<code>ifndef</code>/<code>elsif</code>/<code>else</code> アトリビュート</a></h2>
 <p><code>ifdef</code> と <code>ifndef</code> アトリビュートは定義された値によってコードブロックを有効にするかどうかを制御するために使用することができます。さらに、<code>ifdef</code> と <code>ifndef</code> のついたコードブロックに続けてオプションとして <code>elsif</code> と <code>else</code> アトリビュートの付いたブロックを書くこともできます。</p>
 <p>以下の例はこれらのアトリビュートの使用方法と、各コードブロックが定義された値によって有効になる様子を示しています。</p>
