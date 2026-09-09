@@ -19234,19 +19234,63 @@ msgstr ""
 "在している場合に報告されます。メンバーをいずれか一方に統一してください。"
 
 #: src/07_appendix/02_semantic_error.md:620
+msgid "statement_after_if_reset"
+msgstr "statement_after_if_reset"
+
+#: src/07_appendix/02_semantic_error.md:622
+msgid ""
+"This warning is reported when an executable statement follows the top-level "
+"`if_reset` / `else` chain in an `always_ff` block using `reset`, `reset_async_high`, "
+"or `reset_async_low`. With asynchronous reset, the statement also executes on the "
+"reset assertion edge, outside the reset condition, which may prevent synthesis."
+msgstr ""
+"この警告は、`reset`、`reset_async_high`、`reset_async_low` を使用する "
+"`always_ff` ブロックで、最上位の `if_reset` / `else` の後に実行文がある場合に"
+"報告されます。非同期リセットでは、その文はリセット条件の外側でリセットの"
+"アサートエッジでも実行されるため、合成できない可能性があります。"
+
+#: src/07_appendix/02_semantic_error.md:627
+msgid ""
+"The generic `reset` type is warned about even when `[build].reset_type` is "
+"synchronous, because a library user can select asynchronous reset. Explicit "
+"`reset_sync_high` and `reset_sync_low` types are exempt."
+msgstr ""
+"汎用の `reset` 型は、`[build].reset_type` が同期リセットの設定でも警告対象に"
+"なります。ライブラリの利用者が非同期リセットを選択できるためです。明示的な "
+"`reset_sync_high` 型と `reset_sync_low` 型は対象外です。"
+
+#: src/07_appendix/02_semantic_error.md:631
+msgid ""
+"Declarations without runtime behavior (`var`, `const`, and `gen`), code disabled by "
+"conditional compilation, and testbench modules are also excluded."
+msgstr ""
+"実行時の動作を伴わない宣言（`var`、`const`、`gen`）、条件付きコンパイルで"
+"無効になっているコード、テストベンチモジュールも対象外です。"
+
+#: src/07_appendix/02_semantic_error.md:634
+msgid ""
+"Move the statement into an `else` branch of `if_reset`, or into a separate "
+"`always_ff` without reset. If the design requires synchronous reset, declare an "
+"explicitly synchronous reset type."
+msgstr ""
+"その文を `if_reset` の `else` 分岐内、またはリセットを伴わない別の "
+"`always_ff` に移動してください。設計上、同期リセットが必要な場合は、明示的な"
+"同期リセット型で宣言してください。"
+
+#: src/07_appendix/02_semantic_error.md:638
 msgid "unassign_variable"
 msgstr "unassign_variable"
 
-#: src/07_appendix/02_semantic_error.md:622
+#: src/07_appendix/02_semantic_error.md:640
 msgid ""
 "This warning is reported when a declared variable is never assigned a value."
 msgstr "この警告は、宣言された変数に一度も値が代入されない場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:624
+#: src/07_appendix/02_semantic_error.md:642
 msgid "uncovered_branch"
 msgstr "uncovered_branch"
 
-#: src/07_appendix/02_semantic_error.md:626
+#: src/07_appendix/02_semantic_error.md:644
 msgid ""
 "This warning is reported when a signal is conditionally assigned in some "
 "branches but not all, which infers a latch. Add a default assignment, or "
@@ -19255,11 +19299,11 @@ msgstr ""
 "この警告は、信号が一部の分岐でしか代入されず、ラッチが推論される場合に報告さ"
 "れます。デフォルトの代入を加えるか、すべての分岐で代入してください。"
 
-#: src/07_appendix/02_semantic_error.md:630
+#: src/07_appendix/02_semantic_error.md:648
 msgid "unenclosed_inner_if_expression"
 msgstr "unenclosed_inner_if_expression"
 
-#: src/07_appendix/02_semantic_error.md:632
+#: src/07_appendix/02_semantic_error.md:650
 msgid ""
 "This warning is reported when a nested `if` expression is not enclosed in "
 "parentheses. Add parentheses to make precedence explicit."
@@ -19267,11 +19311,11 @@ msgstr ""
 "この警告は、入れ子になった `if` 式が括弧で囲まれていない場合に報告されます。"
 "優先順位を明示するため括弧を追加してください。"
 
-#: src/07_appendix/02_semantic_error.md:635
+#: src/07_appendix/02_semantic_error.md:653
 msgid "unsigned_arith_shift"
 msgstr "unsigned_arith_shift"
 
-#: src/07_appendix/02_semantic_error.md:637
+#: src/07_appendix/02_semantic_error.md:655
 msgid ""
 "This warning is reported when an arithmetic shift is applied to an unsigned "
 "operand. The result is identical to a logical shift; use a logical shift to "
@@ -19281,11 +19325,11 @@ msgstr ""
 "シフトと結果が同じになるため、意図を明確にするには論理シフトを使用してくださ"
 "い。"
 
-#: src/07_appendix/02_semantic_error.md:640
+#: src/07_appendix/02_semantic_error.md:658
 msgid "unused_return"
 msgstr "unused_return"
 
-#: src/07_appendix/02_semantic_error.md:642
+#: src/07_appendix/02_semantic_error.md:660
 msgid ""
 "This warning is reported when a function call's return value is discarded. "
 "Assign the result to a variable, or use a function whose return value is "
@@ -19294,11 +19338,11 @@ msgstr ""
 "この警告は、関数呼び出しの戻り値が破棄された場合に報告されます。結果を変数に"
 "代入するか、戻り値を無視する設計の関数を使用してください。"
 
-#: src/07_appendix/02_semantic_error.md:646
+#: src/07_appendix/02_semantic_error.md:664
 msgid "unused_variable"
 msgstr "unused_variable"
 
-#: src/07_appendix/02_semantic_error.md:648
+#: src/07_appendix/02_semantic_error.md:666
 msgid ""
 "This warning is reported when a declared variable is never read. Add the `_` "
 "prefix to its name to mark it as intentionally unused, or remove the "

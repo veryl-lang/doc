@@ -617,6 +617,24 @@ a defined reset value.
 This warning is reported when a struct or union mixes 2-state and 4-state members.
 Unify the members to a single state.
 
+### statement_after_if_reset
+
+This warning is reported when an executable statement follows the top-level
+`if_reset` / `else` chain in an `always_ff` block using `reset`, `reset_async_high`,
+or `reset_async_low`. With asynchronous reset, the statement also executes on the
+reset assertion edge, outside the reset condition, which may prevent synthesis.
+
+The generic `reset` type is warned about even when `[build].reset_type` is
+synchronous, because a library user can select asynchronous reset. Explicit
+`reset_sync_high` and `reset_sync_low` types are exempt.
+
+Declarations without runtime behavior (`var`, `const`, and `gen`), code disabled by
+conditional compilation, and testbench modules are also excluded.
+
+Move the statement into an `else` branch of `if_reset`, or into a separate
+`always_ff` without reset. If the design requires synchronous reset, declare an
+explicitly synchronous reset type.
+
 ### unassign_variable
 
 This warning is reported when a declared variable is never assigned a value.
