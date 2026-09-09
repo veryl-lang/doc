@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-b1ef2cf3.js";
+            window.path_to_searchindex_js = "searchindex-2390aaed.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-156e7647.js"></script>
@@ -8294,6 +8294,19 @@ a defined reset value.</p>
 <h3 id="mixed_struct_union_member"><a class="header" href="#mixed_struct_union_member">mixed_struct_union_member</a></h3>
 <p>This warning is reported when a struct or union mixes 2-state and 4-state members.
 Unify the members to a single state.</p>
+<h3 id="statement_after_if_reset"><a class="header" href="#statement_after_if_reset">statement_after_if_reset</a></h3>
+<p>This warning is reported when an executable statement follows the top-level
+<code>if_reset</code> / <code>else</code> chain in an <code>always_ff</code> block using <code>reset</code>, <code>reset_async_high</code>,
+or <code>reset_async_low</code>. With asynchronous reset, the statement also executes on the
+reset assertion edge, outside the reset condition, which may prevent synthesis.</p>
+<p>The generic <code>reset</code> type is warned about even when <code>[build].reset_type</code> is
+synchronous, because a library user can select asynchronous reset. Explicit
+<code>reset_sync_high</code> and <code>reset_sync_low</code> types are exempt.</p>
+<p>Declarations without runtime behavior (<code>var</code>, <code>const</code>, and <code>gen</code>), code disabled by
+conditional compilation, and testbench modules are also excluded.</p>
+<p>Move the statement into an <code>else</code> branch of <code>if_reset</code>, or into a separate
+<code>always_ff</code> without reset. If the design requires synchronous reset, declare an
+explicitly synchronous reset type.</p>
 <h3 id="unassign_variable"><a class="header" href="#unassign_variable">unassign_variable</a></h3>
 <p>This warning is reported when a declared variable is never assigned a value.</p>
 <h3 id="uncovered_branch"><a class="header" href="#uncovered_branch">uncovered_branch</a></h3>

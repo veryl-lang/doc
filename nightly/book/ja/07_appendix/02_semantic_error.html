@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-fe6ae273.js";
+            window.path_to_searchindex_js = "../searchindex-64df4986.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-f6fb0cb4.js"></script>
@@ -500,6 +500,11 @@
 <p>この警告は、<code>if_reset</code> を伴う <code>always_ff</code> ブロック内で宣言されたレジスタに <code>if_reset</code> 分岐内での代入が無い場合に報告されます。リセット値を定義するため、そのレジスタへの代入を追加してください。</p>
 <h3 id="mixed_struct_union_member"><a class="header" href="#mixed_struct_union_member">mixed_struct_union_member</a></h3>
 <p>この警告は、struct または union 内で 2-state メンバーと 4-state メンバーが混在している場合に報告されます。メンバーをいずれか一方に統一してください。</p>
+<h3 id="statement_after_if_reset"><a class="header" href="#statement_after_if_reset">statement_after_if_reset</a></h3>
+<p>この警告は、<code>reset</code>、<code>reset_async_high</code>、<code>reset_async_low</code> を使用する <code>always_ff</code> ブロックで、最上位の <code>if_reset</code> / <code>else</code> の後に実行文がある場合に報告されます。非同期リセットでは、その文はリセット条件の外側でリセットのアサートエッジでも実行されるため、合成できない可能性があります。</p>
+<p>汎用の <code>reset</code> 型は、<code>[build].reset_type</code> が同期リセットの設定でも警告対象になります。ライブラリの利用者が非同期リセットを選択できるためです。明示的な <code>reset_sync_high</code> 型と <code>reset_sync_low</code> 型は対象外です。</p>
+<p>実行時の動作を伴わない宣言（<code>var</code>、<code>const</code>、<code>gen</code>）、条件付きコンパイルで無効になっているコード、テストベンチモジュールも対象外です。</p>
+<p>その文を <code>if_reset</code> の <code>else</code> 分岐内、またはリセットを伴わない別の <code>always_ff</code> に移動してください。設計上、同期リセットが必要な場合は、明示的な同期リセット型で宣言してください。</p>
 <h3 id="unassign_variable"><a class="header" href="#unassign_variable">unassign_variable</a></h3>
 <p>この警告は、宣言された変数に一度も値が代入されない場合に報告されます。</p>
 <h3 id="uncovered_branch"><a class="header" href="#uncovered_branch">uncovered_branch</a></h3>
