@@ -256,6 +256,13 @@ fn pop_read(&mut self, _ctx: &mut SimCtx) -> Result<Value> {
 
 The width resolves per instance, so the same component returns 32 bits on a 32-bit bus and 128 bits on a 128-bit one.
 
+A `Value` is created by `Value::from_u64(v, width)` or `Value::from_bits(...)`, and read by the following methods:
+
+* `width()` — the bit width
+* `as_u64()` / `as_i64()` — the value as a 64-bit integer; an error if the value is wider than 64 bits
+* `as_slice()` — all bits as 64-bit words, least significant word first; use it to read a value wider than 64 bits
+* `mask_xz()` — the X/Z mask in the same word layout as `as_slice()`; `has_x()`, `has_z()` and `has_unknown()` test it
+
 ## Unit testing with MockSim
 
 The `veryl_component::testing` module provides `MockSim`, an in-process stand-in for the simulator host.
