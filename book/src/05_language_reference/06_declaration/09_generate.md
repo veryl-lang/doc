@@ -52,3 +52,15 @@ module ModuleA (
     }
 }
 ```
+
+The generate `for` declaration also accepts `step` as the `for` statement does (see [For](../05_statement/05_for.md)).
+
+```veryl,playground
+module ModuleA {
+    var a: logic<10>;
+
+    for i in 0..10 step += 2 :label {
+        assign a[i] = i;
+    }
+}
+```
