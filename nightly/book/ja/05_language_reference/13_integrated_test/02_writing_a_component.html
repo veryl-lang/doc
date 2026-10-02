@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-2fede129.js";
+            window.path_to_searchindex_js = "../../searchindex-b3cb1f91.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-f6fb0cb4.js"></script>
@@ -466,6 +466,13 @@ fn pop_read(&amp;mut self, _ctx: &amp;mut SimCtx) -&gt; Result&lt;Value&gt; {
     /* ... */
 }</code></pre>
 <p>幅はインスタンスごとに解決されるので、同じコンポーネントが 32 ビットのバスでは 32 ビット、128 ビットのバスでは 128 ビットの値を返します。</p>
+<p><code>Value</code> は <code>Value::from_u64(v, width)</code> または <code>Value::from_bits(...)</code> で作成し、以下のメソッドで読み出します:</p>
+<ul>
+<li><code>width()</code> — ビット幅</li>
+<li><code>as_u64()</code> / <code>as_i64()</code> — 64ビット整数としての値。値が64ビットより広い場合はエラー</li>
+<li><code>as_slice()</code> — 全ビットを下位ワードから順に並べた64ビットワード列。64ビットより広い値の読み出しに使用します</li>
+<li><code>mask_xz()</code> — <code>as_slice()</code> と同じワード配置の X/Z マスク。<code>has_x()</code>、<code>has_z()</code>、<code>has_unknown()</code> でマスクを判定できます</li>
+</ul>
 <h2 id="mocksim-によるユニットテスト"><a class="header" href="#mocksim-によるユニットテスト">MockSim によるユニットテスト</a></h2>
 <p><code>veryl_component::testing</code> モジュールは、シミュレータホストのインプロセスな代替である <code>MockSim</code> を提供します。<code>MockSim</code> は同じ <code>SimCtx</code>/<code>BuildCtx</code> API を通じてコンポーネントを駆動するため、Veryl のシミュレータなしに、通常の <code>cargo test</code> でコンポーネントをユニットテストできます。</p>
 <pre><code class="language-rust noplayground">#[cfg(test)]

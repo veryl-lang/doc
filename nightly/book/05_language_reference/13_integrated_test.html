@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-fcc1e297.js";
+            window.path_to_searchindex_js = "../searchindex-c7e502be.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-156e7647.js"></script>
@@ -381,6 +381,33 @@ module test_reset_cycles_param {
     }
 }
 </code></pre>
+<h3 id="multiple-initial-blocks"><a class="header" href="#multiple-initial-blocks">Multiple initial blocks</a></h3>
+<p>A test module can have multiple <code>initial</code> blocks.
+Each block runs as an independent process, like <code>initial</code> blocks in SystemVerilog:
+while one block waits at <code>clk.next()</code>, the other blocks continue.
+All blocks waiting for the same clock are resumed at the same edge, and blocks resumed at the same time run in declaration order.
+The <code>initial</code> blocks inside the instantiated modules also run as their own processes.</p>
+<pre><code class="language-veryl playground">#[test(test_multi_initial)]
+module test_multi_initial {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    var done: logic;
+
+    initial {
+        done = 0;
+        rst.assert();
+        clk.next(5);
+        done = 1;
+    }
+
+    initial {
+        clk.next(8);
+        $assert(done == 1);
+        $finish();
+    }
+}
+</code></pre>
 <h3 id="function-calls-in-testbench"><a class="header" href="#function-calls-in-testbench">Function calls in testbench</a></h3>
 <p>Testbench methods like <code>clk.next</code> can be called from user-defined functions:</p>
 <pre><code class="language-veryl playground">#[test(test_function_call)]
@@ -464,6 +491,35 @@ Using it in RTL context like <code>always_comb</code>, or in a module which is n
 <p>A hierarchical reference is not counted as a reference to the signal.
 So a signal which is read only through a hierarchical reference is reported as <code>unused_variable</code>.
 It can be suppressed by the <a href="./06_declaration/08_attribute.html"><code>#[allow(unused_variable)]</code></a> attribute.</p>
+<p>A hierarchical reference can also be the destination of <code>$readmemh</code>, so a memory inside the DUT can be loaded from a test module.
+The destination must be a whole variable; a part of the variable, such as an element select, can’t be used.
+Because nothing in the DUT assigns the memory, its declaration needs <a href="./06_declaration/08_attribute.html"><code>#[allow(unassign_variable)]</code></a>.</p>
+<pre><code class="language-veryl playground">module Rom (
+    addr: input  logic&lt;2&gt; ,
+    data: output logic&lt;32&gt;,
+) {
+    #[allow(unassign_variable)]
+    var mem: logic&lt;32&gt; [4];
+
+    assign data = mem[addr];
+}
+
+#[test(test_hier_readmemh)]
+module test_hier_readmemh {
+    var addr: logic&lt;2&gt; ;
+    var data: logic&lt;32&gt;;
+
+    inst dut: Rom ( addr, data );
+
+    initial {
+        $readmemh("rom.hex", dut.mem);
+        addr = 3;
+        $assert(dut.mem[0] == 32'h1);
+        $assert(data == 32'h4);
+        $finish();
+    }
+}
+</code></pre>
 <h3 id="file-output"><a class="header" href="#file-output">File output</a></h3>
 <p><code>$tb::file</code> is a file handle for writing output files during a native test.
 Unlike <code>clock_gen</code> and <code>reset_gen</code>, it is declared with <code>var</code>, then opened, written, and closed inside an <code>initial</code> block:</p>

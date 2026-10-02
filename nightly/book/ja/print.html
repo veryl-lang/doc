@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-2fede129.js";
+            window.path_to_searchindex_js = "searchindex-b3cb1f91.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-f6fb0cb4.js"></script>
@@ -1905,6 +1905,18 @@ module ModuleA {
     assign b = x as 2;
 }
 </code></pre>
+<p><code>()</code> で囲んだ定数式もビット幅として使うことができます。これは <code>(W + 1)'(i_x)</code> のような SystemVerilog のサイズキャストとして出力されます。<code>()</code> がない場合、<code>as</code> のビット幅オペランドは単一の項なので、<code>i_x as W + 1</code> は <code>(i_x as W) + 1</code> と解釈されます。</p>
+<pre><code class="language-veryl playground">module ModuleB #(
+    param W: u32 = 8,
+) (
+    i_x: input  logic&lt;W&gt;    ,
+    o_a: output logic&lt;W + 1&gt;,
+    o_b: output logic&lt;W * 2&gt;,
+) {
+    assign o_a = i_x as (W + 1);
+    assign o_b = (i_x - 1) as (W * 2);
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="構造体コンストラクタ"><a class="header" href="#構造体コンストラクタ">構造体コンストラクタ</a></h1>
 <p>構造体を初期化するために各メンバーにそれぞれ代入する代わりに構造体コンストラクタを使用することができます。特に <code>const</code> は各メンバーに代入することができないためコンストラクタによる初期化が必要です。</p>
@@ -3287,6 +3299,29 @@ module test_reset_cycles_param {
     }
 }
 </code></pre>
+<h3 id="複数の-initial-ブロック"><a class="header" href="#複数の-initial-ブロック">複数の initial ブロック</a></h3>
+<p>テストモジュールは複数の <code>initial</code> ブロックを持つことができます。SystemVerilog の <code>initial</code> ブロックと同様に、各ブロックは独立したプロセスとして実行されます。あるブロックが <code>clk.next()</code> で待機している間も、他のブロックは実行を続けます。同じクロックを待っているブロックはすべて同じエッジで再開され、同時に再開されたブロックは宣言順に実行されます。インスタンス化されたモジュール内の <code>initial</code> ブロックも、それぞれ独立したプロセスとして実行されます。</p>
+<pre><code class="language-veryl playground">#[test(test_multi_initial)]
+module test_multi_initial {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    var done: logic;
+
+    initial {
+        done = 0;
+        rst.assert();
+        clk.next(5);
+        done = 1;
+    }
+
+    initial {
+        clk.next(8);
+        $assert(done == 1);
+        $finish();
+    }
+}
+</code></pre>
 <h3 id="テストベンチ内の関数呼び出し"><a class="header" href="#テストベンチ内の関数呼び出し">テストベンチ内の関数呼び出し</a></h3>
 <p><code>clk.next</code> などのテストベンチメソッドはユーザー定義関数から呼び出すことができます。</p>
 <pre><code class="language-veryl playground">#[test(test_function_call)]
@@ -3365,6 +3400,33 @@ module test_hier {
 <li>インスタンス配列は階層パスの一部にできません。</li>
 </ul>
 <p>階層参照はその信号への参照として数えられません。そのため、階層参照でしか読まれない信号は <code>unused_variable</code> として報告されます。これは <a href="#アトリビュート"><code>#[allow(unused_variable)]</code></a> 属性で抑制できます。</p>
+<p>階層参照は <code>$readmemh</code> の書き込み先にすることもできるため、DUT 内のメモリをテストモジュールからロードできます。書き込み先は変数全体である必要があり、要素選択のような変数の一部は使用できません。DUT 内ではそのメモリに代入しないため、宣言には <a href="#アトリビュート"><code>#[allow(unassign_variable)]</code></a> が必要です。</p>
+<pre><code class="language-veryl playground">module Rom (
+    addr: input  logic&lt;2&gt; ,
+    data: output logic&lt;32&gt;,
+) {
+    #[allow(unassign_variable)]
+    var mem: logic&lt;32&gt; [4];
+
+    assign data = mem[addr];
+}
+
+#[test(test_hier_readmemh)]
+module test_hier_readmemh {
+    var addr: logic&lt;2&gt; ;
+    var data: logic&lt;32&gt;;
+
+    inst dut: Rom ( addr, data );
+
+    initial {
+        $readmemh("rom.hex", dut.mem);
+        addr = 3;
+        $assert(dut.mem[0] == 32'h1);
+        $assert(data == 32'h4);
+        $finish();
+    }
+}
+</code></pre>
 <h3 id="ファイル出力"><a class="header" href="#ファイル出力">ファイル出力</a></h3>
 <p><code>$tb::file</code> はネイティブテスト中に出力ファイルを書き込むためのファイルハンドルです。<code>clock_gen</code> や <code>reset_gen</code> とは異なり <code>var</code> で宣言し、<code>initial</code> ブロック内で開いて書き込み、閉じます。</p>
 <ul>
@@ -3747,6 +3809,13 @@ fn pop_read(&amp;mut self, _ctx: &amp;mut SimCtx) -&gt; Result&lt;Value&gt; {
     /* ... */
 }</code></pre>
 <p>幅はインスタンスごとに解決されるので、同じコンポーネントが 32 ビットのバスでは 32 ビット、128 ビットのバスでは 128 ビットの値を返します。</p>
+<p><code>Value</code> は <code>Value::from_u64(v, width)</code> または <code>Value::from_bits(...)</code> で作成し、以下のメソッドで読み出します:</p>
+<ul>
+<li><code>width()</code> — ビット幅</li>
+<li><code>as_u64()</code> / <code>as_i64()</code> — 64ビット整数としての値。値が64ビットより広い場合はエラー</li>
+<li><code>as_slice()</code> — 全ビットを下位ワードから順に並べた64ビットワード列。64ビットより広い値の読み出しに使用します</li>
+<li><code>mask_xz()</code> — <code>as_slice()</code> と同じワード配置の X/Z マスク。<code>has_x()</code>、<code>has_z()</code>、<code>has_unknown()</code> でマスクを判定できます</li>
+</ul>
 <h2 id="mocksim-によるユニットテスト"><a class="header" href="#mocksim-によるユニットテスト">MockSim によるユニットテスト</a></h2>
 <p><code>veryl_component::testing</code> モジュールは、シミュレータホストのインプロセスな代替である <code>MockSim</code> を提供します。<code>MockSim</code> は同じ <code>SimCtx</code>/<code>BuildCtx</code> API を通じてコンポーネントを駆動するため、Veryl のシミュレータなしに、通常の <code>cargo test</code> でコンポーネントをユニットテストできます。</p>
 <pre><code class="language-rust noplayground">#[cfg(test)]
@@ -7565,6 +7634,8 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、ジェネリック定義位置からジェネリックパラメータ中の式を解決できない場合に報告されます。</p>
 <h3 id="wrong_seperator"><a class="header" href="#wrong_seperator">wrong_seperator</a></h3>
 <p>このエラーは、識別子間で誤った区切り文字（<code>::</code> と <code>.</code>）が使われた場合に報告されます。正しい区切り文字に置き換えてください。</p>
+<h3 id="zero_size"><a class="header" href="#zero_size">zero_size</a></h3>
+<p>このエラーは、<code>logic&lt;0&gt;</code> や <code>W</code> が 0 である <code>logic&lt;W&gt;</code> のように、ビット幅や配列サイズが 0 に評価された場合に報告されます。そのような宣言の扱いは SystemVerilog ツールによって異なるため、エラーとしています。0 より大きいサイズを使用してください。</p>
 <h3 id="zero_width_number"><a class="header" href="#zero_width_number">zero_width_number</a></h3>
 <p>このエラーは、数値の幅が0として宣言された場合に報告されます。</p>
 <h2 id="警告"><a class="header" href="#警告">警告</a></h2>

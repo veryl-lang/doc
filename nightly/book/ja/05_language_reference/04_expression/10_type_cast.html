@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-2fede129.js";
+            window.path_to_searchindex_js = "../../searchindex-b3cb1f91.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-f6fb0cb4.js"></script>
@@ -286,6 +286,18 @@
 
     assign a = x as EnumA;
     assign b = x as 2;
+}
+</code></pre>
+<p><code>()</code> で囲んだ定数式もビット幅として使うことができます。これは <code>(W + 1)'(i_x)</code> のような SystemVerilog のサイズキャストとして出力されます。<code>()</code> がない場合、<code>as</code> のビット幅オペランドは単一の項なので、<code>i_x as W + 1</code> は <code>(i_x as W) + 1</code> と解釈されます。</p>
+<pre><code class="language-veryl playground">module ModuleB #(
+    param W: u32 = 8,
+) (
+    i_x: input  logic&lt;W&gt;    ,
+    o_a: output logic&lt;W + 1&gt;,
+    o_b: output logic&lt;W * 2&gt;,
+) {
+    assign o_a = i_x as (W + 1);
+    assign o_b = (i_x - 1) as (W * 2);
 }
 </code></pre>
 

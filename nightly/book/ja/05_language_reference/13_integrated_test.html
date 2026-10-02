@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-2fede129.js";
+            window.path_to_searchindex_js = "../searchindex-b3cb1f91.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-f6fb0cb4.js"></script>
@@ -372,6 +372,29 @@ module test_reset_cycles_param {
     }
 }
 </code></pre>
+<h3 id="複数の-initial-ブロック"><a class="header" href="#複数の-initial-ブロック">複数の initial ブロック</a></h3>
+<p>テストモジュールは複数の <code>initial</code> ブロックを持つことができます。SystemVerilog の <code>initial</code> ブロックと同様に、各ブロックは独立したプロセスとして実行されます。あるブロックが <code>clk.next()</code> で待機している間も、他のブロックは実行を続けます。同じクロックを待っているブロックはすべて同じエッジで再開され、同時に再開されたブロックは宣言順に実行されます。インスタンス化されたモジュール内の <code>initial</code> ブロックも、それぞれ独立したプロセスとして実行されます。</p>
+<pre><code class="language-veryl playground">#[test(test_multi_initial)]
+module test_multi_initial {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    var done: logic;
+
+    initial {
+        done = 0;
+        rst.assert();
+        clk.next(5);
+        done = 1;
+    }
+
+    initial {
+        clk.next(8);
+        $assert(done == 1);
+        $finish();
+    }
+}
+</code></pre>
 <h3 id="テストベンチ内の関数呼び出し"><a class="header" href="#テストベンチ内の関数呼び出し">テストベンチ内の関数呼び出し</a></h3>
 <p><code>clk.next</code> などのテストベンチメソッドはユーザー定義関数から呼び出すことができます。</p>
 <pre><code class="language-veryl playground">#[test(test_function_call)]
@@ -450,6 +473,33 @@ module test_hier {
 <li>インスタンス配列は階層パスの一部にできません。</li>
 </ul>
 <p>階層参照はその信号への参照として数えられません。そのため、階層参照でしか読まれない信号は <code>unused_variable</code> として報告されます。これは <a href="./06_declaration/08_attribute.html"><code>#[allow(unused_variable)]</code></a> 属性で抑制できます。</p>
+<p>階層参照は <code>$readmemh</code> の書き込み先にすることもできるため、DUT 内のメモリをテストモジュールからロードできます。書き込み先は変数全体である必要があり、要素選択のような変数の一部は使用できません。DUT 内ではそのメモリに代入しないため、宣言には <a href="./06_declaration/08_attribute.html"><code>#[allow(unassign_variable)]</code></a> が必要です。</p>
+<pre><code class="language-veryl playground">module Rom (
+    addr: input  logic&lt;2&gt; ,
+    data: output logic&lt;32&gt;,
+) {
+    #[allow(unassign_variable)]
+    var mem: logic&lt;32&gt; [4];
+
+    assign data = mem[addr];
+}
+
+#[test(test_hier_readmemh)]
+module test_hier_readmemh {
+    var addr: logic&lt;2&gt; ;
+    var data: logic&lt;32&gt;;
+
+    inst dut: Rom ( addr, data );
+
+    initial {
+        $readmemh("rom.hex", dut.mem);
+        addr = 3;
+        $assert(dut.mem[0] == 32'h1);
+        $assert(data == 32'h4);
+        $finish();
+    }
+}
+</code></pre>
 <h3 id="ファイル出力"><a class="header" href="#ファイル出力">ファイル出力</a></h3>
 <p><code>$tb::file</code> はネイティブテスト中に出力ファイルを書き込むためのファイルハンドルです。<code>clock_gen</code> や <code>reset_gen</code> とは異なり <code>var</code> で宣言し、<code>initial</code> ブロック内で開いて書き込み、閉じます。</p>
 <ul>

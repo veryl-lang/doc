@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-2fede129.js";
+            window.path_to_searchindex_js = "../searchindex-b3cb1f91.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-f6fb0cb4.js"></script>
@@ -481,6 +481,8 @@
 <p>このエラーは、ジェネリック定義位置からジェネリックパラメータ中の式を解決できない場合に報告されます。</p>
 <h3 id="wrong_seperator"><a class="header" href="#wrong_seperator">wrong_seperator</a></h3>
 <p>このエラーは、識別子間で誤った区切り文字（<code>::</code> と <code>.</code>）が使われた場合に報告されます。正しい区切り文字に置き換えてください。</p>
+<h3 id="zero_size"><a class="header" href="#zero_size">zero_size</a></h3>
+<p>このエラーは、<code>logic&lt;0&gt;</code> や <code>W</code> が 0 である <code>logic&lt;W&gt;</code> のように、ビット幅や配列サイズが 0 に評価された場合に報告されます。そのような宣言の扱いは SystemVerilog ツールによって異なるため、エラーとしています。0 より大きいサイズを使用してください。</p>
 <h3 id="zero_width_number"><a class="header" href="#zero_width_number">zero_width_number</a></h3>
 <p>このエラーは、数値の幅が0として宣言された場合に報告されます。</p>
 <h2 id="警告"><a class="header" href="#警告">警告</a></h2>

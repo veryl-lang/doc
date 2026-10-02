@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-fcc1e297.js";
+            window.path_to_searchindex_js = "../../searchindex-c7e502be.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-156e7647.js"></script>
@@ -287,6 +287,20 @@ Bit width speficied by based or baseless number or type name of user defined typ
 
     assign a = x as EnumA;
     assign b = x as 2;
+}
+</code></pre>
+<p>A constant expression enclosed in <code>()</code> can also be used as the bit width.
+It is emitted as a SystemVerilog size cast like <code>(W + 1)'(i_x)</code>.
+Without <code>()</code>, <code>i_x as W + 1</code> is interpreted as <code>(i_x as W) + 1</code> because the width operand of <code>as</code> is a single term.</p>
+<pre><code class="language-veryl playground">module ModuleB #(
+    param W: u32 = 8,
+) (
+    i_x: input  logic&lt;W&gt;    ,
+    o_a: output logic&lt;W + 1&gt;,
+    o_b: output logic&lt;W * 2&gt;,
+) {
+    assign o_a = i_x as (W + 1);
+    assign o_b = (i_x - 1) as (W * 2);
 }
 </code></pre>
 

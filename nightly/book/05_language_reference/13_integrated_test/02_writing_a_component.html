@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-fcc1e297.js";
+            window.path_to_searchindex_js = "../../searchindex-c7e502be.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-156e7647.js"></script>
@@ -478,6 +478,13 @@ fn pop_read(&amp;mut self, _ctx: &amp;mut SimCtx) -&gt; Result&lt;Value&gt; {
     /* ... */
 }</code></pre>
 <p>The width resolves per instance, so the same component returns 32 bits on a 32-bit bus and 128 bits on a 128-bit one.</p>
+<p>A <code>Value</code> is created by <code>Value::from_u64(v, width)</code> or <code>Value::from_bits(...)</code>, and read by the following methods:</p>
+<ul>
+<li><code>width()</code> — the bit width</li>
+<li><code>as_u64()</code> / <code>as_i64()</code> — the value as a 64-bit integer; an error if the value is wider than 64 bits</li>
+<li><code>as_slice()</code> — all bits as 64-bit words, least significant word first; use it to read a value wider than 64 bits</li>
+<li><code>mask_xz()</code> — the X/Z mask in the same word layout as <code>as_slice()</code>; <code>has_x()</code>, <code>has_z()</code> and <code>has_unknown()</code> test it</li>
+</ul>
 <h2 id="unit-testing-with-mocksim"><a class="header" href="#unit-testing-with-mocksim">Unit testing with MockSim</a></h2>
 <p>The <code>veryl_component::testing</code> module provides <code>MockSim</code>, an in-process stand-in for the simulator host.
 It drives a component through the same <code>SimCtx</code>/<code>BuildCtx</code> API, so components can be unit-tested with plain <code>cargo test</code> without the Veryl simulator:</p>

@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-fcc1e297.js";
+            window.path_to_searchindex_js = "../searchindex-c7e502be.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-156e7647.js"></script>
@@ -635,6 +635,11 @@ from the position of the generic’s definition.</p>
 <h3 id="wrong_seperator"><a class="header" href="#wrong_seperator">wrong_seperator</a></h3>
 <p>This error is reported when an incorrect separator (<code>::</code> vs <code>.</code>) is used between
 identifiers. Replace it with the correct separator.</p>
+<h3 id="zero_size"><a class="header" href="#zero_size">zero_size</a></h3>
+<p>This error is reported when a bit width or an array size evaluates to 0, such as
+<code>logic&lt;0&gt;</code> or <code>logic&lt;W&gt;</code> with <code>W</code> equal to 0.
+SystemVerilog tools disagree on how to treat such a declaration, so it is rejected.
+Use a size greater than 0.</p>
 <h3 id="zero_width_number"><a class="header" href="#zero_width_number">zero_width_number</a></h3>
 <p>This error is reported when a number is declared with zero width.</p>
 <h2 id="warnings"><a class="header" href="#warnings">Warnings</a></h2>

@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-fcc1e297.js";
+            window.path_to_searchindex_js = "searchindex-c7e502be.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-156e7647.js"></script>
@@ -2025,6 +2025,20 @@ Bit width speficied by based or baseless number or type name of user defined typ
     assign b = x as 2;
 }
 </code></pre>
+<p>A constant expression enclosed in <code>()</code> can also be used as the bit width.
+It is emitted as a SystemVerilog size cast like <code>(W + 1)'(i_x)</code>.
+Without <code>()</code>, <code>i_x as W + 1</code> is interpreted as <code>(i_x as W) + 1</code> because the width operand of <code>as</code> is a single term.</p>
+<pre><code class="language-veryl playground">module ModuleB #(
+    param W: u32 = 8,
+) (
+    i_x: input  logic&lt;W&gt;    ,
+    o_a: output logic&lt;W + 1&gt;,
+    o_b: output logic&lt;W * 2&gt;,
+) {
+    assign o_a = i_x as (W + 1);
+    assign o_b = (i_x - 1) as (W * 2);
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="struct-constructor"><a class="header" href="#struct-constructor">Struct Constructor</a></h1>
 <p>To initialize struct, Struct constructor can be used instead of assigning each members.
@@ -3525,6 +3539,33 @@ module test_reset_cycles_param {
     }
 }
 </code></pre>
+<h3 id="multiple-initial-blocks"><a class="header" href="#multiple-initial-blocks">Multiple initial blocks</a></h3>
+<p>A test module can have multiple <code>initial</code> blocks.
+Each block runs as an independent process, like <code>initial</code> blocks in SystemVerilog:
+while one block waits at <code>clk.next()</code>, the other blocks continue.
+All blocks waiting for the same clock are resumed at the same edge, and blocks resumed at the same time run in declaration order.
+The <code>initial</code> blocks inside the instantiated modules also run as their own processes.</p>
+<pre><code class="language-veryl playground">#[test(test_multi_initial)]
+module test_multi_initial {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    var done: logic;
+
+    initial {
+        done = 0;
+        rst.assert();
+        clk.next(5);
+        done = 1;
+    }
+
+    initial {
+        clk.next(8);
+        $assert(done == 1);
+        $finish();
+    }
+}
+</code></pre>
 <h3 id="function-calls-in-testbench"><a class="header" href="#function-calls-in-testbench">Function calls in testbench</a></h3>
 <p>Testbench methods like <code>clk.next</code> can be called from user-defined functions:</p>
 <pre><code class="language-veryl playground">#[test(test_function_call)]
@@ -3608,6 +3649,35 @@ Using it in RTL context like <code>always_comb</code>, or in a module which is n
 <p>A hierarchical reference is not counted as a reference to the signal.
 So a signal which is read only through a hierarchical reference is reported as <code>unused_variable</code>.
 It can be suppressed by the <a href="#attribute"><code>#[allow(unused_variable)]</code></a> attribute.</p>
+<p>A hierarchical reference can also be the destination of <code>$readmemh</code>, so a memory inside the DUT can be loaded from a test module.
+The destination must be a whole variable; a part of the variable, such as an element select, can’t be used.
+Because nothing in the DUT assigns the memory, its declaration needs <a href="#attribute"><code>#[allow(unassign_variable)]</code></a>.</p>
+<pre><code class="language-veryl playground">module Rom (
+    addr: input  logic&lt;2&gt; ,
+    data: output logic&lt;32&gt;,
+) {
+    #[allow(unassign_variable)]
+    var mem: logic&lt;32&gt; [4];
+
+    assign data = mem[addr];
+}
+
+#[test(test_hier_readmemh)]
+module test_hier_readmemh {
+    var addr: logic&lt;2&gt; ;
+    var data: logic&lt;32&gt;;
+
+    inst dut: Rom ( addr, data );
+
+    initial {
+        $readmemh("rom.hex", dut.mem);
+        addr = 3;
+        $assert(dut.mem[0] == 32'h1);
+        $assert(data == 32'h4);
+        $finish();
+    }
+}
+</code></pre>
 <h3 id="file-output"><a class="header" href="#file-output">File output</a></h3>
 <p><code>$tb::file</code> is a file handle for writing output files during a native test.
 Unlike <code>clock_gen</code> and <code>reset_gen</code>, it is declared with <code>var</code>, then opened, written, and closed inside an <code>initial</code> block:</p>
@@ -4021,6 +4091,13 @@ fn pop_read(&amp;mut self, _ctx: &amp;mut SimCtx) -&gt; Result&lt;Value&gt; {
     /* ... */
 }</code></pre>
 <p>The width resolves per instance, so the same component returns 32 bits on a 32-bit bus and 128 bits on a 128-bit one.</p>
+<p>A <code>Value</code> is created by <code>Value::from_u64(v, width)</code> or <code>Value::from_bits(...)</code>, and read by the following methods:</p>
+<ul>
+<li><code>width()</code> — the bit width</li>
+<li><code>as_u64()</code> / <code>as_i64()</code> — the value as a 64-bit integer; an error if the value is wider than 64 bits</li>
+<li><code>as_slice()</code> — all bits as 64-bit words, least significant word first; use it to read a value wider than 64 bits</li>
+<li><code>mask_xz()</code> — the X/Z mask in the same word layout as <code>as_slice()</code>; <code>has_x()</code>, <code>has_z()</code> and <code>has_unknown()</code> test it</li>
+</ul>
 <h2 id="unit-testing-with-mocksim"><a class="header" href="#unit-testing-with-mocksim">Unit testing with MockSim</a></h2>
 <p>The <code>veryl_component::testing</code> module provides <code>MockSim</code>, an in-process stand-in for the simulator host.
 It drives a component through the same <code>SimCtx</code>/<code>BuildCtx</code> API, so components can be unit-tested with plain <code>cargo test</code> without the Veryl simulator:</p>
@@ -8268,6 +8345,11 @@ from the position of the generic’s definition.</p>
 <h3 id="wrong_seperator"><a class="header" href="#wrong_seperator">wrong_seperator</a></h3>
 <p>This error is reported when an incorrect separator (<code>::</code> vs <code>.</code>) is used between
 identifiers. Replace it with the correct separator.</p>
+<h3 id="zero_size"><a class="header" href="#zero_size">zero_size</a></h3>
+<p>This error is reported when a bit width or an array size evaluates to 0, such as
+<code>logic&lt;0&gt;</code> or <code>logic&lt;W&gt;</code> with <code>W</code> equal to 0.
+SystemVerilog tools disagree on how to treat such a declaration, so it is rejected.
+Use a size greater than 0.</p>
 <h3 id="zero_width_number"><a class="header" href="#zero_width_number">zero_width_number</a></h3>
 <p>This error is reported when a number is declared with zero width.</p>
 <h2 id="warnings"><a class="header" href="#warnings">Warnings</a></h2>
