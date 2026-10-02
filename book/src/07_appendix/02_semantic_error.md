@@ -570,6 +570,13 @@ from the position of the generic's definition.
 This error is reported when an incorrect separator (`::` vs `.`) is used between
 identifiers. Replace it with the correct separator.
 
+### zero_size
+
+This error is reported when a bit width or an array size evaluates to 0, such as
+`logic<0>` or `logic<W>` with `W` equal to 0.
+SystemVerilog tools disagree on how to treat such a declaration, so it is rejected.
+Use a size greater than 0.
+
 ### zero_width_number
 
 This error is reported when a number is declared with zero width.

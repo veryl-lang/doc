@@ -124,6 +124,37 @@ module test_reset_cycles_param {
 }
 ```
 
+### Multiple initial blocks
+
+A test module can have multiple `initial` blocks.
+Each block runs as an independent process, like `initial` blocks in SystemVerilog:
+while one block waits at `clk.next()`, the other blocks continue.
+All blocks waiting for the same clock are resumed at the same edge, and blocks resumed at the same time run in declaration order.
+The `initial` blocks inside the instantiated modules also run as their own processes.
+
+```veryl,playground
+#[test(test_multi_initial)]
+module test_multi_initial {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    var done: logic;
+
+    initial {
+        done = 0;
+        rst.assert();
+        clk.next(5);
+        done = 1;
+    }
+
+    initial {
+        clk.next(8);
+        $assert(done == 1);
+        $finish();
+    }
+}
+```
+
 ### Function calls in testbench
 
 Testbench methods like `clk.next` can be called from user-defined functions:
@@ -216,6 +247,38 @@ There are the following restrictions:
 A hierarchical reference is not counted as a reference to the signal.
 So a signal which is read only through a hierarchical reference is reported as `unused_variable`.
 It can be suppressed by the [`#[allow(unused_variable)]`](./06_declaration/08_attribute.md) attribute.
+
+A hierarchical reference can also be the destination of `$readmemh`, so a memory inside the DUT can be loaded from a test module.
+The destination must be a whole variable; a part of the variable, such as an element select, can't be used.
+Because nothing in the DUT assigns the memory, its declaration needs [`#[allow(unassign_variable)]`](./06_declaration/08_attribute.md).
+
+```veryl,playground
+module Rom (
+    addr: input  logic<2> ,
+    data: output logic<32>,
+) {
+    #[allow(unassign_variable)]
+    var mem: logic<32> [4];
+
+    assign data = mem[addr];
+}
+
+#[test(test_hier_readmemh)]
+module test_hier_readmemh {
+    var addr: logic<2> ;
+    var data: logic<32>;
+
+    inst dut: Rom ( addr, data );
+
+    initial {
+        $readmemh("rom.hex", dut.mem);
+        addr = 3;
+        $assert(dut.mem[0] == 32'h1);
+        $assert(data == 32'h4);
+        $finish();
+    }
+}
+```
 
 ### File output
 

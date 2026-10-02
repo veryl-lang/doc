@@ -3137,6 +3137,16 @@ msgstr ""
 "`as` は型キャスト演算子です。基数付きあるいは基数なしの数値で指定するビット幅"
 "やユーザ定義型の型名をオペランドにとることができます。"
 
+#: src/05_language_reference/04_expression/10_type_cast.md:22
+msgid ""
+"A constant expression enclosed in `()` can also be used as the bit width. It "
+"is emitted as a SystemVerilog size cast like `(W + 1)'(i_x)`. Without `()`, "
+"`i_x as W + 1` is interpreted as `(i_x as W) + 1` because the width operand "
+"of `as` is a single term."
+msgstr ""
+"`()` で囲んだ定数式もビット幅として使うことができます。これは `(W + 1)'(i_x)` のような SystemVerilog のサイズキャストとして出力されます。"
+"`()` がない場合、`as` のビット幅オペランドは単一の項なので、`i_x as W + 1` は `(i_x as W) + 1` と解釈されます。"
+
 #: src/05_language_reference/04_expression/11_struct_constructor.md:3
 msgid ""
 "To initialize struct, Struct constructor can be used instead of assigning "
@@ -5002,8 +5012,7 @@ msgstr "組み込みテストの記述方法は3種類あります。"
 msgid "Native test"
 msgstr "ネイティブテスト"
 
-#: src/05_language_reference/13_integrated_test.md:9
-#: src/05_language_reference/13_integrated_test.md:302
+#: src/05_language_reference/13_integrated_test.md:9 src/05_language_reference/13_integrated_test.md:365
 msgid "SystemVerilog test"
 msgstr "SystemVerilogテスト"
 
@@ -5204,17 +5213,36 @@ msgstr ""
 "```"
 
 #: src/05_language_reference/13_integrated_test.md:127
+msgid "Multiple initial blocks"
+msgstr "複数の initial ブロック"
+
+#: src/05_language_reference/13_integrated_test.md:129
+msgid ""
+"A test module can have multiple `initial` blocks. Each block runs as an "
+"independent process, like `initial` blocks in SystemVerilog: while one block "
+"waits at `clk.next()`, the other blocks continue. All blocks waiting for the "
+"same clock are resumed at the same edge, and blocks resumed at the same time "
+"run in declaration order. The `initial` blocks inside the instantiated "
+"modules also run as their own processes."
+msgstr ""
+"テストモジュールは複数の `initial` ブロックを持つことができます。"
+"SystemVerilog の `initial` ブロックと同様に、各ブロックは独立したプロセスとして実行されます。"
+"あるブロックが `clk.next()` で待機している間も、他のブロックは実行を続けます。"
+"同じクロックを待っているブロックはすべて同じエッジで再開され、同時に再開されたブロックは宣言順に実行されます。"
+"インスタンス化されたモジュール内の `initial` ブロックも、それぞれ独立したプロセスとして実行されます。"
+
+#: src/05_language_reference/13_integrated_test.md:158
 msgid "Function calls in testbench"
 msgstr "テストベンチ内の関数呼び出し"
 
-#: src/05_language_reference/13_integrated_test.md:129
+#: src/05_language_reference/13_integrated_test.md:160
 msgid ""
 "Testbench methods like `clk.next` can be called from user-defined functions:"
 msgstr ""
 "`clk.next` などのテストベンチメソッドはユーザー定義関数から呼び出すことができ"
 "ます。"
 
-#: src/05_language_reference/13_integrated_test.md:131
+#: src/05_language_reference/13_integrated_test.md:162
 msgid ""
 "```veryl,playground\n"
 "#[test(test_function_call)]\n"
@@ -5268,11 +5296,11 @@ msgstr ""
 "}\n"
 "```"
 
-#: src/05_language_reference/13_integrated_test.md:157
+#: src/05_language_reference/13_integrated_test.md:188
 msgid "Hierarchical reference"
 msgstr "階層参照"
 
-#: src/05_language_reference/13_integrated_test.md:159
+#: src/05_language_reference/13_integrated_test.md:190
 msgid ""
 "Signals inside the DUT can be read from an `initial` block through a "
 "hierarchical path. The path starts at an instance of the test module, and "
@@ -5283,7 +5311,7 @@ msgstr ""
 "テストモジュールのインスタンスから始まり、`.` でネストしたインスタンスを辿り"
 "ます。観測のために内部信号をトップレベルまで引き出す必要はありません。"
 
-#: src/05_language_reference/13_integrated_test.md:163
+#: src/05_language_reference/13_integrated_test.md:194
 msgid ""
 "```veryl,playground\n"
 "module Sub (\n"
@@ -5373,7 +5401,7 @@ msgstr ""
 "}\n"
 "```"
 
-#: src/05_language_reference/13_integrated_test.md:207
+#: src/05_language_reference/13_integrated_test.md:238
 msgid ""
 "The referenced value can be used like any other expression, such as an "
 "argument of `$assert` and `$display`, a condition of `if`, and an operand "
@@ -5382,11 +5410,11 @@ msgstr ""
 "参照した値は他の式と同じように使えます。例えば `$assert` や `$display` の引"
 "数、`if` の条件、ビット選択の対象などです。"
 
-#: src/05_language_reference/13_integrated_test.md:209
+#: src/05_language_reference/13_integrated_test.md:240
 msgid "There are the following restrictions:"
 msgstr "以下の制限があります。"
 
-#: src/05_language_reference/13_integrated_test.md:211
+#: src/05_language_reference/13_integrated_test.md:242
 msgid ""
 "A hierarchical reference is available only in `initial` blocks of a test "
 "module. Using it in RTL context like `always_comb`, or in a module which is "
@@ -5396,18 +5424,18 @@ msgstr ""
 "`always_comb` のような RTL のコンテキストや、テストモジュールでないモジュール"
 "の中で使うと `invisible_identifier` になります。"
 
-#: src/05_language_reference/13_integrated_test.md:213
+#: src/05_language_reference/13_integrated_test.md:244
 msgid ""
 "It can't be used in a function because a function body is shared with RTL "
 "callers."
 msgstr ""
 "関数の本体は RTL からの呼び出しと共有されるため、関数の中では使えません。"
 
-#: src/05_language_reference/13_integrated_test.md:214
+#: src/05_language_reference/13_integrated_test.md:245
 msgid "An instance array can't be a part of a hierarchical path."
 msgstr "インスタンス配列は階層パスの一部にできません。"
 
-#: src/05_language_reference/13_integrated_test.md:216
+#: src/05_language_reference/13_integrated_test.md:247
 msgid ""
 "A hierarchical reference is not counted as a reference to the signal. So a "
 "signal which is read only through a hierarchical reference is reported as "
@@ -5419,11 +5447,24 @@ msgstr ""
 "[`#[allow(unused_variable)]`](./06_declaration/08_attribute.md) 属性で抑制で"
 "きます。"
 
-#: src/05_language_reference/13_integrated_test.md:220
+#: src/05_language_reference/13_integrated_test.md:251
+msgid ""
+"A hierarchical reference can also be the destination of `$readmemh`, so a "
+"memory inside the DUT can be loaded from a test module. The destination must "
+"be a whole variable; a part of the variable, such as an element select, "
+"can't be used. Because nothing in the DUT assigns the memory, its "
+"declaration needs "
+"[`#[allow(unassign_variable)]`](./06_declaration/08_attribute.md)."
+msgstr ""
+"階層参照は `$readmemh` の書き込み先にすることもできるため、DUT 内のメモリをテストモジュールからロードできます。"
+"書き込み先は変数全体である必要があり、要素選択のような変数の一部は使用できません。"
+"DUT 内ではそのメモリに代入しないため、宣言には [`#[allow(unassign_variable)]`](./06_declaration/08_attribute.md) が必要です。"
+
+#: src/05_language_reference/13_integrated_test.md:283
 msgid "File output"
 msgstr "ファイル出力"
 
-#: src/05_language_reference/13_integrated_test.md:222
+#: src/05_language_reference/13_integrated_test.md:285
 msgid ""
 "`$tb::file` is a file handle for writing output files during a native test. "
 "Unlike `clock_gen` and `reset_gen`, it is declared with `var`, then opened, "
@@ -5433,21 +5474,21 @@ msgstr ""
 "ルです。`clock_gen` や `reset_gen` とは異なり `var` で宣言し、`initial` ブ"
 "ロック内で開いて書き込み、閉じます。"
 
-#: src/05_language_reference/13_integrated_test.md:225
+#: src/05_language_reference/13_integrated_test.md:288
 msgid ""
 "`f.open(name)` — open file `name` for writing, truncating any existing "
 "content"
 msgstr ""
 "`f.open(name)` — ファイル `name` を書き込み用に開く（既存の内容は切り詰める）"
 
-#: src/05_language_reference/13_integrated_test.md:226
+#: src/05_language_reference/13_integrated_test.md:289
 msgid ""
 "`f.append(name)` — open file `name` for writing, appending to any existing "
 "content"
 msgstr ""
 "`f.append(name)` — ファイル `name` を書き込み用に開く（既存の内容に追記する）"
 
-#: src/05_language_reference/13_integrated_test.md:227
+#: src/05_language_reference/13_integrated_test.md:290
 msgid ""
 "`f.write(format, args...)` — write formatted text, using the same format "
 "style as `$display`"
@@ -5455,15 +5496,15 @@ msgstr ""
 "`f.write(format, args...)` — `$display` と同じ書式でフォーマットしたテキスト"
 "を書き込む"
 
-#: src/05_language_reference/13_integrated_test.md:228
+#: src/05_language_reference/13_integrated_test.md:291
 msgid "`f.flush()` — flush buffered output to disk"
 msgstr "`f.flush()` — バッファされた出力をディスクへフラッシュする"
 
-#: src/05_language_reference/13_integrated_test.md:229
+#: src/05_language_reference/13_integrated_test.md:292
 msgid "`f.close()` — close the file"
 msgstr "`f.close()` — ファイルを閉じる"
 
-#: src/05_language_reference/13_integrated_test.md:231
+#: src/05_language_reference/13_integrated_test.md:294
 msgid ""
 "```veryl,playground\n"
 "#[test(test_file)]\n"
@@ -5505,7 +5546,7 @@ msgstr ""
 "}\n"
 "```"
 
-#: src/05_language_reference/13_integrated_test.md:251
+#: src/05_language_reference/13_integrated_test.md:314
 msgid ""
 "Like other `$tb::*` components, `$tb::file` can only be used inside a "
 "`#[test]` module."
@@ -5513,11 +5554,11 @@ msgstr ""
 "他の `$tb::*` コンポーネントと同様に、`$tb::file` は `#[test]` モジュール内で"
 "のみ使用できます。"
 
-#: src/05_language_reference/13_integrated_test.md:253
+#: src/05_language_reference/13_integrated_test.md:316
 msgid "Random number generation"
 msgstr "乱数の生成"
 
-#: src/05_language_reference/13_integrated_test.md:255
+#: src/05_language_reference/13_integrated_test.md:318
 msgid ""
 "`$tb::random` is a random-number generator for native tests. The value type "
 "is given as a generic argument at declaration. It must be a 2-state integer "
@@ -5531,32 +5572,32 @@ msgstr ""
 "4値の型（`logic` / `lbool`）、浮動小数点型、64ビットを超える幅は拒否されま"
 "す。"
 
-#: src/05_language_reference/13_integrated_test.md:260
+#: src/05_language_reference/13_integrated_test.md:323
 msgid "It is declared with `var`, then used inside an `initial` block:"
 msgstr "`var` で宣言し、`initial` ブロックの中で使います。"
 
-#: src/05_language_reference/13_integrated_test.md:262
+#: src/05_language_reference/13_integrated_test.md:325
 msgid "`r.seed(value)` — set the seed"
 msgstr "`r.seed(value)` --- シードを設定する"
 
-#: src/05_language_reference/13_integrated_test.md:263
+#: src/05_language_reference/13_integrated_test.md:326
 msgid ""
 "`r.get()` — return a uniform random value over the full range of the element "
 "type"
 msgstr "`r.get()` --- 要素型の全範囲にわたる一様乱数を返す"
 
-#: src/05_language_reference/13_integrated_test.md:264
+#: src/05_language_reference/13_integrated_test.md:327
 msgid ""
 "`r.get_range(min, max)` — return a uniform random value in the inclusive "
 "range `min..=max`"
 msgstr ""
 "`r.get_range(min, max)` --- 両端を含む範囲 `min..=max` の一様乱数を返す"
 
-#: src/05_language_reference/13_integrated_test.md:265
+#: src/05_language_reference/13_integrated_test.md:328
 msgid "`r.get_seed()` — return the current seed"
 msgstr "`r.get_seed()` --- 現在のシードを返す"
 
-#: src/05_language_reference/13_integrated_test.md:282
+#: src/05_language_reference/13_integrated_test.md:345
 msgid ""
 "A specific bit width is used by binding it to a type first (a `bit<N>` "
 "cannot be written directly as a generic argument):"
@@ -5564,7 +5605,7 @@ msgstr ""
 "特定のビット幅を使う場合は、先に型に束縛します（`bit<N>` をジェネリック引数と"
 "して直接書くことはできません）。"
 
-#: src/05_language_reference/13_integrated_test.md:284
+#: src/05_language_reference/13_integrated_test.md:347
 msgid ""
 "```veryl,playground\n"
 "#[test(test_random_width)]\n"
@@ -5594,7 +5635,7 @@ msgstr ""
 "}\n"
 "```"
 
-#: src/05_language_reference/13_integrated_test.md:298
+#: src/05_language_reference/13_integrated_test.md:361
 msgid ""
 "When neither `--seed` nor `[test].seed` is specified, each generator is "
 "seeded from a run-wide random base seed, so a run is not reproducible across "
@@ -5608,7 +5649,7 @@ msgstr ""
 "れる系列が再現可能になります。他の `$tb::*` コンポーネントと同様に、`$tb::"
 "random` は `#[test]` モジュールの中でのみ使えます。"
 
-#: src/05_language_reference/13_integrated_test.md:304
+#: src/05_language_reference/13_integrated_test.md:367
 msgid ""
 "SystemVerilog test can be described with `inline` specifier. The top level "
 "module of the block must have the same name as the test name."
@@ -5616,7 +5657,7 @@ msgstr ""
 "SystemVerilog テストは `inline` 指定子で記述することができます。ブロックの"
 "トップレベルモジュールはテスト名と同じでなければなりません。"
 
-#: src/05_language_reference/13_integrated_test.md:307
+#: src/05_language_reference/13_integrated_test.md:370
 msgid ""
 "The messages through `$info`, `$warning`, `$error` and `$fatal` system "
 "function are handled by Veryl compiler, and shown as exectution log. The "
@@ -5626,7 +5667,7 @@ msgstr ""
 "コンパイラにより実行ログとして表示されます。`$error` と `$fatal` の呼び出しは"
 "テストの失敗として扱われます。"
 
-#: src/05_language_reference/13_integrated_test.md:310
+#: src/05_language_reference/13_integrated_test.md:373
 msgid ""
 "The following example, a SystemVerilog source code embedded by `embed` "
 "declaration are marked as test."
@@ -5634,7 +5675,7 @@ msgstr ""
 "以下の例では SystemVerilog のソースコードを `embed` 宣言で埋め込み、テストと"
 "してマークしています。"
 
-#: src/05_language_reference/13_integrated_test.md:312
+#: src/05_language_reference/13_integrated_test.md:375
 msgid ""
 "```veryl,playground\n"
 "#[test(test1)]\n"
@@ -5658,11 +5699,11 @@ msgstr ""
 "}}}\n"
 "```"
 
-#: src/05_language_reference/13_integrated_test.md:323
+#: src/05_language_reference/13_integrated_test.md:386
 msgid "cocotb test"
 msgstr "cocotb テスト"
 
-#: src/05_language_reference/13_integrated_test.md:325
+#: src/05_language_reference/13_integrated_test.md:388
 msgid ""
 "cocotb test can be described with `cocotb` specifier. The target module name "
 "for test should be specified by the second argument of `#[test]` attribute."
@@ -6552,10 +6593,46 @@ msgstr ""
 "は 32 ビット、128 ビットのバスでは 128 ビットの値を返します。"
 
 #: src/05_language_reference/13_integrated_test/02_writing_a_component.md:259
+msgid ""
+"A `Value` is created by `Value::from_u64(v, width)` or "
+"`Value::from_bits(...)`, and read by the following methods:"
+msgstr ""
+"`Value` は `Value::from_u64(v, width)` または `Value::from_bits(...)` で作成し、"
+"以下のメソッドで読み出します:"
+
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:261
+msgid "`width()` — the bit width"
+msgstr "`width()` — ビット幅"
+
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:262
+msgid ""
+"`as_u64()` / `as_i64()` — the value as a 64-bit integer; an error if the "
+"value is wider than 64 bits"
+msgstr ""
+"`as_u64()` / `as_i64()` — 64ビット整数としての値。"
+"値が64ビットより広い場合はエラー"
+
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:263
+msgid ""
+"`as_slice()` — all bits as 64-bit words, least significant word first; use "
+"it to read a value wider than 64 bits"
+msgstr ""
+"`as_slice()` — 全ビットを下位ワードから順に並べた64ビットワード列。"
+"64ビットより広い値の読み出しに使用します"
+
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:264
+msgid ""
+"`mask_xz()` — the X/Z mask in the same word layout as `as_slice()`; "
+"`has_x()`, `has_z()` and `has_unknown()` test it"
+msgstr ""
+"`mask_xz()` — `as_slice()` と同じワード配置の X/Z マスク。"
+"`has_x()`、`has_z()`、`has_unknown()` でマスクを判定できます"
+
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:266
 msgid "Unit testing with MockSim"
 msgstr "MockSim によるユニットテスト"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:261
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:268
 msgid ""
 "The `veryl_component::testing` module provides `MockSim`, an in-process "
 "stand-in for the simulator host. It drives a component through the same "
@@ -6567,24 +6644,23 @@ msgstr ""
 "通じてコンポーネントを駆動するため、Veryl のシミュレータなしに、通常の "
 "`cargo test` でコンポーネントをユニットテストできます。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:273
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:280
 msgid "\"LIMIT\""
 msgstr "\"LIMIT\""
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:274
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:281
 msgid "\"clk\""
 msgstr "\"clk\""
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:275
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:278
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:282 src/05_language_reference/13_integrated_test/02_writing_a_component.md:285
 msgid "\"req\""
 msgstr "\"req\""
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:276
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:283
 msgid "\"ack\""
 msgstr "\"ack\""
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:287
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:294
 msgid ""
 "`MockSim` declares parameters and ports with the builder methods, constructs "
 "the component with `build`, drives inputs with `set` and hooks with `clock`/"
@@ -6596,11 +6672,11 @@ msgstr ""
 "動し、`call` でメソッドを呼び出し、`get`、`failed`、`failures`、`logs`、"
 "`finish_requested` を通じて結果を公開します。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:289
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:296
 msgid "Committing the interface manifest"
 msgstr "インターフェースマニフェストをコミットする"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:291
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:298
 msgid ""
 "Type-checking a testbench needs a component's _interface_ — its ports, "
 "parameters and methods — not its behavior. `veryl publish` records that "
@@ -6614,7 +6690,7 @@ msgstr ""
 "manifest.json` ファイルに記録し、コンポーネントのソースが変わると再生成しま"
 "す。ソースと一緒にコミットしてください。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:294
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:301
 msgid ""
 "Committing the manifest lets a consumer analyze `$comp::<name>` usages "
 "without building the component — in particular without a Rust toolchain, "
@@ -6626,11 +6702,11 @@ msgstr ""
 "用者にとっては、native コンポーネントの場合これが唯一のインターフェース源にな"
 "ります（ビルド済み wasm バイナリは同じインターフェースを埋め込んでいます）。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:296
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:303
 msgid "Publishing a prebuilt wasm"
 msgstr "ビルド済み wasm を publish する"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:298
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:305
 msgid ""
 "By default, consumers build the component from source with cargo. Committing "
 "a prebuilt wasm binary lets consumers without a Rust toolchain use it; "
@@ -6642,7 +6718,7 @@ msgstr ""
 "使えます。`[[components]]` エントリに `wasm =` を宣言すると、パッケージはこの"
 "配布形態を選択します。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:301
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:308
 msgid ""
 "```toml\n"
 "[[components]]\n"
@@ -6656,7 +6732,7 @@ msgstr ""
 "wasm = \"prebuilt/my_checker.wasm\"\n"
 "```"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:307
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:314
 msgid ""
 "`veryl publish` builds the component for the `wasm32-unknown-unknown` target "
 "and writes the binary to the declared path. Building the prebuilt wasm "
@@ -6670,30 +6746,30 @@ msgstr ""
 "unknown` で追加します。プリビルトがソースと一致しなくなると、`veryl publish` "
 "が再生成し、`veryl test` は警告を報告します。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:311
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:318
 msgid "Backend selection"
 msgstr "バックエンドの選択"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:313
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:320
 msgid "Which form is used at test time is selected as follows:"
 msgstr "テスト時にどちらの形式が使われるかは、次のように選択されます。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:315
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:322
 msgid "When cargo is available, the component is built from source."
 msgstr "cargo が利用可能な場合、コンポーネントはソースからビルドされます。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:316
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:323
 msgid "Otherwise the committed prebuilt wasm is used, if declared."
 msgstr ""
 "そうでない場合、宣言されていればコミット済みのビルド済み wasm が使われます。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:318
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:325
 msgid ""
 "The `component_backend` field in the `[test]` section pins the selection:"
 msgstr ""
 "`[test]` セクションの `component_backend` フィールドで選択を固定できます。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:320
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:327
 msgid ""
 "```toml\n"
 "[test]\n"
@@ -6705,7 +6781,7 @@ msgstr ""
 "component_backend = \"wasm\"  # または \"native\"\n"
 "```"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:325
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:332
 msgid ""
 "Pinning `wasm` is how a publisher verifies the prebuilt binary its consumers "
 "will run — the default never chooses it while cargo is available — and how "
@@ -6717,11 +6793,11 @@ msgstr ""
 "ンポーネントをサンドボックス内に留める手段でもあります。`native` に固定する"
 "と、cargo が見つからないときに黙って wasm へフォールバックせず、失敗します。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:327
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:334
 msgid "Native and wasm compared"
 msgstr "ネイティブと wasm の比較"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:329
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:336
 msgid ""
 "The API and simulation semantics are identical on both backends; they differ "
 "in what the component can do and how it runs:"
@@ -6729,47 +6805,47 @@ msgstr ""
 "API とシミュレーションの意味論は両バックエンドで同一で、違いはコンポーネント"
 "に何ができるか、そしてどう実行されるかにあります。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:331
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:338
 msgid "Built from source (native)"
 msgstr "ソースからビルド（ネイティブ）"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:331
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:338
 msgid "Prebuilt wasm"
 msgstr "ビルド済み wasm"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:333
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:340
 msgid "Consumer needs"
 msgstr "利用者に必要なもの"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:333
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:340
 msgid "a Rust toolchain"
 msgstr "Rust ツールチェイン"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:333
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:340
 msgid "nothing — the committed binary"
 msgstr "不要 — コミット済みバイナリ"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:334
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:341
 msgid "Available APIs"
 msgstr "使える API"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:334
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:341
 msgid "any Rust crate (networking, native libraries, GUI, …)"
 msgstr "任意の Rust crate（ネットワーク、ネイティブライブラリ、GUI、…）"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:334
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:341
 msgid "compute plus the host services only"
 msgstr "計算とホストサービスのみ"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:335
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:342
 msgid "Isolation"
 msgstr "隔離"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:335
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:342
 msgid "unsandboxed"
 msgstr "サンドボックスなし"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:335
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:342
 msgid ""
 "sandboxed: 256 MiB memory cap, file access gated by `requires(file)`, "
 "runaway hooks trapped"
@@ -6777,19 +6853,19 @@ msgstr ""
 "サンドボックスあり。256 MiB メモリ上限、ファイルアクセスは `requires(file)` "
 "でゲート、暴走したフックはトラップ"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:336
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:343
 msgid "Speed"
 msgstr "速度"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:336
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:343
 msgid "native code"
 msgstr "ネイティブコード"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:336
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:343
 msgid "slower for compute-heavy models such as a full ISS"
 msgstr "フル ISS のような計算量の多いモデルでは遅い"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:338
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:345
 msgid ""
 "Host capabilities are declared in the `#[component]` attribute: "
 "`requires(file)` allows host-mediated file I/O, and `requires(native)` marks "
@@ -6803,11 +6879,11 @@ msgstr ""
 "トワーク、ネイティブライブラリ、GUI — はコンポーネントをネイティブ専用にし、"
 "wasm として配布できなくなります。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:341
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:348
 msgid "Limitations"
 msgstr "制限事項"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:343
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:350
 msgid ""
 "Method arguments and return values are two-state: X/Z is dropped (port "
 "values carry X/Z under a four-state run)."
@@ -6815,11 +6891,11 @@ msgstr ""
 "メソッドの引数と戻り値は2値で、X/Z は失われます（ポート値は4値実行では X/Z を"
 "運びます）。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:344
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:351
 msgid "Method return values are limited to 512 bits by the ABI."
 msgstr "メソッドの戻り値は ABI により512ビットに制限されます。"
 
-#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:345
+#: src/05_language_reference/13_integrated_test/02_writing_a_component.md:352
 msgid ""
 "Instance arrays and unpacked-array connections to component ports are not "
 "supported."
@@ -19124,22 +19200,37 @@ msgstr ""
 "れます。正しい区切り文字に置き換えてください。"
 
 #: src/07_appendix/02_semantic_error.md:573
+msgid "zero_size"
+msgstr "zero_size"
+
+#: src/07_appendix/02_semantic_error.md:575
+msgid ""
+"This error is reported when a bit width or an array size evaluates to 0, "
+"such as `logic<0>` or `logic<W>` with `W` equal to 0. SystemVerilog tools "
+"disagree on how to treat such a declaration, so it is rejected. Use a size "
+"greater than 0."
+msgstr ""
+"このエラーは、`logic<0>` や `W` が 0 である `logic<W>` のように、"
+"ビット幅や配列サイズが 0 に評価された場合に報告されます。そのような宣言の扱いは SystemVerilog ツールによって異なるため、"
+"エラーとしています。0 より大きいサイズを使用してください。"
+
+#: src/07_appendix/02_semantic_error.md:580
 msgid "zero_width_number"
 msgstr "zero_width_number"
 
-#: src/07_appendix/02_semantic_error.md:575
+#: src/07_appendix/02_semantic_error.md:582
 msgid "This error is reported when a number is declared with zero width."
 msgstr "このエラーは、数値の幅が0として宣言された場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:577
+#: src/07_appendix/02_semantic_error.md:584
 msgid "Warnings"
 msgstr "警告"
 
-#: src/07_appendix/02_semantic_error.md:579
+#: src/07_appendix/02_semantic_error.md:586
 msgid "invalid_identifier"
 msgstr "invalid_identifier"
 
-#: src/07_appendix/02_semantic_error.md:581
+#: src/07_appendix/02_semantic_error.md:588
 msgid ""
 "This warning is reported when an identifier violates the configured naming "
 "rule (see [Lint]"
@@ -19151,11 +19242,11 @@ msgstr ""
 "に違反している場合に報告されます。規則に従うように識別子をリネームしてくださ"
 "い。"
 
-#: src/07_appendix/02_semantic_error.md:585
+#: src/07_appendix/02_semantic_error.md:592
 msgid "invalid_logical_operand"
 msgstr "invalid_logical_operand"
 
-#: src/07_appendix/02_semantic_error.md:587
+#: src/07_appendix/02_semantic_error.md:594
 msgid ""
 "This warning is reported when a multi-bit value is used as the operand of a "
 "logical operator. Reduce the operand to a single bit (for example with `==`)."
@@ -19163,43 +19254,43 @@ msgstr ""
 "この警告は、複数ビット値が論理演算子のオペランドとして使われた場合に報告され"
 "ます。`==` などで 1 ビットに縮約してください。"
 
-#: src/07_appendix/02_semantic_error.md:590
+#: src/07_appendix/02_semantic_error.md:597
 msgid "invalid_select"
 msgstr "invalid_select"
 
-#: src/07_appendix/02_semantic_error.md:592
+#: src/07_appendix/02_semantic_error.md:599
 msgid ""
 "This warning is reported when a bit / range select is invalid (e.g. out of "
 "bounds)."
 msgstr ""
 "この警告は、ビット選択や範囲選択が無効（範囲外など）な場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:594
+#: src/07_appendix/02_semantic_error.md:601
 msgid "mismatch_assignment"
 msgstr "mismatch_assignment"
 
-#: src/07_appendix/02_semantic_error.md:596
+#: src/07_appendix/02_semantic_error.md:603
 msgid ""
 "This warning is reported when the source and destination types of an "
 "assignment do not match."
 msgstr "この警告は、代入の元と先の型が一致しない場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:599
+#: src/07_appendix/02_semantic_error.md:606
 msgid "mismatch_function_arg"
 msgstr "mismatch_function_arg"
 
-#: src/07_appendix/02_semantic_error.md:601
+#: src/07_appendix/02_semantic_error.md:608
 msgid ""
 "This warning is reported when an argument's type does not match the "
 "function's parameter type."
 msgstr ""
 "この警告は、引数の型が関数のパラメータ型と一致しない場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:604
+#: src/07_appendix/02_semantic_error.md:611
 msgid "missing_port"
 msgstr "missing_port"
 
-#: src/07_appendix/02_semantic_error.md:606
+#: src/07_appendix/02_semantic_error.md:613
 msgid ""
 "This warning is reported when a module is instantiated without connecting "
 "one of its declared ports. Add the missing port connection."
@@ -19207,11 +19298,11 @@ msgstr ""
 "この警告は、モジュールが宣言されたポートのいずれかを接続せずにインスタンス化"
 "された場合に報告されます。不足しているポート接続を追加してください。"
 
-#: src/07_appendix/02_semantic_error.md:609
+#: src/07_appendix/02_semantic_error.md:616
 msgid "missing_reset_statement"
 msgstr "missing_reset_statement"
 
-#: src/07_appendix/02_semantic_error.md:611
+#: src/07_appendix/02_semantic_error.md:618
 msgid ""
 "This warning is reported when a register declared in an `always_ff` block "
 "with `if_reset` has no assignment in the `if_reset` branch. Add an "
@@ -19221,11 +19312,11 @@ msgstr ""
 "`if_reset` 分岐内での代入が無い場合に報告されます。リセット値を定義するため、"
 "そのレジスタへの代入を追加してください。"
 
-#: src/07_appendix/02_semantic_error.md:615
+#: src/07_appendix/02_semantic_error.md:622
 msgid "mixed_struct_union_member"
 msgstr "mixed_struct_union_member"
 
-#: src/07_appendix/02_semantic_error.md:617
+#: src/07_appendix/02_semantic_error.md:624
 msgid ""
 "This warning is reported when a struct or union mixes 2-state and 4-state "
 "members. Unify the members to a single state."
@@ -19233,11 +19324,11 @@ msgstr ""
 "この警告は、struct または union 内で 2-state メンバーと 4-state メンバーが混"
 "在している場合に報告されます。メンバーをいずれか一方に統一してください。"
 
-#: src/07_appendix/02_semantic_error.md:620
+#: src/07_appendix/02_semantic_error.md:627
 msgid "statement_after_if_reset"
 msgstr "statement_after_if_reset"
 
-#: src/07_appendix/02_semantic_error.md:622
+#: src/07_appendix/02_semantic_error.md:629
 msgid ""
 "This warning is reported when an executable statement follows the top-level "
 "`if_reset` / `else` chain in an `always_ff` block using `reset`, `reset_async_high`, "
@@ -19249,7 +19340,7 @@ msgstr ""
 "報告されます。非同期リセットでは、その文はリセット条件の外側でリセットの"
 "アサートエッジでも実行されるため、合成できない可能性があります。"
 
-#: src/07_appendix/02_semantic_error.md:627
+#: src/07_appendix/02_semantic_error.md:634
 msgid ""
 "The generic `reset` type is warned about even when `[build].reset_type` is "
 "synchronous, because a library user can select asynchronous reset. Explicit "
@@ -19259,7 +19350,7 @@ msgstr ""
 "なります。ライブラリの利用者が非同期リセットを選択できるためです。明示的な "
 "`reset_sync_high` 型と `reset_sync_low` 型は対象外です。"
 
-#: src/07_appendix/02_semantic_error.md:631
+#: src/07_appendix/02_semantic_error.md:638
 msgid ""
 "Declarations without runtime behavior (`var`, `const`, and `gen`), code disabled by "
 "conditional compilation, and testbench modules are also excluded."
@@ -19267,7 +19358,7 @@ msgstr ""
 "実行時の動作を伴わない宣言（`var`、`const`、`gen`）、条件付きコンパイルで"
 "無効になっているコード、テストベンチモジュールも対象外です。"
 
-#: src/07_appendix/02_semantic_error.md:634
+#: src/07_appendix/02_semantic_error.md:641
 msgid ""
 "Move the statement into an `else` branch of `if_reset`, or into a separate "
 "`always_ff` without reset. If the design requires synchronous reset, declare an "
@@ -19277,20 +19368,20 @@ msgstr ""
 "`always_ff` に移動してください。設計上、同期リセットが必要な場合は、明示的な"
 "同期リセット型で宣言してください。"
 
-#: src/07_appendix/02_semantic_error.md:638
+#: src/07_appendix/02_semantic_error.md:645
 msgid "unassign_variable"
 msgstr "unassign_variable"
 
-#: src/07_appendix/02_semantic_error.md:640
+#: src/07_appendix/02_semantic_error.md:647
 msgid ""
 "This warning is reported when a declared variable is never assigned a value."
 msgstr "この警告は、宣言された変数に一度も値が代入されない場合に報告されます。"
 
-#: src/07_appendix/02_semantic_error.md:642
+#: src/07_appendix/02_semantic_error.md:649
 msgid "uncovered_branch"
 msgstr "uncovered_branch"
 
-#: src/07_appendix/02_semantic_error.md:644
+#: src/07_appendix/02_semantic_error.md:651
 msgid ""
 "This warning is reported when a signal is conditionally assigned in some "
 "branches but not all, which infers a latch. Add a default assignment, or "
@@ -19299,11 +19390,11 @@ msgstr ""
 "この警告は、信号が一部の分岐でしか代入されず、ラッチが推論される場合に報告さ"
 "れます。デフォルトの代入を加えるか、すべての分岐で代入してください。"
 
-#: src/07_appendix/02_semantic_error.md:648
+#: src/07_appendix/02_semantic_error.md:655
 msgid "unenclosed_inner_if_expression"
 msgstr "unenclosed_inner_if_expression"
 
-#: src/07_appendix/02_semantic_error.md:650
+#: src/07_appendix/02_semantic_error.md:657
 msgid ""
 "This warning is reported when a nested `if` expression is not enclosed in "
 "parentheses. Add parentheses to make precedence explicit."
@@ -19311,11 +19402,11 @@ msgstr ""
 "この警告は、入れ子になった `if` 式が括弧で囲まれていない場合に報告されます。"
 "優先順位を明示するため括弧を追加してください。"
 
-#: src/07_appendix/02_semantic_error.md:653
+#: src/07_appendix/02_semantic_error.md:660
 msgid "unsigned_arith_shift"
 msgstr "unsigned_arith_shift"
 
-#: src/07_appendix/02_semantic_error.md:655
+#: src/07_appendix/02_semantic_error.md:662
 msgid ""
 "This warning is reported when an arithmetic shift is applied to an unsigned "
 "operand. The result is identical to a logical shift; use a logical shift to "
@@ -19325,11 +19416,11 @@ msgstr ""
 "シフトと結果が同じになるため、意図を明確にするには論理シフトを使用してくださ"
 "い。"
 
-#: src/07_appendix/02_semantic_error.md:658
+#: src/07_appendix/02_semantic_error.md:665
 msgid "unused_return"
 msgstr "unused_return"
 
-#: src/07_appendix/02_semantic_error.md:660
+#: src/07_appendix/02_semantic_error.md:667
 msgid ""
 "This warning is reported when a function call's return value is discarded. "
 "Assign the result to a variable, or use a function whose return value is "
@@ -19338,11 +19429,11 @@ msgstr ""
 "この警告は、関数呼び出しの戻り値が破棄された場合に報告されます。結果を変数に"
 "代入するか、戻り値を無視する設計の関数を使用してください。"
 
-#: src/07_appendix/02_semantic_error.md:664
+#: src/07_appendix/02_semantic_error.md:671
 msgid "unused_variable"
 msgstr "unused_variable"
 
-#: src/07_appendix/02_semantic_error.md:666
+#: src/07_appendix/02_semantic_error.md:673
 msgid ""
 "This warning is reported when a declared variable is never read. Add the `_` "
 "prefix to its name to mark it as intentionally unused, or remove the "
