@@ -405,6 +405,13 @@ If it is intentional, such as for true dual port SRAM inference on FPGA, add
 This error is reported when a default clock or reset is specified more than once in the
 same module.
 
+### non_constant_output_select
+
+This error is reported when a select in an output port connection is not constant,
+for example `o: bits[index]` with a runtime `index`. An output connection is a continuous
+assignment, so its packed selects must be constant. Use a constant index, or connect the
+port to a variable and select from that variable in an `always_comb` block.
+
 ### non_constant_select_width
 
 This error is reported when the width of a `+:` / `-:` / `step` part select is not a
