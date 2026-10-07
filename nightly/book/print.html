@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-c7e502be.js";
+            window.path_to_searchindex_js = "searchindex-9e9a875e.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-156e7647.js"></script>
@@ -8242,6 +8242,11 @@ If it is intentional, such as for true dual port SRAM inference on FPGA, add
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>This error is reported when a default clock or reset is specified more than once in the
 same module.</p>
+<h3 id="non_constant_output_select"><a class="header" href="#non_constant_output_select">non_constant_output_select</a></h3>
+<p>This error is reported when a select in an output port connection is not constant,
+for example <code>o: bits[index]</code> with a runtime <code>index</code>. An output connection is a continuous
+assignment, so its packed selects must be constant. Use a constant index, or connect the
+port to a variable and select from that variable in an <code>always_comb</code> block.</p>
 <h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
 <p>This error is reported when the width of a <code>+:</code> / <code>-:</code> / <code>step</code> part select is not a
 constant. Use a constant expression for the width.</p>
