@@ -46,6 +46,7 @@ The following testbench components are available:
 * `$tb::reset_gen` — reset signal generator (with optional `#(cycles: N)` parameter)
 * `$tb::file` — file handle for writing output files
 * `$tb::random` — random-number generator (with the value type as a generic argument)
+* `$tb::queue` — queue (with the element type and the capacity as generic arguments)
 
 In addition to the built-in components, verification components written in Rust can be used through the `$comp` namespace.
 See [Using a Component](./13_integrated_test/01_using_a_component.md).
@@ -361,6 +362,54 @@ module test_random_width {
 When neither `--seed` nor `[test].seed` is specified, each generator is seeded from a run-wide random base seed, so a run is not reproducible across invocations.
 Passing an explicit seed (via `--seed`, `[test].seed`, or `r.seed(...)`) makes the generated sequence reproducible.
 Like other `$tb::*` components, `$tb::random` can only be used inside a `#[test]` module.
+
+### Queue
+
+`$tb::queue` is a queue for native tests, e.g. to hold the expected values of a scoreboard.
+The element type `T` and the capacity `N` are given as generic arguments: `$tb::queue::<T, N>`.
+`T` can be any fixed-width packed type, including 4-state types, types wider than 64 bits, enums, structs/unions and floating-point types.
+Unpacked arrays and `string` are rejected.
+`N` is optional and defaults to `0`, which means unbounded.
+
+It is declared with `var`, then used inside an `initial` block:
+
+* `q.push_back(value)` / `q.push_front(value)` — add `value` at the back / front; `value` is evaluated in the width of the element type
+* `q.pop_front()` / `q.pop_back()` — remove and return the front / back element
+* `q.drop_front()` / `q.drop_back()` — remove the front / back element without returning it
+* `q.front()` / `q.back()` — return the front / back element without removing it
+* `q.clear()` — remove all elements
+* `q.size()` — return the number of elements
+* `q.is_empty()` — return whether the queue is empty
+* `q.is_full()` — return whether the queue is full (always false for an unbounded queue)
+
+A queue is shared by the `initial` blocks of the test module, so one block can push expected values while another pops and checks them:
+
+```veryl,playground
+#[test(test_scoreboard)]
+module test_scoreboard {
+    inst clk: $tb::clock_gen;
+    var exp: $tb::queue::<u8, 16>;
+
+    initial {
+        for i in 0..4 {
+            exp.push_back(i);
+            clk.next();
+        }
+    }
+
+    initial {
+        clk.next(8);
+        for i in 0..4 {
+            $assert(exp.pop_front() == i);
+        }
+        $finish();
+    }
+}
+```
+
+Reading an empty queue with `pop_*` / `front` / `back` returns X for a 4-state element type and 0 for a 2-state element type, and `drop_*` on an empty queue does nothing.
+Pushing to a full queue drops the pushed value.
+Neither case is reported as an error.
 
 ## SystemVerilog test
 
