@@ -187,6 +187,8 @@ for the enum (e.g. one-hot, gray).
 
 This error is reported when a non-value symbol (e.g. a module name) is used as a factor
 in an expression.
+It is also reported when a reset value literal (`reset_active` / `reset_inactive`) is used
+where its polarity can't be determined.
 
 ### invalid_for_range
 
