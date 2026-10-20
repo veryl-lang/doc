@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-2091cb18.js";
+            window.path_to_searchindex_js = "searchindex-52a77853.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-f6fb0cb4.js"></script>
@@ -6481,6 +6481,8 @@ ResetAsyncHighTerm    : &lt;INITIAL, Generic                                    
 ResetAsyncLowTerm     : &lt;INITIAL, Generic                                             &gt;'reset_async_low'                                                                     : Token; // Keyword: Type
 ResetSyncHighTerm     : &lt;INITIAL, Generic                                             &gt;'reset_sync_high'                                                                     : Token; // Keyword: Type
 ResetSyncLowTerm      : &lt;INITIAL, Generic                                             &gt;'reset_sync_low'                                                                      : Token; // Keyword: Type
+ResetActiveTerm       : &lt;INITIAL, Generic                                             &gt;'reset_active'                                                                        : Token; // Keyword: Literal
+ResetInactiveTerm     : &lt;INITIAL, Generic                                             &gt;'reset_inactive'                                                                      : Token; // Keyword: Literal
 ReturnTerm            : &lt;INITIAL, Generic                                             &gt;'return'                                                                              : Token; // Keyword: Statement
 RevTerm               : &lt;INITIAL, Generic                                             &gt;'rev'                                                                                 : Token; // Keyword: Repeat
 BreakTerm             : &lt;INITIAL, Generic                                             &gt;'break'                                                                               : Token; // Keyword: Statement
@@ -6632,6 +6634,8 @@ ResetAsyncHighToken: ResetAsyncHighTerm: Token Comments;
 ResetAsyncLowToken : ResetAsyncLowTerm : Token Comments;
 ResetSyncHighToken : ResetSyncHighTerm : Token Comments;
 ResetSyncLowToken  : ResetSyncLowTerm  : Token Comments;
+ResetActiveToken   : ResetActiveTerm   : Token Comments;
+ResetInactiveToken : ResetInactiveTerm : Token Comments;
 ReturnToken        : ReturnTerm        : Token Comments;
 RevToken           : RevTerm           : Token Comments;
 BreakToken         : BreakTerm         : Token Comments;
@@ -6790,6 +6794,8 @@ ResetAsyncHigh: ResetAsyncHighToken: VerylToken;
 ResetAsyncLow : ResetAsyncLowToken : VerylToken;
 ResetSyncHigh : ResetSyncHighToken : VerylToken;
 ResetSyncLow  : ResetSyncLowToken  : VerylToken;
+ResetActive   : ResetActiveToken   : VerylToken;
+ResetInactive : ResetInactiveToken : VerylToken;
 Return        : ReturnToken        : VerylToken;
 Rev           : RevToken           : VerylToken;
 Same          : SameToken          : VerylToken;
@@ -6859,6 +6865,7 @@ Expression02Op: UnaryOperator | Operator06 | Operator05 | Operator03 | Operator0
 
 Factor: Number
       | BooleanLiteral
+      | ResetValueLiteral
       | IdentifierFactor
       | LParen Expression RParen
       | LBrace ConcatenationList RBrace
@@ -6874,6 +6881,8 @@ Factor: Number
       ;
 
 BooleanLiteral: True | False;
+
+ResetValueLiteral: ResetActive | ResetInactive;
 
 IdentifierFactor: ExpressionIdentifier [ FunctionCall | StructConstructor ];
 
