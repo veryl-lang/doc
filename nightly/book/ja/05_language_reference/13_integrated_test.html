@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-a012ae68.js";
+            window.path_to_searchindex_js = "../searchindex-bb615af7.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-f6fb0cb4.js"></script>
@@ -303,6 +303,7 @@ module test_ignored {
 <li><code>$tb::reset_gen</code> — リセット信号生成器（オプションで <code>#(cycles: N)</code> パラメータを指定可能）</li>
 <li><code>$tb::file</code> — 出力ファイルを書き込むためのファイルハンドル</li>
 <li><code>$tb::random</code> — 乱数生成器（値の型をジェネリック引数として指定）</li>
+<li><code>$tb::queue</code> — queue (with the element type and the capacity as generic arguments)</li>
 </ul>
 <p>組み込みのコンポーネントに加えて、Rust で記述した検証コンポーネントを <code>$comp</code> 名前空間を通じて使用できます。<a href="./13_integrated_test/01_using_a_component.html">コンポーネントを使う</a> を参照してください。</p>
 <p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
@@ -564,6 +565,42 @@ module test_random_width {
 }
 </code></pre>
 <p><code>--seed</code> と <code>[test].seed</code> のどちらも指定しない場合、各生成器は実行ごとにランダムな基準シードから初期化されるため、実行を跨いだ再現性はありません。<code>--seed</code>、<code>[test].seed</code>、または <code>r.seed(...)</code> で明示的にシードを与えると、生成される系列が再現可能になります。他の <code>$tb::*</code> コンポーネントと同様に、<code>$tb::random</code> は <code>#[test]</code> モジュールの中でのみ使えます。</p>
+<h3 id="queue"><a class="header" href="#queue">Queue</a></h3>
+<p><code>$tb::queue</code> is a queue for native tests, e.g. to hold the expected values of a scoreboard. The element type <code>T</code> and the capacity <code>N</code> are given as generic arguments: <code>$tb::queue::&lt;T, N&gt;</code>. <code>T</code> can be any fixed-width packed type, including 4-state types, types wider than 64 bits, enums, structs/unions and floating-point types. Unpacked arrays and <code>string</code> are rejected. <code>N</code> is optional and defaults to <code>0</code>, which means unbounded.</p>
+<p><code>var</code> で宣言し、<code>initial</code> ブロックの中で使います。</p>
+<ul>
+<li><code>q.push_back(value)</code> / <code>q.push_front(value)</code> — add <code>value</code> at the back / front; <code>value</code> is evaluated in the width of the element type</li>
+<li><code>q.pop_front()</code> / <code>q.pop_back()</code> — remove and return the front / back element</li>
+<li><code>q.drop_front()</code> / <code>q.drop_back()</code> — remove the front / back element without returning it</li>
+<li><code>q.front()</code> / <code>q.back()</code> — return the front / back element without removing it</li>
+<li><code>q.clear()</code> — remove all elements</li>
+<li><code>q.size()</code> — return the number of elements</li>
+<li><code>q.is_empty()</code> — return whether the queue is empty</li>
+<li><code>q.is_full()</code> — return whether the queue is full (always false for an unbounded queue)</li>
+</ul>
+<p>A queue is shared by the <code>initial</code> blocks of the test module, so one block can push expected values while another pops and checks them:</p>
+<pre><code class="language-veryl playground">#[test(test_scoreboard)]
+module test_scoreboard {
+    inst clk: $tb::clock_gen;
+    var exp: $tb::queue::&lt;u8, 16&gt;;
+
+    initial {
+        for i in 0..4 {
+            exp.push_back(i);
+            clk.next();
+        }
+    }
+
+    initial {
+        clk.next(8);
+        for i in 0..4 {
+            $assert(exp.pop_front() == i);
+        }
+        $finish();
+    }
+}
+</code></pre>
+<p>Reading an empty queue with <code>pop_*</code> / <code>front</code> / <code>back</code> returns X for a 4-state element type and 0 for a 2-state element type, and <code>drop_*</code> on an empty queue does nothing. Pushing to a full queue drops the pushed value. Neither case is reported as an error.</p>
 <h2 id="systemverilogテスト"><a class="header" href="#systemverilogテスト">SystemVerilogテスト</a></h2>
 <p>SystemVerilog テストは <code>inline</code> 指定子で記述することができます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
 <p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>
