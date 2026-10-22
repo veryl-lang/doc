@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-f84d5205.js";
+            window.path_to_searchindex_js = "searchindex-9b8405d6.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-156e7647.js"></script>
@@ -1793,6 +1793,52 @@ For such case, <code>default</code> type modifier can be used to specify the def
         a = 0;
     }
 }
+</code></pre>
+<h2 id="reset-value-literal"><a class="header" href="#reset-value-literal">Reset Value Literal</a></h2>
+<p><code>reset_active</code> and <code>reset_inactive</code> are literals to represent the active and inactive values of a reset.
+They can be used to describe reset values without depending on reset polarity.
+The actual value is determined by the reset type of the counterpart.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Counterpart type</th><th><code>reset_active</code></th><th><code>reset_inactive</code></th></tr>
+</thead>
+<tbody>
+<tr><td><code>reset_async_high</code>, <code>reset_sync_high</code></td><td><code>1'b1</code></td><td><code>1'b0</code></td></tr>
+<tr><td><code>reset_async_low</code>, <code>reset_sync_low</code></td><td><code>1'b0</code></td><td><code>1'b1</code></td></tr>
+<tr><td><code>reset</code></td><td>specified by the build option</td><td>specified by the build option</td></tr>
+</tbody>
+</table>
+</div>
+<p>A reset value literal can be used only as a standalone factor (parentheses are allowed) in the following places:</p>
+<ul>
+<li>connection to an input port of an instance</li>
+<li>right-hand side of an assignment</li>
+<li>initial value of <code>let</code> declaration with an explicit type</li>
+<li>operand of <code>==</code> and <code>!=</code> whose other operand is a variable reference</li>
+</ul>
+<p>The counterpart must be declared with a reset type keyword directly.
+If the reset type is given through a type definition or a type parameter, the literal can’t be used because its polarity can’t be determined.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_rst  : input  reset_async_low,
+    o_rst  : output reset_sync_high,
+    o_rst_n: output reset          ,
+    o_a    : output logic          ,
+) {
+    let rst: reset = reset_active;
+
+    assign o_rst   = reset_inactive;
+    assign o_rst_n = rst;
+    assign o_a     = i_rst == reset_active;
+
+    inst u: ModuleB (
+        i_rst: reset_inactive,
+    );
+}
+
+module ModuleB (
+    i_rst: input reset_async_high,
+) {}
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="expression"><a class="header" href="#expression">Expression</a></h1>
@@ -8113,7 +8159,9 @@ other than <code>(way: inline / lang: sv)</code>.</p>
 for the enum (e.g. one-hot, gray).</p>
 <h3 id="invalid_factor"><a class="header" href="#invalid_factor">invalid_factor</a></h3>
 <p>This error is reported when a non-value symbol (e.g. a module name) is used as a factor
-in an expression.</p>
+in an expression.
+It is also reported when a reset value literal (<code>reset_active</code> / <code>reset_inactive</code>) is used
+where its polarity can’t be determined.</p>
 <h3 id="invalid_for_range"><a class="header" href="#invalid_for_range">invalid_for_range</a></h3>
 <p>This error is reported when the range of a <code>for</code> loop is invalid. The range must be
 written with <code>..</code> or <code>..=</code>; a bare expression is not a range. A range bound must not be
