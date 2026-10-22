@@ -79,3 +79,48 @@ module ModuleA (
     }
 }
 ```
+
+## Reset Value Literal
+
+`reset_active` and `reset_inactive` are literals to represent the active and inactive values of a reset.
+They can be used to describe reset values without depending on reset polarity.
+The actual value is determined by the reset type of the counterpart.
+
+| Counterpart type                         | `reset_active`                | `reset_inactive`              |
+|------------------------------------------|-------------------------------|-------------------------------|
+| `reset_async_high`, `reset_sync_high`    | `1'b1`                        | `1'b0`                        |
+| `reset_async_low`, `reset_sync_low`      | `1'b0`                        | `1'b1`                        |
+| `reset`                                  | specified by the build option | specified by the build option |
+
+A reset value literal can be used only as a standalone factor (parentheses are allowed) in the following places:
+
+* connection to an input port of an instance
+* right-hand side of an assignment
+* initial value of `let` declaration with an explicit type
+* operand of `==` and `!=` whose other operand is a variable reference
+
+The counterpart must be declared with a reset type keyword directly.
+If the reset type is given through a type definition or a type parameter, the literal can't be used because its polarity can't be determined.
+
+```veryl,playground
+module ModuleA (
+    i_rst  : input  reset_async_low,
+    o_rst  : output reset_sync_high,
+    o_rst_n: output reset          ,
+    o_a    : output logic          ,
+) {
+    let rst: reset = reset_active;
+
+    assign o_rst   = reset_inactive;
+    assign o_rst_n = rst;
+    assign o_a     = i_rst == reset_active;
+
+    inst u: ModuleB (
+        i_rst: reset_inactive,
+    );
+}
+
+module ModuleB (
+    i_rst: input reset_async_high,
+) {}
+```
