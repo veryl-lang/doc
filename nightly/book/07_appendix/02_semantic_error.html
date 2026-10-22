@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-6bde0887.js";
+            window.path_to_searchindex_js = "../searchindex-de16a67b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-156e7647.js"></script>
@@ -534,6 +534,18 @@ If it is intentional, such as for true dual port SRAM inference on FPGA, add
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>This error is reported when a default clock or reset is specified more than once in the
 same module.</p>
+<h3 id="non_constant_interface_instance_select"><a class="header" href="#non_constant_interface_instance_select">non_constant_interface_instance_select</a></h3>
+<p>This error is reported when an interface instance is selected with a runtime index,
+for example <code>bus[i].value</code> or <code>bus[i].get()</code> where <code>i</code> is a signal. Interface instance
+indices must be elaboration-time constants (IEEE 1800-2023, Section 23.6). This applies
+to member reads, writes, method calls, and modport connections.</p>
+<p>Use a constant expression, such as a <code>const</code> or a generate-loop index, to select the
+instance. A procedural <code>for</code> loop index is not an elaboration-time constant. External
+SystemVerilog constants are also allowed, even when Veryl cannot evaluate their values
+locally.</p>
+<p>Dynamic indexing of data inside a statically selected interface is allowed. For
+example, <code>bus[0].data[i]</code> is valid when <code>data</code> is an array or a packed value and <code>i</code> is
+a runtime index.</p>
 <h3 id="non_constant_output_select"><a class="header" href="#non_constant_output_select">non_constant_output_select</a></h3>
 <p>This error is reported when a select in an output port connection is not constant,
 for example <code>o: bits[index]</code> with a runtime <code>index</code>. An output connection is a continuous

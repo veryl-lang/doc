@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-bb615af7.js";
+            window.path_to_searchindex_js = "../searchindex-2826dc92.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-f6fb0cb4.js"></script>
@@ -419,6 +419,10 @@
 <p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。FPGA における真のデュアルポート SRAM の推論など意図的な場合は、その信号の宣言に <code>#[allow(multiple_assign)]</code> を付けてください。</p>
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>このエラーは、同じモジュール内でデフォルトのクロックまたはリセットが複数回指定された場合に報告されます。</p>
+<h3 id="non_constant_interface_instance_select"><a class="header" href="#non_constant_interface_instance_select">non_constant_interface_instance_select</a></h3>
+<p>このエラーは、interface インスタンスを実行時の添字で選択した場合に報告されます。例えば、<code>i</code> が信号である場合の <code>bus[i].value</code> や <code>bus[i].get()</code> が該当します。interface インスタンスの添字はエラボレーション時の定数でなければなりません（IEEE 1800-2023、23.6 節）。これはメンバーの読み書き、メソッド呼び出し、modport 接続に適用されます。</p>
+<p>インスタンスの選択には、<code>const</code> や generate ループの添字などの定数式を使ってください。プロシージャルな <code>for</code> ループの添字は、エラボレーション時の定数ではありません。外部 SystemVerilog の定数も、Veryl がその値をローカルで評価できない場合を含めて使用できます。</p>
+<p>静的に選択した interface の内部データに対しては、動的な添字を使用できます。例えば、<code>data</code> が配列またはパックされた値で、<code>i</code> が実行時の添字である場合、<code>bus[0].data[i]</code> は有効です。</p>
 <h3 id="non_constant_output_select"><a class="header" href="#non_constant_output_select">non_constant_output_select</a></h3>
 <p>This error is reported when a select in an output port connection is not constant, for example <code>o: bits[index]</code> with a runtime <code>index</code>. An output connection is a continuous assignment, so its packed selects must be constant. Use a constant index, or connect the port to a variable and select from that variable in an <code>always_comb</code> block.</p>
 <h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
