@@ -18803,6 +18803,47 @@ msgstr ""
 "このエラーは、同じモジュール内でデフォルトのクロックまたはリセットが複数回指"
 "定された場合に報告されます。"
 
+#: src/07_appendix/02_semantic_error.md:410
+msgid "non_constant_interface_instance_select"
+msgstr "non_constant_interface_instance_select"
+
+#: src/07_appendix/02_semantic_error.md:412
+msgid ""
+"This error is reported when an interface instance is selected with a runtime "
+"index, for example `bus[i].value` or `bus[i].get()` where `i` is a signal. "
+"Interface instance indices must be elaboration-time constants (IEEE "
+"1800-2023, Section 23.6). This applies to member reads, writes, method calls, "
+"and modport connections."
+msgstr ""
+"このエラーは、interface インスタンスを実行時の添字で選択した場合に報告されま"
+"す。例えば、`i` が信号である場合の `bus[i].value` や `bus[i].get()` が該当しま"
+"す。interface インスタンスの添字はエラボレーション時の定数でなければなりません"
+"（IEEE 1800-2023、23.6 節）。これはメンバーの読み書き、メソッド呼び出し、"
+"modport 接続に適用されます。"
+
+#: src/07_appendix/02_semantic_error.md:417
+msgid ""
+"Use a constant expression, such as a `const` or a generate-loop index, to "
+"select the instance. A procedural `for` loop index is not an elaboration-time "
+"constant. External SystemVerilog "
+"constants are also allowed, even when Veryl cannot evaluate their values "
+"locally."
+msgstr ""
+"インスタンスの選択には、`const` や generate ループの添字などの定数式を使ってく"
+"ださい。プロシージャルな `for` ループの添字は、エラボレーション時の定数では"
+"ありません。外部 SystemVerilog の定数"
+"も、Veryl がその値をローカルで評価できない場合を含めて使用できます。"
+
+#: src/07_appendix/02_semantic_error.md:422
+msgid ""
+"Dynamic indexing of data inside a statically selected interface is allowed. "
+"For example, `bus[0].data[i]` is valid when `data` is an array or a packed "
+"value and `i` is a runtime index."
+msgstr ""
+"静的に選択した interface の内部データに対しては、動的な添字を使用できます。例"
+"えば、`data` が配列またはパックされた値で、`i` が実行時の添字である場合、"
+"`bus[0].data[i]` は有効です。"
+
 #: src/07_appendix/02_semantic_error.md:408
 msgid "non_constant_select_width"
 msgstr "non_constant_select_width"
