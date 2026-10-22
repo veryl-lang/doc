@@ -407,6 +407,22 @@ If it is intentional, such as for true dual port SRAM inference on FPGA, add
 This error is reported when a default clock or reset is specified more than once in the
 same module.
 
+### non_constant_interface_instance_select
+
+This error is reported when an interface instance is selected with a runtime index,
+for example `bus[i].value` or `bus[i].get()` where `i` is a signal. Interface instance
+indices must be elaboration-time constants (IEEE 1800-2023, Section 23.6). This applies
+to member reads, writes, method calls, and modport connections.
+
+Use a constant expression, such as a `const` or a generate-loop index, to select the
+instance. A procedural `for` loop index is not an elaboration-time constant. External
+SystemVerilog constants are also allowed, even when Veryl cannot evaluate their values
+locally.
+
+Dynamic indexing of data inside a statically selected interface is allowed. For
+example, `bus[0].data[i]` is valid when `data` is an array or a packed value and `i` is
+a runtime index.
+
 ### non_constant_output_select
 
 This error is reported when a select in an output port connection is not constant,
