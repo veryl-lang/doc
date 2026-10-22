@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-de16a67b.js";
+            window.path_to_searchindex_js = "../../searchindex-fbf37b9b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-156e7647.js"></script>
@@ -306,6 +306,37 @@ and <a href="../04_expression/07_range.html">range</a> is placed after it.</p>
     }
 }
 </code></pre>
+<p>The loop variable advances by 1 on each iteration.
+You can change this by putting <code>step</code> keyword, an assignment operator, and an expression after the range.
+The loop variable is updated with the operator on each iteration, so <code>step += 2</code> counts by 2 and <code>step *= 2</code> doubles it.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        for i in 0..10 step += 2 {
+            a = i;
+        }
+
+        for i in 1..10 step *= 2 {
+            b = i;
+        }
+    }
+}
+</code></pre>
+<p><code>step</code> can also be used with <code>rev</code>, but only with <code>+=</code>.
+In this case the loop variable goes down by the given amount.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+
+    always_comb {
+        for i in rev 0..10 step += 3 {
+            a = i;
+        }
+    }
+}
+</code></pre>
+<p>A step which can never reach the end of the range is an error, such as <code>step += 0</code>, <code>step -= 1</code> in a forward loop, or <code>step *= 2</code> together with <code>rev</code>.</p>
 
                     </main>
 

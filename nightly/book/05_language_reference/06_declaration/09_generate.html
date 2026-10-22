@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-de16a67b.js";
+            window.path_to_searchindex_js = "../../searchindex-fbf37b9b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-156e7647.js"></script>
@@ -317,6 +317,15 @@ Label which is shown by <code>:</code> is required to idenfity the generated dec
         if i != 0 :g {
             assign b[i - 1] = b[i];
         }
+    }
+}
+</code></pre>
+<p>The generate <code>for</code> declaration also accepts <code>step</code> as the <code>for</code> statement does (see <a href="../05_statement/05_for.html">For</a>).</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+
+    for i in 0..10 step += 2 :label {
+        assign a[i] = i;
     }
 }
 </code></pre>
