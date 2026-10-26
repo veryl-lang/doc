@@ -18130,6 +18130,18 @@ msgstr ""
 "に実装を調整してください。"
 
 #: src/07_appendix/02_semantic_error.md:127
+msgid "incompatible_assignment"
+msgstr "incompatible_assignment"
+
+#: src/07_appendix/02_semantic_error.md:129
+msgid ""
+"This error is reported when an assignment or port connection uses types that are not "
+"assignment compatible. Use compatible types or an explicit conversion where supported."
+msgstr ""
+"このエラーは、代入やポート接続で代入互換性のない型が使われた場合に報告されます。"
+"互換性のある型を使うか、対応している場合は明示的に変換してください。"
+
+#: src/07_appendix/02_semantic_error.md:127
 msgid "infinite_recursion"
 msgstr "infinite_recursion"
 
@@ -19310,11 +19322,13 @@ msgstr ""
 msgid "mismatch_assignment"
 msgstr "mismatch_assignment"
 
-#: src/07_appendix/02_semantic_error.md:603
+#: src/07_appendix/02_semantic_error.md:633
 msgid ""
-"This warning is reported when the source and destination types of an "
-"assignment do not match."
-msgstr "この警告は、代入の元と先の型が一致しない場合に報告されます。"
+"This warning is reported when an assignment performs a legal implicit scalar conversion. "
+"Make the conversion explicit if intended."
+msgstr ""
+"この警告は、代入で合法な暗黙のスカラー変換が行われる場合に報告されます。"
+"意図した変換なら明示的に記述してください。"
 
 #: src/07_appendix/02_semantic_error.md:606
 msgid "mismatch_function_arg"
