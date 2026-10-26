@@ -77,3 +77,23 @@ module ModuleA {
 ```
 
 A step which can never reach the end of the range is an error, such as `step += 0`, `step -= 1` in a forward loop, or `step *= 2` together with `rev`.
+
+Multiple loop variables can be specified by separating them with `,`.
+Each loop variable has its own range, and `rev` can be specified for each of them.
+The first loop variable is the outermost one, so the following loop iterates in the same order as nested loops.
+`break` breaks the whole loop, not only the innermost one.
+
+```veryl,playground
+module ModuleA {
+    var a: logic<4, 8>;
+
+    always_comb {
+        for i in 0..4, j in rev 0..8 {
+            a[i][j] = i + j;
+        }
+    }
+}
+```
+
+In a loop with multiple loop variables, `step` can't be used,
+and each range must be a constant at elaboration time, such as a literal, a parameter or a constant.
