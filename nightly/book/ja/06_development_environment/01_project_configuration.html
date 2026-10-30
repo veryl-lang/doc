@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-e4b725c5.js";
+            window.path_to_searchindex_js = "../searchindex-a01843e5.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-f6fb0cb4.js"></script>
+        <script src="../toc-dc67cae0.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -291,6 +291,7 @@
 <li><a href="01_project_configuration.html#the-test-section"><code>[test]</code></a> — テスト設定</li>
 <li><a href="01_project_configuration.html#the-publish-section"><code>[publish]</code></a> — 公開設定</li>
 <li><a href="01_project_configuration.html#the-synth-section"><code>[synth]</code></a> — 論理合成設定</li>
+<li><a href="01_project_configuration.html#the-sv-filesets-section"><code>[[sv.filesets]]</code></a> — SystemVerilog files.</li>
 <li><a href="01_project_configuration.html#the-properties-section"><code>[properties]</code></a> — プロジェクトプロパティ</li>
 <li><a href="01_project_configuration.html#the-dependencies-section"><code>[dependencies]</code></a> — ライブラリの依存関係</li>
 <li><a href="01_project_configuration.html#the-components-section"><code>[[components]]</code></a> — 検証コンポーネントパッケージ</li>
@@ -344,6 +345,8 @@ categories = ["interconnect", "verification"]
 <p><code>[publish]</code> セクションはプロジェクト公開の設定です。詳細は<a href="./01_project_configuration/05_publish.html">こちら</a>。</p>
 <h2 id="the-synth-section"><a class="header" href="#the-synth-section"><code>[synth]</code> セクション</a></h2>
 <p><code>[synth]</code> セクションはシンセサイザの設定です。詳細は<a href="./01_project_configuration/06_synth.html">こちら</a>。</p>
+<h2 id="the-sv-filesets-section"><a class="header" href="#the-sv-filesets-section">The <code>[[sv.filesets]]</code> entries</a></h2>
+<p>A <code>[[sv.filesets]]</code> entry specifies SystemVerilog files, such as IPs, which are managed together with the project. Available configurations is <a href="./01_project_configuration/07_sv.html">here</a>.</p>
 <h2 id="the-properties-section"><a class="header" href="#the-properties-section"><code>[properties]</code> セクション</a></h2>
 <p><code>[properties]</code> セクションはプロジェクトプロパティを含みます。プロジェクトプロパティは、そのプロジェクトのソースコードから <code>$prop</code> 名前空間を通して参照できるコンパイル時定数です。</p>
 <p>プロパティ名はソースコード中で識別子として参照されるため、Veryl の有効な識別子である必要があります。プロパティの値は整数または真偽値です。プロパティの型は与えた値によって決まり、ソースコード中では整数のプロパティは <code>i64</code> 型、真偽値のプロパティは <code>bbool</code> 型になります。</p>

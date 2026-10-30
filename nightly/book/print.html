@@ -134,10 +134,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-fbf37b9b.js";
+            window.path_to_searchindex_js = "searchindex-7d28c4e2.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-156e7647.js"></script>
+        <script src="toc-29f14ec0.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -5346,6 +5346,7 @@ The properties which are not specified here keep the default values defined in <
 <li><a href="#the-test-section"><code>[test]</code></a> — Test settings.</li>
 <li><a href="#the-publish-section"><code>[publish]</code></a> — Publish settings.</li>
 <li><a href="#the-synth-section"><code>[synth]</code></a> — Synthesis settings.</li>
+<li><a href="#the-sv-filesets-section"><code>[[sv.filesets]]</code></a> — SystemVerilog files.</li>
 <li><a href="#the-properties-section"><code>[properties]</code></a> — Project properties.</li>
 <li><a href="#the-dependencies-section"><code>[dependencies]</code></a> — Library dependencies.</li>
 <li><a href="#the-components-section"><code>[[components]]</code></a> — Verification component packages.</li>
@@ -5412,6 +5413,9 @@ Available configurations is <a href="#publish">here</a>.</p>
 <h2 id="the-synth-section"><a class="header" href="#the-synth-section">The <code>[synth]</code> section</a></h2>
 <p>The <code>[synth]</code> section contains the configurations of the synthesizer.
 Available configurations is <a href="#synth">here</a>.</p>
+<h2 id="the-sv-filesets-section"><a class="header" href="#the-sv-filesets-section">The <code>[[sv.filesets]]</code> entries</a></h2>
+<p>A <code>[[sv.filesets]]</code> entry specifies SystemVerilog files, such as IPs, which are managed together with the project.
+Available configurations is <a href="#sv">here</a>.</p>
 <h2 id="the-properties-section"><a class="header" href="#the-properties-section">The <code>[properties]</code> section</a></h2>
 <p>The <code>[properties]</code> section contains project properties.
 A project property is a compile time constant which can be referenced from the source code of the project through the <code>$prop</code> namespace.</p>
@@ -5427,7 +5431,7 @@ It can be overridden by the project which depends on this project.
 Please see <a href="#project-property">Project Property</a> for the usage in the source code, and <a href="#project-property-override">Dependencies</a> for overriding.</p>
 <h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section">The <code>[dependencies]</code> section</a></h2>
 <p>The <code>[dependencies]</code> section contains library dependencies.
-Available configurations is <a href="#dependencies">here</a>.</p>
+Available configurations is <a href="#dependencies-1">here</a>.</p>
 <h2 id="the-components-section"><a class="header" href="#the-components-section">The <code>[[components]]</code> entries</a></h2>
 <p>A <code>[[components]]</code> entry registers a cargo package of verification components written in Rust.
 Available configurations is <a href="#writing-a-component">here</a>.</p>
@@ -6026,7 +6030,86 @@ than signoff-grade accuracy. Drive strength 1 cells are used throughout.</p>
 only a small number of cell-level area / delay / leakage / energy figures are used as
 reference data.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h1>
+<h1 id="sv"><a class="header" href="#sv">SV</a></h1>
+<p><code>[[sv.filesets]]</code> entries specify SystemVerilog files, such as IPs, which are managed together with a Veryl project.
+The specified files and include directories are added to the filelist.</p>
+<pre><code class="language-toml">[[sv.filesets]]
+root         = "ip/foo"
+enable_if    = "!for_asic &amp;&amp; width == 32"
+files        = ["rtl/foo_pkg.sv", "rtl/foo.sv"]
+include_dirs = ["include"]
+</code></pre>
+<p>Multiple filesets can be specified by repeating <code>[[sv.filesets]]</code>.</p>
+<h2 id="available-configurations-5"><a class="header" href="#available-configurations-5">Available configurations</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Configuration</th><th>Value</th><th>Required</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>root</td><td>string</td><td>no</td><td>Base directory of relative paths in <code>files</code> and <code>include_dirs</code></td></tr>
+<tr><td>files</td><td>array of string</td><td>yes</td><td>SystemVerilog files</td></tr>
+<tr><td>include_dirs</td><td>array of string</td><td>no</td><td>Include directories</td></tr>
+<tr><td>enable_if</td><td>string</td><td>no</td><td><a href="#condition-expression">Condition expression</a> on project properties. The fileset is enabled only if it is evaluated to true. If omitted, the fileset is always enabled.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Relative paths are relative to the project root directory (the directory containing <code>Veryl.toml</code>) if <code>root</code> is omitted.
+An absolute path ignores <code>root</code>.</p>
+<h2 id="condition-expression"><a class="header" href="#condition-expression">Condition expression</a></h2>
+<p>The <code>enable_if</code> field takes a condition expression on <a href="#the-properties-section">project properties</a>.
+The following operands can be used:</p>
+<ul>
+<li>Property names</li>
+<li>Unsized numbers in Veryl syntax (e.g. <code>32</code>, <code>'b1010</code>, <code>'hff</code>)</li>
+<li>Parenthesized expressions</li>
+</ul>
+<p>The following operators can be used.
+All operators are left-associative.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Precedence</th><th>Operator</th><th>Operand type</th></tr>
+</thead>
+<tbody>
+<tr><td>Highest</td><td><code>!</code></td><td>bool</td></tr>
+<tr><td></td><td><code>&lt;:</code> <code>&gt;:</code> <code>&lt;=</code> <code>&gt;=</code></td><td>int</td></tr>
+<tr><td></td><td><code>==</code> <code>!=</code></td><td>both of the same type</td></tr>
+<tr><td></td><td><code>&amp;&amp;</code></td><td>bool</td></tr>
+<tr><td>Lowest</td><td><code>||</code></td><td>bool</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-toml">[properties]
+for_asic = false
+width    = 32
+
+[[sv.filesets]]
+enable_if = "for_asic"
+files     = ["ip/asic/foo_asic.sv"]
+
+[[sv.filesets]]
+enable_if = "!for_asic &amp;&amp; (width == 32 || width == 64)"
+files     = ["ip/fpga/foo_fpga.sv"]
+</code></pre>
+<p>Syntax errors of the condition expression are reported when <code>Veryl.toml</code> is loaded.
+Unknown properties and type mismatches are reported when the expression is evaluated.</p>
+<h2 id="filelist"><a class="header" href="#filelist">Filelist</a></h2>
+<p>Files and include directories of the enabled filesets are added to the filelist before the generated files.
+Include directories are also passed to the simulators run by <code>veryl test</code>.</p>
+<h2 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h2>
+<p>Filesets of <a href="#dependencies-1">dependencies</a> are also added to the filelist.
+<code>enable_if</code> of a dependency is evaluated with the property values of the dependency,
+which reflect <a href="#project-property-override">project property override</a>.</p>
+<ul>
+<li>Git dependencies: files and include directories are copied into the <code>dependencies</code> directory, and the copied paths are referred.</li>
+<li>Path dependencies: files and include directories are referred directly.</li>
+</ul>
+<h2 id="publish-1"><a class="header" href="#publish-1">Publish</a></h2>
+<p>Paths in <code>[[sv.filesets]]</code> of a published project must be relative paths which don’t contain <code>..</code>.
+<code>veryl publish</code> reports an error if an absolute path or a path containing <code>..</code> is found in any fileset, regardless of <code>enable_if</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="dependencies-1"><a class="header" href="#dependencies-1">Dependencies</a></h1>
 <p>If you want to add other Veryl projects to dependencies of your project, you can add them to <code>[dependencies]</code> section in <code>Veryl.toml</code>.
 The left hand side of entry is the project name of the dependency, and the right hand side is the source and version.
 <code>github</code> is a syntax sugar to refer a repository on GitHub. Instead of it, <code>git</code> with a full URL can be used.</p>

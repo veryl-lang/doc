@@ -134,10 +134,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e4b725c5.js";
+            window.path_to_searchindex_js = "searchindex-a01843e5.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-f6fb0cb4.js"></script>
+        <script src="toc-dc67cae0.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -4972,6 +4972,7 @@ veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", propertie
 <li><a href="#the-test-section"><code>[test]</code></a> — テスト設定</li>
 <li><a href="#the-publish-section"><code>[publish]</code></a> — 公開設定</li>
 <li><a href="#the-synth-section"><code>[synth]</code></a> — 論理合成設定</li>
+<li><a href="#the-sv-filesets-section"><code>[[sv.filesets]]</code></a> — SystemVerilog files.</li>
 <li><a href="#the-properties-section"><code>[properties]</code></a> — プロジェクトプロパティ</li>
 <li><a href="#the-dependencies-section"><code>[dependencies]</code></a> — ライブラリの依存関係</li>
 <li><a href="#the-components-section"><code>[[components]]</code></a> — 検証コンポーネントパッケージ</li>
@@ -5025,6 +5026,8 @@ categories = ["interconnect", "verification"]
 <p><code>[publish]</code> セクションはプロジェクト公開の設定です。詳細は<a href="#publish">こちら</a>。</p>
 <h2 id="the-synth-section"><a class="header" href="#the-synth-section"><code>[synth]</code> セクション</a></h2>
 <p><code>[synth]</code> セクションはシンセサイザの設定です。詳細は<a href="#synth">こちら</a>。</p>
+<h2 id="the-sv-filesets-section"><a class="header" href="#the-sv-filesets-section">The <code>[[sv.filesets]]</code> entries</a></h2>
+<p>A <code>[[sv.filesets]]</code> entry specifies SystemVerilog files, such as IPs, which are managed together with the project. Available configurations is <a href="#sv">here</a>.</p>
 <h2 id="the-properties-section"><a class="header" href="#the-properties-section"><code>[properties]</code> セクション</a></h2>
 <p><code>[properties]</code> セクションはプロジェクトプロパティを含みます。プロジェクトプロパティは、そのプロジェクトのソースコードから <code>$prop</code> 名前空間を通して参照できるコンパイル時定数です。</p>
 <p>プロパティ名はソースコード中で識別子として参照されるため、Veryl の有効な識別子である必要があります。プロパティの値は整数または真偽値です。プロパティの型は与えた値によって決まり、ソースコード中では整数のプロパティは <code>i64</code> 型、真偽値のプロパティは <code>bbool</code> 型になります。</p>
@@ -5034,7 +5037,7 @@ ENABLE_DEBUG = false
 </code></pre>
 <p>ここで定義した値はプロパティの既定値です。この値は、このプロジェクトに依存する側のプロジェクトから上書きできます。ソースコード中での使い方は<a href="#プロジェクトプロパティ">プロジェクトプロパティ</a>を、上書きについては<a href="#project-property-override">依存関係</a>を参照してください。</p>
 <h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section"><code>[dependencies]</code> セクション</a></h2>
-<p><code>[dependencies]</code> セクションはライブラリの依存関係です。詳細は<a href="#依存関係">こちら</a>。</p>
+<p><code>[dependencies]</code> セクションはライブラリの依存関係です。詳細は<a href="#依存関係-1">こちら</a>。</p>
 <h2 id="the-components-section"><a class="header" href="#the-components-section"><code>[[components]]</code> エントリ</a></h2>
 <p><code>[[components]]</code> エントリは Rust で書かれた検証コンポーネントの cargo パッケージを登録します。詳細は<a href="#コンポーネントを書く">こちら</a>。</p>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -5579,7 +5582,77 @@ timing_paths = 1
 </div>
 <p>Veryl はこれらの PDK の Liberty ソース、回路図、レイアウトを再配布していません。参考データとして、ごく少数のセル単位の面積・遅延・漏れ電力・エネルギーの値のみを利用しています。</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h1>
+<h1 id="sv"><a class="header" href="#sv">SV</a></h1>
+<p><code>[[sv.filesets]]</code> entries specify SystemVerilog files, such as IPs, which are managed together with a Veryl project. The specified files and include directories are added to the filelist.</p>
+<pre><code class="language-toml">[[sv.filesets]]
+root         = "ip/foo"
+enable_if    = "!for_asic &amp;&amp; width == 32"
+files        = ["rtl/foo_pkg.sv", "rtl/foo.sv"]
+include_dirs = ["include"]
+</code></pre>
+<p>Multiple filesets can be specified by repeating <code>[[sv.filesets]]</code>.</p>
+<h2 id="設定-5"><a class="header" href="#設定-5">設定</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>Required</th><th>説明</th></tr>
+</thead>
+<tbody>
+<tr><td>root</td><td>文字列</td><td>no</td><td>Base directory of relative paths in <code>files</code> and <code>include_dirs</code></td></tr>
+<tr><td>files</td><td>array of string</td><td>yes</td><td>SystemVerilog files</td></tr>
+<tr><td>include_dirs</td><td>array of string</td><td>no</td><td>Include directories</td></tr>
+<tr><td>enable_if</td><td>文字列</td><td>no</td><td><a href="#condition-expression">Condition expression</a> on project properties. The fileset is enabled only if it is evaluated to true. If omitted, the fileset is always enabled.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Relative paths are relative to the project root directory (the directory containing <code>Veryl.toml</code>) if <code>root</code> is omitted. An absolute path ignores <code>root</code>.</p>
+<h2 id="condition-expression"><a class="header" href="#condition-expression">Condition expression</a></h2>
+<p>The <code>enable_if</code> field takes a condition expression on <a href="#the-properties-section">project properties</a>. The following operands can be used:</p>
+<ul>
+<li>Property names</li>
+<li>Unsized numbers in Veryl syntax (e.g. <code>32</code>, <code>'b1010</code>, <code>'hff</code>)</li>
+<li>Parenthesized expressions</li>
+</ul>
+<p>The following operators can be used. All operators are left-associative.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>優先順位</th><th>演算子</th><th>Operand type</th></tr>
+</thead>
+<tbody>
+<tr><td>高い</td><td><code>!</code></td><td>bool</td></tr>
+<tr><td></td><td><code>&lt;:</code> <code>&gt;:</code> <code>&lt;=</code> <code>&gt;=</code></td><td>int</td></tr>
+<tr><td></td><td><code>==</code> <code>!=</code></td><td>both of the same type</td></tr>
+<tr><td></td><td><code>&amp;&amp;</code></td><td>bool</td></tr>
+<tr><td>低い</td><td><code>||</code></td><td>bool</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-toml">[properties]
+for_asic = false
+width    = 32
+
+[[sv.filesets]]
+enable_if = "for_asic"
+files     = ["ip/asic/foo_asic.sv"]
+
+[[sv.filesets]]
+enable_if = "!for_asic &amp;&amp; (width == 32 || width == 64)"
+files     = ["ip/fpga/foo_fpga.sv"]
+</code></pre>
+<p>Syntax errors of the condition expression are reported when <code>Veryl.toml</code> is loaded. Unknown properties and type mismatches are reported when the expression is evaluated.</p>
+<h2 id="filelist"><a class="header" href="#filelist">Filelist</a></h2>
+<p>Files and include directories of the enabled filesets are added to the filelist before the generated files. Include directories are also passed to the simulators run by <code>veryl test</code>.</p>
+<h2 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h2>
+<p>Filesets of <a href="#依存関係-1">dependencies</a> are also added to the filelist. <code>enable_if</code> of a dependency is evaluated with the property values of the dependency, which reflect <a href="#project-property-override">project property override</a>.</p>
+<ul>
+<li>Git dependencies: files and include directories are copied into the <code>dependencies</code> directory, and the copied paths are referred.</li>
+<li>Path dependencies: files and include directories are referred directly.</li>
+</ul>
+<h2 id="publish-1"><a class="header" href="#publish-1">Publish</a></h2>
+<p>Paths in <code>[[sv.filesets]]</code> of a published project must be relative paths which don’t contain <code>..</code>. <code>veryl publish</code> reports an error if an absolute path or a path containing <code>..</code> is found in any fileset, regardless of <code>enable_if</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="依存関係-1"><a class="header" href="#依存関係-1">依存関係</a></h1>
 <p>他の Veryl プロジェクトへの依存関係をプロジェクトに追加したい場合、<code>Veryl.toml</code> に <code>[dependencies]</code> セクションを追加します。エントリの左辺は依存関係のプロジェクト名、右辺はソースパスとバージョンです。<code>github</code> はGitHub上のリポジトリを参照する糖衣構文です。代わりに <code>git</code> を用いてURL全体を指定することもできます。</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
@@ -5728,7 +5801,7 @@ $ git push
 <p>登録はコミットの push を行いません。公開されたバージョンは、そのリビジョンが push され、レジストリがリポジトリをクロールした後に見えるようになります。</p>
 <p>レジストリが認識しない<a href="#the-categories-field">カテゴリ</a>が指定されている場合、警告として報告されます。</p>
 <p>使用するレジストリは <code>VERYL_REGISTRY_URL</code> 環境変数で変更できます。</p>
-<h3 id="設定-5"><a class="header" href="#設定-5">設定</a></h3>
+<h3 id="設定-6"><a class="header" href="#設定-6">設定</a></h3>
 <p>全設定の説明は<a href="#publish">こちら</a>。</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="ディレクトリ構成"><a class="header" href="#ディレクトリ構成">ディレクトリ構成</a></h1>

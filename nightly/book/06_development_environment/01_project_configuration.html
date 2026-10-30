@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-fbf37b9b.js";
+            window.path_to_searchindex_js = "../searchindex-7d28c4e2.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-156e7647.js"></script>
+        <script src="../toc-29f14ec0.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -291,6 +291,7 @@
 <li><a href="01_project_configuration.html#the-test-section"><code>[test]</code></a> — Test settings.</li>
 <li><a href="01_project_configuration.html#the-publish-section"><code>[publish]</code></a> — Publish settings.</li>
 <li><a href="01_project_configuration.html#the-synth-section"><code>[synth]</code></a> — Synthesis settings.</li>
+<li><a href="01_project_configuration.html#the-sv-filesets-section"><code>[[sv.filesets]]</code></a> — SystemVerilog files.</li>
 <li><a href="01_project_configuration.html#the-properties-section"><code>[properties]</code></a> — Project properties.</li>
 <li><a href="01_project_configuration.html#the-dependencies-section"><code>[dependencies]</code></a> — Library dependencies.</li>
 <li><a href="01_project_configuration.html#the-components-section"><code>[[components]]</code></a> — Verification component packages.</li>
@@ -357,6 +358,9 @@ Available configurations is <a href="./01_project_configuration/05_publish.html"
 <h2 id="the-synth-section"><a class="header" href="#the-synth-section">The <code>[synth]</code> section</a></h2>
 <p>The <code>[synth]</code> section contains the configurations of the synthesizer.
 Available configurations is <a href="./01_project_configuration/06_synth.html">here</a>.</p>
+<h2 id="the-sv-filesets-section"><a class="header" href="#the-sv-filesets-section">The <code>[[sv.filesets]]</code> entries</a></h2>
+<p>A <code>[[sv.filesets]]</code> entry specifies SystemVerilog files, such as IPs, which are managed together with the project.
+Available configurations is <a href="./01_project_configuration/07_sv.html">here</a>.</p>
 <h2 id="the-properties-section"><a class="header" href="#the-properties-section">The <code>[properties]</code> section</a></h2>
 <p>The <code>[properties]</code> section contains project properties.
 A project property is a compile time constant which can be referenced from the source code of the project through the <code>$prop</code> namespace.</p>
