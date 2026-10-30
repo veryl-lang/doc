@@ -90,6 +90,7 @@
         - [Test](./06_development_environment/01_project_configuration/04_test.md)
         - [Publish](./06_development_environment/01_project_configuration/05_publish.md)
         - [Synth](./06_development_environment/01_project_configuration/06_synth.md)
+        - [SV](./06_development_environment/01_project_configuration/07_sv.md)
     - [Dependencies](./06_development_environment/02_dependencies.md)
     - [Publish Project](./06_development_environment/03_publish_project.md)
     - [Directory Layout](./06_development_environment/04_directory_layout.md)

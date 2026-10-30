@@ -14,6 +14,7 @@
 * [`[test]`](01_project_configuration.md#the-test-section) --- Test settings.
 * [`[publish]`](01_project_configuration.md#the-publish-section) --- Publish settings.
 * [`[synth]`](01_project_configuration.md#the-synth-section) --- Synthesis settings.
+* [`[[sv.filesets]]`](01_project_configuration.md#the-sv-filesets-section) --- SystemVerilog files.
 * [`[properties]`](01_project_configuration.md#the-properties-section) --- Project properties.
 * [`[dependencies]`](01_project_configuration.md#the-dependencies-section) --- Library dependencies.
 * [`[[components]]`](01_project_configuration.md#the-components-section) --- Verification component packages.
@@ -117,6 +118,11 @@ Available configurations is [here](./01_project_configuration/05_publish.md).
 
 The `[synth]` section contains the configurations of the synthesizer.
 Available configurations is [here](./01_project_configuration/06_synth.md).
+
+## The `[[sv.filesets]]` entries {#the-sv-filesets-section}
+
+A `[[sv.filesets]]` entry specifies SystemVerilog files, such as IPs, which are managed together with the project.
+Available configurations is [here](./01_project_configuration/07_sv.md).
 
 ## The `[properties]` section {#the-properties-section}
 
