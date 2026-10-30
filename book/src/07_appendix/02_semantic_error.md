@@ -124,6 +124,11 @@ This error is reported when a module / interface / package marked `for {proto}` 
 not satisfy the prototype's contract. Adjust the implementation so that it matches the
 prototype.
 
+### incompatible_assignment
+
+This error is reported when an assignment or port connection uses types that are not
+assignment compatible. Use compatible types or an explicit conversion where supported.
+
 ### infinite_recursion
 
 This error is reported when a module instantiates itself, directly or transitively,
@@ -625,8 +630,8 @@ This warning is reported when a bit / range select is invalid (e.g. out of bound
 
 ### mismatch_assignment
 
-This warning is reported when the source and destination types of an assignment do not
-match.
+This warning is reported when an assignment performs a legal implicit scalar conversion.
+Make the conversion explicit if intended.
 
 ### mismatch_function_arg
 
