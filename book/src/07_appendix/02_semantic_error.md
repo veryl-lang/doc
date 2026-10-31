@@ -217,6 +217,11 @@ the target device initializes the variable at configuration time. Add
 initialize it by reset instead. A variable declared inside the `initial` block is a
 procedural local and is not reported.
 
+### invalid_inline_function
+
+This error is reported when a function with [`inline`](../05_language_reference/06_declaration/08_attribute.md#inline-attribute)
+attribute doesn't satisfy the conditions to be inlined.
+
 ### invalid_lsb
 
 This error is reported when the `lsb` keyword appears in a context where the corresponding
