@@ -223,6 +223,48 @@ module ModuleB {
 }
 ```
 
+## `inline` Attribute
+
+If `inline` attribute is set to a function declared in an interface, calls of the function are replaced with its expression in the generated SystemVerilog.
+Function calls in hot paths can be a bottleneck of simulation on SystemVerilog simulators. This attribute is helpful for such case.
+
+A function with `inline` attribute must satisfy the following conditions:
+
+* It is declared directly in an interface (not in a generate block).
+* It has no arguments.
+* It has a return type.
+* Its body is a single `return` statement.
+* Its return type and expression don't refer to types, consts and params declared in the interface.
+* It doesn't call itself.
+
+```veryl,playground
+interface InterfaceA {
+    var ready: logic;
+    var valid: logic;
+
+    #[inline]
+    function ack () -> logic {
+        return ready && valid;
+    }
+
+    modport master {
+        ready: input ,
+        valid: output,
+        ack  : import,
+    }
+}
+
+module ModuleA (
+    master_if: modport InterfaceA::master,
+) {
+    assign master_if.valid = 1;
+
+    let _ack: logic = master_if.ack();
+}
+```
+
+The inlined expression is cast to the return type defined in a package which is generated for the interface, to keep the semantics of the function return.
+
 ## `align` Attribute
 
 `align` attribute is used to control vertical alignment by formatter.
