@@ -373,6 +373,14 @@ This error is reported when an `always_ff` block has a reset signal but no `if_r
 statement.
 Add an `if_reset` block to describe the reset behavior.
 
+### missing_modport_dependency
+
+This error is reported when a function imported by a modport refers to an interface
+variable which is not exported by the modport, or assigns to an interface variable which
+is not exported as `output` or `inout`.
+Variables referred by interface functions called from the function are also checked.
+Export the variable by the modport with the required direction.
+
 ### missing_reset_signal
 
 This error is reported when an `always_ff` block uses `if_reset` but no reset signal is
