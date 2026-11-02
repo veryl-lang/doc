@@ -405,6 +405,11 @@ msgstr "Publish"
 msgid "Synth"
 msgstr "Synth"
 
+#: src/SUMMARY.md:93
+#: src/06_development_environment/01_project_configuration/07_sv.md:1
+msgid "SV"
+msgstr "SV"
+
 #: src/SUMMARY.md:93 src/06_development_environment/02_dependencies.md:1
 msgid "Dependencies"
 msgstr "依存関係"
@@ -2788,6 +2793,63 @@ msgstr ""
 "あります。このような場合に `default` 型修飾子を使ってデフォルトのクロックとリ"
 "セットを明示することができます。"
 
+#: src/05_language_reference/03_data_type/04_clock_reset.md:83
+msgid "Reset Value Literal"
+msgstr "リセット値リテラル"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:85
+msgid ""
+"`reset_active` and `reset_inactive` are literals to represent the active and "
+"inactive values of a reset. They can be used to describe reset values "
+"without depending on reset polarity. The actual value is determined by the "
+"reset type of the counterpart."
+msgstr ""
+"`reset_active` と `reset_inactive` はリセットのアクティブ値と非アクティブ値を"
+"表すリテラルです。リセットの極性に依存せずにリセット値を記述するために使えま"
+"す。実際の値は相手側のリセット型によって決まります。"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:89
+msgid "Counterpart type"
+msgstr "相手側の型"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:93
+msgid "specified by the build option"
+msgstr "ビルドオプションで指定"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:95
+msgid ""
+"A reset value literal can be used only as a standalone factor (parentheses "
+"are allowed) in the following places:"
+msgstr ""
+"リセット値リテラルは、他の演算と組み合わせずに単体で (括弧で囲むのは可) 以"
+"下の場所でのみ使えます。"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:97
+msgid "connection to an input port of an instance"
+msgstr "インスタンスの入力ポートへの接続"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:98
+msgid "right-hand side of an assignment"
+msgstr "代入の右辺"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:99
+msgid "initial value of `let` declaration with an explicit type"
+msgstr "型を明示した `let` 宣言の初期値"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:100
+msgid "operand of `==` and `!=` whose other operand is a variable reference"
+msgstr "もう一方のオペランドが変数参照である `==` と `!=` のオペランド"
+
+#: src/05_language_reference/03_data_type/04_clock_reset.md:102
+msgid ""
+"The counterpart must be declared with a reset type keyword directly. If the "
+"reset type is given through a type definition or a type parameter, the "
+"literal can't be used because its polarity can't be determined."
+msgstr ""
+"相手側はリセット型のキーワードで直接宣言されている必要があります。リセット型"
+"が型定義や型パラメータを通して与えられている場合は、極性を決定できないためリ"
+"テラルを使えません。"
+
 #: src/05_language_reference/04_expression.md:3
 msgid ""
 "In this chapter, we'll discuss about expression. Expression is combination "
@@ -3415,6 +3477,34 @@ msgstr ""
 "`in` キーワードの後に `rev` キーワードを指定することで、ループを降順にするこ"
 "とができます。"
 
+#: src/05_language_reference/05_statement/05_for.md:43
+msgid ""
+"The loop variable advances by 1 on each iteration. You can change this by "
+"putting `step` keyword, an assignment operator, and an expression after the "
+"range. The loop variable is updated with the operator on each iteration, so "
+"`step += 2` counts by 2 and `step *= 2` doubles it."
+msgstr ""
+"ループ変数は繰り返しごとに 1 ずつ進みます。範囲の後に `step` キーワード、代入"
+"演算子、式を続けることでこれを変更できます。ループ変数は繰り返しごとにその演"
+"算子で更新されるため、`step += 2` なら 2 ずつ増え、`step *= 2` なら 2 倍にな"
+"ります。"
+
+#: src/05_language_reference/05_statement/05_for.md:64
+msgid ""
+"`step` can also be used with `rev`, but only with `+=`. In this case the "
+"loop variable goes down by the given amount."
+msgstr ""
+"`step` は `rev` と組み合わせることもできますが、その場合は `+=` のみ使えま"
+"す。このときループ変数は指定した量ずつ減っていきます。"
+
+#: src/05_language_reference/05_statement/05_for.md:79
+msgid ""
+"A step which can never reach the end of the range is an error, such as `step "
+"+= 0`, `step -= 1` in a forward loop, or `step *= 2` together with `rev`."
+msgstr ""
+"昇順のループでの `step += 0` や `step -= 1`、`rev` と組み合わせた `step *= "
+"2` のように、範囲の終端に到達できない step はエラーになります。"
+
 #: src/05_language_reference/05_statement/06_return.md:3
 msgid ""
 "`return` statement represents return from function. The expression after "
@@ -4030,6 +4120,65 @@ msgid "`modport`: Expand ports of which direction is `modport`"
 msgstr "`modport`: ポート方向が `modport` のポートを展開する"
 
 #: src/05_language_reference/06_declaration/08_attribute.md:226
+msgid "`inline` Attribute"
+msgstr "`inline` アトリビュート"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:228
+msgid ""
+"If `inline` attribute is set to a function declared in an interface, calls "
+"of the function are replaced with its expression in the generated "
+"SystemVerilog. Function calls in hot paths can be a bottleneck of simulation "
+"on SystemVerilog simulators. This attribute is helpful for such case."
+msgstr ""
+"インターフェース内で宣言された関数に `inline` アトリビュートを付けると、生成"
+"される SystemVerilog では関数呼び出しがその式に置き換えられます。頻繁に実行さ"
+"れる箇所での関数呼び出しは SystemVerilog シミュレータでのシミュレーションのボ"
+"トルネックになることがあります。このアトリビュートはそのような場合に役立ちま"
+"す。"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:231
+msgid ""
+"A function with `inline` attribute must satisfy the following conditions:"
+msgstr ""
+"`inline` アトリビュートを付けた関数は以下の条件を満たす必要があります。"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:233
+msgid "It is declared directly in an interface (not in a generate block)."
+msgstr "インターフェース内に直接宣言されている (generate ブロック内ではない)"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:234
+msgid "It has no arguments."
+msgstr "引数を持たない"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:235
+msgid "It has a return type."
+msgstr "戻り値の型を持つ"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:236
+msgid "Its body is a single `return` statement."
+msgstr "本体が単一の `return` 文である"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:237
+msgid ""
+"Its return type and expression don't refer to types, consts and params "
+"declared in the interface."
+msgstr ""
+"戻り値の型と式がインターフェース内で宣言された型・定数・パラメータを参照しな"
+"い"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:238
+msgid "It doesn't call itself."
+msgstr "自身を呼び出さない"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:266
+msgid ""
+"The inlined expression is cast to the return type defined in a package which "
+"is generated for the interface, to keep the semantics of the function return."
+msgstr ""
+"関数の戻り値としての意味を保つため、インライン化された式は、インターフェース"
+"用に生成されるパッケージで定義された戻り値の型にキャストされます。"
+
+#: src/05_language_reference/06_declaration/08_attribute.md:226
 msgid "`align` Attribute"
 msgstr "`align` アトリビュート"
 
@@ -4112,6 +4261,14 @@ msgid ""
 msgstr ""
 "`in` キーワードの後に `rev` キーワードを付けることで、ループを降順にすること"
 "ができます。"
+
+#: src/05_language_reference/06_declaration/09_generate.md:56
+msgid ""
+"The generate `for` declaration also accepts `step` as the `for` statement "
+"does (see [For](../05_statement/05_for.md))."
+msgstr ""
+"generate `for` 宣言でも `for` 文と同様に `step` を使えます ([for]"
+"(../05_statement/05_for.md) を参照)。"
 
 #: src/05_language_reference/06_declaration/10_instantiation.md:3
 msgid ""
@@ -4894,6 +5051,26 @@ msgstr ""
 "}\n"
 "```"
 
+#: src/05_language_reference/10_systemverilog_interoperation.md:36
+msgid "Macro Reference"
+msgstr "マクロ参照"
+
+#: src/05_language_reference/10_systemverilog_interoperation.md:38
+msgid ""
+"Macros defined by `` `define `` in SystemVerilog can be referred through "
+"`$define` namespace. A reference under `$define` is emitted as a macro "
+"reference with a backquote prefix. For example, `$define::WIDTH` is emitted "
+"as `` `WIDTH ``. As with `$sv`, the rest of the path is emitted with `::` "
+"separators, so a macro expanding to a package name can be used to refer its "
+"members. Veryl doesn't check the existence and the value of the macros."
+msgstr ""
+"SystemVerilog で `` `define `` により定義されたマクロは `$define` 名前空間を"
+"通して参照できます。`$define` 配下の参照はバッククォートを前置したマクロ参照"
+"として出力されます。例えば `$define::WIDTH` は `` `WIDTH `` として出力されま"
+"す。`$sv` と同様に、残りのパスは `::` 区切りで出力されるため、パッケージ名に"
+"展開されるマクロを使ってそのメンバを参照できます。Veryl はマクロの存在や値を"
+"確認しません。"
+
 #: src/05_language_reference/11_visibility.md:3
 msgid ""
 "By default, all top level items of a project (module, interface and package) "
@@ -5100,6 +5277,12 @@ msgid ""
 "`$tb::random` — random-number generator (with the value type as a generic "
 "argument)"
 msgstr "`$tb::random` --- 乱数生成器（値の型をジェネリック引数として指定）"
+
+#: src/05_language_reference/13_integrated_test.md:49
+msgid ""
+"`$tb::queue` — queue (with the element type and the capacity as generic "
+"arguments)"
+msgstr "`$tb::queue` — キュー (要素の型と容量をジェネリック引数として指定)"
 
 #: src/05_language_reference/13_integrated_test.md:50
 msgid ""
@@ -5648,6 +5831,90 @@ msgstr ""
 "seed`、`[test].seed`、または `r.seed(...)` で明示的にシードを与えると、生成さ"
 "れる系列が再現可能になります。他の `$tb::*` コンポーネントと同様に、`$tb::"
 "random` は `#[test]` モジュールの中でのみ使えます。"
+
+#: src/05_language_reference/13_integrated_test.md:366
+msgid "Queue"
+msgstr "キュー"
+
+#: src/05_language_reference/13_integrated_test.md:368
+msgid ""
+"`$tb::queue` is a queue for native tests, e.g. to hold the expected values "
+"of a scoreboard. The element type `T` and the capacity `N` are given as "
+"generic arguments: `$tb::queue::<T, N>`. `T` can be any fixed-width packed "
+"type, including 4-state types, types wider than 64 bits, enums, structs/"
+"unions and floating-point types. Unpacked arrays and `string` are rejected. "
+"`N` is optional and defaults to `0`, which means unbounded."
+msgstr ""
+"`$tb::queue` はネイティブテスト用のキューで、例えばスコアボードの期待値を保持"
+"するのに使えます。要素の型 `T` と容量 `N` はジェネリック引数として `$tb::"
+"queue::<T, N>` のように与えます。`T` には 4 値型、64 ビットより広い型、enum、"
+"struct/union、浮動小数点型を含む任意の固定幅の packed 型を指定できます。"
+"unpacked 配列と `string` は使えません。`N` は省略可能で、デフォルトは上限なし"
+"を意味する `0` です。"
+
+#: src/05_language_reference/13_integrated_test.md:376
+msgid ""
+"`q.push_back(value)` / `q.push_front(value)` — add `value` at the back / "
+"front; `value` is evaluated in the width of the element type"
+msgstr ""
+"`q.push_back(value)` / `q.push_front(value)` — `value` を末尾 / 先頭に追加す"
+"る。`value` は要素の型の幅で評価される"
+
+#: src/05_language_reference/13_integrated_test.md:377
+msgid ""
+"`q.pop_front()` / `q.pop_back()` — remove and return the front / back element"
+msgstr "`q.pop_front()` / `q.pop_back()` — 先頭 / 末尾の要素を取り除いて返す"
+
+#: src/05_language_reference/13_integrated_test.md:378
+msgid ""
+"`q.drop_front()` / `q.drop_back()` — remove the front / back element without "
+"returning it"
+msgstr ""
+"`q.drop_front()` / `q.drop_back()` — 先頭 / 末尾の要素を返さずに取り除く"
+
+#: src/05_language_reference/13_integrated_test.md:379
+msgid ""
+"`q.front()` / `q.back()` — return the front / back element without removing "
+"it"
+msgstr "`q.front()` / `q.back()` — 先頭 / 末尾の要素を取り除かずに返す"
+
+#: src/05_language_reference/13_integrated_test.md:380
+msgid "`q.clear()` — remove all elements"
+msgstr "`q.clear()` — すべての要素を取り除く"
+
+#: src/05_language_reference/13_integrated_test.md:381
+msgid "`q.size()` — return the number of elements"
+msgstr "`q.size()` — 要素数を返す"
+
+#: src/05_language_reference/13_integrated_test.md:382
+msgid "`q.is_empty()` — return whether the queue is empty"
+msgstr "`q.is_empty()` — キューが空かどうかを返す"
+
+#: src/05_language_reference/13_integrated_test.md:383
+msgid ""
+"`q.is_full()` — return whether the queue is full (always false for an "
+"unbounded queue)"
+msgstr ""
+"`q.is_full()` — キューが満杯かどうかを返す (上限なしのキューでは常に false)"
+
+#: src/05_language_reference/13_integrated_test.md:385
+msgid ""
+"A queue is shared by the `initial` blocks of the test module, so one block "
+"can push expected values while another pops and checks them:"
+msgstr ""
+"キューはテストモジュールの `initial` ブロック間で共有されるため、あるブロック"
+"で期待値を追加し、別のブロックでそれを取り出して確認できます。"
+
+#: src/05_language_reference/13_integrated_test.md:410
+msgid ""
+"Reading an empty queue with `pop_*` / `front` / `back` returns X for a 4-"
+"state element type and 0 for a 2-state element type, and `drop_*` on an "
+"empty queue does nothing. Pushing to a full queue drops the pushed value. "
+"Neither case is reported as an error."
+msgstr ""
+"空のキューを `pop_*` / `front` / `back` で読み出すと、要素の型が 4 値型なら "
+"X、2 値型なら 0 が返り、空のキューに対する `drop_*` は何もしません。満杯の"
+"キューに追加した値は破棄されます。いずれの場合もエラーにはなりません。"
 
 #: src/05_language_reference/13_integrated_test.md:367
 msgid ""
@@ -9189,6 +9456,14 @@ msgstr ""
 
 #: src/06_development_environment/01_project_configuration.md:17
 msgid ""
+"[`[[sv.filesets]]`](01_project_configuration.md#the-sv-filesets-section) --- "
+"SystemVerilog files."
+msgstr ""
+"[`[[sv.filesets]]`](01_project_configuration.md#the-sv-filesets-section) --- "
+"SystemVerilog ファイル"
+
+#: src/06_development_environment/01_project_configuration.md:17
+msgid ""
 "[`[properties]`](01_project_configuration.md#the-properties-section) --- "
 "Project properties."
 msgstr ""
@@ -9470,6 +9745,20 @@ msgid ""
 msgstr ""
 "`[synth]` セクションはシンセサイザの設定です。詳細は[こちら]"
 "(./01_project_configuration/06_synth.md)。"
+
+#: src/06_development_environment/01_project_configuration.md:122
+msgid "The `[[sv.filesets]]` entries"
+msgstr "`[[sv.filesets]]` エントリ"
+
+#: src/06_development_environment/01_project_configuration.md:124
+msgid ""
+"A `[[sv.filesets]]` entry specifies SystemVerilog files, such as IPs, which "
+"are managed together with the project. Available configurations is [here]"
+"(./01_project_configuration/07_sv.md)."
+msgstr ""
+"`[[sv.filesets]]` エントリはプロジェクトと一緒に管理する IP などの "
+"SystemVerilog ファイルを指定します。詳細は[こちら]"
+"(./01_project_configuration/07_sv.md)。"
 
 #: src/06_development_environment/01_project_configuration.md:121
 msgid "The `[properties]` section"
@@ -11953,6 +12242,167 @@ msgstr ""
 "Veryl はこれらの PDK の Liberty ソース、回路図、レイアウトを再配布していませ"
 "ん。参考データとして、ごく少数のセル単位の面積・遅延・漏れ電力・エネルギーの"
 "値のみを利用しています。"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:3
+msgid ""
+"`[[sv.filesets]]` entries specify SystemVerilog files, such as IPs, which "
+"are managed together with a Veryl project. The specified files and include "
+"directories are added to the filelist."
+msgstr ""
+"`[[sv.filesets]]` エントリは Veryl プロジェクトと一緒に管理する IP などの "
+"SystemVerilog ファイルを指定します。指定したファイルとインクルードディレクト"
+"リはファイルリストに追加されます。"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:14
+msgid "Multiple filesets can be specified by repeating `[[sv.filesets]]`."
+msgstr "`[[sv.filesets]]` を繰り返すことで複数のファイルセットを指定できます。"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:18
+msgid "Required"
+msgstr "必須"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:20
+#: src/06_development_environment/01_project_configuration/07_sv.md:22
+#: src/06_development_environment/01_project_configuration/07_sv.md:23
+msgid "no"
+msgstr "いいえ"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:20
+msgid "Base directory of relative paths in `files` and `include_dirs`"
+msgstr "`files` と `include_dirs` の相対パスの基準ディレクトリ"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:21
+#: src/06_development_environment/01_project_configuration/07_sv.md:22
+msgid "array of string"
+msgstr "文字列の配列"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:21
+msgid "yes"
+msgstr "はい"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:21
+msgid "SystemVerilog files"
+msgstr "SystemVerilog ファイル"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:22
+msgid "Include directories"
+msgstr "インクルードディレクトリ"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:23
+msgid ""
+"[Condition expression](#condition-expression) on project properties. The "
+"fileset is enabled only if it is evaluated to true. If omitted, the fileset "
+"is always enabled."
+msgstr ""
+"プロジェクトプロパティに対する[条件式](#condition-expression)。評価結果が真の"
+"場合のみファイルセットが有効になります。省略した場合は常に有効です。"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:25
+msgid ""
+"Relative paths are relative to the project root directory (the directory "
+"containing `Veryl.toml`) if `root` is omitted. An absolute path ignores "
+"`root`."
+msgstr ""
+"`root` を省略した場合、相対パスはプロジェクトのルートディレクトリ (`Veryl."
+"toml` があるディレクトリ) からの相対パスになります。絶対パスでは `root` は無"
+"視されます。"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:28
+msgid "Condition expression"
+msgstr "条件式"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:30
+msgid ""
+"The `enable_if` field takes a condition expression on [project properties]"
+"(../01_project_configuration.md#the-properties-section). The following "
+"operands can be used:"
+msgstr ""
+"`enable_if` フィールドには[プロジェクトプロパティ]"
+"(../01_project_configuration.md#the-properties-section)に対する条件式を指定し"
+"ます。以下のオペランドを使えます。"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:33
+msgid "Property names"
+msgstr "プロパティ名"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:34
+msgid "Unsized numbers in Veryl syntax (e.g. `32`, `'b1010`, `'hff`)"
+msgstr "Veryl 構文の幅指定なし数値 (例: `32`, `'b1010`, `'hff`)"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:35
+msgid "Parenthesized expressions"
+msgstr "括弧で囲んだ式"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:37
+msgid ""
+"The following operators can be used. All operators are left-associative."
+msgstr "以下の演算子を使えます。すべての演算子は左結合です。"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:40
+msgid "Operand type"
+msgstr "オペランドの型"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:44
+msgid "both of the same type"
+msgstr "両辺が同じ型"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:62
+msgid ""
+"Syntax errors of the condition expression are reported when `Veryl.toml` is "
+"loaded. Unknown properties and type mismatches are reported when the "
+"expression is evaluated."
+msgstr ""
+"条件式の構文エラーは `Veryl.toml` の読み込み時に報告されます。未知のプロパ"
+"ティや型の不一致は式の評価時に報告されます。"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:65
+msgid "Filelist"
+msgstr "ファイルリスト"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:67
+msgid ""
+"Files and include directories of the enabled filesets are added to the "
+"filelist before the generated files. Include directories are also passed to "
+"the simulators run by `veryl test`."
+msgstr ""
+"有効なファイルセットのファイルとインクルードディレクトリは、生成されたファイ"
+"ルより前にファイルリストへ追加されます。インクルードディレクトリは `veryl "
+"test` が実行するシミュレータにも渡されます。"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:72
+msgid ""
+"Filesets of [dependencies](../02_dependencies.md) are also added to the "
+"filelist. `enable_if` of a dependency is evaluated with the property values "
+"of the dependency, which reflect [project property override]"
+"(../02_dependencies.md#project-property-override)."
+msgstr ""
+"[依存関係](../02_dependencies.md)のファイルセットもファイルリストに追加されま"
+"す。依存関係の `enable_if` は、[プロジェクトプロパティの上書き]"
+"(../02_dependencies.md#project-property-override)を反映した依存関係側のプロパ"
+"ティ値で評価されます。"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:76
+msgid ""
+"Git dependencies: files and include directories are copied into the "
+"`dependencies` directory, and the copied paths are referred."
+msgstr ""
+"Git 依存関係: ファイルとインクルードディレクトリは `dependencies` ディレクト"
+"リにコピーされ、コピー先のパスが参照されます。"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:77
+msgid "Path dependencies: files and include directories are referred directly."
+msgstr "パス依存関係: ファイルとインクルードディレクトリは直接参照されます。"
+
+#: src/06_development_environment/01_project_configuration/07_sv.md:81
+msgid ""
+"Paths in `[[sv.filesets]]` of a published project must be relative paths "
+"which don't contain `..`. `veryl publish` reports an error if an absolute "
+"path or a path containing `..` is found in any fileset, regardless of "
+"`enable_if`."
+msgstr ""
+"公開するプロジェクトの `[[sv.filesets]]` のパスは `..` を含まない相対パスでな"
+"ければなりません。`enable_if` に関わらず、いずれかのファイルセットに絶対パス"
+"や `..` を含むパスがあると `veryl publish` はエラーを報告します。"
 
 #: src/06_development_environment/02_dependencies.md:3
 msgid ""
@@ -18276,10 +18726,13 @@ msgstr "invalid_factor"
 #: src/07_appendix/02_semantic_error.md:188
 msgid ""
 "This error is reported when a non-value symbol (e.g. a module name) is used "
-"as a factor in an expression."
+"as a factor in an expression. It is also reported when a reset value literal "
+"(`reset_active` / `reset_inactive`) is used where its polarity can't be "
+"determined."
 msgstr ""
 "このエラーは、値ではないシンボル（例：モジュール名）が式の因子として使われた"
-"場合に報告されます。"
+"場合に報告されます。また、リセット値リテラル (`reset_active` / "
+"`reset_inactive`) が極性を決定できない場所で使われた場合にも報告されます。"
 
 #: src/07_appendix/02_semantic_error.md:191
 msgid "invalid_for_range"
@@ -18344,6 +18797,20 @@ msgstr ""
 "`#[allow(initial_assign)]` を付けるか、代わりにリセットで初期化してください。"
 "`initial` ブロックの内部で宣言された変数は手続き的なローカル変数であり、報告"
 "されません。"
+
+#: src/07_appendix/02_semantic_error.md:220
+msgid "invalid_inline_function"
+msgstr "invalid_inline_function"
+
+#: src/07_appendix/02_semantic_error.md:222
+msgid ""
+"This error is reported when a function with [`inline`]"
+"(../05_language_reference/06_declaration/08_attribute.md#inline-attribute) "
+"attribute doesn't satisfy the conditions to be inlined."
+msgstr ""
+"このエラーは、[`inline`]"
+"(../05_language_reference/06_declaration/08_attribute.md#inline-attribute) ア"
+"トリビュートを付けた関数がインライン化の条件を満たさない場合に報告されます。"
 
 #: src/07_appendix/02_semantic_error.md:218
 msgid "invalid_lsb"
@@ -18723,6 +19190,24 @@ msgstr ""
 "`if_reset` 文が無い場合に報告されます。リセット動作を記述する `if_reset` ブ"
 "ロックを追加してください。"
 
+#: src/07_appendix/02_semantic_error.md:381
+msgid "missing_modport_dependency"
+msgstr "missing_modport_dependency"
+
+#: src/07_appendix/02_semantic_error.md:383
+msgid ""
+"This error is reported when a function imported by a modport refers to an "
+"interface variable which is not exported by the modport, or assigns to an "
+"interface variable which is not exported as `output` or `inout`. Variables "
+"referred by interface functions called from the function are also checked. "
+"Export the variable by the modport with the required direction."
+msgstr ""
+"このエラーは、modport でインポートされた関数が、その modport でエクスポートさ"
+"れていないインターフェース変数を参照した場合、または `output` か `inout` とし"
+"てエクスポートされていないインターフェース変数に代入した場合に報告されます。"
+"その関数から呼び出されるインターフェース関数が参照する変数もチェックされま"
+"す。必要な方向で modport から変数をエクスポートしてください。"
+
 #: src/07_appendix/02_semantic_error.md:374
 msgid "missing_reset_signal"
 msgstr "missing_reset_signal"
@@ -18843,6 +19328,24 @@ msgstr ""
 "静的に選択した interface の内部データに対しては、動的な添字を使用できます。例"
 "えば、`data` が配列またはパックされた値で、`i` が実行時の添字である場合、"
 "`bus[0].data[i]` は有効です。"
+
+#: src/07_appendix/02_semantic_error.md:439
+msgid "non_constant_output_select"
+msgstr "non_constant_output_select"
+
+#: src/07_appendix/02_semantic_error.md:441
+msgid ""
+"This error is reported when a select in an output port connection is not "
+"constant, for example `o: bits[index]` with a runtime `index`. An output "
+"connection is a continuous assignment, so its packed selects must be "
+"constant. Use a constant index, or connect the port to a variable and select "
+"from that variable in an `always_comb` block."
+msgstr ""
+"このエラーは、出力ポート接続での選択が定数でない場合に報告されます。例えば、"
+"実行時に決まる `index` を使った `o: bits[index]` がこれに該当します。出力ポー"
+"ト接続は継続代入なので、packed な選択は定数でなければなりません。定数のイン"
+"デックスを使うか、ポートを変数に接続して `always_comb` ブロック内でその変数か"
+"ら選択してください。"
 
 #: src/07_appendix/02_semantic_error.md:408
 msgid "non_constant_select_width"
