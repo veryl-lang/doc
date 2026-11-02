@@ -32,3 +32,22 @@ module ModuleA (
     );
 }
 ```
+
+## Macro Reference
+
+Macros defined by `` `define `` in SystemVerilog can be referred through `$define` namespace.
+A reference under `$define` is emitted as a macro reference with a backquote prefix.
+For example, `$define::WIDTH` is emitted as `` `WIDTH ``.
+As with `$sv`, the rest of the path is emitted with `::` separators, so a macro expanding to a package name can be used to refer its members.
+Veryl doesn't check the existence and the value of the macros.
+
+```veryl,playground
+module ModuleA (
+    i_a: input logic<$define::WIDTH>,
+) {
+    const A: u32           = $define::A;
+    const B: u32           = $define::PKG::B;
+    var   c: $define::TYPE;
+    assign c = A + B;
+}
+```
