@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-7d28c4e2.js";
+            window.path_to_searchindex_js = "../../searchindex-350e259b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-29f14ec0.js"></script>
@@ -474,6 +474,43 @@ module ModuleB {
     );
 }
 </code></pre>
+<h2 id="inline-attribute"><a class="header" href="#inline-attribute"><code>inline</code> Attribute</a></h2>
+<p>If <code>inline</code> attribute is set to a function declared in an interface, calls of the function are replaced with its expression in the generated SystemVerilog.
+Function calls in hot paths can be a bottleneck of simulation on SystemVerilog simulators. This attribute is helpful for such case.</p>
+<p>A function with <code>inline</code> attribute must satisfy the following conditions:</p>
+<ul>
+<li>It is declared directly in an interface (not in a generate block).</li>
+<li>It has no arguments.</li>
+<li>It has a return type.</li>
+<li>Its body is a single <code>return</code> statement.</li>
+<li>Its return type and expression don’t refer to types, consts and params declared in the interface.</li>
+<li>It doesn’t call itself.</li>
+</ul>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var ready: logic;
+    var valid: logic;
+
+    #[inline]
+    function ack () -&gt; logic {
+        return ready &amp;&amp; valid;
+    }
+
+    modport master {
+        ready: input ,
+        valid: output,
+        ack  : import,
+    }
+}
+
+module ModuleA (
+    master_if: modport InterfaceA::master,
+) {
+    assign master_if.valid = 1;
+
+    let _ack: logic = master_if.ack();
+}
+</code></pre>
+<p>The inlined expression is cast to the return type defined in a package which is generated for the interface, to keep the semantics of the function return.</p>
 <h2 id="align-attribute"><a class="header" href="#align-attribute"><code>align</code> Attribute</a></h2>
 <p><code>align</code> attribute is used to control vertical alignment by formatter.
 If <code>number</code> is specified as an argument of <code>align</code> attribute, all numbers are aligned.

@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-a01843e5.js";
+            window.path_to_searchindex_js = "searchindex-f150f093.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-dc67cae0.js"></script>
@@ -2608,6 +2608,42 @@ module ModuleB {
     );
 }
 </code></pre>
+<h2 id="inline-attribute"><a class="header" href="#inline-attribute"><code>inline</code> Attribute</a></h2>
+<p>If <code>inline</code> attribute is set to a function declared in an interface, calls of the function are replaced with its expression in the generated SystemVerilog. Function calls in hot paths can be a bottleneck of simulation on SystemVerilog simulators. This attribute is helpful for such case.</p>
+<p>A function with <code>inline</code> attribute must satisfy the following conditions:</p>
+<ul>
+<li>It is declared directly in an interface (not in a generate block).</li>
+<li>It has no arguments.</li>
+<li>It has a return type.</li>
+<li>Its body is a single <code>return</code> statement.</li>
+<li>Its return type and expression don’t refer to types, consts and params declared in the interface.</li>
+<li>It doesn’t call itself.</li>
+</ul>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var ready: logic;
+    var valid: logic;
+
+    #[inline]
+    function ack () -&gt; logic {
+        return ready &amp;&amp; valid;
+    }
+
+    modport master {
+        ready: input ,
+        valid: output,
+        ack  : import,
+    }
+}
+
+module ModuleA (
+    master_if: modport InterfaceA::master,
+) {
+    assign master_if.valid = 1;
+
+    let _ack: logic = master_if.ack();
+}
+</code></pre>
+<p>The inlined expression is cast to the return type defined in a package which is generated for the interface, to keep the semantics of the function return.</p>
 <h2 id="align-アトリビュート"><a class="header" href="#align-アトリビュート"><code>align</code> アトリビュート</a></h2>
 <p><code>align</code> アトリビュートはフォーマッタの垂直方向の整列を制御することができます。<code>number</code> が <code>align</code> の引数として指定されたとき、全ての数値は整列されます。<code>identifier</code> も使用可能です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -7699,6 +7735,8 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、参照先がインポート可能でない（private、またはインポート対象として無効）な場合に報告されます。</p>
 <h3 id="invalid_initial_assign"><a class="header" href="#invalid_initial_assign">invalid_initial_assign</a></h3>
 <p>このエラーは、代入文または <code>$readmemh</code> のような関数呼び出しの出力引数を介して、<code>initial</code> ブロックで変数に代入された場合に報告されます。ASIC の合成ツールは <code>initial</code> 文を無視するため、これはターゲットデバイスがコンフィギュレーション時にその変数を初期化する場合にのみ有効です。その場合は変数の宣言に <code>#[allow(initial_assign)]</code> を付けるか、代わりにリセットで初期化してください。<code>initial</code> ブロックの内部で宣言された変数は手続き的なローカル変数であり、報告されません。</p>
+<h3 id="invalid_inline_function"><a class="header" href="#invalid_inline_function">invalid_inline_function</a></h3>
+<p>This error is reported when a function with <a href="#inline-attribute"><code>inline</code></a> attribute doesn’t satisfy the conditions to be inlined.</p>
 <h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
 <p>このエラーは、対応するビット幅を特定できない位置で <code>lsb</code> キーワードが使われた場合に報告されます。<code>lsb</code> を具体的なインデックスに置き換えてください。</p>
 <h3 id="invalid_mixin"><a class="header" href="#invalid_mixin">invalid_mixin</a></h3>
