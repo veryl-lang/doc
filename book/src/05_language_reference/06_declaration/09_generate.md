@@ -64,3 +64,18 @@ module ModuleA {
     }
 }
 ```
+
+The generate `for` declaration also accepts multiple loop variables as the `for` statement does (see [For](../05_statement/05_for.md)).
+
+```veryl,playground
+module ModuleA {
+    var a: logic<4, 8>;
+
+    for i in 0..4, j in 0..8 :label {
+        assign a[i][j] = i + j;
+    }
+}
+```
+
+It is emitted as a single generate loop in SystemVerilog,
+so the generated blocks are labeled by sequential indexes like `label[0]`, `label[1]`, ... instead of `label[i][j]`.
