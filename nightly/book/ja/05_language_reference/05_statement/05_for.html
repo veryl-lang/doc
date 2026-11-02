@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-d063a209.js";
+            window.path_to_searchindex_js = "../../searchindex-91984456.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-dc67cae0.js"></script>
@@ -304,7 +304,7 @@
     }
 }
 </code></pre>
-<p>The loop variable advances by 1 on each iteration. You can change this by putting <code>step</code> keyword, an assignment operator, and an expression after the range. The loop variable is updated with the operator on each iteration, so <code>step += 2</code> counts by 2 and <code>step *= 2</code> doubles it.</p>
+<p>ループ変数は繰り返しごとに 1 ずつ進みます。範囲の後に <code>step</code> キーワード、代入演算子、式を続けることでこれを変更できます。ループ変数は繰り返しごとにその演算子で更新されるため、<code>step += 2</code> なら 2 ずつ増え、<code>step *= 2</code> なら 2 倍になります。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     var a: logic&lt;10&gt;;
     var b: logic&lt;10&gt;;
@@ -320,7 +320,7 @@
     }
 }
 </code></pre>
-<p><code>step</code> can also be used with <code>rev</code>, but only with <code>+=</code>. In this case the loop variable goes down by the given amount.</p>
+<p><code>step</code> は <code>rev</code> と組み合わせることもできますが、その場合は <code>+=</code> のみ使えます。このときループ変数は指定した量ずつ減っていきます。</p>
 <pre><code class="language-veryl playground">module ModuleA {
     var a: logic&lt;10&gt;;
 
@@ -331,7 +331,7 @@
     }
 }
 </code></pre>
-<p>A step which can never reach the end of the range is an error, such as <code>step += 0</code>, <code>step -= 1</code> in a forward loop, or <code>step *= 2</code> together with <code>rev</code>.</p>
+<p>昇順のループでの <code>step += 0</code> や <code>step -= 1</code>、<code>rev</code> と組み合わせた <code>step *= 2</code> のように、範囲の終端に到達できない step はエラーになります。</p>
 
                     </main>
 

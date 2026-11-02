@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-1bbb45e3.js";
+            window.path_to_searchindex_js = "../searchindex-f31a796d.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-29f14ec0.js"></script>
@@ -296,6 +296,21 @@ It depeneds on implementation (e.g. simulator, synthesizer) whether each symbols
         // Instead of it, `r#clock` can be used
         r#clock: i_clk,
     );
+}
+</code></pre>
+<h2 id="macro-reference"><a class="header" href="#macro-reference">Macro Reference</a></h2>
+<p>Macros defined by <code>`define</code> in SystemVerilog can be referred through <code>$define</code> namespace.
+A reference under <code>$define</code> is emitted as a macro reference with a backquote prefix.
+For example, <code>$define::WIDTH</code> is emitted as <code>`WIDTH</code>.
+As with <code>$sv</code>, the rest of the path is emitted with <code>::</code> separators, so a macro expanding to a package name can be used to refer its members.
+Veryl doesn’t check the existence and the value of the macros.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_a: input logic&lt;$define::WIDTH&gt;,
+) {
+    const A: u32           = $define::A;
+    const B: u32           = $define::PKG::B;
+    var   c: $define::TYPE;
+    assign c = A + B;
 }
 </code></pre>
 

@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-d063a209.js";
+            window.path_to_searchindex_js = "../../searchindex-91984456.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-dc67cae0.js"></script>
@@ -273,46 +273,46 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="sv"><a class="header" href="#sv">SV</a></h1>
-<p><code>[[sv.filesets]]</code> entries specify SystemVerilog files, such as IPs, which are managed together with a Veryl project. The specified files and include directories are added to the filelist.</p>
+<p><code>[[sv.filesets]]</code> エントリは Veryl プロジェクトと一緒に管理する IP などの SystemVerilog ファイルを指定します。指定したファイルとインクルードディレクトリはファイルリストに追加されます。</p>
 <pre><code class="language-toml">[[sv.filesets]]
 root         = "ip/foo"
 enable_if    = "!for_asic &amp;&amp; width == 32"
 files        = ["rtl/foo_pkg.sv", "rtl/foo.sv"]
 include_dirs = ["include"]
 </code></pre>
-<p>Multiple filesets can be specified by repeating <code>[[sv.filesets]]</code>.</p>
+<p><code>[[sv.filesets]]</code> を繰り返すことで複数のファイルセットを指定できます。</p>
 <h2 id="設定"><a class="header" href="#設定">設定</a></h2>
 <div class="table-wrapper">
 <table>
 <thead>
-<tr><th>設定</th><th>設定値</th><th>Required</th><th>説明</th></tr>
+<tr><th>設定</th><th>設定値</th><th>必須</th><th>説明</th></tr>
 </thead>
 <tbody>
-<tr><td>root</td><td>文字列</td><td>no</td><td>Base directory of relative paths in <code>files</code> and <code>include_dirs</code></td></tr>
-<tr><td>files</td><td>array of string</td><td>yes</td><td>SystemVerilog files</td></tr>
-<tr><td>include_dirs</td><td>array of string</td><td>no</td><td>Include directories</td></tr>
-<tr><td>enable_if</td><td>文字列</td><td>no</td><td><a href="#condition-expression">Condition expression</a> on project properties. The fileset is enabled only if it is evaluated to true. If omitted, the fileset is always enabled.</td></tr>
+<tr><td>root</td><td>文字列</td><td>いいえ</td><td><code>files</code> と <code>include_dirs</code> の相対パスの基準ディレクトリ</td></tr>
+<tr><td>files</td><td>文字列の配列</td><td>はい</td><td>SystemVerilog ファイル</td></tr>
+<tr><td>include_dirs</td><td>文字列の配列</td><td>いいえ</td><td>インクルードディレクトリ</td></tr>
+<tr><td>enable_if</td><td>文字列</td><td>いいえ</td><td>プロジェクトプロパティに対する<a href="#condition-expression">条件式</a>。評価結果が真の場合のみファイルセットが有効になります。省略した場合は常に有効です。</td></tr>
 </tbody>
 </table>
 </div>
-<p>Relative paths are relative to the project root directory (the directory containing <code>Veryl.toml</code>) if <code>root</code> is omitted. An absolute path ignores <code>root</code>.</p>
-<h2 id="condition-expression"><a class="header" href="#condition-expression">Condition expression</a></h2>
-<p>The <code>enable_if</code> field takes a condition expression on <a href="../01_project_configuration.html#the-properties-section">project properties</a>. The following operands can be used:</p>
+<p><code>root</code> を省略した場合、相対パスはプロジェクトのルートディレクトリ (<code>Veryl.toml</code> があるディレクトリ) からの相対パスになります。絶対パスでは <code>root</code> は無視されます。</p>
+<h2 id="condition-expression"><a class="header" href="#condition-expression">条件式</a></h2>
+<p><code>enable_if</code> フィールドには<a href="../01_project_configuration.html#the-properties-section">プロジェクトプロパティ</a>に対する条件式を指定します。以下のオペランドを使えます。</p>
 <ul>
-<li>Property names</li>
-<li>Unsized numbers in Veryl syntax (e.g. <code>32</code>, <code>'b1010</code>, <code>'hff</code>)</li>
-<li>Parenthesized expressions</li>
+<li>プロパティ名</li>
+<li>Veryl 構文の幅指定なし数値 (例: <code>32</code>, <code>'b1010</code>, <code>'hff</code>)</li>
+<li>括弧で囲んだ式</li>
 </ul>
-<p>The following operators can be used. All operators are left-associative.</p>
+<p>以下の演算子を使えます。すべての演算子は左結合です。</p>
 <div class="table-wrapper">
 <table>
 <thead>
-<tr><th>優先順位</th><th>演算子</th><th>Operand type</th></tr>
+<tr><th>優先順位</th><th>演算子</th><th>オペランドの型</th></tr>
 </thead>
 <tbody>
 <tr><td>高い</td><td><code>!</code></td><td>bool</td></tr>
 <tr><td></td><td><code>&lt;:</code> <code>&gt;:</code> <code>&lt;=</code> <code>&gt;=</code></td><td>int</td></tr>
-<tr><td></td><td><code>==</code> <code>!=</code></td><td>both of the same type</td></tr>
+<tr><td></td><td><code>==</code> <code>!=</code></td><td>両辺が同じ型</td></tr>
 <tr><td></td><td><code>&amp;&amp;</code></td><td>bool</td></tr>
 <tr><td>低い</td><td><code>||</code></td><td>bool</td></tr>
 </tbody>
@@ -330,17 +330,17 @@ files     = ["ip/asic/foo_asic.sv"]
 enable_if = "!for_asic &amp;&amp; (width == 32 || width == 64)"
 files     = ["ip/fpga/foo_fpga.sv"]
 </code></pre>
-<p>Syntax errors of the condition expression are reported when <code>Veryl.toml</code> is loaded. Unknown properties and type mismatches are reported when the expression is evaluated.</p>
-<h2 id="filelist"><a class="header" href="#filelist">Filelist</a></h2>
-<p>Files and include directories of the enabled filesets are added to the filelist before the generated files. Include directories are also passed to the simulators run by <code>veryl test</code>.</p>
+<p>条件式の構文エラーは <code>Veryl.toml</code> の読み込み時に報告されます。未知のプロパティや型の不一致は式の評価時に報告されます。</p>
+<h2 id="ファイルリスト"><a class="header" href="#ファイルリスト">ファイルリスト</a></h2>
+<p>有効なファイルセットのファイルとインクルードディレクトリは、生成されたファイルより前にファイルリストへ追加されます。インクルードディレクトリは <code>veryl test</code> が実行するシミュレータにも渡されます。</p>
 <h2 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h2>
-<p>Filesets of <a href="../02_dependencies.html">dependencies</a> are also added to the filelist. <code>enable_if</code> of a dependency is evaluated with the property values of the dependency, which reflect <a href="../02_dependencies.html#project-property-override">project property override</a>.</p>
+<p><a href="../02_dependencies.html">依存関係</a>のファイルセットもファイルリストに追加されます。依存関係の <code>enable_if</code> は、<a href="../02_dependencies.html#project-property-override">プロジェクトプロパティの上書き</a>を反映した依存関係側のプロパティ値で評価されます。</p>
 <ul>
-<li>Git dependencies: files and include directories are copied into the <code>dependencies</code> directory, and the copied paths are referred.</li>
-<li>Path dependencies: files and include directories are referred directly.</li>
+<li>Git 依存関係: ファイルとインクルードディレクトリは <code>dependencies</code> ディレクトリにコピーされ、コピー先のパスが参照されます。</li>
+<li>パス依存関係: ファイルとインクルードディレクトリは直接参照されます。</li>
 </ul>
 <h2 id="publish"><a class="header" href="#publish">Publish</a></h2>
-<p>Paths in <code>[[sv.filesets]]</code> of a published project must be relative paths which don’t contain <code>..</code>. <code>veryl publish</code> reports an error if an absolute path or a path containing <code>..</code> is found in any fileset, regardless of <code>enable_if</code>.</p>
+<p>公開するプロジェクトの <code>[[sv.filesets]]</code> のパスは <code>..</code> を含まない相対パスでなければなりません。<code>enable_if</code> に関わらず、いずれかのファイルセットに絶対パスや <code>..</code> を含むパスがあると <code>veryl publish</code> はエラーを報告します。</p>
 
                     </main>
 

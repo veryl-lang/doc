@@ -133,7 +133,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-d063a209.js";
+            window.path_to_searchindex_js = "../../searchindex-91984456.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc-dc67cae0.js"></script>
@@ -342,28 +342,28 @@
     }
 }
 </code></pre>
-<h2 id="reset-value-literal"><a class="header" href="#reset-value-literal">Reset Value Literal</a></h2>
-<p><code>reset_active</code> and <code>reset_inactive</code> are literals to represent the active and inactive values of a reset. They can be used to describe reset values without depending on reset polarity. The actual value is determined by the reset type of the counterpart.</p>
+<h2 id="リセット値リテラル"><a class="header" href="#リセット値リテラル">リセット値リテラル</a></h2>
+<p><code>reset_active</code> と <code>reset_inactive</code> はリセットのアクティブ値と非アクティブ値を表すリテラルです。リセットの極性に依存せずにリセット値を記述するために使えます。実際の値は相手側のリセット型によって決まります。</p>
 <div class="table-wrapper">
 <table>
 <thead>
-<tr><th>Counterpart type</th><th><code>reset_active</code></th><th><code>reset_inactive</code></th></tr>
+<tr><th>相手側の型</th><th><code>reset_active</code></th><th><code>reset_inactive</code></th></tr>
 </thead>
 <tbody>
 <tr><td><code>reset_async_high</code>, <code>reset_sync_high</code></td><td><code>1'b1</code></td><td><code>1'b0</code></td></tr>
 <tr><td><code>reset_async_low</code>, <code>reset_sync_low</code></td><td><code>1'b0</code></td><td><code>1'b1</code></td></tr>
-<tr><td><code>reset</code></td><td>specified by the build option</td><td>specified by the build option</td></tr>
+<tr><td><code>reset</code></td><td>ビルドオプションで指定</td><td>ビルドオプションで指定</td></tr>
 </tbody>
 </table>
 </div>
-<p>A reset value literal can be used only as a standalone factor (parentheses are allowed) in the following places:</p>
+<p>リセット値リテラルは、他の演算と組み合わせずに単体で (括弧で囲むのは可) 以下の場所でのみ使えます。</p>
 <ul>
-<li>connection to an input port of an instance</li>
-<li>right-hand side of an assignment</li>
-<li>initial value of <code>let</code> declaration with an explicit type</li>
-<li>operand of <code>==</code> and <code>!=</code> whose other operand is a variable reference</li>
+<li>インスタンスの入力ポートへの接続</li>
+<li>代入の右辺</li>
+<li>型を明示した <code>let</code> 宣言の初期値</li>
+<li>もう一方のオペランドが変数参照である <code>==</code> と <code>!=</code> のオペランド</li>
 </ul>
-<p>The counterpart must be declared with a reset type keyword directly. If the reset type is given through a type definition or a type parameter, the literal can’t be used because its polarity can’t be determined.</p>
+<p>相手側はリセット型のキーワードで直接宣言されている必要があります。リセット型が型定義や型パラメータを通して与えられている場合は、極性を決定できないためリテラルを使えません。</p>
 <pre><code class="language-veryl playground">module ModuleA (
     i_rst  : input  reset_async_low,
     o_rst  : output reset_sync_high,

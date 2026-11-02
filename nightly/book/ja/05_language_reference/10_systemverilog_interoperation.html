@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-d063a209.js";
+            window.path_to_searchindex_js = "../searchindex-91984456.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-dc67cae0.js"></script>
@@ -292,6 +292,17 @@
         // 代わりに `r#clock` を使います
         r#clock: i_clk,
     );
+}
+</code></pre>
+<h2 id="マクロ参照"><a class="header" href="#マクロ参照">マクロ参照</a></h2>
+<p>SystemVerilog で <code>`define</code> により定義されたマクロは <code>$define</code> 名前空間を通して参照できます。<code>$define</code> 配下の参照はバッククォートを前置したマクロ参照として出力されます。例えば <code>$define::WIDTH</code> は <code>`WIDTH</code> として出力されます。<code>$sv</code> と同様に、残りのパスは <code>::</code> 区切りで出力されるため、パッケージ名に展開されるマクロを使ってそのメンバを参照できます。Veryl はマクロの存在や値を確認しません。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_a: input logic&lt;$define::WIDTH&gt;,
+) {
+    const A: u32           = $define::A;
+    const B: u32           = $define::PKG::B;
+    var   c: $define::TYPE;
+    assign c = A + B;
 }
 </code></pre>
 
