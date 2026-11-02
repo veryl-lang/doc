@@ -133,7 +133,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-f150f093.js";
+            window.path_to_searchindex_js = "../searchindex-d063a209.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-dc67cae0.js"></script>
@@ -409,6 +409,8 @@
 <p>このエラーは、デフォルト値を持つジェネリックパラメータの後に続くパラメータがデフォルト値を持たない場合に報告されます。デフォルトパラメータはリストの末尾に置く必要があります。</p>
 <h3 id="missing_if_reset"><a class="header" href="#missing_if_reset">missing_if_reset</a></h3>
 <p>このエラーは、<code>always_ff</code> ブロックがリセット信号を持つにもかかわらず <code>if_reset</code> 文が無い場合に報告されます。リセット動作を記述する <code>if_reset</code> ブロックを追加してください。</p>
+<h3 id="missing_modport_dependency"><a class="header" href="#missing_modport_dependency">missing_modport_dependency</a></h3>
+<p>This error is reported when a function imported by a modport refers to an interface variable which is not exported by the modport, or assigns to an interface variable which is not exported as <code>output</code> or <code>inout</code>. Variables referred by interface functions called from the function are also checked. Export the variable by the modport with the required direction.</p>
 <h3 id="missing_reset_signal"><a class="header" href="#missing_reset_signal">missing_reset_signal</a></h3>
 <p>このエラーは、<code>always_ff</code> ブロックで <code>if_reset</code> を使用しているにもかかわらず、囲っているモジュールにリセット信号が無い場合に報告されます。<code>reset</code> ポートを追加するか、リセット信号を接続してください。</p>
 <h3 id="missing_tb_port"><a class="header" href="#missing_tb_port">missing_tb_port</a></h3>

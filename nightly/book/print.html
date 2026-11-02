@@ -134,7 +134,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-350e259b.js";
+            window.path_to_searchindex_js = "searchindex-1bbb45e3.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-29f14ec0.js"></script>
@@ -8483,6 +8483,12 @@ itself lacks a default. Default parameters must be at the end of the list.</p>
 <p>This error is reported when an <code>always_ff</code> block has a reset signal but no <code>if_reset</code>
 statement.
 Add an <code>if_reset</code> block to describe the reset behavior.</p>
+<h3 id="missing_modport_dependency"><a class="header" href="#missing_modport_dependency">missing_modport_dependency</a></h3>
+<p>This error is reported when a function imported by a modport refers to an interface
+variable which is not exported by the modport, or assigns to an interface variable which
+is not exported as <code>output</code> or <code>inout</code>.
+Variables referred by interface functions called from the function are also checked.
+Export the variable by the modport with the required direction.</p>
 <h3 id="missing_reset_signal"><a class="header" href="#missing_reset_signal">missing_reset_signal</a></h3>
 <p>This error is reported when an <code>always_ff</code> block uses <code>if_reset</code> but no reset signal is
 available in the enclosing module.
