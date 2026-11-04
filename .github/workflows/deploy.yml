@@ -53,7 +53,7 @@ jobs:
         run: |
           cargo install mdbook-i18n-helpers --version 0.4.0
       - name: Install static-sitemap-cli
-        run: npm install static-sitemap-cli
+        run: npm install static-sitemap-cli@3
       # Cache mdbook-veryl keyed on upstream HEAD; rebuild only when it changes.
       - name: Resolve upstream veryl revision
         id: veryl_rev
@@ -90,7 +90,7 @@ jobs:
       - name: Generate sitemap
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         working-directory: book/book
-        run: npx sscli --no-clean --base https://doc.veryl-lang.org/book
+        run: npx sscli --urls raw --base https://doc.veryl-lang.org/book
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
