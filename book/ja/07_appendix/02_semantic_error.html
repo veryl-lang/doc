@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-b3cb1f91.js";
+            window.path_to_searchindex_js = "../searchindex-91984456.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-f6fb0cb4.js"></script>
+        <script src="../toc-dc67cae0.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -338,7 +338,7 @@
 <h3 id="invalid_enum_variant"><a class="header" href="#invalid_enum_variant">invalid_enum_variant</a></h3>
 <p>このエラーは、enum バリアントの値がその enum に指定されたエンコーディング（one-hot、gray など）と一致しない場合に報告されます。</p>
 <h3 id="invalid_factor"><a class="header" href="#invalid_factor">invalid_factor</a></h3>
-<p>このエラーは、値ではないシンボル（例：モジュール名）が式の因子として使われた場合に報告されます。</p>
+<p>このエラーは、値ではないシンボル（例：モジュール名）が式の因子として使われた場合に報告されます。また、リセット値リテラル (<code>reset_active</code> / <code>reset_inactive</code>) が極性を決定できない場所で使われた場合にも報告されます。</p>
 <h3 id="invalid_for_range"><a class="header" href="#invalid_for_range">invalid_for_range</a></h3>
 <p>このエラーは、<code>for</code> ループの範囲が不正な場合に報告されます。範囲は <code>..</code> または <code>..=</code> で書く必要があり、単なる式は範囲になりません。また範囲の境界は符号なしとして評価されるため、負の値にはできません。</p>
 <h3 id="invalid_for_step"><a class="header" href="#invalid_for_step">invalid_for_step</a></h3>
@@ -347,6 +347,8 @@
 <p>このエラーは、参照先がインポート可能でない（private、またはインポート対象として無効）な場合に報告されます。</p>
 <h3 id="invalid_initial_assign"><a class="header" href="#invalid_initial_assign">invalid_initial_assign</a></h3>
 <p>このエラーは、代入文または <code>$readmemh</code> のような関数呼び出しの出力引数を介して、<code>initial</code> ブロックで変数に代入された場合に報告されます。ASIC の合成ツールは <code>initial</code> 文を無視するため、これはターゲットデバイスがコンフィギュレーション時にその変数を初期化する場合にのみ有効です。その場合は変数の宣言に <code>#[allow(initial_assign)]</code> を付けるか、代わりにリセットで初期化してください。<code>initial</code> ブロックの内部で宣言された変数は手続き的なローカル変数であり、報告されません。</p>
+<h3 id="invalid_inline_function"><a class="header" href="#invalid_inline_function">invalid_inline_function</a></h3>
+<p>このエラーは、<a href="../05_language_reference/06_declaration/08_attribute.html#inline-attribute"><code>inline</code></a> アトリビュートを付けた関数がインライン化の条件を満たさない場合に報告されます。</p>
 <h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
 <p>このエラーは、対応するビット幅を特定できない位置で <code>lsb</code> キーワードが使われた場合に報告されます。<code>lsb</code> を具体的なインデックスに置き換えてください。</p>
 <h3 id="invalid_mixin"><a class="header" href="#invalid_mixin">invalid_mixin</a></h3>
@@ -407,6 +409,8 @@
 <p>このエラーは、デフォルト値を持つジェネリックパラメータの後に続くパラメータがデフォルト値を持たない場合に報告されます。デフォルトパラメータはリストの末尾に置く必要があります。</p>
 <h3 id="missing_if_reset"><a class="header" href="#missing_if_reset">missing_if_reset</a></h3>
 <p>このエラーは、<code>always_ff</code> ブロックがリセット信号を持つにもかかわらず <code>if_reset</code> 文が無い場合に報告されます。リセット動作を記述する <code>if_reset</code> ブロックを追加してください。</p>
+<h3 id="missing_modport_dependency"><a class="header" href="#missing_modport_dependency">missing_modport_dependency</a></h3>
+<p>このエラーは、modport でインポートされた関数が、その modport でエクスポートされていないインターフェース変数を参照した場合、または <code>output</code> か <code>inout</code> としてエクスポートされていないインターフェース変数に代入した場合に報告されます。その関数から呼び出されるインターフェース関数が参照する変数もチェックされます。必要な方向で modport から変数をエクスポートしてください。</p>
 <h3 id="missing_reset_signal"><a class="header" href="#missing_reset_signal">missing_reset_signal</a></h3>
 <p>このエラーは、<code>always_ff</code> ブロックで <code>if_reset</code> を使用しているにもかかわらず、囲っているモジュールにリセット信号が無い場合に報告されます。<code>reset</code> ポートを追加するか、リセット信号を接続してください。</p>
 <h3 id="missing_tb_port"><a class="header" href="#missing_tb_port">missing_tb_port</a></h3>
@@ -419,6 +423,12 @@
 <p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。FPGA における真のデュアルポート SRAM の推論など意図的な場合は、その信号の宣言に <code>#[allow(multiple_assign)]</code> を付けてください。</p>
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>このエラーは、同じモジュール内でデフォルトのクロックまたはリセットが複数回指定された場合に報告されます。</p>
+<h3 id="non_constant_interface_instance_select"><a class="header" href="#non_constant_interface_instance_select">non_constant_interface_instance_select</a></h3>
+<p>このエラーは、interface インスタンスを実行時の添字で選択した場合に報告されます。例えば、<code>i</code> が信号である場合の <code>bus[i].value</code> や <code>bus[i].get()</code> が該当します。interface インスタンスの添字はエラボレーション時の定数でなければなりません（IEEE 1800-2023、23.6 節）。これはメンバーの読み書き、メソッド呼び出し、modport 接続に適用されます。</p>
+<p>インスタンスの選択には、<code>const</code> や generate ループの添字などの定数式を使ってください。プロシージャルな <code>for</code> ループの添字は、エラボレーション時の定数ではありません。外部 SystemVerilog の定数も、Veryl がその値をローカルで評価できない場合を含めて使用できます。</p>
+<p>静的に選択した interface の内部データに対しては、動的な添字を使用できます。例えば、<code>data</code> が配列またはパックされた値で、<code>i</code> が実行時の添字である場合、<code>bus[0].data[i]</code> は有効です。</p>
+<h3 id="non_constant_output_select"><a class="header" href="#non_constant_output_select">non_constant_output_select</a></h3>
+<p>このエラーは、出力ポート接続での選択が定数でない場合に報告されます。例えば、実行時に決まる <code>index</code> を使った <code>o: bits[index]</code> がこれに該当します。出力ポート接続は継続代入なので、packed な選択は定数でなければなりません。定数のインデックスを使うか、ポートを変数に接続して <code>always_comb</code> ブロック内でその変数から選択してください。</p>
 <h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
 <p>このエラーは、<code>+:</code> / <code>-:</code> / <code>step</code> の部分選択の幅が定数でない場合に報告されます。幅には定数式を使ってください。</p>
 <h3 id="non_portable_dependency"><a class="header" href="#non_portable_dependency">non_portable_dependency</a></h3>
@@ -566,11 +576,11 @@
         <script src="../searcher-09f2665d.js"></script>
 
         <script src="../clipboard-1626706a.min.js"></script>
-        <script src="../highlight-88633d6f.js"></script>
+        <script src="../highlight-c1a32737.js"></script>
         <script src="../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../mode-veryl-f5f6ed18.js"></script>
+        <script src="../mode-veryl-6129de4e.js"></script>
         <script src="../veryl-init-13e2a09c.js"></script>
         <script src="../theme/language-picker-32df9c32.js"></script>
 

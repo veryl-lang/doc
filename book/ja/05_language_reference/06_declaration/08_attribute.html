@@ -133,10 +133,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-b3cb1f91.js";
+            window.path_to_searchindex_js = "../../searchindex-91984456.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-f6fb0cb4.js"></script>
+        <script src="../../toc-dc67cae0.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -450,6 +450,42 @@ module ModuleB {
     );
 }
 </code></pre>
+<h2 id="inline-アトリビュート"><a class="header" href="#inline-アトリビュート"><code>inline</code> アトリビュート</a></h2>
+<p>インターフェース内で宣言された関数に <code>inline</code> アトリビュートを付けると、生成される SystemVerilog では関数呼び出しがその式に置き換えられます。頻繁に実行される箇所での関数呼び出しは SystemVerilog シミュレータでのシミュレーションのボトルネックになることがあります。このアトリビュートはそのような場合に役立ちます。</p>
+<p><code>inline</code> アトリビュートを付けた関数は以下の条件を満たす必要があります。</p>
+<ul>
+<li>インターフェース内に直接宣言されている (generate ブロック内ではない)</li>
+<li>引数を持たない</li>
+<li>戻り値の型を持つ</li>
+<li>本体が単一の <code>return</code> 文である</li>
+<li>戻り値の型と式がインターフェース内で宣言された型・定数・パラメータを参照しない</li>
+<li>自身を呼び出さない</li>
+</ul>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var ready: logic;
+    var valid: logic;
+
+    #[inline]
+    function ack () -&gt; logic {
+        return ready &amp;&amp; valid;
+    }
+
+    modport master {
+        ready: input ,
+        valid: output,
+        ack  : import,
+    }
+}
+
+module ModuleA (
+    master_if: modport InterfaceA::master,
+) {
+    assign master_if.valid = 1;
+
+    let _ack: logic = master_if.ack();
+}
+</code></pre>
+<p>関数の戻り値としての意味を保つため、インライン化された式は、インターフェース用に生成されるパッケージで定義された戻り値の型にキャストされます。</p>
 <h2 id="align-アトリビュート"><a class="header" href="#align-アトリビュート"><code>align</code> アトリビュート</a></h2>
 <p><code>align</code> アトリビュートはフォーマッタの垂直方向の整列を制御することができます。<code>number</code> が <code>align</code> の引数として指定されたとき、全ての数値は整列されます。<code>identifier</code> も使用可能です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -540,11 +576,11 @@ module ModuleB {
         <script src="../../searcher-09f2665d.js"></script>
 
         <script src="../../clipboard-1626706a.min.js"></script>
-        <script src="../../highlight-88633d6f.js"></script>
+        <script src="../../highlight-c1a32737.js"></script>
         <script src="../../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../../mode-veryl-f5f6ed18.js"></script>
+        <script src="../../mode-veryl-6129de4e.js"></script>
         <script src="../../veryl-init-13e2a09c.js"></script>
         <script src="../../theme/language-picker-32df9c32.js"></script>
 

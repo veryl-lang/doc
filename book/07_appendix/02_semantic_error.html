@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-c7e502be.js";
+            window.path_to_searchindex_js = "../searchindex-f31a796d.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-156e7647.js"></script>
+        <script src="../toc-29f14ec0.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -394,7 +394,9 @@ other than <code>(way: inline / lang: sv)</code>.</p>
 for the enum (e.g. one-hot, gray).</p>
 <h3 id="invalid_factor"><a class="header" href="#invalid_factor">invalid_factor</a></h3>
 <p>This error is reported when a non-value symbol (e.g. a module name) is used as a factor
-in an expression.</p>
+in an expression.
+It is also reported when a reset value literal (<code>reset_active</code> / <code>reset_inactive</code>) is used
+where its polarity can’t be determined.</p>
 <h3 id="invalid_for_range"><a class="header" href="#invalid_for_range">invalid_for_range</a></h3>
 <p>This error is reported when the range of a <code>for</code> loop is invalid. The range must be
 written with <code>..</code> or <code>..=</code>; a bare expression is not a range. A range bound must not be
@@ -414,6 +416,9 @@ the target device initializes the variable at configuration time. Add
 <code>#[allow(initial_assign)]</code> to the declaration of the variable in that case, or
 initialize it by reset instead. A variable declared inside the <code>initial</code> block is a
 procedural local and is not reported.</p>
+<h3 id="invalid_inline_function"><a class="header" href="#invalid_inline_function">invalid_inline_function</a></h3>
+<p>This error is reported when a function with <a href="../05_language_reference/06_declaration/08_attribute.html#inline-attribute"><code>inline</code></a>
+attribute doesn’t satisfy the conditions to be inlined.</p>
 <h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
 <p>This error is reported when the <code>lsb</code> keyword appears in a context where the corresponding
 bit width cannot be determined.
@@ -510,6 +515,12 @@ itself lacks a default. Default parameters must be at the end of the list.</p>
 <p>This error is reported when an <code>always_ff</code> block has a reset signal but no <code>if_reset</code>
 statement.
 Add an <code>if_reset</code> block to describe the reset behavior.</p>
+<h3 id="missing_modport_dependency"><a class="header" href="#missing_modport_dependency">missing_modport_dependency</a></h3>
+<p>This error is reported when a function imported by a modport refers to an interface
+variable which is not exported by the modport, or assigns to an interface variable which
+is not exported as <code>output</code> or <code>inout</code>.
+Variables referred by interface functions called from the function are also checked.
+Export the variable by the modport with the required direction.</p>
 <h3 id="missing_reset_signal"><a class="header" href="#missing_reset_signal">missing_reset_signal</a></h3>
 <p>This error is reported when an <code>always_ff</code> block uses <code>if_reset</code> but no reset signal is
 available in the enclosing module.
@@ -532,6 +543,23 @@ If it is intentional, such as for true dual port SRAM inference on FPGA, add
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>This error is reported when a default clock or reset is specified more than once in the
 same module.</p>
+<h3 id="non_constant_interface_instance_select"><a class="header" href="#non_constant_interface_instance_select">non_constant_interface_instance_select</a></h3>
+<p>This error is reported when an interface instance is selected with a runtime index,
+for example <code>bus[i].value</code> or <code>bus[i].get()</code> where <code>i</code> is a signal. Interface instance
+indices must be elaboration-time constants (IEEE 1800-2023, Section 23.6). This applies
+to member reads, writes, method calls, and modport connections.</p>
+<p>Use a constant expression, such as a <code>const</code> or a generate-loop index, to select the
+instance. A procedural <code>for</code> loop index is not an elaboration-time constant. External
+SystemVerilog constants are also allowed, even when Veryl cannot evaluate their values
+locally.</p>
+<p>Dynamic indexing of data inside a statically selected interface is allowed. For
+example, <code>bus[0].data[i]</code> is valid when <code>data</code> is an array or a packed value and <code>i</code> is
+a runtime index.</p>
+<h3 id="non_constant_output_select"><a class="header" href="#non_constant_output_select">non_constant_output_select</a></h3>
+<p>This error is reported when a select in an output port connection is not constant,
+for example <code>o: bits[index]</code> with a runtime <code>index</code>. An output connection is a continuous
+assignment, so its packed selects must be constant. Use a constant index, or connect the
+port to a variable and select from that variable in an <code>always_comb</code> block.</p>
 <h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
 <p>This error is reported when the width of a <code>+:</code> / <code>-:</code> / <code>step</code> part select is not a
 constant. Use a constant expression for the width.</p>
@@ -747,11 +775,11 @@ Add the <code>_</code> prefix to its name to mark it as intentionally unused, or
         <script src="../searcher-09f2665d.js"></script>
 
         <script src="../clipboard-1626706a.min.js"></script>
-        <script src="../highlight-88633d6f.js"></script>
+        <script src="../highlight-c1a32737.js"></script>
         <script src="../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../mode-veryl-f5f6ed18.js"></script>
+        <script src="../mode-veryl-6129de4e.js"></script>
         <script src="../veryl-init-13e2a09c.js"></script>
         <script src="../theme/language-picker-32df9c32.js"></script>
 

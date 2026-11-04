@@ -133,10 +133,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-b3cb1f91.js";
+            window.path_to_searchindex_js = "../../searchindex-91984456.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-f6fb0cb4.js"></script>
+        <script src="../../toc-dc67cae0.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -342,6 +342,49 @@
     }
 }
 </code></pre>
+<h2 id="リセット値リテラル"><a class="header" href="#リセット値リテラル">リセット値リテラル</a></h2>
+<p><code>reset_active</code> と <code>reset_inactive</code> はリセットのアクティブ値と非アクティブ値を表すリテラルです。リセットの極性に依存せずにリセット値を記述するために使えます。実際の値は相手側のリセット型によって決まります。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>相手側の型</th><th><code>reset_active</code></th><th><code>reset_inactive</code></th></tr>
+</thead>
+<tbody>
+<tr><td><code>reset_async_high</code>, <code>reset_sync_high</code></td><td><code>1'b1</code></td><td><code>1'b0</code></td></tr>
+<tr><td><code>reset_async_low</code>, <code>reset_sync_low</code></td><td><code>1'b0</code></td><td><code>1'b1</code></td></tr>
+<tr><td><code>reset</code></td><td>ビルドオプションで指定</td><td>ビルドオプションで指定</td></tr>
+</tbody>
+</table>
+</div>
+<p>リセット値リテラルは、他の演算と組み合わせずに単体で (括弧で囲むのは可) 以下の場所でのみ使えます。</p>
+<ul>
+<li>インスタンスの入力ポートへの接続</li>
+<li>代入の右辺</li>
+<li>型を明示した <code>let</code> 宣言の初期値</li>
+<li>もう一方のオペランドが変数参照である <code>==</code> と <code>!=</code> のオペランド</li>
+</ul>
+<p>相手側はリセット型のキーワードで直接宣言されている必要があります。リセット型が型定義や型パラメータを通して与えられている場合は、極性を決定できないためリテラルを使えません。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_rst  : input  reset_async_low,
+    o_rst  : output reset_sync_high,
+    o_rst_n: output reset          ,
+    o_a    : output logic          ,
+) {
+    let rst: reset = reset_active;
+
+    assign o_rst   = reset_inactive;
+    assign o_rst_n = rst;
+    assign o_a     = i_rst == reset_active;
+
+    inst u: ModuleB (
+        i_rst: reset_inactive,
+    );
+}
+
+module ModuleB (
+    i_rst: input reset_async_high,
+) {}
+</code></pre>
 
                     </main>
 
@@ -395,11 +438,11 @@
         <script src="../../searcher-09f2665d.js"></script>
 
         <script src="../../clipboard-1626706a.min.js"></script>
-        <script src="../../highlight-88633d6f.js"></script>
+        <script src="../../highlight-c1a32737.js"></script>
         <script src="../../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../../mode-veryl-f5f6ed18.js"></script>
+        <script src="../../mode-veryl-6129de4e.js"></script>
         <script src="../../veryl-init-13e2a09c.js"></script>
         <script src="../../theme/language-picker-32df9c32.js"></script>
 

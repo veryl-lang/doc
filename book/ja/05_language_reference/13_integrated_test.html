@@ -133,10 +133,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-b3cb1f91.js";
+            window.path_to_searchindex_js = "../searchindex-91984456.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-f6fb0cb4.js"></script>
+        <script src="../toc-dc67cae0.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -303,6 +303,7 @@ module test_ignored {
 <li><code>$tb::reset_gen</code> — リセット信号生成器（オプションで <code>#(cycles: N)</code> パラメータを指定可能）</li>
 <li><code>$tb::file</code> — 出力ファイルを書き込むためのファイルハンドル</li>
 <li><code>$tb::random</code> — 乱数生成器（値の型をジェネリック引数として指定）</li>
+<li><code>$tb::queue</code> — キュー (要素の型と容量をジェネリック引数として指定)</li>
 </ul>
 <p>組み込みのコンポーネントに加えて、Rust で記述した検証コンポーネントを <code>$comp</code> 名前空間を通じて使用できます。<a href="./13_integrated_test/01_using_a_component.html">コンポーネントを使う</a> を参照してください。</p>
 <p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
@@ -564,6 +565,42 @@ module test_random_width {
 }
 </code></pre>
 <p><code>--seed</code> と <code>[test].seed</code> のどちらも指定しない場合、各生成器は実行ごとにランダムな基準シードから初期化されるため、実行を跨いだ再現性はありません。<code>--seed</code>、<code>[test].seed</code>、または <code>r.seed(...)</code> で明示的にシードを与えると、生成される系列が再現可能になります。他の <code>$tb::*</code> コンポーネントと同様に、<code>$tb::random</code> は <code>#[test]</code> モジュールの中でのみ使えます。</p>
+<h3 id="キュー"><a class="header" href="#キュー">キュー</a></h3>
+<p><code>$tb::queue</code> はネイティブテスト用のキューで、例えばスコアボードの期待値を保持するのに使えます。要素の型 <code>T</code> と容量 <code>N</code> はジェネリック引数として <code>$tb::queue::&lt;T, N&gt;</code> のように与えます。<code>T</code> には 4 値型、64 ビットより広い型、enum、struct/union、浮動小数点型を含む任意の固定幅の packed 型を指定できます。unpacked 配列と <code>string</code> は使えません。<code>N</code> は省略可能で、デフォルトは上限なしを意味する <code>0</code> です。</p>
+<p><code>var</code> で宣言し、<code>initial</code> ブロックの中で使います。</p>
+<ul>
+<li><code>q.push_back(value)</code> / <code>q.push_front(value)</code> — <code>value</code> を末尾 / 先頭に追加する。<code>value</code> は要素の型の幅で評価される</li>
+<li><code>q.pop_front()</code> / <code>q.pop_back()</code> — 先頭 / 末尾の要素を取り除いて返す</li>
+<li><code>q.drop_front()</code> / <code>q.drop_back()</code> — 先頭 / 末尾の要素を返さずに取り除く</li>
+<li><code>q.front()</code> / <code>q.back()</code> — 先頭 / 末尾の要素を取り除かずに返す</li>
+<li><code>q.clear()</code> — すべての要素を取り除く</li>
+<li><code>q.size()</code> — 要素数を返す</li>
+<li><code>q.is_empty()</code> — キューが空かどうかを返す</li>
+<li><code>q.is_full()</code> — キューが満杯かどうかを返す (上限なしのキューでは常に false)</li>
+</ul>
+<p>キューはテストモジュールの <code>initial</code> ブロック間で共有されるため、あるブロックで期待値を追加し、別のブロックでそれを取り出して確認できます。</p>
+<pre><code class="language-veryl playground">#[test(test_scoreboard)]
+module test_scoreboard {
+    inst clk: $tb::clock_gen;
+    var exp: $tb::queue::&lt;u8, 16&gt;;
+
+    initial {
+        for i in 0..4 {
+            exp.push_back(i);
+            clk.next();
+        }
+    }
+
+    initial {
+        clk.next(8);
+        for i in 0..4 {
+            $assert(exp.pop_front() == i);
+        }
+        $finish();
+    }
+}
+</code></pre>
+<p>空のキューを <code>pop_*</code> / <code>front</code> / <code>back</code> で読み出すと、要素の型が 4 値型なら X、2 値型なら 0 が返り、空のキューに対する <code>drop_*</code> は何もしません。満杯のキューに追加した値は破棄されます。いずれの場合もエラーにはなりません。</p>
 <h2 id="systemverilogテスト"><a class="header" href="#systemverilogテスト">SystemVerilogテスト</a></h2>
 <p>SystemVerilog テストは <code>inline</code> 指定子で記述することができます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
 <p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>
@@ -637,11 +674,11 @@ embed (cocotb) py{{{
         <script src="../searcher-09f2665d.js"></script>
 
         <script src="../clipboard-1626706a.min.js"></script>
-        <script src="../highlight-88633d6f.js"></script>
+        <script src="../highlight-c1a32737.js"></script>
         <script src="../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../mode-veryl-f5f6ed18.js"></script>
+        <script src="../mode-veryl-6129de4e.js"></script>
         <script src="../veryl-init-13e2a09c.js"></script>
         <script src="../theme/language-picker-32df9c32.js"></script>
 

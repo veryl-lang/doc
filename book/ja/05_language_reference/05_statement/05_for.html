@@ -133,10 +133,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-b3cb1f91.js";
+            window.path_to_searchindex_js = "../../searchindex-91984456.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-f6fb0cb4.js"></script>
+        <script src="../../toc-dc67cae0.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -304,6 +304,34 @@
     }
 }
 </code></pre>
+<p>ループ変数は繰り返しごとに 1 ずつ進みます。範囲の後に <code>step</code> キーワード、代入演算子、式を続けることでこれを変更できます。ループ変数は繰り返しごとにその演算子で更新されるため、<code>step += 2</code> なら 2 ずつ増え、<code>step *= 2</code> なら 2 倍になります。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        for i in 0..10 step += 2 {
+            a = i;
+        }
+
+        for i in 1..10 step *= 2 {
+            b = i;
+        }
+    }
+}
+</code></pre>
+<p><code>step</code> は <code>rev</code> と組み合わせることもできますが、その場合は <code>+=</code> のみ使えます。このときループ変数は指定した量ずつ減っていきます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+
+    always_comb {
+        for i in rev 0..10 step += 3 {
+            a = i;
+        }
+    }
+}
+</code></pre>
+<p>昇順のループでの <code>step += 0</code> や <code>step -= 1</code>、<code>rev</code> と組み合わせた <code>step *= 2</code> のように、範囲の終端に到達できない step はエラーになります。</p>
 
                     </main>
 
@@ -357,11 +385,11 @@
         <script src="../../searcher-09f2665d.js"></script>
 
         <script src="../../clipboard-1626706a.min.js"></script>
-        <script src="../../highlight-88633d6f.js"></script>
+        <script src="../../highlight-c1a32737.js"></script>
         <script src="../../book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../../mode-veryl-f5f6ed18.js"></script>
+        <script src="../../mode-veryl-6129de4e.js"></script>
         <script src="../../veryl-init-13e2a09c.js"></script>
         <script src="../../theme/language-picker-32df9c32.js"></script>
 

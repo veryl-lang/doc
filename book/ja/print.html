@@ -134,10 +134,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-b3cb1f91.js";
+            window.path_to_searchindex_js = "searchindex-91984456.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-f6fb0cb4.js"></script>
+        <script src="toc-dc67cae0.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -1700,6 +1700,49 @@ You can define `union` data types within module and package declarations but not
     }
 }
 </code></pre>
+<h2 id="リセット値リテラル"><a class="header" href="#リセット値リテラル">リセット値リテラル</a></h2>
+<p><code>reset_active</code> と <code>reset_inactive</code> はリセットのアクティブ値と非アクティブ値を表すリテラルです。リセットの極性に依存せずにリセット値を記述するために使えます。実際の値は相手側のリセット型によって決まります。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>相手側の型</th><th><code>reset_active</code></th><th><code>reset_inactive</code></th></tr>
+</thead>
+<tbody>
+<tr><td><code>reset_async_high</code>, <code>reset_sync_high</code></td><td><code>1'b1</code></td><td><code>1'b0</code></td></tr>
+<tr><td><code>reset_async_low</code>, <code>reset_sync_low</code></td><td><code>1'b0</code></td><td><code>1'b1</code></td></tr>
+<tr><td><code>reset</code></td><td>ビルドオプションで指定</td><td>ビルドオプションで指定</td></tr>
+</tbody>
+</table>
+</div>
+<p>リセット値リテラルは、他の演算と組み合わせずに単体で (括弧で囲むのは可) 以下の場所でのみ使えます。</p>
+<ul>
+<li>インスタンスの入力ポートへの接続</li>
+<li>代入の右辺</li>
+<li>型を明示した <code>let</code> 宣言の初期値</li>
+<li>もう一方のオペランドが変数参照である <code>==</code> と <code>!=</code> のオペランド</li>
+</ul>
+<p>相手側はリセット型のキーワードで直接宣言されている必要があります。リセット型が型定義や型パラメータを通して与えられている場合は、極性を決定できないためリテラルを使えません。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_rst  : input  reset_async_low,
+    o_rst  : output reset_sync_high,
+    o_rst_n: output reset          ,
+    o_a    : output logic          ,
+) {
+    let rst: reset = reset_active;
+
+    assign o_rst   = reset_inactive;
+    assign o_rst_n = rst;
+    assign o_a     = i_rst == reset_active;
+
+    inst u: ModuleB (
+        i_rst: reset_inactive,
+    );
+}
+
+module ModuleB (
+    i_rst: input reset_async_high,
+) {}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="式"><a class="header" href="#式">式</a></h1>
 <p>この章では式について説明します。式は変数や演算子、関数呼び出しなどを組み合わせたもので、評価して値を得ることができます。</p>
@@ -2115,6 +2158,34 @@ emit_cond_type = true
     }
 }
 </code></pre>
+<p>ループ変数は繰り返しごとに 1 ずつ進みます。範囲の後に <code>step</code> キーワード、代入演算子、式を続けることでこれを変更できます。ループ変数は繰り返しごとにその演算子で更新されるため、<code>step += 2</code> なら 2 ずつ増え、<code>step *= 2</code> なら 2 倍になります。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        for i in 0..10 step += 2 {
+            a = i;
+        }
+
+        for i in 1..10 step *= 2 {
+            b = i;
+        }
+    }
+}
+</code></pre>
+<p><code>step</code> は <code>rev</code> と組み合わせることもできますが、その場合は <code>+=</code> のみ使えます。このときループ変数は指定した量ずつ減っていきます。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+
+    always_comb {
+        for i in rev 0..10 step += 3 {
+            a = i;
+        }
+    }
+}
+</code></pre>
+<p>昇順のループでの <code>step += 0</code> や <code>step -= 1</code>、<code>rev</code> と組み合わせた <code>step *= 2</code> のように、範囲の終端に到達できない step はエラーになります。</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="return"><a class="header" href="#return">return</a></h1>
 <p><code>return</code> 文は関数からの戻りを示します。<code>return</code> キーワードの後の式は関数の戻り値です。</p>
@@ -2537,6 +2608,42 @@ module ModuleB {
     );
 }
 </code></pre>
+<h2 id="inline-アトリビュート"><a class="header" href="#inline-アトリビュート"><code>inline</code> アトリビュート</a></h2>
+<p>インターフェース内で宣言された関数に <code>inline</code> アトリビュートを付けると、生成される SystemVerilog では関数呼び出しがその式に置き換えられます。頻繁に実行される箇所での関数呼び出しは SystemVerilog シミュレータでのシミュレーションのボトルネックになることがあります。このアトリビュートはそのような場合に役立ちます。</p>
+<p><code>inline</code> アトリビュートを付けた関数は以下の条件を満たす必要があります。</p>
+<ul>
+<li>インターフェース内に直接宣言されている (generate ブロック内ではない)</li>
+<li>引数を持たない</li>
+<li>戻り値の型を持つ</li>
+<li>本体が単一の <code>return</code> 文である</li>
+<li>戻り値の型と式がインターフェース内で宣言された型・定数・パラメータを参照しない</li>
+<li>自身を呼び出さない</li>
+</ul>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var ready: logic;
+    var valid: logic;
+
+    #[inline]
+    function ack () -&gt; logic {
+        return ready &amp;&amp; valid;
+    }
+
+    modport master {
+        ready: input ,
+        valid: output,
+        ack  : import,
+    }
+}
+
+module ModuleA (
+    master_if: modport InterfaceA::master,
+) {
+    assign master_if.valid = 1;
+
+    let _ack: logic = master_if.ack();
+}
+</code></pre>
+<p>関数の戻り値としての意味を保つため、インライン化された式は、インターフェース用に生成されるパッケージで定義された戻り値の型にキャストされます。</p>
 <h2 id="align-アトリビュート"><a class="header" href="#align-アトリビュート"><code>align</code> アトリビュート</a></h2>
 <p><code>align</code> アトリビュートはフォーマッタの垂直方向の整列を制御することができます。<code>number</code> が <code>align</code> の引数として指定されたとき、全ての数値は整列されます。<code>identifier</code> も使用可能です。</p>
 <pre><code class="language-veryl playground">module ModuleA {
@@ -2619,6 +2726,15 @@ module ModuleB {
         if i != 0 :g {
             assign b[i - 1] = b[i];
         }
+    }
+}
+</code></pre>
+<p>generate <code>for</code> 宣言でも <code>for</code> 文と同様に <code>step</code> を使えます (<a href="#for">for</a> を参照)。</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+
+    for i in 0..10 step += 2 :label {
+        assign a[i] = i;
     }
 }
 </code></pre>
@@ -3133,6 +3249,17 @@ module ModuleB (
     );
 }
 </code></pre>
+<h2 id="マクロ参照"><a class="header" href="#マクロ参照">マクロ参照</a></h2>
+<p>SystemVerilog で <code>`define</code> により定義されたマクロは <code>$define</code> 名前空間を通して参照できます。<code>$define</code> 配下の参照はバッククォートを前置したマクロ参照として出力されます。例えば <code>$define::WIDTH</code> は <code>`WIDTH</code> として出力されます。<code>$sv</code> と同様に、残りのパスは <code>::</code> 区切りで出力されるため、パッケージ名に展開されるマクロを使ってそのメンバを参照できます。Veryl はマクロの存在や値を確認しません。</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_a: input logic&lt;$define::WIDTH&gt;,
+) {
+    const A: u32           = $define::A;
+    const B: u32           = $define::PKG::B;
+    var   c: $define::TYPE;
+    assign c = A + B;
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="可視性"><a class="header" href="#可視性">可視性</a></h1>
 <p>デフォルトではプロジェクトのトップレベルアイテム（モジュール、インターフェース、パッケージ）はプライベートです。プライベートとは他のプロジェクトから参照できないことを意味します。</p>
@@ -3230,6 +3357,7 @@ module test_ignored {
 <li><code>$tb::reset_gen</code> — リセット信号生成器（オプションで <code>#(cycles: N)</code> パラメータを指定可能）</li>
 <li><code>$tb::file</code> — 出力ファイルを書き込むためのファイルハンドル</li>
 <li><code>$tb::random</code> — 乱数生成器（値の型をジェネリック引数として指定）</li>
+<li><code>$tb::queue</code> — キュー (要素の型と容量をジェネリック引数として指定)</li>
 </ul>
 <p>組み込みのコンポーネントに加えて、Rust で記述した検証コンポーネントを <code>$comp</code> 名前空間を通じて使用できます。<a href="#コンポーネントを使う">コンポーネントを使う</a> を参照してください。</p>
 <p>また、以下のシステム関数が <code>initial</code> ブロック内で使用できます。</p>
@@ -3491,6 +3619,42 @@ module test_random_width {
 }
 </code></pre>
 <p><code>--seed</code> と <code>[test].seed</code> のどちらも指定しない場合、各生成器は実行ごとにランダムな基準シードから初期化されるため、実行を跨いだ再現性はありません。<code>--seed</code>、<code>[test].seed</code>、または <code>r.seed(...)</code> で明示的にシードを与えると、生成される系列が再現可能になります。他の <code>$tb::*</code> コンポーネントと同様に、<code>$tb::random</code> は <code>#[test]</code> モジュールの中でのみ使えます。</p>
+<h3 id="キュー"><a class="header" href="#キュー">キュー</a></h3>
+<p><code>$tb::queue</code> はネイティブテスト用のキューで、例えばスコアボードの期待値を保持するのに使えます。要素の型 <code>T</code> と容量 <code>N</code> はジェネリック引数として <code>$tb::queue::&lt;T, N&gt;</code> のように与えます。<code>T</code> には 4 値型、64 ビットより広い型、enum、struct/union、浮動小数点型を含む任意の固定幅の packed 型を指定できます。unpacked 配列と <code>string</code> は使えません。<code>N</code> は省略可能で、デフォルトは上限なしを意味する <code>0</code> です。</p>
+<p><code>var</code> で宣言し、<code>initial</code> ブロックの中で使います。</p>
+<ul>
+<li><code>q.push_back(value)</code> / <code>q.push_front(value)</code> — <code>value</code> を末尾 / 先頭に追加する。<code>value</code> は要素の型の幅で評価される</li>
+<li><code>q.pop_front()</code> / <code>q.pop_back()</code> — 先頭 / 末尾の要素を取り除いて返す</li>
+<li><code>q.drop_front()</code> / <code>q.drop_back()</code> — 先頭 / 末尾の要素を返さずに取り除く</li>
+<li><code>q.front()</code> / <code>q.back()</code> — 先頭 / 末尾の要素を取り除かずに返す</li>
+<li><code>q.clear()</code> — すべての要素を取り除く</li>
+<li><code>q.size()</code> — 要素数を返す</li>
+<li><code>q.is_empty()</code> — キューが空かどうかを返す</li>
+<li><code>q.is_full()</code> — キューが満杯かどうかを返す (上限なしのキューでは常に false)</li>
+</ul>
+<p>キューはテストモジュールの <code>initial</code> ブロック間で共有されるため、あるブロックで期待値を追加し、別のブロックでそれを取り出して確認できます。</p>
+<pre><code class="language-veryl playground">#[test(test_scoreboard)]
+module test_scoreboard {
+    inst clk: $tb::clock_gen;
+    var exp: $tb::queue::&lt;u8, 16&gt;;
+
+    initial {
+        for i in 0..4 {
+            exp.push_back(i);
+            clk.next();
+        }
+    }
+
+    initial {
+        clk.next(8);
+        for i in 0..4 {
+            $assert(exp.pop_front() == i);
+        }
+        $finish();
+    }
+}
+</code></pre>
+<p>空のキューを <code>pop_*</code> / <code>front</code> / <code>back</code> で読み出すと、要素の型が 4 値型なら X、2 値型なら 0 が返り、空のキューに対する <code>drop_*</code> は何もしません。満杯のキューに追加した値は破棄されます。いずれの場合もエラーにはなりません。</p>
 <h2 id="systemverilogテスト"><a class="header" href="#systemverilogテスト">SystemVerilogテスト</a></h2>
 <p>SystemVerilog テストは <code>inline</code> 指定子で記述することができます。ブロックのトップレベルモジュールはテスト名と同じでなければなりません。</p>
 <p><code>$info</code>、<code>$warning</code>、<code>$error</code>、<code>$fatal</code> システム関数によるメッセージは Veryl コンパイラにより実行ログとして表示されます。<code>$error</code> と <code>$fatal</code> の呼び出しはテストの失敗として扱われます。</p>
@@ -4855,6 +5019,7 @@ veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0", propertie
 <li><a href="#the-test-section"><code>[test]</code></a> — テスト設定</li>
 <li><a href="#the-publish-section"><code>[publish]</code></a> — 公開設定</li>
 <li><a href="#the-synth-section"><code>[synth]</code></a> — 論理合成設定</li>
+<li><a href="#the-sv-filesets-section"><code>[[sv.filesets]]</code></a> — SystemVerilog ファイル</li>
 <li><a href="#the-properties-section"><code>[properties]</code></a> — プロジェクトプロパティ</li>
 <li><a href="#the-dependencies-section"><code>[dependencies]</code></a> — ライブラリの依存関係</li>
 <li><a href="#the-components-section"><code>[[components]]</code></a> — 検証コンポーネントパッケージ</li>
@@ -4908,6 +5073,8 @@ categories = ["interconnect", "verification"]
 <p><code>[publish]</code> セクションはプロジェクト公開の設定です。詳細は<a href="#publish">こちら</a>。</p>
 <h2 id="the-synth-section"><a class="header" href="#the-synth-section"><code>[synth]</code> セクション</a></h2>
 <p><code>[synth]</code> セクションはシンセサイザの設定です。詳細は<a href="#synth">こちら</a>。</p>
+<h2 id="the-sv-filesets-section"><a class="header" href="#the-sv-filesets-section"><code>[[sv.filesets]]</code> エントリ</a></h2>
+<p><code>[[sv.filesets]]</code> エントリはプロジェクトと一緒に管理する IP などの SystemVerilog ファイルを指定します。詳細は<a href="#sv">こちら</a>。</p>
 <h2 id="the-properties-section"><a class="header" href="#the-properties-section"><code>[properties]</code> セクション</a></h2>
 <p><code>[properties]</code> セクションはプロジェクトプロパティを含みます。プロジェクトプロパティは、そのプロジェクトのソースコードから <code>$prop</code> 名前空間を通して参照できるコンパイル時定数です。</p>
 <p>プロパティ名はソースコード中で識別子として参照されるため、Veryl の有効な識別子である必要があります。プロパティの値は整数または真偽値です。プロパティの型は与えた値によって決まり、ソースコード中では整数のプロパティは <code>i64</code> 型、真偽値のプロパティは <code>bbool</code> 型になります。</p>
@@ -4917,7 +5084,7 @@ ENABLE_DEBUG = false
 </code></pre>
 <p>ここで定義した値はプロパティの既定値です。この値は、このプロジェクトに依存する側のプロジェクトから上書きできます。ソースコード中での使い方は<a href="#プロジェクトプロパティ">プロジェクトプロパティ</a>を、上書きについては<a href="#project-property-override">依存関係</a>を参照してください。</p>
 <h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section"><code>[dependencies]</code> セクション</a></h2>
-<p><code>[dependencies]</code> セクションはライブラリの依存関係です。詳細は<a href="#依存関係">こちら</a>。</p>
+<p><code>[dependencies]</code> セクションはライブラリの依存関係です。詳細は<a href="#依存関係-1">こちら</a>。</p>
 <h2 id="the-components-section"><a class="header" href="#the-components-section"><code>[[components]]</code> エントリ</a></h2>
 <p><code>[[components]]</code> エントリは Rust で書かれた検証コンポーネントの cargo パッケージを登録します。詳細は<a href="#コンポーネントを書く">こちら</a>。</p>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -5462,7 +5629,77 @@ timing_paths = 1
 </div>
 <p>Veryl はこれらの PDK の Liberty ソース、回路図、レイアウトを再配布していません。参考データとして、ごく少数のセル単位の面積・遅延・漏れ電力・エネルギーの値のみを利用しています。</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h1>
+<h1 id="sv"><a class="header" href="#sv">SV</a></h1>
+<p><code>[[sv.filesets]]</code> エントリは Veryl プロジェクトと一緒に管理する IP などの SystemVerilog ファイルを指定します。指定したファイルとインクルードディレクトリはファイルリストに追加されます。</p>
+<pre><code class="language-toml">[[sv.filesets]]
+root         = "ip/foo"
+enable_if    = "!for_asic &amp;&amp; width == 32"
+files        = ["rtl/foo_pkg.sv", "rtl/foo.sv"]
+include_dirs = ["include"]
+</code></pre>
+<p><code>[[sv.filesets]]</code> を繰り返すことで複数のファイルセットを指定できます。</p>
+<h2 id="設定-5"><a class="header" href="#設定-5">設定</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>必須</th><th>説明</th></tr>
+</thead>
+<tbody>
+<tr><td>root</td><td>文字列</td><td>いいえ</td><td><code>files</code> と <code>include_dirs</code> の相対パスの基準ディレクトリ</td></tr>
+<tr><td>files</td><td>文字列の配列</td><td>はい</td><td>SystemVerilog ファイル</td></tr>
+<tr><td>include_dirs</td><td>文字列の配列</td><td>いいえ</td><td>インクルードディレクトリ</td></tr>
+<tr><td>enable_if</td><td>文字列</td><td>いいえ</td><td>プロジェクトプロパティに対する<a href="#condition-expression">条件式</a>。評価結果が真の場合のみファイルセットが有効になります。省略した場合は常に有効です。</td></tr>
+</tbody>
+</table>
+</div>
+<p><code>root</code> を省略した場合、相対パスはプロジェクトのルートディレクトリ (<code>Veryl.toml</code> があるディレクトリ) からの相対パスになります。絶対パスでは <code>root</code> は無視されます。</p>
+<h2 id="condition-expression"><a class="header" href="#condition-expression">条件式</a></h2>
+<p><code>enable_if</code> フィールドには<a href="#the-properties-section">プロジェクトプロパティ</a>に対する条件式を指定します。以下のオペランドを使えます。</p>
+<ul>
+<li>プロパティ名</li>
+<li>Veryl 構文の幅指定なし数値 (例: <code>32</code>, <code>'b1010</code>, <code>'hff</code>)</li>
+<li>括弧で囲んだ式</li>
+</ul>
+<p>以下の演算子を使えます。すべての演算子は左結合です。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>優先順位</th><th>演算子</th><th>オペランドの型</th></tr>
+</thead>
+<tbody>
+<tr><td>高い</td><td><code>!</code></td><td>bool</td></tr>
+<tr><td></td><td><code>&lt;:</code> <code>&gt;:</code> <code>&lt;=</code> <code>&gt;=</code></td><td>int</td></tr>
+<tr><td></td><td><code>==</code> <code>!=</code></td><td>両辺が同じ型</td></tr>
+<tr><td></td><td><code>&amp;&amp;</code></td><td>bool</td></tr>
+<tr><td>低い</td><td><code>||</code></td><td>bool</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-toml">[properties]
+for_asic = false
+width    = 32
+
+[[sv.filesets]]
+enable_if = "for_asic"
+files     = ["ip/asic/foo_asic.sv"]
+
+[[sv.filesets]]
+enable_if = "!for_asic &amp;&amp; (width == 32 || width == 64)"
+files     = ["ip/fpga/foo_fpga.sv"]
+</code></pre>
+<p>条件式の構文エラーは <code>Veryl.toml</code> の読み込み時に報告されます。未知のプロパティや型の不一致は式の評価時に報告されます。</p>
+<h2 id="ファイルリスト"><a class="header" href="#ファイルリスト">ファイルリスト</a></h2>
+<p>有効なファイルセットのファイルとインクルードディレクトリは、生成されたファイルより前にファイルリストへ追加されます。インクルードディレクトリは <code>veryl test</code> が実行するシミュレータにも渡されます。</p>
+<h2 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h2>
+<p><a href="#依存関係-1">依存関係</a>のファイルセットもファイルリストに追加されます。依存関係の <code>enable_if</code> は、<a href="#project-property-override">プロジェクトプロパティの上書き</a>を反映した依存関係側のプロパティ値で評価されます。</p>
+<ul>
+<li>Git 依存関係: ファイルとインクルードディレクトリは <code>dependencies</code> ディレクトリにコピーされ、コピー先のパスが参照されます。</li>
+<li>パス依存関係: ファイルとインクルードディレクトリは直接参照されます。</li>
+</ul>
+<h2 id="publish-1"><a class="header" href="#publish-1">Publish</a></h2>
+<p>公開するプロジェクトの <code>[[sv.filesets]]</code> のパスは <code>..</code> を含まない相対パスでなければなりません。<code>enable_if</code> に関わらず、いずれかのファイルセットに絶対パスや <code>..</code> を含むパスがあると <code>veryl publish</code> はエラーを報告します。</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="依存関係-1"><a class="header" href="#依存関係-1">依存関係</a></h1>
 <p>他の Veryl プロジェクトへの依存関係をプロジェクトに追加したい場合、<code>Veryl.toml</code> に <code>[dependencies]</code> セクションを追加します。エントリの左辺は依存関係のプロジェクト名、右辺はソースパスとバージョンです。<code>github</code> はGitHub上のリポジトリを参照する糖衣構文です。代わりに <code>git</code> を用いてURL全体を指定することもできます。</p>
 <pre><code class="language-toml">[dependencies]
 veryl_sample = {github = "veryl-lang/veryl_sample", version = "0.1.0"}
@@ -5611,7 +5848,7 @@ $ git push
 <p>登録はコミットの push を行いません。公開されたバージョンは、そのリビジョンが push され、レジストリがリポジトリをクロールした後に見えるようになります。</p>
 <p>レジストリが認識しない<a href="#the-categories-field">カテゴリ</a>が指定されている場合、警告として報告されます。</p>
 <p>使用するレジストリは <code>VERYL_REGISTRY_URL</code> 環境変数で変更できます。</p>
-<h3 id="設定-5"><a class="header" href="#設定-5">設定</a></h3>
+<h3 id="設定-6"><a class="header" href="#設定-6">設定</a></h3>
 <p>全設定の説明は<a href="#publish">こちら</a>。</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="ディレクトリ構成"><a class="header" href="#ディレクトリ構成">ディレクトリ構成</a></h1>
@@ -6481,6 +6718,8 @@ ResetAsyncHighTerm    : &lt;INITIAL, Generic                                    
 ResetAsyncLowTerm     : &lt;INITIAL, Generic                                             &gt;'reset_async_low'                                                                     : Token; // Keyword: Type
 ResetSyncHighTerm     : &lt;INITIAL, Generic                                             &gt;'reset_sync_high'                                                                     : Token; // Keyword: Type
 ResetSyncLowTerm      : &lt;INITIAL, Generic                                             &gt;'reset_sync_low'                                                                      : Token; // Keyword: Type
+ResetActiveTerm       : &lt;INITIAL, Generic                                             &gt;'reset_active'                                                                        : Token; // Keyword: Literal
+ResetInactiveTerm     : &lt;INITIAL, Generic                                             &gt;'reset_inactive'                                                                      : Token; // Keyword: Literal
 ReturnTerm            : &lt;INITIAL, Generic                                             &gt;'return'                                                                              : Token; // Keyword: Statement
 RevTerm               : &lt;INITIAL, Generic                                             &gt;'rev'                                                                                 : Token; // Keyword: Repeat
 BreakTerm             : &lt;INITIAL, Generic                                             &gt;'break'                                                                               : Token; // Keyword: Statement
@@ -6632,6 +6871,8 @@ ResetAsyncHighToken: ResetAsyncHighTerm: Token Comments;
 ResetAsyncLowToken : ResetAsyncLowTerm : Token Comments;
 ResetSyncHighToken : ResetSyncHighTerm : Token Comments;
 ResetSyncLowToken  : ResetSyncLowTerm  : Token Comments;
+ResetActiveToken   : ResetActiveTerm   : Token Comments;
+ResetInactiveToken : ResetInactiveTerm : Token Comments;
 ReturnToken        : ReturnTerm        : Token Comments;
 RevToken           : RevTerm           : Token Comments;
 BreakToken         : BreakTerm         : Token Comments;
@@ -6790,6 +7031,8 @@ ResetAsyncHigh: ResetAsyncHighToken: VerylToken;
 ResetAsyncLow : ResetAsyncLowToken : VerylToken;
 ResetSyncHigh : ResetSyncHighToken : VerylToken;
 ResetSyncLow  : ResetSyncLowToken  : VerylToken;
+ResetActive   : ResetActiveToken   : VerylToken;
+ResetInactive : ResetInactiveToken : VerylToken;
 Return        : ReturnToken        : VerylToken;
 Rev           : RevToken           : VerylToken;
 Same          : SameToken          : VerylToken;
@@ -6859,6 +7102,7 @@ Expression02Op: UnaryOperator | Operator06 | Operator05 | Operator03 | Operator0
 
 Factor: Number
       | BooleanLiteral
+      | ResetValueLiteral
       | IdentifierFactor
       | LParen Expression RParen
       | LBrace ConcatenationList RBrace
@@ -6874,6 +7118,8 @@ Factor: Number
       ;
 
 BooleanLiteral: True | False;
+
+ResetValueLiteral: ResetActive | ResetInactive;
 
 IdentifierFactor: ExpressionIdentifier [ FunctionCall | StructConstructor ];
 
@@ -7491,7 +7737,7 @@ Veryl: Start { DescriptionGroup };
 <h3 id="invalid_enum_variant"><a class="header" href="#invalid_enum_variant">invalid_enum_variant</a></h3>
 <p>このエラーは、enum バリアントの値がその enum に指定されたエンコーディング（one-hot、gray など）と一致しない場合に報告されます。</p>
 <h3 id="invalid_factor"><a class="header" href="#invalid_factor">invalid_factor</a></h3>
-<p>このエラーは、値ではないシンボル（例：モジュール名）が式の因子として使われた場合に報告されます。</p>
+<p>このエラーは、値ではないシンボル（例：モジュール名）が式の因子として使われた場合に報告されます。また、リセット値リテラル (<code>reset_active</code> / <code>reset_inactive</code>) が極性を決定できない場所で使われた場合にも報告されます。</p>
 <h3 id="invalid_for_range"><a class="header" href="#invalid_for_range">invalid_for_range</a></h3>
 <p>このエラーは、<code>for</code> ループの範囲が不正な場合に報告されます。範囲は <code>..</code> または <code>..=</code> で書く必要があり、単なる式は範囲になりません。また範囲の境界は符号なしとして評価されるため、負の値にはできません。</p>
 <h3 id="invalid_for_step"><a class="header" href="#invalid_for_step">invalid_for_step</a></h3>
@@ -7500,6 +7746,8 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、参照先がインポート可能でない（private、またはインポート対象として無効）な場合に報告されます。</p>
 <h3 id="invalid_initial_assign"><a class="header" href="#invalid_initial_assign">invalid_initial_assign</a></h3>
 <p>このエラーは、代入文または <code>$readmemh</code> のような関数呼び出しの出力引数を介して、<code>initial</code> ブロックで変数に代入された場合に報告されます。ASIC の合成ツールは <code>initial</code> 文を無視するため、これはターゲットデバイスがコンフィギュレーション時にその変数を初期化する場合にのみ有効です。その場合は変数の宣言に <code>#[allow(initial_assign)]</code> を付けるか、代わりにリセットで初期化してください。<code>initial</code> ブロックの内部で宣言された変数は手続き的なローカル変数であり、報告されません。</p>
+<h3 id="invalid_inline_function"><a class="header" href="#invalid_inline_function">invalid_inline_function</a></h3>
+<p>このエラーは、<a href="#inline-attribute"><code>inline</code></a> アトリビュートを付けた関数がインライン化の条件を満たさない場合に報告されます。</p>
 <h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
 <p>このエラーは、対応するビット幅を特定できない位置で <code>lsb</code> キーワードが使われた場合に報告されます。<code>lsb</code> を具体的なインデックスに置き換えてください。</p>
 <h3 id="invalid_mixin"><a class="header" href="#invalid_mixin">invalid_mixin</a></h3>
@@ -7560,6 +7808,8 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、デフォルト値を持つジェネリックパラメータの後に続くパラメータがデフォルト値を持たない場合に報告されます。デフォルトパラメータはリストの末尾に置く必要があります。</p>
 <h3 id="missing_if_reset"><a class="header" href="#missing_if_reset">missing_if_reset</a></h3>
 <p>このエラーは、<code>always_ff</code> ブロックがリセット信号を持つにもかかわらず <code>if_reset</code> 文が無い場合に報告されます。リセット動作を記述する <code>if_reset</code> ブロックを追加してください。</p>
+<h3 id="missing_modport_dependency"><a class="header" href="#missing_modport_dependency">missing_modport_dependency</a></h3>
+<p>このエラーは、modport でインポートされた関数が、その modport でエクスポートされていないインターフェース変数を参照した場合、または <code>output</code> か <code>inout</code> としてエクスポートされていないインターフェース変数に代入した場合に報告されます。その関数から呼び出されるインターフェース関数が参照する変数もチェックされます。必要な方向で modport から変数をエクスポートしてください。</p>
 <h3 id="missing_reset_signal"><a class="header" href="#missing_reset_signal">missing_reset_signal</a></h3>
 <p>このエラーは、<code>always_ff</code> ブロックで <code>if_reset</code> を使用しているにもかかわらず、囲っているモジュールにリセット信号が無い場合に報告されます。<code>reset</code> ポートを追加するか、リセット信号を接続してください。</p>
 <h3 id="missing_tb_port"><a class="header" href="#missing_tb_port">missing_tb_port</a></h3>
@@ -7572,6 +7822,12 @@ Veryl: Start { DescriptionGroup };
 <p>このエラーは、単一の信号が複数のプロシージャルブロックや <code>assign</code> 文から代入される場合に報告されます。各信号は単一の駆動元から駆動してください。FPGA における真のデュアルポート SRAM の推論など意図的な場合は、その信号の宣言に <code>#[allow(multiple_assign)]</code> を付けてください。</p>
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>このエラーは、同じモジュール内でデフォルトのクロックまたはリセットが複数回指定された場合に報告されます。</p>
+<h3 id="non_constant_interface_instance_select"><a class="header" href="#non_constant_interface_instance_select">non_constant_interface_instance_select</a></h3>
+<p>このエラーは、interface インスタンスを実行時の添字で選択した場合に報告されます。例えば、<code>i</code> が信号である場合の <code>bus[i].value</code> や <code>bus[i].get()</code> が該当します。interface インスタンスの添字はエラボレーション時の定数でなければなりません（IEEE 1800-2023、23.6 節）。これはメンバーの読み書き、メソッド呼び出し、modport 接続に適用されます。</p>
+<p>インスタンスの選択には、<code>const</code> や generate ループの添字などの定数式を使ってください。プロシージャルな <code>for</code> ループの添字は、エラボレーション時の定数ではありません。外部 SystemVerilog の定数も、Veryl がその値をローカルで評価できない場合を含めて使用できます。</p>
+<p>静的に選択した interface の内部データに対しては、動的な添字を使用できます。例えば、<code>data</code> が配列またはパックされた値で、<code>i</code> が実行時の添字である場合、<code>bus[0].data[i]</code> は有効です。</p>
+<h3 id="non_constant_output_select"><a class="header" href="#non_constant_output_select">non_constant_output_select</a></h3>
+<p>このエラーは、出力ポート接続での選択が定数でない場合に報告されます。例えば、実行時に決まる <code>index</code> を使った <code>o: bits[index]</code> がこれに該当します。出力ポート接続は継続代入なので、packed な選択は定数でなければなりません。定数のインデックスを使うか、ポートを変数に接続して <code>always_comb</code> ブロック内でその変数から選択してください。</p>
 <h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
 <p>このエラーは、<code>+:</code> / <code>-:</code> / <code>step</code> の部分選択の幅が定数でない場合に報告されます。幅には定数式を使ってください。</p>
 <h3 id="non_portable_dependency"><a class="header" href="#non_portable_dependency">non_portable_dependency</a></h3>
@@ -7713,11 +7969,11 @@ Veryl: Start { DescriptionGroup };
         <script src="searcher-09f2665d.js"></script>
 
         <script src="clipboard-1626706a.min.js"></script>
-        <script src="highlight-88633d6f.js"></script>
+        <script src="highlight-c1a32737.js"></script>
         <script src="book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="mode-veryl-f5f6ed18.js"></script>
+        <script src="mode-veryl-6129de4e.js"></script>
         <script src="veryl-init-13e2a09c.js"></script>
         <script src="theme/language-picker-32df9c32.js"></script>
 

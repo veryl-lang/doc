@@ -119,6 +119,7 @@ https://doc.veryl-lang.org/book/06_development_environment/01_project_configurat
 https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/04_test.html
 https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/05_publish.html
 https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/06_synth.html
+https://doc.veryl-lang.org/book/06_development_environment/01_project_configuration/07_sv.html
 https://doc.veryl-lang.org/book/ja/03_getting_started/01_installation.html
 https://doc.veryl-lang.org/book/ja/03_getting_started/02_hello_world.html
 https://doc.veryl-lang.org/book/ja/04_code_examples/01_module.html
@@ -223,3 +224,4 @@ https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configu
 https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/04_test.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/05_publish.html
 https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/06_synth.html
+https://doc.veryl-lang.org/book/ja/06_development_environment/01_project_configuration/07_sv.html

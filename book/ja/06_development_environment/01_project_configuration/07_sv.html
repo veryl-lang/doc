@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>組み合わせ回路 - The Veryl Hardware Description Language</title>
+        <title>SV - The Veryl Hardware Description Language</title>
 
 
         <!-- Custom HTML head -->
@@ -28,9 +28,9 @@
                     let base = "https://doc.veryl-lang.org/book";
                     let canonical_href;
                     if (lang == "en") {
-                        canonical_href = `${base}/05_language_reference/06_declaration/04_combinational.md`;
+                        canonical_href = `${base}/06_development_environment/01_project_configuration/07_sv.md`;
                     } else {
-                        canonical_href = `${base}/${lang}/05_language_reference/06_declaration/04_combinational.md`;
+                        canonical_href = `${base}/${lang}/06_development_environment/01_project_configuration/07_sv.md`;
                     }
                     canonical_href = canonical_href.slice(0, -"md".length) + "html";
                     if (canonical_href.endsWith("/index.html")) {
@@ -77,7 +77,7 @@
         <!-- Open Graph -->
         <meta property="og:type" content="article" />
         <meta property="og:site_name" content="The Veryl Hardware Description Language" />
-        <meta property="og:title" content="組み合わせ回路 - The Veryl Hardware Description Language" />
+        <meta property="og:title" content="SV - The Veryl Hardware Description Language" />
         <meta property="og:description" content="Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment." />
         <meta property="og:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
         <meta property="og:locale" content="ja_JP" />
@@ -85,7 +85,7 @@
 
         <!-- Twitter Card -->
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="組み合わせ回路 - The Veryl Hardware Description Language" />
+        <meta name="twitter:title" content="SV - The Veryl Hardware Description Language" />
         <meta name="twitter:description" content="Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment." />
         <meta name="twitter:image" content="https://github.com/veryl-lang/veryl/raw/master/support/logo/veryl_ogp.png" />
         
@@ -94,7 +94,7 @@
         {
             "@context": "https://schema.org",
             "@type": "TechArticle",
-            "headline": "組み合わせ回路 - The Veryl Hardware Description Language",
+            "headline": "SV - The Veryl Hardware Description Language",
             "description": "Veryl is a modern hardware description language designed as a SystemVerilog alternative. This is the official reference book covering language features, code examples, and the development environment.",
             "inLanguage": "ja",
             "isPartOf": {
@@ -272,37 +272,85 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="組み合わせ回路"><a class="header" href="#組み合わせ回路">組み合わせ回路</a></h1>
-<p><code>always_comb</code> 宣言で代入される変数は組み合わせ回路を表します。組み合わせ変数はブロッキング代入セマンティクスを使用し、入力が変化したときに再評価されます。評価の詳細については<a href="../18_execution_model.html">実行モデル</a>を参照してください。</p>
-<pre><code class="language-veryl playground">module ModuleA {
-    let a: logic&lt;10&gt; = 1;
-    var b: logic&lt;10&gt;;
-
-    always_comb {
-        b = a + 1;
-    }
-}
+                        <h1 id="sv"><a class="header" href="#sv">SV</a></h1>
+<p><code>[[sv.filesets]]</code> エントリは Veryl プロジェクトと一緒に管理する IP などの SystemVerilog ファイルを指定します。指定したファイルとインクルードディレクトリはファイルリストに追加されます。</p>
+<pre><code class="language-toml">[[sv.filesets]]
+root         = "ip/foo"
+enable_if    = "!for_asic &amp;&amp; width == 32"
+files        = ["rtl/foo_pkg.sv", "rtl/foo.sv"]
+include_dirs = ["include"]
 </code></pre>
-<p><code>always_comb</code> 宣言の左辺には連結も使用することができます。</p>
-<pre><code class="language-veryl playground">module ModuleA {
-    var a: logic&lt;10&gt;;
-    var b: logic&lt;10&gt;;
+<p><code>[[sv.filesets]]</code> を繰り返すことで複数のファイルセットを指定できます。</p>
+<h2 id="設定"><a class="header" href="#設定">設定</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>設定</th><th>設定値</th><th>必須</th><th>説明</th></tr>
+</thead>
+<tbody>
+<tr><td>root</td><td>文字列</td><td>いいえ</td><td><code>files</code> と <code>include_dirs</code> の相対パスの基準ディレクトリ</td></tr>
+<tr><td>files</td><td>文字列の配列</td><td>はい</td><td>SystemVerilog ファイル</td></tr>
+<tr><td>include_dirs</td><td>文字列の配列</td><td>いいえ</td><td>インクルードディレクトリ</td></tr>
+<tr><td>enable_if</td><td>文字列</td><td>いいえ</td><td>プロジェクトプロパティに対する<a href="#condition-expression">条件式</a>。評価結果が真の場合のみファイルセットが有効になります。省略した場合は常に有効です。</td></tr>
+</tbody>
+</table>
+</div>
+<p><code>root</code> を省略した場合、相対パスはプロジェクトのルートディレクトリ (<code>Veryl.toml</code> があるディレクトリ) からの相対パスになります。絶対パスでは <code>root</code> は無視されます。</p>
+<h2 id="condition-expression"><a class="header" href="#condition-expression">条件式</a></h2>
+<p><code>enable_if</code> フィールドには<a href="../01_project_configuration.html#the-properties-section">プロジェクトプロパティ</a>に対する条件式を指定します。以下のオペランドを使えます。</p>
+<ul>
+<li>プロパティ名</li>
+<li>Veryl 構文の幅指定なし数値 (例: <code>32</code>, <code>'b1010</code>, <code>'hff</code>)</li>
+<li>括弧で囲んだ式</li>
+</ul>
+<p>以下の演算子を使えます。すべての演算子は左結合です。</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>優先順位</th><th>演算子</th><th>オペランドの型</th></tr>
+</thead>
+<tbody>
+<tr><td>高い</td><td><code>!</code></td><td>bool</td></tr>
+<tr><td></td><td><code>&lt;:</code> <code>&gt;:</code> <code>&lt;=</code> <code>&gt;=</code></td><td>int</td></tr>
+<tr><td></td><td><code>==</code> <code>!=</code></td><td>両辺が同じ型</td></tr>
+<tr><td></td><td><code>&amp;&amp;</code></td><td>bool</td></tr>
+<tr><td>低い</td><td><code>||</code></td><td>bool</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-toml">[properties]
+for_asic = false
+width    = 32
 
-    always_comb {
-        {a, b} = 1;
-    }
-}
+[[sv.filesets]]
+enable_if = "for_asic"
+files     = ["ip/asic/foo_asic.sv"]
+
+[[sv.filesets]]
+enable_if = "!for_asic &amp;&amp; (width == 32 || width == 64)"
+files     = ["ip/fpga/foo_fpga.sv"]
 </code></pre>
+<p>条件式の構文エラーは <code>Veryl.toml</code> の読み込み時に報告されます。未知のプロパティや型の不一致は式の評価時に報告されます。</p>
+<h2 id="ファイルリスト"><a class="header" href="#ファイルリスト">ファイルリスト</a></h2>
+<p>有効なファイルセットのファイルとインクルードディレクトリは、生成されたファイルより前にファイルリストへ追加されます。インクルードディレクトリは <code>veryl test</code> が実行するシミュレータにも渡されます。</p>
+<h2 id="依存関係"><a class="header" href="#依存関係">依存関係</a></h2>
+<p><a href="../02_dependencies.html">依存関係</a>のファイルセットもファイルリストに追加されます。依存関係の <code>enable_if</code> は、<a href="../02_dependencies.html#project-property-override">プロジェクトプロパティの上書き</a>を反映した依存関係側のプロパティ値で評価されます。</p>
+<ul>
+<li>Git 依存関係: ファイルとインクルードディレクトリは <code>dependencies</code> ディレクトリにコピーされ、コピー先のパスが参照されます。</li>
+<li>パス依存関係: ファイルとインクルードディレクトリは直接参照されます。</li>
+</ul>
+<h2 id="publish"><a class="header" href="#publish">Publish</a></h2>
+<p>公開するプロジェクトの <code>[[sv.filesets]]</code> のパスは <code>..</code> を含まない相対パスでなければなりません。<code>enable_if</code> に関わらず、いずれかのファイルセットに絶対パスや <code>..</code> を含むパスがあると <code>veryl publish</code> はエラーを報告します。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../05_language_reference/06_declaration/03_register.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../06_development_environment/01_project_configuration/06_synth.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../../05_language_reference/06_declaration/05_assign.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../06_development_environment/02_dependencies.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -312,11 +360,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../05_language_reference/06_declaration/03_register.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../06_development_environment/01_project_configuration/06_synth.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../../05_language_reference/06_declaration/05_assign.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../06_development_environment/02_dependencies.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
@@ -351,7 +399,7 @@
 
         <!-- Custom JS scripts -->
         <script src="../../mode-veryl-6129de4e.js"></script>
-        <script src="../../veryl-init-9e565c5e.js"></script>
+        <script src="../../veryl-init-13e2a09c.js"></script>
         <script src="../../theme/language-picker-32df9c32.js"></script>
 
 

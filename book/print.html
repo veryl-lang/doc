@@ -134,10 +134,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-c7e502be.js";
+            window.path_to_searchindex_js = "searchindex-f31a796d.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-156e7647.js"></script>
+        <script src="toc-29f14ec0.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -1794,6 +1794,52 @@ For such case, <code>default</code> type modifier can be used to specify the def
     }
 }
 </code></pre>
+<h2 id="reset-value-literal"><a class="header" href="#reset-value-literal">Reset Value Literal</a></h2>
+<p><code>reset_active</code> and <code>reset_inactive</code> are literals to represent the active and inactive values of a reset.
+They can be used to describe reset values without depending on reset polarity.
+The actual value is determined by the reset type of the counterpart.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Counterpart type</th><th><code>reset_active</code></th><th><code>reset_inactive</code></th></tr>
+</thead>
+<tbody>
+<tr><td><code>reset_async_high</code>, <code>reset_sync_high</code></td><td><code>1'b1</code></td><td><code>1'b0</code></td></tr>
+<tr><td><code>reset_async_low</code>, <code>reset_sync_low</code></td><td><code>1'b0</code></td><td><code>1'b1</code></td></tr>
+<tr><td><code>reset</code></td><td>specified by the build option</td><td>specified by the build option</td></tr>
+</tbody>
+</table>
+</div>
+<p>A reset value literal can be used only as a standalone factor (parentheses are allowed) in the following places:</p>
+<ul>
+<li>connection to an input port of an instance</li>
+<li>right-hand side of an assignment</li>
+<li>initial value of <code>let</code> declaration with an explicit type</li>
+<li>operand of <code>==</code> and <code>!=</code> whose other operand is a variable reference</li>
+</ul>
+<p>The counterpart must be declared with a reset type keyword directly.
+If the reset type is given through a type definition or a type parameter, the literal can’t be used because its polarity can’t be determined.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_rst  : input  reset_async_low,
+    o_rst  : output reset_sync_high,
+    o_rst_n: output reset          ,
+    o_a    : output logic          ,
+) {
+    let rst: reset = reset_active;
+
+    assign o_rst   = reset_inactive;
+    assign o_rst_n = rst;
+    assign o_a     = i_rst == reset_active;
+
+    inst u: ModuleB (
+        i_rst: reset_inactive,
+    );
+}
+
+module ModuleB (
+    i_rst: input reset_async_high,
+) {}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="expression"><a class="header" href="#expression">Expression</a></h1>
 <p>In this chapter, we’ll discuss about expression.
@@ -2250,6 +2296,37 @@ and <a href="#range">range</a> is placed after it.</p>
     }
 }
 </code></pre>
+<p>The loop variable advances by 1 on each iteration.
+You can change this by putting <code>step</code> keyword, an assignment operator, and an expression after the range.
+The loop variable is updated with the operator on each iteration, so <code>step += 2</code> counts by 2 and <code>step *= 2</code> doubles it.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+    var b: logic&lt;10&gt;;
+
+    always_comb {
+        for i in 0..10 step += 2 {
+            a = i;
+        }
+
+        for i in 1..10 step *= 2 {
+            b = i;
+        }
+    }
+}
+</code></pre>
+<p><code>step</code> can also be used with <code>rev</code>, but only with <code>+=</code>.
+In this case the loop variable goes down by the given amount.</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+
+    always_comb {
+        for i in rev 0..10 step += 3 {
+            a = i;
+        }
+    }
+}
+</code></pre>
+<p>A step which can never reach the end of the range is an error, such as <code>step += 0</code>, <code>step -= 1</code> in a forward loop, or <code>step *= 2</code> together with <code>rev</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="return"><a class="header" href="#return">Return</a></h1>
 <p><code>return</code> statement represents return from function.
@@ -2723,6 +2800,43 @@ module ModuleB {
     );
 }
 </code></pre>
+<h2 id="inline-attribute"><a class="header" href="#inline-attribute"><code>inline</code> Attribute</a></h2>
+<p>If <code>inline</code> attribute is set to a function declared in an interface, calls of the function are replaced with its expression in the generated SystemVerilog.
+Function calls in hot paths can be a bottleneck of simulation on SystemVerilog simulators. This attribute is helpful for such case.</p>
+<p>A function with <code>inline</code> attribute must satisfy the following conditions:</p>
+<ul>
+<li>It is declared directly in an interface (not in a generate block).</li>
+<li>It has no arguments.</li>
+<li>It has a return type.</li>
+<li>Its body is a single <code>return</code> statement.</li>
+<li>Its return type and expression don’t refer to types, consts and params declared in the interface.</li>
+<li>It doesn’t call itself.</li>
+</ul>
+<pre><code class="language-veryl playground">interface InterfaceA {
+    var ready: logic;
+    var valid: logic;
+
+    #[inline]
+    function ack () -&gt; logic {
+        return ready &amp;&amp; valid;
+    }
+
+    modport master {
+        ready: input ,
+        valid: output,
+        ack  : import,
+    }
+}
+
+module ModuleA (
+    master_if: modport InterfaceA::master,
+) {
+    assign master_if.valid = 1;
+
+    let _ack: logic = master_if.ack();
+}
+</code></pre>
+<p>The inlined expression is cast to the return type defined in a package which is generated for the interface, to keep the semantics of the function return.</p>
 <h2 id="align-attribute"><a class="header" href="#align-attribute"><code>align</code> Attribute</a></h2>
 <p><code>align</code> attribute is used to control vertical alignment by formatter.
 If <code>number</code> is specified as an argument of <code>align</code> attribute, all numbers are aligned.
@@ -2809,6 +2923,15 @@ Label which is shown by <code>:</code> is required to idenfity the generated dec
         if i != 0 :g {
             assign b[i - 1] = b[i];
         }
+    }
+}
+</code></pre>
+<p>The generate <code>for</code> declaration also accepts <code>step</code> as the <code>for</code> statement does (see <a href="#for">For</a>).</p>
+<pre><code class="language-veryl playground">module ModuleA {
+    var a: logic&lt;10&gt;;
+
+    for i in 0..10 step += 2 :label {
+        assign a[i] = i;
     }
 }
 </code></pre>
@@ -3356,6 +3479,21 @@ It depeneds on implementation (e.g. simulator, synthesizer) whether each symbols
     );
 }
 </code></pre>
+<h2 id="macro-reference"><a class="header" href="#macro-reference">Macro Reference</a></h2>
+<p>Macros defined by <code>`define</code> in SystemVerilog can be referred through <code>$define</code> namespace.
+A reference under <code>$define</code> is emitted as a macro reference with a backquote prefix.
+For example, <code>$define::WIDTH</code> is emitted as <code>`WIDTH</code>.
+As with <code>$sv</code>, the rest of the path is emitted with <code>::</code> separators, so a macro expanding to a package name can be used to refer its members.
+Veryl doesn’t check the existence and the value of the macros.</p>
+<pre><code class="language-veryl playground">module ModuleA (
+    i_a: input logic&lt;$define::WIDTH&gt;,
+) {
+    const A: u32           = $define::A;
+    const B: u32           = $define::PKG::B;
+    var   c: $define::TYPE;
+    assign c = A + B;
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="visibility"><a class="header" href="#visibility">Visibility</a></h1>
 <p>By default, all top level items of a project (module, interface and package) are private.
@@ -3469,6 +3607,7 @@ A module with <code>#[test(test_name)]</code> attribute (without <code>embed</co
 <li><code>$tb::reset_gen</code> — reset signal generator (with optional <code>#(cycles: N)</code> parameter)</li>
 <li><code>$tb::file</code> — file handle for writing output files</li>
 <li><code>$tb::random</code> — random-number generator (with the value type as a generic argument)</li>
+<li><code>$tb::queue</code> — queue (with the element type and the capacity as generic arguments)</li>
 </ul>
 <p>In addition to the built-in components, verification components written in Rust can be used through the <code>$comp</code> namespace.
 See <a href="#using-a-component">Using a Component</a>.</p>
@@ -3748,6 +3887,48 @@ module test_random_width {
 <p>When neither <code>--seed</code> nor <code>[test].seed</code> is specified, each generator is seeded from a run-wide random base seed, so a run is not reproducible across invocations.
 Passing an explicit seed (via <code>--seed</code>, <code>[test].seed</code>, or <code>r.seed(...)</code>) makes the generated sequence reproducible.
 Like other <code>$tb::*</code> components, <code>$tb::random</code> can only be used inside a <code>#[test]</code> module.</p>
+<h3 id="queue"><a class="header" href="#queue">Queue</a></h3>
+<p><code>$tb::queue</code> is a queue for native tests, e.g. to hold the expected values of a scoreboard.
+The element type <code>T</code> and the capacity <code>N</code> are given as generic arguments: <code>$tb::queue::&lt;T, N&gt;</code>.
+<code>T</code> can be any fixed-width packed type, including 4-state types, types wider than 64 bits, enums, structs/unions and floating-point types.
+Unpacked arrays and <code>string</code> are rejected.
+<code>N</code> is optional and defaults to <code>0</code>, which means unbounded.</p>
+<p>It is declared with <code>var</code>, then used inside an <code>initial</code> block:</p>
+<ul>
+<li><code>q.push_back(value)</code> / <code>q.push_front(value)</code> — add <code>value</code> at the back / front; <code>value</code> is evaluated in the width of the element type</li>
+<li><code>q.pop_front()</code> / <code>q.pop_back()</code> — remove and return the front / back element</li>
+<li><code>q.drop_front()</code> / <code>q.drop_back()</code> — remove the front / back element without returning it</li>
+<li><code>q.front()</code> / <code>q.back()</code> — return the front / back element without removing it</li>
+<li><code>q.clear()</code> — remove all elements</li>
+<li><code>q.size()</code> — return the number of elements</li>
+<li><code>q.is_empty()</code> — return whether the queue is empty</li>
+<li><code>q.is_full()</code> — return whether the queue is full (always false for an unbounded queue)</li>
+</ul>
+<p>A queue is shared by the <code>initial</code> blocks of the test module, so one block can push expected values while another pops and checks them:</p>
+<pre><code class="language-veryl playground">#[test(test_scoreboard)]
+module test_scoreboard {
+    inst clk: $tb::clock_gen;
+    var exp: $tb::queue::&lt;u8, 16&gt;;
+
+    initial {
+        for i in 0..4 {
+            exp.push_back(i);
+            clk.next();
+        }
+    }
+
+    initial {
+        clk.next(8);
+        for i in 0..4 {
+            $assert(exp.pop_front() == i);
+        }
+        $finish();
+    }
+}
+</code></pre>
+<p>Reading an empty queue with <code>pop_*</code> / <code>front</code> / <code>back</code> returns X for a 4-state element type and 0 for a 2-state element type, and <code>drop_*</code> on an empty queue does nothing.
+Pushing to a full queue drops the pushed value.
+Neither case is reported as an error.</p>
 <h2 id="systemverilog-test"><a class="header" href="#systemverilog-test">SystemVerilog test</a></h2>
 <p>SystemVerilog test can be described with <code>inline</code> specifier.
 The top level module of the block must have the same name as the test name.</p>
@@ -5217,6 +5398,7 @@ The properties which are not specified here keep the default values defined in <
 <li><a href="#the-test-section"><code>[test]</code></a> — Test settings.</li>
 <li><a href="#the-publish-section"><code>[publish]</code></a> — Publish settings.</li>
 <li><a href="#the-synth-section"><code>[synth]</code></a> — Synthesis settings.</li>
+<li><a href="#the-sv-filesets-section"><code>[[sv.filesets]]</code></a> — SystemVerilog files.</li>
 <li><a href="#the-properties-section"><code>[properties]</code></a> — Project properties.</li>
 <li><a href="#the-dependencies-section"><code>[dependencies]</code></a> — Library dependencies.</li>
 <li><a href="#the-components-section"><code>[[components]]</code></a> — Verification component packages.</li>
@@ -5283,6 +5465,9 @@ Available configurations is <a href="#publish">here</a>.</p>
 <h2 id="the-synth-section"><a class="header" href="#the-synth-section">The <code>[synth]</code> section</a></h2>
 <p>The <code>[synth]</code> section contains the configurations of the synthesizer.
 Available configurations is <a href="#synth">here</a>.</p>
+<h2 id="the-sv-filesets-section"><a class="header" href="#the-sv-filesets-section">The <code>[[sv.filesets]]</code> entries</a></h2>
+<p>A <code>[[sv.filesets]]</code> entry specifies SystemVerilog files, such as IPs, which are managed together with the project.
+Available configurations is <a href="#sv">here</a>.</p>
 <h2 id="the-properties-section"><a class="header" href="#the-properties-section">The <code>[properties]</code> section</a></h2>
 <p>The <code>[properties]</code> section contains project properties.
 A project property is a compile time constant which can be referenced from the source code of the project through the <code>$prop</code> namespace.</p>
@@ -5298,7 +5483,7 @@ It can be overridden by the project which depends on this project.
 Please see <a href="#project-property">Project Property</a> for the usage in the source code, and <a href="#project-property-override">Dependencies</a> for overriding.</p>
 <h2 id="the-dependencies-section"><a class="header" href="#the-dependencies-section">The <code>[dependencies]</code> section</a></h2>
 <p>The <code>[dependencies]</code> section contains library dependencies.
-Available configurations is <a href="#dependencies">here</a>.</p>
+Available configurations is <a href="#dependencies-1">here</a>.</p>
 <h2 id="the-components-section"><a class="header" href="#the-components-section">The <code>[[components]]</code> entries</a></h2>
 <p>A <code>[[components]]</code> entry registers a cargo package of verification components written in Rust.
 Available configurations is <a href="#writing-a-component">here</a>.</p>
@@ -5897,7 +6082,86 @@ than signoff-grade accuracy. Drive strength 1 cells are used throughout.</p>
 only a small number of cell-level area / delay / leakage / energy figures are used as
 reference data.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h1>
+<h1 id="sv"><a class="header" href="#sv">SV</a></h1>
+<p><code>[[sv.filesets]]</code> entries specify SystemVerilog files, such as IPs, which are managed together with a Veryl project.
+The specified files and include directories are added to the filelist.</p>
+<pre><code class="language-toml">[[sv.filesets]]
+root         = "ip/foo"
+enable_if    = "!for_asic &amp;&amp; width == 32"
+files        = ["rtl/foo_pkg.sv", "rtl/foo.sv"]
+include_dirs = ["include"]
+</code></pre>
+<p>Multiple filesets can be specified by repeating <code>[[sv.filesets]]</code>.</p>
+<h2 id="available-configurations-5"><a class="header" href="#available-configurations-5">Available configurations</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Configuration</th><th>Value</th><th>Required</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>root</td><td>string</td><td>no</td><td>Base directory of relative paths in <code>files</code> and <code>include_dirs</code></td></tr>
+<tr><td>files</td><td>array of string</td><td>yes</td><td>SystemVerilog files</td></tr>
+<tr><td>include_dirs</td><td>array of string</td><td>no</td><td>Include directories</td></tr>
+<tr><td>enable_if</td><td>string</td><td>no</td><td><a href="#condition-expression">Condition expression</a> on project properties. The fileset is enabled only if it is evaluated to true. If omitted, the fileset is always enabled.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Relative paths are relative to the project root directory (the directory containing <code>Veryl.toml</code>) if <code>root</code> is omitted.
+An absolute path ignores <code>root</code>.</p>
+<h2 id="condition-expression"><a class="header" href="#condition-expression">Condition expression</a></h2>
+<p>The <code>enable_if</code> field takes a condition expression on <a href="#the-properties-section">project properties</a>.
+The following operands can be used:</p>
+<ul>
+<li>Property names</li>
+<li>Unsized numbers in Veryl syntax (e.g. <code>32</code>, <code>'b1010</code>, <code>'hff</code>)</li>
+<li>Parenthesized expressions</li>
+</ul>
+<p>The following operators can be used.
+All operators are left-associative.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Precedence</th><th>Operator</th><th>Operand type</th></tr>
+</thead>
+<tbody>
+<tr><td>Highest</td><td><code>!</code></td><td>bool</td></tr>
+<tr><td></td><td><code>&lt;:</code> <code>&gt;:</code> <code>&lt;=</code> <code>&gt;=</code></td><td>int</td></tr>
+<tr><td></td><td><code>==</code> <code>!=</code></td><td>both of the same type</td></tr>
+<tr><td></td><td><code>&amp;&amp;</code></td><td>bool</td></tr>
+<tr><td>Lowest</td><td><code>||</code></td><td>bool</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-toml">[properties]
+for_asic = false
+width    = 32
+
+[[sv.filesets]]
+enable_if = "for_asic"
+files     = ["ip/asic/foo_asic.sv"]
+
+[[sv.filesets]]
+enable_if = "!for_asic &amp;&amp; (width == 32 || width == 64)"
+files     = ["ip/fpga/foo_fpga.sv"]
+</code></pre>
+<p>Syntax errors of the condition expression are reported when <code>Veryl.toml</code> is loaded.
+Unknown properties and type mismatches are reported when the expression is evaluated.</p>
+<h2 id="filelist"><a class="header" href="#filelist">Filelist</a></h2>
+<p>Files and include directories of the enabled filesets are added to the filelist before the generated files.
+Include directories are also passed to the simulators run by <code>veryl test</code>.</p>
+<h2 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h2>
+<p>Filesets of <a href="#dependencies-1">dependencies</a> are also added to the filelist.
+<code>enable_if</code> of a dependency is evaluated with the property values of the dependency,
+which reflect <a href="#project-property-override">project property override</a>.</p>
+<ul>
+<li>Git dependencies: files and include directories are copied into the <code>dependencies</code> directory, and the copied paths are referred.</li>
+<li>Path dependencies: files and include directories are referred directly.</li>
+</ul>
+<h2 id="publish-1"><a class="header" href="#publish-1">Publish</a></h2>
+<p>Paths in <code>[[sv.filesets]]</code> of a published project must be relative paths which don’t contain <code>..</code>.
+<code>veryl publish</code> reports an error if an absolute path or a path containing <code>..</code> is found in any fileset, regardless of <code>enable_if</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="dependencies-1"><a class="header" href="#dependencies-1">Dependencies</a></h1>
 <p>If you want to add other Veryl projects to dependencies of your project, you can add them to <code>[dependencies]</code> section in <code>Veryl.toml</code>.
 The left hand side of entry is the project name of the dependency, and the right hand side is the source and version.
 <code>github</code> is a syntax sugar to refer a repository on GitHub. Instead of it, <code>git</code> with a full URL can be used.</p>
@@ -7038,6 +7302,8 @@ ResetAsyncHighTerm    : &lt;INITIAL, Generic                                    
 ResetAsyncLowTerm     : &lt;INITIAL, Generic                                             &gt;'reset_async_low'                                                                     : Token; // Keyword: Type
 ResetSyncHighTerm     : &lt;INITIAL, Generic                                             &gt;'reset_sync_high'                                                                     : Token; // Keyword: Type
 ResetSyncLowTerm      : &lt;INITIAL, Generic                                             &gt;'reset_sync_low'                                                                      : Token; // Keyword: Type
+ResetActiveTerm       : &lt;INITIAL, Generic                                             &gt;'reset_active'                                                                        : Token; // Keyword: Literal
+ResetInactiveTerm     : &lt;INITIAL, Generic                                             &gt;'reset_inactive'                                                                      : Token; // Keyword: Literal
 ReturnTerm            : &lt;INITIAL, Generic                                             &gt;'return'                                                                              : Token; // Keyword: Statement
 RevTerm               : &lt;INITIAL, Generic                                             &gt;'rev'                                                                                 : Token; // Keyword: Repeat
 BreakTerm             : &lt;INITIAL, Generic                                             &gt;'break'                                                                               : Token; // Keyword: Statement
@@ -7189,6 +7455,8 @@ ResetAsyncHighToken: ResetAsyncHighTerm: Token Comments;
 ResetAsyncLowToken : ResetAsyncLowTerm : Token Comments;
 ResetSyncHighToken : ResetSyncHighTerm : Token Comments;
 ResetSyncLowToken  : ResetSyncLowTerm  : Token Comments;
+ResetActiveToken   : ResetActiveTerm   : Token Comments;
+ResetInactiveToken : ResetInactiveTerm : Token Comments;
 ReturnToken        : ReturnTerm        : Token Comments;
 RevToken           : RevTerm           : Token Comments;
 BreakToken         : BreakTerm         : Token Comments;
@@ -7347,6 +7615,8 @@ ResetAsyncHigh: ResetAsyncHighToken: VerylToken;
 ResetAsyncLow : ResetAsyncLowToken : VerylToken;
 ResetSyncHigh : ResetSyncHighToken : VerylToken;
 ResetSyncLow  : ResetSyncLowToken  : VerylToken;
+ResetActive   : ResetActiveToken   : VerylToken;
+ResetInactive : ResetInactiveToken : VerylToken;
 Return        : ReturnToken        : VerylToken;
 Rev           : RevToken           : VerylToken;
 Same          : SameToken          : VerylToken;
@@ -7416,6 +7686,7 @@ Expression02Op: UnaryOperator | Operator06 | Operator05 | Operator03 | Operator0
 
 Factor: Number
       | BooleanLiteral
+      | ResetValueLiteral
       | IdentifierFactor
       | LParen Expression RParen
       | LBrace ConcatenationList RBrace
@@ -7431,6 +7702,8 @@ Factor: Number
       ;
 
 BooleanLiteral: True | False;
+
+ResetValueLiteral: ResetActive | ResetInactive;
 
 IdentifierFactor: ExpressionIdentifier [ FunctionCall | StructConstructor ];
 
@@ -8104,7 +8377,9 @@ other than <code>(way: inline / lang: sv)</code>.</p>
 for the enum (e.g. one-hot, gray).</p>
 <h3 id="invalid_factor"><a class="header" href="#invalid_factor">invalid_factor</a></h3>
 <p>This error is reported when a non-value symbol (e.g. a module name) is used as a factor
-in an expression.</p>
+in an expression.
+It is also reported when a reset value literal (<code>reset_active</code> / <code>reset_inactive</code>) is used
+where its polarity can’t be determined.</p>
 <h3 id="invalid_for_range"><a class="header" href="#invalid_for_range">invalid_for_range</a></h3>
 <p>This error is reported when the range of a <code>for</code> loop is invalid. The range must be
 written with <code>..</code> or <code>..=</code>; a bare expression is not a range. A range bound must not be
@@ -8124,6 +8399,9 @@ the target device initializes the variable at configuration time. Add
 <code>#[allow(initial_assign)]</code> to the declaration of the variable in that case, or
 initialize it by reset instead. A variable declared inside the <code>initial</code> block is a
 procedural local and is not reported.</p>
+<h3 id="invalid_inline_function"><a class="header" href="#invalid_inline_function">invalid_inline_function</a></h3>
+<p>This error is reported when a function with <a href="#inline-attribute"><code>inline</code></a>
+attribute doesn’t satisfy the conditions to be inlined.</p>
 <h3 id="invalid_lsb"><a class="header" href="#invalid_lsb">invalid_lsb</a></h3>
 <p>This error is reported when the <code>lsb</code> keyword appears in a context where the corresponding
 bit width cannot be determined.
@@ -8220,6 +8498,12 @@ itself lacks a default. Default parameters must be at the end of the list.</p>
 <p>This error is reported when an <code>always_ff</code> block has a reset signal but no <code>if_reset</code>
 statement.
 Add an <code>if_reset</code> block to describe the reset behavior.</p>
+<h3 id="missing_modport_dependency"><a class="header" href="#missing_modport_dependency">missing_modport_dependency</a></h3>
+<p>This error is reported when a function imported by a modport refers to an interface
+variable which is not exported by the modport, or assigns to an interface variable which
+is not exported as <code>output</code> or <code>inout</code>.
+Variables referred by interface functions called from the function are also checked.
+Export the variable by the modport with the required direction.</p>
 <h3 id="missing_reset_signal"><a class="header" href="#missing_reset_signal">missing_reset_signal</a></h3>
 <p>This error is reported when an <code>always_ff</code> block uses <code>if_reset</code> but no reset signal is
 available in the enclosing module.
@@ -8242,6 +8526,23 @@ If it is intentional, such as for true dual port SRAM inference on FPGA, add
 <h3 id="multiple_default"><a class="header" href="#multiple_default">multiple_default</a></h3>
 <p>This error is reported when a default clock or reset is specified more than once in the
 same module.</p>
+<h3 id="non_constant_interface_instance_select"><a class="header" href="#non_constant_interface_instance_select">non_constant_interface_instance_select</a></h3>
+<p>This error is reported when an interface instance is selected with a runtime index,
+for example <code>bus[i].value</code> or <code>bus[i].get()</code> where <code>i</code> is a signal. Interface instance
+indices must be elaboration-time constants (IEEE 1800-2023, Section 23.6). This applies
+to member reads, writes, method calls, and modport connections.</p>
+<p>Use a constant expression, such as a <code>const</code> or a generate-loop index, to select the
+instance. A procedural <code>for</code> loop index is not an elaboration-time constant. External
+SystemVerilog constants are also allowed, even when Veryl cannot evaluate their values
+locally.</p>
+<p>Dynamic indexing of data inside a statically selected interface is allowed. For
+example, <code>bus[0].data[i]</code> is valid when <code>data</code> is an array or a packed value and <code>i</code> is
+a runtime index.</p>
+<h3 id="non_constant_output_select"><a class="header" href="#non_constant_output_select">non_constant_output_select</a></h3>
+<p>This error is reported when a select in an output port connection is not constant,
+for example <code>o: bits[index]</code> with a runtime <code>index</code>. An output connection is a continuous
+assignment, so its packed selects must be constant. Use a constant index, or connect the
+port to a variable and select from that variable in an <code>always_comb</code> block.</p>
 <h3 id="non_constant_select_width"><a class="header" href="#non_constant_select_width">non_constant_select_width</a></h3>
 <p>This error is reported when the width of a <code>+:</code> / <code>-:</code> / <code>step</code> part select is not a
 constant. Use a constant expression for the width.</p>
@@ -8451,11 +8752,11 @@ Add the <code>_</code> prefix to its name to mark it as intentionally unused, or
         <script src="searcher-09f2665d.js"></script>
 
         <script src="clipboard-1626706a.min.js"></script>
-        <script src="highlight-88633d6f.js"></script>
+        <script src="highlight-c1a32737.js"></script>
         <script src="book-45fd71ce.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="mode-veryl-f5f6ed18.js"></script>
+        <script src="mode-veryl-6129de4e.js"></script>
         <script src="veryl-init-13e2a09c.js"></script>
         <script src="theme/language-picker-32df9c32.js"></script>
 
