@@ -28,6 +28,12 @@ requires a named identifier.
 This error is reported when a non-function symbol is called as if it were a function.
 Remove the call, or replace the symbol with an actual function.
 
+### clock_reset_union_member
+
+This error is reported when a union member is clock/reset-typed, or is a struct which has
+clock/reset members. Another member of the union could reinterpret the clock/reset as a
+value of another type. Move the clock/reset out of the union.
+
 ### combinational_loop
 
 This error is reported when a combinational loop is detected, where the value of a
@@ -112,6 +118,8 @@ This error is reported when a value which is not clock/reset-typed is connected 
 clock/reset port, or vice versa. Clock-ness and reset-ness are conferred only at a
 declaration, so the value should be bound to a clock/reset-typed signal in the parent
 (e.g. `let g: '_ clock = expr;`), and that signal should be connected.
+A port of a struct which has clock/reset members accepts only a value of the same struct
+type, so a value of another type should be cast to the struct type explicitly.
 
 ### include_failure
 
