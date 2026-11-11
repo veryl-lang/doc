@@ -403,6 +403,16 @@ Add the required port connection at instantiation.
 This error is reported when an `inout` port is declared without the `tri` type modifier.
 Add the `tri` modifier.
 
+### mixed_clock_reset_struct_member
+
+This error is reported when a struct which has clock/reset members, nested structs
+included, has a member of another type. Members of different clock/reset kinds, such as
+`clock` and `clock_posedge`, or `clock` and `reset`, are also reported, while members of
+the same kind with different widths, such as `clock` and `clock<2>`, are allowed.
+This ensures that a bit select or a part select of the struct keeps the clock/reset kind.
+Make all members of the struct the same kind of clock/reset, or move the other members out
+of the struct.
+
 ### mixed_function_argument
 
 This error is reported when both positional arguments and named arguments are used in
