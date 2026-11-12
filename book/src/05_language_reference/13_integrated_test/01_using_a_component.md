@@ -137,6 +137,12 @@ Method arguments are positional; named arguments are not supported.
 
 Methods are not limited to the `var` form: an `inst` component takes zero-time calls too (e.g. `iss.load("test.elf");`).
 
+Some methods take a reference to a clock, a reset, a signal or a modport instead of a value, telling the component which signals to work on (e.g. `rsp.attach(bus.responder);`, like handing a virtual interface to a UVM agent).
+A clock or a reset passed this way drives the component like a connected one; a component taking all its clocks so is instantiated without a clock connection (`inst cnt: $comp::edge_counter;`).
+Pass the variable or the modport itself, without an expression or a select; the component then reads and drives it like a connected port.
+As with port connections, a variable may be driven through one reference only.
+See [Reference arguments](./02_writing_a_component.md#reference-arguments) for the details.
+
 ## Random seed
 
 A component that uses randomization derives it from a deterministic per-instance seed, so a run can be reproduced from its base seed.
