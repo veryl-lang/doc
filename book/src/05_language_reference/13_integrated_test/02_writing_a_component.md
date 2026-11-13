@@ -74,13 +74,13 @@ veryl_component_export!("my_checker" => ReqAckChecker);
 `#[derive(Component)]` classifies the struct fields:
 
 * Fields typed `InputPort` / `OutputPort` become data ports. Their width is taken from the connected signal — a component that constrains its widths checks them itself in `on_build` from `port.width()`. The port name defaults to the field name; `#[port(name = "...")]` overrides it.
-* Fields typed `ClockPort` / `ResetPort` become clock and reset ports (always 1 bit). They must be connected with a `clock`/`reset` typed expression, and only they fire the `on_clock`/`on_reset` hooks.
+* Fields typed `ClockPort` / `ResetPort` become clock and reset ports (always 1 bit). They must be connected with a `clock`/`reset` typed expression, and only they fire the `on_clock`/`on_reset` hooks — besides clocks and resets passed to a method as [references](#reference-arguments), which fire them too.
 * Fields with `#[param]` become elaboration-time parameters. Supported types are integers, `bool`, `String` and `Value`; an `Option` of those marks the parameter as omittable. `#[param(name = "LIMIT")]` overrides the Veryl-side name.
 * All other fields are plain state, initialized with `Default`.
 
 Every declared port must be connected at the instantiation site; a missing connection is an analysis-time error.
 
-A component with a `ClockPort` field is a `clocked` component, instantiated with `inst`; `method_only` components are declared with `var`. The optional `#[component(kind = ...)]` attribute states the shape explicitly and must agree with the fields: a `clocked` declaration without a `ClockPort` field, or a clock/reset port on a `method_only` component, is a compile error.
+A component with a `ClockPort` field is a `clocked` component, instantiated with `inst`; `method_only` components are declared with `var`. The optional `#[component(kind = ...)]` attribute states the shape explicitly and must agree with the fields: a clock/reset port on a `method_only` component is a compile error. A `clocked` component may instead take all its clocks through a method's `ClockPort` argument, so it then declares `kind = clocked` without a `ClockPort` field; with neither a `ClockPort` field nor such a method, it is a compile error.
 Doc comments on the struct, ports, parameters and methods surface in `veryl doc` and in editor hovers.
 
 `#[component_impl]` turns the reserved function names `on_build`, `on_init`, `on_reset`, `on_clock` and `on_finish` into simulation hooks, and every other function into a testbench method.
@@ -159,8 +159,8 @@ All hooks are optional and take `&mut self, ctx: &mut SimCtx` (or `&mut BuildCtx
 
 * `on_build` — called once per instance after ports and parameters are resolved
 * `on_init` — called once at time 0 before `initial` blocks run; output writes become initial values
-* `on_reset` — called on reset assertion of a connected `ResetPort`
-* `on_clock` — called on each edge of a connected `ClockPort`
+* `on_reset` — called on the events of a connected `ResetPort`, or of a reset passed by [reference](#reference-arguments): each clock edge while `rst.assert()` holds it (in place of `on_clock`), and the assertion of a reset the design produces
+* `on_clock` — called on each edge of a connected `ClockPort`, or of a clock passed by [reference](#reference-arguments)
 * `on_finish` — called when the test ends (normally or via `finish`/`fail`)
 
 `SimCtx` provides the host services available inside hooks and methods:
@@ -218,7 +218,7 @@ impl Golden {
 }
 ```
 
-Supported argument types are `&str`, `String`, integers, `bool` and `Value`; supported return types are `()`, integers, `bool` and `Value`.
+Supported argument types are `&str`, `String`, integers, `bool`, `Value`, and the [reference](#reference-arguments) types `ClockPort`, `ResetPort`, `InputPort`, `OutputPort` and `ModportRef`; supported return types are `()`, integers, `bool` and `Value`.
 
 A `Value` **argument** carries whatever width the call-site expression has, so it needs no declaration. A `Value` **return** value must declare its width with `#[ret_width(...)]` (integer return types imply their own width); the width expression may be an integer, a parameter name, an interface constant qualified by an interface port (`axi.DATA_WIDTH_BYTES`), or arithmetic over them:
 
@@ -263,6 +263,166 @@ A `Value` is created by `Value::from_u64(v, width)` or `Value::from_bits(...)`, 
 * `as_slice()` — all bits as 64-bit words, least significant word first; use it to read a value wider than 64 bits
 * `mask_xz()` — the X/Z mask in the same word layout as `as_slice()`; `has_x()`, `has_z()` and `has_unknown()` test it
 
+## Reference arguments
+
+A method can take a reference to a clock, a reset, a signal or a modport instead of a value, so that the testbench decides which signals the component works on — like a virtual interface handed to a UVM agent.
+The component keeps the reference and reads and writes through it in later hooks, exactly as through a connected port: reads see the pre-edge value, and writes commit together with flip-flops.
+
+```rust,noplayground
+#[derive(Component)]
+#[component(kind = clocked)]
+pub struct Responder {
+    clk: ClockPort,
+    bus: Option<ModportRef>,
+    count: Option<OutputPort>,
+    requests: u64,
+}
+
+#[component_impl]
+impl Responder {
+    /// Answers requests on the given modport.
+    fn attach(&mut self, _ctx: &mut SimCtx, bus: ModportRef) -> Result<()> {
+        self.bus = Some(bus);
+        Ok(())
+    }
+
+    /// Counts the requests in the given variable.
+    fn count_into(&mut self, _ctx: &mut SimCtx, count: OutputPort) -> Result<()> {
+        self.count = Some(count);
+        Ok(())
+    }
+
+    fn on_clock(&mut self, ctx: &mut SimCtx) -> Result<()> {
+        if let Some(bus) = &self.bus {
+            let req = ctx.read_u64(bus.input("req")?);
+            ctx.write_u64(bus.output("ack")?, req);
+            self.requests += req;
+        }
+        if let Some(count) = self.count {
+            ctx.write_u64(count, self.requests);
+        }
+        Ok(())
+    }
+}
+```
+
+```veryl
+#[test(test_responder)]
+module test_responder {
+    inst clk: $tb::clock_gen;
+    inst bus: ReqAckIf;
+    var  cnt: logic<8>;
+
+    inst dut: Requester ( clk, bus: bus.requester );
+    inst rsp: $comp::responder ( clk );
+
+    initial {
+        rsp.attach(bus.responder);
+        rsp.count_into(cnt);
+        clk.next(16);
+        $finish();
+    }
+}
+```
+
+The argument type selects what may be passed:
+
+| Argument type | Passed from the testbench | The component |
+|---|---|---|
+| `ClockPort` | a clock of the test module (`clk`; `clock_posedge` and `clock_negedge` too) | runs `on_clock` on its active edges |
+| `ResetPort` | a reset of the test module (`rst`) | runs `on_reset` on its events |
+| `InputPort` | a variable (`x`, `dut.u_sub.x`) | reads it |
+| `OutputPort` | a variable of the test module (`y`) | drives it |
+| `ModportRef` | a modport of an interface instance in the test module (`bus.responder`), of any interface | reads its `input` members and drives its `output` members |
+
+A reference names its variables directly: an expression or a select (`x + 1`, `x[0]`) is an analysis-time error, and so is a `ClockPort`, a `ResetPort` or an `OutputPort` reference into a child instance.
+
+The reference is bound when the method is called, so a testbench may choose at run time which references to pass.
+As with port connections, a variable may be read through any number of references, which share one port, but driven through one only: passing an `OutputPort` reference, or a modport with an `output` member, fails the test when its variable is already driven — by the design, by another component, or by the same component.
+
+A clock passed by reference fires `on_clock` from the call on, like a connected clock port; `ctx.fired(port)` tells which clock fired the hook.
+A reset passed by reference fires `on_reset` likewise, like a connected reset port.
+A reset the design produces fires `on_reset` only when some `always_ff` of the design resets on it.
+A component that takes all its clocks this way has no clock port, declares `kind = clocked`, and is instantiated without a clock connection:
+
+```rust,noplayground
+#[derive(Component)]
+#[component(kind = clocked)]
+pub struct EdgeCounter {
+    watched: Vec<(ClockPort, OutputPort, u64)>,
+}
+
+#[component_impl]
+impl EdgeCounter {
+    /// Counts the edges of `clk` in `count`.
+    fn watch(&mut self, _ctx: &mut SimCtx, clk: ClockPort, count: OutputPort) -> Result<()> {
+        self.watched.push((clk, count, 0));
+        Ok(())
+    }
+
+    fn on_clock(&mut self, ctx: &mut SimCtx) -> Result<()> {
+        for (clk, count, n) in &mut self.watched {
+            if ctx.fired(*clk) {
+                *n += 1;
+                ctx.write_u64(*count, *n);
+            }
+        }
+        Ok(())
+    }
+}
+```
+
+```veryl
+module ClockDivider (
+    i_clk: input  '_ clock,
+    i_rst: input  '_ reset,
+    o_clk: output '_ clock,
+) {
+    var toggle: logic;
+    always_ff (i_clk, i_rst) {
+        if_reset {
+            toggle = 0;
+        } else {
+            toggle = ~toggle;
+        }
+    }
+    assign o_clk = i_clk & toggle;
+}
+
+#[test(test_edge_counter)]
+module test_edge_counter {
+    inst clk    : $tb::clock_gen;
+    inst rst    : $tb::reset_gen (clk);
+    var  div_clk: clock        ;
+    inst div    : ClockDivider (
+        i_clk: clk    ,
+        i_rst: rst    ,
+        o_clk: div_clk,
+    );
+    var fast: logic<8>;
+    var slow: logic<8>;
+
+    inst cnt: $comp::edge_counter;
+
+    initial {
+        rst.assert();
+        cnt.watch(clk, fast);
+        cnt.watch(div_clk, slow);
+        clk.next(8);
+        $assert(fast == 8, "every edge of clk");
+        $assert(slow == 4, "every edge of the divided clock");
+        $finish();
+    }
+}
+```
+
+A `ModportRef` gives `interface()`, `modport()`, `path()` and its `members()`; `input(name)` and `output(name)` return the member port of that name, checking that the modport gives it that direction.
+A port bound for a reference also describes its variable: `dims()` returns the packed dimensions, outermost first (`[4, 8]` for `logic<4, 8>`), `unpacked_dims()` the unpacked ones (always empty for now), and `path()` the hierarchical path.
+
+Elements of a packed array are read and written by index with `ctx.read_elem(port, &[...])` / `ctx.write_elem(port, &[...], value)`, and a bit range with `ctx.read_bits(port, &[], lsb, width)` / `ctx.write_bits(port, &[], lsb, width, value)`.
+Indices go outermost first and may stop short of the last dimension; elements are placed as in SystemVerilog, so `[2]` of `logic<4, 8>` is bits `[23:16]`.
+A partial write keeps the bits written elsewhere in the same hook.
+
 ## Unit testing with MockSim
 
 The `veryl_component::testing` module provides `MockSim`, an in-process stand-in for the simulator host.
@@ -292,6 +452,7 @@ mod tests {
 ```
 
 `MockSim` declares parameters and ports with the builder methods, constructs the component with `build`, drives inputs with `set` and hooks with `clock`/`reset`/`init`/`finish`, calls methods with `call`, and exposes the results through `get`, `failed`, `failures`, `logs` and `finish_requested`.
+For a [reference argument](#reference-arguments), `clock_ref`, `reset_ref`, `signal_ref` and `modport_ref` bind the ports and return the argument to pass to `call`; the bound ports are then driven and observed with `set` and `get` like any other, a bound clock is fired with `set_fired_clock` and `clock`, and a bound reset with `reset`.
 
 ## Committing the interface manifest
 
@@ -350,3 +511,4 @@ Anything beyond compute and the host services — direct `std::fs`, networking, 
 * Method arguments and return values are two-state: X/Z is dropped (port values carry X/Z under a four-state run).
 * Method return values are limited to 512 bits by the ABI.
 * Instance arrays and unpacked-array connections to component ports are not supported.
+* Reference arguments cannot name unpacked arrays, pass a clock or a reset inside a child instance, drive a variable inside a child instance, or name a modport of an interface instance inside a child instance.
