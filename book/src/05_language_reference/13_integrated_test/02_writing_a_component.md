@@ -184,6 +184,21 @@ Method arguments and return values are always two-state.
 `ctx.seed()` returns a deterministic per-instance seed computed from the base test seed and the instance path; a component that randomizes should derive all of its randomness from it, so that pinning the base seed reproduces the run.
 The base seed is random per run by default (printed by `veryl test`, reproducible with `--seed`); pin it with the `seed` field in the `[test]` section.
 
+Both contexts read the runtime arguments given to `veryl test` with `--runtime-arg` (see [Runtime arguments](../13_integrated_test.md#runtime-arguments)):
+
+* `ctx.runtime_arg(name)` — the value of the argument that wins for `name` (the last one given), as `Option<&ArgValue>`; `ArgValue` is `Flag` or `Text(String)`
+* `ctx.runtime_arg_exists(name)` — whether `name` was given, as a flag or a value
+* `ctx.runtime_arg_value::<T>(name)` — the value read as `T`, `None` if `name` was not given, and an error if it was given as a flag or its value cannot be read as `T`
+* `ctx.runtime_args()` — every argument as given, in order, overridden ones included
+
+```rust,noplayground
+let test: String = ctx.runtime_arg_value("TESTNAME")?.unwrap_or("basic_test".into());
+let rounds: u32 = ctx.runtime_arg_value("ROUNDS")?.unwrap_or(2);
+```
+
+`runtime_arg_value` converts with `TryFrom<&ArgValue>`, which the SDK implements for `String` and the integer types (`i8`..`i128`, `u8`..`u128`, `BigInt`, `BigUint`), reading numbers as `$tb::runtime_args` does.
+A component can implement it for its own types, with `ArgError` as the error.
+
 The `ctx` file I/O is the portable path: components using `std::fs` directly work only as native libraries, not as prebuilt wasm binaries.
 
 ## Testbench methods
@@ -291,7 +306,7 @@ mod tests {
 }
 ```
 
-`MockSim` declares parameters and ports with the builder methods, constructs the component with `build`, drives inputs with `set` and hooks with `clock`/`reset`/`init`/`finish`, calls methods with `call`, and exposes the results through `get`, `failed`, `failures`, `logs` and `finish_requested`.
+`MockSim` declares parameters, ports and runtime arguments (`runtime_flag(name)` / `runtime_arg(name, value)`) with the builder methods, constructs the component with `build`, drives inputs with `set` and hooks with `clock`/`reset`/`init`/`finish`, calls methods with `call`, and exposes the results through `get`, `failed`, `failures`, `logs` and `finish_requested`.
 
 ## Committing the interface manifest
 
