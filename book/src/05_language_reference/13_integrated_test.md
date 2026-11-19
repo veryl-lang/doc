@@ -98,10 +98,12 @@ module test_counter {
 
 ### Testbench methods
 
-`clock_gen` provides the `next` method to advance clock cycles:
+`clock_gen` provides the `next` and `start` methods to advance clock cycles:
 
 * `clk.next()` — advance clock by 1 cycle
 * `clk.next(N)` — advance clock by `N` cycles
+* `clk.start()` — keep the clock running until the test ends (see [Running the clock until the test ends](#running-the-clock-until-the-test-ends))
+* `clk.start(N)` — the same as `clk.start()`, but fail the test if the clock takes more than `N` cycles
 
 `reset_gen` provides the `assert` method to assert reset:
 
@@ -152,6 +154,62 @@ module test_multi_initial {
         clk.next(8);
         $assert(done == 1);
         $finish();
+    }
+}
+```
+
+### Running the clock until the test ends
+
+`clk.next(N)` fixes the number of cycles up front.
+When the end of a test is decided by something else, such as a [component](./13_integrated_test/01_using_a_component.md) that checks the results, `clk.start()` keeps the clock running instead.
+`clk.start()` returns at once, and the clock keeps running even after all `initial` blocks have ended.
+The test ends at the first of:
+
+* `$finish()`
+* a component's `finish` request
+* a failure (`$assert`, a component's `fail`)
+
+```veryl,playground
+#[test(test_component_driven)]
+module test_component_driven {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    var req: logic;
+    var ack: logic;
+
+    inst dut: Peripheral ( clk, rst, req, ack );
+
+    // Requests `finish` once all the checks have passed
+    inst chk: $comp::my_checker ( clk, req, ack );
+
+    initial {
+        clk.start();
+        rst.assert();
+        req = 1;
+    }
+}
+```
+
+After `clk.start()`, `clk.next(N)` waits for `N` edges of the running clock, from the block that started it or from another one.
+Calling `clk.start()` on a running clock does nothing.
+
+A test with nothing to end it runs forever.
+`clk.start(N)` takes a limit as a safety net: the test fails if the clock takes more than `N` cycles after `clk.start(N)`.
+A test that ends within `N` cycles passes, including one that ends at the `N`-th cycle.
+
+```veryl,playground
+#[test(test_cycle_limit)]
+module test_cycle_limit {
+    inst clk: $tb::clock_gen;
+    inst rst: $tb::reset_gen ( clk );
+
+    // ...
+
+    initial {
+        clk.start(100000); // fail if `chk` has not requested `finish` within 100000 cycles
+        rst.assert();
+        req = 1;
     }
 }
 ```
