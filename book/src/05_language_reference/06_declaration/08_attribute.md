@@ -265,6 +265,43 @@ module ModuleA (
 
 The inlined expression is cast to the return type defined in a package which is generated for the interface, to keep the semantics of the function return.
 
+## `legacy_always_block` Attribute
+
+If `legacy_always_block` attribute is set to `always_comb` or `always_ff` declaration, the declaration is emitted as legacy `always` block in the generated SystemVerilog.
+`always_comb` is emitted as `always @*`, and `always_ff` is emitted as `always @(...)` with the same event list.
+
+SystemVerilog forbids variables assigned in `always_comb`/`always_ff` from being assigned by any other process.
+Interfaces of verification IPs may be driven by other statements, so connecting them requires legacy `always` blocks.
+This attribute is helpful for such case.
+
+Note that `always @*` is not completely equivalent to `always_comb`.
+`always_comb` is also triggered by changes of variables which are referred directly in functions called from it, but `always @*` is not.
+Therefore, the simulation may not work as expected by this conversion.
+
+```veryl,playground
+module ModuleA (
+    i_clk: input  clock   ,
+    i_rst: input  reset   ,
+    i_a  : input  logic<8>,
+    o_b  : output logic<8>,
+    o_c  : output logic<8>,
+) {
+    #[legacy_always_block]
+    always_comb {
+        o_b = i_a;
+    }
+
+    #[legacy_always_block]
+    always_ff {
+        if_reset {
+            o_c = 0;
+        } else {
+            o_c = i_a;
+        }
+    }
+}
+```
+
 ## `align` Attribute
 
 `align` attribute is used to control vertical alignment by formatter.
