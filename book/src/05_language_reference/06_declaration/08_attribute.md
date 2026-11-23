@@ -310,3 +310,59 @@ module ModuleA {
 ```
 
 * `skip`: `veryl fmt` does not format modules, interfaces and packages on which `fmt` attribute with `skip` argument is specified.
+
+## `enum_encoding` Attribute
+
+`enum_encoding` attribute specifies the state encoding scheme for enum declarations.
+
+The available arguments are:
+
+* `sequential`: Values are assigned sequentially starting from 0 (default).
+* `onehot` (or `one_hot`): One-hot encoding where each variant has exactly one bit set.
+* `gray`: Gray code encoding where adjacent variants differ by exactly one bit.
+
+```veryl,playground
+module ModuleA {
+    #[enum_encoding(sequential)]
+    enum EnumSeq {
+        A,
+        B,
+        C,
+    }
+
+    #[enum_encoding(onehot)]
+    enum EnumOneHot {
+        A,
+        B,
+        C,
+    }
+
+    #[enum_encoding(gray)]
+    enum EnumGray {
+        A,
+        B,
+        C,
+    }
+}
+```
+
+## `enum_member_prefix` Attribute
+
+By default, Veryl generates SystemVerilog enum members by prepending the enum type name (e.g. `State::Idle` is emitted as `State_Idle`) to prevent collisions in SystemVerilog's flat enum namespace.
+
+`enum_member_prefix` allows overriding this prefix in the generated SystemVerilog:
+
+```veryl,playground
+module ModuleA {
+    #[enum_member_prefix(ST)]
+    enum State: logic<2> {
+        Idle, // Emitted as `ST_Idle` in SystemVerilog instead of `State_Idle`
+        Run,  // Emitted as `ST_Run`
+        Done, // Emitted as `ST_Done`
+    }
+
+    var s: State;
+    assign s = State::Idle;
+}
+```
+

@@ -70,6 +70,27 @@ So these attributes are ignored by default, and if there is the following config
 emit_cond_type = true
 ```
 
+## Wildcard & Range Matching (`case inside`)
+
+Just like `case` expressions, `case` statements support wildcard bit-pattern matching with `x` (and `z`) as well as range matching with `..=`.
+When wildcard bit literals or ranges are present in any case arm, the Veryl compiler automatically transpiles the statement into SystemVerilog's IEEE 1800 `case (...) inside` statement.
+
+```veryl,playground
+module ModuleA {
+    let a: logic<8> = 8'h00;
+    var b: logic<8>;
+
+    always_comb {
+        case a {
+            8'b0000_00xx   : b = 8'd1; // Matches 8'b0000_0000 through 8'b0000_0011
+            8'b0001_xxxx   : b = 8'd2; // Matches any 8'b0001_????
+            8'd100..=8'd200: b = 8'd3; // Matches range [100:200]
+            default        : b = 8'd0;
+        }
+    }
+}
+```
+
 ## Concatenation in left-hand side
 
 If you want to use bit concatenation in left-hand of case/switch, 
