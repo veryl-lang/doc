@@ -47,6 +47,7 @@ The following testbench components are available:
 * `$tb::file` — file handle for writing output files
 * `$tb::random` — random-number generator (with the value type as a generic argument)
 * `$tb::queue` — queue (with the element type and the capacity as generic arguments)
+* `$tb::runtime_args` — runtime arguments given to `veryl test`
 
 In addition to the built-in components, verification components written in Rust can be used through the `$comp` namespace.
 See [Using a Component](./13_integrated_test/01_using_a_component.md).
@@ -410,6 +411,55 @@ module test_scoreboard {
 Reading an empty queue with `pop_*` / `front` / `back` returns X for a 4-state element type and 0 for a 2-state element type, and `drop_*` on an empty queue does nothing.
 Pushing to a full queue drops the pushed value.
 Neither case is reported as an error.
+
+### Runtime arguments
+
+Runtime arguments let a value be chosen when a test is run rather than when it is written, such as which scenario to run or how many rounds.
+They are given to `veryl test` with the `--runtime-arg` option:
+
+```
+veryl test --runtime-arg VERBOSE --runtime-arg ROUNDS=4 --runtime-arg TESTNAME=random_test
+```
+
+* `NAME` gives a flag, and `NAME=VALUE` gives a value. The text is split at the first `=`, so a value may contain `=`.
+* The option can be repeated. When a name is given more than once, the last one wins.
+* Every test the command runs receives the same arguments.
+
+`$tb::runtime_args` reads them in a native test.
+It is declared with `var`, and its methods can be called only inside `initial` and `final` blocks:
+
+* `args.exists(name)` — return 1 if `name` was given, as a flag or a value, and 0 otherwise
+* `args.get_int(name, default)` — return the value of `name` as an integer, or `default` if `name` was not given
+* `args.get_string(name, default)` — return the value of `name` as a string, or `default` if `name` was not given
+
+```veryl,playground
+#[test(test_runtime_args)]
+module test_runtime_args {
+    var args     : $tb::runtime_args;
+    var rounds   : u32;
+    var test_name: string;
+
+    initial {
+        rounds    = args.get_int("ROUNDS", 2);
+        test_name = args.get_string("TESTNAME", "basic_test");
+        if args.exists("VERBOSE") == 1 {
+            $display("%s: %0d rounds", test_name, rounds);
+        }
+        $finish();
+    }
+}
+```
+
+An integer value is written in decimal, or in hexadecimal or binary with a `0x` / `0b` prefix, optionally preceded by `-`, with `_` allowed between digits (`4`, `-3`, `0x1f`, `0xdead_beef`).
+Assigned directly to a variable, it takes the width of that variable, a negative value in two's complement; used in any other expression, it is an `i64`.
+A value that is not an integer, a value that does not fit, and reading the value of a name given as a flag fail the test.
+
+A `string` variable written only in `initial` / `final` blocks, such as `test_name` above, can hold a text known only when the test runs.
+It supports assignment, `if ?:`, `==`, `!=`, printing with `%s`, and passing to a component method or to `$tb::file`'s `open` / `append`.
+Selecting part of it, concatenating it, comparing its order, and assigning it to a `string` driven by `always_comb`, `always_ff`, `assign` or `let` are reported as errors by the simulator.
+
+Components read the same arguments themselves; see [Writing a Component](./13_integrated_test/02_writing_a_component.md).
+When `veryl test` runs a SystemVerilog simulator, the winning argument of each name is passed as a plusarg (`+NAME` / `+NAME=VALUE`), to be read with `$test$plusargs` / `$value$plusargs`.
 
 ## SystemVerilog test
 
