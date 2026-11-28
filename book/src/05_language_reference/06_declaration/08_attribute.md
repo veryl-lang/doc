@@ -318,7 +318,7 @@ module ModuleA {
 The available arguments are:
 
 * `sequential`: Values are assigned sequentially starting from 0 (default).
-* `onehot` (or `one_hot`): One-hot encoding where each variant has exactly one bit set.
+* `onehot`: One-hot encoding where each variant has exactly one bit set.
 * `gray`: Gray code encoding where adjacent variants differ by exactly one bit.
 
 ```veryl,playground
