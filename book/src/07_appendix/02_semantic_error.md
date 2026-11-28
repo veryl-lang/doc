@@ -183,6 +183,13 @@ other than `(way: inline / lang: sv)`.
 This error is reported when an enum variant's value does not match the encoding declared
 for the enum (e.g. one-hot, gray).
 
+### invalid_export
+
+This error is reported when [`export`](../05_language_reference/06_declaration/08_attribute.md#export-attribute)
+attribute is attached to something other than a package or an interface, or when the
+marked package or interface doesn't satisfy the conditions to be exported (e.g. it has
+parameters, it refers to a package without `export` attribute, or it contains a union).
+
 ### invalid_factor
 
 This error is reported when a non-value symbol (e.g. a module name) is used as a factor
