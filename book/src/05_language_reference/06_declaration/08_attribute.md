@@ -265,6 +265,50 @@ module ModuleA (
 
 The inlined expression is cast to the return type defined in a package which is generated for the interface, to keep the semantics of the function return.
 
+## `export` Attribute
+
+`export` attribute marks a package or an interface to be used from a user-defined component written in another language.
+Its argument is the language; only `rust` is available.
+Veryl describes the marked packages and interfaces, and a component written in Rust expands them as Rust types (see [Types imported from Veryl](../13_integrated_test/02_writing_a_component.md#types-imported-from-veryl)).
+
+```veryl,playground
+#[export(rust)]
+package BusPkg {
+    enum Mode: logic<2> {
+        Idle = 1,
+        Busy = 2,
+    }
+    struct BusConfig {
+        mode: Mode    ,
+        regs: logic<8>,
+    }
+    const DEFAULT_MODE: Mode = Mode::Busy;
+}
+
+#[export(rust)]
+interface BusIf {
+    var valid: logic            ;
+    var cfg  : BusPkg::BusConfig;
+    var ready: logic            ;
+
+    modport master {
+        valid: output,
+        cfg  : output,
+        ready: input ,
+    }
+}
+```
+
+A package or an interface with `export` attribute must satisfy the following conditions:
+
+* It has no parameters or generic parameters, so that its types are fixed by itself.
+* It refers to no package but packages with `export` attribute.
+* Its types are bit vectors, enums, packed structs and packed arrays of them; unions and unpacked arrays are not supported. A constant may also be of the `string` type.
+* An enum, and each value of a constant, is 128 bits wide at most, and an enum value has no X or Z.
+* A member of a modport is an `input` or an `output`.
+
+Functions in the package or the interface are not described.
+
 ## `align` Attribute
 
 `align` attribute is used to control vertical alignment by formatter.

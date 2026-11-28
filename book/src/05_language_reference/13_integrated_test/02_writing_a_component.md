@@ -125,6 +125,160 @@ Each `#[interface]` field is one interface port of the component, named after th
 
 Every member the struct declares must exist in the connected interface — a missing member is an analysis-time error — while declaring only the members the component observes is fine.
 
+## Types imported from Veryl
+
+A component often takes structured values, such as a configuration, and drives or observes a whole bus.
+Instead of defining those types twice, define them once in Veryl, in a package or an interface with [`#[export(rust)]`](../06_declaration/08_attribute.md#export-attribute), and import them into the component with `import!`:
+
+```veryl,playground
+#[export(rust)]
+package bus_pkg {
+    enum Mode: logic<2> {
+        Idle = 1,
+        Busy = 2,
+    }
+    struct BusConfig {
+        mode : Mode           ,
+        regs : logic<8>       ,
+        delta: signed logic<4>,
+    }
+    const DEFAULT_MODE: Mode = Mode::Busy;
+}
+
+#[export(rust)]
+interface bus_if {
+    var valid: logic   ;
+    var data : logic<8>;
+    var ready: logic   ;
+
+    modport master {
+        valid: output,
+        data : output,
+        ready: input ,
+    }
+}
+```
+
+```rust,noplayground
+use veryl_component::*;
+
+// Each is imported as a public module named after it, where the line is written.
+import!(bus_pkg);
+import!(bus_if);
+```
+
+A package or an interface referring to a type of another package names that package through the module where it is imported, given with `use(...)`:
+
+```rust,noplayground
+import!(regblock_pkg, use(bus_pkg = vip_bus::bus_pkg));
+```
+
+Import each package once, in the crate owning it, and use it from there: importing it twice makes two distinct Rust types.
+
+Veryl writes the description of the exported packages and interfaces as `veryl.types.json` next to the `Cargo.toml` of each [`[[components]]` package](#the-components-entry) during the analysis and before it builds the components; `import!` reads it.
+Commit it alongside the sources, as the [interface manifest](#committing-the-interface-manifest) is.
+
+### Type mapping
+
+The types of packages and interfaces, as the fields of structs and the members of modports, map to Rust types as follows:
+
+| Veryl | Rust |
+|-------|------|
+| `logic<1>` / `bit` | `bool` |
+| `logic<N>` (N ≤ 128) | the smallest of `u8`, `u16`, `u32`, `u64` and `u128` holding it |
+| `logic<N>` (N > 128) | `BigUint` |
+| `signed logic<N>` | the smallest of `i8` .. `i128` holding it, or `BigInt` |
+| packed array (`logic<4, 8>`, `Mode<3>`) | `[T; N]`, the first element the most significant |
+| enum or struct of an exported package | the type imported from its package |
+
+Names follow Rust's conventions: modules and fields in `snake_case`, types and enum variants in `UpperCamelCase`, constants in `SCREAMING_SNAKE_CASE`.
+A name that is a Rust keyword is written as a raw identifier.
+
+Values convert between Veryl's packed bits and these types through `Packed`, which the SDK implements for `bool`, the integers, `BigUint`, `BigInt`, `Value` and arrays of them, and `import!` for the enums and structs it imports.
+X and Z bits read as 0, and a value that is no variant of an enum fails the conversion.
+`Packed::from_value` and `Packed::to_value` convert from and to a `Value`.
+
+### Packages
+
+A package is imported as follows:
+
+| Veryl | Rust |
+|-------|------|
+| enum | an enum with `#[repr(uN)]`, whose variants carry the Veryl values |
+| struct | a struct with public fields, the first field the most significant |
+| `type` / `const X: type` | a type alias |
+| `const` | a constant with the evaluated value: `pub const DEFAULT_MODE: Mode = Mode::Busy;`; a `string` constant is a `&'static str` |
+
+A testbench method can take the enums and structs directly; the value a test module passes is unpacked into it:
+
+```rust,noplayground
+#[component_impl]
+impl BusVip {
+    fn set_config(&mut self, _ctx: &mut SimCtx, cfg: bus_pkg::BusConfig) -> Result<()> {
+        self.config = cfg;
+        Ok(())
+    }
+}
+```
+
+```veryl
+var cfg: bus_pkg::BusConfig;
+assign cfg.mode  = bus_pkg::Mode::Busy;
+assign cfg.regs  = 8;
+assign cfg.delta = 4'he;
+
+initial {
+    vip.set_config(cfg);
+}
+```
+
+### Interfaces
+
+An interface is imported as a module holding a struct per modport, named after the modport (`master` is `Master`).
+Its fields are the values of the modport's members; members of a clock or a reset type are left out.
+The struct implements `Modport`:
+
+* `Modport::bind(&modport_ref)` binds each member by its name in the `ModportRef` a test module passes to a method (`drv.set_bus(bus.master)`), checking its width; the fields start at their default values
+* `load(ctx)` reads every input into its field
+* `store(ctx)` drives every output whose field changed since it was last driven, so an output never assigned is never driven
+
+```rust,noplayground
+#[component_impl]
+impl BusDriver {
+    fn set_bus(&mut self, _ctx: &mut SimCtx, bus: ModportRef) -> Result<()> {
+        self.bus = Some(bus_if::Master::bind(&bus)?);
+        Ok(())
+    }
+
+    fn on_clock(&mut self, ctx: &mut SimCtx) -> Result<()> {
+        if let Some(bus) = self.bus.as_mut() {
+            bus.load(ctx)?;
+            bus.valid = !bus.ready;
+            bus.data = 0x5a;
+            bus.store(ctx);
+        }
+        Ok(())
+    }
+}
+```
+
+The struct also handles each member alone: `load_<member>(ctx)` reads an input, `force_<member>(ctx)` drives an output whatever was last driven, and `assume_<member>()` takes the field of an output as the value last driven without driving it.
+A struct of a modport with no output implements `InputOnly`.
+
+The same struct can be written by hand with `#[modport]`, marking each field `#[input]` or `#[output]`; a field binds to the member of its name, or of `#[input(name = "...")]`:
+
+```rust,noplayground
+#[modport]
+struct BusMonitor {
+    #[input]
+    valid: bool,
+    #[input(name = "data")]
+    payload: u8,
+}
+```
+
+The signals under them are `InputSignal` and `OutputSignal`, which a component may also use on their own.
+
 ## Naming
 
 Several names appear around a component, but only one is part of the contract:
@@ -147,6 +301,13 @@ path = "my_checker"
 
 * `path` — path to the component's cargo package, relative to the directory containing `Veryl.toml`
 * `wasm` — optional committed prebuilt wasm binary, generated by `veryl publish`
+* `library` — marks a package exporting no component: a library the components use, such as the Rust part of a VIP. It receives [`veryl.types.json`](#types-imported-from-veryl) but is neither built nor loaded as a component library, so it needs no `cdylib` crate type nor manifest. It cannot have `wasm`.
+
+```toml
+[[components]]
+path = "vip"
+library = true
+```
 
 Testbenches that exercise the package's own components are best placed in the
 [`examples` directory](../../06_development_environment/04_directory_layout.md#the-examples-directory):
@@ -218,7 +379,7 @@ impl Golden {
 }
 ```
 
-Supported argument types are `&str`, `String`, integers, `bool` and `Value`; supported return types are `()`, integers, `bool` and `Value`.
+Supported argument types are `&str`, `String`, integers, `bool`, `Value` and any other type implementing `Packed`, such as the types [imported from Veryl](#types-imported-from-veryl); supported return types are `()`, integers, `bool` and `Value`.
 
 A `Value` **argument** carries whatever width the call-site expression has, so it needs no declaration. A `Value` **return** value must declare its width with `#[ret_width(...)]` (integer return types imply their own width); the width expression may be an integer, a parameter name, an interface constant qualified by an interface port (`axi.DATA_WIDTH_BYTES`), or arithmetic over them:
 
@@ -349,4 +510,5 @@ Anything beyond compute and the host services — direct `std::fs`, networking, 
 
 * Method arguments and return values are two-state: X/Z is dropped (port values carry X/Z under a four-state run).
 * Method return values are limited to 512 bits by the ABI.
+* A type imported from Veryl is not a method return type yet; return it as a `Value` (`Ok(x.into())`) with `#[ret_width(...)]`.
 * Instance arrays and unpacked-array connections to component ports are not supported.
