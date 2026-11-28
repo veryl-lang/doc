@@ -51,3 +51,26 @@ module ModuleA (
     assign c = A + B;
 }
 ```
+
+## Built-in System Functions
+
+Veryl recognizes IEEE 1800 SystemVerilog system tasks and functions directly as built-in identifiers without requiring `$sv::` prefixing. These are validated and type-checked natively by the analyzer:
+
+* **Bitwise & Query**: `$countones(expr)`, `$countbits(expr, ...)`, `$onehot(expr)`, `$onehot0(expr)`, `$isunknown(expr)`, `$bits(type)`, `$size(array)`.
+* **Math Functions**: `$clog2(expr)`, `$ln(expr)`, `$log10(expr)`, `$exp(expr)`, `$sqrt(expr)`, `$pow(x, y)`, `$floor(expr)`, `$ceil(expr)`, `$sin(expr)`, `$cos(expr)`, `$tan(expr)`, `$hypot(x, y)`.
+* **Sampled & Temporal Functions**: `$sampled(expr)`, `$rose(expr)`, `$fell(expr)`, `$stable(expr)`, `$past(expr)`, `$rose_gclk(expr)`, `$fell_gclk(expr)`.
+* **Assertions & Control**: `$assert(cond, ...)`, `$assert_continue(cond, ...)`, `$asserton`, `$assertoff`, `$assertkill`.
+* **Simulation & Diagnostics**: `$display(...)`, `$write(...)`, `$monitor(...)`, `$finish`, `$stop`, `$time`, `$realtime`.
+* **Memory & File I/O**: `$readmemh(path, mem)`, `$readmemb(path, mem)`, `$fopen(...)`, `$fclose(...)`, `$fread(...)`, `$fdisplay(...)`.
+
+```veryl,playground
+module ModuleA (
+    i_data: input  logic<8>,
+    o_pop : output u32     ,
+    o_hot : output logic   ,
+) {
+    assign o_pop = $countones(i_data);
+    assign o_hot = $onehot(i_data);
+}
+```
+
